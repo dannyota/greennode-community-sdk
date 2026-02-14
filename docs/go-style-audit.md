@@ -203,9 +203,14 @@ or use `errors.Is()`.
 
 ## 5. Structural Patterns
 
-### 5.1 Builder pattern returning interfaces
+### 5.1 Builder pattern returning interfaces — **PARTIALLY RESOLVED**
 
-~30 `New*` constructors return interface types instead of concrete types:
+~141 request-type constructors now return `*ConcreteType` instead of
+`I*Interface`. Since `*T` satisfies the corresponding interface, all callers
+passing results to service methods continue to work unchanged.
+
+**Remaining:** Gateway, service-factory, and client constructors (~33) still
+return interfaces because their concrete structs are unexported:
 
 ```go
 // greennode/gateway/gateway.go
@@ -222,21 +227,22 @@ func NewSdkConfigure() SdkConfigure         { return &sdkConfigure{...} }
 func NewRequest() Request                   { return &request{...} }
 ```
 
-**Go convention:** "Accept interfaces, return structs." Constructors should
-return the concrete `*T` type. This preserves full type information, allows
-consumers to define their own interfaces, and avoids unnecessary heap
-allocations through interface boxing.
+These require exporting the concrete structs first — deferred to a future pass.
 
-### 5.2 100% pointer receivers
+### 5.2 100% pointer receivers — **PARTIALLY RESOLVED**
 
-Every method in the codebase uses a pointer receiver, including simple read-only
-accessors on small types (`Endpoint`, `Pool`, `VirtualAddress`).
+Read-only entity types (16 types, ~46 methods) and error response types (4
+types, 8 methods) now use value receivers: `Endpoint`, `ListEndpoints`,
+`AddressPair`, `ListAddressPairs`, `VirtualAddress`, `Listener`, `Pool`,
+`HealthMonitor`, `LoadBalancer`, `Server`, `Volume`, `ListVolumes`,
+`ListQuotas`, `ListPortals`, `ListSecgroupRules`, `AccessToken`,
+`IAMErrorResponse`, `NormalErrorResponse`, `NetworkGatewayErrorResponse`,
+`GlobalLoadBalancerErrorResponse`.
 
-**Go convention:** Value receivers are appropriate for small, immutable types
-and simple accessors. Pointer receivers are for methods that mutate state or
-when the struct is large. Mixing receiver types on a single type is discouraged,
-so this is a judgment call per type, but the blanket use of pointer receivers
-everywhere is not idiomatic.
+**Remaining:** Types with mutating methods (`ListServerGroups`,
+`ListListeners`, `ListLoadBalancers`, etc.), all client/SDK types (builder
+pattern, sync primitives), and request types (builder pattern with `With*`
+mutations) correctly keep pointer receivers.
 
 ### 5.3 `interface{}` instead of `any` — **RESOLVED**
 
@@ -294,7 +300,8 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
 | Custom error framework | 1 package | `sdkerror` | Open |
-| Constructors returning interfaces | ~30 functions | gateways, clients | Open |
+| Constructors returning interfaces | ~33 functions | gateways, clients | **Partial** (~141 request constructors fixed) |
+| Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
 | `var _` assertions | ~45 | codebase-wide | Open |
 | Missing godoc | ~97% of exports | codebase-wide | Open |
