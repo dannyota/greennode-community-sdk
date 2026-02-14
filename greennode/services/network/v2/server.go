@@ -6,22 +6,22 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) ListAllServersBySecgroupId(opts IListAllServersBySecgroupIdRequest) (*entity.ListServers, sdkerror.Error) {
-	url := listAllServersBySecgroupIdUrl(s.VserverClient, opts)
-	resp := new(ListAllServersBySecgroupIdResponse)
+func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts IListAllServersBySecgroupIDRequest) (*entity.ListServers, sdkerror.Error) {
+	url := listAllServersBySecgroupIDURL(s.VserverClient, opts)
+	resp := new(ListAllServersBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorSecgroupNotFound(errResp)).
 			WithKVparameters(
-				"secgroupId", opts.GetSecgroupId(),
-				"projectId", s.getProjectId())
+				"secgroupId", opts.GetSecgroupID(),
+				"projectId", s.getProjectID())
 	}
 
 	return resp.ToEntityListServers(), nil

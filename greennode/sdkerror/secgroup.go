@@ -19,7 +19,7 @@ func WithErrorSecgroupNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNotFound) {
 			sdkError.WithErrorCode(EcVServerSecgroupNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -34,7 +34,7 @@ func WithErrorSecgroupNameAlreadyExists(errResp ErrorResponse) func(sdkError Err
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNameAlreadyExists) {
 			sdkError.WithErrorCode(EcVServerSecgroupNameAlreadyExists).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -49,7 +49,7 @@ func WithErrorSecgroupExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupExceedQuota) {
 			sdkError.WithErrorCode(EcVServerSecgroupExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -65,7 +65,7 @@ func WithErrorSecgroupInUse(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupInUse) {
 			sdkError.WithErrorCode(EcVServerSecgroupInUse).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

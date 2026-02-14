@@ -16,8 +16,8 @@ func (s *GetPortalInfoResponse) ToEntityPortal() *entity.Portal {
 
 type ListProjectsResponse struct {
 	Projects []struct {
-		ProjectId string `json:"projectId"`
-		UserId    int    `json:"userId"`
+		ProjectID string `json:"projectId"`
+		UserID    int    `json:"userId"`
 	}
 }
 
@@ -25,8 +25,8 @@ func (s *ListProjectsResponse) ToEntityListPortals() *entity.ListPortals {
 	listPortals := entity.NewListPortals()
 	for _, p := range s.Projects {
 		listPortals.Items = append(listPortals.Items, &entity.Portal{
-			ProjectID: p.ProjectId,
-			UserID:    p.UserId,
+			ProjectID: p.ProjectID,
+			UserID:    p.UserID,
 		})
 	}
 

@@ -36,20 +36,20 @@ type NetworkingConfig struct {
 	Subnets []string `json:"subnets,omitempty"`
 }
 
-func NewCreateLoadBalancerRequest(name, packageId, subnetId string) ICreateLoadBalancerRequest {
+func NewCreateLoadBalancerRequest(name, packageID, subnetID string) ICreateLoadBalancerRequest {
 	return &CreateLoadBalancerRequest{
 		Name:      name,
-		PackageID: packageId,
+		PackageID: packageID,
 		Scheme:    InternetLoadBalancerScheme,
-		SubnetID:  subnetId,
+		SubnetID:  subnetID,
 		Type:      LoadBalancerTypeLayer4,
 	}
 }
 
-func NewResizeLoadBalancerRequest(lbId, packageID string) IResizeLoadBalancerRequest {
+func NewResizeLoadBalancerRequest(lbID, packageID string) IResizeLoadBalancerRequest {
 	return &ResizeLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PackageID: packageID,
 	}
@@ -59,9 +59,9 @@ func NewListLoadBalancerPackagesRequest() IListLoadBalancerPackagesRequest {
 	return &ListLoadBalancerPackagesRequest{}
 }
 
-func NewGetLoadBalancerByIdRequest(lbId string) IGetLoadBalancerByIdRequest {
-	opts := new(GetLoadBalancerByIdRequest)
-	opts.LoadBalancerId = lbId
+func NewGetLoadBalancerByIDRequest(lbID string) IGetLoadBalancerByIDRequest {
+	opts := new(GetLoadBalancerByIDRequest)
+	opts.LoadBalancerID = lbID
 	return opts
 }
 
@@ -77,16 +77,16 @@ func (s *ListLoadBalancersRequest) AddUserAgent(agent ...string) IListLoadBalanc
 	return s
 }
 
-func NewDeleteLoadBalancerByIdRequest(lbId string) IDeleteLoadBalancerByIdRequest {
-	opts := new(DeleteLoadBalancerByIdRequest)
-	opts.LoadBalancerId = lbId
+func NewDeleteLoadBalancerByIDRequest(lbID string) IDeleteLoadBalancerByIDRequest {
+	opts := new(DeleteLoadBalancerByIDRequest)
+	opts.LoadBalancerID = lbID
 	return opts
 }
 
-func NewScaleLoadBalancerRequest(lbId string) IScaleLoadBalancerRequest {
+func NewScaleLoadBalancerRequest(lbID string) IScaleLoadBalancerRequest {
 	return &ScaleLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 	}
 }
@@ -102,7 +102,7 @@ type CreateLoadBalancerRequest struct {
 	Pool         ICreatePoolRequest     `json:"pool"`
 	Tags         []common.Tag           `json:"tags,omitempty"`
 	IsPoc        bool                   `json:"isPoc"`
-	ZoneId       *common.Zone           `json:"zoneId"`
+	ZoneID       *common.Zone           `json:"zoneId"`
 
 	common.UserAgent
 }
@@ -115,10 +115,10 @@ type ResizeLoadBalancerRequest struct {
 
 type ListLoadBalancerPackagesRequest struct {
 	common.UserAgent
-	ZoneId common.Zone `q:"zoneId,beempty"`
+	ZoneID common.Zone `q:"zoneId,beempty"`
 }
 
-type GetLoadBalancerByIdRequest struct {
+type GetLoadBalancerByIDRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 }
@@ -132,24 +132,24 @@ type ListLoadBalancersRequest struct {
 	common.UserAgent
 }
 
-type DeleteLoadBalancerByIdRequest struct {
+type DeleteLoadBalancerByIDRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 }
 
-func (s *DeleteLoadBalancerByIdRequest) AddUserAgent(agent ...string) IDeleteLoadBalancerByIdRequest {
+func (s *DeleteLoadBalancerByIDRequest) AddUserAgent(agent ...string) IDeleteLoadBalancerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-type ResizeLoadBalancerByIdRequest struct {
+type ResizeLoadBalancerByIDRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 
-	PackageId string `json:"packageId"`
+	PackageID string `json:"packageId"`
 }
 
-func (s *ResizeLoadBalancerByIdRequest) AddUserAgent(agent ...string) IResizeLoadBalancerByIdRequest {
+func (s *ResizeLoadBalancerByIDRequest) AddUserAgent(agent ...string) IResizeLoadBalancerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
@@ -271,13 +271,13 @@ func (s *CreateLoadBalancerRequest) WithAutoScalable(autoScalable bool) ICreateL
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithPackageId(packageId string) ICreateLoadBalancerRequest {
-	s.PackageID = packageId
+func (s *CreateLoadBalancerRequest) WithPackageID(packageID string) ICreateLoadBalancerRequest {
+	s.PackageID = packageID
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithSubnetId(subnetId string) ICreateLoadBalancerRequest {
-	s.SubnetID = subnetId
+func (s *CreateLoadBalancerRequest) WithSubnetID(subnetID string) ICreateLoadBalancerRequest {
+	s.SubnetID = subnetID
 	return s
 }
 
@@ -291,8 +291,8 @@ func (s *CreateLoadBalancerRequest) WithPoc(isPoc bool) ICreateLoadBalancerReque
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(zoneId common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneId = &zoneId
+func (s *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
+	s.ZoneID = &zoneID
 	return s
 }
 
@@ -305,8 +305,8 @@ func (s *ResizeLoadBalancerRequest) AddUserAgent(agent ...string) IResizeLoadBal
 	return s
 }
 
-func (s *ResizeLoadBalancerRequest) WithPackageId(packageId string) IResizeLoadBalancerRequest {
-	s.PackageID = packageId
+func (s *ResizeLoadBalancerRequest) WithPackageID(packageID string) IResizeLoadBalancerRequest {
+	s.PackageID = packageID
 	return s
 }
 
@@ -315,20 +315,20 @@ func (s *ListLoadBalancerPackagesRequest) AddUserAgent(agent ...string) IListLoa
 	return s
 }
 
-func (s *ListLoadBalancerPackagesRequest) WithZoneId(zoneId common.Zone) IListLoadBalancerPackagesRequest {
-	s.ZoneId = zoneId
+func (s *ListLoadBalancerPackagesRequest) WithZoneID(zoneID common.Zone) IListLoadBalancerPackagesRequest {
+	s.ZoneID = zoneID
 	return s
 }
 
-func (s *ListLoadBalancerPackagesRequest) GetZoneId() string {
-	return string(s.ZoneId)
+func (s *ListLoadBalancerPackagesRequest) GetZoneID() string {
+	return string(s.ZoneID)
 }
 
 func (s *ListLoadBalancerPackagesRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{}
 }
 
-func (s *GetLoadBalancerByIdRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIdRequest {
+func (s *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
@@ -384,13 +384,13 @@ func (s *ListLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 
-func (s *ResizeLoadBalancerByIdRequest) ToMap() map[string]interface{} {
+func (s *ResizeLoadBalancerByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"packageId":      s.PackageId,
-		"loadBalancerId": s.LoadBalancerId,
+		"packageId":      s.PackageID,
+		"loadBalancerId": s.LoadBalancerID,
 	}
 }
 
-func (s *ResizeLoadBalancerByIdRequest) ToRequestBody() interface{} {
+func (s *ResizeLoadBalancerByIDRequest) ToRequestBody() interface{} {
 	return s
 }

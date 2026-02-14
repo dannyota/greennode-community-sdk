@@ -44,7 +44,7 @@ func WithErrorServerFlavorNotSupported(errResp ErrorResponse) func(sdkError Erro
 		if regexErrorServerFlavorNotSupported.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerFlavorNotSupported).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -59,7 +59,7 @@ func WithErrorServerNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerNotFound) {
 			sdkError.WithErrorCode(EcVServerServerNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -74,7 +74,7 @@ func WithErrorImageNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(errMsg, patternImageNotFound) {
 			sdkError.WithErrorCode(EcVServerImageNotFound).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -89,7 +89,7 @@ func WithErrorServerFlavorSystemExceedQuota(errResp ErrorResponse) func(sdkError
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerFlavorSystemExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerFlavorSystemExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatInfra)
 		}
 	}
@@ -105,7 +105,7 @@ func WithErrorServerDeleteCreatingServer(errResp ErrorResponse) func(sdkError Er
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCreating) {
 			sdkError.WithErrorCode(EcVServerServerDeleteCreatingServer).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -120,7 +120,7 @@ func WithErrorServerExpired(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExpired) {
 			sdkError.WithErrorCode(EcVServerServerExpired).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -137,7 +137,7 @@ func WithErrorServerUpdatingSecgroups(errResp ErrorResponse) func(sdkError Error
 			strings.Contains(stdErrMsg, patternServerDeleteServerUpdatingSecgroups) {
 			sdkError.WithErrorCode(EcVServerServerUpdatingSecgroups).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -152,7 +152,7 @@ func WithErrorServerExceedCpuQuota(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedCpuQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedCpuQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -168,7 +168,7 @@ func WithErrorServerExceedFloatingIpQuota(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedFloatingIpQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedFloatingIpQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -186,7 +186,7 @@ func WithErrorServerImageNotSupported(errResp ErrorResponse) func(sdkError Error
 			strings.Contains(lowerErrMsg, patternImageNotSupport) {
 			sdkError.WithErrorCode(EcVServerServerImageNotSupported).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -201,7 +201,7 @@ func WithErrorServerExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -217,7 +217,7 @@ func WithErrorServerDeleteDeletingServer(errResp ErrorResponse) func(sdkError Er
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerDeleting) {
 			sdkError.WithErrorCode(EcVServerServerDeleteDeletingServer).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -232,7 +232,7 @@ func WithErrorServerDeleteBillingServer(errResp ErrorResponse) func(sdkError Err
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerBilling) {
 			sdkError.WithErrorCode(EcVServerServerDeleteBillingServer).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -247,7 +247,7 @@ func WithErrorServerCreateBillingPaymentMethodNotAllowed(errResp ErrorResponse) 
 		if strings.Contains(errMsg, patternBillingPaymentMethodNotAllowed) {
 			sdkError.WithErrorCode(EcVServerCreateBillingPaymentMethodNotAllowed).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -262,7 +262,7 @@ func WithErrorServerAttachVolumeQuotaExceeded(errResp ErrorResponse) func(sdkErr
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachVolumeQuotaExceeded) {
 			sdkError.WithErrorCode(EcVServerServerVolumeAttachQuotaExceeded).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -278,7 +278,7 @@ func WithErrorServerAttachEncryptedVolume(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachEncryptedVolume) {
 			sdkError.WithErrorCode(EcVServerServerAttachEncryptedVolume).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -293,7 +293,7 @@ func WithErrorServerCanNotAttachFloatingIp(errResp ErrorResponse) func(sdkError 
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCanNotAttachFloatingIp) {
 			sdkError.WithErrorCode(EcVServerServerCanNotAttachFloatingIp).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -308,7 +308,7 @@ func WithErrorServerGroupNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNotFound) {
 			sdkError.WithErrorCode(EcVServerServerGroupNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -323,7 +323,7 @@ func WithErrorServerGroupInUse(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupInUse) {
 			sdkError.WithErrorCode(EcVServerServerGroupInUse).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -338,7 +338,7 @@ func WithErrorServerGroupNameMustBeUnique(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNameMustBeUnique) {
 			sdkError.WithErrorCode(EcVServerServerGroupNameMustBeUnique).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

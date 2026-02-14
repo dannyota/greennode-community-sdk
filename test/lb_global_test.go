@@ -33,16 +33,16 @@ func TestCreateGlobalPoolSuccess(t *testing.T) {
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePublic)
 	poolMember.WithMembers(member)
 	opt := v1.NewCreateGlobalPoolRequest("annd2-test-pool-4", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
+		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolTCP)).
 		WithMembers(poolMember)
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.GetError())
-		t.Log(sdkerr.GetErrorCode())
+		t.Log(sdkerr.Err())
+		t.Log(sdkerr.ErrorCode())
 		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.GetErrorCategories())
+		t.Log(sdkerr.ErrorCategories())
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -60,12 +60,12 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePrivate)
 	poolMember.WithMembers(member)
 	opt := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
+		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
 				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
 				WithPath(common.Ptr("/sfdsaf")).
-				WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1)).
 				WithSuccessCode(common.Ptr("200")).
 				WithDomainName(common.Ptr("example.com")),
 		).
@@ -73,10 +73,10 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.GetError())
-		t.Log(sdkerr.GetErrorCode())
+		t.Log(sdkerr.Err())
+		t.Log(sdkerr.ErrorCode())
 		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.GetErrorCategories())
+		t.Log(sdkerr.ErrorCategories())
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -94,17 +94,17 @@ func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 		WithDomainName(common.Ptr("exampleee.com")).
 		WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
 		WithPath(common.Ptr("/hghjgj")).
-		WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1))
+		WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1))
 	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
 		WithHealthMonitor(httpMonitor)
 
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().UpdateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.GetError())
-		t.Log(sdkerr.GetErrorCode())
+		t.Log(sdkerr.Err())
+		t.Log(sdkerr.ErrorCode())
 		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.GetErrorCategories())
+		t.Log(sdkerr.ErrorCategories())
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -122,10 +122,10 @@ func TestDeleteGlobalPoolSuccess(t *testing.T) {
 	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.GetError())
-		t.Log(sdkerr.GetErrorCode())
+		t.Log(sdkerr.Err())
+		t.Log(sdkerr.ErrorCode())
 		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.GetErrorCategories())
+		t.Log(sdkerr.ErrorCategories())
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -211,7 +211,7 @@ func TestCreateGlobalListenerSuccess(t *testing.T) {
 		WithTimeoutClient(50).
 		WithTimeoutConnection(5).
 		WithTimeoutMember(50).
-		WithGlobalPoolId("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
 	listener, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalListener(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -231,7 +231,7 @@ func TestUpdateGlobalListenerSuccess(t *testing.T) {
 		WithTimeoutClient(60).
 		WithTimeoutConnection(6).
 		WithTimeoutMember(60).
-		WithGlobalPoolId("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
 	listener, sdkerr := vngcloud.GLBGateway().V1().GLBService().UpdateGlobalListener(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -285,12 +285,12 @@ func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 
 func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 	pool := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
+		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
 				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
 				WithPath(common.Ptr("/sfdsaf")).
-				WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1)).
 				WithSuccessCode(common.Ptr("200")).
 				WithDomainName(common.Ptr("example.com")),
 		).
@@ -311,7 +311,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 		WithTimeoutClient(50).
 		WithTimeoutConnection(5).
 		WithTimeoutMember(50).
-		WithGlobalPoolId("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
 	vngcloud := validSdkConfig()
 	opt := v1.NewCreateGlobalLoadBalancerRequest("annd2-testtt").
 		WithDescription("hihi").
@@ -344,8 +344,8 @@ func TestDeleteGlobalLoadBalancerSuccess(t *testing.T) {
 
 func TestGetGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewGetGlobalLoadBalancerByIdRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
-	lb, sdkerr := vngcloud.GLBGateway().V1().GLBService().GetGlobalLoadBalancerById(opt)
+	opt := v1.NewGetGlobalLoadBalancerByIDRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
+	lb, sdkerr := vngcloud.GLBGateway().V1().GLBService().GetGlobalLoadBalancerByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}

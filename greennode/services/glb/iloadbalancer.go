@@ -27,7 +27,7 @@ type GLBServiceV1 interface {
 	ListGlobalLoadBalancers(opts v1.IListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.Error)
 	CreateGlobalLoadBalancer(opts v1.ICreateGlobalLoadBalancerRequest) (*entity.GlobalLoadBalancer, sdkerror.Error)
 	DeleteGlobalLoadBalancer(opts v1.IDeleteGlobalLoadBalancerRequest) sdkerror.Error
-	GetGlobalLoadBalancerById(opts v1.IGetGlobalLoadBalancerByIdRequest) (*entity.GlobalLoadBalancer, sdkerror.Error)
+	GetGlobalLoadBalancerByID(opts v1.IGetGlobalLoadBalancerByIDRequest) (*entity.GlobalLoadBalancer, sdkerror.Error)
 
 	ListGlobalPackages(opts v1.IListGlobalPackagesRequest) (*entity.ListGlobalPackages, sdkerror.Error)
 	ListGlobalRegions(opts v1.IListGlobalRegionsRequest) (*entity.ListGlobalRegions, sdkerror.Error)

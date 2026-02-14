@@ -2,21 +2,21 @@ package entity
 
 type Volume struct {
 	Name             string
-	Id               string
+	ID               string
 	VolumeTypeID     string
-	ClusterId        *string
-	VmId             string
+	ClusterID        *string
+	VmID             string
 	Size             uint64
-	IopsId           uint64
+	IopsID           uint64
 	Status           string
 	CreatedAt        string
 	UpdatedAt        *string
 	PersistentVolume bool
 	AttachedMachine  []string
-	UnderId          string
+	UnderID          string
 	MigrateState     string
 	MultiAttach      bool
-	ZoneId           string
+	ZoneID           string
 }
 
 type ListVolumes struct {
@@ -27,13 +27,13 @@ func (s *ListVolumes) Len() int {
 	return len(s.Items)
 }
 
-func (s *Volume) AttachedTheInstance(instanceId string) bool {
-	if s.VmId == instanceId {
+func (s *Volume) AttachedTheInstance(instanceID string) bool {
+	if s.VmID == instanceID {
 		return true
 	}
 
-	for _, machineId := range s.AttachedMachine {
-		if machineId == instanceId {
+	for _, machineID := range s.AttachedMachine {
+		if machineID == instanceID {
 			return true
 		}
 	}
@@ -54,7 +54,7 @@ func (s *Volume) IsInUse() bool {
 }
 
 func (s *Volume) CanDelete() bool {
-	if len(s.AttachedMachine) < 1 && s.VmId == "" && s.Status == "AVAILABLE" {
+	if len(s.AttachedMachine) < 1 && s.VmID == "" && s.Status == "AVAILABLE" {
 		return true
 	}
 

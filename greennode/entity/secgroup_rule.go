@@ -1,8 +1,8 @@
 package entity
 
 type SecgroupRule struct {
-	Id             string
-	SecgroupId     string
+	ID             string
+	SecgroupID     string
 	Direction      string
 	EtherType      string
 	Protocol       string

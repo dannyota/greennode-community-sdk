@@ -45,7 +45,7 @@ type LoadBalancerPackageResponse struct {
 	DisplayLbType    string `json:"displayLbType"`
 }
 
-type GetLoadBalancerByIdResponse struct {
+type GetLoadBalancerByIDResponse struct {
 	Data LoadBalancer `json:"data"`
 }
 
@@ -139,7 +139,7 @@ func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *e
 	return result
 }
 
-func (s *GetLoadBalancerByIdResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (s *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	if s == nil {
 		return nil
 	}

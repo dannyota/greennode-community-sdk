@@ -53,18 +53,18 @@ func SdkErrorHandler(sdkErr Error, errResp ErrorResponse, opts ...func(psdkErr E
 		return nil
 	}
 
-	if sdkErr != nil && sdkErr.GetErrorCode() != EcUnknownError {
+	if sdkErr != nil && sdkErr.ErrorCode() != EcUnknownError {
 		return sdkErr
 	}
 
 	// Fill the default error
 	if errResp != nil {
-		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.GetError())
+		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
 	}
 
 	for _, opt := range opts {
 		opt(sdkErr)
-		if sdkErr.GetErrorCode() != EcUnknownError {
+		if sdkErr.ErrorCode() != EcUnknownError {
 			return sdkErr
 		}
 	}
@@ -106,7 +106,7 @@ func WithErrorPurchaseIssue(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPurchaseIssue) {
 			sdkError.WithErrorCode(EcPurchaseIssue).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatPurchase)
 		}
 	}
@@ -122,7 +122,7 @@ func WithErrorTagKeyInvalid(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternTagKeyInvalid) {
 			sdkError.WithErrorCode(EcTagKeyInvalid).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -137,7 +137,7 @@ func WithErrorPagingInvalid(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPagingInvalid) {
 			sdkError.WithErrorCode(EcPagingInvalid).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -181,7 +181,7 @@ func WithErrorPaymentMethodNotAllow(errResp ErrorResponse) func(sdkError Error) 
 		if strings.Contains(errMsg, "ext_pm_payment_method_not_allow") {
 			sdkError.WithErrorCode(EcPaymentMethodNotAllow).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -196,7 +196,7 @@ func WithErrorCreditNotEnough(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(errMsg, "ext_pm_credit_not_enough") {
 			sdkError.WithErrorCode(EcCreditNotEnough).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -211,7 +211,7 @@ func WithErrorProjectConflict(errResp ErrorResponse) func(sdkError Error) {
 		if regexErrorProjectConflict.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcProjectConflict).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

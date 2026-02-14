@@ -14,13 +14,13 @@ func WithErrorAuthenticationFailed(errResp ErrorResponse) func(Error) {
 			return
 		}
 
-		if errResp.GetError() == nil {
+		if errResp.Err() == nil {
 			return
 		}
 
-		if errResp.GetError().Error() == "AUTHENTICATION_FAILED" {
+		if errResp.Err().Error() == "AUTHENTICATION_FAILED" {
 			sdkErr.WithErrorCode(EcAuthenticationFailed).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
 				WithErrorCategories(ErrCatIam)
 		}
@@ -41,13 +41,13 @@ func WithErrorTooManyFailedLogin(errResp ErrorResponse) func(Error) {
 			return
 		}
 
-		if errResp.GetError() == nil {
+		if errResp.Err() == nil {
 			return
 		}
 
-		if errResp.GetError().Error() == "TOO_MANY_FAILED_LOGINS" {
+		if errResp.Err().Error() == "TOO_MANY_FAILED_LOGINS" {
 			sdkErr.WithErrorCode(EcTooManyFailedLogins).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
 				WithErrorCategories(ErrCatIam)
 		}
@@ -60,14 +60,14 @@ func WithErrorUnknownAuthFailure(errResp ErrorResponse) func(Error) {
 			return
 		}
 
-		if errResp.GetError() == nil {
+		if errResp.Err() == nil {
 			return
 		}
 
-		if sdkErr.GetErrorCode() == EcUnknownError {
+		if sdkErr.ErrorCode() == EcUnknownError {
 			sdkErr.WithErrorCode(EcUnknownAuthFailure).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

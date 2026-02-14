@@ -5,9 +5,9 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewListTagsRequest(lbId string) IListTagsRequest {
+func NewListTagsRequest(lbID string) IListTagsRequest {
 	opt := new(ListTagsRequest)
-	opt.LoadBalancerId = lbId
+	opt.LoadBalancerID = lbID
 	return opt
 }
 
@@ -16,20 +16,20 @@ func (s *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
 	return s
 }
 
-func NewCreateTagsRequest(lbId string) ICreateTagsRequest {
+func NewCreateTagsRequest(lbID string) ICreateTagsRequest {
 	opts := new(CreateTagsRequest)
-	opts.LoadBalancerId = lbId
-	opts.ResourceID = lbId
+	opts.LoadBalancerID = lbID
+	opts.ResourceID = lbID
 	opts.ResourceType = "LOAD-BALANCER"
 	opts.TagRequestList = make([]common.Tag, 0)
 
 	return opts
 }
 
-func NewUpdateTagsRequest(lbId string) IUpdateTagsRequest {
+func NewUpdateTagsRequest(lbID string) IUpdateTagsRequest {
 	opts := new(UpdateTagsRequest)
-	opts.LoadBalancerId = lbId
-	opts.ResourceID = lbId
+	opts.LoadBalancerID = lbID
+	opts.ResourceID = lbID
 	opts.ResourceType = "LOAD-BALANCER"
 	opts.TagRequestList = make([]common.Tag, 0)
 

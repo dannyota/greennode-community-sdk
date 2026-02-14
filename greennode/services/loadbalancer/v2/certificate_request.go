@@ -21,25 +21,25 @@ func NewListCertificatesRequest() *ListCertificatesRequest {
 
 // --------------------------------------------------------
 
-var _ IGetCertificateByIdRequest = &GetCertificateByIdRequest{}
+var _ IGetCertificateByIDRequest = &GetCertificateByIDRequest{}
 
-type GetCertificateByIdRequest struct {
+type GetCertificateByIDRequest struct {
 	common.UserAgent
-	CertificateId string
+	CertificateID string
 }
 
-func (r *GetCertificateByIdRequest) GetCertificateId() string {
-	return r.CertificateId
+func (r *GetCertificateByIDRequest) GetCertificateID() string {
+	return r.CertificateID
 }
 
-func (s *GetCertificateByIdRequest) AddUserAgent(agent ...string) IGetCertificateByIdRequest {
+func (s *GetCertificateByIDRequest) AddUserAgent(agent ...string) IGetCertificateByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewGetCertificateByIdRequest(certificateId string) *GetCertificateByIdRequest {
-	return &GetCertificateByIdRequest{
-		CertificateId: certificateId,
+func NewGetCertificateByIDRequest(certificateID string) *GetCertificateByIDRequest {
+	return &GetCertificateByIDRequest{
+		CertificateID: certificateID,
 	}
 }
 
@@ -118,24 +118,24 @@ func (s *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertific
 
 // --------------------------------------------------------
 
-var _ IDeleteCertificateByIdRequest = &DeleteCertificateByIdRequest{}
+var _ IDeleteCertificateByIDRequest = &DeleteCertificateByIDRequest{}
 
-type DeleteCertificateByIdRequest struct {
+type DeleteCertificateByIDRequest struct {
 	common.UserAgent
-	CertificateId string
+	CertificateID string
 }
 
-func (r *DeleteCertificateByIdRequest) GetCertificateId() string {
-	return r.CertificateId
+func (r *DeleteCertificateByIDRequest) GetCertificateID() string {
+	return r.CertificateID
 }
 
-func (s *DeleteCertificateByIdRequest) AddUserAgent(agent ...string) IDeleteCertificateByIdRequest {
+func (s *DeleteCertificateByIDRequest) AddUserAgent(agent ...string) IDeleteCertificateByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewDeleteCertificateByIdRequest(certificateId string) *DeleteCertificateByIdRequest {
-	return &DeleteCertificateByIdRequest{
-		CertificateId: certificateId,
+func NewDeleteCertificateByIDRequest(certificateID string) *DeleteCertificateByIDRequest {
+	return &DeleteCertificateByIDRequest{
+		CertificateID: certificateID,
 	}
 }

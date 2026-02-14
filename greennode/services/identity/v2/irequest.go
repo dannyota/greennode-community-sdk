@@ -1,9 +1,9 @@
 package v2
 
 type IGetAccessTokenRequest interface {
-	WithClientId(clientId string) IGetAccessTokenRequest
+	WithClientID(clientID string) IGetAccessTokenRequest
 	WithClientSecret(clientSecret string) IGetAccessTokenRequest
-	GetClientId() string
+	GetClientID() string
 	GetClientSecret() string
 	ToRequestBody() interface{}
 }

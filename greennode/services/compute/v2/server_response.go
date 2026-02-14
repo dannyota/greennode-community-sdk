@@ -4,7 +4,7 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type (
 	Server struct {
-		BootVolumeId       string             `json:"bootVolumeId"`
+		BootVolumeID       string             `json:"bootVolumeId"`
 		CreatedAt          string             `json:"createdAt"`
 		EncryptionVolume   bool               `json:"encryptionVolume"`
 		Licence            bool               `json:"licence"`
@@ -13,7 +13,7 @@ type (
 		MigrateState       string             `json:"migrateState"`
 		Name               string             `json:"name"`
 		Product            string             `json:"product"`
-		ServerGroupId      string             `json:"serverGroupId"`
+		ServerGroupID      string             `json:"serverGroupId"`
 		ServerGroupName    string             `json:"serverGroupName"`
 		SshKeyName         string             `json:"sshKeyName"`
 		Status             string             `json:"status"`
@@ -23,7 +23,7 @@ type (
 		Image              Image              `json:"image"`
 		Flavor             Flavor             `json:"flavor"`
 		SecGroups          []ServerSecgroup   `json:"secGroups"`
-		ZoneId             string             `json:"zoneId"`
+		ZoneID             string             `json:"zoneId"`
 		ExternalInterfaces []NetworkInterface `json:"externalInterfaces"`
 		InternalInterfaces []NetworkInterface `json:"internalInterfaces"`
 	}
@@ -32,7 +32,7 @@ type (
 		CreatedAt     string `json:"createdAt"`
 		FixedIp       string `json:"fixedIp"`
 		FloatingIp    string `json:"floatingIp,omitempty"`
-		FloatingIpId  string `json:"floatingIpId,omitempty"`
+		FloatingIpID  string `json:"floatingIpId,omitempty"`
 		InterfaceType string `json:"interfaceType"`
 		Mac           string `json:"mac"`
 		NetworkUuid   string `json:"networkUuid"`
@@ -51,19 +51,19 @@ type (
 		BandwidthUnit          string `json:"bandwidthUnit"`
 		Cpu                    int64  `json:"cpu"`
 		CpuPlatformDescription string `json:"cpuPlatformDescription"`
-		FlavorId               string `json:"flavorId"`
+		FlavorID               string `json:"flavorId"`
 		Gpu                    int64  `json:"gpu"`
 		Group                  string `json:"group"`
 		Memory                 int64  `json:"memory"`
 		MetaData               string `json:"metaData"`
 		Name                   string `json:"name"`
 		RemainingVms           int64  `json:"remainingVms"`
-		ZoneId                 string `json:"zoneId"`
+		ZoneID                 string `json:"zoneId"`
 	}
 
 	Image struct {
-		FlavorZoneIds []string     `json:"flavorZoneIds"`
-		Id            string       `json:"id"`
+		FlavorZoneIDs []string     `json:"flavorZoneIds"`
+		ID            string       `json:"id"`
 		ImageType     string       `json:"imageType"`
 		ImageVersion  string       `json:"imageVersion"`
 		Licence       bool         `json:"licence"`
@@ -105,7 +105,7 @@ type (
 		UUID        string `json:"uuid"`
 		Name        string `json:"name"`
 		Description string `json:"description"`
-		PolicyId    string `json:"policyId"`
+		PolicyID    string `json:"policyId"`
 		PolicyName  string `json:"policyName"`
 		Servers     []struct {
 			Name string `json:"name"`
@@ -116,10 +116,10 @@ type (
 	CreateServerGroupResponse struct {
 		Data struct {
 			UUID          string `json:"uuid"`
-			ServerGroupId int    `json:"serverGroupId"`
+			ServerGroupID int    `json:"serverGroupId"`
 			Name          string `json:"name"`
 			Description   string `json:"description"`
-			PolicyId      string `json:"policyId"`
+			PolicyID      string `json:"policyId"`
 			CreatedAt     string `json:"createdAt"`
 		} `json:"data"`
 	}
@@ -127,8 +127,8 @@ type (
 
 func (s Image) toEntityImage() entity.Image {
 	return entity.Image{
-		FlavorZoneIds: s.FlavorZoneIds,
-		Id:            s.Id,
+		FlavorZoneIDs: s.FlavorZoneIDs,
+		ID:            s.ID,
 		ImageType:     s.ImageType,
 		ImageVersion:  s.ImageVersion,
 		Licence:       s.Licence,
@@ -157,7 +157,7 @@ func (s NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
 		CreatedAt:     s.CreatedAt,
 		FixedIp:       s.FixedIp,
 		FloatingIp:    s.FloatingIp,
-		FloatingIpId:  s.FloatingIpId,
+		FloatingIpID:  s.FloatingIpID,
 		InterfaceType: s.InterfaceType,
 		Mac:           s.Mac,
 		NetworkUuid:   s.NetworkUuid,
@@ -185,20 +185,20 @@ func (s Flavor) toEntityFlavor() entity.Flavor {
 		BandwidthUnit:          s.BandwidthUnit,
 		Cpu:                    s.Cpu,
 		CpuPlatformDescription: s.CpuPlatformDescription,
-		FlavorId:               s.FlavorId,
+		FlavorID:               s.FlavorID,
 		Gpu:                    s.Gpu,
 		Group:                  s.Group,
 		Memory:                 s.Memory,
 		MetaData:               s.MetaData,
 		Name:                   s.Name,
 		RemainingVms:           s.RemainingVms,
-		ZoneId:                 s.ZoneId,
+		ZoneID:                 s.ZoneID,
 	}
 }
 
 func (s Server) toEntityServer() *entity.Server {
 	server := new(entity.Server)
-	server.BootVolumeId = s.BootVolumeId
+	server.BootVolumeID = s.BootVolumeID
 	server.CreatedAt = s.CreatedAt
 	server.EncryptionVolume = s.EncryptionVolume
 	server.Licence = s.Licence
@@ -207,7 +207,7 @@ func (s Server) toEntityServer() *entity.Server {
 	server.MigrateState = s.MigrateState
 	server.Name = s.Name
 	server.Product = s.Product
-	server.ServerGroupId = s.ServerGroupId
+	server.ServerGroupID = s.ServerGroupID
 	server.ServerGroupName = s.ServerGroupName
 	server.SshKeyName = s.SshKeyName
 	server.Status = s.Status
@@ -216,7 +216,7 @@ func (s Server) toEntityServer() *entity.Server {
 	server.Uuid = s.Uuid
 	server.Image = s.Image.toEntityImage()
 	server.Flavor = s.Flavor.toEntityFlavor()
-	server.ZoneId = s.ZoneId
+	server.ZoneID = s.ZoneID
 
 	for _, secGroup := range s.SecGroups {
 		server.SecGroups = append(server.SecGroups, secGroup.toEntityServerSecgroup())
@@ -241,19 +241,19 @@ func (s *CreateServerResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
-type GetServerByIdResponse struct {
+type GetServerByIDResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *GetServerByIdResponse) ToEntityServer() *entity.Server {
+func (s *GetServerByIDResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
-type UpdateServerSecgroupsByServerIdResponse struct {
+type UpdateServerSecgroupsByServerIDResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *UpdateServerSecgroupsByServerIdResponse) ToEntityServer() *entity.Server {
+func (s *UpdateServerSecgroupsByServerIDResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
@@ -272,7 +272,7 @@ func (s *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServer
 			UUID:        itemServerGroup.UUID,
 			Name:        itemServerGroup.Name,
 			Description: itemServerGroup.Description,
-			PolicyId:    itemServerGroup.PolicyId,
+			PolicyID:    itemServerGroup.PolicyID,
 			PolicyName:  itemServerGroup.PolicyName,
 		}
 
@@ -298,6 +298,6 @@ func (s *CreateServerGroupResponse) ToEntityServerGroup() *entity.ServerGroup {
 		UUID:        s.Data.UUID,
 		Name:        s.Data.Name,
 		Description: s.Data.Description,
-		PolicyId:    s.Data.PolicyId,
+		PolicyID:    s.Data.PolicyID,
 	}
 }

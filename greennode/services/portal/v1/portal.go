@@ -7,31 +7,31 @@ import (
 )
 
 func (s *PortalServiceV1) GetPortalInfo(opts IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error) {
-	url := getPortalInfoUrl(s.PortalClient, opts)
+	url := getPortalInfoURL(s.PortalClient, opts)
 	resp := new(GetPortalInfoResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("backendProjectId", opts.GetBackEndProjectId())
+			WithKVparameters("backendProjectId", opts.GetBackEndProjectID())
 	}
 
 	return resp.ToEntityPortal(), nil
 }
 
 func (s *PortalServiceV1) ListProjects(opts IListProjectsRequest) (*entity.ListPortals, sdkerror.Error) {
-	url := listProjectsUrl(s.PortalClient)
+	url := listProjectsURL(s.PortalClient)
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)

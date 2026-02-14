@@ -15,27 +15,27 @@ const (
 
 type CreateServerRequest struct {
 	AttachFloating         bool                     `json:"attachFloating,omitempty"`
-	BackupInstancePointId  string                   `json:"backupInstancePointId,omitempty"`
+	BackupInstancePointID  string                   `json:"backupInstancePointId,omitempty"`
 	DataDiskEncryptionType DataDiskEncryptionType   `json:"dataDiskEncryptionType,omitempty"`
 	DataDiskName           string                   `json:"dataDiskName,omitempty"`
 	DataDiskSize           int                      `json:"dataDiskSize,omitempty"`
-	DataDiskTypeId         string                   `json:"dataDiskTypeId,omitempty"`
+	DataDiskTypeID         string                   `json:"dataDiskTypeId,omitempty"`
 	EnableBackup           bool                     `json:"enableBackup,omitempty"`
 	EncryptionVolume       bool                     `json:"encryptionVolume"`
 	ExpirePassword         bool                     `json:"expirePassword,omitempty"`
-	FlavorId               string                   `json:"flavorId"`
-	ImageId                string                   `json:"imageId"`
+	FlavorID               string                   `json:"flavorId"`
+	ImageID                string                   `json:"imageId"`
 	Name                   string                   `json:"name"`
-	NetworkId              string                   `json:"networkId,omitempty"`
-	SubnetId               string                   `json:"subnetId,omitempty"`
+	NetworkID              string                   `json:"networkId,omitempty"`
+	SubnetID               string                   `json:"subnetId,omitempty"`
 	OsLicence              bool                     `json:"osLicence,omitempty"`
 	RestoreBackup          bool                     `json:"restoreBackup,omitempty"`
 	RootDiskEncryptionType DataDiskEncryptionType   `json:"rootDiskEncryptionType,omitempty"`
 	RootDiskSize           int                      `json:"rootDiskSize"`
-	RootDiskTypeId         string                   `json:"rootDiskTypeId"`
+	RootDiskTypeID         string                   `json:"rootDiskTypeId"`
 	SecurityGroup          []string                 `json:"securityGroup,omitempty"`
-	ServerGroupId          string                   `json:"serverGroupId,omitempty"`
-	SshKeyId               string                   `json:"sshKeyId,omitempty"`
+	ServerGroupID          string                   `json:"serverGroupId,omitempty"`
+	SshKeyID               string                   `json:"sshKeyId,omitempty"`
 	UserData               string                   `json:"userData,omitempty"`
 	UserDataBase64Encoded  bool                     `json:"userDataBase64Encoded,omitempty"`
 	UserName               string                   `json:"userName,omitempty"`
@@ -51,9 +51,9 @@ type CreateServerRequest struct {
 }
 
 type ServerNetworkInterface struct {
-	ProjectId      string `json:"projectId"`
-	NetworkId      string `json:"networkId"`
-	SubnetId       string `json:"subnetId"`
+	ProjectID      string `json:"projectId"`
+	NetworkID      string `json:"networkId"`
+	SubnetID       string `json:"subnetId"`
 	AttachFloating bool   `json:"attachFloating"`
 }
 
@@ -78,20 +78,20 @@ func (s *CreateServerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateServerRequest) WithZone(zoneId string) ICreateServerRequest {
-	s.Zone = zoneId
+func (s *CreateServerRequest) WithZone(zoneID string) ICreateServerRequest {
+	s.Zone = zoneID
 	return s
 }
 
-func (s *CreateServerRequest) WithServerNetworkInterface(projectId, networkId, subnetId string, attachFloating bool) ICreateServerRequest {
+func (s *CreateServerRequest) WithServerNetworkInterface(projectID, networkID, subnetID string, attachFloating bool) ICreateServerRequest {
 	s.Networks = append(s.Networks, ServerNetworkInterface{
-		ProjectId:      projectId,
-		NetworkId:      networkId,
-		SubnetId:       subnetId,
+		ProjectID:      projectID,
+		NetworkID:      networkID,
+		SubnetID:       subnetID,
 		AttachFloating: attachFloating,
 	})
 
-	return s.WithNetwork(s.Networks[0].NetworkId, s.Networks[0].SubnetId)
+	return s.WithNetwork(s.Networks[0].NetworkID, s.Networks[0].SubnetID)
 }
 
 func (s *CreateServerRequest) WithRootDiskEncryptionType(dataDisk DataDiskEncryptionType) ICreateServerRequest {
@@ -141,8 +141,8 @@ func (s *CreateServerRequest) WithSecgroups(secgroups ...string) ICreateServerRe
 	return s
 }
 
-func (s *CreateServerRequest) WithServerGroupId(serverGroupId string) ICreateServerRequest {
-	s.ServerGroupId = serverGroupId
+func (s *CreateServerRequest) WithServerGroupID(serverGroupID string) ICreateServerRequest {
+	s.ServerGroupID = serverGroupID
 	return s
 }
 
@@ -161,9 +161,9 @@ func (s *CreateServerRequest) WithProduct(product string) ICreateServerRequest {
 	return s
 }
 
-func (s *CreateServerRequest) WithNetwork(networkId, subnetId string) ICreateServerRequest {
-	s.NetworkId = networkId
-	s.SubnetId = subnetId
+func (s *CreateServerRequest) WithNetwork(networkID, subnetID string) ICreateServerRequest {
+	s.NetworkID = networkID
+	s.SubnetID = subnetID
 
 	return s
 }
@@ -176,27 +176,27 @@ func (s *CreateServerRequest) AddUserAgent(agent ...string) ICreateServerRequest
 func (s *CreateServerRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"attachFloating":         s.AttachFloating,
-		"backupInstancePointId":  s.BackupInstancePointId,
+		"backupInstancePointId":  s.BackupInstancePointID,
 		"dataDiskEncryptionType": s.DataDiskEncryptionType,
 		"dataDiskName":           s.DataDiskName,
 		"dataDiskSize":           s.DataDiskSize,
-		"dataDiskTypeId":         s.DataDiskTypeId,
+		"dataDiskTypeId":         s.DataDiskTypeID,
 		"enableBackup":           s.EnableBackup,
 		"encryptionVolume":       s.EncryptionVolume,
 		"expirePassword":         s.ExpirePassword,
-		"flavorId":               s.FlavorId,
-		"imageId":                s.ImageId,
+		"flavorId":               s.FlavorID,
+		"imageId":                s.ImageID,
 		"name":                   s.Name,
-		"networkId":              s.NetworkId,
-		"subnetId":               s.SubnetId,
+		"networkId":              s.NetworkID,
+		"subnetId":               s.SubnetID,
 		"osLicence":              s.OsLicence,
 		"restoreBackup":          s.RestoreBackup,
 		"rootDiskEncryptionType": s.RootDiskEncryptionType,
 		"rootDiskSize":           s.RootDiskSize,
-		"rootDiskTypeId":         s.RootDiskTypeId,
+		"rootDiskTypeId":         s.RootDiskTypeID,
 		"securityGroup":          s.SecurityGroup,
-		"serverGroupId":          s.ServerGroupId,
-		"sshKeyId":               s.SshKeyId,
+		"serverGroupId":          s.ServerGroupID,
+		"sshKeyId":               s.SshKeyID,
 		"userName":               s.UserName,
 		"isPoc":                  s.IsPoc,
 		"product":                s.Product,
@@ -207,64 +207,64 @@ func (s *CreateServerRequest) ToMap() map[string]interface{} {
 	}
 }
 
-type GetServerByIdRequest struct {
+type GetServerByIDRequest struct {
 	common.ServerCommon
 	common.UserAgent
 }
 
-func (s *GetServerByIdRequest) AddUserAgent(agent ...string) IGetServerByIdRequest {
+func (s *GetServerByIDRequest) AddUserAgent(agent ...string) IGetServerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *GetServerByIdRequest) ToMap() map[string]interface{} {
+func (s *GetServerByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"serverId": s.ServerId,
+		"serverId": s.ServerID,
 	}
 }
 
-type DeleteServerByIdRequest struct {
+type DeleteServerByIDRequest struct {
 	DeleteAllVolume bool `json:"deleteAllVolume"`
 	common.ServerCommon
 	common.UserAgent
 }
 
-func (s *DeleteServerByIdRequest) WithDeleteAllVolume(ok bool) IDeleteServerByIdRequest {
+func (s *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) IDeleteServerByIDRequest {
 	s.DeleteAllVolume = ok
 	return s
 }
 
-func (s *DeleteServerByIdRequest) AddUserAgent(agent ...string) IDeleteServerByIdRequest {
+func (s *DeleteServerByIDRequest) AddUserAgent(agent ...string) IDeleteServerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *DeleteServerByIdRequest) ToRequestBody() interface{} {
+func (s *DeleteServerByIDRequest) ToRequestBody() interface{} {
 	return s
 }
 
-type UpdateServerSecgroupsByServerIdRequest struct {
+type UpdateServerSecgroupsByServerIDRequest struct {
 	Secgroups []string `json:"securityGroup"`
 
 	common.ServerCommon
 	common.UserAgent
 }
 
-func (s *UpdateServerSecgroupsByServerIdRequest) AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIdRequest {
+func (s *UpdateServerSecgroupsByServerIDRequest) AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *UpdateServerSecgroupsByServerIdRequest) ToRequestBody() interface{} {
+func (s *UpdateServerSecgroupsByServerIDRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *UpdateServerSecgroupsByServerIdRequest) GetListSecgroupsIds() []string {
+func (s *UpdateServerSecgroupsByServerIDRequest) GetListSecgroupsIDs() []string {
 	return s.Secgroups
 }
 
 type AttachFloatingIpRequest struct {
-	NetworkInterfaceId string `json:"networkInterfaceId"`
+	NetworkInterfaceID string `json:"networkInterfaceId"`
 
 	common.InternalNetworkInterfaceCommon
 	common.ServerCommon
@@ -282,14 +282,14 @@ func (s *AttachFloatingIpRequest) AddUserAgent(agent ...string) IAttachFloatingI
 
 func (s *AttachFloatingIpRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"serverId":                   s.ServerId,
-		"internalNetworkInterfaceId": s.InternalNetworkInterfaceId,
-		"networkId":                  s.NetworkInterfaceId,
+		"serverId":                   s.ServerID,
+		"internalNetworkInterfaceId": s.InternalNetworkInterfaceID,
+		"networkId":                  s.NetworkInterfaceID,
 	}
 }
 
 type DetachFloatingIpRequest struct {
-	NetworkInterfaceId string `json:"networkInterfaceId"`
+	NetworkInterfaceID string `json:"networkInterfaceId"`
 
 	common.ServerCommon
 	common.WanCommon
@@ -308,10 +308,10 @@ func (s *DetachFloatingIpRequest) AddUserAgent(agent ...string) IDetachFloatingI
 
 func (s *DetachFloatingIpRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"serverId":                   s.ServerId,
-		"internalNetworkInterfaceId": s.InternalNetworkInterfaceId,
-		"networkId":                  s.NetworkInterfaceId,
-		"wanId":                      s.WanId,
+		"serverId":                   s.ServerID,
+		"internalNetworkInterfaceId": s.InternalNetworkInterfaceID,
+		"networkId":                  s.NetworkInterfaceID,
+		"wanId":                      s.WanID,
 	}
 }
 
@@ -324,19 +324,19 @@ func (s *ListServerGroupPoliciesRequest) AddUserAgent(agent ...string) IListServ
 	return s
 }
 
-type DeleteServerGroupByIdRequest struct {
+type DeleteServerGroupByIDRequest struct {
 	common.ServerGroupCommon
 	common.UserAgent
 }
 
-func (s *DeleteServerGroupByIdRequest) AddUserAgent(agent ...string) IDeleteServerGroupByIdRequest {
+func (s *DeleteServerGroupByIDRequest) AddUserAgent(agent ...string) IDeleteServerGroupByIDRequest {
 	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
-func (s *DeleteServerGroupByIdRequest) ToMap() map[string]interface{} {
+func (s *DeleteServerGroupByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"serverGroupId": s.ServerGroupId,
+		"serverGroupId": s.ServerGroupID,
 	}
 }
 
@@ -385,7 +385,7 @@ func (s *ListServerGroupsRequest) AddUserAgent(agent ...string) IListServerGroup
 type CreateServerGroupRequest struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
-	PolicyId    string `json:"policyId,omitempty"`
+	PolicyID    string `json:"policyId,omitempty"`
 
 	common.UserAgent
 }
@@ -398,7 +398,7 @@ func (s *CreateServerGroupRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"name":        s.Name,
 		"description": s.Description,
-		"policyId":    s.PolicyId,
+		"policyId":    s.PolicyID,
 	}
 }
 

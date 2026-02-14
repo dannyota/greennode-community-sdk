@@ -1,8 +1,8 @@
 package v2
 
-func NewResizeLoadBalancerByIdRequest(lbId, packageId string) IResizeLoadBalancerByIdRequest {
-	opts := new(ResizeLoadBalancerByIdRequest)
-	opts.LoadBalancerId = lbId
-	opts.PackageId = packageId
+func NewResizeLoadBalancerByIDRequest(lbID, packageID string) IResizeLoadBalancerByIDRequest {
+	opts := new(ResizeLoadBalancerByIDRequest)
+	opts.LoadBalancerID = lbID
+	opts.PackageID = packageID
 	return opts
 }

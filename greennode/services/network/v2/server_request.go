@@ -2,18 +2,18 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewListAllServersBySecgroupIdRequest(secgroupId string) IListAllServersBySecgroupIdRequest {
-	opt := new(ListAllServersBySecgroupIdRequest)
-	opt.SecgroupId = secgroupId
+func NewListAllServersBySecgroupIDRequest(secgroupID string) IListAllServersBySecgroupIDRequest {
+	opt := new(ListAllServersBySecgroupIDRequest)
+	opt.SecgroupID = secgroupID
 	return opt
 }
 
-type ListAllServersBySecgroupIdRequest struct {
+type ListAllServersBySecgroupIDRequest struct {
 	common.SecgroupCommon
 	common.UserAgent
 }
 
-func (s *ListAllServersBySecgroupIdRequest) AddUserAgent(agent ...string) IListAllServersBySecgroupIdRequest {
+func (s *ListAllServersBySecgroupIDRequest) AddUserAgent(agent ...string) IListAllServersBySecgroupIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

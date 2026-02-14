@@ -7,14 +7,14 @@ import (
 )
 
 func (s *LoadBalancerServiceV2) ListTags(opts IListTagsRequest) (*entity.ListTags, sdkerror.Error) {
-	url := listTagsUrl(s.VServerClient, opts)
+	url := listTagsURL(s.VServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
@@ -24,13 +24,13 @@ func (s *LoadBalancerServiceV2) ListTags(opts IListTagsRequest) (*entity.ListTag
 }
 
 func (s *LoadBalancerServiceV2) CreateTags(opts ICreateTagsRequest) sdkerror.Error {
-	url := createTagsUrl(s.VServerClient, opts)
+	url := createTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp)
@@ -40,7 +40,7 @@ func (s *LoadBalancerServiceV2) CreateTags(opts ICreateTagsRequest) sdkerror.Err
 }
 
 func (s *LoadBalancerServiceV2) UpdateTags(opts IUpdateTagsRequest) sdkerror.Error {
-	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(opts.GetLoadBalancerId()))
+	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(opts.GetLoadBalancerID()))
 	if sdkErr != nil {
 		return sdkErr
 	}
@@ -53,13 +53,13 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts IUpdateTagsRequest) sdkerror.Err
 		}
 	}
 
-	url := updateTagsUrl(s.VServerClient, opts)
+	url := updateTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody(tags)).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody(tags)).
+		WithJSONError(errResp)
 
 	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,

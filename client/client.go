@@ -17,10 +17,10 @@ var (
 type (
 	client struct {
 		context    context.Context
-		projectId  string
-		zoneId     string
-		userId     string
-		httpClient svcclient.HttpClient
+		projectID  string
+		zoneID     string
+		userID     string
+		httpClient svcclient.HTTPClient
 		userAgent  string
 		authOpt    svcclient.AuthOpts
 
@@ -45,7 +45,7 @@ func NewSdkConfigure() SdkConfigure {
 	return &sdkConfigure{}
 }
 
-func (s *client) WithHttpClient(client svcclient.HttpClient) Client {
+func (s *client) WithHTTPClient(client svcclient.HTTPClient) Client {
 	s.httpClient = client
 	return s
 }
@@ -57,7 +57,7 @@ func (s *client) WithContext(ctx context.Context) Client {
 
 func (s *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfigure) Client {
 	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHTTPClient(s.context)
 	}
 
 	s.authOpt = authOpts // Assign the auth option to the client
@@ -76,7 +76,7 @@ func (s *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfi
 
 func (s *client) WithRetryCount(retry int) Client {
 	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHTTPClient(s.context)
 	}
 
 	s.httpClient.WithRetryCount(retry)
@@ -85,7 +85,7 @@ func (s *client) WithRetryCount(retry int) Client {
 
 func (s *client) WithKvDefaultHeaders(args ...string) Client {
 	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHTTPClient(s.context)
 	}
 
 	s.httpClient.WithKvDefaultHeaders(args...)
@@ -94,29 +94,29 @@ func (s *client) WithKvDefaultHeaders(args ...string) Client {
 
 func (s *client) WithSleep(sleep time.Duration) Client {
 	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHTTPClient(s.context)
 	}
 
 	s.httpClient.WithSleep(sleep)
 	return s
 }
 
-func (s *client) WithProjectId(projectId string) Client {
-	s.projectId = projectId
+func (s *client) WithProjectID(projectID string) Client {
+	s.projectID = projectID
 	if s.httpClient == nil {
 		return s
 	}
 
 	// So it needs to reconfigure the gateway project id
 	if s.vserverGateway != nil {
-		s.vserverGateway = gateway.NewVServerGateway(s.vserverGateway.GetEndpoint(), s.projectId, s.httpClient)
+		s.vserverGateway = gateway.NewVServerGateway(s.vserverGateway.GetEndpoint(), s.projectID, s.httpClient)
 	}
 
 	if s.vlbGateway != nil {
 		s.vlbGateway = gateway.NewVLBGateway(
 			s.vlbGateway.GetEndpoint(),
 			s.vserverGateway.GetEndpoint(),
-			s.projectId,
+			s.projectID,
 			s.httpClient,
 		)
 	}
@@ -124,28 +124,28 @@ func (s *client) WithProjectId(projectId string) Client {
 	if s.vnetworkGateway != nil {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			s.vnetworkGateway.GetEndpoint(),
-			s.zoneId,
-			s.projectId,
-			s.userId,
+			s.zoneID,
+			s.projectID,
+			s.userID,
 			s.httpClient,
 		)
 	}
 
 	if s.vdnsGateway != nil {
-		s.vdnsGateway = gateway.NewVDnsGateway(s.vdnsGateway.GetEndpoint(), s.projectId, s.httpClient)
+		s.vdnsGateway = gateway.NewVDnsGateway(s.vdnsGateway.GetEndpoint(), s.projectID, s.httpClient)
 	}
 
 	return s
 }
 
-func (s *client) WithUserId(userId string) Client {
-	s.userId = userId
+func (s *client) WithUserID(userID string) Client {
+	s.userID = userID
 	if s.vnetworkGateway != nil {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			s.vnetworkGateway.GetEndpoint(),
-			s.zoneId,
-			s.projectId,
-			s.userId,
+			s.zoneID,
+			s.projectID,
+			s.userID,
 			s.httpClient,
 		)
 	}
@@ -154,53 +154,53 @@ func (s *client) WithUserId(userId string) Client {
 }
 
 func (s *client) Configure(sdkCfg SdkConfigure) Client {
-	s.projectId = sdkCfg.GetProjectId()
-	s.userId = sdkCfg.GetUserId()
+	s.projectID = sdkCfg.GetProjectID()
+	s.userID = sdkCfg.GetUserID()
 	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHTTPClient(s.context)
 	}
 
-	if s.iamGateway == nil && sdkCfg.GetIamEndpoint() != "" {
-		s.iamGateway = gateway.NewIamGateway(sdkCfg.GetIamEndpoint(), s.projectId, s.httpClient)
+	if s.iamGateway == nil && sdkCfg.IamEndpoint() != "" {
+		s.iamGateway = gateway.NewIamGateway(sdkCfg.IamEndpoint(), s.projectID, s.httpClient)
 	}
 
-	if s.vserverGateway == nil && sdkCfg.GetVServerEndpoint() != "" {
+	if s.vserverGateway == nil && sdkCfg.VServerEndpoint() != "" {
 		s.vserverGateway = gateway.NewVServerGateway(
-			sdkCfg.GetVServerEndpoint(),
-			s.projectId,
+			sdkCfg.VServerEndpoint(),
+			s.projectID,
 			s.httpClient,
 		)
 	}
 
-	if s.vlbGateway == nil && sdkCfg.GetVLBEndpoint() != "" && sdkCfg.GetVServerEndpoint() != "" {
+	if s.vlbGateway == nil && sdkCfg.VLBEndpoint() != "" && sdkCfg.VServerEndpoint() != "" {
 		s.vlbGateway = gateway.NewVLBGateway(
-			sdkCfg.GetVLBEndpoint(),
-			sdkCfg.GetVServerEndpoint(),
-			s.projectId,
+			sdkCfg.VLBEndpoint(),
+			sdkCfg.VServerEndpoint(),
+			s.projectID,
 			s.httpClient,
 		)
 	}
 
-	if s.vnetworkGateway == nil && sdkCfg.GetVNetworkEndpoint() != "" {
+	if s.vnetworkGateway == nil && sdkCfg.VNetworkEndpoint() != "" {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
-			sdkCfg.GetVNetworkEndpoint(),
-			sdkCfg.GetZoneId(),
-			s.projectId,
-			s.userId,
+			sdkCfg.VNetworkEndpoint(),
+			sdkCfg.GetZoneID(),
+			s.projectID,
+			s.userID,
 			s.httpClient,
 		)
 	}
 
-	if s.glbGateway == nil && sdkCfg.GetGLBEndpoint() != "" {
-		s.glbGateway = gateway.NewGLBGateway(sdkCfg.GetGLBEndpoint(), s.httpClient)
+	if s.glbGateway == nil && sdkCfg.GLBEndpoint() != "" {
+		s.glbGateway = gateway.NewGLBGateway(sdkCfg.GLBEndpoint(), s.httpClient)
 	}
 
-	if s.vdnsGateway == nil && sdkCfg.GetVDnsEndpoint() != "" {
-		s.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.GetVDnsEndpoint(), s.projectId, s.httpClient)
+	if s.vdnsGateway == nil && sdkCfg.VDnsEndpoint() != "" {
+		s.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.VDnsEndpoint(), s.projectID, s.httpClient)
 	}
 
 	s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(sdkCfg))
-	s.userAgent = sdkCfg.GetUserAgent()
+	s.userAgent = sdkCfg.UserAgent()
 
 	return s
 }
@@ -236,7 +236,7 @@ func (s *client) VDnsGateway() gateway.VDnsGateway {
 func (s *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
 	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
 		token, err := s.iamGateway.V2().IdentityService().GetAccessToken(
-			identityv2.NewGetAccessTokenRequest(authConfig.GetClientId(), authConfig.GetClientSecret()))
+			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))
 		if err != nil {
 			return nil, err
 		}
@@ -247,6 +247,6 @@ func (s *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svc
 	return authFunc
 }
 
-func (s *client) GetUserAgent() string {
+func (s *client) UserAgent() string {
 	return s.userAgent
 }

@@ -6,14 +6,14 @@ type NetworkServiceV1 struct {
 	VNetworkClient client.ServiceClient
 }
 
-func (s *NetworkServiceV1) getProjectId() string {
-	return s.VNetworkClient.GetProjectId()
+func (s *NetworkServiceV1) getProjectID() string {
+	return s.VNetworkClient.GetProjectID()
 }
 
 type NetworkServiceInternalV1 struct {
 	VNetworkClient client.ServiceClient
 }
 
-func (s *NetworkServiceInternalV1) getProjectId() string {
-	return s.VNetworkClient.GetProjectId()
+func (s *NetworkServiceInternalV1) getProjectID() string {
+	return s.VNetworkClient.GetProjectID()
 }

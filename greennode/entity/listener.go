@@ -12,7 +12,7 @@ type Listener struct {
 	Protocol                        string
 	ProtocolPort                    int
 	ConnectionLimit                 int
-	DefaultPoolId                   string
+	DefaultPoolID                   string
 	DefaultPoolName                 string
 	TimeoutClient                   int
 	TimeoutMember                   int
@@ -44,12 +44,12 @@ func (s *ListListeners) Empty() bool {
 	return s.Len() < 1
 }
 
-func (s *Listener) GetId() string {
+func (s *Listener) GetID() string {
 	return s.UUID
 }
 
-func (s *Listener) GetDefaultPoolId() string {
-	return s.DefaultPoolId
+func (s *Listener) GetDefaultPoolID() string {
+	return s.DefaultPoolID
 }
 
 func (s *ListListeners) At(index int) *Listener {

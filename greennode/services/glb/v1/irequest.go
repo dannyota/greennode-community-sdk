@@ -1,8 +1,8 @@
 package v1
 
 type IListGlobalPoolsRequest interface {
-	WithLoadBalancerId(lbId string) IListGlobalPoolsRequest
-	GetLoadBalancerId() string
+	WithLoadBalancerID(lbID string) IListGlobalPoolsRequest
+	GetLoadBalancerID() string
 
 	AddUserAgent(agent ...string) IListGlobalPoolsRequest
 	ParseUserAgent() string
@@ -18,8 +18,8 @@ type ICreateGlobalPoolRequest interface {
 	WithHealthMonitor(monitor IGlobalHealthMonitorRequest) ICreateGlobalPoolRequest
 	WithMembers(members ...ICreateGlobalPoolMemberRequest) ICreateGlobalPoolRequest
 
-	WithLoadBalancerId(lbId string) ICreateGlobalPoolRequest
-	GetLoadBalancerId() string // to use in request url
+	WithLoadBalancerID(lbID string) ICreateGlobalPoolRequest
+	GetLoadBalancerID() string // to use in request url
 
 	AddUserAgent(agent ...string) ICreateGlobalPoolRequest
 	ParseUserAgent() string
@@ -36,7 +36,7 @@ type IGlobalHealthMonitorRequest interface {
 
 	// http, https
 	WithHealthCheckMethod(method *GlobalPoolHealthCheckMethod) IGlobalHealthMonitorRequest
-	WithHttpVersion(version *GlobalPoolHealthCheckHttpVersion) IGlobalHealthMonitorRequest
+	WithHTTPVersion(version *GlobalPoolHealthCheckHTTPVersion) IGlobalHealthMonitorRequest
 	WithPath(path *string) IGlobalHealthMonitorRequest
 	WithSuccessCode(code *string) IGlobalHealthMonitorRequest
 	WithDomainName(domain *string) IGlobalHealthMonitorRequest
@@ -55,10 +55,10 @@ type ICreateGlobalPoolMemberRequest interface {
 	WithMembers(members ...IGlobalMemberRequest) ICreateGlobalPoolMemberRequest
 	WithType(typeVal GlobalPoolMemberType) ICreateGlobalPoolMemberRequest
 
-	WithLoadBalancerId(lbId string) ICreateGlobalPoolMemberRequest
-	WithPoolId(poolId string) ICreateGlobalPoolMemberRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string         // to use in request url
+	WithLoadBalancerID(lbID string) ICreateGlobalPoolMemberRequest
+	WithPoolID(poolID string) ICreateGlobalPoolMemberRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string         // to use in request url
 
 	AddUserAgent(agent ...string) ICreateGlobalPoolMemberRequest
 	ParseUserAgent() string
@@ -88,10 +88,10 @@ type IUpdateGlobalPoolRequest interface {
 	WithAlgorithm(algorithm GlobalPoolAlgorithm) IUpdateGlobalPoolRequest
 	WithHealthMonitor(monitor IGlobalHealthMonitorRequest) IUpdateGlobalPoolRequest
 
-	WithLoadBalancerId(lbId string) IUpdateGlobalPoolRequest
-	WithPoolId(poolId string) IUpdateGlobalPoolRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
+	WithLoadBalancerID(lbID string) IUpdateGlobalPoolRequest
+	WithPoolID(poolID string) IUpdateGlobalPoolRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
 
 	AddUserAgent(agent ...string) IUpdateGlobalPoolRequest
 	ParseUserAgent() string
@@ -102,10 +102,10 @@ type IUpdateGlobalPoolRequest interface {
 // --------------------------------------------------------
 
 type IDeleteGlobalPoolRequest interface {
-	WithLoadBalancerId(lbId string) IDeleteGlobalPoolRequest
-	WithPoolId(poolId string) IDeleteGlobalPoolRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
+	WithLoadBalancerID(lbID string) IDeleteGlobalPoolRequest
+	WithPoolID(poolID string) IDeleteGlobalPoolRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
 
 	AddUserAgent(agent ...string) IDeleteGlobalPoolRequest
 	ParseUserAgent() string
@@ -114,10 +114,10 @@ type IDeleteGlobalPoolRequest interface {
 // --------------------------------------------------------
 
 type IListGlobalPoolMembersRequest interface {
-	WithLoadBalancerId(lbId string) IListGlobalPoolMembersRequest
-	WithPoolId(poolId string) IListGlobalPoolMembersRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
+	WithLoadBalancerID(lbID string) IListGlobalPoolMembersRequest
+	WithPoolID(poolID string) IListGlobalPoolMembersRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
 
 	AddUserAgent(agent ...string) IListGlobalPoolMembersRequest
 	ParseUserAgent() string
@@ -126,12 +126,12 @@ type IListGlobalPoolMembersRequest interface {
 // --------------------------------------------------------
 
 type IGetGlobalPoolMemberRequest interface {
-	WithLoadBalancerId(lbId string) IGetGlobalPoolMemberRequest
-	WithPoolId(poolId string) IGetGlobalPoolMemberRequest
-	WithPoolMemberId(poolMemberId string) IGetGlobalPoolMemberRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
-	GetPoolMemberId() string
+	WithLoadBalancerID(lbID string) IGetGlobalPoolMemberRequest
+	WithPoolID(poolID string) IGetGlobalPoolMemberRequest
+	WithPoolMemberID(poolMemberID string) IGetGlobalPoolMemberRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
+	GetPoolMemberID() string
 
 	AddUserAgent(agent ...string) IGetGlobalPoolMemberRequest
 	ParseUserAgent() string
@@ -140,12 +140,12 @@ type IGetGlobalPoolMemberRequest interface {
 // --------------------------------------------------------
 
 type IDeleteGlobalPoolMemberRequest interface {
-	WithLoadBalancerId(lbId string) IDeleteGlobalPoolMemberRequest
-	WithPoolId(poolId string) IDeleteGlobalPoolMemberRequest
-	WithPoolMemberId(poolMemberId string) IDeleteGlobalPoolMemberRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
-	GetPoolMemberId() string
+	WithLoadBalancerID(lbID string) IDeleteGlobalPoolMemberRequest
+	WithPoolID(poolID string) IDeleteGlobalPoolMemberRequest
+	WithPoolMemberID(poolMemberID string) IDeleteGlobalPoolMemberRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
+	GetPoolMemberID() string
 
 	AddUserAgent(agent ...string) IDeleteGlobalPoolMemberRequest
 	ParseUserAgent() string
@@ -156,10 +156,10 @@ type IDeleteGlobalPoolMemberRequest interface {
 type IPatchGlobalPoolMembersRequest interface {
 	WithBulkAction(action ...IBulkActionRequest) IPatchGlobalPoolMembersRequest
 
-	WithLoadBalancerId(lbId string) IPatchGlobalPoolMembersRequest
-	WithPoolId(poolId string) IPatchGlobalPoolMembersRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
+	WithLoadBalancerID(lbID string) IPatchGlobalPoolMembersRequest
+	WithPoolID(poolID string) IPatchGlobalPoolMembersRequest
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
 
 	AddUserAgent(agent ...string) IPatchGlobalPoolMembersRequest
 	ParseUserAgent() string
@@ -175,8 +175,8 @@ type IBulkActionRequest interface {
 // --------------------------------------------------------
 
 type IListGlobalListenersRequest interface {
-	WithLoadBalancerId(lbId string) IListGlobalListenersRequest
-	GetLoadBalancerId() string // to use in request url
+	WithLoadBalancerID(lbID string) IListGlobalListenersRequest
+	GetLoadBalancerID() string // to use in request url
 
 	AddUserAgent(agent ...string) IListGlobalListenersRequest
 	ParseUserAgent() string
@@ -185,10 +185,10 @@ type IListGlobalListenersRequest interface {
 // --------------------------------------------------------
 
 type IGetGlobalListenerRequest interface {
-	WithLoadBalancerId(lbId string) IGetGlobalListenerRequest
-	WithListenerId(listenerId string) IGetGlobalListenerRequest
-	GetLoadBalancerId() string // to use in request url
-	GetListenerId() string
+	WithLoadBalancerID(lbID string) IGetGlobalListenerRequest
+	WithListenerID(listenerID string) IGetGlobalListenerRequest
+	GetLoadBalancerID() string // to use in request url
+	GetListenerID() string
 
 	AddUserAgent(agent ...string) IGetGlobalListenerRequest
 	ParseUserAgent() string
@@ -206,10 +206,10 @@ type ICreateGlobalListenerRequest interface {
 	WithTimeoutClient(toc int) ICreateGlobalListenerRequest
 	WithTimeoutConnection(toc int) ICreateGlobalListenerRequest
 	WithTimeoutMember(tom int) ICreateGlobalListenerRequest
-	WithGlobalPoolId(poolId string) ICreateGlobalListenerRequest
+	WithGlobalPoolID(poolID string) ICreateGlobalListenerRequest
 
-	WithLoadBalancerId(lbid string) ICreateGlobalListenerRequest
-	GetLoadBalancerId() string
+	WithLoadBalancerID(lbid string) ICreateGlobalListenerRequest
+	GetLoadBalancerID() string
 	// AddCidrs(pcidrs ...string) ICreateGlobalListenerRequest
 
 	AddUserAgent(agent ...string) ICreateGlobalListenerRequest
@@ -226,12 +226,12 @@ type IUpdateGlobalListenerRequest interface {
 	WithTimeoutMember(tom int) IUpdateGlobalListenerRequest
 	WithTimeoutConnection(toc int) IUpdateGlobalListenerRequest
 	WithHeaders(headers ...string) IUpdateGlobalListenerRequest
-	WithGlobalPoolId(poolId string) IUpdateGlobalListenerRequest
+	WithGlobalPoolID(poolID string) IUpdateGlobalListenerRequest
 
-	WithLoadBalancerId(lbId string) IUpdateGlobalListenerRequest
-	WithListenerId(listenerId string) IUpdateGlobalListenerRequest
-	GetLoadBalancerId() string // to use in request url
-	GetListenerId() string
+	WithLoadBalancerID(lbID string) IUpdateGlobalListenerRequest
+	WithListenerID(listenerID string) IUpdateGlobalListenerRequest
+	GetLoadBalancerID() string // to use in request url
+	GetListenerID() string
 
 	AddUserAgent(agent ...string) IUpdateGlobalListenerRequest
 	ParseUserAgent() string
@@ -242,10 +242,10 @@ type IUpdateGlobalListenerRequest interface {
 // --------------------------------------------------------
 
 type IDeleteGlobalListenerRequest interface {
-	WithLoadBalancerId(lbId string) IDeleteGlobalListenerRequest
-	WithListenerId(listenerId string) IDeleteGlobalListenerRequest
-	GetLoadBalancerId() string // to use in request url
-	GetListenerId() string
+	WithLoadBalancerID(lbID string) IDeleteGlobalListenerRequest
+	WithListenerID(listenerID string) IDeleteGlobalListenerRequest
+	GetLoadBalancerID() string // to use in request url
+	GetListenerID() string
 
 	AddUserAgent(agent ...string) IDeleteGlobalListenerRequest
 	ParseUserAgent() string
@@ -268,11 +268,11 @@ type IListGlobalRegionsRequest interface {
 // --------------------------------------------------------
 
 type IGetGlobalLoadBalancerUsageHistoriesRequest interface {
-	WithLoadBalancerId(lbId string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest
 	WithFrom(from string) IGetGlobalLoadBalancerUsageHistoriesRequest
 	WithTo(to string) IGetGlobalLoadBalancerUsageHistoriesRequest
 	WithType(typeVal string) IGetGlobalLoadBalancerUsageHistoriesRequest
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 
 	AddUserAgent(agent ...string) IGetGlobalLoadBalancerUsageHistoriesRequest
 	ParseUserAgent() string
@@ -300,7 +300,7 @@ type ICreateGlobalLoadBalancerRequest interface {
 	WithType(typeVal GlobalLoadBalancerType) ICreateGlobalLoadBalancerRequest
 	WithGlobalListener(listener ICreateGlobalListenerRequest) ICreateGlobalLoadBalancerRequest
 	WithGlobalPool(pool ICreateGlobalPoolRequest) ICreateGlobalLoadBalancerRequest
-	WithPackage(packageId string) ICreateGlobalLoadBalancerRequest
+	WithPackage(packageID string) ICreateGlobalLoadBalancerRequest
 	WithPaymentFlow(paymentFlow GlobalLoadBalancerPaymentFlow) ICreateGlobalLoadBalancerRequest
 
 	// WithTags(ptags ...string) ICreateGlobalLoadBalancerRequest
@@ -319,8 +319,8 @@ type ICreateGlobalLoadBalancerRequest interface {
 // --------------------------------------------------------
 
 type IDeleteGlobalLoadBalancerRequest interface {
-	WithLoadBalancerId(lbId string) IDeleteGlobalLoadBalancerRequest
-	GetLoadBalancerId() string // to use in request url
+	WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest
+	GetLoadBalancerID() string // to use in request url
 
 	AddUserAgent(agent ...string) IDeleteGlobalLoadBalancerRequest
 	ParseUserAgent() string
@@ -328,10 +328,10 @@ type IDeleteGlobalLoadBalancerRequest interface {
 
 // --------------------------------------------------------
 
-type IGetGlobalLoadBalancerByIdRequest interface {
-	WithLoadBalancerId(lbId string) IGetGlobalLoadBalancerByIdRequest
-	GetLoadBalancerId() string // to use in request url
+type IGetGlobalLoadBalancerByIDRequest interface {
+	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest
+	GetLoadBalancerID() string // to use in request url
 
-	AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIdRequest
+	AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIDRequest
 	ParseUserAgent() string
 }

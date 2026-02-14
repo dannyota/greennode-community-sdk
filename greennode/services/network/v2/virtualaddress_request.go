@@ -17,10 +17,10 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	// Contains the required information to create a virtual address cross project.
 	CrossProjectRequest struct {
 		// The project ID whose virtual address will be created.
-		ProjectId string `json:"projectId"` // required
+		ProjectID string `json:"projectId"` // required
 
 		// The subnet ID where the virtual address will be created.
-		SubnetId string `json:"subnetId"` // required
+		SubnetID string `json:"subnetId"` // required
 
 		// The IP address of the virtual address.
 		IpAddress string `json:"ipAddress"`
@@ -39,8 +39,8 @@ func (s *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]interface{}
 		"name":        s.Name,
 		"description": s.Description,
 		"crossProjectRequest": map[string]interface{}{
-			"projectId": s.CrossProjectRequest.ProjectId,
-			"subnetId":  s.CrossProjectRequest.SubnetId,
+			"projectId": s.CrossProjectRequest.ProjectID,
+			"subnetId":  s.CrossProjectRequest.SubnetID,
 			"ipAddress": s.CrossProjectRequest.IpAddress,
 		},
 	}
@@ -57,54 +57,54 @@ func (s *CreateVirtualAddressCrossProjectRequest) WithDescription(description st
 }
 
 // API Delete virtual address by ID
-type DeleteVirtualAddressByIdRequest struct {
+type DeleteVirtualAddressByIDRequest struct {
 	common.VirtualAddressCommon
 	common.UserAgent
 }
 
-func (s *DeleteVirtualAddressByIdRequest) AddUserAgent(agent ...string) IDeleteVirtualAddressByIdRequest {
+func (s *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) IDeleteVirtualAddressByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *DeleteVirtualAddressByIdRequest) ToMap() map[string]interface{} {
+func (s *DeleteVirtualAddressByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"virtualAddressId": s.VirtualAddressId,
+		"virtualAddressId": s.VirtualAddressID,
 	}
 }
 
 // Api Get virtual address by ID
 
-type GetVirtualAddressByIdRequest struct {
+type GetVirtualAddressByIDRequest struct {
 	common.VirtualAddressCommon
 	common.UserAgent
 }
 
-func (s *GetVirtualAddressByIdRequest) AddUserAgent(agent ...string) IGetVirtualAddressByIdRequest {
+func (s *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) IGetVirtualAddressByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *GetVirtualAddressByIdRequest) ToMap() map[string]interface{} {
+func (s *GetVirtualAddressByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"virtualAddressId": s.VirtualAddressId,
+		"virtualAddressId": s.VirtualAddressID,
 	}
 }
 
 // Api list address pairs by virtual address ID
 
-type ListAddressPairsByVirtualAddressIdRequest struct {
+type ListAddressPairsByVirtualAddressIDRequest struct {
 	common.VirtualAddressCommon
 	common.UserAgent
 }
 
-func (s *ListAddressPairsByVirtualAddressIdRequest) AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIdRequest {
+func (s *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *ListAddressPairsByVirtualAddressIdRequest) ToMap() map[string]interface{} {
+func (s *ListAddressPairsByVirtualAddressIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"virtualAddressId": s.VirtualAddressId,
+		"virtualAddressId": s.VirtualAddressID,
 	}
 }

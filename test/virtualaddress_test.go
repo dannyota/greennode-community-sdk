@@ -8,14 +8,14 @@ import (
 
 func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	virtualAddressName := "cuongdm3-test-virtual-address"
-	projectId := "pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491"
-	subnetId := "sub-33ec4719-915f-4818-85b0-f17bdf7f899b"
+	projectID := "pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491"
+	subnetID := "sub-33ec4719-915f-4818-85b0-f17bdf7f899b"
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
-		virtualAddressName, projectId, subnetId).
+		virtualAddressName, projectID, subnetID).
 		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.").
-		AddUserAgent(vngcloud.GetUserAgent())
+		AddUserAgent(vngcloud.UserAgent())
 	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(opt)
 
 	if err != nil {
@@ -30,13 +30,13 @@ func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVirtualAddressById(t *testing.T) {
-	virtualAddressId := "vip-1a17ffb3-28e5-4a7a-a4e0-17af09de28aa"
+func TestDeleteVirtualAddressByID(t *testing.T) {
+	virtualAddressID := "vip-1a17ffb3-28e5-4a7a-a4e0-17af09de28aa"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewDeleteVirtualAddressByIdRequest(virtualAddressId).
-		AddUserAgent(vngcloud.GetUserAgent())
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressById(opt)
+	opt := networkv2.NewDeleteVirtualAddressByIDRequest(virtualAddressID).
+		AddUserAgent(vngcloud.UserAgent())
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressByID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -45,13 +45,13 @@ func TestDeleteVirtualAddressById(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetVirtualAddessById(t *testing.T) {
-	virtualAddressId := "vip-0d2402cf-49e8-43bf-abbe-b707597320e0"
+func TestGetVirtualAddessByID(t *testing.T) {
+	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e0"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewGetVirtualAddressByIdRequest(virtualAddressId).
-		AddUserAgent(vngcloud.GetUserAgent())
-	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressById(opt)
+	opt := networkv2.NewGetVirtualAddressByIDRequest(virtualAddressID).
+		AddUserAgent(vngcloud.UserAgent())
+	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressByID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -65,13 +65,13 @@ func TestGetVirtualAddessById(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestListAddressPairsByVirtualAddressId(t *testing.T) {
-	virtualAddressId := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
+func TestListAddressPairsByVirtualAddressID(t *testing.T) {
+	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewListAddressPairsByVirtualAddressIdRequest(virtualAddressId).
-		AddUserAgent(vngcloud.GetUserAgent())
-	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressId(opt)
+	opt := networkv2.NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID).
+		AddUserAgent(vngcloud.UserAgent())
+	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)

@@ -7,17 +7,17 @@ import (
 )
 
 func (s *PortalServiceV1) ListZones() (*entity.ListZones, sdkerror.Error) {
-	url := listZonesUrl(s.PortalClient)
+	url := listZonesURL(s.PortalClient)
 	resp := new(ListZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.PortalClient.GetProjectId())
+			WithKVparameters("projectId", s.PortalClient.GetProjectID())
 	}
 
 	return resp.ToEntityListZones(), nil

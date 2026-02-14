@@ -8,8 +8,8 @@ import (
 
 func TestListSnapshotFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewListSnapshotsByBlockVolumeIdRequest(1, 10, "fsffsfsdfdsfsdf")
-	_, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeId(opt)
+	opt := v2.NewListSnapshotsByBlockVolumeIDRequest(1, 10, "fsffsfsdfdsfsdf")
+	_, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeID(opt)
 
 	t.Log("Result: ", sdkerr)
 	t.Log("PASS")
@@ -17,8 +17,8 @@ func TestListSnapshotFailure(t *testing.T) {
 
 func TestListSnapshotSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewListSnapshotsByBlockVolumeIdRequest(1, 10, "vol-d360fd83-948d-4efa-ab46-aab97328e275")
-	snapshots, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeId(opt)
+	opt := v2.NewListSnapshotsByBlockVolumeIDRequest(1, 10, "vol-d360fd83-948d-4efa-ab46-aab97328e275")
+	snapshots, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -33,10 +33,10 @@ func TestListSnapshotSuccess(t *testing.T) {
 
 func TestCreateSnapshotFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewCreateSnapshotByBlockVolumeIdRequest(
+	opt := v2.NewCreateSnapshotByBlockVolumeIDRequest(
 		"teasdadasdadst",
 		"vol-d360fd83-948d-4efa-ab46-aab97328e275").WithPermanently(true)
-	_, sdkerr := vngcloud.VServerGateway().V2().VolumeService().CreateSnapshotByBlockVolumeId(opt)
+	_, sdkerr := vngcloud.VServerGateway().V2().VolumeService().CreateSnapshotByBlockVolumeID(opt)
 
 	t.Log("Result: ", sdkerr)
 	t.Log("PASS")
@@ -44,8 +44,8 @@ func TestCreateSnapshotFailure(t *testing.T) {
 
 func TestDeleteSnapshot(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewDeleteSnapshotByIdRequest("snap-vol-pt-03e5891b-xxxx-4eb9-b2e6-be599f4e2a4b")
-	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteSnapshotById(opt)
+	opt := v2.NewDeleteSnapshotByIDRequest("snap-vol-pt-03e5891b-xxxx-4eb9-b2e6-be599f4e2a4b")
+	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteSnapshotByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}

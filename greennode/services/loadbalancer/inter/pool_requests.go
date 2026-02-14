@@ -29,8 +29,8 @@ const (
 )
 
 const (
-	HealthCheckHttpVersionHttp1       HealthCheckHttpVersion = "1.0"
-	HealthCheckHttpVersionHttp1Minor1 HealthCheckHttpVersion = "1.1"
+	HealthCheckHTTPVersionHttp1       HealthCheckHTTPVersion = "1.0"
+	HealthCheckHTTPVersionHttp1Minor1 HealthCheckHTTPVersion = "1.1"
 )
 
 const (
@@ -74,7 +74,7 @@ type (
 	PoolProtocol           string
 	HealthCheckProtocol    string
 	HealthCheckMethod      string
-	HealthCheckHttpVersion string
+	HealthCheckHTTPVersion string
 )
 
 type CreatePoolRequest struct {
@@ -97,7 +97,7 @@ type HealthMonitor struct {
 	Interval            int                     `json:"interval"`
 	Timeout             int                     `json:"timeout"`
 	HealthCheckMethod   *HealthCheckMethod      `json:"healthCheckMethod,omitempty"`
-	HttpVersion         *HealthCheckHttpVersion `json:"httpVersion,omitempty"`
+	HTTPVersion         *HealthCheckHTTPVersion `json:"httpVersion,omitempty"`
 	HealthCheckPath     *string                 `json:"healthCheckPath,omitempty"`
 	DomainName          *string                 `json:"domainName,omitempty"`
 	SuccessCode         *string                 `json:"successCode,omitempty"`
@@ -121,17 +121,17 @@ func (s *HealthMonitor) toRequestBody() IHealthMonitorRequest {
 	switch s.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		s.HealthCheckPath = nil
-		s.HttpVersion = nil
+		s.HTTPVersion = nil
 		s.SuccessCode = nil
 		s.HealthCheckMethod = nil
 		s.DomainName = nil
 
 	case HealthCheckProtocolHTTP, HealthCheckProtocolHTTPs:
-		if s.HttpVersion != nil {
-			switch opt := *s.HttpVersion; opt {
-			case HealthCheckHttpVersionHttp1:
+		if s.HTTPVersion != nil {
+			switch opt := *s.HTTPVersion; opt {
+			case HealthCheckHTTPVersionHttp1:
 				s.DomainName = nil
-			case HealthCheckHttpVersionHttp1Minor1:
+			case HealthCheckHTTPVersionHttp1Minor1:
 				if s.DomainName == nil ||
 					(s.DomainName != nil && len(*s.DomainName) < 1) {
 
@@ -155,8 +155,8 @@ func (s *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRe
 	return s
 }
 
-func (s *CreatePoolRequest) WithLoadBalancerId(lbId string) ICreatePoolRequest {
-	s.LoadBalancerId = lbId
+func (s *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
@@ -228,8 +228,8 @@ func (s *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) IHealthM
 	return s
 }
 
-func (s *HealthMonitor) WithHttpVersion(version HealthCheckHttpVersion) IHealthMonitorRequest {
-	s.HttpVersion = &version
+func (s *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest {
+	s.HTTPVersion = &version
 	return s
 }
 
@@ -256,7 +256,7 @@ func (s *HealthMonitor) ToMap() map[string]interface{} {
 		"interval":            s.Interval,
 		"timeout":             s.Timeout,
 		"healthCheckMethod":   s.HealthCheckMethod,
-		"httpVersion":         s.HttpVersion,
+		"httpVersion":         s.HTTPVersion,
 		"healthCheckPath":     s.HealthCheckPath,
 		"domainName":          s.DomainName,
 		"successCode":         s.SuccessCode,

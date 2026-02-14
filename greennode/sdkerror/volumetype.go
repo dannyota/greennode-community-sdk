@@ -16,7 +16,7 @@ func WithErrorVolumeTypeNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeTypeNotFound) {
 			sdkError.WithErrorCode(EcVServerVolumeTypeNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

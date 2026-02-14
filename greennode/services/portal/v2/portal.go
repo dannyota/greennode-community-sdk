@@ -7,17 +7,17 @@ import (
 )
 
 func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error) {
-	url := listAllQuotaUsedUrl(s.PortalClient)
+	url := listAllQuotaUsedURL(s.PortalClient)
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectId())
+			WithKVparameters("projectId", s.getProjectID())
 	}
 
 	return resp.ToEntityListQuotas(), nil
@@ -37,6 +37,6 @@ func (s *PortalServiceV2) GetQuotaByName(opts IGetQuotaByNameRequest) (*entity.Q
 	return quota, nil
 }
 
-func (s *PortalServiceV2) getProjectId() string {
-	return s.PortalClient.GetProjectId()
+func (s *PortalServiceV2) getProjectID() string {
+	return s.PortalClient.GetProjectID()
 }

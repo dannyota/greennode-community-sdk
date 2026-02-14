@@ -4,24 +4,24 @@ import "strings"
 
 type (
 	SdkConfigure interface {
-		GetClientId() string
+		GetClientID() string
 		GetClientSecret() string
-		GetProjectId() string
-		GetUserId() string
-		GetZoneId() string
-		GetIamEndpoint() string
-		GetVServerEndpoint() string
-		GetVLBEndpoint() string
-		GetGLBEndpoint() string
-		GetVNetworkEndpoint() string
-		GetVDnsEndpoint() string
-		GetUserAgent() string
-		WithUserId(userId string) SdkConfigure
-		WithZoneId(zoneId string) SdkConfigure
-		WithClientId(clientId string) SdkConfigure
+		GetProjectID() string
+		GetUserID() string
+		GetZoneID() string
+		IamEndpoint() string
+		VServerEndpoint() string
+		VLBEndpoint() string
+		GLBEndpoint() string
+		VNetworkEndpoint() string
+		VDnsEndpoint() string
+		UserAgent() string
+		WithUserID(userID string) SdkConfigure
+		WithZoneID(zoneID string) SdkConfigure
+		WithClientID(clientID string) SdkConfigure
 		WithClientSecret(clientSecret string) SdkConfigure
 		WithUserAgent(userAgent string) SdkConfigure
-		WithProjectId(projectId string) SdkConfigure
+		WithProjectID(projectID string) SdkConfigure
 		WithIamEndpoint(iamEndpoint string) SdkConfigure
 		WithVServerEndpoint(vserverEndpoint string) SdkConfigure
 		WithVLBEndpoint(vlbEndpoint string) SdkConfigure
@@ -32,11 +32,11 @@ type (
 )
 
 type sdkConfigure struct {
-	clientId         string
+	clientID         string
 	clientSecret     string
-	projectId        string
-	zoneId           string
-	userId           string
+	projectID        string
+	zoneID           string
+	userID           string
 	iamEndpoint      string
 	vserverEndpoint  string
 	vlbEndpoint      string
@@ -46,51 +46,51 @@ type sdkConfigure struct {
 	userAgent        string
 }
 
-func (s *sdkConfigure) GetClientId() string {
-	return s.clientId
+func (s *sdkConfigure) GetClientID() string {
+	return s.clientID
 }
 
 func (s *sdkConfigure) GetClientSecret() string {
 	return s.clientSecret
 }
 
-func (s *sdkConfigure) GetProjectId() string {
-	return s.projectId
+func (s *sdkConfigure) GetProjectID() string {
+	return s.projectID
 }
 
-func (s *sdkConfigure) GetUserId() string {
-	return s.userId
+func (s *sdkConfigure) GetUserID() string {
+	return s.userID
 }
 
-func (s *sdkConfigure) GetZoneId() string {
-	return s.zoneId
+func (s *sdkConfigure) GetZoneID() string {
+	return s.zoneID
 }
 
-func (s *sdkConfigure) GetIamEndpoint() string {
+func (s *sdkConfigure) IamEndpoint() string {
 	return s.iamEndpoint
 }
 
-func (s *sdkConfigure) GetVServerEndpoint() string {
+func (s *sdkConfigure) VServerEndpoint() string {
 	return s.vserverEndpoint
 }
 
-func (s *sdkConfigure) GetVLBEndpoint() string {
+func (s *sdkConfigure) VLBEndpoint() string {
 	return s.vlbEndpoint
 }
 
-func (s *sdkConfigure) GetGLBEndpoint() string {
+func (s *sdkConfigure) GLBEndpoint() string {
 	return s.glbEndpoint
 }
 
-func (s *sdkConfigure) GetVNetworkEndpoint() string {
+func (s *sdkConfigure) VNetworkEndpoint() string {
 	return s.vnetworkEndpoint
 }
 
-func (s *sdkConfigure) GetVDnsEndpoint() string {
+func (s *sdkConfigure) VDnsEndpoint() string {
 	return s.vdnsEndpoint
 }
 
-func (s *sdkConfigure) GetUserAgent() string {
+func (s *sdkConfigure) UserAgent() string {
 	return s.userAgent
 }
 
@@ -99,8 +99,8 @@ func (s *sdkConfigure) WithUserAgent(userAgent string) SdkConfigure {
 	return s
 }
 
-func (s *sdkConfigure) WithClientId(clientId string) SdkConfigure {
-	s.clientId = clientId
+func (s *sdkConfigure) WithClientID(clientID string) SdkConfigure {
+	s.clientID = clientID
 	return s
 }
 
@@ -109,18 +109,18 @@ func (s *sdkConfigure) WithClientSecret(clientSecret string) SdkConfigure {
 	return s
 }
 
-func (s *sdkConfigure) WithUserId(userId string) SdkConfigure {
-	s.userId = userId
+func (s *sdkConfigure) WithUserID(userID string) SdkConfigure {
+	s.userID = userID
 	return s
 }
 
-func (s *sdkConfigure) WithZoneId(zoneId string) SdkConfigure {
-	s.zoneId = zoneId
+func (s *sdkConfigure) WithZoneID(zoneID string) SdkConfigure {
+	s.zoneID = zoneID
 	return s
 }
 
-func (s *sdkConfigure) WithProjectId(projectId string) SdkConfigure {
-	s.projectId = projectId
+func (s *sdkConfigure) WithProjectID(projectID string) SdkConfigure {
+	s.projectID = projectID
 	return s
 }
 

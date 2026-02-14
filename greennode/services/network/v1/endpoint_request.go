@@ -10,24 +10,24 @@ import (
 )
 
 const (
-	defaultPackageId = "d391c404-51b0-4f4d-a946-ec35c8a6e2be"
+	defaultPackageID = "d391c404-51b0-4f4d-a946-ec35c8a6e2be"
 
-	VStorageServiceId = "b9ba2b16-389e-48b7-9e75-4c991239da27"
-	VCRServiceId      = "4f823540-4d64-4bf5-a3e2-322b098b601b"
-	VServerServiceId  = "e3f1b087-2d8b-4258-8b49-f5c6a4d27411"
-	IAMServiceId      = "f3d11a4c-f071-4009-88a6-4a21346c8708"
-	VMonitorServiceId = "9cc0d21a-5c27-4295-9787-eea213e255a1"
+	VStorageServiceID = "b9ba2b16-389e-48b7-9e75-4c991239da27"
+	VCRServiceID      = "4f823540-4d64-4bf5-a3e2-322b098b601b"
+	VServerServiceID  = "e3f1b087-2d8b-4258-8b49-f5c6a4d27411"
+	IAMServiceID      = "f3d11a4c-f071-4009-88a6-4a21346c8708"
+	VMonitorServiceID = "9cc0d21a-5c27-4295-9787-eea213e255a1"
 
 	defaultListEndpointsRequestPage = 1
 	defaultListEndpointsRequestSize = 10
 )
 
-type GetEndpointByIdRequest struct {
+type GetEndpointByIDRequest struct {
 	common.UserAgent
 	common.EndpointCommon
 }
 
-func (s *GetEndpointByIdRequest) AddUserAgent(agent ...string) IGetEndpointByIdRequest {
+func (s *GetEndpointByIDRequest) AddUserAgent(agent ...string) IGetEndpointByIDRequest {
 	s.Agent = append(s.Agent, agent...)
 	return s
 }
@@ -44,7 +44,7 @@ type CreateEndpointRequest struct {
 		ServiceUuid       string `json:"serviceUuid"`
 		PackageUuid       string `json:"packageUuid"`
 		VpcUuid           string `json:"vpcUuid"`
-		PortalUserId      string `json:"portalUserId"`
+		PortalUserID      string `json:"portalUserId"`
 		SubnetUuid        string `json:"subnetUuid"`
 		RegionUuid        string `json:"regionUuid"`
 		ProjectUuid       string `json:"projectUuid"`
@@ -102,8 +102,8 @@ func (s *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) interfac
 	s.ResourceType = "endpoint"
 	s.Action = "create"
 	s.ResourceInfo.EnableAZ = true
-	s.ResourceInfo.RegionUuid = svc.GetZoneId()
-	s.ResourceInfo.ProjectUuid = svc.GetProjectId()
+	s.ResourceInfo.RegionUuid = svc.GetZoneID()
+	s.ResourceInfo.ProjectUuid = svc.GetProjectID()
 
 	return s
 }
@@ -133,13 +133,13 @@ func (s *CreateEndpointRequest) WithVpcUuid(vpcUuid string) ICreateEndpointReque
 	return s
 }
 
-func (s *CreateEndpointRequest) WithPortalUserId(portalUserId string) ICreateEndpointRequest {
-	s.ResourceInfo.PortalUserId = portalUserId
+func (s *CreateEndpointRequest) WithPortalUserID(portalUserID string) ICreateEndpointRequest {
+	s.ResourceInfo.PortalUserID = portalUserID
 	return s
 }
 
-func (s *CreateEndpointRequest) GetPortalUserId() string {
-	return s.ResourceInfo.PortalUserId
+func (s *CreateEndpointRequest) GetPortalUserID() string {
+	return s.ResourceInfo.PortalUserID
 }
 
 func (s *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) ICreateEndpointRequest {
@@ -194,7 +194,7 @@ func (s *CreateEndpointRequest) WithScaling(minSize int, maxSize int) ICreateEnd
 	return s
 }
 
-type DeleteEndpointByIdRequest struct {
+type DeleteEndpointByIDRequest struct {
 	EndpointServiceUuid string `json:"endpointServiceUuid"`
 	EndpointUuid        string `json:"endpointUuid"`
 	ProjectUuid         string `json:"projectUuid"`
@@ -205,22 +205,22 @@ type DeleteEndpointByIdRequest struct {
 	common.EndpointCommon
 }
 
-func (s *DeleteEndpointByIdRequest) AddUserAgent(agent ...string) IDeleteEndpointByIdRequest {
+func (s *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) IDeleteEndpointByIDRequest {
 	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
-func (s *DeleteEndpointByIdRequest) ToRequestBody(svc client.ServiceClient) interface{} {
-	s.ProjectUuid = svc.GetProjectId()
-	s.RegionUuid = svc.GetZoneId()
+func (s *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+	s.ProjectUuid = svc.GetProjectID()
+	s.RegionUuid = svc.GetZoneID()
 
 	return s
 }
 
-func (s *DeleteEndpointByIdRequest) ToMap() map[string]interface{} {
+func (s *DeleteEndpointByIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
 		"serviceId":  s.EndpointServiceUuid,
-		"endpointId": s.EndpointId,
+		"endpointId": s.EndpointID,
 		"projectId":  s.ProjectUuid,
 		"regionId":   s.RegionUuid,
 		"vpcId":      s.VpcUuid,
@@ -236,7 +236,7 @@ func (s *DeleteEndpointByIdRequest) ToMap() map[string]interface{} {
 type ListEndpointsRequest struct {
 	Page  int
 	Size  int
-	VpcId string
+	VpcID string
 	Uuid  string
 	common.UserAgent
 }
@@ -245,7 +245,7 @@ func (s *ListEndpointsRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
 		"page":  s.Page,
 		"size":  s.Size,
-		"vpcId": s.VpcId,
+		"vpcId": s.VpcID,
 		"uuid":  s.Uuid,
 	}
 
@@ -266,8 +266,8 @@ func (s *ListEndpointsRequest) WithSize(size int) IListEndpointsRequest {
 	return s
 }
 
-func (s *ListEndpointsRequest) WithVpcId(vpcId string) IListEndpointsRequest {
-	s.VpcId = vpcId
+func (s *ListEndpointsRequest) WithVpcID(vpcID string) IListEndpointsRequest {
+	s.VpcID = vpcID
 	return s
 }
 
@@ -278,8 +278,8 @@ func (s *ListEndpointsRequest) WithUuid(uuid string) IListEndpointsRequest {
 
 func (s *ListEndpointsRequest) ToListQuery() (string, error) {
 	var params []string
-	if s.VpcId != "" {
-		params = append(params, fmt.Sprintf(`{"field":"vpcId","value":"%s"}`, s.VpcId))
+	if s.VpcID != "" {
+		params = append(params, fmt.Sprintf(`{"field":"vpcId","value":"%s"}`, s.VpcID))
 	}
 
 	if s.Uuid != "" {
@@ -306,36 +306,36 @@ func (s *ListEndpointsRequest) AddUserAgent(agent ...string) IListEndpointsReque
 
 // _____________________________________________________________________ ListTagsByEndpointIdRequest
 
-type ListTagsByEndpointIdRequest struct {
+type ListTagsByEndpointIDRequest struct {
 	common.UserAgent
 	common.EndpointCommon
 	common.PortalUser
 
-	ProjectId string
-	Id        string
+	ProjectID string
+	ID        string
 }
 
-func (s *ListTagsByEndpointIdRequest) ToListQuery() (string, error) {
+func (s *ListTagsByEndpointIDRequest) ToListQuery() (string, error) {
 	v := url.Values{}
-	if s.Id != "" {
-		v.Set("resourceUuid", s.Id)
+	if s.ID != "" {
+		v.Set("resourceUuid", s.ID)
 	}
 	return v.Encode(), nil
 }
 
-func (s *ListTagsByEndpointIdRequest) GetProjectId() string {
-	return s.ProjectId
+func (s *ListTagsByEndpointIDRequest) GetProjectID() string {
+	return s.ProjectID
 }
 
-func (s *ListTagsByEndpointIdRequest) GetDefaultQuery() string {
+func (s *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
 	return query
 }
 
-func (s *ListTagsByEndpointIdRequest) ToMap() map[string]interface{} {
+func (s *ListTagsByEndpointIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceUuid": s.Id,
+		"resourceUuid": s.ID,
 	}
 
 	if len(s.Agent) > 0 {
@@ -345,23 +345,23 @@ func (s *ListTagsByEndpointIdRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *ListTagsByEndpointIdRequest) GetMapHeaders() map[string]string {
+func (s *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *ListTagsByEndpointIdRequest) AddUserAgent(agent ...string) IListTagsByEndpointIdRequest {
+func (s *ListTagsByEndpointIDRequest) AddUserAgent(agent ...string) IListTagsByEndpointIDRequest {
 	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
 // _________________________________________________________________ CreateTagsWithEndpointIdRequest
 
-type CreateTagsWithEndpointIdRequest struct {
+type CreateTagsWithEndpointIDRequest struct {
 	common.UserAgent
 	common.EndpointCommon
 	common.PortalUser
 
-	ProjectId    string
+	ProjectID    string
 	ResourceUuid string `json:"resourceUuid"`
 	Tags         []struct {
 		TagKey   string `json:"tagKey"`
@@ -371,9 +371,9 @@ type CreateTagsWithEndpointIdRequest struct {
 	SystemTag bool `json:"systemTag"`
 }
 
-func (s *CreateTagsWithEndpointIdRequest) ToMap() map[string]interface{} {
+func (s *CreateTagsWithEndpointIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceUuid": s.Id,
+		"resourceUuid": s.ID,
 	}
 
 	if len(s.Agent) > 0 {
@@ -385,16 +385,16 @@ func (s *CreateTagsWithEndpointIdRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *CreateTagsWithEndpointIdRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIdRequest {
+func (s *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest {
 	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
-func (s *CreateTagsWithEndpointIdRequest) GetMapHeaders() map[string]string {
+func (s *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *CreateTagsWithEndpointIdRequest) AddTag(key, value string) ICreateTagsWithEndpointIdRequest {
+func (s *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsWithEndpointIDRequest {
 	s.Tags = append(s.Tags, struct {
 		TagKey   string `json:"tagKey"`
 		TagValue string `json:"tagValue"`
@@ -406,12 +406,12 @@ func (s *CreateTagsWithEndpointIdRequest) AddTag(key, value string) ICreateTagsW
 	return s
 }
 
-func (s *CreateTagsWithEndpointIdRequest) ToRequestBody() interface{} {
+func (s *CreateTagsWithEndpointIDRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateTagsWithEndpointIdRequest) GetProjectId() string {
-	return s.ProjectId
+func (s *CreateTagsWithEndpointIDRequest) GetProjectID() string {
+	return s.ProjectID
 }
 
 // ____________________________________________________________________ DeleteTagByEndpointIdRequest
@@ -420,13 +420,13 @@ type DeleteTagOfEndpointRequest struct {
 	common.UserAgent
 	common.PortalUser
 
-	ProjectId string
-	TagId     string
+	ProjectID string
+	TagID     string
 }
 
 func (s *DeleteTagOfEndpointRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"tagId": s.TagId,
+		"tagId": s.TagID,
 	}
 
 	if len(s.Agent) > 0 {
@@ -445,12 +445,12 @@ func (s *DeleteTagOfEndpointRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *DeleteTagOfEndpointRequest) GetTagId() string {
-	return s.TagId
+func (s *DeleteTagOfEndpointRequest) GetTagID() string {
+	return s.TagID
 }
 
-func (s *DeleteTagOfEndpointRequest) GetProjectId() string {
-	return s.ProjectId
+func (s *DeleteTagOfEndpointRequest) GetProjectID() string {
+	return s.ProjectID
 }
 
 // _________________________________________________________________ UpdateTagValueOfEndpointRequest
@@ -459,14 +459,14 @@ type UpdateTagValueOfEndpointRequest struct {
 	common.UserAgent
 	common.PortalUser
 
-	TagId     string
-	ProjectId string
+	TagID     string
+	ProjectID string
 	TagValue  string `json:"tagValue"`
 }
 
 func (s *UpdateTagValueOfEndpointRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"tagId":    s.TagId,
+		"tagId":    s.TagID,
 		"tagValue": s.TagValue,
 	}
 
@@ -486,14 +486,14 @@ func (s *UpdateTagValueOfEndpointRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *UpdateTagValueOfEndpointRequest) GetTagId() string {
-	return s.TagId
+func (s *UpdateTagValueOfEndpointRequest) GetTagID() string {
+	return s.TagID
 }
 
 func (s *UpdateTagValueOfEndpointRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *UpdateTagValueOfEndpointRequest) GetProjectId() string {
-	return s.ProjectId
+func (s *UpdateTagValueOfEndpointRequest) GetProjectID() string {
+	return s.ProjectID
 }

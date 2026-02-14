@@ -8,39 +8,39 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewListSnapshotsByBlockVolumeIdRequest(page, size int, blockVolumeId string) IListSnapshotsByBlockVolumeIdRequest {
-	opt := new(ListSnapshotsByBlockVolumeIdRequest)
-	opt.BlockVolumeId = blockVolumeId
+func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) IListSnapshotsByBlockVolumeIDRequest {
+	opt := new(ListSnapshotsByBlockVolumeIDRequest)
+	opt.BlockVolumeID = blockVolumeID
 	opt.Page = page
 	opt.Size = size
 
 	return opt
 }
 
-func NewCreateSnapshotByBlockVolumeIdRequest(name, blockVolumeId string) ICreateSnapshotByBlockVolumeIdRequest {
-	opt := new(CreateSnapshotByBlockVolumeIdRequest)
+func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) ICreateSnapshotByBlockVolumeIDRequest {
+	opt := new(CreateSnapshotByBlockVolumeIDRequest)
 	opt.Name = name
-	opt.BlockVolumeId = blockVolumeId
+	opt.BlockVolumeID = blockVolumeID
 
 	return opt
 }
 
-func NewDeleteSnapshotByIdRequest(snapshotId string) IDeleteSnapshotByIdRequest {
-	opt := new(DeleteSnapshotByIdRequest)
-	opt.BlockVolumeId = "undefined"
-	opt.SnapshotId = snapshotId
+func NewDeleteSnapshotByIDRequest(snapshotID string) IDeleteSnapshotByIDRequest {
+	opt := new(DeleteSnapshotByIDRequest)
+	opt.BlockVolumeID = "undefined"
+	opt.SnapshotID = snapshotID
 
 	return opt
 }
 
-type ListSnapshotsByBlockVolumeIdRequest struct {
+type ListSnapshotsByBlockVolumeIDRequest struct {
 	Page int
 	Size int
 
 	common.BlockVolumeCommon
 }
 
-type CreateSnapshotByBlockVolumeIdRequest struct {
+type CreateSnapshotByBlockVolumeIDRequest struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Permanently bool   `json:"isPermanently"`
@@ -49,16 +49,16 @@ type CreateSnapshotByBlockVolumeIdRequest struct {
 	common.BlockVolumeCommon
 }
 
-type DeleteSnapshotByIdRequest struct {
+type DeleteSnapshotByIDRequest struct {
 	common.BlockVolumeCommon
 	common.SnapshotCommon
 }
 
-func (s *ListSnapshotsByBlockVolumeIdRequest) GetDefaultQuery() string {
-	return fmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIdRequest, defaultSizeListSnapshotsByBlockVolumeIdRequest)
+func (s *ListSnapshotsByBlockVolumeIDRequest) GetDefaultQuery() string {
+	return fmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIDRequest, defaultSizeListSnapshotsByBlockVolumeIDRequest)
 }
 
-func (s *ListSnapshotsByBlockVolumeIdRequest) ToQuery() (string, error) {
+func (s *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
 	v := url.Values{}
 	if s.Page > 0 {
 		v.Set("page", strconv.Itoa(s.Page))
@@ -69,21 +69,21 @@ func (s *ListSnapshotsByBlockVolumeIdRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) ToRequestBody() interface{} {
+func (s *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIdRequest {
+func (s *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest {
 	s.Description = desc
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIdRequest {
+func (s *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest {
 	s.Permanently = val
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIdRequest {
+func (s *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest {
 	s.RetainedDay = val
 	return s
 }

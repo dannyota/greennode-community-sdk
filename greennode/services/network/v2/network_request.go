@@ -2,18 +2,18 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewGetNetworkByIdRequest(networkId string) IGetNetworkByIdRequest {
-	opt := new(GetNetworkByIdRequest)
-	opt.NetworkId = networkId
+func NewGetNetworkByIDRequest(networkID string) IGetNetworkByIDRequest {
+	opt := new(GetNetworkByIDRequest)
+	opt.NetworkID = networkID
 	return opt
 }
 
-type GetNetworkByIdRequest struct {
+type GetNetworkByIDRequest struct {
 	common.NetworkCommon
 	common.UserAgent
 }
 
-func (s *GetNetworkByIdRequest) AddUserAgent(agent ...string) IGetNetworkByIdRequest {
+func (s *GetNetworkByIDRequest) AddUserAgent(agent ...string) IGetNetworkByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

@@ -46,10 +46,10 @@ func TestCreateVolumeSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVolumeByIdFailure(t *testing.T) {
+func TestDeleteVolumeByIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewDeleteBlockVolumeByIdRequest("this-is-fake")
-	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeById(opt)
+	opt := v2.NewDeleteBlockVolumeByIDRequest("this-is-fake")
+	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeByID(opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -58,10 +58,10 @@ func TestDeleteVolumeByIdFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVolumeByIdSuccess(t *testing.T) {
+func TestDeleteVolumeByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewDeleteBlockVolumeByIdRequest("vol-51f71146-9c20-4615-a73e-a43a39bf03ea")
-	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeById(opt)
+	opt := v2.NewDeleteBlockVolumeByIDRequest("vol-51f71146-9c20-4615-a73e-a43a39bf03ea")
+	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -122,10 +122,10 @@ func TestListBlockVolumeWithFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetBlockVolumeByIdFailure(t *testing.T) {
+func TestGetBlockVolumeByIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewGetBlockVolumeByIdRequest("vol-17dc6df0-43d3-4ad2-be88-69ddaef2f146")
-	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeById(opt)
+	opt := v2.NewGetBlockVolumeByIDRequest("vol-17dc6df0-43d3-4ad2-be88-69ddaef2f146")
+	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeByID(opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -138,10 +138,10 @@ func TestGetBlockVolumeByIdFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetBlockVolumeByIdSuccess(t *testing.T) {
+func TestGetBlockVolumeByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewGetBlockVolumeByIdRequest("vol-aa784f76-a13d-4f92-b807-d2df3180e030")
-	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeById(opt)
+	opt := v2.NewGetBlockVolumeByIDRequest("vol-aa784f76-a13d-4f92-b807-d2df3180e030")
+	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -156,11 +156,11 @@ func TestGetBlockVolumeByIdSuccess(t *testing.T) {
 
 func TestResizeBlockVolumeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewResizeBlockVolumeByIdRequest(
+	opt := v2.NewResizeBlockVolumeByIDRequest(
 		"vol-ae3fffe5-bd46-475f-bee3-3d5eff4a4b45",
 		"vtype-9f811804-3574-466e-831c-f23d56ca6700",
 		40)
-	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ResizeBlockVolumeById(opt)
+	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ResizeBlockVolumeByID(opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -173,10 +173,10 @@ func TestResizeBlockVolumeFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetUnderVolumeIdFailure(t *testing.T) {
+func TestGetUnderVolumeIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewGetUnderVolumeIdRequest("vol-ae3fffe5-bd46-475f-besadd")
-	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeId(opt)
+	opt := v2.NewGetUnderVolumeIDRequest("vol-ae3fffe5-bd46-475f-besadd")
+	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeID(opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -189,10 +189,10 @@ func TestGetUnderVolumeIdFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetUnderVolumeIdSuccess(t *testing.T) {
+func TestGetUnderVolumeIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewGetUnderVolumeIdRequest("vol-137f3dfc-9198-4d94-983f-6802e3c39e4f")
-	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeId(opt)
+	opt := v2.NewGetUnderVolumeIDRequest("vol-137f3dfc-9198-4d94-983f-6802e3c39e4f")
+	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -211,10 +211,10 @@ func TestMigrateBlockVolume(t *testing.T) {
 	t.Log(vtSsd, vtNvme)
 
 	vngcloud := validSdkConfig()
-	opt := v2.NewMigrateBlockVolumeByIdRequest(
+	opt := v2.NewMigrateBlockVolumeByIDRequest(
 		"vol-78c26ee6-20b2-45a3-9f0a-e7728349c300",
 		vtSsd).WithConfirm(true).WithAction(v2.ProcessMigrateAction)
-	sdkerr := vngcloud.VServerGateway().V2().VolumeService().MigrateBlockVolumeById(opt)
+	sdkerr := vngcloud.VServerGateway().V2().VolumeService().MigrateBlockVolumeByID(opt)
 
 	t.Log("Error: ", sdkerr)
 	t.Log("PASS")

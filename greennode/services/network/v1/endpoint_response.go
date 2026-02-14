@@ -5,9 +5,9 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 type Endpoint struct {
 	Uuid              string `json:"uuid,omitempty"`
 	EndpointName      string `json:"endpointName,omitempty"`
-	EndpointServiceId string `json:"endpointServiceId,omitempty"`
-	VpcId             string `json:"vpcId,omitempty"`
-	EndpointUrl       string `json:"endpointUrl,omitempty"`
+	EndpointServiceID string `json:"endpointServiceId,omitempty"`
+	VpcID             string `json:"vpcId,omitempty"`
+	EndpointURL       string `json:"endpointUrl,omitempty"`
 	EndpointIp        string `json:"endpointIp,omitempty"`
 	Status            string `json:"status,omitempty"`
 }
@@ -25,20 +25,20 @@ type EndpointTag struct {
 
 func (s *Endpoint) toEntityEndpoint() *entity.Endpoint {
 	return &entity.Endpoint{
-		Id:          s.Uuid,
+		ID:          s.Uuid,
 		Name:        s.EndpointName,
-		VpcId:       s.VpcId,
+		VpcID:       s.VpcID,
 		IPv4Address: s.EndpointIp,
-		EndpointUrl: s.EndpointUrl,
+		EndpointURL: s.EndpointURL,
 		Status:      s.Status,
 	}
 }
 
-type GetEndpointByIdResponse struct {
+type GetEndpointByIDResponse struct {
 	Data Endpoint `json:"data"`
 }
 
-func (s *GetEndpointByIdResponse) ToEntityEndpoint() *entity.Endpoint {
+func (s *GetEndpointByIDResponse) ToEntityEndpoint() *entity.Endpoint {
 	return s.Data.toEntityEndpoint()
 }
 
@@ -51,7 +51,7 @@ type CreateEndpointResponse struct {
 
 func (s *CreateEndpointResponse) ToEntityEndpoint() *entity.Endpoint {
 	return &entity.Endpoint{
-		Id:   s.Data.Uuid,
+		ID:   s.Data.Uuid,
 		Name: s.Data.Name,
 	}
 }
@@ -78,19 +78,19 @@ func (s *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
 	}
 }
 
-type ListTagsByEndpointIdResponse struct {
+type ListTagsByEndpointIDResponse struct {
 	Data []EndpointTag `json:"data"`
 }
 
-func (s *ListTagsByEndpointIdResponse) ToEntityListTags() *entity.ListTags {
+func (s *ListTagsByEndpointIDResponse) ToEntityListTags() *entity.ListTags {
 	items := make([]*entity.Tag, 0, len(s.Data))
 	for _, item := range s.Data {
 		items = append(items, &entity.Tag{
 			Key:        item.TagKey,
 			Value:      item.TagValue,
 			SystemTag:  item.SystemTag,
-			ResourceId: item.ResourceUuid,
-			TagId:      item.Uuid,
+			ResourceID: item.ResourceUuid,
+			TagID:      item.Uuid,
 		})
 	}
 	return &entity.ListTags{

@@ -1,63 +1,63 @@
 package v2
 
-func NewCreateServerRequest(name, imageId, flavorId, rootDiskType string, rootDiskSize int) ICreateServerRequest {
+func NewCreateServerRequest(name, imageID, flavorID, rootDiskType string, rootDiskSize int) ICreateServerRequest {
 	opt := new(CreateServerRequest)
 	opt.Name = name
-	opt.ImageId = imageId
-	opt.FlavorId = flavorId
-	opt.RootDiskTypeId = rootDiskType
+	opt.ImageID = imageID
+	opt.FlavorID = flavorID
+	opt.RootDiskTypeID = rootDiskType
 	opt.RootDiskSize = rootDiskSize
 	return opt
 }
 
-func NewGetServerByIdRequest(serverId string) IGetServerByIdRequest {
-	opt := new(GetServerByIdRequest)
-	opt.ServerId = serverId
+func NewGetServerByIDRequest(serverID string) IGetServerByIDRequest {
+	opt := new(GetServerByIDRequest)
+	opt.ServerID = serverID
 	return opt
 }
 
-func NewDeleteServerByIdRequest(serverId string) IDeleteServerByIdRequest {
-	opt := new(DeleteServerByIdRequest)
-	opt.ServerId = serverId
+func NewDeleteServerByIDRequest(serverID string) IDeleteServerByIDRequest {
+	opt := new(DeleteServerByIDRequest)
+	opt.ServerID = serverID
 	opt.DeleteAllVolume = false
 	return opt
 }
 
-func NewUpdateServerSecgroupsRequest(serverId string, secgroups ...string) IUpdateServerSecgroupsByServerIdRequest {
-	opt := new(UpdateServerSecgroupsByServerIdRequest)
-	opt.ServerId = serverId
+func NewUpdateServerSecgroupsRequest(serverID string, secgroups ...string) IUpdateServerSecgroupsByServerIDRequest {
+	opt := new(UpdateServerSecgroupsByServerIDRequest)
+	opt.ServerID = serverID
 	opt.Secgroups = secgroups
 	return opt
 }
 
-func NewAttachBlockVolumeRequest(serverId, volumeId string) IAttachBlockVolumeRequest {
+func NewAttachBlockVolumeRequest(serverID, volumeID string) IAttachBlockVolumeRequest {
 	opt := new(AttachBlockVolumeRequest)
-	opt.ServerId = serverId
-	opt.BlockVolumeId = volumeId
+	opt.ServerID = serverID
+	opt.BlockVolumeID = volumeID
 	return opt
 }
 
-func NewDetachBlockVolumeRequest(serverId, volumeId string) IDetachBlockVolumeRequest {
+func NewDetachBlockVolumeRequest(serverID, volumeID string) IDetachBlockVolumeRequest {
 	opt := new(DetachBlockVolumeRequest)
-	opt.ServerId = serverId
-	opt.BlockVolumeId = volumeId
+	opt.ServerID = serverID
+	opt.BlockVolumeID = volumeID
 	return opt
 }
 
-func NewAttachFloatingIpRequest(serverId, niid string) IAttachFloatingIpRequest {
+func NewAttachFloatingIpRequest(serverID, niid string) IAttachFloatingIpRequest {
 	opt := new(AttachFloatingIpRequest)
-	opt.ServerId = serverId
-	opt.InternalNetworkInterfaceId = niid
-	opt.NetworkInterfaceId = niid
+	opt.ServerID = serverID
+	opt.InternalNetworkInterfaceID = niid
+	opt.NetworkInterfaceID = niid
 	return opt
 }
 
-func NewDetachFloatingIpRequest(serverId, wanId, niid string) IDetachFloatingIpRequest {
+func NewDetachFloatingIpRequest(serverID, wanID, niid string) IDetachFloatingIpRequest {
 	opt := new(DetachFloatingIpRequest)
-	opt.ServerId = serverId
-	opt.InternalNetworkInterfaceId = niid
-	opt.NetworkInterfaceId = niid
-	opt.WanId = wanId
+	opt.ServerID = serverID
+	opt.InternalNetworkInterfaceID = niid
+	opt.NetworkInterfaceID = niid
+	opt.WanID = wanID
 	return opt
 }
 
@@ -65,9 +65,9 @@ func NewListServerGroupPoliciesRequest() IListServerGroupPoliciesRequest {
 	return new(ListServerGroupPoliciesRequest)
 }
 
-func NewDeleteServerGroupByIdRequest(serverGroupId string) IDeleteServerGroupByIdRequest {
-	opt := new(DeleteServerGroupByIdRequest)
-	opt.ServerGroupId = serverGroupId
+func NewDeleteServerGroupByIDRequest(serverGroupID string) IDeleteServerGroupByIDRequest {
+	opt := new(DeleteServerGroupByIDRequest)
+	opt.ServerGroupID = serverGroupID
 	return opt
 }
 
@@ -80,11 +80,11 @@ func NewListServerGroupsRequest(page, size int) IListServerGroupsRequest {
 	return opt
 }
 
-func NewCreateServerGroupRequest(name, description, policyId string) ICreateServerGroupRequest {
+func NewCreateServerGroupRequest(name, description, policyID string) ICreateServerGroupRequest {
 	opt := new(CreateServerGroupRequest)
 	opt.Name = name
 	opt.Description = description
-	opt.PolicyId = policyId
+	opt.PolicyID = policyID
 
 	return opt
 }

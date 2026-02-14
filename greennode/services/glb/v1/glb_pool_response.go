@@ -50,8 +50,8 @@ type HealthResponse struct {
 	IntervalTime         int     `json:"intervalTime"`
 	HealthyThreshold     int     `json:"healthyThreshold"`
 	UnhealthyThreshold   int     `json:"unhealthyThreshold"`
-	HttpVersion          *string `json:"httpVersion"`
-	HttpMethod           *string `json:"httpMethod"`
+	HTTPVersion          *string `json:"httpVersion"`
+	HTTPMethod           *string `json:"httpMethod"`
 	DomainName           *string `json:"domainName"`
 	SuccessCode          *string `json:"successCode"`
 	Status               string  `json:"status"`
@@ -72,8 +72,8 @@ func (s *HealthResponse) ToEntityGlobalPoolHealthMonitor() *entity.GlobalPoolHea
 		HealthyThreshold:     s.HealthyThreshold,
 		UnhealthyThreshold:   s.UnhealthyThreshold,
 		DomainName:           s.DomainName,
-		HTTPVersion:          s.HttpVersion,
-		HTTPMethod:           s.HttpMethod,
+		HTTPVersion:          s.HTTPVersion,
+		HTTPMethod:           s.HTTPMethod,
 		SuccessCode:          s.SuccessCode,
 		Status:               s.Status,
 	}

@@ -15,7 +15,7 @@ type (
 		Status      string                             `json:"status"`
 		Package     string                             `json:"package"`
 		Type        string                             `json:"type"`
-		UserId      int                                `json:"userId"`
+		UserID      int                                `json:"userId"`
 		Vips        []GlobalLoadBalancerVIPResponse    `json:"vips"`
 		Domains     []GlobalLoadBalancerDomainResponse `json:"domains"`
 	}
@@ -84,7 +84,7 @@ func (s *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.Global
 		Status:      s.Status,
 		Package:     s.Package,
 		Type:        s.Type,
-		UserId:      s.UserId,
+		UserID:      s.UserID,
 		Vips:        vips,
 		Domains:     domains,
 	}
@@ -135,9 +135,9 @@ func (s *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.
 
 // --------------------------------------------------
 
-type GetGlobalLoadBalancerByIdResponse GlobalLoadBalancerResponse
+type GetGlobalLoadBalancerByIDResponse GlobalLoadBalancerResponse
 
-func (s *GetGlobalLoadBalancerByIdResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
+func (s *GetGlobalLoadBalancerByIDResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
 	return (*GlobalLoadBalancerResponse)(s).ToEntityGlobalLoadBalancer()
 }
 

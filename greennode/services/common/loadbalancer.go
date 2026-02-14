@@ -1,41 +1,41 @@
 package common
 
 type LoadBalancerCommon struct {
-	LoadBalancerId string
+	LoadBalancerID string
 }
 
-func (s *LoadBalancerCommon) GetLoadBalancerId() string {
-	return s.LoadBalancerId
+func (s *LoadBalancerCommon) GetLoadBalancerID() string {
+	return s.LoadBalancerID
 }
 
 type ListenerCommon struct {
-	ListenerId string
+	ListenerID string
 }
 
-func (s *ListenerCommon) GetListenerId() string {
-	return s.ListenerId
+func (s *ListenerCommon) GetListenerID() string {
+	return s.ListenerID
 }
 
 type PoolCommon struct {
-	PoolId string
+	PoolID string
 }
 
-func (s *PoolCommon) GetPoolId() string {
-	return s.PoolId
+func (s *PoolCommon) GetPoolID() string {
+	return s.PoolID
 }
 
 type PolicyCommon struct {
-	PolicyId string
+	PolicyID string
 }
 
-func (s *PolicyCommon) GetPolicyId() string {
-	return s.PolicyId
+func (s *PolicyCommon) GetPolicyID() string {
+	return s.PolicyID
 }
 
 type PoolMemberCommon struct {
-	PoolMemberId string
+	PoolMemberID string
 }
 
-func (s *PoolMemberCommon) GetPoolMemberId() string {
-	return s.PoolMemberId
+func (s *PoolMemberCommon) GetPoolMemberID() string {
+	return s.PoolMemberID
 }

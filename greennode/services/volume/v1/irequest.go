@@ -1,11 +1,11 @@
 package v1
 
-type IGetVolumeTypeByIdRequest interface {
-	GetVolumeTypeId() string
+type IGetVolumeTypeByIDRequest interface {
+	GetVolumeTypeID() string
 }
 
 type IGetListVolumeTypeRequest interface {
-	GetVolumeTypeZoneId() string
+	GetVolumeTypeZoneID() string
 }
 
 type IGetVolumeTypeZonesRequest interface {

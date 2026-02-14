@@ -1,9 +1,9 @@
 package common
 
 type SnapshotCommon struct {
-	SnapshotId string
+	SnapshotID string
 }
 
-func (s *SnapshotCommon) GetSnapshotId() string {
-	return s.SnapshotId
+func (s *SnapshotCommon) GetSnapshotID() string {
+	return s.SnapshotID
 }

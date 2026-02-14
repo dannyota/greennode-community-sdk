@@ -14,15 +14,15 @@ type ListBlockVolumesResponse struct {
 	ListData  []BlockVolume `json:"listData"`
 }
 
-type GetBlockVolumeByIdResponse struct {
+type GetBlockVolumeByIDResponse struct {
 	Data BlockVolume `json:"data"`
 }
 
-type ResizeBlockVolumeByIdResponse struct {
+type ResizeBlockVolumeByIDResponse struct {
 	Data BlockVolume `json:"data"`
 }
 
-type GetUnderBlockVolumeIdResponse struct {
+type GetUnderBlockVolumeIDResponse struct {
 	Uuid string `json:"uuid"`
 }
 
@@ -30,7 +30,7 @@ type Zone struct {
 	Uuid string `json:"uuid"`
 }
 
-func (s *GetBlockVolumeByIdResponse) ToEntityVolume() *entity.Volume {
+func (s *GetBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
 	return s.Data.toEntityVolume()
 }
 
@@ -75,27 +75,27 @@ func (s *ListBlockVolumesResponse) ToEntityListVolumes() *entity.ListVolumes {
 
 func (s *BlockVolume) toEntityVolume() *entity.Volume {
 	return &entity.Volume{
-		Id:              s.UUID,
+		ID:              s.UUID,
 		Name:            s.Name,
 		Size:            s.Size,
 		Status:          s.Status,
 		CreatedAt:       s.CreatedAt,
 		UpdatedAt:       s.UpdatedAt,
-		VmId:            s.ServerID,
+		VmID:            s.ServerID,
 		AttachedMachine: s.ServerIDList,
 		VolumeTypeID:    s.VolumeTypeID,
 		MigrateState:    s.MigrateState,
 		MultiAttach:     s.MultiAttach,
-		ZoneId:          s.Zone.Uuid,
+		ZoneID:          s.Zone.Uuid,
 	}
 }
 
-func (s *ResizeBlockVolumeByIdResponse) ToEntityVolume() *entity.Volume {
+func (s *ResizeBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
 	return s.Data.toEntityVolume()
 }
 
-func (s *GetUnderBlockVolumeIdResponse) ToEntityVolume() *entity.Volume {
+func (s *GetUnderBlockVolumeIDResponse) ToEntityVolume() *entity.Volume {
 	return &entity.Volume{
-		UnderId: s.Uuid,
+		UnderID: s.Uuid,
 	}
 }

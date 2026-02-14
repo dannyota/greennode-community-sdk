@@ -7,7 +7,7 @@ func NewCreateSecgroupRuleRequest(
 	etherType SecgroupRuleEtherType,
 	protocol SecgroupRuleProtocol,
 	portMinRange, portMaxRange int,
-	remoteIpPrefix, securityGroupId, description string) ICreateSecgroupRuleRequest {
+	remoteIpPrefix, securityGroupID, description string) ICreateSecgroupRuleRequest {
 
 	opt := &CreateSecgroupRuleRequest{
 		Description:     description,
@@ -17,27 +17,27 @@ func NewCreateSecgroupRuleRequest(
 		PortRangeMin:    portMinRange,
 		Protocol:        protocol,
 		RemoteIPPrefix:  remoteIpPrefix,
-		SecurityGroupID: securityGroupId,
+		SecurityGroupID: securityGroupID,
 	}
-	opt.SecgroupId = securityGroupId
+	opt.SecgroupID = securityGroupID
 	return opt
 }
 
-func NewDeleteSecgroupRuleByIdRequest(secgroupRuleId string) IDeleteSecgroupRuleByIdRequest {
-	opt := new(DeleteSecgroupRuleByIdRequest)
-	opt.SecgroupId = "undefined"
-	opt.SecgroupRuleId = secgroupRuleId
+func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) IDeleteSecgroupRuleByIDRequest {
+	opt := new(DeleteSecgroupRuleByIDRequest)
+	opt.SecgroupID = "undefined"
+	opt.SecgroupRuleID = secgroupRuleID
 	return opt
 }
 
-func (s *DeleteSecgroupRuleByIdRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIdRequest {
+func (s *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewListSecgroupRulesBySecgroupIdRequest(securityGroupId string) IListSecgroupRulesBySecgroupIdRequest {
-	opt := new(ListSecgroupRulesBySecgroupIdRequest)
-	opt.SecgroupId = securityGroupId
+func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) IListSecgroupRulesBySecgroupIDRequest {
+	opt := new(ListSecgroupRulesBySecgroupIDRequest)
+	opt.SecgroupID = securityGroupID
 	return opt
 }
 
@@ -101,23 +101,23 @@ func (s *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) ICreateSecgrou
 	return s
 }
 
-type DeleteSecgroupRuleByIdRequest struct { //__________________________________________________________________________
-	SecgroupRuleId string
+type DeleteSecgroupRuleByIDRequest struct { //__________________________________________________________________________
+	SecgroupRuleID string
 
 	common.UserAgent
 	common.SecgroupCommon
 }
 
-func (s *DeleteSecgroupRuleByIdRequest) GetSecgroupRuleId() string {
-	return s.SecgroupRuleId
+func (s *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
+	return s.SecgroupRuleID
 }
 
-type ListSecgroupRulesBySecgroupIdRequest struct { //___________________________________________________________________
+type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________________________________________________
 	common.SecgroupCommon
 	common.UserAgent
 }
 
-func (s *ListSecgroupRulesBySecgroupIdRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIdRequest {
+func (s *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

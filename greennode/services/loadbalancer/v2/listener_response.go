@@ -6,34 +6,34 @@ type CreateListenerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-type ListListenersByLoadBalancerIdResponse struct {
+type ListListenersByLoadBalancerIDResponse struct {
 	Data []Listener `json:"data"`
 }
 
-type GetListenerByIdResponse struct {
+type GetListenerByIDResponse struct {
 	Data Listener `json:"data"`
 }
 
 type Listener struct {
-	UUID                            string                          `json:"uuid"`
-	Name                            string                          `json:"name"`
-	Description                     string                          `json:"description,omitempty"`
-	Protocol                        string                          `json:"protocol"`
-	ProtocolPort                    int                             `json:"protocolPort"`
-	ConnectionLimit                 int                             `json:"connectionLimit"`
-	DefaultPoolId                   string                          `json:"defaultPoolId"`
-	DefaultPoolName                 string                          `json:"defaultPoolName"`
-	TimeoutClient                   int                             `json:"timeoutClient"`
-	TimeoutMember                   int                             `json:"timeoutMember"`
-	TimeoutConnection               int                             `json:"timeoutConnection"`
-	AllowedCidrs                    string                          `json:"allowedCidrs"`
-	CertificateAuthorities          []string                        `json:"certificateAuthorities"`
-	DisplayStatus                   string                          `json:"displayStatus"`
-	CreatedAt                       string                          `json:"createdAt"`
-	UpdatedAt                       string                          `json:"updatedAt"`
-	DefaultCertificateAuthority     *string                         `json:"defaultCertificateAuthority"`
-	ClientCertificateAuthentication *string                         `json:"clientCertificateAuthentication"`
-	ProgressStatus                  string                          `json:"progressStatus"`
+	UUID                            string                        `json:"uuid"`
+	Name                            string                        `json:"name"`
+	Description                     string                        `json:"description,omitempty"`
+	Protocol                        string                        `json:"protocol"`
+	ProtocolPort                    int                           `json:"protocolPort"`
+	ConnectionLimit                 int                           `json:"connectionLimit"`
+	DefaultPoolID                   string                        `json:"defaultPoolId"`
+	DefaultPoolName                 string                        `json:"defaultPoolName"`
+	TimeoutClient                   int                           `json:"timeoutClient"`
+	TimeoutMember                   int                           `json:"timeoutMember"`
+	TimeoutConnection               int                           `json:"timeoutConnection"`
+	AllowedCidrs                    string                        `json:"allowedCidrs"`
+	CertificateAuthorities          []string                      `json:"certificateAuthorities"`
+	DisplayStatus                   string                        `json:"displayStatus"`
+	CreatedAt                       string                        `json:"createdAt"`
+	UpdatedAt                       string                        `json:"updatedAt"`
+	DefaultCertificateAuthority     *string                       `json:"defaultCertificateAuthority"`
+	ClientCertificateAuthentication *string                       `json:"clientCertificateAuthentication"`
+	ProgressStatus                  string                        `json:"progressStatus"`
 	InsertHeaders                   []entity.ListenerInsertHeader `json:"insertHeaders"`
 }
 
@@ -43,7 +43,7 @@ func (s *CreateListenerResponse) ToEntityListener() *entity.Listener {
 	}
 }
 
-func (s *ListListenersByLoadBalancerIdResponse) ToEntityListListeners() *entity.ListListeners {
+func (s *ListListenersByLoadBalancerIDResponse) ToEntityListListeners() *entity.ListListeners {
 	listeners := &entity.ListListeners{}
 	for _, itemListener := range s.Data {
 		listeners.Add(itemListener.toEntityListener())
@@ -70,7 +70,7 @@ func (s *Listener) toEntityListener() *entity.Listener {
 		Protocol:                        s.Protocol,
 		ProtocolPort:                    s.ProtocolPort,
 		ConnectionLimit:                 s.ConnectionLimit,
-		DefaultPoolId:                   s.DefaultPoolId,
+		DefaultPoolID:                   s.DefaultPoolID,
 		DefaultPoolName:                 s.DefaultPoolName,
 		TimeoutClient:                   s.TimeoutClient,
 		TimeoutMember:                   s.TimeoutMember,
@@ -87,6 +87,6 @@ func (s *Listener) toEntityListener() *entity.Listener {
 	}
 }
 
-func (s *GetListenerByIdResponse) ToEntityListener() *entity.Listener {
+func (s *GetListenerByIDResponse) ToEntityListener() *entity.Listener {
 	return s.Data.toEntityListener()
 }

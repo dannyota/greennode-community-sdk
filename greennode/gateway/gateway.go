@@ -38,32 +38,32 @@ type vnetworkGateway struct {
 	vnetworkGatewayInternalV1 VNetworkGatewayInternalV1
 }
 
-func NewIamGateway(endpoint, projectId string, hc client.HttpClient) IamGateway {
+func NewIamGateway(endpoint, projectID string, hc client.HTTPClient) IamGateway {
 	iamSvcV2 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v2").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	return &iamGateway{
 		iamGatewayV2: NewIamGatewayV2(iamSvcV2),
 	}
 }
 
-func NewVServerGateway(endpoint, projectId string, hc client.HttpClient) VServerGateway {
+func NewVServerGateway(endpoint, projectID string, hc client.HTTPClient) VServerGateway {
 	vserverSvcV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	vserverInternalSvcV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "internal").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	vserverSvcV2 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v2").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	return &vserverGateway{
 		endpoint:                 endpoint,
@@ -73,21 +73,21 @@ func NewVServerGateway(endpoint, projectId string, hc client.HttpClient) VServer
 	}
 }
 
-func NewVLBGateway(lbEndpoint, serverEndpoint, projectId string, hc client.HttpClient) VLBGateway {
+func NewVLBGateway(lbEndpoint, serverEndpoint, projectID string, hc client.HTTPClient) VLBGateway {
 	vlbSvcV2 := client.NewServiceClient().
 		WithEndpoint(lbEndpoint + "v2").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	vlbSvcIn := client.NewServiceClient().
 		WithEndpoint(lbEndpoint + "internal").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	vserverSvcV2 := client.NewServiceClient().
 		WithEndpoint(serverEndpoint + "v2").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	return &vlbGateway{
 		endpoint:           lbEndpoint,
@@ -96,27 +96,27 @@ func NewVLBGateway(lbEndpoint, serverEndpoint, projectId string, hc client.HttpC
 	}
 }
 
-func NewVNetworkGateway(endpoint, zoneId, projectId, userId string, hc client.HttpClient) VNetworkGateway {
+func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc client.HTTPClient) VNetworkGateway {
 	vnetworkSvcV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "vnetwork/v1").
 		WithClient(hc).
-		WithZoneId(zoneId).
-		WithProjectId(projectId).
-		WithUserId(userId)
+		WithZoneID(zoneID).
+		WithProjectID(projectID).
+		WithUserID(userID)
 
 	vnetworkSvcV2 := client.NewServiceClient().
 		WithEndpoint(endpoint + "vnetwork/az/v1").
 		WithClient(hc).
-		WithZoneId(zoneId).
-		WithProjectId(projectId).
-		WithUserId(userId)
+		WithZoneID(zoneID).
+		WithProjectID(projectID).
+		WithUserID(userID)
 
 	vnetworkSvcInternalV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "internal/v1").
 		WithClient(hc).
-		WithZoneId(zoneId).
-		WithProjectId(projectId).
-		WithUserId(userId)
+		WithZoneID(zoneID).
+		WithProjectID(projectID).
+		WithUserID(userID)
 
 	return &vnetworkGateway{
 		endpoint:                  endpoint,
@@ -180,7 +180,7 @@ type glbGateway struct {
 	glbGatewayV1 GLBGatewayV1
 }
 
-func NewGLBGateway(endpoint string, hc client.HttpClient) GLBGateway {
+func NewGLBGateway(endpoint string, hc client.HTTPClient) GLBGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc)
@@ -219,16 +219,16 @@ type vdnsGateway struct {
 	dnsServiceInternal dns.VDnsServiceInternal
 }
 
-func NewVDnsGateway(endpoint, projectId string, hc client.HttpClient) VDnsGateway {
+func NewVDnsGateway(endpoint, projectID string, hc client.HTTPClient) VDnsGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	internalClient := client.NewServiceClient().
 		WithEndpoint(endpoint + "internal/v1").
 		WithClient(hc).
-		WithProjectId(projectId)
+		WithProjectID(projectID)
 
 	return &vdnsGateway{
 		endpoint:           endpoint,

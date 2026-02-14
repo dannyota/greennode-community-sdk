@@ -2,41 +2,41 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewGetAllAddressPairByVirtualSubnetIdRequest(subnetId string) IGetAllAddressPairByVirtualSubnetIdRequest {
-	opt := new(GetAllAddressPairByVirtualSubnetIdRequest)
-	opt.VirtualSubnetId = subnetId
+func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) IGetAllAddressPairByVirtualSubnetIDRequest {
+	opt := new(GetAllAddressPairByVirtualSubnetIDRequest)
+	opt.VirtualSubnetID = subnetID
 	return opt
 }
 
-type GetAllAddressPairByVirtualSubnetIdRequest struct {
+type GetAllAddressPairByVirtualSubnetIDRequest struct {
 	common.UserAgent
-	VirtualSubnetId string
+	VirtualSubnetID string
 }
 
-func (s *GetAllAddressPairByVirtualSubnetIdRequest) GetVirtualSubnetId() string {
-	return s.VirtualSubnetId
+func (s *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string {
+	return s.VirtualSubnetID
 }
 
 // --------------------------------------------------------
 
-func NewSetAddressPairInVirtualSubnetRequest(subnetId, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
+func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
 	opt := new(SetAddressPairInVirtualSubnetRequest)
-	opt.VirtualSubnetId = subnetId
+	opt.VirtualSubnetID = subnetID
 	opt.AddressPairRequest = AddressPairRequest{
 		CIDR:                       CIDR,
-		InternalNetworkInterfaceId: networkInterfaceID,
+		InternalNetworkInterfaceID: networkInterfaceID,
 	}
 	return opt
 }
 
 type SetAddressPairInVirtualSubnetRequest struct {
 	common.UserAgent
-	VirtualSubnetId    string
+	VirtualSubnetID    string
 	AddressPairRequest AddressPairRequest
 }
 
-func (s *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetId() string {
-	return s.VirtualSubnetId
+func (s *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
+	return s.VirtualSubnetID
 }
 
 func (s *SetAddressPairInVirtualSubnetRequest) ToRequestBody() interface{} {
@@ -45,7 +45,7 @@ func (s *SetAddressPairInVirtualSubnetRequest) ToRequestBody() interface{} {
 
 type AddressPairRequest struct {
 	CIDR                       string `json:"cidr"`
-	InternalNetworkInterfaceId string `json:"internalNetworkInterfaceId"`
+	InternalNetworkInterfaceID string `json:"internalNetworkInterfaceId"`
 }
 
 // --------------------------------------------------------
@@ -82,7 +82,7 @@ const (
 
 type CreateAddressPairRequest struct {
 	// Is the ID of the network interface that the address pair will be attached to.
-	InternalNetworkInterfaceId string `json:"internalNetworkInterfaceId"` // required
+	InternalNetworkInterfaceID string `json:"internalNetworkInterfaceId"` // required
 
 	// Is the pair mode of the address pair.
 	Mode *AddressPairMode `json:"mode,omitempty"`
@@ -103,7 +103,7 @@ func (s *CreateAddressPairRequest) ToMap() map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"internalNetworkInterfaceId": s.InternalNetworkInterfaceId,
+		"internalNetworkInterfaceId": s.InternalNetworkInterfaceID,
 		"mode":                       mode,
 	}
 }

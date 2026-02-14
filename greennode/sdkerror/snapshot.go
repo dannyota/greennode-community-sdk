@@ -17,7 +17,7 @@ func WithErrorSnapshotNameNotValid(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNameNotValid) {
 			sdkError.WithErrorCode(EcVServerSnapshotNameNotValid).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -32,7 +32,7 @@ func WithErrorSnapshotNameNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNotFound) {
 			sdkError.WithErrorCode(EcVServerSnapshotNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

@@ -6,6 +6,6 @@ type NetworkServiceV2 struct {
 	VserverClient client.ServiceClient
 }
 
-func (s *NetworkServiceV2) getProjectId() string {
-	return s.VserverClient.GetProjectId()
+func (s *NetworkServiceV2) getProjectID() string {
+	return s.VserverClient.GetProjectID()
 }

@@ -8,7 +8,7 @@ import (
 
 func (s *ServerServiceInternalV1) CreateSystemTags(opts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error) {
 
-	url := createSystemTagUrl(s.VServerClient)
+	url := createSystemTagURL(s.VServerClient)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 
 	rawResp := new([]SystemTagResponse)
@@ -16,9 +16,9 @@ func (s *ServerServiceInternalV1) CreateSystemTags(opts ICreateSystemTagRequest)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonResponse(rawResp).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONResponse(rawResp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)

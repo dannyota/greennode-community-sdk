@@ -2,7 +2,7 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type GetNetworkByIdResponse struct {
+type GetNetworkByIDResponse struct {
 	Status      string   `json:"status"`
 	ElasticIps  []string `json:"elasticIps"`
 	DisplayName string   `json:"displayName"`
@@ -11,12 +11,12 @@ type GetNetworkByIdResponse struct {
 	Cidr        string   `json:"cidr"`
 }
 
-func (s *GetNetworkByIdResponse) ToEntityNetwork() *entity.Network {
+func (s *GetNetworkByIDResponse) ToEntityNetwork() *entity.Network {
 	return &entity.Network{
 		Status:     s.Status,
 		ElasticIps: s.ElasticIps,
 		Name:       s.DisplayName,
-		Id:         s.ID,
+		ID:         s.ID,
 		CreatedAt:  s.CreatedAt,
 		Cidr:       s.Cidr,
 	}

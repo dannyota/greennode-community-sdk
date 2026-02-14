@@ -12,7 +12,7 @@ const (
 	patternSubnetNotBelongNetwork           = `subnet id: [^.]+ belong to network id: [^.]+ not found`
 	patternInternalNetworkInterfaceNotFound = `internal network interface with id [^.]+ is not found`
 	patternWanIpAvailable                   = "wan ip is available"
-	pattermWapIdNotFound                    = "cannot get wan ip with id"
+	pattermWapIDNotFound                    = "cannot get wan ip with id"
 	patternAddressPairExisted               = `address pair with internal network interface  id [^.]+ already exists`
 )
 
@@ -32,10 +32,10 @@ func WithErrorNetworkNotFound(errResp ErrorResponse) func(sdkError Error) {
 
 		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternNetworkNotFound) ||
-			strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "VPC_IS_NOT_FOUND" {
+			strings.ToUpper(strings.TrimSpace(errResp.Err().Error())) == "VPC_IS_NOT_FOUND" {
 			sdkError.WithErrorCode(EcVServerNetworkNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -50,7 +50,7 @@ func WithErrorSubnetNotBelongNetwork(errResp ErrorResponse) func(sdkError Error)
 		if regexErrorSubnetNotBelongNetwork.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerSubnetNotBelongNetwork).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -64,10 +64,10 @@ func WithErrorSubnetNotFound(errResp ErrorResponse) func(sdkError Error) {
 		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorSubnetNotFound.FindString(errMsg) != "" ||
 			regexErrorSubnetNotFound2.FindString(errMsg) != "" ||
-			strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "SUBNET_IS_NOT_FOUND" {
+			strings.ToUpper(strings.TrimSpace(errResp.Err().Error())) == "SUBNET_IS_NOT_FOUND" {
 			sdkError.WithErrorCode(EcVServerSubnetNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -82,7 +82,7 @@ func WithErrorInternalNetworkInterfaceNotFound(errResp ErrorResponse) func(sdkEr
 		if regexErrorInternalNetworkInterfaceNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerInternalNetworkInterfaceNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -97,7 +97,7 @@ func WithErrorAddressPairExisted(errResp ErrorResponse) func(sdkError Error) {
 		if regexErrorAddressPairExisted.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerAddressPairExisted).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -112,22 +112,22 @@ func WithErrorWanIpAvailable(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternWanIpAvailable) {
 			sdkError.WithErrorCode(EcVServerWanIpAvailable).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
 
-func WithErrorWanIdNotFound(errResp ErrorResponse) func(sdkError Error) {
+func WithErrorWanIDNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
 		if errResp == nil {
 			return
 		}
 
 		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), pattermWapIdNotFound) {
-			sdkError.WithErrorCode(EcVServerWanIdNotFound).
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), pattermWapIDNotFound) {
+			sdkError.WithErrorCode(EcVServerWanIDNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

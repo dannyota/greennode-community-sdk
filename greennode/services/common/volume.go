@@ -1,17 +1,17 @@
 package common
 
 type BlockVolumeCommon struct {
-	BlockVolumeId string
+	BlockVolumeID string
 }
 
-func (s *BlockVolumeCommon) GetBlockVolumeId() string {
-	return s.BlockVolumeId
+func (s *BlockVolumeCommon) GetBlockVolumeID() string {
+	return s.BlockVolumeID
 }
 
 type VolumeTypeCommon struct {
-	VolumeTypeId string
+	VolumeTypeID string
 }
 
-func (s *VolumeTypeCommon) GetVolumeTypeId() string {
-	return s.VolumeTypeId
+func (s *VolumeTypeCommon) GetVolumeTypeID() string {
+	return s.VolumeTypeID
 }

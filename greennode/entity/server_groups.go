@@ -4,7 +4,7 @@ type ServerGroup struct {
 	UUID        string
 	Name        string
 	Description string
-	PolicyId    string
+	PolicyID    string
 	PolicyName  string
 	Servers     []ServerGroupMember
 }
@@ -26,9 +26,9 @@ func (s *ListServerGroups) Add(item *ServerGroup) {
 	s.Items = append(s.Items, item)
 }
 
-func (s *ListServerGroups) FindServerGroupByServerGroupId(serverGroupId string) (*ServerGroup, bool) {
+func (s *ListServerGroups) FindServerGroupByServerGroupID(serverGroupID string) (*ServerGroup, bool) {
 	for _, item := range s.Items {
-		if item.UUID == serverGroupId {
+		if item.UUID == serverGroupID {
 			return item, true
 		}
 	}

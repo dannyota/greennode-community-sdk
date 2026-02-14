@@ -3,7 +3,7 @@ package v2
 type ICreateBlockVolumeRequest interface {
 	ToRequestBody() interface{}
 	ToMap() map[string]interface{}
-	GetListParameters() []interface{}
+	ListParameters() []interface{}
 	GetSize() int64
 	GetVolumeType() string
 	GetVolumeName() string
@@ -14,15 +14,15 @@ type ICreateBlockVolumeRequest interface {
 	WithMultiAttach(multiAttach bool) ICreateBlockVolumeRequest
 	WithSize(size int64) ICreateBlockVolumeRequest
 	WithEncryptionType(et EncryptType) ICreateBlockVolumeRequest
-	WithVolumeType(volumeTypeId string) ICreateBlockVolumeRequest
+	WithVolumeType(volumeTypeID string) ICreateBlockVolumeRequest
 	WithZone(zone string) ICreateBlockVolumeRequest
 	WithPoolName(poolName string) ICreateBlockVolumeRequest
 	WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) ICreateBlockVolumeRequest
 	WithTags(tags ...string) ICreateBlockVolumeRequest
 }
 
-type IDeleteBlockVolumeByIdRequest interface {
-	GetBlockVolumeId() string
+type IDeleteBlockVolumeByIDRequest interface {
+	GetBlockVolumeID() string
 }
 
 type IListBlockVolumesRequest interface {
@@ -32,45 +32,45 @@ type IListBlockVolumesRequest interface {
 	ToMap() map[string]interface{}
 }
 
-type IGetBlockVolumeByIdRequest interface {
-	GetBlockVolumeId() string
+type IGetBlockVolumeByIDRequest interface {
+	GetBlockVolumeID() string
 }
 
-type IResizeBlockVolumeByIdRequest interface {
+type IResizeBlockVolumeByIDRequest interface {
 	ToRequestBody() interface{}
-	GetBlockVolumeId() string
+	GetBlockVolumeID() string
 	GetSize() int
-	GetVolumeTypeId() string
+	GetVolumeTypeID() string
 }
 
-type IListSnapshotsByBlockVolumeIdRequest interface {
-	GetBlockVolumeId() string
+type IListSnapshotsByBlockVolumeIDRequest interface {
+	GetBlockVolumeID() string
 	ToQuery() (string, error)
 	GetDefaultQuery() string
 }
 
-type ICreateSnapshotByBlockVolumeIdRequest interface {
-	GetBlockVolumeId() string
+type ICreateSnapshotByBlockVolumeIDRequest interface {
+	GetBlockVolumeID() string
 	ToRequestBody() interface{}
-	WithDescription(desc string) ICreateSnapshotByBlockVolumeIdRequest
-	WithPermanently(val bool) ICreateSnapshotByBlockVolumeIdRequest
-	WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIdRequest
+	WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest
+	WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest
+	WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest
 }
 
-type IDeleteSnapshotByIdRequest interface {
-	GetSnapshotId() string
-	GetBlockVolumeId() string
+type IDeleteSnapshotByIDRequest interface {
+	GetSnapshotID() string
+	GetBlockVolumeID() string
 }
 
-type IGetUnderBlockVolumeIdRequest interface {
-	GetBlockVolumeId() string
+type IGetUnderBlockVolumeIDRequest interface {
+	GetBlockVolumeID() string
 }
 
-type IMigrateBlockVolumeByIdRequest interface {
-	GetBlockVolumeId() string
+type IMigrateBlockVolumeByIDRequest interface {
+	GetBlockVolumeID() string
 	ToRequestBody() interface{}
-	WithTags(tags ...string) IMigrateBlockVolumeByIdRequest
-	WithAction(action MigrateAction) IMigrateBlockVolumeByIdRequest
-	WithConfirm(confirm bool) IMigrateBlockVolumeByIdRequest
+	WithTags(tags ...string) IMigrateBlockVolumeByIDRequest
+	WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest
+	WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest
 	IsConfirm() bool
 }

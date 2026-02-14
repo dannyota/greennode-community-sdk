@@ -13,11 +13,11 @@ type ICreateLoadBalancerRequest interface {
 	WithTags(tags ...string) ICreateLoadBalancerRequest
 	WithScheme(scheme LoadBalancerScheme) ICreateLoadBalancerRequest
 	WithAutoScalable(autoScalable bool) ICreateLoadBalancerRequest
-	WithPackageId(packageId string) ICreateLoadBalancerRequest
-	WithSubnetId(subnetId string) ICreateLoadBalancerRequest
+	WithPackageID(packageID string) ICreateLoadBalancerRequest
+	WithSubnetID(subnetID string) ICreateLoadBalancerRequest
 	WithType(typeVal LoadBalancerType) ICreateLoadBalancerRequest
 	WithPoc(poc bool) ICreateLoadBalancerRequest
-	WithZoneId(zoneId common.Zone) ICreateLoadBalancerRequest
+	WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
@@ -25,24 +25,24 @@ type ICreateLoadBalancerRequest interface {
 type IResizeLoadBalancerRequest interface {
 	ToRequestBody() interface{}
 	AddUserAgent(agent ...string) IResizeLoadBalancerRequest
-	WithPackageId(packageId string) IResizeLoadBalancerRequest
+	WithPackageID(packageID string) IResizeLoadBalancerRequest
 	ParseUserAgent() string
 
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 }
 
 type IListLoadBalancerPackagesRequest interface {
-	WithZoneId(zoneId common.Zone) IListLoadBalancerPackagesRequest
-	GetZoneId() string
+	WithZoneID(zoneID common.Zone) IListLoadBalancerPackagesRequest
+	GetZoneID() string
 	AddUserAgent(agent ...string) IListLoadBalancerPackagesRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
-type IGetLoadBalancerByIdRequest interface {
-	AddUserAgent(agent ...string) IGetLoadBalancerByIdRequest
+type IGetLoadBalancerByIDRequest interface {
+	AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest
 	ParseUserAgent() string
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 }
 
 type IListLoadBalancersRequest interface {
@@ -57,8 +57,8 @@ type IListLoadBalancersRequest interface {
 type ICreateListenerRequest interface {
 	ToRequestBody() interface{}
 	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
-	WithLoadBalancerId(lbid string) ICreateListenerRequest
-	WithDefaultPoolId(poolId string) ICreateListenerRequest
+	WithLoadBalancerID(lbid string) ICreateListenerRequest
+	WithDefaultPoolID(poolID string) ICreateListenerRequest
 	WithTimeoutClient(toc int) ICreateListenerRequest
 	WithTimeoutConnection(toc int) ICreateListenerRequest
 	WithTimeoutMember(tom int) ICreateListenerRequest
@@ -68,20 +68,20 @@ type ICreateListenerRequest interface {
 	WithClientCertificate(clientCert *string) ICreateListenerRequest
 	AddCidrs(cidrs ...string) ICreateListenerRequest
 	ParseUserAgent() string
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ToMap() map[string]interface{}
 	AddUserAgent(agent ...string) ICreateListenerRequest
 }
 
 type IUpdateListenerRequest interface {
-	GetLoadBalancerId() string
-	GetListenerId() string
+	GetLoadBalancerID() string
+	GetListenerID() string
 	ToRequestBody() interface{}
 	WithCidrs(cidrs ...string) IUpdateListenerRequest
 	WithTimeoutClient(toc int) IUpdateListenerRequest
 	WithTimeoutConnection(toc int) IUpdateListenerRequest
 	WithTimeoutMember(tom int) IUpdateListenerRequest
-	WithDefaultPoolId(poolId string) IUpdateListenerRequest
+	WithDefaultPoolID(poolID string) IUpdateListenerRequest
 	WithInsertHeaders(headers ...string) IUpdateListenerRequest
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IUpdateListenerRequest
@@ -91,85 +91,85 @@ type IUpdateListenerRequest interface {
 	WithDefaultCertificateAuthority(defaultCA string) IUpdateListenerRequest
 }
 
-type IGetPoolHealthMonitorByIdRequest interface {
-	GetLoadBalancerId() string
-	GetPoolId() string
+type IGetPoolHealthMonitorByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetPoolHealthMonitorByIdRequest
+	AddUserAgent(agent ...string) IGetPoolHealthMonitorByIDRequest
 }
 
 type ICreatePoolRequest interface {
 	ToRequestBody() interface{}
 	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
 	WithMembers(members ...IMemberRequest) ICreatePoolRequest
-	WithLoadBalancerId(lbId string) ICreatePoolRequest
+	WithLoadBalancerID(lbID string) ICreatePoolRequest
 	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
 	ToMap() map[string]interface{}
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) ICreatePoolRequest
 }
 
 type IUpdatePoolRequest interface {
-	GetPoolId() string
+	GetPoolID() string
 	ToRequestBody() interface{}
 	WithHealthMonitor(monitor IHealthMonitorRequest) IUpdatePoolRequest
-	WithLoadBalancerId(lbId string) IUpdatePoolRequest
+	WithLoadBalancerID(lbID string) IUpdatePoolRequest
 	WithAlgorithm(algorithm PoolAlgorithm) IUpdatePoolRequest
 	WithStickiness(v *bool) IUpdatePoolRequest
 	WithTLSEncryption(v *bool) IUpdatePoolRequest
 	ToMap() map[string]interface{}
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IUpdatePoolRequest
 }
 
-type IListListenersByLoadBalancerIdRequest interface {
-	GetLoadBalancerId() string
+type IListListenersByLoadBalancerIDRequest interface {
+	GetLoadBalancerID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListListenersByLoadBalancerIdRequest
+	AddUserAgent(agent ...string) IListListenersByLoadBalancerIDRequest
 }
 
-type IListPoolsByLoadBalancerIdRequest interface {
-	GetLoadBalancerId() string
+type IListPoolsByLoadBalancerIDRequest interface {
+	GetLoadBalancerID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListPoolsByLoadBalancerIdRequest
+	AddUserAgent(agent ...string) IListPoolsByLoadBalancerIDRequest
 }
 
 type IUpdatePoolMembersRequest interface {
 	WithMembers(members ...IMemberRequest) IUpdatePoolMembersRequest
 	ToRequestBody() interface{}
-	GetLoadBalancerId() string
-	GetPoolId() string
+	GetLoadBalancerID() string
+	GetPoolID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IUpdatePoolMembersRequest
 }
 
 type IListPoolMembersRequest interface {
-	GetLoadBalancerId() string
-	GetPoolId() string
+	GetLoadBalancerID() string
+	GetPoolID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IListPoolMembersRequest
 }
 
-type IDeletePoolByIdRequest interface {
-	GetLoadBalancerId() string
-	GetPoolId() string
+type IDeletePoolByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeletePoolByIdRequest
+	AddUserAgent(agent ...string) IDeletePoolByIDRequest
 }
 
-type IDeleteListenerByIdRequest interface {
-	GetLoadBalancerId() string
-	GetListenerId() string
+type IDeleteListenerByIDRequest interface {
+	GetLoadBalancerID() string
+	GetListenerID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeleteListenerByIdRequest
+	AddUserAgent(agent ...string) IDeleteListenerByIDRequest
 }
 
-type IDeleteLoadBalancerByIdRequest interface {
-	GetLoadBalancerId() string
+type IDeleteLoadBalancerByIDRequest interface {
+	GetLoadBalancerID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeleteLoadBalancerByIdRequest
+	AddUserAgent(agent ...string) IDeleteLoadBalancerByIDRequest
 }
 
 type IHealthMonitorRequest interface {
@@ -181,7 +181,7 @@ type IHealthMonitorRequest interface {
 	WithInterval(interval int) IHealthMonitorRequest
 	WithTimeout(to int) IHealthMonitorRequest
 	WithHealthCheckMethod(method *HealthCheckMethod) IHealthMonitorRequest
-	WithHttpVersion(version *HealthCheckHttpVersion) IHealthMonitorRequest
+	WithHTTPVersion(version *HealthCheckHTTPVersion) IHealthMonitorRequest
 	WithHealthCheckPath(path *string) IHealthMonitorRequest
 	WithSuccessCode(code *string) IHealthMonitorRequest
 	WithDomainName(domain *string) IHealthMonitorRequest
@@ -194,13 +194,13 @@ type IMemberRequest interface {
 }
 
 type IListTagsRequest interface {
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IListTagsRequest
 }
 
 type ICreateTagsRequest interface {
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ToRequestBody() interface{}
 	ParseUserAgent() string
 	WithTags(tags ...string) ICreateTagsRequest
@@ -208,7 +208,7 @@ type ICreateTagsRequest interface {
 }
 
 type IUpdateTagsRequest interface {
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ToRequestBody(lstTags *entity.ListTags) interface{}
 	ParseUserAgent() string
 	WithTags(tags ...string) IUpdateTagsRequest
@@ -220,16 +220,16 @@ type IUpdateTagsRequest interface {
 
 type IListPoliciesRequest interface {
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
+	GetLoadBalancerID() string
+	GetListenerID() string
 	AddUserAgent(agent ...string) IListPoliciesRequest
 }
 
 type ICreatePolicyRequest interface {
 	ToRequestBody() interface{}
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
+	GetLoadBalancerID() string
+	GetListenerID() string
 	ToMap() map[string]interface{}
 	AddUserAgent(agent ...string) ICreatePolicyRequest
 
@@ -238,7 +238,7 @@ type ICreatePolicyRequest interface {
 	WithAction(action PolicyAction) ICreatePolicyRequest
 
 	// only for action redirect to pool
-	WithRedirectPoolId(redirectPoolId string) ICreatePolicyRequest
+	WithRedirectPoolID(redirectPoolID string) ICreatePolicyRequest
 
 	// only for action redirect to url
 	WithRedirectURL(redirectURL string) ICreatePolicyRequest
@@ -248,72 +248,72 @@ type ICreatePolicyRequest interface {
 	WithKeepQueryString(keepQueryString bool) ICreatePolicyRequest
 }
 
-type IGetPolicyByIdRequest interface {
+type IGetPolicyByIDRequest interface {
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
-	GetPolicyId() string
-	AddUserAgent(agent ...string) IGetPolicyByIdRequest
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
+	AddUserAgent(agent ...string) IGetPolicyByIDRequest
 }
 
 type IUpdatePolicyRequest interface {
 	ToRequestBody() interface{}
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
-	GetPolicyId() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
 	AddUserAgent(agent ...string) IUpdatePolicyRequest
 
 	WithAction(action PolicyAction) IUpdatePolicyRequest
 	WithRules(rules ...L7RuleRequest) IUpdatePolicyRequest
-	WithRedirectPoolID(redirectPoolId string) IUpdatePolicyRequest
+	WithRedirectPoolID(redirectPoolID string) IUpdatePolicyRequest
 	WithRedirectURL(redirectURL string) IUpdatePolicyRequest
 	WithRedirectHTTPCode(redirectHTTPCode int) IUpdatePolicyRequest
 	WithKeepQueryString(keepQueryString bool) IUpdatePolicyRequest
 }
 
-type IDeletePolicyByIdRequest interface {
+type IDeletePolicyByIDRequest interface {
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
-	GetPolicyId() string
-	AddUserAgent(agent ...string) IDeletePolicyByIdRequest
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
+	AddUserAgent(agent ...string) IDeletePolicyByIDRequest
 }
 
 type IReorderPoliciesRequest interface {
 	ToRequestBody() interface{}
 	ParseUserAgent() string
-	GetLoadBalancerId() string
-	GetListenerId() string
+	GetLoadBalancerID() string
+	GetListenerID() string
 	AddUserAgent(agent ...string) IReorderPoliciesRequest
 
 	WithPoliciesOrder(lstPolicies []string) IReorderPoliciesRequest
 }
 
-type IGetPoolByIdRequest interface {
-	GetLoadBalancerId() string
-	GetPoolId() string
+type IGetPoolByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetPoolByIdRequest
+	AddUserAgent(agent ...string) IGetPoolByIDRequest
 }
 
-type IGetListenerByIdRequest interface {
-	GetLoadBalancerId() string
-	GetListenerId() string
+type IGetListenerByIDRequest interface {
+	GetLoadBalancerID() string
+	GetListenerID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetListenerByIdRequest
+	AddUserAgent(agent ...string) IGetListenerByIDRequest
 }
 
-type IResizeLoadBalancerByIdRequest interface {
-	GetLoadBalancerId() string
+type IResizeLoadBalancerByIDRequest interface {
+	GetLoadBalancerID() string
 	ToMap() map[string]interface{}
 	ParseUserAgent() string
 	ToRequestBody() interface{}
-	AddUserAgent(agent ...string) IResizeLoadBalancerByIdRequest
+	AddUserAgent(agent ...string) IResizeLoadBalancerByIDRequest
 }
 
 type IScaleLoadBalancerRequest interface {
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ToMap() map[string]interface{}
 	ParseUserAgent() string
 	ToRequestBody() interface{}
@@ -329,10 +329,10 @@ type IListCertificatesRequest interface {
 	AddUserAgent(agent ...string) IListCertificatesRequest
 }
 
-type IGetCertificateByIdRequest interface {
-	GetCertificateId() string
+type IGetCertificateByIDRequest interface {
+	GetCertificateID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetCertificateByIdRequest
+	AddUserAgent(agent ...string) IGetCertificateByIDRequest
 }
 
 type ICreateCertificateRequest interface {
@@ -346,8 +346,8 @@ type ICreateCertificateRequest interface {
 	WithPrivateKey(privateKey string) ICreateCertificateRequest
 }
 
-type IDeleteCertificateByIdRequest interface {
-	GetCertificateId() string
+type IDeleteCertificateByIDRequest interface {
+	GetCertificateID() string
 	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeleteCertificateByIdRequest
+	AddUserAgent(agent ...string) IDeleteCertificateByIDRequest
 }

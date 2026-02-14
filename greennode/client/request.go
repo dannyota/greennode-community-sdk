@@ -1,13 +1,13 @@
 package client
 
 type request struct {
-	JsonBody     interface{}
-	JsonResponse interface{}
-	JsonError    interface{}
-	MoreHeaders  map[string]string
+	jsonBody     interface{}
+	jsonResponse interface{}
+	jsonError    interface{}
+	moreHeaders  map[string]string
 	okCodes      map[int]struct{}
-	Method       requestMethod
-	SkipAuth     bool
+	method       requestMethod
+	skipAuth     bool
 }
 
 type requestMethod string
@@ -33,61 +33,61 @@ func (s *request) WithOkCodes(okCodes ...int) Request {
 	return s
 }
 
-func (s *request) WithUserId(userId string) Request {
-	return s.WithHeader("portal-user-id", userId)
+func (s *request) WithUserID(userID string) Request {
+	return s.WithHeader("portal-user-id", userID)
 }
 
-func (s *request) WithJsonBody(jsonBody interface{}) Request {
-	s.JsonBody = jsonBody
+func (s *request) WithJSONBody(jsonBody interface{}) Request {
+	s.jsonBody = jsonBody
 	return s
 }
 
-func (s *request) WithJsonResponse(jsonResponse interface{}) Request {
-	s.JsonResponse = jsonResponse
+func (s *request) WithJSONResponse(jsonResponse interface{}) Request {
+	s.jsonResponse = jsonResponse
 	return s
 }
 
-func (s *request) WithJsonError(jsonError interface{}) Request {
-	s.JsonError = jsonError
+func (s *request) WithJSONError(jsonError interface{}) Request {
+	s.jsonError = jsonError
 	return s
 }
 
 func (s *request) WithRequestMethod(method requestMethod) Request {
-	s.Method = method
+	s.method = method
 	return s
 }
 
 func (s *request) WithSkipAuth(skipAuth bool) Request {
-	s.SkipAuth = skipAuth
+	s.skipAuth = skipAuth
 	return s
 }
 
-func (s *request) GetRequestBody() interface{} {
-	return s.JsonBody
+func (s *request) RequestBody() interface{} {
+	return s.jsonBody
 }
 
-func (s *request) GetJsonError() interface{} {
-	return s.JsonError
+func (s *request) JSONError() interface{} {
+	return s.jsonError
 }
 
-func (s *request) GetRequestMethod() string {
-	return string(s.Method)
+func (s *request) RequestMethod() string {
+	return string(s.method)
 }
 
-func (s *request) GetMoreHeaders() map[string]string {
-	return s.MoreHeaders
+func (s *request) MoreHeaders() map[string]string {
+	return s.moreHeaders
 }
 
-func (s *request) GetJsonResponse() interface{} {
-	return s.JsonResponse
+func (s *request) JSONResponse() interface{} {
+	return s.jsonResponse
 }
 
-func (s *request) SetJsonResponse(jsonResponse interface{}) {
-	s.JsonResponse = jsonResponse
+func (s *request) SetJSONResponse(jsonResponse interface{}) {
+	s.jsonResponse = jsonResponse
 }
 
-func (s *request) SetJsonError(jsonError interface{}) {
-	s.JsonError = jsonError
+func (s *request) SetJSONError(jsonError interface{}) {
+	s.jsonError = jsonError
 }
 
 func (s *request) ContainsOkCode(code ...int) bool {
@@ -104,26 +104,26 @@ func (s *request) WithHeader(key, value string) Request {
 		return s
 	}
 
-	if s.MoreHeaders == nil {
-		s.MoreHeaders = make(map[string]string)
+	if s.moreHeaders == nil {
+		s.moreHeaders = make(map[string]string)
 	}
 
-	s.MoreHeaders[key] = value
+	s.moreHeaders[key] = value
 	return s
 }
 
 func (s *request) WithMapHeaders(headers map[string]string) Request {
-	if s.MoreHeaders == nil {
-		s.MoreHeaders = make(map[string]string)
+	if s.moreHeaders == nil {
+		s.moreHeaders = make(map[string]string)
 	}
 
 	for k, v := range headers {
-		s.MoreHeaders[k] = v
+		s.moreHeaders[k] = v
 	}
 
 	return s
 }
 
 func (s *request) SkipAuthentication() bool {
-	return s.SkipAuth
+	return s.skipAuth
 }

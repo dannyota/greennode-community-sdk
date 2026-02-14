@@ -1,9 +1,9 @@
 package entity
 
 type Snapshot struct {
-	Id         string
+	ID         string
 	CreatedAt  string
-	VolumeId   string
+	VolumeID   string
 	Size       int64
 	VolumeSize int64
 	Status     string

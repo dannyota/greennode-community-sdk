@@ -29,7 +29,7 @@ func WithErrorVirtualAddressNotFound(errResp ErrorResponse) func(sdkError Error)
 		if regexErrorVirtualAddressNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -44,7 +44,7 @@ func WithErrorAddressPairNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if regexErrorAddressPairNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -59,7 +59,7 @@ func WithErrorVirtualAddressExceedQuota(errResp ErrorResponse) func(sdkError Err
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVirtualAddressExceedQuota) {
 			sdkError.WithErrorCode(EcVServerVirtualAddressExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -76,7 +76,7 @@ func WithErrorVirtualAddressInUse(errResp ErrorResponse) func(sdkError Error) {
 			regexErrorVirtualAddressInUse.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressInUse).
 				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}

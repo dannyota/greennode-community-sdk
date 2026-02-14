@@ -3,11 +3,11 @@ package v1
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type GetPortalInfoRequest struct {
-	BackEndProjectId string
+	BackEndProjectID string
 }
 
-func (s *GetPortalInfoRequest) GetBackEndProjectId() string {
-	return s.BackEndProjectId
+func (s *GetPortalInfoRequest) GetBackEndProjectID() string {
+	return s.BackEndProjectID
 }
 
 type ListProjectsRequest struct {

@@ -7,9 +7,9 @@ type ICreateLoadBalancerRequest interface {
 	AddUserAgent(agent ...string) ICreateLoadBalancerRequest
 	WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest
 	WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest
-	WithProjectId(projectId string) ICreateLoadBalancerRequest
+	WithProjectID(projectID string) ICreateLoadBalancerRequest
 	WithTags(tags ...string) ICreateLoadBalancerRequest
-	WithZoneId(zoneID common.Zone) ICreateLoadBalancerRequest
+	WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest
 	GetMapHeaders() map[string]string
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
@@ -18,14 +18,14 @@ type ICreateLoadBalancerRequest interface {
 type ICreateListenerRequest interface {
 	ToRequestBody() interface{}
 	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
-	WithLoadBalancerId(lbid string) ICreateListenerRequest
-	WithDefaultPoolId(poolId string) ICreateListenerRequest
+	WithLoadBalancerID(lbid string) ICreateListenerRequest
+	WithDefaultPoolID(poolID string) ICreateListenerRequest
 	WithTimeoutClient(toc int) ICreateListenerRequest
 	WithTimeoutConnection(toc int) ICreateListenerRequest
 	WithTimeoutMember(tom int) ICreateListenerRequest
 	AddCidrs(cidrs ...string) ICreateListenerRequest
 	ParseUserAgent() string
-	GetLoadBalancerId() string
+	GetLoadBalancerID() string
 	ToMap() map[string]interface{}
 }
 
@@ -44,7 +44,7 @@ type IHealthMonitorRequest interface {
 	WithInterval(interval int) IHealthMonitorRequest
 	WithTimeout(to int) IHealthMonitorRequest
 	WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest
-	WithHttpVersion(version HealthCheckHttpVersion) IHealthMonitorRequest
+	WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest
 	WithHealthCheckPath(path string) IHealthMonitorRequest
 	WithSuccessCode(code string) IHealthMonitorRequest
 	WithDomainName(domain string) IHealthMonitorRequest

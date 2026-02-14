@@ -133,7 +133,7 @@ func (s *SdkError) WithKVparameters(params ...interface{}) Error {
 	return s
 }
 
-func (s *SdkError) GetError() error {
+func (s *SdkError) Err() error {
 	return s.error
 }
 
@@ -141,15 +141,15 @@ func (s *SdkError) GetMessage() string {
 	return s.message
 }
 
-func (s *SdkError) GetErrorCode() ErrorCode {
+func (s *SdkError) ErrorCode() ErrorCode {
 	return s.errorCode
 }
 
-func (s *SdkError) GetStringErrorCode() string {
+func (s *SdkError) StringErrorCode() string {
 	return string(s.errorCode)
 }
 
-func (s *SdkError) GetParameters() map[string]interface{} {
+func (s *SdkError) Parameters() map[string]interface{} {
 	res := make(map[string]interface{})
 	if s.parameters != nil {
 		s.parameters.Range(func(key, val interface{}) bool {
@@ -161,7 +161,7 @@ func (s *SdkError) GetParameters() map[string]interface{} {
 	return res
 }
 
-func (s *SdkError) GetErrorCategories() []ErrorCategory {
+func (s *SdkError) ErrorCategories() []ErrorCategory {
 	result := make([]ErrorCategory, 0, len(s.categories))
 	for c := range s.categories {
 		result = append(result, c)
@@ -169,7 +169,7 @@ func (s *SdkError) GetErrorCategories() []ErrorCategory {
 	return result
 }
 
-func (s *SdkError) GetErrorMessages() string {
+func (s *SdkError) ErrorMessages() string {
 	if s.error == nil {
 		return s.message
 	}
@@ -177,7 +177,7 @@ func (s *SdkError) GetErrorMessages() string {
 	return fmt.Sprintf("%s: %s", s.message, s.error.Error())
 }
 
-func (s *SdkError) GetListParameters() []interface{} {
+func (s *SdkError) ListParameters() []interface{} {
 	var result []interface{}
 	if s.parameters == nil {
 		return result

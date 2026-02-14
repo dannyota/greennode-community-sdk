@@ -45,7 +45,7 @@ type (
 	AuthOpts string
 )
 
-func NewHttpClient(ctx context.Context) HttpClient {
+func NewHTTPClient(ctx context.Context) HTTPClient {
 	return &httpClient{
 		context:    ctx,
 		retryCount: 0,
@@ -58,22 +58,22 @@ func NewHttpClient(ctx context.Context) HttpClient {
 	}
 }
 
-func (s *httpClient) WithRetryCount(retryCount int) HttpClient {
+func (s *httpClient) WithRetryCount(retryCount int) HTTPClient {
 	s.client.SetCommonRetryCount(retryCount)
 	return s
 }
 
-func (s *httpClient) WithTimeout(timeout time.Duration) HttpClient {
+func (s *httpClient) WithTimeout(timeout time.Duration) HTTPClient {
 	s.client.SetTimeout(timeout)
 	return s
 }
 
-func (s *httpClient) WithSleep(sleep time.Duration) HttpClient {
+func (s *httpClient) WithSleep(sleep time.Duration) HTTPClient {
 	s.client.SetCommonRetryFixedInterval(sleep)
 	return s
 }
 
-func (s *httpClient) WithKvDefaultHeaders(args ...string) HttpClient {
+func (s *httpClient) WithKvDefaultHeaders(args ...string) HTTPClient {
 	if s.defaultHeaders == nil {
 		s.defaultHeaders = make(map[string]string)
 	}
@@ -89,7 +89,7 @@ func (s *httpClient) WithKvDefaultHeaders(args ...string) HttpClient {
 	return s
 }
 
-func (s *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient {
+func (s *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HTTPClient {
 	s.reauthFunc = reauthFunc
 	s.reauthOption = authOpt
 	return s
@@ -107,17 +107,17 @@ func (s *httpClient) DoRequest(url string, preq Request) (*req.Response, sdkerro
 }
 
 func (s *httpClient) prepareRequest(preq Request) *req.Request {
-	req := s.client.R().SetContext(s.context).SetHeaders(s.getDefaultHeaders()).SetHeaders(preq.GetMoreHeaders())
+	req := s.client.R().SetContext(s.context).SetHeaders(s.getDefaultHeaders()).SetHeaders(preq.MoreHeaders())
 
-	if opt := preq.GetRequestBody(); opt != nil {
+	if opt := preq.RequestBody(); opt != nil {
 		req.SetBodyJsonMarshal(opt)
 	}
 
-	if opt := preq.GetJsonResponse(); opt != nil {
+	if opt := preq.JSONResponse(); opt != nil {
 		req.SetSuccessResult(opt)
 	}
 
-	if opt := preq.GetJsonError(); opt != nil {
+	if opt := preq.JSONError(); opt != nil {
 		req.SetErrorResult(opt)
 	}
 
@@ -129,7 +129,7 @@ func (s *httpClient) executeRequest(url string, req *req.Request, preq Request) 
 		return s.handleReauthBeforeRequest(url, preq)
 	}
 
-	resp, err := s.executeHttpMethod(url, req, preq)
+	resp, err := s.executeHTTPMethod(url, req, preq)
 
 	if err != nil && resp == nil {
 		return resp, sdkerror.ErrorHandler(err)
@@ -138,8 +138,8 @@ func (s *httpClient) executeRequest(url string, req *req.Request, preq Request) 
 	return resp, nil
 }
 
-func (s *httpClient) executeHttpMethod(url string, req *req.Request, preq Request) (*req.Response, error) {
-	switch strings.ToUpper(preq.GetRequestMethod()) {
+func (s *httpClient) executeHTTPMethod(url string, req *req.Request, preq Request) (*req.Response, error) {
+	switch strings.ToUpper(preq.RequestMethod()) {
 	case "POST":
 		return req.Post(url)
 	case "GET":
@@ -256,12 +256,12 @@ func (s *httpClient) reauthenticate() sdkerror.Error {
 	return sdkerr
 }
 
-func (s *httpClient) setAccessToken(newToken SdkAuthentication) HttpClient {
+func (s *httpClient) setAccessToken(newToken SdkAuthentication) HTTPClient {
 	s.mut.Lock()
 	defer s.mut.Unlock()
 	if newToken != nil {
 		s.accessToken = newToken
-		s.WithKvDefaultHeaders("Authorization", "Bearer "+s.accessToken.GetAccessToken())
+		s.WithKvDefaultHeaders("Authorization", "Bearer "+s.accessToken.AccessToken())
 	}
 
 	return s
@@ -295,7 +295,7 @@ func (s *reauthFuture) set(err sdkerror.Error) {
 }
 
 func defaultErrorResponse(err error, url string, req Request, resp *req.Response) sdkerror.Error {
-	headers := req.GetMoreHeaders()
+	headers := req.MoreHeaders()
 
 	// Remove sensitive information
 	if headers != nil {
@@ -305,7 +305,7 @@ func defaultErrorResponse(err error, url string, req Request, resp *req.Response
 	return sdkerror.ErrorHandler(err).WithKVparameters(
 		"statusCode", resp.StatusCode,
 		"url", url,
-		"method", req.GetRequestMethod(),
+		"method", req.RequestMethod(),
 		"requestHeaders", headers,
 		"responseHeaders", resp.Header,
 	)

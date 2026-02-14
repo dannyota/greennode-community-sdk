@@ -1,9 +1,9 @@
 package common
 
 type VirtualAddressCommon struct {
-	VirtualAddressId string
+	VirtualAddressID string
 }
 
-func (s *VirtualAddressCommon) GetVirtualAddressId() string {
-	return s.VirtualAddressId
+func (s *VirtualAddressCommon) GetVirtualAddressID() string {
+	return s.VirtualAddressID
 }

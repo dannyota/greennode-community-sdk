@@ -49,7 +49,7 @@ func WithErrorLoadBalancerNotFound(errResp ErrorResponse) func(sdkError Error) {
 			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerNotFound) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -65,7 +65,7 @@ func WithErrorLoadBalancerNotFound2(errResp ErrorResponse) func(sdkError Error) 
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerNotFound2) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -80,7 +80,7 @@ func WithErrorLoadBalancerExceedQuota(errResp ErrorResponse) func(sdkError Error
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerExceedQuota) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -96,7 +96,7 @@ func WithErrorLoadBalancerDuplicatePoolName(errResp ErrorResponse) func(sdkError
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerDuplicatePoolName) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerDuplicatePoolName).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -111,7 +111,7 @@ func WithErrorListenerDuplicateProtocolOrPort(errResp ErrorResponse) func(sdkErr
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternListenerDuplicateProtocolOrPort) {
 			sdkError.WithErrorCode(EcVLBListenerDuplicateProtocolOrPort).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -126,7 +126,7 @@ func WithErrorListenerDuplicateName(errResp ErrorResponse) func(sdkError Error) 
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternListenerDuplicateName) {
 			sdkError.WithErrorCode(EcVLBListenerDuplicateName).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -141,7 +141,7 @@ func WithErrorPoolNotFound(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPoolNotFound) {
 			sdkError.WithErrorCode(EcVLBPoolNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -156,7 +156,7 @@ func WithErrorPoolInUse(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPoolInUse) {
 			sdkError.WithErrorCode(EcVLBPoolInUse).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -174,7 +174,7 @@ func WithErrorLoadBalancerNotReady(errResp ErrorResponse) func(sdkError Error) {
 			regexErrorLoadBalancerIsUpdating.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerNotReady).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -189,7 +189,7 @@ func WithErrorLoadBalancerIsDeleting(errResp ErrorResponse) func(sdkError Error)
 		if regexErrorLoadBalancerIsDeleting.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsDeleting).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -204,7 +204,7 @@ func WithErrorLoadBalancerIsCreating(errResp ErrorResponse) func(sdkError Error)
 		if regexErrorLoadBalancerIsCreating.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsCreating).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -219,7 +219,7 @@ func WithErrorLoadBalancerIsUpdating(errResp ErrorResponse) func(sdkError Error)
 		if regexErrorLoadBalancerIsUpdating.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsUpdating).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -235,7 +235,7 @@ func WithErrorListenerNotFound(errResp ErrorResponse) func(sdkError Error) {
 			regexErrorListenerNotBelongToLoadBalancer.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBListenerNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -250,7 +250,7 @@ func WithErrorMemberMustIdentical(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternMemberMustIdentical) {
 			sdkError.WithErrorCode(EcVLBMemberMustIdentical).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -265,7 +265,7 @@ func WithErrorLoadBalancerResizeSamePackage(errResp ErrorResponse) func(sdkError
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerResizeSamePackage) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerResizeSamePackage).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -280,7 +280,7 @@ func WithErrorLoadBalancerPackageNotFound(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadbalancerPackageNotFound) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerPackageNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -295,7 +295,7 @@ func WithErrorGlobalLoadBalancerNotFound(errResp ErrorResponse) func(sdkError Er
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), strings.ToLower("Global load balancer is not found")) {
 			sdkError.WithErrorCode(EcGlobalLoadBalancerNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

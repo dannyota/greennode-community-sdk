@@ -8,15 +8,15 @@ import (
 func Ptr[T any](v T) *T { return &v }
 
 type Project struct {
-	Id string
+	ID string
 }
 
-func (s *Project) GetProjectId() string {
-	return s.Id
+func (s *Project) GetProjectID() string {
+	return s.ID
 }
 
-func (s *Project) SetProjectId(id string) {
-	s.Id = id
+func (s *Project) SetProjectID(id string) {
+	s.ID = id
 }
 
 type Paging struct {
@@ -77,19 +77,19 @@ func (s *UserAgent) AddUserAgent(pagent ...string) *UserAgent {
 }
 
 type PortalUser struct {
-	Id string
+	ID string
 }
 
-func (s *PortalUser) GetPortalUserId() string {
-	return s.Id
+func (s *PortalUser) GetPortalUserID() string {
+	return s.ID
 }
 
-func (s *PortalUser) SetPortalUserId(id string) {
-	s.Id = id
+func (s *PortalUser) SetPortalUserID(id string) {
+	s.ID = id
 }
 
 func (s *PortalUser) GetMapHeaders() map[string]string {
 	return map[string]string{
-		"portal-user-id": s.Id,
+		"portal-user-id": s.ID,
 	}
 }

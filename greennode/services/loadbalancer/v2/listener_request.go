@@ -27,33 +27,33 @@ func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) 
 	return opts
 }
 
-func NewUpdateListenerRequest(lbId, listenerId string) IUpdateListenerRequest {
+func NewUpdateListenerRequest(lbID, listenerID string) IUpdateListenerRequest {
 	opts := new(UpdateListenerRequest)
-	opts.LoadBalancerId = lbId
-	opts.ListenerId = listenerId
+	opts.LoadBalancerID = lbID
+	opts.ListenerID = listenerID
 
 	return opts
 }
 
-func NewListListenersByLoadBalancerIdRequest(lbId string) IListListenersByLoadBalancerIdRequest {
-	opts := new(ListListenersByLoadBalancerIdRequest)
-	opts.LoadBalancerId = lbId
+func NewListListenersByLoadBalancerIDRequest(lbID string) IListListenersByLoadBalancerIDRequest {
+	opts := new(ListListenersByLoadBalancerIDRequest)
+	opts.LoadBalancerID = lbID
 
 	return opts
 }
 
-func NewDeleteListenerByIdRequest(lbId, listenerId string) IDeleteListenerByIdRequest {
-	opts := new(DeleteListenerByIdRequest)
-	opts.LoadBalancerId = lbId
-	opts.ListenerId = listenerId
+func NewDeleteListenerByIDRequest(lbID, listenerID string) IDeleteListenerByIDRequest {
+	opts := new(DeleteListenerByIDRequest)
+	opts.LoadBalancerID = lbID
+	opts.ListenerID = listenerID
 
 	return opts
 }
 
-func NewGetListenerByIdRequest(lbId, listenerId string) IGetListenerByIdRequest {
-	opts := new(GetListenerByIdRequest)
-	opts.LoadBalancerId = lbId
-	opts.ListenerId = listenerId
+func NewGetListenerByIDRequest(lbID, listenerID string) IGetListenerByIDRequest {
+	opts := new(GetListenerByIDRequest)
+	opts.LoadBalancerID = lbID
+	opts.ListenerID = listenerID
 
 	return opts
 }
@@ -68,7 +68,7 @@ type CreateListenerRequest struct {
 	TimeoutClient               int                            `json:"timeoutClient"`
 	TimeoutConnection           int                            `json:"timeoutConnection"`
 	TimeoutMember               int                            `json:"timeoutMember"`
-	DefaultPoolId               *string                        `json:"defaultPoolId"`
+	DefaultPoolID               *string                        `json:"defaultPoolId"`
 	CertificateAuthorities      *[]string                      `json:"certificateAuthorities"`
 	ClientCertificate           *string                        `json:"clientCertificate"`
 	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
@@ -85,7 +85,7 @@ func (s *CreateListenerRequest) AddUserAgent(agent ...string) ICreateListenerReq
 
 type UpdateListenerRequest struct {
 	AllowedCidrs                string                         `json:"allowedCidrs"`
-	DefaultPoolId               string                         `json:"defaultPoolId"`
+	DefaultPoolID               string                         `json:"defaultPoolId"`
 	TimeoutClient               int                            `json:"timeoutClient"`
 	TimeoutConnection           int                            `json:"timeoutConnection"`
 	TimeoutMember               int                            `json:"timeoutMember"`
@@ -104,34 +104,34 @@ func (s *UpdateListenerRequest) AddUserAgent(agent ...string) IUpdateListenerReq
 	return s
 }
 
-type ListListenersByLoadBalancerIdRequest struct {
+type ListListenersByLoadBalancerIDRequest struct {
 	common.LoadBalancerCommon
 	common.UserAgent
 }
 
-func (s *ListListenersByLoadBalancerIdRequest) AddUserAgent(agent ...string) IListListenersByLoadBalancerIdRequest {
+func (s *ListListenersByLoadBalancerIDRequest) AddUserAgent(agent ...string) IListListenersByLoadBalancerIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-type DeleteListenerByIdRequest struct {
+type DeleteListenerByIDRequest struct {
 	common.LoadBalancerCommon
 	common.ListenerCommon
 	common.UserAgent
 }
 
-func (s *DeleteListenerByIdRequest) AddUserAgent(agent ...string) IDeleteListenerByIdRequest {
+func (s *DeleteListenerByIDRequest) AddUserAgent(agent ...string) IDeleteListenerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-type GetListenerByIdRequest struct {
+type GetListenerByIDRequest struct {
 	common.LoadBalancerCommon
 	common.ListenerCommon
 	common.UserAgent
 }
 
-func (s *GetListenerByIdRequest) AddUserAgent(agent ...string) IGetListenerByIdRequest {
+func (s *GetListenerByIDRequest) AddUserAgent(agent ...string) IGetListenerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
@@ -190,13 +190,13 @@ func (s *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest
 	return s
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerId(lbid string) ICreateListenerRequest {
-	s.LoadBalancerId = lbid
+func (s *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
+	s.LoadBalancerID = lbid
 	return s
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolId(poolId string) ICreateListenerRequest {
-	s.DefaultPoolId = &poolId
+func (s *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
+	s.DefaultPoolID = &poolID
 	return s
 }
 
@@ -244,7 +244,7 @@ func (s *CreateListenerRequest) ToMap() map[string]interface{} {
 		"timeoutConnection":           s.TimeoutConnection,
 		"timeoutMember":               s.TimeoutMember,
 		"allowedCidrs":                s.AllowedCidrs,
-		"defaultPoolId":               s.DefaultPoolId,
+		"defaultPoolId":               s.DefaultPoolID,
 		"certificateAuthorities":      s.CertificateAuthorities,
 		"clientCertificate":           s.ClientCertificate,
 		"defaultCertificateAuthority": s.DefaultCertificateAuthority,
@@ -280,8 +280,8 @@ func (s *UpdateListenerRequest) WithTimeoutMember(tom int) IUpdateListenerReques
 	return s
 }
 
-func (s *UpdateListenerRequest) WithDefaultPoolId(poolId string) IUpdateListenerRequest {
-	s.DefaultPoolId = poolId
+func (s *UpdateListenerRequest) WithDefaultPoolID(poolID string) IUpdateListenerRequest {
+	s.DefaultPoolID = poolID
 	return s
 }
 

@@ -7,8 +7,8 @@ type LoadBalancerServiceV2 struct {
 	VServerClient client.ServiceClient
 }
 
-func (s *LoadBalancerServiceV2) getProjectId() string {
-	return s.VLBClient.GetProjectId()
+func (s *LoadBalancerServiceV2) getProjectID() string {
+	return s.VLBClient.GetProjectID()
 }
 
 const (

@@ -6,11 +6,11 @@ import (
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestGetSecgroupByIdSuccess(t *testing.T) {
-	secgroupId := "secg-d803abe8-2cf9-4b46-b3e7-94d8ab3c94ca"
+func TestGetSecgroupByIDSuccess(t *testing.T) {
+	secgroupID := "secg-d803abe8-2cf9-4b46-b3e7-94d8ab3c94ca"
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewGetSecgroupByIdRequest(secgroupId)
-	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().GetSecgroupById(opt)
+	opt := networkv2.NewGetSecgroupByIDRequest(secgroupID)
+	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().GetSecgroupByID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -24,11 +24,11 @@ func TestGetSecgroupByIdSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetSecgroupByIdFailure(t *testing.T) {
-	secgroupId := "secg-90d617b4-b893-407b-a9a8-3bd80c177920"
+func TestGetSecgroupByIDFailure(t *testing.T) {
+	secgroupID := "secg-90d617b4-b893-407b-a9a8-3bd80c177920"
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewGetSecgroupByIdRequest(secgroupId)
-	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().GetSecgroupById(opt)
+	opt := networkv2.NewGetSecgroupByIDRequest(secgroupID)
+	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().GetSecgroupByID(opt)
 
 	if err == nil {
 		t.Errorf("Expect error not to be nil but got nil")
@@ -78,11 +78,11 @@ func TestCreateSecgroupSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteSecgroupByIdFailure(t *testing.T) {
-	secgroupId := "secg-90d617b4-b893-407b-a9a8-3bd80c177920"
+func TestDeleteSecgroupByIDFailure(t *testing.T) {
+	secgroupID := "secg-90d617b4-b893-407b-a9a8-3bd80c177920"
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewDeleteSecgroupByIdRequest(secgroupId)
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupById(opt)
+	opt := networkv2.NewDeleteSecgroupByIDRequest(secgroupID)
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupByID(opt)
 
 	if err == nil {
 		t.Errorf("Expect error not to be nil but got nil")
@@ -92,11 +92,11 @@ func TestDeleteSecgroupByIdFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteSecgroupByIdSuccess(t *testing.T) {
-	secgroupId := "secg-3787f73d-d62b-49ca-96cd-226b7dc8ead4"
+func TestDeleteSecgroupByIDSuccess(t *testing.T) {
+	secgroupID := "secg-3787f73d-d62b-49ca-96cd-226b7dc8ead4"
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewDeleteSecgroupByIdRequest(secgroupId)
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupById(opt)
+	opt := networkv2.NewDeleteSecgroupByIDRequest(secgroupID)
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupByID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -106,11 +106,11 @@ func TestDeleteSecgroupByIdSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestListAllServerBySecgroupIdSuccess(t *testing.T) {
-	secgroupId := "secg-1395e86c-9631-4c13-xxxx-e41be5bdaab3"
+func TestListAllServerBySecgroupIDSuccess(t *testing.T) {
+	secgroupID := "secg-1395e86c-9631-4c13-xxxx-e41be5bdaab3"
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewListAllServersBySecgroupIdRequest(secgroupId)
-	serbvers, err := vngcloud.VServerGateway().V2().NetworkService().ListAllServersBySecgroupId(opt)
+	opt := networkv2.NewListAllServersBySecgroupIDRequest(secgroupID)
+	serbvers, err := vngcloud.VServerGateway().V2().NetworkService().ListAllServersBySecgroupID(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)

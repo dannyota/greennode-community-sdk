@@ -1,33 +1,33 @@
 package common
 
 type NetworkCommon struct {
-	NetworkId string
+	NetworkID string
 }
 
-func (s *NetworkCommon) GetNetworkId() string {
-	return s.NetworkId
+func (s *NetworkCommon) GetNetworkID() string {
+	return s.NetworkID
 }
 
 type InternalNetworkInterfaceCommon struct {
-	InternalNetworkInterfaceId string
+	InternalNetworkInterfaceID string
 }
 
-func (s *InternalNetworkInterfaceCommon) GetInternalNetworkInterfaceId() string {
-	return s.InternalNetworkInterfaceId
+func (s *InternalNetworkInterfaceCommon) GetInternalNetworkInterfaceID() string {
+	return s.InternalNetworkInterfaceID
 }
 
 type WanCommon struct {
-	WanId string
+	WanID string
 }
 
-func (s *WanCommon) GetWanId() string {
-	return s.WanId
+func (s *WanCommon) GetWanID() string {
+	return s.WanID
 }
 
 type SecgroupCommon struct {
-	SecgroupId string
+	SecgroupID string
 }
 
-func (s *SecgroupCommon) GetSecgroupId() string {
-	return s.SecgroupId
+func (s *SecgroupCommon) GetSecgroupID() string {
+	return s.SecgroupID
 }

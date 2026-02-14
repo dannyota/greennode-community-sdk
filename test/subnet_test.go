@@ -6,10 +6,10 @@ import (
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestGetSubnetByIdSuccess(t *testing.T) {
+func TestGetSubnetByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewGetSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"))
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetSubnetById(opt)
+	opt := networkv2.NewGetSubnetByIDRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"))
+	network, err := vngcloud.VServerGateway().V2().NetworkService().GetSubnetByID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -23,7 +23,7 @@ func TestGetSubnetByIdSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateSubnetById(t *testing.T) {
+func TestUpdateSubnetByID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	updateBody := networkv2.UpdateSubnetBody{
 		Name: "subnet-1",
@@ -34,8 +34,8 @@ func TestUpdateSubnetById(t *testing.T) {
 		},
 	}
 
-	opt := networkv2.NewUpdateSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"), &updateBody)
-	network, err := vngcloud.VServerGateway().V2().NetworkService().UpdateSubnetById(opt)
+	opt := networkv2.NewUpdateSubnetByIDRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"), &updateBody)
+	network, err := vngcloud.VServerGateway().V2().NetworkService().UpdateSubnetByID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)

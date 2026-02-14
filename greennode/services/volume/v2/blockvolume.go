@@ -7,14 +7,14 @@ import (
 )
 
 func (s *VolumeServiceV2) CreateBlockVolume(opts ICreateBlockVolumeRequest) (*entity.Volume, sdkerror.Error) {
-	url := createBlockVolumeUrl(s.VServerClient)
+	url := createBlockVolumeURL(s.VServerClient)
 	resp := new(CreateBlockVolumeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -22,79 +22,79 @@ func (s *VolumeServiceV2) CreateBlockVolume(opts ICreateBlockVolumeRequest) (*en
 			sdkerror.WithErrorVolumeSizeOutOfRange(errResp),
 			sdkerror.WithErrorVolumeSizeExceedGlobalQuota(errResp),
 			sdkerror.WithErrorVolumeNameNotValid(errResp)).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap())
 	}
 
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) DeleteBlockVolumeById(opts IDeleteBlockVolumeByIdRequest) sdkerror.Error {
-	url := deleteBlockVolumeByIdUrl(s.VServerClient, opts)
+func (s *VolumeServiceV2) DeleteBlockVolumeByID(opts IDeleteBlockVolumeByIDRequest) sdkerror.Error {
+	url := deleteBlockVolumeByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJsonError(errResp)
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorVolumeNotFound(errResp)).
 			WithKVparameters(
-				"projectId", s.getProjectId(),
-				"volumeId", opts.GetBlockVolumeId())
+				"projectId", s.getProjectID(),
+				"volumeId", opts.GetBlockVolumeID())
 	}
 
 	return nil
 }
 
 func (s *VolumeServiceV2) ListBlockVolumes(opts IListBlockVolumesRequest) (*entity.ListVolumes, sdkerror.Error) {
-	url := listBlockVolumesUrl(s.VServerClient, opts)
+	url := listBlockVolumesURL(s.VServerClient, opts)
 	resp := new(ListBlockVolumesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorPagingInvalid(errResp)).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap())
 	}
 
 	return resp.ToEntityListVolumes(), nil
 }
 
-func (s *VolumeServiceV2) GetBlockVolumeById(opts IGetBlockVolumeByIdRequest) (*entity.Volume, sdkerror.Error) {
-	url := getBlockVolumeByIdUrl(s.VServerClient, opts)
-	resp := new(GetBlockVolumeByIdResponse)
+func (s *VolumeServiceV2) GetBlockVolumeByID(opts IGetBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error) {
+	url := getBlockVolumeByIDURL(s.VServerClient, opts)
+	resp := new(GetBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorVolumeNotFound(errResp)).
 			WithKVparameters(
-				"projectId", s.getProjectId(),
-				"volumeId", opts.GetBlockVolumeId())
+				"projectId", s.getProjectID(),
+				"volumeId", opts.GetBlockVolumeID())
 	}
 
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) ResizeBlockVolumeById(opts IResizeBlockVolumeByIdRequest) (*entity.Volume, sdkerror.Error) {
-	url := resizeBlockVolumeByIdUrl(s.VServerClient, opts)
-	resp := new(ResizeBlockVolumeByIdResponse)
+func (s *VolumeServiceV2) ResizeBlockVolumeByID(opts IResizeBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error) {
+	url := resizeBlockVolumeByIDURL(s.VServerClient, opts)
+	resp := new(ResizeBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -103,43 +103,43 @@ func (s *VolumeServiceV2) ResizeBlockVolumeById(opts IResizeBlockVolumeByIdReque
 			sdkerror.WithErrorVolumeMustSameZone(errResp),
 			sdkerror.WithErrorVolumeUnchanged(errResp)).
 			WithKVparameters(
-				"projectId", s.getProjectId(),
-				"volumeId", opts.GetBlockVolumeId(),
+				"projectId", s.getProjectID(),
+				"volumeId", opts.GetBlockVolumeID(),
 				"size", opts.GetSize())
 	}
 
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) GetUnderBlockVolumeId(opts IGetUnderBlockVolumeIdRequest) (*entity.Volume, sdkerror.Error) {
-	url := getUnderBlockVolumeIdUrl(s.VServerClient, opts)
-	resp := new(GetUnderBlockVolumeIdResponse)
+func (s *VolumeServiceV2) GetUnderBlockVolumeID(opts IGetUnderBlockVolumeIDRequest) (*entity.Volume, sdkerror.Error) {
+	url := getUnderBlockVolumeIDURL(s.VServerClient, opts)
+	resp := new(GetUnderBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorVolumeNotFound(errResp)).
 			WithKVparameters(
-				"projectId", s.getProjectId(),
-				"volumeId", opts.GetBlockVolumeId())
+				"projectId", s.getProjectID(),
+				"volumeId", opts.GetBlockVolumeID())
 	}
 
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) MigrateBlockVolumeById(opts IMigrateBlockVolumeByIdRequest) sdkerror.Error {
-	url := migrateBlockVolumeByIdUrl(s.VServerClient, opts)
+func (s *VolumeServiceV2) MigrateBlockVolumeByID(opts IMigrateBlockVolumeByIDRequest) sdkerror.Error {
+	url := migrateBlockVolumeByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	resp := map[string]interface{}{}
 	req := client.NewRequest().
 		WithOkCodes(204).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonError(errResp).
-		WithJsonResponse(&resp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONError(errResp).
+		WithJSONResponse(&resp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		sdkErr = sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -153,20 +153,20 @@ func (s *VolumeServiceV2) MigrateBlockVolumeById(opts IMigrateBlockVolumeByIdReq
 			sdkerror.WithErrorVolumeMigrateBeingFinish(errResp),
 			sdkerror.WithErrorVolumeNotFound(errResp)).
 			WithKVparameters(
-				"projectId", s.getProjectId(),
-				"volumeId", opts.GetBlockVolumeId())
+				"projectId", s.getProjectID(),
+				"volumeId", opts.GetBlockVolumeID())
 
 		if opts.IsConfirm() {
-			switch sdkErr.GetErrorCode() {
+			switch sdkErr.ErrorCode() {
 			case sdkerror.EcVServerVolumeMigrateMissingInit:
 				opts = opts.WithAction(InitMigrateAction)
-				return s.MigrateBlockVolumeById(opts)
+				return s.MigrateBlockVolumeByID(opts)
 			case sdkerror.EcVServerVolumeMigrateNeedProcess:
 				opts = opts.WithAction(ProcessMigrateAction)
-				return s.MigrateBlockVolumeById(opts)
+				return s.MigrateBlockVolumeByID(opts)
 			case sdkerror.EcVServerVolumeMigrateNeedConfirm:
 				opts = opts.WithAction(ConfirmMigrateAction)
-				return s.MigrateBlockVolumeById(opts)
+				return s.MigrateBlockVolumeByID(opts)
 			}
 		}
 

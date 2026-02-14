@@ -1,7 +1,7 @@
 package entity
 
 type VolumeTypeZone struct {
-	Id       string
+	ID       string
 	Name     string
 	PoolName []string
 }

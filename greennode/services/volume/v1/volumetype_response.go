@@ -2,30 +2,30 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type GetVolumeTypeByIdResponse struct {
+type GetVolumeTypeByIDResponse struct {
 	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
 type GetDefaultVolumeTypeResponse struct {
-	Id     string `json:"volumeTypeId"`
-	ZoneId string `json:"volumeTypeZoneId"`
+	ID     string `json:"volumeTypeId"`
+	ZoneID string `json:"volumeTypeZoneId"`
 }
 
 type (
 	VolumeTypeZone struct {
-		Id       string   `json:"id"`
+		ID       string   `json:"id"`
 		Name     string   `json:"name"`
 		PoolName []string `json:"poolName,omitempty"`
 	}
 
 	VolumeType struct {
-		Id         string `json:"id"`
+		ID         string `json:"id"`
 		Iops       int    `json:"iops"`
 		MaxSize    int    `json:"maxSize"`
 		MinSize    int    `json:"minSize"`
 		Name       string `json:"name"`
 		ThroughPut int    `json:"throughPut,omitempty"`
-		ZoneId     string `json:"zoneId,omitempty"`
+		ZoneID     string `json:"zoneId,omitempty"`
 	}
 )
 
@@ -37,7 +37,7 @@ type ListVolumeTypeResponse struct {
 	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
-func (s *GetVolumeTypeByIdResponse) ToEntityVolumeType() *entity.VolumeType {
+func (s *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
 	if len(s.VolumeTypes) == 0 {
 		return nil
 	}
@@ -47,26 +47,26 @@ func (s *GetVolumeTypeByIdResponse) ToEntityVolumeType() *entity.VolumeType {
 
 func (s *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
 	return &entity.VolumeType{
-		Id:     s.Id,
-		ZoneId: s.ZoneId,
+		ID:     s.ID,
+		ZoneID: s.ZoneID,
 	}
 }
 
 func (s VolumeType) toEntityVolumeType() *entity.VolumeType {
 	return &entity.VolumeType{
-		Id:         s.Id,
+		ID:         s.ID,
 		Iops:       s.Iops,
 		MaxSize:    s.MaxSize,
 		MinSize:    s.MinSize,
 		Name:       s.Name,
 		ThroughPut: s.ThroughPut,
-		ZoneId:     s.ZoneId,
+		ZoneID:     s.ZoneID,
 	}
 }
 
 func (s VolumeTypeZone) toEntityVolumeTypeZone() *entity.VolumeTypeZone {
 	return &entity.VolumeTypeZone{
-		Id:       s.Id,
+		ID:       s.ID,
 		Name:     s.Name,
 		PoolName: s.PoolName,
 	}

@@ -10,7 +10,7 @@ const (
 
 type ResourceType string
 type CreateSystemTagRequest struct { // __________________________________________________________________________________
-	ResourceId   string       `json:"resourceId"`
+	ResourceID   string       `json:"resourceId"`
 	ResourceType ResourceType `json:"resourceType"`
 	Tags         []struct {
 		Key   string `json:"key"`
@@ -28,8 +28,8 @@ func (s *CreateSystemTagRequest) AddUserAgent(agent ...string) ICreateSystemTagR
 	return s
 }
 
-func (s *CreateSystemTagRequest) GetResourceId() string {
-	return s.ResourceId
+func (s *CreateSystemTagRequest) GetResourceID() string {
+	return s.ResourceID
 }
 
 func (s *CreateSystemTagRequest) GetResourceType() ResourceType {
@@ -50,7 +50,7 @@ func (s *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagReque
 
 func (s *CreateSystemTagRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceId":   s.ResourceId,
+		"resourceId":   s.ResourceID,
 		"resourceType": s.ResourceType,
 	}
 

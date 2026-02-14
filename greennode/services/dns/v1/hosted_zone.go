@@ -6,20 +6,20 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceV1) GetHostedZoneById(opts IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.Error) {
-	url := getHostedZoneByIdUrl(s.DnsClient, opts)
-	resp := new(GetHostedZoneByIdResponse)
+func (s *VDnsServiceV1) GetHostedZoneByID(opts IGetHostedZoneByIDRequest) (*entity.HostedZone, sdkerror.Error) {
+	url := getHostedZoneByIDURL(s.DnsClient, opts)
+	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"hostedZoneId", opts.GetHostedZoneId()).
+				"hostedZoneId", opts.GetHostedZoneID()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -27,14 +27,14 @@ func (s *VDnsServiceV1) GetHostedZoneById(opts IGetHostedZoneByIdRequest) (*enti
 }
 
 func (s *VDnsServiceV1) ListHostedZones(opts IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.Error) {
-	url := listHostedZonesUrl(s.DnsClient, opts)
+	url := listHostedZonesURL(s.DnsClient, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
@@ -46,15 +46,15 @@ func (s *VDnsServiceV1) ListHostedZones(opts IListHostedZonesRequest) (*entity.L
 }
 
 func (s *VDnsServiceV1) CreateHostedZone(opts ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.Error) {
-	url := createHostedZoneUrl(s.DnsClient)
+	url := createHostedZoneURL(s.DnsClient)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody(s.DnsClient)).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
@@ -66,12 +66,12 @@ func (s *VDnsServiceV1) CreateHostedZone(opts ICreateHostedZoneRequest) (*entity
 }
 
 func (s *VDnsServiceV1) DeleteHostedZone(opts IDeleteHostedZoneRequest) sdkerror.Error {
-	url := deleteHostedZoneUrl(s.DnsClient, opts)
+	url := deleteHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
-		WithJsonError(errResp)
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
@@ -83,13 +83,13 @@ func (s *VDnsServiceV1) DeleteHostedZone(opts IDeleteHostedZoneRequest) sdkerror
 }
 
 func (s *VDnsServiceV1) UpdateHostedZone(opts IUpdateHostedZoneRequest) sdkerror.Error {
-	url := updateHostedZoneUrl(s.DnsClient, opts)
+	url := updateHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
-		WithJsonBody(opts.ToRequestBody(s.DnsClient)).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).

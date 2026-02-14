@@ -1,17 +1,17 @@
 package common
 
 type ServerCommon struct {
-	ServerId string
+	ServerID string
 }
 
-func (s *ServerCommon) GetServerId() string {
-	return s.ServerId
+func (s *ServerCommon) GetServerID() string {
+	return s.ServerID
 }
 
 type ServerGroupCommon struct {
-	ServerGroupId string
+	ServerGroupID string
 }
 
-func (s *ServerGroupCommon) GetServerGroupId() string {
-	return s.ServerGroupId
+func (s *ServerGroupCommon) GetServerGroupID() string {
+	return s.ServerGroupID
 }

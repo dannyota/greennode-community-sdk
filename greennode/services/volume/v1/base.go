@@ -12,6 +12,6 @@ type VolumeServiceV1 struct {
 	VServerClient client.ServiceClient
 }
 
-func (s *VolumeServiceV1) getProjectId() string {
-	return s.VServerClient.GetProjectId()
+func (s *VolumeServiceV1) getProjectID() string {
+	return s.VServerClient.GetProjectID()
 }

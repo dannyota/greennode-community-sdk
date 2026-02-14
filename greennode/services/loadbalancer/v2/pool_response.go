@@ -2,14 +2,14 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type GetPoolHealthMonitorByIdResponse struct {
+type GetPoolHealthMonitorByIDResponse struct {
 	Data struct {
 		UUID                string  `json:"uuid"`
 		Timeout             int     `json:"timeout"`
 		CreatedAt           string  `json:"createdAt"`
 		UpdatedAt           string  `json:"updatedAt"`
 		DomainName          *string `json:"domainName"`
-		HttpVersion         *string `json:"httpVersion"`
+		HTTPVersion         *string `json:"httpVersion"`
 		HealthCheckProtocol string  `json:"healthCheckProtocol"`
 		Interval            int     `json:"interval"`
 		HealthyThreshold    int     `json:"healthyThreshold"`
@@ -22,7 +22,7 @@ type GetPoolHealthMonitorByIdResponse struct {
 	} `json:"data"`
 }
 
-func (s *GetPoolHealthMonitorByIdResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
+func (s *GetPoolHealthMonitorByIDResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
 	if s == nil {
 		return nil
 	}
@@ -32,7 +32,7 @@ func (s *GetPoolHealthMonitorByIdResponse) ToEntityHealthMonitor() *entity.Healt
 		CreatedAt:           s.Data.CreatedAt,
 		UpdatedAt:           s.Data.UpdatedAt,
 		DomainName:          s.Data.DomainName,
-		HttpVersion:         s.Data.HttpVersion,
+		HTTPVersion:         s.Data.HTTPVersion,
 		HealthCheckProtocol: s.Data.HealthCheckProtocol,
 		Interval:            s.Data.Interval,
 		HealthyThreshold:    s.Data.HealthyThreshold,
@@ -49,7 +49,7 @@ type CreatePoolResponse struct {
 	UUID string `json:"uuid"`
 }
 
-type ListPoolsByLoadBalancerIdResponse struct {
+type ListPoolsByLoadBalancerIDResponse struct {
 	Data []Pool `json:"data"`
 }
 
@@ -57,7 +57,7 @@ type ListPoolMembersResponse struct {
 	Data []PoolMember `json:"data"`
 }
 
-type GetPoolByIdResponse struct {
+type GetPoolByIDResponse struct {
 	Data Pool `json:"data"`
 }
 
@@ -99,7 +99,7 @@ func (s *CreatePoolResponse) ToEntityPool() *entity.Pool {
 	}
 }
 
-func (s *ListPoolsByLoadBalancerIdResponse) ToEntityListPools() *entity.ListPools {
+func (s *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *entity.ListPools {
 	listPools := new(entity.ListPools)
 	for _, pool := range s.Data {
 		listPools.Add(pool.toEntityPool())
@@ -156,6 +156,6 @@ func (s *ListPoolMembersResponse) ToEntityListMembers() *entity.ListMembers {
 	return listMembers
 }
 
-func (s *GetPoolByIdResponse) ToEntityPool() *entity.Pool {
+func (s *GetPoolByIDResponse) ToEntityPool() *entity.Pool {
 	return s.Data.toEntityPool()
 }

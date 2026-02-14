@@ -42,7 +42,7 @@ type ListLoadBalancers struct {
 	TotalItem int
 }
 
-func (s *LoadBalancer) GetId() string {
+func (s *LoadBalancer) GetID() string {
 	return s.UUID
 }
 

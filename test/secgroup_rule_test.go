@@ -58,8 +58,8 @@ func TestCreateSecgroupRuleFailure(t *testing.T) {
 
 func TestDeleteSecgroupRuleFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewDeleteSecgroupRuleByIdRequest("secr-8c44dc7f-3916-4952-8a01-884ad9360f00")
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleById(opt)
+	opt := networkv2.NewDeleteSecgroupRuleByIDRequest("secr-8c44dc7f-3916-4952-8a01-884ad9360f00")
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleByID(opt)
 
 	if err == nil {
 		t.Errorf("Expect error not to be nil but got nil")
@@ -71,8 +71,8 @@ func TestDeleteSecgroupRuleFailure(t *testing.T) {
 
 func TestDeleteSecgroupRuleSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewDeleteSecgroupRuleByIdRequest("secr-d8c83235-93ae-4de1-85c2-365a32494121")
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleById(opt)
+	opt := networkv2.NewDeleteSecgroupRuleByIDRequest("secr-d8c83235-93ae-4de1-85c2-365a32494121")
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleByID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -82,10 +82,10 @@ func TestDeleteSecgroupRuleSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestListSecgroupRulesBySecgroupIdFailure(t *testing.T) {
+func TestListSecgroupRulesBySecgroupIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee840")
-	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupId(opt)
+	opt := networkv2.NewListSecgroupRulesBySecgroupIDRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee840")
+	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -99,10 +99,10 @@ func TestListSecgroupRulesBySecgroupIdFailure(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestListSecgroupRulesBySecgroupIdSuccess(t *testing.T) {
+func TestListSecgroupRulesBySecgroupIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee838")
-	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupId(opt)
+	opt := networkv2.NewListSecgroupRulesBySecgroupIDRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee838")
+	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)

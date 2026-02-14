@@ -56,7 +56,7 @@ func (s *IamErrorResponse) GetMessage() string {
 	return s.Errors[0].Message
 }
 
-func (s *IamErrorResponse) GetError() error {
+func (s *IamErrorResponse) Err() error {
 	if len(s.Errors) < 1 {
 		return nil
 	}
@@ -68,7 +68,7 @@ func (s *NormalErrorResponse) GetMessage() string {
 	return s.Message
 }
 
-func (s *NormalErrorResponse) GetError() error {
+func (s *NormalErrorResponse) Err() error {
 	return fmt.Errorf("%s", s.Message)
 }
 
@@ -76,7 +76,7 @@ func (s *NetworkGatewayErrorResponse) GetMessage() string {
 	return fmt.Sprintf("%s/%d/%s", s.ErrorCode, s.Code, s.Message)
 }
 
-func (s *NetworkGatewayErrorResponse) GetError() error {
+func (s *NetworkGatewayErrorResponse) Err() error {
 	return fmt.Errorf("%s", s.ErrorCode)
 }
 
@@ -84,6 +84,6 @@ func (s *GlobalLoadBalancerErrorResponse) GetMessage() string {
 	return s.Error
 }
 
-func (s *GlobalLoadBalancerErrorResponse) GetError() error {
+func (s *GlobalLoadBalancerErrorResponse) Err() error {
 	return fmt.Errorf("%s", s.Code)
 }

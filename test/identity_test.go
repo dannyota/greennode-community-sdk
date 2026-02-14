@@ -38,26 +38,26 @@ func readEnvFile(path string) (map[string]string, error) {
 
 func getEnv() (string, string) {
 	envFile, _ := readEnvFile("./env.yaml")
-	clientId := envFile["VNGCLOUD_CLIENT_ID"]
+	clientID := envFile["VNGCLOUD_CLIENT_ID"]
 	clientSecret := envFile["VNGCLOUD_CLIENT_SECRET"]
 
-	return clientId, clientSecret
+	return clientID, clientSecret
 }
 
 func getEnvCuongDm4() (string, string) {
 	envFile, _ := readEnvFile("./env.yaml")
-	clientId := envFile["CUONGDM4_CLIENT_ID"]
+	clientID := envFile["CUONGDM4_CLIENT_ID"]
 	clientSecret := envFile["CUONGDM4_CLIENT_SECRET"]
 
-	return clientId, clientSecret
+	return clientID, clientSecret
 }
 
 func getEnvDevOps() (string, string) {
 	envFile, _ := readEnvFile("./env.yaml")
-	clientId := envFile["CLIENT_ID_DEVOPS"]
+	clientID := envFile["CLIENT_ID_DEVOPS"]
 	clientSecret := envFile["CLIENT_SECRET_DEVOPS"]
 
-	return clientId, clientSecret
+	return clientID, clientSecret
 }
 
 func getValueOfEnv(key string) string {
@@ -67,13 +67,13 @@ func getValueOfEnv(key string) string {
 }
 
 func validSdkConfig() client.Client {
-	clientId, clientSecret := getEnv()
+	clientID, clientSecret := getEnv()
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithUserId(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
+		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -86,13 +86,13 @@ func validSdkConfig() client.Client {
 }
 
 func validUserSdkConfig() client.Client {
-	clientId, clientSecret := getValueOfEnv("USER_CLIENT_ID"), getValueOfEnv("USER_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("USER_CLIENT_ID"), getValueOfEnv("USER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithUserId(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("USER_PROJECT")).
+		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("USER_PROJECT")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -103,11 +103,11 @@ func validUserSdkConfig() client.Client {
 }
 
 func validUserSdkConfigForCuongDm4() client.Client {
-	clientId, clientSecret := getEnvCuongDm4()
+	clientID, clientSecret := getEnvCuongDm4()
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId("pro-462803f3-6858-466f-bf05-df2b33faa360").
+		WithProjectID("pro-462803f3-6858-466f-bf05-df2b33faa360").
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -118,13 +118,13 @@ func validUserSdkConfigForCuongDm4() client.Client {
 }
 
 func validSdkConfigHanRegion() client.Client {
-	clientId, clientSecret := getEnv()
+	clientID, clientSecret := getEnv()
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithUserId(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("HAN01_PROJECT_ID")).
+		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("HAN01_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://han-1.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://han-1.api.vngcloud.vn/vserver/vlb-gateway").
@@ -137,10 +137,10 @@ func validSdkConfigHanRegion() client.Client {
 
 func validHcm3bSdkConfig() client.Client {
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(getValueOfEnv("HCM3B_CLIENT_ID")).
+		WithClientID(getValueOfEnv("HCM3B_CLIENT_ID")).
 		WithClientSecret(getValueOfEnv("HCM3B_CLIENT_SECRET")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("HCM3B_PROJECT_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("HCM3B_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -152,10 +152,10 @@ func validHcm3bSdkConfig() client.Client {
 
 func validHcm3bSuperSdkConfig() client.Client {
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(getValueOfEnv("HCM3B_SUPER_CLIENT_ID")).
+		WithClientID(getValueOfEnv("HCM3B_SUPER_CLIENT_ID")).
 		WithClientSecret(getValueOfEnv("HCM3B_SUPER_CLIENT_SECRET")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("HCM3B_PROJECT_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("HCM3B_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -167,10 +167,10 @@ func validHcm3bSuperSdkConfig() client.Client {
 
 func validVinhNt8SdkConfig() client.Client {
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(getValueOfEnv("VINHCLIENT_ID")).
+		WithClientID(getValueOfEnv("VINHCLIENT_ID")).
 		WithClientSecret(getValueOfEnv("VINHCLIENT_SECRET")).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("VINH_PROJECT_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("VINH_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -190,11 +190,11 @@ func customerSdkConfig() client.Client {
 }
 
 func validSdkHannibalConfig() client.Client {
-	clientId, clientSecret := getValueOfEnv("HANNIBAL_CLIENT_ID"), getValueOfEnv("HANNIBAL_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("HANNIBAL_CLIENT_ID"), getValueOfEnv("HANNIBAL_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId(getValueOfEnv("HANNIBAL_PROJECT_ID")).
+		WithProjectID(getValueOfEnv("HANNIBAL_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
@@ -203,12 +203,12 @@ func validSdkHannibalConfig() client.Client {
 }
 
 func validSuperSdkConfig() client.Client {
-	clientId, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -218,12 +218,12 @@ func validSuperSdkConfig() client.Client {
 }
 
 func validSuperSdkHcm03bConfig() client.Client {
-	clientId, clientSecret := getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_ID"), getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_ID"), getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithZoneId(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectId(getValueOfEnv("VNGCLOUD_PROD_HCM03B_PROJECT_ID")).
+		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
+		WithProjectID(getValueOfEnv("VNGCLOUD_PROD_HCM03B_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -233,11 +233,11 @@ func validSuperSdkHcm03bConfig() client.Client {
 }
 
 func validUser11412SdkConfig() client.Client {
-	clientId, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId(getValueOfEnv("USER_11412_PROJECT_ID")).
+		WithProjectID(getValueOfEnv("USER_11412_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
@@ -246,11 +246,11 @@ func validUser11412SdkConfig() client.Client {
 }
 
 func validUser11412() client.Client {
-	clientId, clientSecret := getValueOfEnv("USER_11412_CLIENT_ID"), getValueOfEnv("USER_11412_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("USER_11412_CLIENT_ID"), getValueOfEnv("USER_11412_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId(getValueOfEnv("USER_11412_PROJECT_ID")).
+		WithProjectID(getValueOfEnv("USER_11412_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
@@ -260,11 +260,11 @@ func validUser11412() client.Client {
 }
 
 func validSuperSdkConfig2() client.Client {
-	clientId, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId(getValueOfEnv("VINH_PROJECT_ID")).
+		WithProjectID(getValueOfEnv("VINH_PROJECT_ID")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
@@ -273,11 +273,11 @@ func validSuperSdkConfig2() client.Client {
 }
 
 func validSdkConfigDevops() client.Client {
-	clientId, clientSecret := getEnvDevOps()
+	clientID, clientSecret := getEnvDevOps()
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
-		WithProjectId(getValueOfEnv("PROJECT_ID_DEVOPS")).
+		WithProjectID(getValueOfEnv("PROJECT_ID_DEVOPS")).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
 
@@ -285,10 +285,10 @@ func validSdkConfigDevops() client.Client {
 }
 
 func invalidSdkConfig() client.Client {
-	clientId := "invalid-id"
+	clientID := "invalid-id"
 	clientSecret := "invalid-secret"
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
@@ -297,17 +297,17 @@ func invalidSdkConfig() client.Client {
 }
 
 func TestAuthenFailed(t *testing.T) {
-	clientId := "cc136360-709c-4248-9358-e8e96c74480a"
+	clientID := "cc136360-709c-4248-9358-e8e96c74480a"
 	clientSecret := "invalid-secret"
 
 	sdkConfig := client.NewSdkConfigure().
-		WithClientId(clientId).
+		WithClientID(clientID).
 		WithClientSecret(clientSecret).
 		WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
 
 	vngcloud := client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
-	opt := identityv2.NewGetAccessTokenRequest(clientId, clientSecret)
+	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
 	token, err := vngcloud.IamGateway().V2().IdentityService().GetAccessToken(opt)
 
 	if err == nil {
@@ -327,9 +327,9 @@ func TestAuthenFailed(t *testing.T) {
 }
 
 func TestAuthenPass(t *testing.T) {
-	clientId, clientSecret := getEnv()
+	clientID, clientSecret := getEnv()
 	vngcloud := validSdkConfig()
-	opt := identityv2.NewGetAccessTokenRequest(clientId, clientSecret)
+	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
 	token, err := vngcloud.IamGateway().V2().IdentityService().GetAccessToken(opt)
 
 	if err != nil || token == nil {
@@ -342,9 +342,9 @@ func TestAuthenPass(t *testing.T) {
 }
 
 func TestASuperuthenPass(t *testing.T) {
-	clientId, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	vngcloud := validSdkConfig()
-	opt := identityv2.NewGetAccessTokenRequest(clientId, clientSecret)
+	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
 	token, err := vngcloud.IamGateway().V2().IdentityService().GetAccessToken(opt)
 
 	if err != nil || token == nil {
@@ -357,9 +357,9 @@ func TestASuperuthenPass(t *testing.T) {
 }
 
 func TestVinhAuthenPass(t *testing.T) {
-	clientId, clientSecret := getValueOfEnv("VINHCLIENT_ID"), getValueOfEnv("VINHCLIENT_SECRET")
+	clientID, clientSecret := getValueOfEnv("VINHCLIENT_ID"), getValueOfEnv("VINHCLIENT_SECRET")
 	vngcloud := validSuperSdkConfig2()
-	opt := identityv2.NewGetAccessTokenRequest(clientId, clientSecret)
+	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
 	token, err := vngcloud.IamGateway().V2().IdentityService().GetAccessToken(opt)
 
 	if err != nil || token == nil {

@@ -25,10 +25,10 @@ func TestListCertificates(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestGetCertificateById(t *testing.T) {
+func TestGetCertificateByID(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewGetCertificateByIdRequest("secret-84cb7a5e-b949-4f1b-a2e8-d2752e6e1181")
-	cert, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetCertificateById(opt)
+	opt := v2.NewGetCertificateByIDRequest("secret-84cb7a5e-b949-4f1b-a2e8-d2752e6e1181")
+	cert, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetCertificateByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -63,10 +63,10 @@ func TestCreateCertificate(t *testing.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteCertificateById(t *testing.T) {
+func TestDeleteCertificateByID(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewDeleteCertificateByIdRequest(FakeSecretId)
-	err := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteCertificateById(opt)
+	opt := v2.NewDeleteCertificateByIDRequest(FakeSecretID)
+	err := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteCertificateByID(opt)
 	if err != nil {
 		t.Fatalf("Expect nil but got %+v", err)
 	}

@@ -101,5 +101,5 @@ const (
 	// FakeToken is a fake authentication token for testing purposes only
 	FakeToken = "fake-token-xyz789-not-real-abc123"
 
-	FakeSecretId = "secret-92318075-6622-48a3-88a7-daf2a8917917"
+	FakeSecretID = "secret-92318075-6622-48a3-88a7-daf2a8917917"
 )

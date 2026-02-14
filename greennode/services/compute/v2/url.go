@@ -2,104 +2,104 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createServerUrl(sc client.ServiceClient) string {
+func createServerURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers")
 }
 
-func getServerByIdUrl(sc client.ServiceClient, opts IGetServerByIdRequest) string {
+func getServerByIDURL(sc client.ServiceClient, opts IGetServerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers",
-		opts.GetServerId())
+		opts.GetServerID())
 }
 
-func deleteServerByIdUrl(sc client.ServiceClient, opts IDeleteServerByIdRequest) string {
+func deleteServerByIDURL(sc client.ServiceClient, opts IDeleteServerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers",
-		opts.GetServerId())
+		opts.GetServerID())
 }
 
-func updateServerSecgroupsByServerIdUrl(sc client.ServiceClient, opts IUpdateServerSecgroupsByServerIdRequest) string {
+func updateServerSecgroupsByServerIDURL(sc client.ServiceClient, opts IUpdateServerSecgroupsByServerIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers",
-		opts.GetServerId(),
+		opts.GetServerID(),
 		"update-sec-group")
 }
 
-func attachBlockVolumeUrl(sc client.ServiceClient, opts IAttachBlockVolumeRequest) string {
+func attachBlockVolumeURL(sc client.ServiceClient, opts IAttachBlockVolumeRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeId(),
+		opts.GetBlockVolumeID(),
 		"servers",
-		opts.GetServerId(),
+		opts.GetServerID(),
 		"attach")
 }
 
-func detachBlockVolumeUrl(sc client.ServiceClient, opts IDetachBlockVolumeRequest) string {
+func detachBlockVolumeURL(sc client.ServiceClient, opts IDetachBlockVolumeRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeId(),
+		opts.GetBlockVolumeID(),
 		"servers",
-		opts.GetServerId(),
+		opts.GetServerID(),
 		"detach",
 	)
 }
 
-func attachFloatingIpUrl(sc client.ServiceClient, opts IAttachFloatingIpRequest) string {
+func attachFloatingIpURL(sc client.ServiceClient, opts IAttachFloatingIpRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers",
-		opts.GetServerId(),
+		opts.GetServerID(),
 		"wan-ips",
 		"auto",
 		"attach")
 
 }
 
-func detachFloatingIpUrl(sc client.ServiceClient, opts IDetachFloatingIpRequest) string {
+func detachFloatingIpURL(sc client.ServiceClient, opts IDetachFloatingIpRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"servers",
-		opts.GetServerId(),
+		opts.GetServerID(),
 		"wan-ips",
-		opts.GetWanId(),
+		opts.GetWanID(),
 		"detach")
 }
 
-func listServerGroupPoliciesUrl(sc client.ServiceClient) string {
+func listServerGroupPoliciesURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"serverGroups",
 		"policies",
 	)
 }
 
-func deleteServerGroupByIdUrl(sc client.ServiceClient, opts IDeleteServerGroupByIdRequest) string {
+func deleteServerGroupByIDURL(sc client.ServiceClient, opts IDeleteServerGroupByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"serverGroups",
-		opts.GetServerGroupId(),
+		opts.GetServerGroupID(),
 	)
 }
 
-func listServerGroupsUrl(sc client.ServiceClient, opts IListServerGroupsRequest) string {
+func listServerGroupsURL(sc client.ServiceClient, opts IListServerGroupsRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.GetProjectId(), "serverGroups") + query
+	return sc.ServiceURL(sc.GetProjectID(), "serverGroups") + query
 }
 
-func createServerGroupUrl(sc client.ServiceClient, _ ICreateServerGroupRequest) string {
+func createServerGroupURL(sc client.ServiceClient, _ ICreateServerGroupRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"serverGroups",
 	)
 }

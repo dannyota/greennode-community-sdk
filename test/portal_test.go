@@ -9,9 +9,9 @@ import (
 )
 
 func TestGetPortalInfoFailed(t *testing.T) {
-	backendProjectId := getValueOfEnv("BACKEND_PROJECT_ID")
+	backendProjectID := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := invalidSdkConfig()
-	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err == nil {
@@ -23,7 +23,7 @@ func TestGetPortalInfoFailed(t *testing.T) {
 	}
 
 	if !err.IsError(sdkerror.EcAuthenticationFailed) {
-		t.Errorf("Expect error code to be %s but got %s", sdkerror.EcAuthenticationFailed, err.GetErrorCode())
+		t.Errorf("Expect error code to be %s but got %s", sdkerror.EcAuthenticationFailed, err.ErrorCode())
 	}
 
 	t.Log("RESULT:", err)
@@ -31,9 +31,9 @@ func TestGetPortalInfoFailed(t *testing.T) {
 }
 
 func TestGetPortalInfoSuccess(t *testing.T) {
-	backendProjectId := getValueOfEnv("BACKEND_PROJECT_ID")
+	backendProjectID := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
-	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err != nil {
@@ -49,9 +49,9 @@ func TestGetPortalInfoSuccess(t *testing.T) {
 }
 
 func TestGetPortalInfoSuccess2(t *testing.T) {
-	backendProjectId := getValueOfEnv("USER_11412_OS_PROJECT_ID")
+	backendProjectID := getValueOfEnv("USER_11412_OS_PROJECT_ID")
 	vngcloud := validUser11412SdkConfig()
-	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err != nil {
@@ -67,9 +67,9 @@ func TestGetPortalInfoSuccess2(t *testing.T) {
 }
 
 func TestGetPortalInfoFailure(t *testing.T) {
-	backendProjectId := getValueOfEnv("FAKE_BACKEND_PROJECT_ID")
+	backendProjectID := getValueOfEnv("FAKE_BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
-	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err == nil {

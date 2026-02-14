@@ -19,11 +19,11 @@ type VirtualAddressDataResponse struct {
 
 func (s *VirtualAddressDataResponse) toEntityVirtualAddress() *entity.VirtualAddress {
 	return &entity.VirtualAddress{
-		Id:              s.UUID,
+		ID:              s.UUID,
 		Name:            s.Name,
 		EndpointAddress: s.IPAddress,
-		VpcId:           s.NetworkID,
-		SubnetId:        s.SubnetID,
+		VpcID:           s.NetworkID,
+		SubnetID:        s.SubnetID,
 		Description:     s.Description,
 		SubnetCidr:      s.SubnetCIDR,
 		VpcCidr:         s.NetworkCIDR,
@@ -42,28 +42,28 @@ func (s *CreateVirtualAddressCrossProjectResponse) ToEntityVirtualAddress() *ent
 }
 
 // Response struct for API get virtual address by ID
-type GetVirtualAddressByIdResponse struct {
+type GetVirtualAddressByIDResponse struct {
 	Data VirtualAddressDataResponse `json:"data"`
 }
 
-func (s *GetVirtualAddressByIdResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
+func (s *GetVirtualAddressByIDResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
 	return s.Data.toEntityVirtualAddress()
 }
 
 // Response struct for API list address pair by virtual address ID
-type ListAddressPairsByVirtualAddressIdResponse struct {
+type ListAddressPairsByVirtualAddressIDResponse struct {
 	Data []AddressPairResponse `json:"data"`
 }
 
-func (s *ListAddressPairsByVirtualAddressIdResponse) ToEntityListAddressPairs() *entity.ListAddressPairs {
+func (s *ListAddressPairsByVirtualAddressIDResponse) ToEntityListAddressPairs() *entity.ListAddressPairs {
 	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
 	for _, addressPair := range s.Data {
 		addressPairs = append(addressPairs, &entity.AddressPair{
-			Id:                 addressPair.UUID,
-			VirtualIpAddressId: addressPair.VirtualIpAddressId,
-			VirtualSubnetId:    addressPair.VirtualSubnetId,
+			ID:                 addressPair.UUID,
+			VirtualIpAddressID: addressPair.VirtualIpAddressID,
+			VirtualSubnetID:    addressPair.VirtualSubnetID,
 			NetworkInterfaceIp: addressPair.NetworkInterfaceIp,
-			NetworkInterfaceId: addressPair.NetworkInterfaceId,
+			NetworkInterfaceID: addressPair.NetworkInterfaceID,
 			CIDR:               addressPair.CIDR,
 		})
 	}

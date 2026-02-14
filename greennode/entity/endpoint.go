@@ -2,10 +2,10 @@ package entity
 
 type Endpoint struct {
 	IPv4Address string
-	EndpointUrl string
+	EndpointURL string
 	Status      string
-	VpcId       string
-	Id          string
+	VpcID       string
+	ID          string
 	Name        string
 }
 
@@ -13,8 +13,8 @@ func (s *Endpoint) IsUsable() bool {
 	return s.Status == "ACTIVE"
 }
 
-func (s *Endpoint) GetId() string {
-	return s.Id
+func (s *Endpoint) GetID() string {
+	return s.ID
 }
 
 func (s *Endpoint) GetName() string {
@@ -25,12 +25,12 @@ func (s *Endpoint) GetIPv4Address() string {
 	return s.IPv4Address
 }
 
-func (s *Endpoint) GetEndpointUrl() string {
-	return s.EndpointUrl
+func (s *Endpoint) GetEndpointURL() string {
+	return s.EndpointURL
 }
 
-func (s *Endpoint) GetVpcId() string {
-	return s.VpcId
+func (s *Endpoint) GetVpcID() string {
+	return s.VpcID
 }
 
 func (s *Endpoint) GetStatus() string {

@@ -13,14 +13,14 @@ type Error interface {
 	WithParameters(params map[string]interface{}) Error
 	WithKVparameters(params ...interface{}) Error
 
-	GetError() error
+	Err() error
 	GetMessage() string
-	GetErrorCode() ErrorCode
-	GetStringErrorCode() string
-	GetParameters() map[string]interface{}
-	GetErrorCategories() []ErrorCategory
-	GetErrorMessages() string
-	GetListParameters() []interface{}
+	ErrorCode() ErrorCode
+	StringErrorCode() string
+	Parameters() map[string]interface{}
+	ErrorCategories() []ErrorCategory
+	ErrorMessages() string
+	ListParameters() []interface{}
 
 	RemoveCategories(categories ...ErrorCategory) Error
 
@@ -29,5 +29,5 @@ type Error interface {
 
 type ErrorResponse interface {
 	GetMessage() string
-	GetError() error
+	Err() error
 }

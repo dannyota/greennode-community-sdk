@@ -10,7 +10,7 @@ type GlobalLoadBalancer struct {
 	Status      string                      `json:"status"`
 	Package     string                      `json:"package"`
 	Type        string                      `json:"type"`
-	UserId      int                         `json:"userId"`
+	UserID      int                         `json:"userId"`
 	Vips        []*GlobalLoadBalancerVIP    `json:"vips"`
 	Domains     []*GlobalLoadBalancerDomain `json:"domains"`
 }

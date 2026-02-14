@@ -2,299 +2,299 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createLoadBalancerUrl(sc client.ServiceClient) string {
+func createLoadBalancerURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers")
 }
 
-func resizeLoadBalancerUrl(sc client.ServiceClient, opts IResizeLoadBalancerRequest) string {
+func resizeLoadBalancerURL(sc client.ServiceClient, opts IResizeLoadBalancerRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"resize")
 }
 
-func listLoadBalancerPackagesUrl(sc client.ServiceClient, opts IListLoadBalancerPackagesRequest) string {
+func listLoadBalancerPackagesURL(sc client.ServiceClient, opts IListLoadBalancerPackagesRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
-		"loadBalancers", "packages") + "?zoneId=" + opts.GetZoneId()
+		sc.GetProjectID(),
+		"loadBalancers", "packages") + "?zoneId=" + opts.GetZoneID()
 }
 
-func getLoadBalancerByIdUrl(sc client.ServiceClient, opts IGetLoadBalancerByIdRequest) string {
+func getLoadBalancerByIDURL(sc client.ServiceClient, opts IGetLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId())
+		opts.GetLoadBalancerID())
 }
 
-func listLoadBalancersUrl(sc client.ServiceClient, opts IListLoadBalancersRequest) string {
+func listLoadBalancersURL(sc client.ServiceClient, opts IListLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.GetProjectId(), "loadBalancers") + query
+	return sc.ServiceURL(sc.GetProjectID(), "loadBalancers") + query
 }
 
-func getPoolHealthMonitorByIdUrl(sc client.ServiceClient, opts IGetPoolHealthMonitorByIdRequest) string {
+func getPoolHealthMonitorByIDURL(sc client.ServiceClient, opts IGetPoolHealthMonitorByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId(),
+		opts.GetPoolID(),
 		"healthMonitor")
 }
 
-func createPoolUrl(sc client.ServiceClient, opts ICreatePoolRequest) string {
+func createPoolURL(sc client.ServiceClient, opts ICreatePoolRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools")
 }
 
-func updatePoolUrl(sc client.ServiceClient, opts IUpdatePoolRequest) string {
+func updatePoolURL(sc client.ServiceClient, opts IUpdatePoolRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId())
+		opts.GetPoolID())
 }
 
-func createListenerUrl(sc client.ServiceClient, opts ICreateListenerRequest) string {
+func createListenerURL(sc client.ServiceClient, opts ICreateListenerRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners")
 }
 
-func updateListenerUrl(sc client.ServiceClient, opts IUpdateListenerRequest) string {
+func updateListenerURL(sc client.ServiceClient, opts IUpdateListenerRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId())
+		opts.GetListenerID())
 }
 
-func listListenersByLoadBalancerIdUrl(sc client.ServiceClient, opts IListListenersByLoadBalancerIdRequest) string {
+func listListenersByLoadBalancerIDURL(sc client.ServiceClient, opts IListListenersByLoadBalancerIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners")
 }
 
-func listPoolsByLoadBalancerIdUrl(sc client.ServiceClient, opts IListPoolsByLoadBalancerIdRequest) string {
+func listPoolsByLoadBalancerIDURL(sc client.ServiceClient, opts IListPoolsByLoadBalancerIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools")
 }
 
-func updatePoolMembersUrl(sc client.ServiceClient, opts IUpdatePoolMembersRequest) string {
+func updatePoolMembersURL(sc client.ServiceClient, opts IUpdatePoolMembersRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId(),
+		opts.GetPoolID(),
 		"members")
 }
 
-func listPoolMembersUrl(sc client.ServiceClient, opts IListPoolMembersRequest) string {
+func listPoolMembersURL(sc client.ServiceClient, opts IListPoolMembersRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId(),
+		opts.GetPoolID(),
 		"members")
 }
 
-func deletePoolByIdUrl(sc client.ServiceClient, opts IDeletePoolByIdRequest) string {
+func deletePoolByIDURL(sc client.ServiceClient, opts IDeletePoolByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId())
+		opts.GetPoolID())
 }
 
-func deleteListenerByIdUrl(sc client.ServiceClient, opts IDeleteListenerByIdRequest) string {
+func deleteListenerByIDURL(sc client.ServiceClient, opts IDeleteListenerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId())
+		opts.GetListenerID())
 }
 
-func deleteLoadBalancerByIdUrl(sc client.ServiceClient, opts IDeleteLoadBalancerByIdRequest) string {
+func deleteLoadBalancerByIDURL(sc client.ServiceClient, opts IDeleteLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId())
+		opts.GetLoadBalancerID())
 }
 
-func listTagsUrl(sc client.ServiceClient, opts IListTagsRequest) string {
+func listTagsURL(sc client.ServiceClient, opts IListTagsRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerId())
+		opts.GetLoadBalancerID())
 }
 
-func createTagsUrl(sc client.ServiceClient, opts ICreateTagsRequest) string {
+func createTagsURL(sc client.ServiceClient, opts ICreateTagsRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerId())
+		opts.GetLoadBalancerID())
 }
 
-func updateTagsUrl(sc client.ServiceClient, opts IUpdateTagsRequest) string {
+func updateTagsURL(sc client.ServiceClient, opts IUpdateTagsRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerId())
+		opts.GetLoadBalancerID())
 }
 
 // Policy
 
-func listPoliciesUrl(sc client.ServiceClient, opts IListPoliciesRequest) string {
+func listPoliciesURL(sc client.ServiceClient, opts IListPoliciesRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"l7policies",
 	)
 }
 
-func createPolicyUrl(sc client.ServiceClient, opts ICreatePolicyRequest) string {
+func createPolicyURL(sc client.ServiceClient, opts ICreatePolicyRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"l7policies",
 	)
 }
 
-func getPolicyByIdUrl(sc client.ServiceClient, opts IGetPolicyByIdRequest) string {
+func getPolicyByIDURL(sc client.ServiceClient, opts IGetPolicyByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"l7policies",
-		opts.GetPolicyId(),
+		opts.GetPolicyID(),
 	)
 }
 
-func updatePolicyUrl(sc client.ServiceClient, opts IUpdatePolicyRequest) string {
+func updatePolicyURL(sc client.ServiceClient, opts IUpdatePolicyRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"l7policies",
-		opts.GetPolicyId(),
+		opts.GetPolicyID(),
 	)
 }
 
-func deletePolicyByIdUrl(sc client.ServiceClient, opts IDeletePolicyByIdRequest) string {
+func deletePolicyByIDURL(sc client.ServiceClient, opts IDeletePolicyByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"l7policies",
-		opts.GetPolicyId(),
+		opts.GetPolicyID(),
 	)
 }
 
-func reorderPoliciesUrl(sc client.ServiceClient, opts IReorderPoliciesRequest) string {
+func reorderPoliciesURL(sc client.ServiceClient, opts IReorderPoliciesRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId(),
+		opts.GetListenerID(),
 		"reorderL7Policies")
 }
 
-func getPoolByIdUrl(sc client.ServiceClient, opts IGetPoolByIdRequest) string {
+func getPoolByIDURL(sc client.ServiceClient, opts IGetPoolByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"pools",
-		opts.GetPoolId())
+		opts.GetPoolID())
 }
 
-func getListenerByIdUrl(sc client.ServiceClient, opts IGetListenerByIdRequest) string {
+func getListenerByIDURL(sc client.ServiceClient, opts IGetListenerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"listeners",
-		opts.GetListenerId())
+		opts.GetListenerID())
 }
 
-func resizeLoadBalancerByIdUrl(sc client.ServiceClient, opts IResizeLoadBalancerByIdRequest) string {
+func resizeLoadBalancerByIDURL(sc client.ServiceClient, opts IResizeLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"resize")
 }
 
-func scaleLoadBalancerUrl(sc client.ServiceClient, opts IScaleLoadBalancerRequest) string {
+func scaleLoadBalancerURL(sc client.ServiceClient, opts IScaleLoadBalancerRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerId(),
+		opts.GetLoadBalancerID(),
 		"rebalancing")
 }
 
 // --------------------------------------------------------
 
-func listCertificatesUrl(sc client.ServiceClient) string {
+func listCertificatesURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"cas")
 }
 
-func createCertificateUrl(sc client.ServiceClient) string {
+func createCertificateURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"cas")
 }
 
-func getCertificateByIdUrl(sc client.ServiceClient, opts IGetCertificateByIdRequest) string {
+func getCertificateByIDURL(sc client.ServiceClient, opts IGetCertificateByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"cas",
-		opts.GetCertificateId())
+		opts.GetCertificateID())
 }
 
-func deleteCertificateByIdUrl(sc client.ServiceClient, opts IDeleteCertificateByIdRequest) string {
+func deleteCertificateByIDURL(sc client.ServiceClient, opts IDeleteCertificateByIDRequest) string {
 	return sc.ServiceURL(
-		sc.GetProjectId(),
+		sc.GetProjectID(),
 		"cas",
-		opts.GetCertificateId())
+		opts.GetCertificateID())
 }

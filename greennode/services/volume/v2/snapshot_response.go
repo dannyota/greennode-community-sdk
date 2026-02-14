@@ -2,7 +2,7 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type ListSnapshotsByBlockVolumeIdResponse struct {
+type ListSnapshotsByBlockVolumeIDResponse struct {
 	Items      []Snapshot `json:"items"`
 	Page       int        `json:"page"`
 	PageSize   int        `json:"pageSize"`
@@ -10,7 +10,7 @@ type ListSnapshotsByBlockVolumeIdResponse struct {
 	TotalItems int        `json:"totalItems"`
 }
 
-type CreateSnapshotByBlockVolumeIdResponse struct {
+type CreateSnapshotByBlockVolumeIDResponse struct {
 	Snapshot
 }
 
@@ -28,11 +28,11 @@ type (
 		Size                int64          `json:"size"`
 		SnapshotConfig      Config         `json:"snapshotConfig"`
 		SnapshotTime        int64          `json:"snapshotTime"`
-		SnapshotVolumeId    string         `json:"snapshotVolumeId"`
+		SnapshotVolumeID    string         `json:"snapshotVolumeId"`
 		Status              string         `json:"status"`
 		UpdatedAt           string         `json:"updatedAt"`
-		UserId              int64          `json:"userId"`
-		VolumeId            string         `json:"volumeId"`
+		UserID              int64          `json:"userId"`
+		VolumeID            string         `json:"volumeId"`
 		VolumeSnapshot      VolumeSnapshot `json:"volumeSnapshot"`
 		Name                string         `json:"name"`
 		Description         string         `json:"description"`
@@ -51,24 +51,24 @@ type (
 		BootIndex        int     `json:"bootIndex"`
 		Bootable         bool    `json:"bootable"`
 		CreatedAt        string  `json:"createdAt"`
-		Id               string  `json:"id"`
+		ID               string  `json:"id"`
 		MultiAttach      bool    `json:"multiAttach"`
 		Name             string  `json:"name"`
 		Product          string  `json:"product"`
-		ProjectId        string  `json:"projectId"`
+		ProjectID        string  `json:"projectId"`
 		Size             int64   `json:"size"`
 		Status           string  `json:"status"`
 		Type             string  `json:"type"`
 		UpdatedAt        string  `json:"updatedAt"`
 		Uuid             string  `json:"uuid"`
-		VolumeId         int64   `json:"volumeId"`
-		VolumeTypeId     string  `json:"volumeTypeId"`
-		VolumeTypeZoneId string  `json:"volumeTypeZoneId"`
+		VolumeID         int64   `json:"volumeId"`
+		VolumeTypeID     string  `json:"volumeTypeId"`
+		VolumeTypeZoneID string  `json:"volumeTypeZoneId"`
 		EncryptionType   *string `json:"encryptionType"`
 	}
 )
 
-func (s *ListSnapshotsByBlockVolumeIdResponse) ToEntityListSnapshots() *entity.ListSnapshots {
+func (s *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *entity.ListSnapshots {
 	sl := new(entity.ListSnapshots)
 
 	for _, item := range s.Items {
@@ -85,15 +85,15 @@ func (s *ListSnapshotsByBlockVolumeIdResponse) ToEntityListSnapshots() *entity.L
 
 func (s *Snapshot) toEntitySnapshot() *entity.Snapshot {
 	return &entity.Snapshot{
-		Id:        s.ID,
+		ID:        s.ID,
 		Name:      s.Name,
 		CreatedAt: s.CreatedAt,
-		VolumeId:  s.VolumeId,
+		VolumeID:  s.VolumeID,
 		Status:    s.Status,
 		Size:      s.Size,
 	}
 }
 
-func (s *CreateSnapshotByBlockVolumeIdResponse) ToEntitySnapshot() *entity.Snapshot {
+func (s *CreateSnapshotByBlockVolumeIDResponse) ToEntitySnapshot() *entity.Snapshot {
 	return s.toEntitySnapshot()
 }

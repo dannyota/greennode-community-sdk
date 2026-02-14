@@ -127,8 +127,8 @@ func (s *CreateGlobalLoadBalancerRequest) WithType(typeVal GlobalLoadBalancerTyp
 	return s
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithPackage(packageId string) ICreateGlobalLoadBalancerRequest {
-	s.Package = packageId
+func (s *CreateGlobalLoadBalancerRequest) WithPackage(packageID string) ICreateGlobalLoadBalancerRequest {
+	s.Package = packageID
 	return s
 }
 
@@ -188,8 +188,8 @@ type DeleteGlobalLoadBalancerRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *DeleteGlobalLoadBalancerRequest) WithLoadBalancerId(lbId string) IDeleteGlobalLoadBalancerRequest {
-	s.LoadBalancerId = lbId
+func (s *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
@@ -198,10 +198,10 @@ func (s *DeleteGlobalLoadBalancerRequest) AddUserAgent(agent ...string) IDeleteG
 	return s
 }
 
-func NewDeleteGlobalLoadBalancerRequest(lbId string) IDeleteGlobalLoadBalancerRequest {
+func NewDeleteGlobalLoadBalancerRequest(lbID string) IDeleteGlobalLoadBalancerRequest {
 	opts := &DeleteGlobalLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 	}
 	return opts
@@ -256,8 +256,8 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerId(lbId string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.LoadBalancerId = lbId
+func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
@@ -299,13 +299,13 @@ func (s *GetGlobalLoadBalancerUsageHistoriesRequest) AddUserAgent(agent ...strin
 	return s
 }
 
-func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbId, from, to, usageType string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) IGetGlobalLoadBalancerUsageHistoriesRequest {
 	opts := &GetGlobalLoadBalancerUsageHistoriesRequest{
 		From: from,
 		To:   to,
 		Type: usageType,
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 	}
 	return opts
@@ -313,27 +313,27 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbId, from, to, usageType str
 
 // --------------------------------------------------------------------------
 
-var _ IGetGlobalLoadBalancerByIdRequest = &GetGlobalLoadBalancerByIdRequest{}
+var _ IGetGlobalLoadBalancerByIDRequest = &GetGlobalLoadBalancerByIDRequest{}
 
-type GetGlobalLoadBalancerByIdRequest struct {
+type GetGlobalLoadBalancerByIDRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 }
 
-func (s *GetGlobalLoadBalancerByIdRequest) WithLoadBalancerId(lbId string) IGetGlobalLoadBalancerByIdRequest {
-	s.LoadBalancerId = lbId
+func (s *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *GetGlobalLoadBalancerByIdRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIdRequest {
+func (s *GetGlobalLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewGetGlobalLoadBalancerByIdRequest(lbId string) IGetGlobalLoadBalancerByIdRequest {
-	opts := &GetGlobalLoadBalancerByIdRequest{
+func NewGetGlobalLoadBalancerByIDRequest(lbID string) IGetGlobalLoadBalancerByIDRequest {
+	opts := &GetGlobalLoadBalancerByIDRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 	}
 	return opts

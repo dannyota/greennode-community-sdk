@@ -36,7 +36,7 @@ type CreateListenerRequest struct {
 	TimeoutClient               int              `json:"timeoutClient"`
 	TimeoutConnection           int              `json:"timeoutConnection"`
 	TimeoutMember               int              `json:"timeoutMember"`
-	DefaultPoolId               *string          `json:"defaultPoolId"`
+	DefaultPoolID               *string          `json:"defaultPoolId"`
 	CertificateAuthorities      *[]string        `json:"certificateAuthorities"`
 	ClientCertificate           *string          `json:"clientCertificate"`
 	DefaultCertificateAuthority *string          `json:"defaultCertificateAuthority"`
@@ -85,13 +85,13 @@ func (s *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerReques
 	return s
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerId(lbid string) ICreateListenerRequest {
-	s.LoadBalancerId = lbid
+func (s *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
+	s.LoadBalancerID = lbid
 	return s
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolId(poolId string) ICreateListenerRequest {
-	s.DefaultPoolId = &poolId
+func (s *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
+	s.DefaultPoolID = &poolID
 	return s
 }
 
@@ -118,6 +118,6 @@ func (s *CreateListenerRequest) ToMap() map[string]interface{} {
 		"timeoutConnection":    s.TimeoutConnection,
 		"timeoutMember":        s.TimeoutMember,
 		"allowedCidrs":         s.AllowedCidrs,
-		"defaultPoolId":        s.DefaultPoolId,
+		"defaultPoolId":        s.DefaultPoolID,
 	}
 }

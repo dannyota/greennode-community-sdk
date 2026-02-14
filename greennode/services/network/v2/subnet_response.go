@@ -2,7 +2,7 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type GetSubnetByIdResponse struct {
+type GetSubnetByIDResponse struct {
 	UUID                   string `json:"uuid"`
 	CreatedAt              string `json:"createdAt"`
 	UpdatedAt              string `json:"updatedAt,omitempty"`
@@ -23,23 +23,23 @@ type GetSubnetByIdResponse struct {
 	} `json:"zone"`
 }
 
-func (s *GetSubnetByIdResponse) ToEntitySubnet() *entity.Subnet {
+func (s *GetSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
 	secondaryRange := make([]entity.SubnetSecondaryRange, 0, len(s.SecondarySubnets))
 	for _, sr := range s.SecondarySubnets {
 		secondaryRange = append(secondaryRange, entity.SubnetSecondaryRange{
-			Id:   sr.UUID,
+			ID:   sr.UUID,
 			Name: sr.Name,
 			Cidr: sr.Cidr,
 		})
 	}
 	return &entity.Subnet{
-		Id:                     s.UUID,
-		NetworkId:              s.NetworkUuid,
+		ID:                     s.UUID,
+		NetworkID:              s.NetworkUuid,
 		Name:                   s.Name,
 		Status:                 s.Status,
 		Cidr:                   s.Cidr,
-		RouteTableId:           s.RouteTableUuid,
-		InterfaceAclPolicyId:   s.InterfaceAclPolicyUuid,
+		RouteTableID:           s.RouteTableUuid,
+		InterfaceAclPolicyID:   s.InterfaceAclPolicyUuid,
 		InterfaceAclPolicyName: s.InterfaceAclPolicyName,
 		SecondarySubnets:       secondaryRange,
 		ZoneID:                 s.Zone.UUID,
@@ -47,10 +47,10 @@ func (s *GetSubnetByIdResponse) ToEntitySubnet() *entity.Subnet {
 }
 
 // --------------------------------------------------------
-type UpdateSubnetByIdResponse struct {
-	Data GetSubnetByIdResponse `json:"data"`
+type UpdateSubnetByIDResponse struct {
+	Data GetSubnetByIDResponse `json:"data"`
 }
 
-func (s *UpdateSubnetByIdResponse) ToEntitySubnet() *entity.Subnet {
+func (s *UpdateSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
 	return s.Data.ToEntitySubnet()
 }

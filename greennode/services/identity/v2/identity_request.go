@@ -1,22 +1,22 @@
 package v2
 
 type GetAccessTokenRequest struct {
-	ClientId     string
+	ClientID     string
 	ClientSecret string
 
 	GrantType string `json:"grant_type"`
 }
 
-func NewGetAccessTokenRequest(clientId, clientSecret string) IGetAccessTokenRequest {
+func NewGetAccessTokenRequest(clientID, clientSecret string) IGetAccessTokenRequest {
 	return &GetAccessTokenRequest{
-		ClientId:     clientId,
+		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		GrantType:    "client_credentials",
 	}
 }
 
-func (s *GetAccessTokenRequest) WithClientId(clientId string) IGetAccessTokenRequest {
-	s.ClientId = clientId
+func (s *GetAccessTokenRequest) WithClientID(clientID string) IGetAccessTokenRequest {
+	s.ClientID = clientID
 	return s
 }
 
@@ -25,8 +25,8 @@ func (s *GetAccessTokenRequest) WithClientSecret(clientSecret string) IGetAccess
 	return s
 }
 
-func (s *GetAccessTokenRequest) GetClientId() string {
-	return s.ClientId
+func (s *GetAccessTokenRequest) GetClientID() string {
+	return s.ClientID
 }
 
 func (s *GetAccessTokenRequest) GetClientSecret() string {

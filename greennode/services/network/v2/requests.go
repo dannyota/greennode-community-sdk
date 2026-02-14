@@ -1,35 +1,35 @@
 package v2
 
-func NewCreateVirtualAddressCrossProjectRequest(name, projectId, subnetId string) ICreateVirtualAddressCrossProjectRequest {
+func NewCreateVirtualAddressCrossProjectRequest(name, projectID, subnetID string) ICreateVirtualAddressCrossProjectRequest {
 	opts := new(CreateVirtualAddressCrossProjectRequest)
 	opts.Name = name
-	opts.CrossProjectRequest.ProjectId = projectId
-	opts.CrossProjectRequest.SubnetId = subnetId
+	opts.CrossProjectRequest.ProjectID = projectID
+	opts.CrossProjectRequest.SubnetID = subnetID
 	return opts
 }
 
-func NewDeleteVirtualAddressByIdRequest(virtualAddressId string) IDeleteVirtualAddressByIdRequest {
-	opts := new(DeleteVirtualAddressByIdRequest)
-	opts.VirtualAddressId = virtualAddressId
+func NewDeleteVirtualAddressByIDRequest(virtualAddressID string) IDeleteVirtualAddressByIDRequest {
+	opts := new(DeleteVirtualAddressByIDRequest)
+	opts.VirtualAddressID = virtualAddressID
 	return opts
 }
 
-func NewGetVirtualAddressByIdRequest(virtualAddressId string) IGetVirtualAddressByIdRequest {
-	opts := new(GetVirtualAddressByIdRequest)
-	opts.VirtualAddressId = virtualAddressId
+func NewGetVirtualAddressByIDRequest(virtualAddressID string) IGetVirtualAddressByIDRequest {
+	opts := new(GetVirtualAddressByIDRequest)
+	opts.VirtualAddressID = virtualAddressID
 	return opts
 }
 
-func NewListAddressPairsByVirtualAddressIdRequest(virtualAddressId string) IListAddressPairsByVirtualAddressIdRequest {
-	opts := new(ListAddressPairsByVirtualAddressIdRequest)
-	opts.VirtualAddressId = virtualAddressId
+func NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID string) IListAddressPairsByVirtualAddressIDRequest {
+	opts := new(ListAddressPairsByVirtualAddressIDRequest)
+	opts.VirtualAddressID = virtualAddressID
 	return opts
 }
 
-func NewCreateAddressPairRequest(virtualAddressId, internalNicId string) ICreateAddressPairRequest {
+func NewCreateAddressPairRequest(virtualAddressID, internalNicID string) ICreateAddressPairRequest {
 	opts := new(CreateAddressPairRequest)
-	opts.VirtualAddressId = virtualAddressId
-	opts.InternalNetworkInterfaceId = internalNicId
+	opts.VirtualAddressID = virtualAddressID
+	opts.InternalNetworkInterfaceID = internalNicID
 	return opts
 }
 
@@ -40,15 +40,15 @@ func NewCreateSecgroupRequest(name, description string) ICreateSecgroupRequest {
 	}
 }
 
-func NewDeleteSecgroupByIdRequest(secgroupId string) IDeleteSecgroupByIdRequest {
-	opts := new(DeleteSecgroupByIdRequest)
-	opts.SecgroupId = secgroupId
+func NewDeleteSecgroupByIDRequest(secgroupID string) IDeleteSecgroupByIDRequest {
+	opts := new(DeleteSecgroupByIDRequest)
+	opts.SecgroupID = secgroupID
 	return opts
 }
 
-func NewGetSecgroupByIdRequest(secgroupId string) IGetSecgroupByIdRequest {
-	opt := new(GetSecgroupByIdRequest)
-	opt.SecgroupId = secgroupId
+func NewGetSecgroupByIDRequest(secgroupID string) IGetSecgroupByIDRequest {
+	opt := new(GetSecgroupByIDRequest)
+	opt.SecgroupID = secgroupID
 	return opt
 }
 

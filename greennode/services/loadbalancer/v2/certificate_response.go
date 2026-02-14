@@ -62,7 +62,7 @@ func (r *ListCertificatesResponse) ToEntityListCertificates() *entity.ListCertif
 
 // --------------------------------------------------------
 
-type GetCertificateByIdResponse struct {
+type GetCertificateByIDResponse struct {
 	certResponseData
 }
 

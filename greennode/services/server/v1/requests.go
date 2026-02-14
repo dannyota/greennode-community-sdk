@@ -1,8 +1,8 @@
 package v1
 
-func NewSystemTagRequest(resourceId string, resourceType ResourceType) ICreateSystemTagRequest {
+func NewSystemTagRequest(resourceID string, resourceType ResourceType) ICreateSystemTagRequest {
 	opt := new(CreateSystemTagRequest)
-	opt.ResourceId = resourceId
+	opt.ResourceID = resourceID
 	opt.ResourceType = resourceType
 	return opt
 }

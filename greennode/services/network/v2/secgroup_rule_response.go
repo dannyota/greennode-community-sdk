@@ -16,7 +16,7 @@ type CreateSecgroupRuleResponse struct {
 		PortRangeMax   int     `json:"portRangeMax"`
 		PortRangeMin   int     `json:"portRangeMin"`
 		Protocol       string  `json:"protocol"`
-		RuleId         int     `json:"ruleId"`
+		RuleID         int     `json:"ruleId"`
 		Description    string  `json:"description"`
 		RemoteIpPrefix string  `json:"remoteIpPrefix"`
 		IsSystem       bool    `json:"isSystem"`
@@ -25,8 +25,8 @@ type CreateSecgroupRuleResponse struct {
 
 func (s *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule {
 	return &entity.SecgroupRule{
-		Id:             s.Data.UUID,
-		SecgroupId:     s.Data.SecgroupUuid,
+		ID:             s.Data.UUID,
+		SecgroupID:     s.Data.SecgroupUuid,
 		Direction:      s.Data.Direction,
 		EtherType:      s.Data.EtherType,
 		PortRangeMax:   s.Data.PortRangeMax,
@@ -37,7 +37,7 @@ func (s *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule
 	}
 }
 
-type ListSecgroupRulesBySecgroupIdResponse struct {
+type ListSecgroupRulesBySecgroupIDResponse struct {
 	Data []struct {
 		ID             string `json:"id"`
 		Direction      string `json:"direction"`
@@ -46,21 +46,21 @@ type ListSecgroupRulesBySecgroupIdResponse struct {
 		PortRangeMin   int    `json:"portRangeMin"`
 		PortRangeMax   int    `json:"portRangeMax"`
 		RemoteIpPrefix string `json:"remoteIpPrefix"`
-		RemoteGroupId  string `json:"remoteGroupId"`
+		RemoteGroupID  string `json:"remoteGroupId"`
 		Status         string `json:"status"`
 		Description    string `json:"description"`
 		CreatedAt      string `json:"createdAt"`
 	} `json:"data"`
 }
 
-func (s *ListSecgroupRulesBySecgroupIdResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
+func (s *ListSecgroupRulesBySecgroupIDResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
 	lsr := &entity.ListSecgroupRules{
 		Items: make([]*entity.SecgroupRule, 0),
 	}
 
 	for _, rule := range s.Data {
 		lsr.Items = append(lsr.Items, &entity.SecgroupRule{
-			Id:             rule.ID,
+			ID:             rule.ID,
 			Direction:      rule.Direction,
 			EtherType:      rule.EtherType,
 			Protocol:       rule.Protocol,

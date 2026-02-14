@@ -9,9 +9,9 @@ type RecordValue struct {
 }
 
 type DnsRecord struct {
-	RecordId            string        `json:"recordId"`
+	RecordID            string        `json:"recordId"`
 	SubDomain           string        `json:"subDomain"`
-	HostedZoneId        string        `json:"hostedZoneId"`
+	HostedZoneID        string        `json:"hostedZoneId"`
 	Status              string        `json:"status"`
 	Type                string        `json:"type"`
 	RoutingPolicy       string        `json:"routingPolicy"`

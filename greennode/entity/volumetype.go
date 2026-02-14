@@ -1,13 +1,13 @@
 package entity
 
 type VolumeType struct {
-	Id         string
+	ID         string
 	Name       string
 	Iops       int
 	MaxSize    int
 	MinSize    int
 	ThroughPut int
-	ZoneId     string
+	ZoneID     string
 }
 
 type ListVolumeType struct {

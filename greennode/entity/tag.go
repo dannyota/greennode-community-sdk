@@ -4,8 +4,8 @@ type Tag struct {
 	Key        string
 	Value      string
 	SystemTag  bool
-	ResourceId string
-	TagId      string
+	ResourceID string
+	TagID      string
 }
 
 type ListTags struct {

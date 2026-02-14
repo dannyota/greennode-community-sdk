@@ -38,7 +38,7 @@ type HealthMonitor struct {
 	CreatedAt           string  `json:"createdAt"`
 	UpdatedAt           string  `json:"updatedAt"`
 	DomainName          *string `json:"domainName"`
-	HttpVersion         *string `json:"httpVersion"`
+	HTTPVersion         *string `json:"httpVersion"`
 	HealthCheckProtocol string  `json:"healthCheckProtocol"`
 	Interval            int     `json:"interval"`
 	HealthyThreshold    int     `json:"healthyThreshold"`
@@ -67,7 +67,7 @@ type ListMembers struct {
 	Items []*Member
 }
 
-func (s *Pool) GetId() string {
+func (s *Pool) GetID() string {
 	return s.UUID
 }
 

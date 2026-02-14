@@ -9,54 +9,54 @@ type ICreateServerRequest interface {
 	WithTags(tags ...string) ICreateServerRequest
 	WithAttachFloating(attachFloating bool) ICreateServerRequest
 	WithSecgroups(secgroups ...string) ICreateServerRequest
-	WithServerGroupId(serverGroupId string) ICreateServerRequest
+	WithServerGroupID(serverGroupID string) ICreateServerRequest
 	WithPoc(isPoc bool) ICreateServerRequest
 	WithType(typeVal string) ICreateServerRequest
-	WithNetwork(networkId, subnetId string) ICreateServerRequest
+	WithNetwork(networkID, subnetID string) ICreateServerRequest
 	WithProduct(product string) ICreateServerRequest
-	WithServerNetworkInterface(projectId, networkId, subnetId string, attachFloating bool) ICreateServerRequest
+	WithServerNetworkInterface(projectID, networkID, subnetID string, attachFloating bool) ICreateServerRequest
 	WithZone(zone string) ICreateServerRequest
 	AddUserAgent(agent ...string) ICreateServerRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
-type IGetServerByIdRequest interface {
-	GetServerId() string
-	AddUserAgent(agent ...string) IGetServerByIdRequest
+type IGetServerByIDRequest interface {
+	GetServerID() string
+	AddUserAgent(agent ...string) IGetServerByIDRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
-type IDeleteServerByIdRequest interface {
-	GetServerId() string
-	WithDeleteAllVolume(ok bool) IDeleteServerByIdRequest
+type IDeleteServerByIDRequest interface {
+	GetServerID() string
+	WithDeleteAllVolume(ok bool) IDeleteServerByIDRequest
 	ToRequestBody() interface{}
-	AddUserAgent(agent ...string) IDeleteServerByIdRequest
+	AddUserAgent(agent ...string) IDeleteServerByIDRequest
 	ParseUserAgent() string
 }
 
-type IUpdateServerSecgroupsByServerIdRequest interface {
-	GetServerId() string
+type IUpdateServerSecgroupsByServerIDRequest interface {
+	GetServerID() string
 	ToRequestBody() interface{}
-	GetListSecgroupsIds() []string
-	AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIdRequest
+	GetListSecgroupsIDs() []string
+	AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIDRequest
 	ParseUserAgent() string
 }
 
 type IAttachBlockVolumeRequest interface {
-	GetServerId() string
-	GetBlockVolumeId() string
+	GetServerID() string
+	GetBlockVolumeID() string
 }
 
 type IDetachBlockVolumeRequest interface {
-	GetServerId() string
-	GetBlockVolumeId() string
+	GetServerID() string
+	GetBlockVolumeID() string
 }
 
 type IAttachFloatingIpRequest interface {
-	GetServerId() string
-	GetInternalNetworkInterfaceId() string
+	GetServerID() string
+	GetInternalNetworkInterfaceID() string
 	ToRequestBody() interface{}
 	AddUserAgent(agent ...string) IAttachFloatingIpRequest
 	ParseUserAgent() string
@@ -64,9 +64,9 @@ type IAttachFloatingIpRequest interface {
 }
 
 type IDetachFloatingIpRequest interface {
-	GetInternalNetworkInterfaceId() string
-	GetWanId() string
-	GetServerId() string
+	GetInternalNetworkInterfaceID() string
+	GetWanID() string
+	GetServerID() string
 	ToRequestBody() interface{}
 	AddUserAgent(agent ...string) IDetachFloatingIpRequest
 	ParseUserAgent() string
@@ -78,10 +78,10 @@ type IListServerGroupPoliciesRequest interface {
 	ParseUserAgent() string
 }
 
-type IDeleteServerGroupByIdRequest interface {
-	AddUserAgent(agent ...string) IDeleteServerGroupByIdRequest
+type IDeleteServerGroupByIDRequest interface {
+	AddUserAgent(agent ...string) IDeleteServerGroupByIDRequest
 	ParseUserAgent() string
-	GetServerGroupId() string
+	GetServerGroupID() string
 	ToMap() map[string]interface{}
 }
 

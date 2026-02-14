@@ -1,20 +1,20 @@
 package entity
 
 type Subnet struct {
-	Id                     string
-	NetworkId              string
+	ID                     string
+	NetworkID              string
 	Name                   string
 	Status                 string
 	Cidr                   string
-	RouteTableId           string
-	InterfaceAclPolicyId   string
+	RouteTableID           string
+	InterfaceAclPolicyID   string
 	InterfaceAclPolicyName string
 	SecondarySubnets       []SubnetSecondaryRange
 	ZoneID                 string
 }
 
 type SubnetSecondaryRange struct {
-	Id   string
+	ID   string
 	Name string
 	Cidr string
 }

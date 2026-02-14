@@ -7,7 +7,7 @@ type (
 	GlobalPoolProtocol               string
 	GlobalPoolHealthCheckProtocol    string
 	GlobalPoolHealthCheckMethod      string
-	GlobalPoolHealthCheckHttpVersion string
+	GlobalPoolHealthCheckHTTPVersion string
 
 	GlobalPoolMemberType string
 )
@@ -36,8 +36,8 @@ const (
 )
 
 const (
-	GlobalPoolHealthCheckHttpVersionHttp1       GlobalPoolHealthCheckHttpVersion = "1.0"
-	GlobalPoolHealthCheckHttpVersionHttp1Minor1 GlobalPoolHealthCheckHttpVersion = "1.1"
+	GlobalPoolHealthCheckHTTPVersionHttp1       GlobalPoolHealthCheckHTTPVersion = "1.0"
+	GlobalPoolHealthCheckHTTPVersionHttp1Minor1 GlobalPoolHealthCheckHTTPVersion = "1.1"
 )
 
 const (
@@ -54,8 +54,8 @@ type ListGlobalPoolsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *ListGlobalPoolsRequest) WithLoadBalancerId(lbId string) IListGlobalPoolsRequest {
-	s.LoadBalancerId = lbId
+func (s *ListGlobalPoolsRequest) WithLoadBalancerID(lbID string) IListGlobalPoolsRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
@@ -64,9 +64,9 @@ func (s *ListGlobalPoolsRequest) AddUserAgent(agent ...string) IListGlobalPoolsR
 	return s
 }
 
-func NewListGlobalPoolsRequest(lbId string) IListGlobalPoolsRequest {
+func NewListGlobalPoolsRequest(lbID string) IListGlobalPoolsRequest {
 	opts := &ListGlobalPoolsRequest{}
-	opts.LoadBalancerId = lbId
+	opts.LoadBalancerID = lbID
 	return opts
 }
 
@@ -118,8 +118,8 @@ func (s *CreateGlobalPoolRequest) WithMembers(members ...ICreateGlobalPoolMember
 	return s
 }
 
-func (s *CreateGlobalPoolRequest) WithLoadBalancerId(lbId string) ICreateGlobalPoolRequest {
-	s.LoadBalancerId = lbId
+func (s *CreateGlobalPoolRequest) WithLoadBalancerID(lbID string) ICreateGlobalPoolRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
@@ -176,8 +176,8 @@ type GlobalHealthMonitorRequest struct {
 	UnhealthyThreshold  int                               `json:"unhealthyThreshold"`
 	Interval            int                               `json:"interval"`
 	Timeout             int                               `json:"timeout"`
-	HttpMethod          *GlobalPoolHealthCheckMethod      `json:"httpMethod,omitempty"`
-	HttpVersion         *GlobalPoolHealthCheckHttpVersion `json:"httpVersion,omitempty"`
+	HTTPMethod          *GlobalPoolHealthCheckMethod      `json:"httpMethod,omitempty"`
+	HTTPVersion         *GlobalPoolHealthCheckHTTPVersion `json:"httpVersion,omitempty"`
 	Path                *string                           `json:"path,omitempty"`
 	DomainName          *string                           `json:"domainName,omitempty"`
 	SuccessCode         *string                           `json:"successCode,omitempty"`
@@ -211,12 +211,12 @@ func (s *GlobalHealthMonitorRequest) WithTimeout(timeout int) IGlobalHealthMonit
 }
 
 func (s *GlobalHealthMonitorRequest) WithHealthCheckMethod(method *GlobalPoolHealthCheckMethod) IGlobalHealthMonitorRequest {
-	s.HttpMethod = method
+	s.HTTPMethod = method
 	return s
 }
 
-func (s *GlobalHealthMonitorRequest) WithHttpVersion(version *GlobalPoolHealthCheckHttpVersion) IGlobalHealthMonitorRequest {
-	s.HttpVersion = version
+func (s *GlobalHealthMonitorRequest) WithHTTPVersion(version *GlobalPoolHealthCheckHTTPVersion) IGlobalHealthMonitorRequest {
+	s.HTTPVersion = version
 	return s
 }
 
@@ -247,8 +247,8 @@ func (s *GlobalHealthMonitorRequest) ToMap() map[string]interface{} {
 		"unhealthyThreshold": s.UnhealthyThreshold,
 		"interval":           s.Interval,
 		"timeout":            s.Timeout,
-		"httpMethod":         s.HttpMethod,
-		"httpVersion":        s.HttpVersion,
+		"httpMethod":         s.HTTPMethod,
+		"httpVersion":        s.HTTPVersion,
 		"path":               s.Path,
 		"domainName":         s.DomainName,
 		"successCode":        s.SuccessCode,
@@ -268,15 +268,15 @@ func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) IGlobal
 		UnhealthyThreshold:  3,
 		Interval:            30,
 		Timeout:             5,
-		HttpMethod:          nil,
-		HttpVersion:         nil,
+		HTTPMethod:          nil,
+		HTTPVersion:         nil,
 		Path:                nil,
 		DomainName:          nil,
 		SuccessCode:         nil,
 	}
 	if checkProtocol == GlobalPoolHealthCheckProtocolHTTP || checkProtocol == GlobalPoolHealthCheckProtocolHTTPs {
-		opts.HttpMethod = common.Ptr(GlobalPoolHealthCheckMethodGET)
-		opts.HttpVersion = common.Ptr(GlobalPoolHealthCheckHttpVersionHttp1Minor1)
+		opts.HTTPMethod = common.Ptr(GlobalPoolHealthCheckMethodGET)
+		opts.HTTPVersion = common.Ptr(GlobalPoolHealthCheckHTTPVersionHttp1Minor1)
 		opts.Path = common.Ptr("/")
 		opts.DomainName = common.Ptr("")
 		opts.SuccessCode = common.Ptr("200")
@@ -322,8 +322,8 @@ func (s *GlobalPoolMemberRequest) WithTrafficDial(dial int) ICreateGlobalPoolMem
 	return s
 }
 
-func (s *GlobalPoolMemberRequest) WithVPCID(vpcId string) ICreateGlobalPoolMemberRequest {
-	s.VPCID = vpcId
+func (s *GlobalPoolMemberRequest) WithVPCID(vpcID string) ICreateGlobalPoolMemberRequest {
+	s.VPCID = vpcID
 	return s
 }
 
@@ -337,13 +337,13 @@ func (s *GlobalPoolMemberRequest) WithMembers(members ...IGlobalMemberRequest) I
 	return s
 }
 
-func (s *GlobalPoolMemberRequest) WithLoadBalancerId(lbId string) ICreateGlobalPoolMemberRequest {
-	s.LoadBalancerId = lbId
+func (s *GlobalPoolMemberRequest) WithLoadBalancerID(lbID string) ICreateGlobalPoolMemberRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *GlobalPoolMemberRequest) WithPoolId(poolId string) ICreateGlobalPoolMemberRequest {
-	s.PoolId = poolId
+func (s *GlobalPoolMemberRequest) WithPoolID(poolID string) ICreateGlobalPoolMemberRequest {
+	s.PoolID = poolID
 	return s
 }
 
@@ -373,14 +373,14 @@ func (s *GlobalPoolMemberRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func NewGlobalPoolMemberRequest(name, region, vpcId string, dial int, typeVal GlobalPoolMemberType) ICreateGlobalPoolMemberRequest {
+func NewGlobalPoolMemberRequest(name, region, vpcID string, dial int, typeVal GlobalPoolMemberType) ICreateGlobalPoolMemberRequest {
 	opts := &GlobalPoolMemberRequest{
 		Name:        name,
 		Description: "",
 		Region:      region,
 		TrafficDial: dial,
 		Type:        typeVal,
-		VPCID:       vpcId,
+		VPCID:       vpcID,
 		Members:     make([]IGlobalMemberRequest, 0),
 	}
 	return opts
@@ -433,8 +433,8 @@ func (s *GlobalMemberRequest) WithPort(port int) IGlobalMemberRequest {
 	return s
 }
 
-func (s *GlobalMemberRequest) WithSubnetID(subnetId string) IGlobalMemberRequest {
-	s.SubnetID = subnetId
+func (s *GlobalMemberRequest) WithSubnetID(subnetID string) IGlobalMemberRequest {
+	s.SubnetID = subnetID
 	return s
 }
 
@@ -466,7 +466,7 @@ func (s *GlobalMemberRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func NewGlobalMemberRequest(name, address, subnetId string, port, monitorPort, weight int, backupRole bool) IGlobalMemberRequest {
+func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, weight int, backupRole bool) IGlobalMemberRequest {
 	opts := &GlobalMemberRequest{
 		Name:        name,
 		Address:     address,
@@ -474,7 +474,7 @@ func NewGlobalMemberRequest(name, address, subnetId string, port, monitorPort, w
 		Description: "",
 		MonitorPort: monitorPort,
 		Port:        port,
-		SubnetID:    subnetId,
+		SubnetID:    subnetID,
 		Weight:      weight,
 	}
 	return opts
@@ -502,13 +502,13 @@ func (s *UpdateGlobalPoolRequest) WithHealthMonitor(monitor IGlobalHealthMonitor
 	return s
 }
 
-func (s *UpdateGlobalPoolRequest) WithLoadBalancerId(lbId string) IUpdateGlobalPoolRequest {
-	s.LoadBalancerId = lbId
+func (s *UpdateGlobalPoolRequest) WithLoadBalancerID(lbID string) IUpdateGlobalPoolRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *UpdateGlobalPoolRequest) WithPoolId(poolId string) IUpdateGlobalPoolRequest {
-	s.PoolId = poolId
+func (s *UpdateGlobalPoolRequest) WithPoolID(poolID string) IUpdateGlobalPoolRequest {
+	s.PoolID = poolID
 	return s
 }
 
@@ -529,15 +529,15 @@ func (s *UpdateGlobalPoolRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func NewUpdateGlobalPoolRequest(lbId, poolId string) IUpdateGlobalPoolRequest {
+func NewUpdateGlobalPoolRequest(lbID, poolID string) IUpdateGlobalPoolRequest {
 	opts := &UpdateGlobalPoolRequest{
 		Algorithm:     GlobalPoolAlgorithmRoundRobin,
 		HealthMonitor: nil,
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 	}
 	return opts
@@ -553,13 +553,13 @@ type DeleteGlobalPoolRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteGlobalPoolRequest) WithLoadBalancerId(lbId string) IDeleteGlobalPoolRequest {
-	s.LoadBalancerId = lbId
+func (s *DeleteGlobalPoolRequest) WithLoadBalancerID(lbID string) IDeleteGlobalPoolRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *DeleteGlobalPoolRequest) WithPoolId(poolId string) IDeleteGlobalPoolRequest {
-	s.PoolId = poolId
+func (s *DeleteGlobalPoolRequest) WithPoolID(poolID string) IDeleteGlobalPoolRequest {
+	s.PoolID = poolID
 	return s
 }
 
@@ -568,13 +568,13 @@ func (s *DeleteGlobalPoolRequest) AddUserAgent(agent ...string) IDeleteGlobalPoo
 	return s
 }
 
-func NewDeleteGlobalPoolRequest(lbId, poolId string) IDeleteGlobalPoolRequest {
+func NewDeleteGlobalPoolRequest(lbID, poolID string) IDeleteGlobalPoolRequest {
 	opts := &DeleteGlobalPoolRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 	}
 	return opts
@@ -590,13 +590,13 @@ type ListGlobalPoolMembersRequest struct {
 	common.UserAgent
 }
 
-func (s *ListGlobalPoolMembersRequest) WithLoadBalancerId(lbId string) IListGlobalPoolMembersRequest {
-	s.LoadBalancerId = lbId
+func (s *ListGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) IListGlobalPoolMembersRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *ListGlobalPoolMembersRequest) WithPoolId(poolId string) IListGlobalPoolMembersRequest {
-	s.PoolId = poolId
+func (s *ListGlobalPoolMembersRequest) WithPoolID(poolID string) IListGlobalPoolMembersRequest {
+	s.PoolID = poolID
 	return s
 }
 
@@ -605,13 +605,13 @@ func (s *ListGlobalPoolMembersRequest) AddUserAgent(agent ...string) IListGlobal
 	return s
 }
 
-func NewListGlobalPoolMembersRequest(lbId, poolId string) IListGlobalPoolMembersRequest {
+func NewListGlobalPoolMembersRequest(lbID, poolID string) IListGlobalPoolMembersRequest {
 	opts := &ListGlobalPoolMembersRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 	}
 	return opts
@@ -633,13 +633,13 @@ func (s *PatchGlobalPoolMembersRequest) WithBulkAction(action ...IBulkActionRequ
 	return s
 }
 
-func (s *PatchGlobalPoolMembersRequest) WithLoadBalancerId(lbId string) IPatchGlobalPoolMembersRequest {
-	s.LoadBalancerId = lbId
+func (s *PatchGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) IPatchGlobalPoolMembersRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *PatchGlobalPoolMembersRequest) WithPoolId(poolId string) IPatchGlobalPoolMembersRequest {
-	s.PoolId = poolId
+func (s *PatchGlobalPoolMembersRequest) WithPoolID(poolID string) IPatchGlobalPoolMembersRequest {
+	s.PoolID = poolID
 	return s
 }
 
@@ -664,14 +664,14 @@ func (s *PatchGlobalPoolMembersRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func NewPatchGlobalPoolMembersRequest(lbId, poolId string) IPatchGlobalPoolMembersRequest {
+func NewPatchGlobalPoolMembersRequest(lbID, poolID string) IPatchGlobalPoolMembersRequest {
 	opts := &PatchGlobalPoolMembersRequest{
 		BulkActions: make([]IBulkActionRequest, 0),
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 	}
 	return opts
@@ -762,14 +762,14 @@ func NewPatchGlobalPoolUpdateBulkActionRequest(id string, member IUpdateGlobalPo
 }
 
 type IUpdateGlobalPoolMemberRequest interface {
-	WithLoadBalancerId(lbId string) IUpdateGlobalPoolMemberRequest
-	WithPoolId(poolId string) IUpdateGlobalPoolMemberRequest
-	WithPoolMemberId(poolMemberId string) IUpdateGlobalPoolMemberRequest
+	WithLoadBalancerID(lbID string) IUpdateGlobalPoolMemberRequest
+	WithPoolID(poolID string) IUpdateGlobalPoolMemberRequest
+	WithPoolMemberID(poolMemberID string) IUpdateGlobalPoolMemberRequest
 	WithTrafficDial(dial int) IUpdateGlobalPoolMemberRequest
 	WithMembers(members ...IGlobalMemberRequest) IUpdateGlobalPoolMemberRequest
-	GetLoadBalancerId() string // to use in request url
-	GetPoolId() string
-	GetPoolMemberId() string
+	GetLoadBalancerID() string // to use in request url
+	GetPoolID() string
+	GetPoolMemberID() string
 
 	AddUserAgent(agent ...string) IUpdateGlobalPoolMemberRequest
 	ParseUserAgent() string
@@ -812,18 +812,18 @@ func (s *UpdateGlobalPoolMemberRequest) ToMap() map[string]interface{} {
 	return err
 }
 
-func (s *UpdateGlobalPoolMemberRequest) WithLoadBalancerId(lbId string) IUpdateGlobalPoolMemberRequest {
-	s.LoadBalancerId = lbId
+func (s *UpdateGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) IUpdateGlobalPoolMemberRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *UpdateGlobalPoolMemberRequest) WithPoolId(poolId string) IUpdateGlobalPoolMemberRequest {
-	s.PoolId = poolId
+func (s *UpdateGlobalPoolMemberRequest) WithPoolID(poolID string) IUpdateGlobalPoolMemberRequest {
+	s.PoolID = poolID
 	return s
 }
 
-func (s *UpdateGlobalPoolMemberRequest) WithPoolMemberId(poolMemberId string) IUpdateGlobalPoolMemberRequest {
-	s.PoolMemberId = poolMemberId
+func (s *UpdateGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) IUpdateGlobalPoolMemberRequest {
+	s.PoolMemberID = poolMemberID
 	return s
 }
 
@@ -836,18 +836,18 @@ func (s *UpdateGlobalPoolMemberRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func NewUpdateGlobalPoolMemberRequest(lbId, poolId, poolMemberId string, dial int) IUpdateGlobalPoolMemberRequest {
+func NewUpdateGlobalPoolMemberRequest(lbID, poolID, poolMemberID string, dial int) IUpdateGlobalPoolMemberRequest {
 	opts := &UpdateGlobalPoolMemberRequest{
 		TrafficDial: dial,
 		Members:     make([]IGlobalMemberRequest, 0),
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberId: poolMemberId,
+			PoolMemberID: poolMemberID,
 		},
 	}
 	return opts
@@ -864,18 +864,18 @@ type DeleteGlobalPoolMemberRequest struct {
 	common.PoolMemberCommon
 }
 
-func (s *DeleteGlobalPoolMemberRequest) WithLoadBalancerId(lbId string) IDeleteGlobalPoolMemberRequest {
-	s.LoadBalancerId = lbId
+func (s *DeleteGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) IDeleteGlobalPoolMemberRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *DeleteGlobalPoolMemberRequest) WithPoolId(poolId string) IDeleteGlobalPoolMemberRequest {
-	s.PoolId = poolId
+func (s *DeleteGlobalPoolMemberRequest) WithPoolID(poolID string) IDeleteGlobalPoolMemberRequest {
+	s.PoolID = poolID
 	return s
 }
 
-func (s *DeleteGlobalPoolMemberRequest) WithPoolMemberId(poolMemberId string) IDeleteGlobalPoolMemberRequest {
-	s.PoolMemberId = poolMemberId
+func (s *DeleteGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) IDeleteGlobalPoolMemberRequest {
+	s.PoolMemberID = poolMemberID
 	return s
 }
 
@@ -884,16 +884,16 @@ func (s *DeleteGlobalPoolMemberRequest) AddUserAgent(agent ...string) IDeleteGlo
 	return s
 }
 
-func NewDeleteGlobalPoolMemberRequest(lbId, poolId, poolMemberId string) IDeleteGlobalPoolMemberRequest {
+func NewDeleteGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) IDeleteGlobalPoolMemberRequest {
 	opts := &DeleteGlobalPoolMemberRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberId: poolMemberId,
+			PoolMemberID: poolMemberID,
 		},
 	}
 	return opts
@@ -910,18 +910,18 @@ type GetGlobalPoolMemberRequest struct {
 	common.PoolMemberCommon
 }
 
-func (s *GetGlobalPoolMemberRequest) WithLoadBalancerId(lbId string) IGetGlobalPoolMemberRequest {
-	s.LoadBalancerId = lbId
+func (s *GetGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) IGetGlobalPoolMemberRequest {
+	s.LoadBalancerID = lbID
 	return s
 }
 
-func (s *GetGlobalPoolMemberRequest) WithPoolId(poolId string) IGetGlobalPoolMemberRequest {
-	s.PoolId = poolId
+func (s *GetGlobalPoolMemberRequest) WithPoolID(poolID string) IGetGlobalPoolMemberRequest {
+	s.PoolID = poolID
 	return s
 }
 
-func (s *GetGlobalPoolMemberRequest) WithPoolMemberId(poolMemberId string) IGetGlobalPoolMemberRequest {
-	s.PoolMemberId = poolMemberId
+func (s *GetGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) IGetGlobalPoolMemberRequest {
+	s.PoolMemberID = poolMemberID
 	return s
 }
 
@@ -930,16 +930,16 @@ func (s *GetGlobalPoolMemberRequest) AddUserAgent(agent ...string) IGetGlobalPoo
 	return s
 }
 
-func NewGetGlobalPoolMemberRequest(lbId, poolId, poolMemberId string) IGetGlobalPoolMemberRequest {
+func NewGetGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) IGetGlobalPoolMemberRequest {
 	opts := &GetGlobalPoolMemberRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: lbId,
+			LoadBalancerID: lbID,
 		},
 		PoolCommon: common.PoolCommon{
-			PoolId: poolId,
+			PoolID: poolID,
 		},
 		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberId: poolMemberId,
+			PoolMemberID: poolMemberID,
 		},
 	}
 	return opts

@@ -10,7 +10,7 @@ const (
 
 type (
 	Server struct {
-		BootVolumeId       string
+		BootVolumeID       string
 		CreatedAt          string
 		EncryptionVolume   bool
 		Licence            bool
@@ -19,7 +19,7 @@ type (
 		MigrateState       string
 		Name               string
 		Product            string
-		ServerGroupId      string
+		ServerGroupID      string
 		ServerGroupName    string
 		SshKeyName         string
 		Status             string
@@ -31,14 +31,14 @@ type (
 		SecGroups          []ServerSecgroup
 		ExternalInterfaces []NetworkInterface
 		InternalInterfaces []NetworkInterface
-		ZoneId             string
+		ZoneID             string
 	}
 
 	NetworkInterface struct {
 		CreatedAt     string
 		FixedIp       string
 		FloatingIp    string
-		FloatingIpId  string
+		FloatingIpID  string
 		InterfaceType string
 		Mac           string
 		NetworkUuid   string
@@ -57,19 +57,19 @@ type (
 		BandwidthUnit          string
 		Cpu                    int64
 		CpuPlatformDescription string
-		FlavorId               string
+		FlavorID               string
 		Gpu                    int64
 		Group                  string
 		Memory                 int64
 		MetaData               string
 		Name                   string
 		RemainingVms           int64
-		ZoneId                 string
+		ZoneID                 string
 	}
 
 	Image struct {
-		FlavorZoneIds []string
-		Id            string
+		FlavorZoneIDs []string
+		ID            string
 		ImageType     string
 		ImageVersion  string
 		Licence       bool
@@ -120,14 +120,14 @@ func (s *Server) IsRunning() bool {
 func (s *Server) GetInternalInterfaceWanInfo() (string, string, string, bool) {
 	for _, i := range s.InternalInterfaces {
 		if i.FloatingIp != "" {
-			return i.Uuid, i.FloatingIpId, i.FloatingIp, true
+			return i.Uuid, i.FloatingIpID, i.FloatingIp, true
 		}
 	}
 
 	return "", "", "", false
 }
 
-func (s *Server) GetInternalNetworkInterfaceIds() []string {
+func (s *Server) GetInternalNetworkInterfaceIDs() []string {
 	ids := make([]string, 0, len(s.InternalInterfaces))
 	for _, i := range s.InternalInterfaces {
 		ids = append(ids, i.Uuid)

@@ -7,34 +7,34 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewGetVolumeTypeByIdRequest(volumeTypeId string) IGetVolumeTypeByIdRequest {
-	opt := new(GetVolumeTypeByIdRequest)
-	opt.VolumeTypeId = volumeTypeId
+func NewGetVolumeTypeByIDRequest(volumeTypeID string) IGetVolumeTypeByIDRequest {
+	opt := new(GetVolumeTypeByIDRequest)
+	opt.VolumeTypeID = volumeTypeID
 	return opt
 }
 
-func NewListVolumeTypeRequest(volumeTypeZoneId string) IGetListVolumeTypeRequest {
+func NewListVolumeTypeRequest(volumeTypeZoneID string) IGetListVolumeTypeRequest {
 	opt := new(GetListVolumeTypeRequest)
-	opt.VolumeTypeZoneId = volumeTypeZoneId
+	opt.VolumeTypeZoneID = volumeTypeZoneID
 	return opt
 }
 
-func NewGetVolumeTypeZonesRequest(zoneId string) IGetVolumeTypeZonesRequest {
+func NewGetVolumeTypeZonesRequest(zoneID string) IGetVolumeTypeZonesRequest {
 	opt := new(GetVolumeTypeZonesRequest)
-	opt.ZoneId = zoneId
+	opt.ZoneID = zoneID
 	return opt
 }
 
-type GetVolumeTypeByIdRequest struct {
+type GetVolumeTypeByIDRequest struct {
 	common.VolumeTypeCommon
 }
 
 type GetVolumeTypeZonesRequest struct {
-	ZoneId string
+	ZoneID string
 }
 
 type GetListVolumeTypeRequest struct {
-	VolumeTypeZoneId string
+	VolumeTypeZoneID string
 }
 
 func (s *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
@@ -43,12 +43,12 @@ func (s *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
 
 func (s *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
 	v := url.Values{}
-	if s.ZoneId != "" {
-		v.Set("zoneId", s.ZoneId)
+	if s.ZoneID != "" {
+		v.Set("zoneId", s.ZoneID)
 	}
 	return v.Encode(), nil
 }
 
-func (s *GetListVolumeTypeRequest) GetVolumeTypeZoneId() string {
-	return s.VolumeTypeZoneId
+func (s *GetListVolumeTypeRequest) GetVolumeTypeZoneID() string {
+	return s.VolumeTypeZoneID
 }

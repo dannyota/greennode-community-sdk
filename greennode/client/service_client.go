@@ -11,11 +11,11 @@ import (
 type serviceClient struct {
 	name        string
 	endpoint    string
-	projectId   string
-	zoneId      string
-	userId      string
+	projectID   string
+	zoneID      string
+	userID      string
 	moreHeaders map[string]string
-	client      HttpClient
+	client      HTTPClient
 }
 
 func NewServiceClient() ServiceClient {
@@ -32,18 +32,18 @@ func (s *serviceClient) WithName(name string) ServiceClient {
 	return s
 }
 
-func (s *serviceClient) WithZoneId(zoneId string) ServiceClient {
-	s.zoneId = zoneId
+func (s *serviceClient) WithZoneID(zoneID string) ServiceClient {
+	s.zoneID = zoneID
 	return s
 }
 
-func (s *serviceClient) WithUserId(userId string) ServiceClient {
-	s.userId = userId
+func (s *serviceClient) WithUserID(userID string) ServiceClient {
+	s.userID = userID
 	return s
 }
 
-func (s *serviceClient) WithProjectId(projectId string) ServiceClient {
-	s.projectId = projectId
+func (s *serviceClient) WithProjectID(projectID string) ServiceClient {
+	s.projectID = projectID
 	return s
 }
 
@@ -57,7 +57,7 @@ func (s *serviceClient) WithKVheader(key string, value string) ServiceClient {
 	return s
 }
 
-func (s *serviceClient) WithClient(client HttpClient) ServiceClient {
+func (s *serviceClient) WithClient(client HTTPClient) ServiceClient {
 	s.client = client
 	return s
 }
@@ -86,16 +86,16 @@ func (s *serviceClient) Patch(url string, req Request) (*req.Response, sdkerror.
 	return s.client.DoRequest(url, req.WithRequestMethod(MethodPatch))
 }
 
-func (s *serviceClient) GetProjectId() string {
-	return s.projectId
+func (s *serviceClient) GetProjectID() string {
+	return s.projectID
 }
 
-func (s *serviceClient) GetZoneId() string {
-	return s.zoneId
+func (s *serviceClient) GetZoneID() string {
+	return s.zoneID
 }
 
-func (s *serviceClient) GetUserId() string {
-	return s.userId
+func (s *serviceClient) GetUserID() string {
+	return s.userID
 }
 
 type sdkAuthentication struct {
@@ -127,15 +127,15 @@ func (s *sdkAuthentication) NeedReauth() bool {
 }
 
 func (s *sdkAuthentication) UpdateAuth(auth SdkAuthentication) {
-	s.accessToken = auth.GetAccessToken()
-	s.expiresAt = auth.GetExpiresAt()
+	s.accessToken = auth.AccessToken()
+	s.expiresAt = auth.ExpiresAt()
 }
 
-func (s *sdkAuthentication) GetAccessToken() string {
+func (s *sdkAuthentication) AccessToken() string {
 	return s.accessToken
 }
 
-func (s *sdkAuthentication) GetExpiresAt() int64 {
+func (s *sdkAuthentication) ExpiresAt() int64 {
 	return s.expiresAt
 }
 

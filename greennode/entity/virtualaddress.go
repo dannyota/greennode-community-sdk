@@ -1,19 +1,19 @@
 package entity
 
 type VirtualAddress struct {
-	Id              string
+	ID              string
 	Name            string
 	EndpointAddress string
-	VpcId           string
-	SubnetId        string
+	VpcID           string
+	SubnetID        string
 	Description     string
 	SubnetCidr      string
 	VpcCidr         string
 	AddressPairIps  []string
 }
 
-func (s *VirtualAddress) GetId() string {
-	return s.Id
+func (s *VirtualAddress) GetID() string {
+	return s.ID
 }
 
 func (s *VirtualAddress) GetName() string {
@@ -24,12 +24,12 @@ func (s *VirtualAddress) GetEndpointAddress() string {
 	return s.EndpointAddress
 }
 
-func (s *VirtualAddress) GetVpcId() string {
-	return s.VpcId
+func (s *VirtualAddress) GetVpcID() string {
+	return s.VpcID
 }
 
-func (s *VirtualAddress) GetSubnetId() string {
-	return s.SubnetId
+func (s *VirtualAddress) GetSubnetID() string {
+	return s.SubnetID
 }
 
 func (s *VirtualAddress) GetDescription() string {

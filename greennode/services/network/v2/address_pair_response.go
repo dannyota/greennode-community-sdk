@@ -2,16 +2,16 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
-type GetAllAddressPairByVirtualSubnetIdResponse struct {
+type GetAllAddressPairByVirtualSubnetIDResponse struct {
 	Data []*AddressPairResponse `json:"data"`
 }
 
 type AddressPairResponse struct {
 	UUID               string `json:"uuid"`
-	VirtualIpAddressId string `json:"virtualIpAddressId"`
-	VirtualSubnetId    string `json:"virtualSubnetId"`
+	VirtualIpAddressID string `json:"virtualIpAddressId"`
+	VirtualSubnetID    string `json:"virtualSubnetId"`
 	NetworkInterfaceIp string `json:"networkInterfaceIp"`
-	NetworkInterfaceId string `json:"networkInterfaceId"`
+	NetworkInterfaceID string `json:"networkInterfaceId"`
 
 	CIDR string `json:"cidr"`
 	// ID              string `json:"id"`
@@ -23,16 +23,16 @@ type AddressPairResponse struct {
 
 func (s *AddressPairResponse) toAddressPair() *entity.AddressPair {
 	return &entity.AddressPair{
-		Id:                 s.UUID,
-		VirtualIpAddressId: s.VirtualIpAddressId,
-		VirtualSubnetId:    s.VirtualSubnetId,
+		ID:                 s.UUID,
+		VirtualIpAddressID: s.VirtualIpAddressID,
+		VirtualSubnetID:    s.VirtualSubnetID,
 		NetworkInterfaceIp: s.NetworkInterfaceIp,
-		NetworkInterfaceId: s.NetworkInterfaceId,
+		NetworkInterfaceID: s.NetworkInterfaceID,
 		CIDR:               s.CIDR,
 	}
 }
 
-func (s *GetAllAddressPairByVirtualSubnetIdResponse) ToListAddressPair() []*entity.AddressPair {
+func (s *GetAllAddressPairByVirtualSubnetIDResponse) ToListAddressPair() []*entity.AddressPair {
 	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
 	for _, addressPair := range s.Data {
 		addressPairs = append(addressPairs, addressPair.toAddressPair())

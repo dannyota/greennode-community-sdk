@@ -44,7 +44,7 @@ func WithErrorVolumeNameNotValid(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNameNotValid) {
 			sdkError.WithErrorCode(EcVServerVolumeNameNotValid).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -60,7 +60,7 @@ func WithErrorVolumeSizeOutOfRange(errResp ErrorResponse) func(sdkError Error) {
 			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNewSizeOutOfRange) {
 			sdkError.WithErrorCode(EcVServerVolumeSizeOutOfRange).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -75,7 +75,7 @@ func WithErrorVolumeSizeExceedGlobalQuota(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeSizeExceedGlobalQuota) {
 			sdkError.WithErrorCode(EcVServerVolumeSizeExceedGlobalQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -91,7 +91,7 @@ func WithErrorVolumeExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeExceedQuota) {
 			sdkError.WithErrorCode(EcVServerVolumeExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError()).
+				WithErrors(errResp.Err()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
@@ -108,7 +108,7 @@ func WithErrorVolumeNotFound(errResp ErrorResponse) func(sdkError Error) {
 			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNotFound2) {
 			sdkError.WithErrorCode(EcVServerVolumeNotFound).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -124,7 +124,7 @@ func WithErrorVolumeAvailable(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAvailable) {
 			sdkError.WithErrorCode(EcVServerVolumeAvailable).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -139,7 +139,7 @@ func WithErrorVolumeAlreadyAttached(errResp ErrorResponse) func(sdkError Error) 
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttached) {
 			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttached).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -154,7 +154,7 @@ func WithErrorVolumeAlreadyAttachedThisServer(errResp ErrorResponse) func(sdkErr
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttachedThisServer) {
 			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttachedThisServer).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -169,7 +169,7 @@ func WithErrorVolumeInProcess(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeInProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeInProcess).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -184,7 +184,7 @@ func WithErrorVolumeUnchanged(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeUnchaged) {
 			sdkError.WithErrorCode(EcVServerVolumeUnchanged).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -199,7 +199,7 @@ func WithErrorVolumeMustSameZone(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMustSameZone) {
 			sdkError.WithErrorCode(EcVServerVolumeMustSameZone).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -214,7 +214,7 @@ func WithErrorVolumeMigrateMissingInit(errResp ErrorResponse) func(sdkError Erro
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateMissingInit) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateMissingInit).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -229,7 +229,7 @@ func WithErrorVolumeMigrateNeedProcess(errResp ErrorResponse) func(sdkError Erro
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedProcess).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -244,7 +244,7 @@ func WithErrorVolumeMigrateNeedConfirm(errResp ErrorResponse) func(sdkError Erro
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedConfirm) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedConfirm).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -259,7 +259,7 @@ func WithErrorVolumeMigrateBeingProcess(errResp ErrorResponse) func(sdkError Err
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingProcess).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -274,7 +274,7 @@ func WithErrorVolumeMigrateBeingFinish(errResp ErrorResponse) func(sdkError Erro
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingFinish) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingFinish).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -289,7 +289,7 @@ func WithErrorVolumeMigrateProcessingConfirm(errResp ErrorResponse) func(sdkErro
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateProcessingConfirm) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateProcessingConfirm).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -306,7 +306,7 @@ func WithErrorVolumeMigrateBeingMigrating(errResp ErrorResponse) func(sdkError E
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingMigrating) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingMigrating).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -321,7 +321,7 @@ func WithErrorVolumeMigrateInSameZone(errResp ErrorResponse) func(sdkError Error
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateInSameZone) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateInSameZone).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }
@@ -336,7 +336,7 @@ func WithErrorVolumeIsMigrating(errResp ErrorResponse) func(sdkError Error) {
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeIsMigrating) {
 			sdkError.WithErrorCode(EcVServerVolumeIsMigrating).
 				WithMessage(errMsg).
-				WithErrors(errResp.GetError())
+				WithErrors(errResp.Err())
 		}
 	}
 }

@@ -10,17 +10,17 @@ import (
 
 type Client interface {
 	// List of builder methods
-	WithHttpClient(httpClient svcclient.HttpClient) Client
+	WithHTTPClient(httpClient svcclient.HTTPClient) Client
 	WithContext(ctx context.Context) Client
 	WithAuthOption(authOption svcclient.AuthOpts, authConfig SdkConfigure) Client
 	WithKvDefaultHeaders(args ...string) Client
 	WithRetryCount(retry int) Client
 	WithSleep(sleep time.Duration) Client
-	WithProjectId(projectId string) Client
+	WithProjectID(projectID string) Client
 
 	// List of functional methods
 	Configure(sdkCfg SdkConfigure) Client
-	GetUserAgent() string
+	UserAgent() string
 
 	// List of gateways
 	IamGateway() gateway.IamGateway

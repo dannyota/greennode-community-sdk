@@ -6,10 +6,10 @@ import (
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestGetAllAddressPairByVirtualSubnetId(t *testing.T) {
+func TestGetAllAddressPairByVirtualSubnetID(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewGetAllAddressPairByVirtualSubnetIdRequest(getValueOfEnv("VIRTUAL_SUBNET_ID"))
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetAllAddressPairByVirtualSubnetId(opt)
+	opt := networkv2.NewGetAllAddressPairByVirtualSubnetIDRequest(getValueOfEnv("VIRTUAL_SUBNET_ID"))
+	network, err := vngcloud.VServerGateway().V2().NetworkService().GetAllAddressPairByVirtualSubnetID(opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -61,10 +61,10 @@ func TestDeleteAddressPair(t *testing.T) {
 func TestCreateAddressPair(t *testing.T) {
 	vngcloud := validSdkConfigHanRegion()
 
-	virtualAddressId := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
-	internalNicId := "net-in-3b076753-6561-4e3e-8a66-e10dc79cab2d"
+	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
+	internalNicID := "net-in-3b076753-6561-4e3e-8a66-e10dc79cab2d"
 
-	opt := networkv2.NewCreateAddressPairRequest(virtualAddressId, internalNicId).
+	opt := networkv2.NewCreateAddressPairRequest(virtualAddressID, internalNicID).
 		WithMode(networkv2.AddressPairModeActiveActive)
 
 	ap, err := vngcloud.VServerGateway().V2().NetworkService().CreateAddressPair(opt)

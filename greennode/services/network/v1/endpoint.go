@@ -6,21 +6,21 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV1) GetEndpointById(opts IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.Error) {
-	url := getEndpointByIdUrl(s.VNetworkClient, opts)
-	resp := new(GetEndpointByIdResponse)
+func (s *NetworkServiceV1) GetEndpointByID(opts IGetEndpointByIDRequest) (*entity.Endpoint, sdkerror.Error) {
+	url := getEndpointByIDURL(s.VNetworkClient, opts)
+	resp := new(GetEndpointByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
 		// WithUserId(s.getUserId()).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"endpointId", opts.GetEndpointId(),
-				"projectId", s.getProjectId()).
+				"endpointId", opts.GetEndpointID(),
+				"projectId", s.getProjectID()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -28,15 +28,15 @@ func (s *NetworkServiceV1) GetEndpointById(opts IGetEndpointByIdRequest) (*entit
 }
 
 func (s *NetworkServiceV1) CreateEndpoint(opts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error) {
-	url := createEndpointUrl(s.VNetworkClient)
+	url := createEndpointURL(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(201).
-		WithUserId(opts.GetPortalUserId()).
-		WithJsonBody(opts.ToRequestBody(s.VNetworkClient)).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithUserID(opts.GetPortalUserID()).
+		WithJSONBody(opts.ToRequestBody(s.VNetworkClient)).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -56,15 +56,15 @@ func (s *NetworkServiceV1) CreateEndpoint(opts ICreateEndpointRequest) (*entity.
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) DeleteEndpointById(opts IDeleteEndpointByIdRequest) sdkerror.Error {
-	url := deleteEndpointByIdUrl(s.VNetworkClient, opts)
+func (s *NetworkServiceV1) DeleteEndpointByID(opts IDeleteEndpointByIDRequest) sdkerror.Error {
+	url := deleteEndpointByIDURL(s.VNetworkClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody(s.VNetworkClient)).
+		WithJSONBody(opts.ToRequestBody(s.VNetworkClient)).
 		// WithUserId(s.getUserId()).
-		WithJsonError(errResp)
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -79,19 +79,19 @@ func (s *NetworkServiceV1) DeleteEndpointById(opts IDeleteEndpointByIdRequest) s
 }
 
 func (s *NetworkServiceV1) ListEndpoints(opts IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.Error) {
-	url := listEndpointsUrl(s.VNetworkClient, opts)
+	url := listEndpointsURL(s.VNetworkClient, opts)
 	resp := new(ListEndpointsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		// WithUserId(s.getUserId()).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -101,20 +101,20 @@ func (s *NetworkServiceV1) ListEndpoints(opts IListEndpointsRequest) (*entity.Li
 
 // ________________________________________________________________________ NetworkServiceInternalV1
 
-func (s *NetworkServiceInternalV1) ListTagsByEndpointId(opts IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.Error) {
-	url := listTagsByEndpointIdUrl(s.VNetworkClient, opts)
-	resp := new(ListTagsByEndpointIdResponse)
+func (s *NetworkServiceInternalV1) ListTagsByEndpointID(opts IListTagsByEndpointIDRequest) (*entity.ListTags, sdkerror.Error) {
+	url := listTagsByEndpointIDURL(s.VNetworkClient, opts)
+	resp := new(ListTagsByEndpointIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -122,21 +122,21 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointId(opts IListTagsByEndpoint
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(opts ICreateTagsWithEndpointIdRequest) sdkerror.Error {
-	url := createTagsWithEndpointIdUrl(s.VNetworkClient, opts)
+func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(opts ICreateTagsWithEndpointIDRequest) sdkerror.Error {
+	url := createTagsWithEndpointIDURL(s.VNetworkClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorEndpointTagExisted(errResp),
 			sdkerror.WithErrorEndpointTagNotFound(errResp)).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -145,18 +145,18 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(opts ICreateTagsWith
 }
 
 func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(opts IDeleteTagOfEndpointRequest) sdkerror.Error {
-	url := deleteTagOfEndpointUrl(s.VNetworkClient, opts)
+	url := deleteTagOfEndpointURL(s.VNetworkClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonError(errResp)
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorEndpointTagNotFound(errResp)).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -165,19 +165,19 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(opts IDeleteTagOfEndpoint
 }
 
 func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts IUpdateTagValueOfEndpointRequest) sdkerror.Error {
-	url := updateTagValueOfEndpointUrl(s.VNetworkClient, opts)
+	url := updateTagValueOfEndpointURL(s.VNetworkClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(opts.ToRequestBody()).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody()).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorEndpointTagNotFound(errResp)).
-			WithKVparameters("projectId", s.getProjectId()).
+			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -186,15 +186,15 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts IUpdateTagValue
 }
 
 func (s *NetworkServiceInternalV1) CreateEndpoint(opts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error) {
-	url := createEndpointUrl(s.VNetworkClient)
+	url := createEndpointURL(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(201).
 		// WithUserId(s.getUserId()).
-		WithJsonBody(opts.ToRequestBody(s.VNetworkClient)).
-		WithJsonResponse(resp).
-		WithJsonError(errResp)
+		WithJSONBody(opts.ToRequestBody(s.VNetworkClient)).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,

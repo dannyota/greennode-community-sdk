@@ -56,7 +56,7 @@ const (
 
 	EcVServerInternalNetworkInterfaceNotFound = ErrorCode("VngCloudVServerInternalNetworkInterfaceNotFound")
 	EcVServerWanIpAvailable                   = ErrorCode("VngCloudVServerWanIpAvailable")
-	EcVServerWanIdNotFound                    = ErrorCode("VngCloudVServerWanIdNotFound")
+	EcVServerWanIDNotFound                    = ErrorCode("VngCloudVServerWanIdNotFound")
 
 	EcVServerAddressPairExisted = ErrorCode("VngCloudVServerAddressPairExisted")
 )

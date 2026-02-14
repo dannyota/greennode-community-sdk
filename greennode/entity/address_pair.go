@@ -1,16 +1,16 @@
 package entity
 
 type AddressPair struct {
-	Id                 string
-	VirtualIpAddressId string
-	VirtualSubnetId    string
+	ID                 string
+	VirtualIpAddressID string
+	VirtualSubnetID    string
 	NetworkInterfaceIp string
-	NetworkInterfaceId string
+	NetworkInterfaceID string
 	CIDR               string
 }
 
-func (s *AddressPair) GetId() string {
-	return s.Id
+func (s *AddressPair) GetID() string {
+	return s.ID
 }
 
 type ListAddressPairs struct {

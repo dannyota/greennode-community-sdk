@@ -9,16 +9,16 @@ import (
 type ServiceClient interface {
 	WithEndpoint(endpoint string) ServiceClient
 	WithName(name string) ServiceClient
-	WithProjectId(projectId string) ServiceClient
-	WithZoneId(zoneId string) ServiceClient
-	WithUserId(userId string) ServiceClient
+	WithProjectID(projectID string) ServiceClient
+	WithZoneID(zoneID string) ServiceClient
+	WithUserID(userID string) ServiceClient
 	WithMoreHeaders(moreHeaders map[string]string) ServiceClient
 	WithKVheader(key string, value string) ServiceClient
-	WithClient(client HttpClient) ServiceClient
+	WithClient(client HTTPClient) ServiceClient
 	ServiceURL(parts ...string) string
-	GetProjectId() string
-	GetZoneId() string
-	GetUserId() string
+	GetProjectID() string
+	GetZoneID() string
+	GetUserID() string
 
 	Post(url string, req Request) (*req.Response, sdkerror.Error)
 	Get(url string, req Request) (*req.Response, sdkerror.Error)
@@ -32,6 +32,6 @@ type SdkAuthentication interface {
 	WithExpiresAt(expiresAt int64) SdkAuthentication
 	UpdateAuth(auth SdkAuthentication)
 	NeedReauth() bool
-	GetAccessToken() string
-	GetExpiresAt() int64
+	AccessToken() string
+	ExpiresAt() int64
 }

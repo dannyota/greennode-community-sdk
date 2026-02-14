@@ -6,8 +6,8 @@ type ComputeServiceV2 struct {
 	VServerClient client.ServiceClient
 }
 
-func (s *ComputeServiceV2) getProjectId() string {
-	return s.VServerClient.GetProjectId()
+func (s *ComputeServiceV2) getProjectID() string {
+	return s.VServerClient.GetProjectID()
 }
 
 const (

@@ -6,14 +6,14 @@ type VolumeServiceV2 struct {
 	VServerClient client.ServiceClient
 }
 
-func (s *VolumeServiceV2) getProjectId() string {
-	return s.VServerClient.GetProjectId()
+func (s *VolumeServiceV2) getProjectID() string {
+	return s.VServerClient.GetProjectID()
 }
 
 const (
 	defaultPageListBlockVolumesRequest = 1
 	defaultSizeListBlockVolumesRequest = 10000
 
-	defaultPageListSnapshotsByBlockVolumeIdRequest = 1
-	defaultSizeListSnapshotsByBlockVolumeIdRequest = 10000
+	defaultPageListSnapshotsByBlockVolumeIDRequest = 1
+	defaultSizeListSnapshotsByBlockVolumeIDRequest = 10000
 )

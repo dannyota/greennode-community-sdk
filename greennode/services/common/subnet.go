@@ -1,9 +1,9 @@
 package common
 
 type SubnetCommon struct {
-	SubnetId string
+	SubnetID string
 }
 
-func (s *SubnetCommon) GetSubnetId() string {
-	return s.SubnetId
+func (s *SubnetCommon) GetSubnetID() string {
+	return s.SubnetID
 }

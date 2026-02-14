@@ -6,6 +6,6 @@ type ICreateSystemTagRequest interface {
 	ToMap() map[string]interface{}
 	AddTag(key, value string) ICreateSystemTagRequest
 	ParseUserAgent() string
-	GetResourceId() string
+	GetResourceID() string
 	GetResourceType() ResourceType
 }

@@ -11,12 +11,12 @@ func (s *ListSecgroupRequest) AddUserAgent(agent ...string) IListSecgroupRequest
 	return s
 }
 
-type DeleteSecgroupByIdRequest struct { //__________________________________________________________________________________
+type DeleteSecgroupByIDRequest struct { //__________________________________________________________________________________
 	common.UserAgent
 	common.SecgroupCommon
 }
 
-func (s *DeleteSecgroupByIdRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIdRequest {
+func (s *DeleteSecgroupByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
@@ -41,12 +41,12 @@ func (s *CreateSecgroupRequest) GetSecgroupName() string {
 	return s.Name
 }
 
-type GetSecgroupByIdRequest struct { //_________________________________________________________________________________
+type GetSecgroupByIDRequest struct { //_________________________________________________________________________________
 	common.SecgroupCommon
 	common.UserAgent
 }
 
-func (s *GetSecgroupByIdRequest) AddUserAgent(agent ...string) IGetSecgroupByIdRequest {
+func (s *GetSecgroupByIDRequest) AddUserAgent(agent ...string) IGetSecgroupByIDRequest {
 	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

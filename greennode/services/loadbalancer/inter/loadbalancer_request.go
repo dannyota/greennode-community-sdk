@@ -23,13 +23,13 @@ type CreateLoadBalancerRequest struct {
 	PackageID       string                 `json:"packageId"`
 	Scheme          LoadBalancerScheme     `json:"scheme"`
 	SubnetID        string                 `json:"subnetId"`
-	BackEndSubnetId string                 `json:"backendSubnetId,omitempty"`
-	ProjectId       string                 `json:"projectId,omitempty"`
+	BackEndSubnetID string                 `json:"backendSubnetId,omitempty"`
+	ProjectID       string                 `json:"projectId,omitempty"`
 	Type            LoadBalancerType       `json:"type"`
 	Listener        ICreateListenerRequest `json:"listener,omitempty"`
 	Pool            ICreatePoolRequest     `json:"pool,omitempty"`
 	Tags            []common.Tag           `json:"tags,omitempty"`
-	ZoneId          *common.Zone           `json:"zoneId,omitempty"`
+	ZoneID          *common.Zone           `json:"zoneId,omitempty"`
 
 	common.PortalUser
 	common.UserAgent
@@ -41,11 +41,11 @@ func (s *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
 		"packageId":       s.PackageID,
 		"scheme":          s.Scheme,
 		"subnetId":        s.SubnetID,
-		"backendSubnetId": s.BackEndSubnetId,
-		"projectId":       s.ProjectId,
+		"backendSubnetId": s.BackEndSubnetID,
+		"projectId":       s.ProjectID,
 		"type":            s.Type,
 		"tags":            s.Tags,
-		"zoneId":          s.ZoneId,
+		"zoneId":          s.ZoneID,
 	}
 }
 
@@ -61,8 +61,8 @@ func (s *CreateLoadBalancerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithProjectId(projectId string) ICreateLoadBalancerRequest {
-	s.ProjectId = projectId
+func (s *CreateLoadBalancerRequest) WithProjectID(projectID string) ICreateLoadBalancerRequest {
+	s.ProjectID = projectID
 	return s
 }
 
@@ -101,7 +101,7 @@ func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancer
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(zoneId common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneId = &zoneId
+func (s *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
+	s.ZoneID = &zoneID
 	return s
 }

@@ -1,9 +1,9 @@
 package common
 
 type EndpointCommon struct {
-	EndpointId string
+	EndpointID string
 }
 
-func (s *EndpointCommon) GetEndpointId() string {
-	return s.EndpointId
+func (s *EndpointCommon) GetEndpointID() string {
+	return s.EndpointID
 }

@@ -8,15 +8,15 @@ import (
 )
 
 type NetworkServiceV1 interface {
-	GetEndpointById(ops networkv1.IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.Error)
+	GetEndpointByID(ops networkv1.IGetEndpointByIDRequest) (*entity.Endpoint, sdkerror.Error)
 	CreateEndpoint(opts networkv1.ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error)
-	DeleteEndpointById(opts networkv1.IDeleteEndpointByIdRequest) sdkerror.Error
+	DeleteEndpointByID(opts networkv1.IDeleteEndpointByIDRequest) sdkerror.Error
 	ListEndpoints(opts networkv1.IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.Error)
 }
 
 type NetworkServiceInternalV1 interface {
-	ListTagsByEndpointId(opts networkv1.IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.Error)
-	CreateTagsWithEndpointId(opts networkv1.ICreateTagsWithEndpointIdRequest) sdkerror.Error
+	ListTagsByEndpointID(opts networkv1.IListTagsByEndpointIDRequest) (*entity.ListTags, sdkerror.Error)
+	CreateTagsWithEndpointID(opts networkv1.ICreateTagsWithEndpointIDRequest) sdkerror.Error
 	DeleteTagOfEndpoint(opts networkv1.IDeleteTagOfEndpointRequest) sdkerror.Error
 	UpdateTagValueOfEndpoint(opts networkv1.IUpdateTagValueOfEndpointRequest) sdkerror.Error
 	CreateEndpoint(opts networkv1.ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error)
@@ -24,37 +24,37 @@ type NetworkServiceInternalV1 interface {
 
 type NetworkServiceV2 interface {
 	// The group of Network APIs
-	GetNetworkById(opts networkv2.IGetNetworkByIdRequest) (*entity.Network, sdkerror.Error)
+	GetNetworkByID(opts networkv2.IGetNetworkByIDRequest) (*entity.Network, sdkerror.Error)
 
 	// The group of Secgroup APIs
 
-	GetSecgroupById(opts networkv2.IGetSecgroupByIdRequest) (*entity.Secgroup, sdkerror.Error)
+	GetSecgroupByID(opts networkv2.IGetSecgroupByIDRequest) (*entity.Secgroup, sdkerror.Error)
 	CreateSecgroup(opts networkv2.ICreateSecgroupRequest) (*entity.Secgroup, sdkerror.Error)
 	ListSecgroup(opts networkv2.IListSecgroupRequest) (*entity.ListSecgroups, sdkerror.Error)
-	DeleteSecgroupById(opts networkv2.IDeleteSecgroupByIdRequest) sdkerror.Error
+	DeleteSecgroupByID(opts networkv2.IDeleteSecgroupByIDRequest) sdkerror.Error
 
 	// The group of SecgroupRule APIs
 
 	CreateSecgroupRule(opts networkv2.ICreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.Error)
-	DeleteSecgroupRuleById(opts networkv2.IDeleteSecgroupRuleByIdRequest) sdkerror.Error
-	ListSecgroupRulesBySecgroupId(opts networkv2.IListSecgroupRulesBySecgroupIdRequest) (*entity.ListSecgroupRules, sdkerror.Error)
+	DeleteSecgroupRuleByID(opts networkv2.IDeleteSecgroupRuleByIDRequest) sdkerror.Error
+	ListSecgroupRulesBySecgroupID(opts networkv2.IListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, sdkerror.Error)
 
 	// Subnet
-	GetSubnetById(opts networkv2.IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.Error)
-	UpdateSubnetById(opts networkv2.IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.Error)
+	GetSubnetByID(opts networkv2.IGetSubnetByIDRequest) (*entity.Subnet, sdkerror.Error)
+	UpdateSubnetByID(opts networkv2.IUpdateSubnetByIDRequest) (*entity.Subnet, sdkerror.Error)
 
 	// Address Pair
-	GetAllAddressPairByVirtualSubnetId(opts networkv2.IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.Error)
+	GetAllAddressPairByVirtualSubnetID(opts networkv2.IGetAllAddressPairByVirtualSubnetIDRequest) ([]*entity.AddressPair, sdkerror.Error)
 	SetAddressPairInVirtualSubnet(opts networkv2.ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.Error)
 	DeleteAddressPair(opts networkv2.IDeleteAddressPairRequest) sdkerror.Error
 	CreateAddressPair(opts networkv2.ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.Error)
 
 	// Servers
-	ListAllServersBySecgroupId(opts networkv2.IListAllServersBySecgroupIdRequest) (*entity.ListServers, sdkerror.Error)
+	ListAllServersBySecgroupID(opts networkv2.IListAllServersBySecgroupIDRequest) (*entity.ListServers, sdkerror.Error)
 
 	// Virtual Address API group
 	CreateVirtualAddressCrossProject(opts networkv2.ICreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, sdkerror.Error)
-	DeleteVirtualAddressById(opts networkv2.IDeleteVirtualAddressByIdRequest) sdkerror.Error
-	GetVirtualAddressById(opts networkv2.IGetVirtualAddressByIdRequest) (*entity.VirtualAddress, sdkerror.Error)
-	ListAddressPairsByVirtualAddressId(opts networkv2.IListAddressPairsByVirtualAddressIdRequest) (*entity.ListAddressPairs, sdkerror.Error)
+	DeleteVirtualAddressByID(opts networkv2.IDeleteVirtualAddressByIDRequest) sdkerror.Error
+	GetVirtualAddressByID(opts networkv2.IGetVirtualAddressByIDRequest) (*entity.VirtualAddress, sdkerror.Error)
+	ListAddressPairsByVirtualAddressID(opts networkv2.IListAddressPairsByVirtualAddressIDRequest) (*entity.ListAddressPairs, sdkerror.Error)
 }

@@ -6,9 +6,9 @@ import (
 )
 
 type IListRecordsRequest interface {
-	GetHostedZoneId() string
+	GetHostedZoneID() string
 	GetName() string
-	WithHostedZoneId(hostedZoneId string) IListRecordsRequest
+	WithHostedZoneID(hostedZoneID string) IListRecordsRequest
 	WithName(name string) IListRecordsRequest
 	ToMap() map[string]interface{}
 
@@ -16,22 +16,22 @@ type IListRecordsRequest interface {
 }
 
 type ListRecordsRequest struct {
-	HostedZoneId string
+	HostedZoneID string
 	Name         string
 
 	common.UserAgent
 }
 
-func (r *ListRecordsRequest) GetHostedZoneId() string {
-	return r.HostedZoneId
+func (r *ListRecordsRequest) GetHostedZoneID() string {
+	return r.HostedZoneID
 }
 
 func (r *ListRecordsRequest) GetName() string {
 	return r.Name
 }
 
-func (r *ListRecordsRequest) WithHostedZoneId(hostedZoneId string) IListRecordsRequest {
-	r.HostedZoneId = hostedZoneId
+func (r *ListRecordsRequest) WithHostedZoneID(hostedZoneID string) IListRecordsRequest {
+	r.HostedZoneID = hostedZoneID
 	return r
 }
 
@@ -42,75 +42,75 @@ func (r *ListRecordsRequest) WithName(name string) IListRecordsRequest {
 
 func (r *ListRecordsRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"hostedZoneId": r.HostedZoneId,
+		"hostedZoneId": r.HostedZoneID,
 		"name":         r.Name,
 	}
 }
 
-func NewListRecordsRequest(hostedZoneId string) IListRecordsRequest {
+func NewListRecordsRequest(hostedZoneID string) IListRecordsRequest {
 	return &ListRecordsRequest{
-		HostedZoneId: hostedZoneId,
+		HostedZoneID: hostedZoneID,
 	}
 }
 
 // ----------------------------------------------------------------------
 
 type IGetRecordRequest interface {
-	GetHostedZoneId() string
-	GetRecordId() string
-	WithHostedZoneId(hostedZoneId string) IGetRecordRequest
-	WithRecordId(recordId string) IGetRecordRequest
+	GetHostedZoneID() string
+	GetRecordID() string
+	WithHostedZoneID(hostedZoneID string) IGetRecordRequest
+	WithRecordID(recordID string) IGetRecordRequest
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
 }
 
 type GetRecordRequest struct {
-	HostedZoneId string
-	RecordId     string
+	HostedZoneID string
+	RecordID     string
 
 	common.UserAgent
 }
 
-func (r *GetRecordRequest) GetHostedZoneId() string {
-	return r.HostedZoneId
+func (r *GetRecordRequest) GetHostedZoneID() string {
+	return r.HostedZoneID
 }
 
-func (r *GetRecordRequest) GetRecordId() string {
-	return r.RecordId
+func (r *GetRecordRequest) GetRecordID() string {
+	return r.RecordID
 }
 
-func (r *GetRecordRequest) WithHostedZoneId(hostedZoneId string) IGetRecordRequest {
-	r.HostedZoneId = hostedZoneId
+func (r *GetRecordRequest) WithHostedZoneID(hostedZoneID string) IGetRecordRequest {
+	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *GetRecordRequest) WithRecordId(recordId string) IGetRecordRequest {
-	r.RecordId = recordId
+func (r *GetRecordRequest) WithRecordID(recordID string) IGetRecordRequest {
+	r.RecordID = recordID
 	return r
 }
 
 func (r *GetRecordRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"hostedZoneId": r.HostedZoneId,
-		"recordId":     r.RecordId,
+		"hostedZoneId": r.HostedZoneID,
+		"recordId":     r.RecordID,
 	}
 }
 
-func NewGetRecordRequest(hostedZoneId, recordId string) IGetRecordRequest {
+func NewGetRecordRequest(hostedZoneID, recordID string) IGetRecordRequest {
 	return &GetRecordRequest{
-		HostedZoneId: hostedZoneId,
-		RecordId:     recordId,
+		HostedZoneID: hostedZoneID,
+		RecordID:     recordID,
 	}
 }
 
 // ----------------------------------------------------------------------
 
 type IUpdateRecordRequest interface {
-	GetHostedZoneId() string
-	GetRecordId() string
-	WithHostedZoneId(hostedZoneId string) IUpdateRecordRequest
-	WithRecordId(recordId string) IUpdateRecordRequest
+	GetHostedZoneID() string
+	GetRecordID() string
+	WithHostedZoneID(hostedZoneID string) IUpdateRecordRequest
+	WithRecordID(recordID string) IUpdateRecordRequest
 	WithSubDomain(subDomain string) IUpdateRecordRequest
 	WithTTL(ttl int) IUpdateRecordRequest
 	WithType(recordType DnsRecordType) IUpdateRecordRequest
@@ -124,8 +124,8 @@ type IUpdateRecordRequest interface {
 }
 
 type UpdateRecordRequest struct {
-	HostedZoneId        string               `json:"-"`
-	RecordId            string               `json:"-"`
+	HostedZoneID        string               `json:"-"`
+	RecordID            string               `json:"-"`
 	SubDomain           string               `json:"subDomain"`
 	TTL                 int                  `json:"ttl"`
 	Type                DnsRecordType        `json:"type"`
@@ -136,21 +136,21 @@ type UpdateRecordRequest struct {
 	common.UserAgent
 }
 
-func (r *UpdateRecordRequest) GetHostedZoneId() string {
-	return r.HostedZoneId
+func (r *UpdateRecordRequest) GetHostedZoneID() string {
+	return r.HostedZoneID
 }
 
-func (r *UpdateRecordRequest) GetRecordId() string {
-	return r.RecordId
+func (r *UpdateRecordRequest) GetRecordID() string {
+	return r.RecordID
 }
 
-func (r *UpdateRecordRequest) WithHostedZoneId(hostedZoneId string) IUpdateRecordRequest {
-	r.HostedZoneId = hostedZoneId
+func (r *UpdateRecordRequest) WithHostedZoneID(hostedZoneID string) IUpdateRecordRequest {
+	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *UpdateRecordRequest) WithRecordId(recordId string) IUpdateRecordRequest {
-	r.RecordId = recordId
+func (r *UpdateRecordRequest) WithRecordID(recordID string) IUpdateRecordRequest {
+	r.RecordID = recordID
 	return r
 }
 
@@ -200,8 +200,8 @@ func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]
 
 func (r *UpdateRecordRequest) ToMap() map[string]interface{} {
 	m := map[string]interface{}{
-		"hostedZoneId":  r.HostedZoneId,
-		"recordId":      r.RecordId,
+		"hostedZoneId":  r.HostedZoneID,
+		"recordId":      r.RecordID,
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
 		"type":          r.Type,
@@ -214,69 +214,69 @@ func (r *UpdateRecordRequest) ToMap() map[string]interface{} {
 	return m
 }
 
-func NewUpdateRecordRequest(hostedZoneId, recordId string) IUpdateRecordRequest {
+func NewUpdateRecordRequest(hostedZoneID, recordID string) IUpdateRecordRequest {
 	return &UpdateRecordRequest{
-		HostedZoneId: hostedZoneId,
-		RecordId:     recordId,
+		HostedZoneID: hostedZoneID,
+		RecordID:     recordID,
 	}
 }
 
 // ----------------------------------------------------------------------
 
 type IDeleteRecordRequest interface {
-	GetHostedZoneId() string
-	GetRecordId() string
-	WithHostedZoneId(hostedZoneId string) IDeleteRecordRequest
-	WithRecordId(recordId string) IDeleteRecordRequest
+	GetHostedZoneID() string
+	GetRecordID() string
+	WithHostedZoneID(hostedZoneID string) IDeleteRecordRequest
+	WithRecordID(recordID string) IDeleteRecordRequest
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
 }
 
 type DeleteRecordRequest struct {
-	HostedZoneId string
-	RecordId     string
+	HostedZoneID string
+	RecordID     string
 
 	common.UserAgent
 }
 
-func (r *DeleteRecordRequest) GetHostedZoneId() string {
-	return r.HostedZoneId
+func (r *DeleteRecordRequest) GetHostedZoneID() string {
+	return r.HostedZoneID
 }
 
-func (r *DeleteRecordRequest) GetRecordId() string {
-	return r.RecordId
+func (r *DeleteRecordRequest) GetRecordID() string {
+	return r.RecordID
 }
 
-func (r *DeleteRecordRequest) WithHostedZoneId(hostedZoneId string) IDeleteRecordRequest {
-	r.HostedZoneId = hostedZoneId
+func (r *DeleteRecordRequest) WithHostedZoneID(hostedZoneID string) IDeleteRecordRequest {
+	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *DeleteRecordRequest) WithRecordId(recordId string) IDeleteRecordRequest {
-	r.RecordId = recordId
+func (r *DeleteRecordRequest) WithRecordID(recordID string) IDeleteRecordRequest {
+	r.RecordID = recordID
 	return r
 }
 
 func (r *DeleteRecordRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"hostedZoneId": r.HostedZoneId,
-		"recordId":     r.RecordId,
+		"hostedZoneId": r.HostedZoneID,
+		"recordId":     r.RecordID,
 	}
 }
 
-func NewDeleteRecordRequest(hostedZoneId, recordId string) IDeleteRecordRequest {
+func NewDeleteRecordRequest(hostedZoneID, recordID string) IDeleteRecordRequest {
 	return &DeleteRecordRequest{
-		HostedZoneId: hostedZoneId,
-		RecordId:     recordId,
+		HostedZoneID: hostedZoneID,
+		RecordID:     recordID,
 	}
 }
 
 // ----------------------------------------------------------------------
 
 type ICreateDnsRecordRequest interface {
-	GetHostedZoneId() string
-	WithHostedZoneId(hostedZoneId string) ICreateDnsRecordRequest
+	GetHostedZoneID() string
+	WithHostedZoneID(hostedZoneID string) ICreateDnsRecordRequest
 	WithSubDomain(subDomain string) ICreateDnsRecordRequest
 	WithTTL(ttl int) ICreateDnsRecordRequest
 	WithType(recordType DnsRecordType) ICreateDnsRecordRequest
@@ -296,7 +296,7 @@ type RecordValueRequest struct {
 }
 
 type CreateDnsRecordRequest struct {
-	HostedZoneId        string               `json:"-"`
+	HostedZoneID        string               `json:"-"`
 	SubDomain           string               `json:"subDomain"`
 	TTL                 int                  `json:"ttl"`
 	Type                DnsRecordType        `json:"type"`
@@ -307,12 +307,12 @@ type CreateDnsRecordRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateDnsRecordRequest) GetHostedZoneId() string {
-	return r.HostedZoneId
+func (r *CreateDnsRecordRequest) GetHostedZoneID() string {
+	return r.HostedZoneID
 }
 
-func (r *CreateDnsRecordRequest) WithHostedZoneId(hostedZoneId string) ICreateDnsRecordRequest {
-	r.HostedZoneId = hostedZoneId
+func (r *CreateDnsRecordRequest) WithHostedZoneID(hostedZoneID string) ICreateDnsRecordRequest {
+	r.HostedZoneID = hostedZoneID
 	return r
 }
 
@@ -362,7 +362,7 @@ func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[stri
 
 func (r *CreateDnsRecordRequest) ToMap() map[string]interface{} {
 	m := map[string]interface{}{
-		"hostedZoneId":  r.HostedZoneId,
+		"hostedZoneId":  r.HostedZoneID,
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
 		"type":          r.Type,
@@ -375,9 +375,9 @@ func (r *CreateDnsRecordRequest) ToMap() map[string]interface{} {
 	return m
 }
 
-func NewCreateDnsRecordRequest(hostedZoneId, subDomain string, ttl int, recordType DnsRecordType, routingPolicy RoutingPolicy, value []RecordValueRequest) ICreateDnsRecordRequest {
+func NewCreateDnsRecordRequest(hostedZoneID, subDomain string, ttl int, recordType DnsRecordType, routingPolicy RoutingPolicy, value []RecordValueRequest) ICreateDnsRecordRequest {
 	return &CreateDnsRecordRequest{
-		HostedZoneId:  hostedZoneId,
+		HostedZoneID:  hostedZoneID,
 		SubDomain:     subDomain,
 		TTL:           ttl,
 		Type:          recordType,

@@ -1,7 +1,7 @@
 package entity
 
 type Secgroup struct {
-	Id          string
+	ID          string
 	Name        string
 	Description string
 	Status      string

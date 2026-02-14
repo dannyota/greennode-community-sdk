@@ -1,7 +1,7 @@
 package v1
 
 type IGetPortalInfoRequest interface {
-	GetBackEndProjectId() string
+	GetBackEndProjectID() string
 }
 
 type IListProjectsRequest interface {
