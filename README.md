@@ -29,17 +29,17 @@ A community Go SDK for GreenNode cloud services.
   package main
 
   import (
+    "context"
     "fmt"
-    lctx "context"
 
-    lsclient "github.com/dannyota/greennode-community-sdk/v2/client"
-    lslbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+    "github.com/dannyota/greennode-community-sdk/v2/client"
+    lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
   )
 
   func main() {
-    client := validSdkConfig()
-    opt := lslbv2.NewListLoadBalancerPackagesRequest()
-    packages, sdkerr := client.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(opt)
+    c := validSdkConfig()
+    opt := lbv2.NewListLoadBalancerPackagesRequest()
+    packages, sdkerr := c.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(opt)
     if sdkerr != nil {
       fmt.Printf("Expect nil but got %+v", sdkerr)
     }
@@ -53,19 +53,19 @@ A community Go SDK for GreenNode cloud services.
     }
   }
 
-  func validSdkConfig() lsclient.IClient {
-    clientId, clientSecret := "__PUT_YOUR_CLIENT_ID__", "__PUT_YOUR_CLIENT_SECRET__"
-    sdkConfig := lsclient.NewSdkConfigure().
-      WithClientId(clientId).
+  func validSdkConfig() client.Client {
+    clientID, clientSecret := "__PUT_YOUR_CLIENT_ID__", "__PUT_YOUR_CLIENT_SECRET__"
+    sdkConfig := client.NewSdkConfigure().
+      WithClientID(clientID).
       WithClientSecret(clientSecret).
-      WithProjectId("__PUT_YOUR_PROJECT_ID__").
-      WithZoneId("65e12ffcb6d82cd39f8cf023").
+      WithProjectID("__PUT_YOUR_PROJECT_ID__").
+      WithZoneID("65e12ffcb6d82cd39f8cf023").
       WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
       WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
       WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
       WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork")
 
-    return lsclient.NewClient(lctx.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+    return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
   }
   ```
 

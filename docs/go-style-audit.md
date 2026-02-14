@@ -11,124 +11,76 @@ them as order-of-magnitude guides, not exact totals.
 
 ## 1. Naming Conventions
 
-### 1.1 `I` prefix on interfaces
+### 1.1 `I` prefix on interfaces — **RESOLVED (non-request interfaces)**
 
-| Metric | Value |
-|--------|-------|
-| Interfaces affected | ~184 |
-| Files | 34 `i`-prefixed files plus inline declarations |
+Non-request interfaces (~73) have been renamed: `IClient` → `Client`,
+`IHttpClient` → `HTTPClient`, `IError` → `Error`, `IIamGateway` → `IamGateway`, etc.
 
-Every interface in the codebase uses a Java/C#-style `I` prefix:
-`IClient`, `IHttpClient`, `IServiceClient`, `ILoadBalancerServiceV2`, `IError`, etc.
+**Remaining:** ~106 `I*Request` interfaces (e.g., `ICreateLoadBalancerRequest`)
+are kept — they have name collisions with their concrete structs. These should be
+removed entirely per §2.2 in a future pass.
 
-**Go convention:** Name interfaces after what they do — `Reader`, `Writer`,
-`Closer` — or after the concept they represent. Drop the `I` prefix entirely.
+### 1.2 `p` prefix on parameters — **RESOLVED**
 
-**Examples:**
+All function parameters have been stripped of the `p` prefix (~1,456 occurrences
+across 140 files). Natural words starting with `p` (e.g., `portalUserID`,
+`poolID`, `path`, `policies`) were correctly excluded.
 
-| Current | Idiomatic Go |
-|---------|-------------|
-| `IClient` | `Client` |
-| `IHttpClient` | `HTTPClient` |
-| `ILoadBalancerServiceV2` | `LoadBalancerService` (or decompose — see §2.3) |
-| `IError` | `Error` |
-| `ICreateLoadBalancerRequest` | remove entirely (see §2.2) |
+**Known residuals:** `psdkErr` in function-type parameters within
+`sdkerror/common.go` and `perrResp` in `test/error_test.go` were not caught by
+the AST tool (they appear in function types, not direct function signatures).
 
-### 1.2 `p` prefix on parameters
+### 1.3 `s` receiver name on all types — **RESOLVED**
 
-| Metric | Value |
-|--------|-------|
-| Files affected | ~120 |
-| Total occurrences | ~1,009 |
-
-Every function parameter is prefixed with `p`: `pOpts`, `pId`, `pProjectId`,
-`pClientId`, `pEndpoint`, etc.
-
-**Go convention:** Use short, descriptive names without prefixes. Single-letter
-names are fine for small scopes.
-
-```go
-// Before
-func (s *client) WithHttpClient(pclient svcclient.IHttpClient) IClient {
-
-// After
-func (c *Client) WithHTTPClient(hc HTTPClient) *Client {
-```
-
-### 1.3 `s` receiver name on all types
-
-| Metric | Value |
-|--------|-------|
-| Methods affected | ~1,009 |
-
-Every method in the codebase uses `s` as the receiver regardless of type:
-
-```go
-func (s *sdkConfigure) GetClientId() string { ... }
-func (s *Endpoint) GetId() string { ... }
-func (s *request) WithOkCodes(pokCodes ...int) IRequest { ... }
-```
-
-**Go convention:** Use a one- or two-letter abbreviation of the type name,
-consistently within each type.
+All methods now use type-appropriate receiver names (~967 methods across 86 files):
 
 | Type | Receiver |
 |------|----------|
-| `Client` | `c` |
-| `LoadBalancer` | `lb` |
-| `Endpoint` | `e` |
-| `Request` | `r` |
-| `SdkConfigure` | `sc` |
+| `client` (top-level) | `c` |
+| `httpClient` | `hc` |
+| `serviceClient` | `sc` |
+| `request` | `r` |
+| `sdkConfigure` | `sc` |
+| `SdkError` | `e` |
+| `*Gateway` types | `g` |
+| `*ServiceV2` types | `s` (kept — already appropriate for "service") |
+| Entity types | type-specific (`e` for Endpoint, `lb` for LoadBalancer, etc.) |
+| Request/Response types | `r` |
 
-### 1.4 Acronym casing
+### 1.4 Acronym casing — **RESOLVED**
 
-Go treats common acronyms as single words in ALL CAPS
-([Go wiki: Initialisms](https://go.dev/wiki/CodeReviewComments#initialisms)).
+All acronyms in exported identifiers now use correct ALL CAPS casing:
 
-| Pattern | Instances | Fix |
-|---------|-----------|-----|
-| `Id` → `ID` | ~239 | `GetClientId()` → `ClientID()` |
-| `Json` → `JSON` | pervasive | `WithJsonBody()` → `WithJSONBody()` |
-| `Http` → `HTTP` | ~2 types + constants | `IHttpClient` → `HTTPClient` |
-| `Url` → `URL` | 0 | (already correct or not used) |
-| `Api` → `API` | 0 in identifiers | (only in string constants) |
+| Pattern | Status |
+|---------|--------|
+| `Id` → `ID` | Done (~284 occurrences). `WithClientID()`, `GetProjectID()`, `WithZoneID()`, etc. |
+| `Json` → `JSON` | Done. `WithJSONBody()`, `WithJSONResponse()`, `WithJSONError()`, etc. |
+| `Http` → `HTTP` | Done. `HTTPClient`, `executeHTTPMethod()` |
+| `Url` → `URL` | Done where applicable. `createServerURL()`, `ServiceURL()`, etc. |
 
-### 1.5 Java-style getters
+**Note:** `SetBodyJsonMarshal` is an external method from `imroc/req/v3` — not renamed.
 
-| Metric | Value |
-|--------|-------|
-| `Get*()` accessor methods | ~162 |
+### 1.5 Java-style getters — **PARTIALLY RESOLVED**
 
-Go does not prefix simple accessors with `Get`. An exported field or a method
-named after the thing it returns is preferred.
+Most `Get*()` accessors have been simplified:
 
-```go
-// Before
-func (s *Endpoint) GetId() string     { return s.id }
-func (s *Endpoint) GetName() string   { return s.name }
-func (s *Endpoint) GetStatus() string { return s.status }
+| Change | Status |
+|--------|--------|
+| `GetErrorCode()` → `ErrorCode()` | Done |
+| `GetParameters()` → `Parameters()` | Done |
+| `GetErrorCategories()` → `ErrorCategories()` | Done |
+| `GetAccessToken()` → `AccessToken()` | Done |
+| `GetExpiresAt()` → `ExpiresAt()` | Done |
 
-// After — exported fields (if no invariants to protect)
-type Endpoint struct {
-    ID     string
-    Name   string
-    Status string
-}
+**Kept with `Get` prefix** (name collisions with exported struct fields used for
+JSON serialization on request types):
+- `GetProjectID()`, `GetZoneID()`, `GetUserID()`, `GetClientID()`, `GetClientSecret()`
+- `GetMessage()` (collides with `Message` field on error response structs)
 
-// Or, if accessor methods are needed:
-func (e *Endpoint) ID() string     { return e.id }
-func (e *Endpoint) Name() string   { return e.name }
-func (e *Endpoint) Status() string { return e.status }
-```
+### 1.6 Package names with underscores — **RESOLVED**
 
-### 1.6 Package names with underscores
-
-| Package | Location |
-|---------|----------|
-| `sdk_error` | `greennode/sdkerror/` (18 files) |
-
-**Go convention:** Package names are lowercase, single-word, no underscores.
-`sdk_error` → `sdkerror`.
+The `sdk_error` package has been renamed to `sdkerror` (`greennode/sdkerror/`,
+18 files). All 42 importing files updated.
 
 ---
 
@@ -152,8 +104,8 @@ Every request struct has a parallel `I*Request` interface, even when there is
 exactly one implementation. Examples:
 
 - `ICreateLoadBalancerRequest` ↔ `CreateLoadBalancerRequest`
-- `IGetPoolByIdRequest` ↔ `GetPoolByIdRequest`
-- `IDeleteLoadBalancerByIdRequest` ↔ `DeleteLoadBalancerByIdRequest`
+- `IGetPoolByIDRequest` ↔ `GetPoolByIDRequest`
+- `IDeleteLoadBalancerByIDRequest` ↔ `DeleteLoadBalancerByIDRequest`
 
 Each pair also has a `var _` compile-time assertion (~45 total).
 
@@ -165,31 +117,32 @@ interfaces if they need to mock it.
 
 | Interface | Methods | File |
 |-----------|---------|------|
-| `ILoadBalancerServiceV2` | 35 | `greennode/services/loadbalancer/iloadbalancer.go` |
-| `INetworkServiceV2` | 28 | `greennode/services/network/inetwork.go` |
-| `IGLBServiceV1` | 21 | `greennode/services/glb/iloadbalancer.go` |
-| `IVDnsServiceInternal` | 11 | `greennode/services/dns/idns.go` |
-| `IVDnsServiceV1` | 11 | `greennode/services/dns/idns.go` |
+| `LoadBalancerServiceV2` | 35 | `greennode/services/loadbalancer/iloadbalancer.go` |
+| `NetworkServiceV2` | 28 | `greennode/services/network/inetwork.go` |
+| `GLBServiceV1` | 21 | `greennode/services/glb/iloadbalancer.go` |
+| `VDnsServiceInternal` | 11 | `greennode/services/dns/idns.go` |
+| `VDnsServiceV1` | 11 | `greennode/services/dns/idns.go` |
 
 **Go convention:** Keep interfaces small and composable. A 35-method interface
 is impossible to mock, hard to implement, and signals that the type is doing too
 much. Break into focused interfaces (e.g., `PoolCreator`, `ListenerManager`)
 or — better — let consumers define the subset they need (see §2.1).
 
-### 2.4 Double-I naming
+### 2.4 Double-I naming — **RESOLVED**
 
-The `I` prefix collides with the `IAM` acronym, producing stutter names:
+The `I` prefix has been removed, resolving the stutter:
 
-- `IIamGateway` (`greennode/gateway/igateway.go`)
-- `IIamGatewayV2` (`greennode/gateway/igateway.go`)
+- `IIamGateway` → `IamGateway`
+- `IIamGatewayV2` → `IamGatewayV2`
 
-Removing the `I` prefix resolves this: `IAMGateway`, `IAMGatewayV2`.
+Note: `Iam` was not further changed to `IAM` (that would be a separate acronym
+casing fix beyond scope).
 
 ### 2.5 Empty interface declaration
 
 ```go
 // greennode/gateway/igateway.go:80
-type IVBackUpGateway interface{}
+type VBackUpGateway interface{}
 ```
 
 This is an unused stub. It should be deleted or, if backup support is planned,
@@ -249,11 +202,11 @@ grouping. Horizontal rules add noise and no semantic value.
 
 ### 4.1 Custom error framework
 
-The `sdk_error` package implements a bespoke error system:
+The `sdkerror` package implements a bespoke error system:
 
-- `IError` interface with `GetErrorCode()`, `GetMessage()`, `GetErrors()`, etc.
+- `Error` interface with `ErrorCode()`, `GetMessage()`, `Err()`, etc.
 - `SdkErrorHandler` with functional-option error handlers
-- Named error codes (`EcVServerWanIdNotFound`, `EcInternalServerError`, ...)
+- Named error codes (`EcVServerWanIDNotFound`, `EcInternalServerError`, ...)
 - Error categories for classification
 
 None of this integrates with the standard library's `errors.Is()`, `errors.As()`,
@@ -266,7 +219,7 @@ callers use the standard toolchain to inspect errors.
 ### 4.2 Functional-option error handlers
 
 ```go
-WithErrorServerNotFound(perrResp *sdkerr.SdkError) // and many similar
+WithErrorServerNotFound(errResp ErrorResponse) func(sdkError Error) // and many similar
 ```
 
 Error matching is done by registering handler functions, adding indirection that
@@ -285,17 +238,17 @@ or use `errors.Is()`.
 
 ```go
 // greennode/gateway/gateway.go
-func NewIamGateway(...) IIamGateway          { return &iamGateway{...} }
-func NewVServerGateway(...) IVServerGateway  { return &vserverGateway{...} }
-func NewVLBGateway(...) IVLBGateway          { return &vlbGateway{...} }
-func NewVNetworkGateway(...) IVNetworkGateway { return &vnetworkGateway{...} }
+func NewIamGateway(...) IamGateway          { return &iamGateway{...} }
+func NewVServerGateway(...) VServerGateway  { return &vserverGateway{...} }
+func NewVLBGateway(...) VLBGateway          { return &vlbGateway{...} }
+func NewVNetworkGateway(...) VNetworkGateway { return &vnetworkGateway{...} }
 
 // client/client.go
-func NewClient(...) IClient                  { return &client{...} }
-func NewSdkConfigure() ISdkConfigure         { return &sdkConfigure{...} }
+func NewClient(...) Client                  { return &client{...} }
+func NewSdkConfigure() SdkConfigure         { return &sdkConfigure{...} }
 
 // greennode/client/request.go
-func NewRequest() IRequest                   { return &request{...} }
+func NewRequest() Request                   { return &request{...} }
 ```
 
 **Go convention:** "Accept interfaces, return structs." Constructors should
@@ -363,44 +316,41 @@ function, and method.
 
 ```go
 // greennode/gateway/gateway.go:164
-func (s *vnetworkGateway) V2() IVNetworkGatewayV1 {
-    return s.vnetworkGatewayV2
+func (g *vnetworkGateway) V2() VNetworkGatewayV1 {
+    return g.vnetworkGatewayV2
 }
 ```
 
-The `V2()` method declares return type `IVNetworkGatewayV1`. The interface
-definition in `igateway.go:37` mirrors this:
+The `V2()` method declares return type `VNetworkGatewayV1`. The interface
+definition in `igateway.go:33` mirrors this:
 
 ```go
-V2() IVNetworkGatewayV1
+V2() VNetworkGatewayV1
 ```
 
-And the field is initialized from `NewVNetworkGatewayV1(vnetworkSvcV2)` at
-`gateway.go:124`.
-
 This likely means callers of `V2()` get the V1 API surface. Either the method
-should return `IVNetworkGatewayV2`, or the naming is misleading.
+should return `VNetworkGatewayV2`, or the naming is misleading.
 
 ---
 
 ## Summary
 
-| Category | Items | Scope |
-|----------|-------|-------|
-| `I`-prefix interfaces | 184 interfaces | 34 files |
-| `p`-prefix parameters | ~1,009 occurrences | ~120 files |
-| `s` receiver name | ~1,009 methods | codebase-wide |
-| Acronym casing (`Id`, `Json`, `Http`) | ~241+ identifiers | codebase-wide |
-| Java-style `Get*()` accessors | ~162 methods | codebase-wide |
-| Underscore package names | 1 package | `sdk_error` |
-| Producer-side interfaces | all interfaces | codebase-wide |
-| Interface-per-type | all request types | codebase-wide |
-| God interfaces (>10 methods) | 5 interfaces | 3 packages |
-| `i`-prefixed filenames | 34 files | codebase-wide |
-| Horizontal separators | ~119 occurrences | ~23 files |
-| Custom error framework | 1 package | `sdk_error` |
-| Constructors returning interfaces | ~30 functions | gateways, clients |
-| `interface{}` → `any` | ~411 occurrences | ~47 files |
-| `var _` assertions | ~45 | codebase-wide |
-| Missing godoc | ~97% of exports | codebase-wide |
-| V2/V1 mismatch bug | 1 | `gateway/gateway.go` |
+| Category | Items | Scope | Status |
+|----------|-------|-------|--------|
+| `I`-prefix interfaces | 184 interfaces | 34 files | **Done** (non-request); ~106 `I*Request` remain |
+| `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** (2 residuals in func types) |
+| `s` receiver name | ~967 methods | 86 files | **Done** |
+| Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
+| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
+| Underscore package names | 1 package | `sdkerror` | **Done** |
+| Producer-side interfaces | all interfaces | codebase-wide | Open |
+| Interface-per-type | all request types | codebase-wide | Open |
+| God interfaces (>10 methods) | 5 interfaces | 3 packages | Open |
+| `i`-prefixed filenames | 34 files | codebase-wide | Open |
+| Horizontal separators | ~119 occurrences | ~23 files | Open |
+| Custom error framework | 1 package | `sdkerror` | Open |
+| Constructors returning interfaces | ~30 functions | gateways, clients | Open |
+| `interface{}` → `any` | ~411 occurrences | ~47 files | Open |
+| `var _` assertions | ~45 | codebase-wide | Open |
+| Missing godoc | ~97% of exports | codebase-wide | Open |
+| V2/V1 mismatch bug | 1 | `gateway/gateway.go` | Open |

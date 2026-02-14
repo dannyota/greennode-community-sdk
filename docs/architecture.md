@@ -31,7 +31,7 @@ greennode-community-sdk/
 │   │   ├── server/                Internal server system tags
 │   │   └── volume/                Block volumes, snapshots, volume types
 │   ├── entity/                    Domain model structs (26 entities)
-│   └── sdk_error/                 Error codes, categories, handler chain
+│   └── sdkerror/                  Error codes, categories, handler chain
 └── test/                          Integration tests
 ```
 
@@ -110,7 +110,7 @@ mut       *sync.RWMutex   — guards accessToken and defaultHeaders
 reauthmut *reauthlock      — serializes token refresh
   └─ ongoing *reauthFuture
        ├─ done chan struct{}
-       └─ err  IError
+       └─ err  Error
 ```
 
 ## 5. Request Lifecycle
@@ -125,13 +125,13 @@ Step  Layer        Code path
  3    Gateway      greennode/gateway/vserver_gateway.go — ComputeService() returns service
  4    Service      greennode/services/compute/v2/server.go — CreateServer()
  4a     URL        greennode/services/compute/v2/url.go — builds {endpoint}/v2/{projectId}/servers
- 4b     Request    greennode/client/request.go — NewRequest().WithJsonBody().WithOkCodes(202)...
+ 4b     Request    greennode/client/request.go — NewRequest().WithJSONBody().WithOkCodes(202)...
  4c     Dispatch   service calls s.VServerClient.Post(url, req)
  5    HTTP Client  greennode/client/service_client.go — Post() delegates to httpClient.DoRequest()
  6    HTTP Client  greennode/client/http.go — DoRequest():
  6a     Prepare      prepareRequest() — set context, headers, marshal body
  6b     Auth         needReauth() → reauthenticate() if token is nil/expiring
- 6c     Execute      executeHttpMethod() — req/v3 HTTP call
+ 6c     Execute      executeHTTPMethod() — req/v3 HTTP call
  6d     Handle       handleResponse() → handleStatusCode()
  6e     Retry        401 → handleUnauthorized() → reauthenticate() → retry DoRequest()
  7    Response     JSON unmarshaled into entity struct; error enriched via SdkErrorHandler
@@ -141,10 +141,10 @@ Step  Layer        Code path
 
 ### Interface
 
-`IError` (`greennode/sdkerror/isdk_error.go`) provides:
+`Error` (`greennode/sdkerror/isdk_error.go`) provides:
 - Error code queries: `IsError(code)`, `IsCategory(cat)`
 - Builder methods: `WithErrorCode()`, `WithMessage()`, `WithParameters()`
-- Getters: `GetErrorCode()`, `GetMessage()`, `GetParameters()`
+- Getters: `ErrorCode()`, `GetMessage()`, `Parameters()`
 
 ### Handler Chain
 
@@ -161,7 +161,7 @@ sdkerror.SdkErrorHandler(sdkErr, errResp,
 ```
 
 Each handler inspects the error response message (string matching) and, if it
-matches, calls `WithErrorCode()` on the `IError`. The chain stops at the first
+matches, calls `WithErrorCode()` on the `Error`. The chain stops at the first
 match (error code changes from `EcUnknownError`).
 
 ### Error Enrichment
@@ -170,8 +170,8 @@ At the service layer, errors are enriched with context:
 
 ```go
 return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
-    WithParameters(popts.ToMap()).
-    WithKVparameters("projectId", s.getProjectId()).
+    WithParameters(opts.ToMap()).
+    WithKVparameters("projectId", s.getProjectID()).
     WithErrorCategories(sdkerror.ErrCatVServer)
 ```
 
@@ -189,7 +189,7 @@ return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
 ## 7. Key Design Patterns
 
 ### Builder Pattern
-Request objects use fluent builders (`NewRequest().WithJsonBody().WithOkCodes()`).
+Request objects use fluent builders (`NewRequest().WithJSONBody().WithOkCodes()`).
 SDK configuration follows the same style (`NewClient().WithAuthOption().Configure()`).
 
 ### Version Multiplexing
@@ -206,7 +206,7 @@ the public domain model.
 
 ### URL Helpers
 Each service version has a `url.go` file with functions that build endpoint paths
-from a `ServiceClient` (e.g., `createServerUrl(s.VServerClient)` →
+from a `ServiceClient` (e.g., `createServerURL(s.VServerClient)` →
 `{endpoint}/v2/{projectId}/servers`).
 
 ### Shared Commons
@@ -214,7 +214,7 @@ from a `ServiceClient` (e.g., `createServerUrl(s.VServerClient)` →
 services compose into their request structs for consistent field handling.
 
 ### Functional-Option Error Handlers
-Error handlers are functions with signature `func(IError)` passed as variadic
+Error handlers are functions with signature `func(Error)` passed as variadic
 arguments to `SdkErrorHandler`. This makes the handler chain composable and lets
 each service choose which error patterns to match.
 
