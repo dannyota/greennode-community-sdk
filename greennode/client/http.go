@@ -16,6 +16,16 @@ const (
 	IAMOauth2 AuthOpts = "IamOauth2"
 )
 
+type HTTPClient interface {
+	WithRetryCount(retryCount int) HTTPClient
+	WithTimeout(timeout time.Duration) HTTPClient
+	WithSleep(sleep time.Duration) HTTPClient
+	WithKvDefaultHeaders(args ...string) HTTPClient
+	WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HTTPClient
+
+	DoRequest(url string, req Request) (*req.Response, sdkerror.Error)
+}
+
 type (
 	httpClient struct {
 		context    context.Context

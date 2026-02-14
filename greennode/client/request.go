@@ -1,5 +1,29 @@
 package client
 
+type Request interface {
+	WithOkCodes(okCodes ...int) Request
+	WithJSONBody(jsonBody any) Request
+	WithJSONResponse(jsonResponse any) Request
+	WithJSONError(jsonError any) Request
+	WithRequestMethod(method requestMethod) Request
+	WithSkipAuth(skipAuth bool) Request
+	WithHeader(key, value string) Request
+	WithMapHeaders(headers map[string]string) Request
+	WithUserID(userID string) Request
+
+	RequestBody() any
+	RequestMethod() string
+	MoreHeaders() map[string]string
+	JSONResponse() any
+	JSONError() any
+
+	SetJSONResponse(jsonResponse any)
+	SetJSONError(jsonError any)
+
+	ContainsOkCode(code ...int) bool
+	SkipAuthentication() bool
+}
+
 type request struct {
 	jsonBody     any
 	jsonResponse any
