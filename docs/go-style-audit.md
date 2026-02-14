@@ -86,11 +86,13 @@ The `sdk_error` package has been renamed to `sdkerror` (`greennode/sdkerror/`,
 
 ## 2. Interface Design
 
-### 2.1 Producer-side interfaces
+### 2.1 Producer-side interfaces — **PARTIALLY RESOLVED**
 
-Every interface in this codebase is defined next to its implementation (the
-"producer" side), Java style. Files like `iclient.go`, `igateway.go`,
-`irequest.go` sit alongside the concrete types they describe.
+Interfaces are defined next to their implementations (the "producer" side).
+The Java-style file separation (`iclient.go`, `igateway.go`, `irequest.go`)
+has been eliminated — interfaces now live in the same files as their
+implementations. Producer-side placement is kept, which is appropriate for a
+public SDK library whose interfaces form the API contract.
 
 **Go convention:** Define interfaces at the call site (the "consumer" side).
 The producer exports concrete types; consumers define the small interfaces they
@@ -117,11 +119,11 @@ interfaces if they need to mock it.
 
 | Interface | Methods | File |
 |-----------|---------|------|
-| `LoadBalancerServiceV2` | 35 | `greennode/services/loadbalancer/iloadbalancer.go` |
-| `NetworkServiceV2` | 28 | `greennode/services/network/inetwork.go` |
-| `GLBServiceV1` | 21 | `greennode/services/glb/iloadbalancer.go` |
-| `VDnsServiceInternal` | 11 | `greennode/services/dns/idns.go` |
-| `VDnsServiceV1` | 11 | `greennode/services/dns/idns.go` |
+| `LoadBalancerServiceV2` | 35 | `greennode/services/loadbalancer/loadbalancer.go` |
+| `NetworkServiceV2` | 28 | `greennode/services/network/network.go` |
+| `GLBServiceV1` | 21 | `greennode/services/glb/loadbalancer.go` |
+| `VDnsServiceInternal` | 11 | `greennode/services/dns/dns.go` |
+| `VDnsServiceV1` | 11 | `greennode/services/dns/dns.go` |
 
 **Go convention:** Keep interfaces small and composable. A 35-method interface
 is impossible to mock, hard to implement, and signals that the type is doing too
@@ -142,8 +144,8 @@ in error codes (e.g., `"VngCloudIamAuthenticationFailed"`) are unchanged.
 ### 2.5 Empty interface declaration
 
 ```go
-// greennode/gateway/igateway.go:80
-type VBackUpGateway interface{}
+// greennode/gateway/gateway.go
+type VBackUpGateway any
 ```
 
 This is an unused stub. It should be deleted or, if backup support is planned,
@@ -153,32 +155,13 @@ replaced with a concrete TODO tracked in an issue.
 
 ## 3. File Organization
 
-### 3.1 `i`-prefixed filenames
+### 3.1 `i`-prefixed filenames — **RESOLVED**
 
-34 files use an `i` prefix to indicate "interface definition":
-
-```
-client/iclient.go
-greennode/client/iclient.go
-greennode/client/iservice_client.go
-greennode/gateway/igateway.go
-greennode/sdkerror/isdk_error.go
-greennode/services/loadbalancer/iloadbalancer.go
-greennode/services/network/inetwork.go
-greennode/services/glb/iloadbalancer.go
-greennode/services/dns/idns.go
-greennode/services/portal/iportal.go
-greennode/services/server/iserver.go
-greennode/services/volume/ivolume.go
-greennode/services/compute/icompute.go
-greennode/services/identity/iidentity.go
-  ... plus ~19 irequest.go files in v1/v2/inter subdirectories
-```
-
-**Go convention:** Go does not conventionally separate interfaces into dedicated
-files. When producer-side interfaces are eliminated (§2.1), these files can be
-removed entirely. Any types worth keeping move into the main source file for
-their package.
+All 26 `i`-prefixed files have been eliminated. Interfaces were merged into their
+corresponding implementation files:
+- 5 core infrastructure files (`iclient.go`, `iservice_client.go`, `igateway.go`, `isdk_error.go`)
+- 9 service-level files (`icompute.go`, `idns.go`, `iloadbalancer.go`, etc.)
+- 12 version-specific `irequest.go` files (distributed to files containing their implementation structs)
 
 ### 3.2 Horizontal separator comments — **RESOLVED**
 
@@ -305,10 +288,10 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
-| Producer-side interfaces | all interfaces | codebase-wide | Open |
+| Producer-side interfaces | all interfaces | codebase-wide | **Partial** (file separation removed) |
 | Interface-per-type | all request types | codebase-wide | Open |
 | God interfaces (>10 methods) | 5 interfaces | 3 packages | Open |
-| `i`-prefixed filenames | 34 files | codebase-wide | Open |
+| `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
 | Custom error framework | 1 package | `sdkerror` | Open |
 | Constructors returning interfaces | ~30 functions | gateways, clients | Open |
