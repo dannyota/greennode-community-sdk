@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Portal, sdkerror.IError) {
+func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error) {
 	url := getPortalInfoUrl(s.PortalClient, popts)
 	resp := new(GetPortalInfoResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -23,7 +23,7 @@ func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Po
 	return resp.ToEntityPortal(), nil
 }
 
-func (s *PortalServiceV1) ListProjects(popts IListProjectsRequest) (*entity.ListPortals, sdkerror.IError) {
+func (s *PortalServiceV1) ListProjects(popts IListProjectsRequest) (*entity.ListPortals, sdkerror.Error) {
 	url := listProjectsUrl(s.PortalClient)
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

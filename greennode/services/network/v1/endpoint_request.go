@@ -98,7 +98,7 @@ func (s *CreateEndpointRequest) AddUserAgent(pagent ...string) ICreateEndpointRe
 	return s
 }
 
-func (s *CreateEndpointRequest) ToRequestBody(psvc client.IServiceClient) interface{} {
+func (s *CreateEndpointRequest) ToRequestBody(psvc client.ServiceClient) interface{} {
 	s.ResourceType = "endpoint"
 	s.Action = "create"
 	s.ResourceInfo.EnableAZ = true
@@ -210,7 +210,7 @@ func (s *DeleteEndpointByIdRequest) AddUserAgent(pagent ...string) IDeleteEndpoi
 	return s
 }
 
-func (s *DeleteEndpointByIdRequest) ToRequestBody(psvc client.IServiceClient) interface{} {
+func (s *DeleteEndpointByIdRequest) ToRequestBody(psvc client.ServiceClient) interface{} {
 	s.ProjectUuid = psvc.GetProjectId()
 	s.RegionUuid = psvc.GetZoneId()
 

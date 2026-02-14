@@ -8,26 +8,26 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
 )
 
-type IClient interface {
+type Client interface {
 	// List of builder methods
-	WithHttpClient(phttpClient svcclient.IHttpClient) IClient
-	WithContext(pctx context.Context) IClient
-	WithAuthOption(pauthOption svcclient.AuthOpts, pauthConfig ISdkConfigure) IClient
-	WithKvDefaultHeaders(pargs ...string) IClient
-	WithRetryCount(pretry int) IClient
-	WithSleep(psleep time.Duration) IClient
-	WithProjectId(pprojectId string) IClient
+	WithHttpClient(phttpClient svcclient.HttpClient) Client
+	WithContext(pctx context.Context) Client
+	WithAuthOption(pauthOption svcclient.AuthOpts, pauthConfig SdkConfigure) Client
+	WithKvDefaultHeaders(pargs ...string) Client
+	WithRetryCount(pretry int) Client
+	WithSleep(psleep time.Duration) Client
+	WithProjectId(pprojectId string) Client
 
 	// List of functional methods
-	Configure(psdkCfg ISdkConfigure) IClient
+	Configure(psdkCfg SdkConfigure) Client
 	GetUserAgent() string
 
 	// List of gateways
-	IamGateway() gateway.IIamGateway
-	VServerGateway() gateway.IVServerGateway
-	VLBGateway() gateway.IVLBGateway
-	VBackUpGateway() gateway.IVBackUpGateway
-	VNetworkGateway() gateway.IVNetworkGateway
-	GLBGateway() gateway.IGLBGateway
-	VDnsGateway() gateway.IVDnsGateway
+	IamGateway() gateway.IamGateway
+	VServerGateway() gateway.VServerGateway
+	VLBGateway() gateway.VLBGateway
+	VBackUpGateway() gateway.VBackUpGateway
+	VNetworkGateway() gateway.VNetworkGateway
+	GLBGateway() gateway.GLBGateway
+	VDnsGateway() gateway.VDnsGateway
 }

@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV2) CreateBlockVolume(popts ICreateBlockVolumeRequest) (*entity.Volume, sdkerror.IError) {
+func (s *VolumeServiceV2) CreateBlockVolume(popts ICreateBlockVolumeRequest) (*entity.Volume, sdkerror.Error) {
 	url := createBlockVolumeUrl(s.VServerClient)
 	resp := new(CreateBlockVolumeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -29,7 +29,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(popts ICreateBlockVolumeRequest) (*e
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) DeleteBlockVolumeById(popts IDeleteBlockVolumeByIdRequest) sdkerror.IError {
+func (s *VolumeServiceV2) DeleteBlockVolumeById(popts IDeleteBlockVolumeByIdRequest) sdkerror.Error {
 	url := deleteBlockVolumeByIdUrl(s.VServerClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -47,7 +47,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeById(popts IDeleteBlockVolumeByIdRequ
 	return nil
 }
 
-func (s *VolumeServiceV2) ListBlockVolumes(popts IListBlockVolumesRequest) (*entity.ListVolumes, sdkerror.IError) {
+func (s *VolumeServiceV2) ListBlockVolumes(popts IListBlockVolumesRequest) (*entity.ListVolumes, sdkerror.Error) {
 	url := listBlockVolumesUrl(s.VServerClient, popts)
 	resp := new(ListBlockVolumesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -66,7 +66,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(popts IListBlockVolumesRequest) (*ent
 	return resp.ToEntityListVolumes(), nil
 }
 
-func (s *VolumeServiceV2) GetBlockVolumeById(popts IGetBlockVolumeByIdRequest) (*entity.Volume, sdkerror.IError) {
+func (s *VolumeServiceV2) GetBlockVolumeById(popts IGetBlockVolumeByIdRequest) (*entity.Volume, sdkerror.Error) {
 	url := getBlockVolumeByIdUrl(s.VServerClient, popts)
 	resp := new(GetBlockVolumeByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -86,7 +86,7 @@ func (s *VolumeServiceV2) GetBlockVolumeById(popts IGetBlockVolumeByIdRequest) (
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) ResizeBlockVolumeById(popts IResizeBlockVolumeByIdRequest) (*entity.Volume, sdkerror.IError) {
+func (s *VolumeServiceV2) ResizeBlockVolumeById(popts IResizeBlockVolumeByIdRequest) (*entity.Volume, sdkerror.Error) {
 	url := resizeBlockVolumeByIdUrl(s.VServerClient, popts)
 	resp := new(ResizeBlockVolumeByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -111,7 +111,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeById(popts IResizeBlockVolumeByIdRequ
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) GetUnderBlockVolumeId(popts IGetUnderBlockVolumeIdRequest) (*entity.Volume, sdkerror.IError) {
+func (s *VolumeServiceV2) GetUnderBlockVolumeId(popts IGetUnderBlockVolumeIdRequest) (*entity.Volume, sdkerror.Error) {
 	url := getUnderBlockVolumeIdUrl(s.VServerClient, popts)
 	resp := new(GetUnderBlockVolumeIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -131,7 +131,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeId(popts IGetUnderBlockVolumeIdRequ
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) MigrateBlockVolumeById(popts IMigrateBlockVolumeByIdRequest) sdkerror.IError {
+func (s *VolumeServiceV2) MigrateBlockVolumeById(popts IMigrateBlockVolumeByIdRequest) sdkerror.Error {
 	url := migrateBlockVolumeByIdUrl(s.VServerClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	resp := map[string]interface{}{}

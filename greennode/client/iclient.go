@@ -8,26 +8,26 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-type IHttpClient interface {
-	WithRetryCount(pretryCount int) IHttpClient
-	WithTimeout(ptimeout time.Duration) IHttpClient
-	WithSleep(psleep time.Duration) IHttpClient
-	WithKvDefaultHeaders(pargs ...string) IHttpClient
-	WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (ISdkAuthentication, sdkerror.IError)) IHttpClient
+type HttpClient interface {
+	WithRetryCount(pretryCount int) HttpClient
+	WithTimeout(ptimeout time.Duration) HttpClient
+	WithSleep(psleep time.Duration) HttpClient
+	WithKvDefaultHeaders(pargs ...string) HttpClient
+	WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient
 
-	DoRequest(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	DoRequest(purl string, preq Request) (*req.Response, sdkerror.Error)
 }
 
-type IRequest interface {
-	WithOkCodes(pokCodes ...int) IRequest
-	WithJsonBody(pjsonBody interface{}) IRequest
-	WithJsonResponse(pjsonResponse interface{}) IRequest
-	WithJsonError(pjsonError interface{}) IRequest
-	WithRequestMethod(pmethod requestMethod) IRequest
-	WithSkipAuth(pskipAuth bool) IRequest
-	WithHeader(pkey, pvalue string) IRequest
-	WithMapHeaders(pheaders map[string]string) IRequest
-	WithUserId(puserId string) IRequest
+type Request interface {
+	WithOkCodes(pokCodes ...int) Request
+	WithJsonBody(pjsonBody interface{}) Request
+	WithJsonResponse(pjsonResponse interface{}) Request
+	WithJsonError(pjsonError interface{}) Request
+	WithRequestMethod(pmethod requestMethod) Request
+	WithSkipAuth(pskipAuth bool) Request
+	WithHeader(pkey, pvalue string) Request
+	WithMapHeaders(pheaders map[string]string) Request
+	WithUserId(puserId string) Request
 
 	GetRequestBody() interface{}
 	GetRequestMethod() string

@@ -2,20 +2,20 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getVolumeTypeByIdUrl(psc client.IServiceClient, popts IGetVolumeTypeByIdRequest) string {
+func getVolumeTypeByIdUrl(psc client.ServiceClient, popts IGetVolumeTypeByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volume_types",
 		popts.GetVolumeTypeId())
 }
 
-func getDefaultVolumeTypeUrl(psc client.IServiceClient) string {
+func getDefaultVolumeTypeUrl(psc client.ServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volume_default_id")
 }
 
-func getVolumeTypeZonesUrl(psc client.IServiceClient, popts IGetVolumeTypeZonesRequest) string {
+func getVolumeTypeZonesUrl(psc client.ServiceClient, popts IGetVolumeTypeZonesRequest) string {
 	query, err := popts.ToQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -26,7 +26,7 @@ func getVolumeTypeZonesUrl(psc client.IServiceClient, popts IGetVolumeTypeZonesR
 	) + query
 }
 
-func getVolumeTypesUrl(psc client.IServiceClient, popts IGetListVolumeTypeRequest) string {
+func getVolumeTypesUrl(psc client.ServiceClient, popts IGetListVolumeTypeRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		popts.GetVolumeTypeZoneId(),

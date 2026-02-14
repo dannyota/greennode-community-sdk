@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.IError) {
+func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.Error) {
 	url := getAllAddressPairByVirtualSubnetIdUrl(s.VserverClient, popts)
 	resp := new(GetAllAddressPairByVirtualSubnetIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -28,7 +28,7 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddre
 	return resp.ToListAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.IError) {
+func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.Error) {
 	url := setAddressPairInVirtualSubnetUrl(s.VserverClient, popts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -45,7 +45,7 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairIn
 	return resp.ToAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) sdkerror.IError {
+func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) sdkerror.Error {
 	url := deleteAddressPairUrl(s.VserverClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -61,7 +61,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) sd
 	return nil
 }
 
-func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.IError) {
+func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.Error) {
 	url := createAddressPairUrl(s.VserverClient, popts)
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

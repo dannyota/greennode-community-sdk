@@ -8,8 +8,8 @@ const (
 	loginFailedPrefixMsg = "There are some problems with your service account key pair, please re-generate a new one. Error message: %s"
 )
 
-func WithErrorAuthenticationFailed(perrResp IErrorResponse) func(IError) {
-	return func(sdkErr IError) {
+func WithErrorAuthenticationFailed(perrResp ErrorResponse) func(Error) {
+	return func(sdkErr Error) {
 		if perrResp == nil {
 			return
 		}
@@ -27,16 +27,16 @@ func WithErrorAuthenticationFailed(perrResp IErrorResponse) func(IError) {
 	}
 }
 
-func WithErrorReauthFuncNotSet() func(IError) {
-	return func(sdkErr IError) {
+func WithErrorReauthFuncNotSet() func(Error) {
+	return func(sdkErr Error) {
 		sdkErr.WithErrorCode(EcReauthFuncNotSet).
 			WithMessage("Reauthentication function is not configured").
 			WithErrors(fmt.Errorf("reauthentication function is not configured"))
 	}
 }
 
-func WithErrorTooManyFailedLogin(perrResp IErrorResponse) func(IError) {
-	return func(sdkErr IError) {
+func WithErrorTooManyFailedLogin(perrResp ErrorResponse) func(Error) {
+	return func(sdkErr Error) {
 		if perrResp == nil {
 			return
 		}
@@ -54,8 +54,8 @@ func WithErrorTooManyFailedLogin(perrResp IErrorResponse) func(IError) {
 	}
 }
 
-func WithErrorUnknownAuthFailure(perrResp IErrorResponse) func(IError) {
-	return func(sdkErr IError) {
+func WithErrorUnknownAuthFailure(perrResp ErrorResponse) func(Error) {
+	return func(sdkErr Error) {
 		if perrResp == nil {
 			return
 		}

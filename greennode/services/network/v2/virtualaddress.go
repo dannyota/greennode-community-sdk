@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, sdkerror.IError) {
+func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, sdkerror.Error) {
 	url := createVirtualAddressCrossProjectUrl(s.VserverClient)
 	resp := new(CreateVirtualAddressCrossProjectResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -28,7 +28,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtual
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) DeleteVirtualAddressById(popts IDeleteVirtualAddressByIdRequest) sdkerror.IError {
+func (s *NetworkServiceV2) DeleteVirtualAddressById(popts IDeleteVirtualAddressByIdRequest) sdkerror.Error {
 	url := deleteVirtualAddressByIdUrl(s.VserverClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -47,7 +47,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressById(popts IDeleteVirtualAddressB
 	return nil
 }
 
-func (s *NetworkServiceV2) GetVirtualAddressById(popts IGetVirtualAddressByIdRequest) (*entity.VirtualAddress, sdkerror.IError) {
+func (s *NetworkServiceV2) GetVirtualAddressById(popts IGetVirtualAddressByIdRequest) (*entity.VirtualAddress, sdkerror.Error) {
 	url := getVirtualAddressByIdUrl(s.VserverClient, popts)
 	resp := new(GetVirtualAddressByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -67,7 +67,7 @@ func (s *NetworkServiceV2) GetVirtualAddressById(popts IGetVirtualAddressByIdReq
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressId(popts IListAddressPairsByVirtualAddressIdRequest) (*entity.ListAddressPairs, sdkerror.IError) {
+func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressId(popts IListAddressPairsByVirtualAddressIdRequest) (*entity.ListAddressPairs, sdkerror.Error) {
 	url := listAddressPairsByVirtualAddressIdUrl(s.VserverClient, popts)
 	resp := new(ListAddressPairsByVirtualAddressIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

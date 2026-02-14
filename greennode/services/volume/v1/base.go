@@ -9,7 +9,7 @@ const (
 )
 
 type VolumeServiceV1 struct {
-	VServerClient client.IServiceClient
+	VServerClient client.ServiceClient
 }
 
 func (s *VolumeServiceV1) getProjectId() string {

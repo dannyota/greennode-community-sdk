@@ -8,7 +8,7 @@ type IGetEndpointByIdRequest interface {
 }
 
 type ICreateEndpointRequest interface {
-	ToRequestBody(psvc client.IServiceClient) interface{}
+	ToRequestBody(psvc client.ServiceClient) interface{}
 	WithDescription(pdesp string) ICreateEndpointRequest
 	WithSubnetUuid(psubnetUuid string) ICreateEndpointRequest
 	WithVpcUuid(pvpcUuid string) ICreateEndpointRequest
@@ -32,7 +32,7 @@ type IDeleteEndpointByIdRequest interface {
 	GetEndpointId() string
 	AddUserAgent(pagent ...string) IDeleteEndpointByIdRequest
 	ParseUserAgent() string
-	ToRequestBody(psvc client.IServiceClient) interface{}
+	ToRequestBody(psvc client.ServiceClient) interface{}
 	ToMap() map[string]interface{}
 }
 

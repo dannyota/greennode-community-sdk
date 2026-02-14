@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV1) GetEndpointById(popts IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.IError) {
+func (s *NetworkServiceV1) GetEndpointById(popts IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.Error) {
 	url := getEndpointByIdUrl(s.VNetworkClient, popts)
 	resp := new(GetEndpointByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -27,7 +27,7 @@ func (s *NetworkServiceV1) GetEndpointById(popts IGetEndpointByIdRequest) (*enti
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError) {
+func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error) {
 	url := createEndpointUrl(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -56,7 +56,7 @@ func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) sdkerror.IError {
+func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) sdkerror.Error {
 	url := deleteEndpointByIdUrl(s.VNetworkClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -78,7 +78,7 @@ func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) 
 	return nil
 }
 
-func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.IError) {
+func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.Error) {
 	url := listEndpointsUrl(s.VNetworkClient, popts)
 	resp := new(ListEndpointsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -101,7 +101,7 @@ func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*entity.L
 
 // ________________________________________________________________________ NetworkServiceInternalV1
 
-func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.IError) {
+func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.Error) {
 	url := listTagsByEndpointIdUrl(s.VNetworkClient, popts)
 	resp := new(ListTagsByEndpointIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -122,7 +122,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpoin
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWithEndpointIdRequest) sdkerror.IError {
+func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWithEndpointIdRequest) sdkerror.Error {
 	url := createTagsWithEndpointIdUrl(s.VNetworkClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -144,7 +144,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWit
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(popts IDeleteTagOfEndpointRequest) sdkerror.IError {
+func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(popts IDeleteTagOfEndpointRequest) sdkerror.Error {
 	url := deleteTagOfEndpointUrl(s.VNetworkClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -164,7 +164,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(popts IDeleteTagOfEndpoin
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValueOfEndpointRequest) sdkerror.IError {
+func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValueOfEndpointRequest) sdkerror.Error {
 	url := updateTagValueOfEndpointUrl(s.VNetworkClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -185,7 +185,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValu
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError) {
+func (s *NetworkServiceInternalV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.Error) {
 	url := createEndpointUrl(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

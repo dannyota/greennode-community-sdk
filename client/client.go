@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	_ IClient = new(client)
+	_ Client = new(client)
 )
 
 type (
@@ -20,42 +20,42 @@ type (
 		projectId  string
 		zoneId     string
 		userId     string
-		httpClient svcclient.IHttpClient
+		httpClient svcclient.HttpClient
 		userAgent  string
 		authOpt    svcclient.AuthOpts
 
-		iamGateway      gateway.IIamGateway
-		vserverGateway  gateway.IVServerGateway
-		vlbGateway      gateway.IVLBGateway
-		vbackupGateway  gateway.IVBackUpGateway
-		vnetworkGateway gateway.IVNetworkGateway
-		glbGateway      gateway.IGLBGateway
-		vdnsGateway     gateway.IVDnsGateway
+		iamGateway      gateway.IamGateway
+		vserverGateway  gateway.VServerGateway
+		vlbGateway      gateway.VLBGateway
+		vbackupGateway  gateway.VBackUpGateway
+		vnetworkGateway gateway.VNetworkGateway
+		glbGateway      gateway.GLBGateway
+		vdnsGateway     gateway.VDnsGateway
 	}
 )
 
-func NewClient(pctx context.Context) IClient {
+func NewClient(pctx context.Context) Client {
 	c := new(client)
 	c.context = pctx
 
 	return c
 }
 
-func NewSdkConfigure() ISdkConfigure {
+func NewSdkConfigure() SdkConfigure {
 	return &sdkConfigure{}
 }
 
-func (s *client) WithHttpClient(pclient svcclient.IHttpClient) IClient {
+func (s *client) WithHttpClient(pclient svcclient.HttpClient) Client {
 	s.httpClient = pclient
 	return s
 }
 
-func (s *client) WithContext(pctx context.Context) IClient {
+func (s *client) WithContext(pctx context.Context) Client {
 	s.context = pctx
 	return s
 }
 
-func (s *client) WithAuthOption(pauthOpts svcclient.AuthOpts, pauthConfig ISdkConfigure) IClient {
+func (s *client) WithAuthOption(pauthOpts svcclient.AuthOpts, pauthConfig SdkConfigure) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
@@ -74,7 +74,7 @@ func (s *client) WithAuthOption(pauthOpts svcclient.AuthOpts, pauthConfig ISdkCo
 	return s
 }
 
-func (s *client) WithRetryCount(pretry int) IClient {
+func (s *client) WithRetryCount(pretry int) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
@@ -83,7 +83,7 @@ func (s *client) WithRetryCount(pretry int) IClient {
 	return s
 }
 
-func (s *client) WithKvDefaultHeaders(pargs ...string) IClient {
+func (s *client) WithKvDefaultHeaders(pargs ...string) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
@@ -92,7 +92,7 @@ func (s *client) WithKvDefaultHeaders(pargs ...string) IClient {
 	return s
 }
 
-func (s *client) WithSleep(psleep time.Duration) IClient {
+func (s *client) WithSleep(psleep time.Duration) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
@@ -101,7 +101,7 @@ func (s *client) WithSleep(psleep time.Duration) IClient {
 	return s
 }
 
-func (s *client) WithProjectId(pprojectId string) IClient {
+func (s *client) WithProjectId(pprojectId string) Client {
 	s.projectId = pprojectId
 	if s.httpClient == nil {
 		return s
@@ -138,7 +138,7 @@ func (s *client) WithProjectId(pprojectId string) IClient {
 	return s
 }
 
-func (s *client) WithUserId(puserId string) IClient {
+func (s *client) WithUserId(puserId string) Client {
 	s.userId = puserId
 	if s.vnetworkGateway != nil {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
@@ -153,7 +153,7 @@ func (s *client) WithUserId(puserId string) IClient {
 	return s
 }
 
-func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
+func (s *client) Configure(psdkCfg SdkConfigure) Client {
 	s.projectId = psdkCfg.GetProjectId()
 	s.userId = psdkCfg.GetUserId()
 	if s.httpClient == nil {
@@ -205,36 +205,36 @@ func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
 	return s
 }
 
-func (s *client) IamGateway() gateway.IIamGateway {
+func (s *client) IamGateway() gateway.IamGateway {
 	return s.iamGateway
 }
 
-func (s *client) VServerGateway() gateway.IVServerGateway {
+func (s *client) VServerGateway() gateway.VServerGateway {
 	return s.vserverGateway
 }
 
-func (s *client) VLBGateway() gateway.IVLBGateway {
+func (s *client) VLBGateway() gateway.VLBGateway {
 	return s.vlbGateway
 }
 
-func (s *client) VBackUpGateway() gateway.IVBackUpGateway {
+func (s *client) VBackUpGateway() gateway.VBackUpGateway {
 	return s.vbackupGateway
 }
 
-func (s *client) VNetworkGateway() gateway.IVNetworkGateway {
+func (s *client) VNetworkGateway() gateway.VNetworkGateway {
 	return s.vnetworkGateway
 }
 
-func (s *client) GLBGateway() gateway.IGLBGateway {
+func (s *client) GLBGateway() gateway.GLBGateway {
 	return s.glbGateway
 }
 
-func (s *client) VDnsGateway() gateway.IVDnsGateway {
+func (s *client) VDnsGateway() gateway.VDnsGateway {
 	return s.vdnsGateway
 }
 
-func (s *client) usingIamOauth2AsAuthOption(pauthConfig ISdkConfigure) func() (svcclient.ISdkAuthentication, sdkerror.IError) {
-	authFunc := func() (svcclient.ISdkAuthentication, sdkerror.IError) {
+func (s *client) usingIamOauth2AsAuthOption(pauthConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
+	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
 		token, err := s.iamGateway.V2().IdentityService().GetAccessToken(
 			identityv2.NewGetAccessTokenRequest(pauthConfig.GetClientId(), pauthConfig.GetClientSecret()))
 		if err != nil {

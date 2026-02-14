@@ -20,44 +20,44 @@ const (
 	MethodDelete = requestMethod("DELETE")
 )
 
-func NewRequest() IRequest {
+func NewRequest() Request {
 	return &request{
 		okCodes: make(map[int]struct{}),
 	}
 }
 
-func (s *request) WithOkCodes(pokCodes ...int) IRequest {
+func (s *request) WithOkCodes(pokCodes ...int) Request {
 	for _, c := range pokCodes {
 		s.okCodes[c] = struct{}{}
 	}
 	return s
 }
 
-func (s *request) WithUserId(puserId string) IRequest {
+func (s *request) WithUserId(puserId string) Request {
 	return s.WithHeader("portal-user-id", puserId)
 }
 
-func (s *request) WithJsonBody(pjsonBody interface{}) IRequest {
+func (s *request) WithJsonBody(pjsonBody interface{}) Request {
 	s.JsonBody = pjsonBody
 	return s
 }
 
-func (s *request) WithJsonResponse(pjsonResponse interface{}) IRequest {
+func (s *request) WithJsonResponse(pjsonResponse interface{}) Request {
 	s.JsonResponse = pjsonResponse
 	return s
 }
 
-func (s *request) WithJsonError(pjsonError interface{}) IRequest {
+func (s *request) WithJsonError(pjsonError interface{}) Request {
 	s.JsonError = pjsonError
 	return s
 }
 
-func (s *request) WithRequestMethod(pmethod requestMethod) IRequest {
+func (s *request) WithRequestMethod(pmethod requestMethod) Request {
 	s.Method = pmethod
 	return s
 }
 
-func (s *request) WithSkipAuth(pskipAuth bool) IRequest {
+func (s *request) WithSkipAuth(pskipAuth bool) Request {
 	s.SkipAuth = pskipAuth
 	return s
 }
@@ -99,7 +99,7 @@ func (s *request) ContainsOkCode(pcode ...int) bool {
 	return false
 }
 
-func (s *request) WithHeader(pkey, pvalue string) IRequest {
+func (s *request) WithHeader(pkey, pvalue string) Request {
 	if pkey == "" || pvalue == "" {
 		return s
 	}
@@ -112,7 +112,7 @@ func (s *request) WithHeader(pkey, pvalue string) IRequest {
 	return s
 }
 
-func (s *request) WithMapHeaders(pheaders map[string]string) IRequest {
+func (s *request) WithMapHeaders(pheaders map[string]string) Request {
 	if s.MoreHeaders == nil {
 		s.MoreHeaders = make(map[string]string)
 	}

@@ -3,8 +3,8 @@ package v2
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 type LoadBalancerServiceV2 struct {
-	VLBClient     client.IServiceClient
-	VServerClient client.IServiceClient
+	VLBClient     client.ServiceClient
+	VServerClient client.ServiceClient
 }
 
 func (s *LoadBalancerServiceV2) getProjectId() string {

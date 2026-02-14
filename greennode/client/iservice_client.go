@@ -6,31 +6,31 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-type IServiceClient interface {
-	WithEndpoint(pendpoint string) IServiceClient
-	WithName(pname string) IServiceClient
-	WithProjectId(pprojectId string) IServiceClient
-	WithZoneId(pzoneId string) IServiceClient
-	WithUserId(puserId string) IServiceClient
-	WithMoreHeaders(pmoreHeaders map[string]string) IServiceClient
-	WithKVheader(pkey string, pvalue string) IServiceClient
-	WithClient(pclient IHttpClient) IServiceClient
+type ServiceClient interface {
+	WithEndpoint(pendpoint string) ServiceClient
+	WithName(pname string) ServiceClient
+	WithProjectId(pprojectId string) ServiceClient
+	WithZoneId(pzoneId string) ServiceClient
+	WithUserId(puserId string) ServiceClient
+	WithMoreHeaders(pmoreHeaders map[string]string) ServiceClient
+	WithKVheader(pkey string, pvalue string) ServiceClient
+	WithClient(pclient HttpClient) ServiceClient
 	ServiceURL(pparts ...string) string
 	GetProjectId() string
 	GetZoneId() string
 	GetUserId() string
 
-	Post(purl string, preq IRequest) (*req.Response, sdkerror.IError)
-	Get(purl string, preq IRequest) (*req.Response, sdkerror.IError)
-	Delete(purl string, preq IRequest) (*req.Response, sdkerror.IError)
-	Put(purl string, preq IRequest) (*req.Response, sdkerror.IError)
-	Patch(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	Post(purl string, preq Request) (*req.Response, sdkerror.Error)
+	Get(purl string, preq Request) (*req.Response, sdkerror.Error)
+	Delete(purl string, preq Request) (*req.Response, sdkerror.Error)
+	Put(purl string, preq Request) (*req.Response, sdkerror.Error)
+	Patch(purl string, preq Request) (*req.Response, sdkerror.Error)
 }
 
-type ISdkAuthentication interface {
-	WithAccessToken(paccessToken string) ISdkAuthentication
-	WithExpiresAt(pexpiresAt int64) ISdkAuthentication
-	UpdateAuth(pauth ISdkAuthentication)
+type SdkAuthentication interface {
+	WithAccessToken(paccessToken string) SdkAuthentication
+	WithExpiresAt(pexpiresAt int64) SdkAuthentication
+	UpdateAuth(pauth SdkAuthentication)
 	NeedReauth() bool
 	GetAccessToken() string
 	GetExpiresAt() int64

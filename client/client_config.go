@@ -3,7 +3,7 @@ package client
 import "strings"
 
 type (
-	ISdkConfigure interface {
+	SdkConfigure interface {
 		GetClientId() string
 		GetClientSecret() string
 		GetProjectId() string
@@ -16,18 +16,18 @@ type (
 		GetVNetworkEndpoint() string
 		GetVDnsEndpoint() string
 		GetUserAgent() string
-		WithUserId(puserId string) ISdkConfigure
-		WithZoneId(pzoneId string) ISdkConfigure
-		WithClientId(pclientId string) ISdkConfigure
-		WithClientSecret(pclientSecret string) ISdkConfigure
-		WithUserAgent(puserAgent string) ISdkConfigure
-		WithProjectId(pprojectId string) ISdkConfigure
-		WithIamEndpoint(piamEndpoint string) ISdkConfigure
-		WithVServerEndpoint(pvserverEndpoint string) ISdkConfigure
-		WithVLBEndpoint(pvlbEndpoint string) ISdkConfigure
-		WithVNetworkEndpoint(pvnetworkEndpoint string) ISdkConfigure
-		WithVDnsEndpoint(pvdnsEndpoint string) ISdkConfigure
-		WithGLBEndpoint(pvlbEndpoint string) ISdkConfigure
+		WithUserId(puserId string) SdkConfigure
+		WithZoneId(pzoneId string) SdkConfigure
+		WithClientId(pclientId string) SdkConfigure
+		WithClientSecret(pclientSecret string) SdkConfigure
+		WithUserAgent(puserAgent string) SdkConfigure
+		WithProjectId(pprojectId string) SdkConfigure
+		WithIamEndpoint(piamEndpoint string) SdkConfigure
+		WithVServerEndpoint(pvserverEndpoint string) SdkConfigure
+		WithVLBEndpoint(pvlbEndpoint string) SdkConfigure
+		WithVNetworkEndpoint(pvnetworkEndpoint string) SdkConfigure
+		WithVDnsEndpoint(pvdnsEndpoint string) SdkConfigure
+		WithGLBEndpoint(pvlbEndpoint string) SdkConfigure
 	}
 )
 
@@ -94,62 +94,62 @@ func (s *sdkConfigure) GetUserAgent() string {
 	return s.userAgent
 }
 
-func (s *sdkConfigure) WithUserAgent(puserAgent string) ISdkConfigure {
+func (s *sdkConfigure) WithUserAgent(puserAgent string) SdkConfigure {
 	s.userAgent = puserAgent
 	return s
 }
 
-func (s *sdkConfigure) WithClientId(pclientId string) ISdkConfigure {
+func (s *sdkConfigure) WithClientId(pclientId string) SdkConfigure {
 	s.clientId = pclientId
 	return s
 }
 
-func (s *sdkConfigure) WithClientSecret(pclientSecret string) ISdkConfigure {
+func (s *sdkConfigure) WithClientSecret(pclientSecret string) SdkConfigure {
 	s.clientSecret = pclientSecret
 	return s
 }
 
-func (s *sdkConfigure) WithUserId(puserId string) ISdkConfigure {
+func (s *sdkConfigure) WithUserId(puserId string) SdkConfigure {
 	s.userId = puserId
 	return s
 }
 
-func (s *sdkConfigure) WithZoneId(pzoneId string) ISdkConfigure {
+func (s *sdkConfigure) WithZoneId(pzoneId string) SdkConfigure {
 	s.zoneId = pzoneId
 	return s
 }
 
-func (s *sdkConfigure) WithProjectId(pprojectId string) ISdkConfigure {
+func (s *sdkConfigure) WithProjectId(pprojectId string) SdkConfigure {
 	s.projectId = pprojectId
 	return s
 }
 
-func (s *sdkConfigure) WithIamEndpoint(piamEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithIamEndpoint(piamEndpoint string) SdkConfigure {
 	s.iamEndpoint = normalizeURL(piamEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVServerEndpoint(pvserverEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithVServerEndpoint(pvserverEndpoint string) SdkConfigure {
 	s.vserverEndpoint = normalizeURL(pvserverEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVLBEndpoint(pvlbEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithVLBEndpoint(pvlbEndpoint string) SdkConfigure {
 	s.vlbEndpoint = normalizeURL(pvlbEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVNetworkEndpoint(pvnetworkEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithVNetworkEndpoint(pvnetworkEndpoint string) SdkConfigure {
 	s.vnetworkEndpoint = normalizeURL(pvnetworkEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVDnsEndpoint(pvdnsEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithVDnsEndpoint(pvdnsEndpoint string) SdkConfigure {
 	s.vdnsEndpoint = normalizeURL(pvdnsEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithGLBEndpoint(pvlbEndpoint string) ISdkConfigure {
+func (s *sdkConfigure) WithGLBEndpoint(pvlbEndpoint string) SdkConfigure {
 	s.glbEndpoint = normalizeURL(pvlbEndpoint)
 	return s
 }

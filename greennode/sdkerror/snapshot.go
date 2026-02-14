@@ -7,8 +7,8 @@ const (
 	patternSnapshotNotFound     = "not found snapshot-volume-point"
 )
 
-func WithErrorSnapshotNameNotValid(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorSnapshotNameNotValid(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -22,8 +22,8 @@ func WithErrorSnapshotNameNotValid(perrResp IErrorResponse) func(sdkError IError
 	}
 }
 
-func WithErrorSnapshotNameNotFound(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorSnapshotNameNotFound(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}

@@ -2,8 +2,8 @@ package sdkerror
 
 import "strings"
 
-func WithErrorEndpointStatusInvalid(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorEndpointStatusInvalid(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -16,8 +16,8 @@ func WithErrorEndpointStatusInvalid(perrResp IErrorResponse) func(sdkError IErro
 	}
 }
 
-func WithErrorEndpointOfVpcExists(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorEndpointOfVpcExists(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -30,8 +30,8 @@ func WithErrorEndpointOfVpcExists(perrResp IErrorResponse) func(sdkError IError)
 	}
 }
 
-func WithErrorEndpointPackageNotBelongToEndpointService(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorEndpointPackageNotBelongToEndpointService(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -44,8 +44,8 @@ func WithErrorEndpointPackageNotBelongToEndpointService(perrResp IErrorResponse)
 	}
 }
 
-func WithErrorContainInvalidCharacter(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorContainInvalidCharacter(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -58,8 +58,8 @@ func WithErrorContainInvalidCharacter(perrResp IErrorResponse) func(sdkError IEr
 	}
 }
 
-func WithErrorLockOnProcess(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorLockOnProcess(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -72,8 +72,8 @@ func WithErrorLockOnProcess(perrResp IErrorResponse) func(sdkError IError) {
 	}
 }
 
-func WithErrorEndpointTagNotFound(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorEndpointTagNotFound(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -86,8 +86,8 @@ func WithErrorEndpointTagNotFound(perrResp IErrorResponse) func(sdkError IError)
 	}
 }
 
-func WithErrorEndpointTagExisted(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorEndpointTagExisted(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}

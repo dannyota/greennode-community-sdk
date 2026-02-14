@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceV1) GetHostedZoneById(popts IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.IError) {
+func (s *VDnsServiceV1) GetHostedZoneById(popts IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.Error) {
 	url := getHostedZoneByIdUrl(s.DnsClient, popts)
 	resp := new(GetHostedZoneByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -26,7 +26,7 @@ func (s *VDnsServiceV1) GetHostedZoneById(popts IGetHostedZoneByIdRequest) (*ent
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceV1) ListHostedZones(popts IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.IError) {
+func (s *VDnsServiceV1) ListHostedZones(popts IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.Error) {
 	url := listHostedZonesUrl(s.DnsClient, popts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -45,7 +45,7 @@ func (s *VDnsServiceV1) ListHostedZones(popts IListHostedZonesRequest) (*entity.
 	return resp.ToEntityListHostedZones(), nil
 }
 
-func (s *VDnsServiceV1) CreateHostedZone(popts ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.IError) {
+func (s *VDnsServiceV1) CreateHostedZone(popts ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.Error) {
 	url := createHostedZoneUrl(s.DnsClient)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -65,7 +65,7 @@ func (s *VDnsServiceV1) CreateHostedZone(popts ICreateHostedZoneRequest) (*entit
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceV1) DeleteHostedZone(popts IDeleteHostedZoneRequest) sdkerror.IError {
+func (s *VDnsServiceV1) DeleteHostedZone(popts IDeleteHostedZoneRequest) sdkerror.Error {
 	url := deleteHostedZoneUrl(s.DnsClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -82,7 +82,7 @@ func (s *VDnsServiceV1) DeleteHostedZone(popts IDeleteHostedZoneRequest) sdkerro
 	return nil
 }
 
-func (s *VDnsServiceV1) UpdateHostedZone(popts IUpdateHostedZoneRequest) sdkerror.IError {
+func (s *VDnsServiceV1) UpdateHostedZone(popts IUpdateHostedZoneRequest) sdkerror.Error {
 	url := updateHostedZoneUrl(s.DnsClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().

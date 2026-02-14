@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.IError) {
+func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error) {
 	url := listAllQuotaUsedUrl(s.PortalClient)
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -23,7 +23,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.IErro
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.IError) {
+func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error) {
 	listQuotas, sdkErr := s.ListAllQuotaUsed()
 	if sdkErr != nil {
 		return nil, sdkErr

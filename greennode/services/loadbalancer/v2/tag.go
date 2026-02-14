@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *LoadBalancerServiceV2) ListTags(popts IListTagsRequest) (*entity.ListTags, sdkerror.IError) {
+func (s *LoadBalancerServiceV2) ListTags(popts IListTagsRequest) (*entity.ListTags, sdkerror.Error) {
 	url := listTagsUrl(s.VServerClient, popts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -23,7 +23,7 @@ func (s *LoadBalancerServiceV2) ListTags(popts IListTagsRequest) (*entity.ListTa
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateTags(popts ICreateTagsRequest) sdkerror.IError {
+func (s *LoadBalancerServiceV2) CreateTags(popts ICreateTagsRequest) sdkerror.Error {
 	url := createTagsUrl(s.VServerClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -39,7 +39,7 @@ func (s *LoadBalancerServiceV2) CreateTags(popts ICreateTagsRequest) sdkerror.IE
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) UpdateTags(popts IUpdateTagsRequest) sdkerror.IError {
+func (s *LoadBalancerServiceV2) UpdateTags(popts IUpdateTagsRequest) sdkerror.Error {
 	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(popts.GetLoadBalancerId()))
 	if sdkErr != nil {
 		return sdkErr

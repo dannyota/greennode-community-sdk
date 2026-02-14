@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.IError) {
+func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
 	url := getSubnetByIdUrl(s.VserverClient, popts)
 	resp := new(GetSubnetByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -28,7 +28,7 @@ func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.S
 	return resp.ToEntitySubnet(), nil
 }
 
-func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.IError) {
+func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
 	url := updateSubnetByIdUrl(s.VserverClient, popts)
 	resp := new(UpdateSubnetByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

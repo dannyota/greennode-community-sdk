@@ -2,33 +2,33 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getSecgroupByIdUrl(psc client.IServiceClient, popts IGetSecgroupByIdRequest) string {
+func getSecgroupByIdUrl(psc client.ServiceClient, popts IGetSecgroupByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
 		popts.GetSecgroupId())
 }
 
-func createSecgroupUrl(psc client.IServiceClient) string {
+func createSecgroupUrl(psc client.ServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups")
 }
 
-func listSecgroupUrl(psc client.IServiceClient, _ IListSecgroupRequest) string {
+func listSecgroupUrl(psc client.ServiceClient, _ IListSecgroupRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups")
 }
 
-func deleteSecgroupByIdUrl(psc client.IServiceClient, popts IDeleteSecgroupByIdRequest) string {
+func deleteSecgroupByIdUrl(psc client.ServiceClient, popts IDeleteSecgroupByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
 		popts.GetSecgroupId())
 }
 
-func createSecgroupRuleUrl(psc client.IServiceClient, popts ICreateSecgroupRuleRequest) string {
+func createSecgroupRuleUrl(psc client.ServiceClient, popts ICreateSecgroupRuleRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
@@ -36,7 +36,7 @@ func createSecgroupRuleUrl(psc client.IServiceClient, popts ICreateSecgroupRuleR
 		"secgroupRules")
 }
 
-func deleteSecgroupRuleByIdUrl(psc client.IServiceClient, popts IDeleteSecgroupRuleByIdRequest) string {
+func deleteSecgroupRuleByIdUrl(psc client.ServiceClient, popts IDeleteSecgroupRuleByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
@@ -45,7 +45,7 @@ func deleteSecgroupRuleByIdUrl(psc client.IServiceClient, popts IDeleteSecgroupR
 		popts.GetSecgroupRuleId())
 }
 
-func listSecgroupRulesBySecgroupIdUrl(psc client.IServiceClient, popts IListSecgroupRulesBySecgroupIdRequest) string {
+func listSecgroupRulesBySecgroupIdUrl(psc client.ServiceClient, popts IListSecgroupRulesBySecgroupIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
@@ -53,14 +53,14 @@ func listSecgroupRulesBySecgroupIdUrl(psc client.IServiceClient, popts IListSecg
 		"secGroupRules")
 }
 
-func getNetworkByIdUrl(psc client.IServiceClient, popts IGetNetworkByIdRequest) string {
+func getNetworkByIdUrl(psc client.ServiceClient, popts IGetNetworkByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"networks",
 		popts.GetNetworkId())
 }
 
-func getSubnetByIdUrl(psc client.IServiceClient, popts IGetSubnetByIdRequest) string {
+func getSubnetByIdUrl(psc client.ServiceClient, popts IGetSubnetByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"networks",
@@ -69,7 +69,7 @@ func getSubnetByIdUrl(psc client.IServiceClient, popts IGetSubnetByIdRequest) st
 		popts.GetSubnetId())
 }
 
-func updateSubnetByIdUrl(psc client.IServiceClient, popts IUpdateSubnetByIdRequest) string {
+func updateSubnetByIdUrl(psc client.ServiceClient, popts IUpdateSubnetByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"networks",
@@ -78,7 +78,7 @@ func updateSubnetByIdUrl(psc client.IServiceClient, popts IUpdateSubnetByIdReque
 		popts.GetSubnetId())
 }
 
-func getAllAddressPairByVirtualSubnetIdUrl(psc client.IServiceClient, popts IGetAllAddressPairByVirtualSubnetIdRequest) string {
+func getAllAddressPairByVirtualSubnetIdUrl(psc client.ServiceClient, popts IGetAllAddressPairByVirtualSubnetIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtual-subnets",
@@ -86,7 +86,7 @@ func getAllAddressPairByVirtualSubnetIdUrl(psc client.IServiceClient, popts IGet
 		"addressPairs")
 }
 
-func setAddressPairInVirtualSubnetUrl(psc client.IServiceClient, popts IGetAllAddressPairByVirtualSubnetIdRequest) string {
+func setAddressPairInVirtualSubnetUrl(psc client.ServiceClient, popts IGetAllAddressPairByVirtualSubnetIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtual-subnets",
@@ -94,7 +94,7 @@ func setAddressPairInVirtualSubnetUrl(psc client.IServiceClient, popts IGetAllAd
 		"addressPairs")
 }
 
-func deleteAddressPairUrl(psc client.IServiceClient, popts IDeleteAddressPairRequest) string {
+func deleteAddressPairUrl(psc client.ServiceClient, popts IDeleteAddressPairRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtual-subnets",
@@ -102,7 +102,7 @@ func deleteAddressPairUrl(psc client.IServiceClient, popts IDeleteAddressPairReq
 		popts.GetAddressPairID())
 }
 
-func createAddressPairUrl(psc client.IServiceClient, popts ICreateAddressPairRequest) string {
+func createAddressPairUrl(psc client.ServiceClient, popts ICreateAddressPairRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtualIpAddress",
@@ -110,7 +110,7 @@ func createAddressPairUrl(psc client.IServiceClient, popts ICreateAddressPairReq
 		"addressPairs")
 }
 
-func listAllServersBySecgroupIdUrl(psc client.IServiceClient, popts IListAllServersBySecgroupIdRequest) string {
+func listAllServersBySecgroupIdUrl(psc client.ServiceClient, popts IListAllServersBySecgroupIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"secgroups",
@@ -118,27 +118,27 @@ func listAllServersBySecgroupIdUrl(psc client.IServiceClient, popts IListAllServ
 		"servers")
 }
 
-func createVirtualAddressCrossProjectUrl(psc client.IServiceClient) string {
+func createVirtualAddressCrossProjectUrl(psc client.ServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtualIpAddress")
 }
 
-func deleteVirtualAddressByIdUrl(psc client.IServiceClient, popts IDeleteVirtualAddressByIdRequest) string {
+func deleteVirtualAddressByIdUrl(psc client.ServiceClient, popts IDeleteVirtualAddressByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtualIpAddress",
 		popts.GetVirtualAddressId())
 }
 
-func getVirtualAddressByIdUrl(psc client.IServiceClient, popts IGetVirtualAddressByIdRequest) string {
+func getVirtualAddressByIdUrl(psc client.ServiceClient, popts IGetVirtualAddressByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtualIpAddress",
 		popts.GetVirtualAddressId())
 }
 
-func listAddressPairsByVirtualAddressIdUrl(psc client.IServiceClient, popts IListAddressPairsByVirtualAddressIdRequest) string {
+func listAddressPairsByVirtualAddressIdUrl(psc client.ServiceClient, popts IListAddressPairsByVirtualAddressIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"virtualIpAddress",

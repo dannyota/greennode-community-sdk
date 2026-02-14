@@ -12,91 +12,91 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
-type IIamGateway interface {
-	V2() IIamGatewayV2
+type IamGateway interface {
+	V2() IamGatewayV2
 }
 
-type IIamGatewayV2 interface {
-	IdentityService() identity.IIdentityServiceV2
+type IamGatewayV2 interface {
+	IdentityService() identity.IdentityServiceV2
 }
 
-type IVServerGateway interface {
-	V1() IVServerGatewayV1
-	InternalV1() IVServerGatewayInternalV1
-	V2() IVServerGatewayV2
+type VServerGateway interface {
+	V1() VServerGatewayV1
+	InternalV1() VServerGatewayInternalV1
+	V2() VServerGatewayV2
 	// GetEndpoint returns the endpoint of the vServer service
 	GetEndpoint() string
 }
 
-type IVNetworkGateway interface {
-	V1() IVNetworkGatewayV1
-	V2() IVNetworkGatewayV1
-	InternalV1() IVNetworkGatewayInternalV1
+type VNetworkGateway interface {
+	V1() VNetworkGatewayV1
+	V2() VNetworkGatewayV1
+	InternalV1() VNetworkGatewayInternalV1
 	GetEndpoint() string
 }
 
-type IVServerGatewayV1 interface {
-	PortalService() portal.IPortalServiceV1
-	VolumeService() volume.IVolumeServiceV1
+type VServerGatewayV1 interface {
+	PortalService() portal.PortalServiceV1
+	VolumeService() volume.VolumeServiceV1
 }
 
-type IVServerGatewayInternalV1 interface {
-	ServerService() server.IServerServiceInternalV1
+type VServerGatewayInternalV1 interface {
+	ServerService() server.ServerServiceInternalV1
 }
 
-type IVServerGatewayV2 interface {
-	NetworkService() network.INetworkServiceV2
-	ComputeService() compute.IComputeServiceV2
-	PortalService() portal.IPortalServiceV2
-	VolumeService() volume.IVolumeServiceV2
+type VServerGatewayV2 interface {
+	NetworkService() network.NetworkServiceV2
+	ComputeService() compute.ComputeServiceV2
+	PortalService() portal.PortalServiceV2
+	VolumeService() volume.VolumeServiceV2
 }
 
-type IVLBGatewayV2 interface {
-	LoadBalancerService() loadbalancer.ILoadBalancerServiceV2
+type VLBGatewayV2 interface {
+	LoadBalancerService() loadbalancer.LoadBalancerServiceV2
 }
 
-type IVNetworkGatewayV1 interface {
-	NetworkService() network.INetworkServiceV1
+type VNetworkGatewayV1 interface {
+	NetworkService() network.NetworkServiceV1
 }
 
-type IVNetworkGatewayV2 interface {
-	NetworkService() network.INetworkServiceV2
+type VNetworkGatewayV2 interface {
+	NetworkService() network.NetworkServiceV2
 }
 
-type IVNetworkGatewayInternalV1 interface {
-	NetworkService() network.INetworkServiceInternalV1
+type VNetworkGatewayInternalV1 interface {
+	NetworkService() network.NetworkServiceInternalV1
 }
 
-type IVLBGatewayInternal interface {
-	LoadBalancerService() loadbalancer.ILoadBalancerServiceInternal
+type VLBGatewayInternal interface {
+	LoadBalancerService() loadbalancer.LoadBalancerServiceInternal
 }
 
-type IVLBGateway interface {
-	Internal() IVLBGatewayInternal
-	V2() IVLBGatewayV2
+type VLBGateway interface {
+	Internal() VLBGatewayInternal
+	V2() VLBGatewayV2
 	GetEndpoint() string
 }
 
-type IVBackUpGateway interface{}
+type VBackUpGateway interface{}
 
-type IGLBGateway interface {
-	V1() IGLBGatewayV1
+type GLBGateway interface {
+	V1() GLBGatewayV1
 }
 
-type IGLBGatewayV1 interface {
-	GLBService() glb.IGLBServiceV1
+type GLBGatewayV1 interface {
+	GLBService() glb.GLBServiceV1
 }
 
-type IVDnsGateway interface {
-	V1() IVDnsGatewayV1
-	Internal() IVDnsGatewayInternal
+type VDnsGateway interface {
+	V1() VDnsGatewayV1
+	Internal() VDnsGatewayInternal
 	GetEndpoint() string
 }
 
-type IVDnsGatewayV1 interface {
-	DnsService() dns.IVDnsServiceV1
+type VDnsGatewayV1 interface {
+	DnsService() dns.VDnsServiceV1
 }
 
-type IVDnsGatewayInternal interface {
-	DnsService() dns.IVDnsServiceInternal
+type VDnsGatewayInternal interface {
+	DnsService() dns.VDnsServiceInternal
 }

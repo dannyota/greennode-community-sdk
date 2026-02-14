@@ -6,6 +6,6 @@ import (
 	serverv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server/v1"
 )
 
-type IServerServiceInternalV1 interface {
-	CreateSystemTags(popts serverv1.ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.IError)
+type ServerServiceInternalV1 interface {
+	CreateSystemTags(popts serverv1.ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error)
 }

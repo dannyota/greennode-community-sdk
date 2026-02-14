@@ -5,5 +5,5 @@ import (
 )
 
 type ServerServiceInternalV1 struct {
-	VServerClient client.IServiceClient
+	VServerClient client.ServiceClient
 }

@@ -7,13 +7,13 @@ import (
 	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
 )
 
-type IPortalServiceV1 interface {
-	ListZones() (*entity.ListZones, sdkerror.IError)
-	GetPortalInfo(popts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.IError)
-	ListProjects(popts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.IError)
+type PortalServiceV1 interface {
+	ListZones() (*entity.ListZones, sdkerror.Error)
+	GetPortalInfo(popts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error)
+	ListProjects(popts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.Error)
 }
 
-type IPortalServiceV2 interface {
-	ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.IError)
-	GetQuotaByName(popts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.IError)
+type PortalServiceV2 interface {
+	ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error)
+	GetQuotaByName(popts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error)
 }

@@ -20,7 +20,7 @@ var (
 	regexErrorProjectConflict = regexp.MustCompile(patternProjectConflict)
 )
 
-func ErrorHandler(perr error, popts ...func(psdkErr IError)) IError {
+func ErrorHandler(perr error, popts ...func(psdkErr Error)) Error {
 	sdkErr := &SdkError{
 		error:     perr,
 		errorCode: EcUnknownError,
@@ -48,7 +48,7 @@ func ErrorHandler(perr error, popts ...func(psdkErr IError)) IError {
 	return sdkErr
 }
 
-func SdkErrorHandler(psdkErr IError, perrResp IErrorResponse, popts ...func(psdkErr IError)) IError {
+func SdkErrorHandler(psdkErr Error, perrResp ErrorResponse, popts ...func(psdkErr Error)) Error {
 	if psdkErr == nil && perrResp == nil {
 		return nil
 	}
@@ -72,32 +72,32 @@ func SdkErrorHandler(psdkErr IError, perrResp IErrorResponse, popts ...func(psdk
 	return psdkErr
 }
 
-func WithErrorInternalServerError() func(IError) {
-	return func(sdkErr IError) {
+func WithErrorInternalServerError() func(Error) {
+	return func(sdkErr Error) {
 		sdkErr.WithErrorCode(EcInternalServerError).
 			WithMessage("Internal Server Error").
 			WithErrors(fmt.Errorf("internal server error from making request to external service"))
 	}
 }
 
-func WithErrorServiceMaintenance() func(IError) {
-	return func(sdkErr IError) {
+func WithErrorServiceMaintenance() func(Error) {
+	return func(sdkErr Error) {
 		sdkErr.WithErrorCode(EcServiceMaintenance).
 			WithMessage("Service Maintenance").
 			WithErrors(fmt.Errorf("service is under maintenance"))
 	}
 }
 
-func WithErrorPermissionDenied() func(IError) {
-	return func(sdkErr IError) {
+func WithErrorPermissionDenied() func(Error) {
+	return func(sdkErr Error) {
 		sdkErr.WithErrorCode(EcPermissionDenied).
 			WithMessage("Permission Denied").
 			WithErrors(fmt.Errorf("permission denied when making request to external service"))
 	}
 }
 
-func WithErrorPurchaseIssue(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorPurchaseIssue(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -112,8 +112,8 @@ func WithErrorPurchaseIssue(perrResp IErrorResponse) func(sdkError IError) {
 	}
 }
 
-func WithErrorTagKeyInvalid(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorTagKeyInvalid(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -127,8 +127,8 @@ func WithErrorTagKeyInvalid(perrResp IErrorResponse) func(sdkError IError) {
 	}
 }
 
-func WithErrorPagingInvalid(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorPagingInvalid(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -142,7 +142,7 @@ func WithErrorPagingInvalid(perrResp IErrorResponse) func(sdkError IError) {
 	}
 }
 
-func WithErrorUnexpected(presponse *req.Response) func(IError) {
+func WithErrorUnexpected(presponse *req.Response) func(Error) {
 	statusCode := 0
 	url := ""
 	err := fmt.Errorf("unexpected error from making request to external service")
@@ -160,7 +160,7 @@ func WithErrorUnexpected(presponse *req.Response) func(IError) {
 		}
 	}
 
-	return func(sdkErr IError) {
+	return func(sdkErr Error) {
 		sdkErr.WithErrorCode(EcUnexpectedError).
 			WithMessage("Unexpected Error").
 			WithErrors(err).
@@ -171,8 +171,8 @@ func WithErrorUnexpected(presponse *req.Response) func(IError) {
 	}
 }
 
-func WithErrorPaymentMethodNotAllow(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorPaymentMethodNotAllow(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -186,8 +186,8 @@ func WithErrorPaymentMethodNotAllow(perrResp IErrorResponse) func(sdkError IErro
 	}
 }
 
-func WithErrorCreditNotEnough(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorCreditNotEnough(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}
@@ -201,8 +201,8 @@ func WithErrorCreditNotEnough(perrResp IErrorResponse) func(sdkError IError) {
 	}
 }
 
-func WithErrorProjectConflict(perrResp IErrorResponse) func(sdkError IError) {
-	return func(sdkError IError) {
+func WithErrorProjectConflict(perrResp ErrorResponse) func(sdkError Error) {
+	return func(sdkError Error) {
 		if perrResp == nil {
 			return
 		}

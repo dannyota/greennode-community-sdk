@@ -6,39 +6,39 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
 )
 
-var _ IIamGateway = &iamGateway{}
+var _ IamGateway = &iamGateway{}
 
 type iamGateway struct {
-	iamGatewayV2 IIamGatewayV2
+	iamGatewayV2 IamGatewayV2
 }
 
-var _ IVServerGateway = &vserverGateway{}
+var _ VServerGateway = &vserverGateway{}
 
 type vserverGateway struct {
 	endpoint                 string // Hold the endpoint of the vServer service
-	vserverGatewayV1         IVServerGatewayV1
-	vserverGatewayV2         IVServerGatewayV2
-	vserverGatewayInternalV1 IVServerGatewayInternalV1
+	vserverGatewayV1         VServerGatewayV1
+	vserverGatewayV2         VServerGatewayV2
+	vserverGatewayInternalV1 VServerGatewayInternalV1
 }
 
-var _ IVLBGateway = &vlbGateway{}
+var _ VLBGateway = &vlbGateway{}
 
 type vlbGateway struct {
 	endpoint           string // Hold the endpoint of the vLB service
-	vlbGatewayInternal IVLBGatewayInternal
-	vlbGatewayV2       IVLBGatewayV2
+	vlbGatewayInternal VLBGatewayInternal
+	vlbGatewayV2       VLBGatewayV2
 }
 
-var _ IVNetworkGateway = &vnetworkGateway{}
+var _ VNetworkGateway = &vnetworkGateway{}
 
 type vnetworkGateway struct {
 	endpoint                  string
-	vnetworkGatewayV1         IVNetworkGatewayV1
-	vnetworkGatewayV2         IVNetworkGatewayV1
-	vnetworkGatewayInternalV1 IVNetworkGatewayInternalV1
+	vnetworkGatewayV1         VNetworkGatewayV1
+	vnetworkGatewayV2         VNetworkGatewayV1
+	vnetworkGatewayInternalV1 VNetworkGatewayInternalV1
 }
 
-func NewIamGateway(pendpoint, projectId string, phc client.IHttpClient) IIamGateway {
+func NewIamGateway(pendpoint, projectId string, phc client.HttpClient) IamGateway {
 	iamSvcV2 := client.NewServiceClient().
 		WithEndpoint(pendpoint + "v2").
 		WithClient(phc).
@@ -49,7 +49,7 @@ func NewIamGateway(pendpoint, projectId string, phc client.IHttpClient) IIamGate
 	}
 }
 
-func NewVServerGateway(pendpoint, pprojectId string, phc client.IHttpClient) IVServerGateway {
+func NewVServerGateway(pendpoint, pprojectId string, phc client.HttpClient) VServerGateway {
 	vserverSvcV1 := client.NewServiceClient().
 		WithEndpoint(pendpoint + "v1").
 		WithClient(phc).
@@ -73,7 +73,7 @@ func NewVServerGateway(pendpoint, pprojectId string, phc client.IHttpClient) IVS
 	}
 }
 
-func NewVLBGateway(plbEndpoint, pserverEndpoint, pprojectId string, phc client.IHttpClient) IVLBGateway {
+func NewVLBGateway(plbEndpoint, pserverEndpoint, pprojectId string, phc client.HttpClient) VLBGateway {
 	vlbSvcV2 := client.NewServiceClient().
 		WithEndpoint(plbEndpoint + "v2").
 		WithClient(phc).
@@ -96,7 +96,7 @@ func NewVLBGateway(plbEndpoint, pserverEndpoint, pprojectId string, phc client.I
 	}
 }
 
-func NewVNetworkGateway(pendpoint, pzoneId, projectId, puserId string, phc client.IHttpClient) IVNetworkGateway {
+func NewVNetworkGateway(pendpoint, pzoneId, projectId, puserId string, phc client.HttpClient) VNetworkGateway {
 	vnetworkSvcV1 := client.NewServiceClient().
 		WithEndpoint(pendpoint + "vnetwork/v1").
 		WithClient(phc).
@@ -126,26 +126,26 @@ func NewVNetworkGateway(pendpoint, pzoneId, projectId, puserId string, phc clien
 	}
 }
 
-func (s *iamGateway) V2() IIamGatewayV2 {
+func (s *iamGateway) V2() IamGatewayV2 {
 	return s.iamGatewayV2
 }
 
-func (s *vserverGateway) V1() IVServerGatewayV1 {
+func (s *vserverGateway) V1() VServerGatewayV1 {
 	return s.vserverGatewayV1
 }
 
-func (s *vserverGateway) V2() IVServerGatewayV2 {
+func (s *vserverGateway) V2() VServerGatewayV2 {
 	return s.vserverGatewayV2
 }
-func (s *vserverGateway) InternalV1() IVServerGatewayInternalV1 {
+func (s *vserverGateway) InternalV1() VServerGatewayInternalV1 {
 	return s.vserverGatewayInternalV1
 }
 
-func (s *vlbGateway) Internal() IVLBGatewayInternal {
+func (s *vlbGateway) Internal() VLBGatewayInternal {
 	return s.vlbGatewayInternal
 }
 
-func (s *vlbGateway) V2() IVLBGatewayV2 {
+func (s *vlbGateway) V2() VLBGatewayV2 {
 	return s.vlbGatewayV2
 }
 
@@ -157,11 +157,11 @@ func (s *vlbGateway) GetEndpoint() string {
 	return s.endpoint
 }
 
-func (s *vnetworkGateway) V1() IVNetworkGatewayV1 {
+func (s *vnetworkGateway) V1() VNetworkGatewayV1 {
 	return s.vnetworkGatewayV1
 }
 
-func (s *vnetworkGateway) V2() IVNetworkGatewayV1 {
+func (s *vnetworkGateway) V2() VNetworkGatewayV1 {
 	return s.vnetworkGatewayV2
 }
 
@@ -169,18 +169,18 @@ func (s *vnetworkGateway) GetEndpoint() string {
 	return s.endpoint
 }
 
-func (s *vnetworkGateway) InternalV1() IVNetworkGatewayInternalV1 {
+func (s *vnetworkGateway) InternalV1() VNetworkGatewayInternalV1 {
 	return s.vnetworkGatewayInternalV1
 }
 
-var _ IGLBGateway = &glbGateway{}
+var _ GLBGateway = &glbGateway{}
 
 type glbGateway struct {
 	endpoint     string
-	glbGatewayV1 IGLBGatewayV1
+	glbGatewayV1 GLBGatewayV1
 }
 
-func NewGLBGateway(pendpoint string, phc client.IHttpClient) IGLBGateway {
+func NewGLBGateway(pendpoint string, phc client.HttpClient) GLBGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(pendpoint + "v1").
 		WithClient(phc)
@@ -191,35 +191,35 @@ func NewGLBGateway(pendpoint string, phc client.IHttpClient) IGLBGateway {
 	}
 }
 
-func (s *glbGateway) V1() IGLBGatewayV1 {
+func (s *glbGateway) V1() GLBGatewayV1 {
 	return s.glbGatewayV1
 }
 
-var _ IGLBGatewayV1 = &glbGatewayV1{}
+var _ GLBGatewayV1 = &glbGatewayV1{}
 
 type glbGatewayV1 struct {
-	glbService glb.IGLBServiceV1
+	glbService glb.GLBServiceV1
 }
 
-func (s *glbGatewayV1) GLBService() glb.IGLBServiceV1 {
+func (s *glbGatewayV1) GLBService() glb.GLBServiceV1 {
 	return s.glbService
 }
 
-func NewGLBGatewayV1(psvcClient client.IServiceClient) IGLBGatewayV1 {
+func NewGLBGatewayV1(psvcClient client.ServiceClient) GLBGatewayV1 {
 	return &glbGatewayV1{
 		glbService: glb.NewGLBServiceV1(psvcClient),
 	}
 }
 
-var _ IVDnsGateway = &vdnsGateway{}
+var _ VDnsGateway = &vdnsGateway{}
 
 type vdnsGateway struct {
 	endpoint           string
-	dnsService         dns.IVDnsServiceV1
-	dnsServiceInternal dns.IVDnsServiceInternal
+	dnsService         dns.VDnsServiceV1
+	dnsServiceInternal dns.VDnsServiceInternal
 }
 
-func NewVDnsGateway(pendpoint, pprojectId string, phc client.IHttpClient) IVDnsGateway {
+func NewVDnsGateway(pendpoint, pprojectId string, phc client.HttpClient) VDnsGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(pendpoint + "v1").
 		WithClient(phc).
@@ -237,13 +237,13 @@ func NewVDnsGateway(pendpoint, pprojectId string, phc client.IHttpClient) IVDnsG
 	}
 }
 
-func (s *vdnsGateway) V1() IVDnsGatewayV1 {
+func (s *vdnsGateway) V1() VDnsGatewayV1 {
 	return &vdnsGatewayV1{
 		dnsService: s.dnsService,
 	}
 }
 
-func (s *vdnsGateway) Internal() IVDnsGatewayInternal {
+func (s *vdnsGateway) Internal() VDnsGatewayInternal {
 	return &vdnsGatewayInternal{
 		dnsService: s.dnsServiceInternal,
 	}
@@ -253,22 +253,22 @@ func (s *vdnsGateway) GetEndpoint() string {
 	return s.endpoint
 }
 
-var _ IVDnsGatewayV1 = &vdnsGatewayV1{}
+var _ VDnsGatewayV1 = &vdnsGatewayV1{}
 
 type vdnsGatewayV1 struct {
-	dnsService dns.IVDnsServiceV1
+	dnsService dns.VDnsServiceV1
 }
 
-func (s *vdnsGatewayV1) DnsService() dns.IVDnsServiceV1 {
+func (s *vdnsGatewayV1) DnsService() dns.VDnsServiceV1 {
 	return s.dnsService
 }
 
-var _ IVDnsGatewayInternal = &vdnsGatewayInternal{}
+var _ VDnsGatewayInternal = &vdnsGatewayInternal{}
 
 type vdnsGatewayInternal struct {
-	dnsService dns.IVDnsServiceInternal
+	dnsService dns.VDnsServiceInternal
 }
 
-func (s *vdnsGatewayInternal) DnsService() dns.IVDnsServiceInternal {
+func (s *vdnsGatewayInternal) DnsService() dns.VDnsServiceInternal {
 	return s.dnsService
 }

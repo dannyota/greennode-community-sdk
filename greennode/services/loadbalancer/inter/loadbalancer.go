@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *LoadBalancerServiceInternal) CreateLoadBalancer(popts ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.IError) {
+func (s *LoadBalancerServiceInternal) CreateLoadBalancer(popts ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
 	url := createLoadBalancerUrl(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

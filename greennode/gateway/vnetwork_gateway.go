@@ -6,28 +6,28 @@ import (
 )
 
 type vnetworkGatewayV1 struct {
-	networkService network.INetworkServiceV1
+	networkService network.NetworkServiceV1
 }
 
 type vnetworkGatewayInternalV1 struct {
-	networkService network.INetworkServiceInternalV1
+	networkService network.NetworkServiceInternalV1
 }
 
-func (s *vnetworkGatewayV1) NetworkService() network.INetworkServiceV1 {
+func (s *vnetworkGatewayV1) NetworkService() network.NetworkServiceV1 {
 	return s.networkService
 }
 
-func (s *vnetworkGatewayInternalV1) NetworkService() network.INetworkServiceInternalV1 {
+func (s *vnetworkGatewayInternalV1) NetworkService() network.NetworkServiceInternalV1 {
 	return s.networkService
 }
 
-func NewVNetworkGatewayV1(psvcClient client.IServiceClient) IVNetworkGatewayV1 {
+func NewVNetworkGatewayV1(psvcClient client.ServiceClient) VNetworkGatewayV1 {
 	return &vnetworkGatewayV1{
 		networkService: network.NewNetworkServiceV1(psvcClient),
 	}
 }
 
-func NewVNetworkGatewayInternalV1(psvcClient client.IServiceClient) IVNetworkGatewayInternalV1 {
+func NewVNetworkGatewayInternalV1(psvcClient client.ServiceClient) VNetworkGatewayInternalV1 {
 	return &vnetworkGatewayInternalV1{
 		networkService: network.NewNetworkServiceInternalV1(psvcClient),
 	}

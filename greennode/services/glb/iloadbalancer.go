@@ -6,30 +6,30 @@ import (
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
-type IGLBServiceV1 interface {
-	ListGlobalPools(popts v1.IListGlobalPoolsRequest) (*entity.ListGlobalPools, sdkerror.IError)
-	CreateGlobalPool(popts v1.ICreateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.IError)
-	UpdateGlobalPool(popts v1.IUpdateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.IError)
-	DeleteGlobalPool(popts v1.IDeleteGlobalPoolRequest) sdkerror.IError
+type GLBServiceV1 interface {
+	ListGlobalPools(popts v1.IListGlobalPoolsRequest) (*entity.ListGlobalPools, sdkerror.Error)
+	CreateGlobalPool(popts v1.ICreateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error)
+	UpdateGlobalPool(popts v1.IUpdateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error)
+	DeleteGlobalPool(popts v1.IDeleteGlobalPoolRequest) sdkerror.Error
 
-	ListGlobalPoolMembers(popts v1.IListGlobalPoolMembersRequest) (*entity.ListGlobalPoolMembers, sdkerror.IError)
-	GetGlobalPoolMember(popts v1.IGetGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.IError)
-	UpdateGlobalPoolMember(popts v1.IUpdateGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.IError)
-	DeleteGlobalPoolMember(popts v1.IDeleteGlobalPoolMemberRequest) sdkerror.IError
-	PatchGlobalPoolMembers(popts v1.IPatchGlobalPoolMembersRequest) sdkerror.IError
+	ListGlobalPoolMembers(popts v1.IListGlobalPoolMembersRequest) (*entity.ListGlobalPoolMembers, sdkerror.Error)
+	GetGlobalPoolMember(popts v1.IGetGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error)
+	UpdateGlobalPoolMember(popts v1.IUpdateGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error)
+	DeleteGlobalPoolMember(popts v1.IDeleteGlobalPoolMemberRequest) sdkerror.Error
+	PatchGlobalPoolMembers(popts v1.IPatchGlobalPoolMembersRequest) sdkerror.Error
 
-	ListGlobalListeners(popts v1.IListGlobalListenersRequest) (*entity.ListGlobalListeners, sdkerror.IError)
-	CreateGlobalListener(popts v1.ICreateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.IError)
-	UpdateGlobalListener(popts v1.IUpdateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.IError)
-	DeleteGlobalListener(popts v1.IDeleteGlobalListenerRequest) sdkerror.IError
-	GetGlobalListener(popts v1.IGetGlobalListenerRequest) (*entity.GlobalListener, sdkerror.IError)
+	ListGlobalListeners(popts v1.IListGlobalListenersRequest) (*entity.ListGlobalListeners, sdkerror.Error)
+	CreateGlobalListener(popts v1.ICreateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error)
+	UpdateGlobalListener(popts v1.IUpdateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error)
+	DeleteGlobalListener(popts v1.IDeleteGlobalListenerRequest) sdkerror.Error
+	GetGlobalListener(popts v1.IGetGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error)
 
-	ListGlobalLoadBalancers(popts v1.IListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.IError)
-	CreateGlobalLoadBalancer(popts v1.ICreateGlobalLoadBalancerRequest) (*entity.GlobalLoadBalancer, sdkerror.IError)
-	DeleteGlobalLoadBalancer(popts v1.IDeleteGlobalLoadBalancerRequest) sdkerror.IError
-	GetGlobalLoadBalancerById(popts v1.IGetGlobalLoadBalancerByIdRequest) (*entity.GlobalLoadBalancer, sdkerror.IError)
+	ListGlobalLoadBalancers(popts v1.IListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.Error)
+	CreateGlobalLoadBalancer(popts v1.ICreateGlobalLoadBalancerRequest) (*entity.GlobalLoadBalancer, sdkerror.Error)
+	DeleteGlobalLoadBalancer(popts v1.IDeleteGlobalLoadBalancerRequest) sdkerror.Error
+	GetGlobalLoadBalancerById(popts v1.IGetGlobalLoadBalancerByIdRequest) (*entity.GlobalLoadBalancer, sdkerror.Error)
 
-	ListGlobalPackages(popts v1.IListGlobalPackagesRequest) (*entity.ListGlobalPackages, sdkerror.IError)
-	ListGlobalRegions(popts v1.IListGlobalRegionsRequest) (*entity.ListGlobalRegions, sdkerror.IError)
-	GetGlobalLoadBalancerUsageHistories(popts v1.IGetGlobalLoadBalancerUsageHistoriesRequest) (*entity.ListGlobalLoadBalancerUsageHistories, sdkerror.IError)
+	ListGlobalPackages(popts v1.IListGlobalPackagesRequest) (*entity.ListGlobalPackages, sdkerror.Error)
+	ListGlobalRegions(popts v1.IListGlobalRegionsRequest) (*entity.ListGlobalRegions, sdkerror.Error)
+	GetGlobalLoadBalancerUsageHistories(popts v1.IGetGlobalLoadBalancerUsageHistoriesRequest) (*entity.ListGlobalLoadBalancerUsageHistories, sdkerror.Error)
 }

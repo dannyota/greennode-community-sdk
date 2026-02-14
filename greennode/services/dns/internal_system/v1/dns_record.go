@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.IError) {
+func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.Error) {
 	url := listRecordsUrl(s.DnsClient, popts)
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -26,7 +26,7 @@ func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserI
 	return resp.ToEntityListRecords(), nil
 }
 
-func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError) {
+func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error) {
 	url := getRecordUrl(s.DnsClient, popts)
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -46,7 +46,7 @@ func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId st
 	return resp.ToEntityDnsRecord(), nil
 }
 
-func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUserId string) sdkerror.IError {
+func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUserId string) sdkerror.Error {
 	url := updateRecordUrl(s.DnsClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -65,7 +65,7 @@ func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUse
 	return nil
 }
 
-func (s *VDnsServiceInternal) DeleteRecord(popts IDeleteRecordRequest, portalUserId string) sdkerror.IError {
+func (s *VDnsServiceInternal) DeleteRecord(popts IDeleteRecordRequest, portalUserId string) sdkerror.Error {
 	url := deleteRecordUrl(s.DnsClient, popts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -83,7 +83,7 @@ func (s *VDnsServiceInternal) DeleteRecord(popts IDeleteRecordRequest, portalUse
 	return nil
 }
 
-func (s *VDnsServiceInternal) CreateDnsRecord(popts ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError) {
+func (s *VDnsServiceInternal) CreateDnsRecord(popts ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error) {
 	url := createDnsRecordUrl(s.DnsClient, popts)
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

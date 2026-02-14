@@ -3,7 +3,7 @@ package v2
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 type ComputeServiceV2 struct {
-	VServerClient client.IServiceClient
+	VServerClient client.ServiceClient
 }
 
 func (s *ComputeServiceV2) getProjectId() string {

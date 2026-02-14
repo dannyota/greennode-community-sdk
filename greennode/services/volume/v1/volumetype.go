@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*entity.VolumeType, sdkerror.IError) {
+func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*entity.VolumeType, sdkerror.Error) {
 	url := getVolumeTypeByIdUrl(s.VServerClient, popts)
 	resp := new(GetVolumeTypeByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -26,7 +26,7 @@ func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*e
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.IError) {
+func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.Error) {
 	url := getDefaultVolumeTypeUrl(s.VServerClient)
 	resp := new(GetDefaultVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -44,7 +44,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.I
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.IError) {
+func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error) {
 	url := getVolumeTypeZonesUrl(s.VServerClient, popts)
 	resp := new(ListVolumeTypeZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -63,7 +63,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (
 
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.IError) {
+func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error) {
 	url := getVolumeTypesUrl(s.VServerClient, popts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

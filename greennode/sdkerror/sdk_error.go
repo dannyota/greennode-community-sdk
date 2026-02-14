@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	_ IError = new(SdkError)
+	_ Error = new(SdkError)
 )
 
 type (
@@ -60,17 +60,17 @@ func (s *SdkError) IsCategories(pcategories ...ErrorCategory) bool {
 	return false
 }
 
-func (s *SdkError) WithErrorCode(perrCode ErrorCode) IError {
+func (s *SdkError) WithErrorCode(perrCode ErrorCode) Error {
 	s.errorCode = perrCode
 	return s
 }
 
-func (s *SdkError) WithMessage(pmsg string) IError {
+func (s *SdkError) WithMessage(pmsg string) Error {
 	s.message = pmsg
 	return s
 }
 
-func (s *SdkError) WithErrors(perrs ...error) IError {
+func (s *SdkError) WithErrors(perrs ...error) Error {
 	if len(perrs) == 0 {
 		return s
 	}
@@ -87,7 +87,7 @@ func (s *SdkError) WithErrors(perrs ...error) IError {
 	return s
 }
 
-func (s *SdkError) WithErrorCategories(pcategories ...ErrorCategory) IError {
+func (s *SdkError) WithErrorCategories(pcategories ...ErrorCategory) Error {
 	if s.categories == nil {
 		s.categories = make(map[ErrorCategory]struct{})
 	}
@@ -98,7 +98,7 @@ func (s *SdkError) WithErrorCategories(pcategories ...ErrorCategory) IError {
 	return s
 }
 
-func (s *SdkError) WithParameters(pparams map[string]interface{}) IError {
+func (s *SdkError) WithParameters(pparams map[string]interface{}) Error {
 	if s.parameters == nil {
 		s.parameters = new(sync.Map)
 		return s
@@ -111,7 +111,7 @@ func (s *SdkError) WithParameters(pparams map[string]interface{}) IError {
 	return s
 }
 
-func (s *SdkError) WithKVparameters(pparams ...interface{}) IError {
+func (s *SdkError) WithKVparameters(pparams ...interface{}) Error {
 	if s.parameters == nil {
 		s.parameters = new(sync.Map)
 	}
@@ -191,7 +191,7 @@ func (s *SdkError) GetListParameters() []interface{} {
 	return result
 }
 
-func (s *SdkError) RemoveCategories(pcategories ...ErrorCategory) IError {
+func (s *SdkError) RemoveCategories(pcategories ...ErrorCategory) Error {
 	if s.categories == nil {
 		return s
 	}
@@ -202,7 +202,7 @@ func (s *SdkError) RemoveCategories(pcategories ...ErrorCategory) IError {
 	return s
 }
 
-func (s *SdkError) AppendCategories(pcategories ...ErrorCategory) IError {
+func (s *SdkError) AppendCategories(pcategories ...ErrorCategory) Error {
 	if s.categories == nil {
 		s.categories = make(map[ErrorCategory]struct{})
 	}
