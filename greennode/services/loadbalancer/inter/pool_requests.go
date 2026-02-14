@@ -63,7 +63,7 @@ const (
 	defaultFakeDomainName = "nip.io"
 )
 
-func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest {
+func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest {
 	opts := new(CreatePoolRequest)
 	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
@@ -73,7 +73,7 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest
 	return opts
 }
 
-func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
+func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
 	opts := new(HealthMonitor)
 	opts.HealthCheckProtocol = checkProtocol
 	opts.HealthyThreshold = 3
@@ -84,7 +84,7 @@ func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
 	return opts
 }
 
-func NewMember(name, ipAddress string, port int, monitorPort int) IMemberRequest {
+func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
 	return &Member{
 		Backup:      false,
 		IpAddress:   ipAddress,

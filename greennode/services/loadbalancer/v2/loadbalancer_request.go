@@ -119,7 +119,7 @@ type NetworkingConfig struct {
 	Subnets []string `json:"subnets,omitempty"`
 }
 
-func NewCreateLoadBalancerRequest(name, packageID, subnetID string) ICreateLoadBalancerRequest {
+func NewCreateLoadBalancerRequest(name, packageID, subnetID string) *CreateLoadBalancerRequest {
 	return &CreateLoadBalancerRequest{
 		Name:      name,
 		PackageID: packageID,
@@ -129,7 +129,7 @@ func NewCreateLoadBalancerRequest(name, packageID, subnetID string) ICreateLoadB
 	}
 }
 
-func NewResizeLoadBalancerRequest(lbID, packageID string) IResizeLoadBalancerRequest {
+func NewResizeLoadBalancerRequest(lbID, packageID string) *ResizeLoadBalancerRequest {
 	return &ResizeLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,
@@ -138,17 +138,17 @@ func NewResizeLoadBalancerRequest(lbID, packageID string) IResizeLoadBalancerReq
 	}
 }
 
-func NewListLoadBalancerPackagesRequest() IListLoadBalancerPackagesRequest {
+func NewListLoadBalancerPackagesRequest() *ListLoadBalancerPackagesRequest {
 	return &ListLoadBalancerPackagesRequest{}
 }
 
-func NewGetLoadBalancerByIDRequest(lbID string) IGetLoadBalancerByIDRequest {
+func NewGetLoadBalancerByIDRequest(lbID string) *GetLoadBalancerByIDRequest {
 	opts := new(GetLoadBalancerByIDRequest)
 	opts.LoadBalancerID = lbID
 	return opts
 }
 
-func NewListLoadBalancersRequest(page, size int) IListLoadBalancersRequest {
+func NewListLoadBalancersRequest(page, size int) *ListLoadBalancersRequest {
 	opts := new(ListLoadBalancersRequest)
 	opts.Page = page
 	opts.Size = size
@@ -160,13 +160,13 @@ func (r *ListLoadBalancersRequest) AddUserAgent(agent ...string) IListLoadBalanc
 	return r
 }
 
-func NewDeleteLoadBalancerByIDRequest(lbID string) IDeleteLoadBalancerByIDRequest {
+func NewDeleteLoadBalancerByIDRequest(lbID string) *DeleteLoadBalancerByIDRequest {
 	opts := new(DeleteLoadBalancerByIDRequest)
 	opts.LoadBalancerID = lbID
 	return opts
 }
 
-func NewScaleLoadBalancerRequest(lbID string) IScaleLoadBalancerRequest {
+func NewScaleLoadBalancerRequest(lbID string) *ScaleLoadBalancerRequest {
 	return &ScaleLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,

@@ -65,7 +65,7 @@ type IMigrateBlockVolumeByIDRequest interface {
 	IsConfirm() bool
 }
 
-func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) ICreateBlockVolumeRequest {
+func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) *CreateBlockVolumeRequest {
 	opt := new(CreateBlockVolumeRequest)
 	opt.VolumeTypeID = volumeType
 	opt.CreatedFrom = CreateFromNew
@@ -75,26 +75,26 @@ func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) ICre
 	return opt
 }
 
-func NewDeleteBlockVolumeByIDRequest(volumeID string) IDeleteBlockVolumeByIDRequest {
+func NewDeleteBlockVolumeByIDRequest(volumeID string) *DeleteBlockVolumeByIDRequest {
 	opt := new(DeleteBlockVolumeByIDRequest)
 	opt.BlockVolumeID = volumeID
 	return opt
 }
 
-func NewListBlockVolumesRequest(page, size int) IListBlockVolumesRequest {
+func NewListBlockVolumesRequest(page, size int) *ListBlockVolumesRequest {
 	opt := new(ListBlockVolumesRequest)
 	opt.Page = page
 	opt.Size = size
 	return opt
 }
 
-func NewGetBlockVolumeByIDRequest(volumeID string) IGetBlockVolumeByIDRequest {
+func NewGetBlockVolumeByIDRequest(volumeID string) *GetBlockVolumeByIDRequest {
 	opt := new(GetBlockVolumeByIDRequest)
 	opt.BlockVolumeID = volumeID
 	return opt
 }
 
-func NewResizeBlockVolumeByIDRequest(volumeID, volumeType string, size int) IResizeBlockVolumeByIDRequest {
+func NewResizeBlockVolumeByIDRequest(volumeID, volumeType string, size int) *ResizeBlockVolumeByIDRequest {
 	opt := new(ResizeBlockVolumeByIDRequest)
 	opt.BlockVolumeID = volumeID
 	opt.NewSize = size
@@ -102,13 +102,13 @@ func NewResizeBlockVolumeByIDRequest(volumeID, volumeType string, size int) IRes
 	return opt
 }
 
-func NewGetUnderVolumeIDRequest(volumeID string) IGetUnderBlockVolumeIDRequest {
+func NewGetUnderVolumeIDRequest(volumeID string) *GetUnderBlockVolumeIDRequest {
 	opt := new(GetUnderBlockVolumeIDRequest)
 	opt.BlockVolumeID = volumeID
 	return opt
 }
 
-func NewMigrateBlockVolumeByIDRequest(volumeID, volumeType string) IMigrateBlockVolumeByIDRequest {
+func NewMigrateBlockVolumeByIDRequest(volumeID, volumeType string) *MigrateBlockVolumeByIDRequest {
 	opt := new(MigrateBlockVolumeByIDRequest)
 	opt.BlockVolumeID = volumeID
 	opt.VolumeTypeID = volumeType

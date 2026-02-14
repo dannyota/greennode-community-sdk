@@ -27,7 +27,7 @@ const (
 	ListenerProtocolHTTPS ListenerProtocol = "HTTPS"
 )
 
-func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) ICreateListenerRequest {
+func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) *CreateListenerRequest {
 	opts := new(CreateListenerRequest)
 	opts.ListenerName = name
 	opts.ListenerProtocol = protocol

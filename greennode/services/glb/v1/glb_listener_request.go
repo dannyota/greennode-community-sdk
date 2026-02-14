@@ -98,7 +98,7 @@ func (r *ListGlobalListenersRequest) AddUserAgent(agent ...string) IListGlobalLi
 	return r
 }
 
-func NewListGlobalListenersRequest(lbID string) IListGlobalListenersRequest {
+func NewListGlobalListenersRequest(lbID string) *ListGlobalListenersRequest {
 	opts := &ListGlobalListenersRequest{}
 	opts.LoadBalancerID = lbID
 	return opts
@@ -212,7 +212,7 @@ func (r *CreateGlobalListenerRequest) AddUserAgent(agent ...string) ICreateGloba
 	return r
 }
 
-func NewCreateGlobalListenerRequest(lbID, name string) ICreateGlobalListenerRequest {
+func NewCreateGlobalListenerRequest(lbID, name string) *CreateGlobalListenerRequest {
 	opts := &CreateGlobalListenerRequest{
 		AllowedCidrs:      "0.0.0.0/0",
 		Description:       "",
@@ -308,7 +308,7 @@ func (r *UpdateGlobalListenerRequest) AddUserAgent(agent ...string) IUpdateGloba
 	return r
 }
 
-func NewUpdateGlobalListenerRequest(lbID, lID string) IUpdateGlobalListenerRequest {
+func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerRequest {
 	opts := &UpdateGlobalListenerRequest{
 		AllowedCidrs:      "0.0.0.0/0",
 		TimeoutClient:     50,
@@ -350,7 +350,7 @@ func (r *DeleteGlobalListenerRequest) AddUserAgent(agent ...string) IDeleteGloba
 	return r
 }
 
-func NewDeleteGlobalListenerRequest(lbID, lID string) IDeleteGlobalListenerRequest {
+func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerRequest {
 	opts := &DeleteGlobalListenerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,
@@ -386,7 +386,7 @@ func (r *GetGlobalListenerRequest) AddUserAgent(agent ...string) IGetGlobalListe
 	return r
 }
 
-func NewGetGlobalListenerRequest(lbID, lID string) IGetGlobalListenerRequest {
+func NewGetGlobalListenerRequest(lbID, lID string) *GetGlobalListenerRequest {
 	opts := &GetGlobalListenerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,

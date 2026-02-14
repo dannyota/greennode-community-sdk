@@ -27,7 +27,7 @@ type IDeleteSnapshotByIDRequest interface {
 	GetBlockVolumeID() string
 }
 
-func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) IListSnapshotsByBlockVolumeIDRequest {
+func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) *ListSnapshotsByBlockVolumeIDRequest {
 	opt := new(ListSnapshotsByBlockVolumeIDRequest)
 	opt.BlockVolumeID = blockVolumeID
 	opt.Page = page
@@ -36,7 +36,7 @@ func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string
 	return opt
 }
 
-func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) ICreateSnapshotByBlockVolumeIDRequest {
+func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) *CreateSnapshotByBlockVolumeIDRequest {
 	opt := new(CreateSnapshotByBlockVolumeIDRequest)
 	opt.Name = name
 	opt.BlockVolumeID = blockVolumeID
@@ -44,7 +44,7 @@ func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) ICreate
 	return opt
 }
 
-func NewDeleteSnapshotByIDRequest(snapshotID string) IDeleteSnapshotByIDRequest {
+func NewDeleteSnapshotByIDRequest(snapshotID string) *DeleteSnapshotByIDRequest {
 	opt := new(DeleteSnapshotByIDRequest)
 	opt.BlockVolumeID = "undefined"
 	opt.SnapshotID = snapshotID

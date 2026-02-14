@@ -1,12 +1,12 @@
 package v1
 
-func NewGetEndpointByIDRequest(endpointID string) IGetEndpointByIDRequest {
+func NewGetEndpointByIDRequest(endpointID string) *GetEndpointByIDRequest {
 	opt := new(GetEndpointByIDRequest)
 	opt.EndpointID = endpointID
 	return opt
 }
 
-func NewCreateEndpointRequest(name, serviceID, vpcID, subnetID string) ICreateEndpointRequest {
+func NewCreateEndpointRequest(name, serviceID, vpcID, subnetID string) *CreateEndpointRequest {
 	opts := new(CreateEndpointRequest)
 	opts.ResourceInfo.EndpointName = name
 	opts.ResourceInfo.ServiceUuid = serviceID
@@ -17,7 +17,7 @@ func NewCreateEndpointRequest(name, serviceID, vpcID, subnetID string) ICreateEn
 	return opts
 }
 
-func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) IDeleteEndpointByIDRequest {
+func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) *DeleteEndpointByIDRequest {
 	opt := new(DeleteEndpointByIDRequest)
 	opt.EndpointID = endpointID
 	opt.EndpointUuid = endpointID
@@ -27,14 +27,14 @@ func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) I
 	return opt
 }
 
-func NewListEndpointsRequest(page, size int) IListEndpointsRequest {
+func NewListEndpointsRequest(page, size int) *ListEndpointsRequest {
 	return &ListEndpointsRequest{
 		Page: page,
 		Size: size,
 	}
 }
 
-func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) IListTagsByEndpointIDRequest {
+func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) *ListTagsByEndpointIDRequest {
 	opt := new(ListTagsByEndpointIDRequest)
 	opt.ID = endpointID
 	opt.EndpointID = endpointID
@@ -43,7 +43,7 @@ func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) IListT
 	return opt
 }
 
-func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) ICreateTagsWithEndpointIDRequest {
+func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) *CreateTagsWithEndpointIDRequest {
 	opt := new(CreateTagsWithEndpointIDRequest)
 	opt.ResourceUuid = endpointID
 	opt.EndpointID = endpointID
@@ -54,7 +54,7 @@ func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) IC
 	return opt
 }
 
-func NewDeleteTagOfEndpointRequest(userID, projectID, tagID string) IDeleteTagOfEndpointRequest {
+func NewDeleteTagOfEndpointRequest(userID, projectID, tagID string) *DeleteTagOfEndpointRequest {
 	opt := new(DeleteTagOfEndpointRequest)
 	opt.TagID = tagID
 	opt.ProjectID = projectID
@@ -63,7 +63,7 @@ func NewDeleteTagOfEndpointRequest(userID, projectID, tagID string) IDeleteTagOf
 	return opt
 }
 
-func NewUpdateTagValueOfEndpointRequest(userID, projectID, tagID, value string) IUpdateTagValueOfEndpointRequest {
+func NewUpdateTagValueOfEndpointRequest(userID, projectID, tagID, value string) *UpdateTagValueOfEndpointRequest {
 	opt := new(UpdateTagValueOfEndpointRequest)
 	opt.TagID = tagID
 	opt.TagValue = value

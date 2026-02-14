@@ -19,7 +19,7 @@ type ICreateTagsRequest interface {
 	AddUserAgent(agent ...string) ICreateTagsRequest
 }
 
-func NewListTagsRequest(lbID string) IListTagsRequest {
+func NewListTagsRequest(lbID string) *ListTagsRequest {
 	opt := new(ListTagsRequest)
 	opt.LoadBalancerID = lbID
 	return opt
@@ -30,7 +30,7 @@ func (r *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
 	return r
 }
 
-func NewCreateTagsRequest(lbID string) ICreateTagsRequest {
+func NewCreateTagsRequest(lbID string) *CreateTagsRequest {
 	opts := new(CreateTagsRequest)
 	opts.LoadBalancerID = lbID
 	opts.ResourceID = lbID
@@ -40,7 +40,7 @@ func NewCreateTagsRequest(lbID string) ICreateTagsRequest {
 	return opts
 }
 
-func NewUpdateTagsRequest(lbID string) IUpdateTagsRequest {
+func NewUpdateTagsRequest(lbID string) *UpdateTagsRequest {
 	opts := new(UpdateTagsRequest)
 	opts.LoadBalancerID = lbID
 	opts.ResourceID = lbID

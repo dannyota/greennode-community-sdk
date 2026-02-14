@@ -15,7 +15,7 @@ type GetAccessTokenRequest struct {
 	GrantType string `json:"grant_type"`
 }
 
-func NewGetAccessTokenRequest(clientID, clientSecret string) IGetAccessTokenRequest {
+func NewGetAccessTokenRequest(clientID, clientSecret string) *GetAccessTokenRequest {
 	return &GetAccessTokenRequest{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

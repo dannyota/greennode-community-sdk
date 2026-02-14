@@ -44,7 +44,7 @@ func NewCreateSecgroupRuleRequest(
 	return opt
 }
 
-func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) IDeleteSecgroupRuleByIDRequest {
+func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) *DeleteSecgroupRuleByIDRequest {
 	opt := new(DeleteSecgroupRuleByIDRequest)
 	opt.SecgroupID = "undefined"
 	opt.SecgroupRuleID = secgroupRuleID
@@ -56,7 +56,7 @@ func (r *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) IDeleteSec
 	return r
 }
 
-func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) IListSecgroupRulesBySecgroupIDRequest {
+func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) *ListSecgroupRulesBySecgroupIDRequest {
 	opt := new(ListSecgroupRulesBySecgroupIDRequest)
 	opt.SecgroupID = securityGroupID
 	return opt

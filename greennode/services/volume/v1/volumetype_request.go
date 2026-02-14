@@ -20,19 +20,19 @@ type IGetVolumeTypeZonesRequest interface {
 	GetDefaultQuery() string
 }
 
-func NewGetVolumeTypeByIDRequest(volumeTypeID string) IGetVolumeTypeByIDRequest {
+func NewGetVolumeTypeByIDRequest(volumeTypeID string) *GetVolumeTypeByIDRequest {
 	opt := new(GetVolumeTypeByIDRequest)
 	opt.VolumeTypeID = volumeTypeID
 	return opt
 }
 
-func NewListVolumeTypeRequest(volumeTypeZoneID string) IGetListVolumeTypeRequest {
+func NewListVolumeTypeRequest(volumeTypeZoneID string) *GetListVolumeTypeRequest {
 	opt := new(GetListVolumeTypeRequest)
 	opt.VolumeTypeZoneID = volumeTypeZoneID
 	return opt
 }
 
-func NewGetVolumeTypeZonesRequest(zoneID string) IGetVolumeTypeZonesRequest {
+func NewGetVolumeTypeZonesRequest(zoneID string) *GetVolumeTypeZonesRequest {
 	opt := new(GetVolumeTypeZonesRequest)
 	opt.ZoneID = zoneID
 	return opt

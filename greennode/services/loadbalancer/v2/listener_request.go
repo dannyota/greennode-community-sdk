@@ -71,7 +71,7 @@ const (
 	ListenerProtocolHTTPS ListenerProtocol = "HTTPS"
 )
 
-func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) ICreateListenerRequest {
+func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) *CreateListenerRequest {
 	opts := new(CreateListenerRequest)
 	opts.ListenerName = name
 	opts.ListenerProtocol = protocol
@@ -84,7 +84,7 @@ func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) 
 	return opts
 }
 
-func NewUpdateListenerRequest(lbID, listenerID string) IUpdateListenerRequest {
+func NewUpdateListenerRequest(lbID, listenerID string) *UpdateListenerRequest {
 	opts := new(UpdateListenerRequest)
 	opts.LoadBalancerID = lbID
 	opts.ListenerID = listenerID
@@ -92,14 +92,14 @@ func NewUpdateListenerRequest(lbID, listenerID string) IUpdateListenerRequest {
 	return opts
 }
 
-func NewListListenersByLoadBalancerIDRequest(lbID string) IListListenersByLoadBalancerIDRequest {
+func NewListListenersByLoadBalancerIDRequest(lbID string) *ListListenersByLoadBalancerIDRequest {
 	opts := new(ListListenersByLoadBalancerIDRequest)
 	opts.LoadBalancerID = lbID
 
 	return opts
 }
 
-func NewDeleteListenerByIDRequest(lbID, listenerID string) IDeleteListenerByIDRequest {
+func NewDeleteListenerByIDRequest(lbID, listenerID string) *DeleteListenerByIDRequest {
 	opts := new(DeleteListenerByIDRequest)
 	opts.LoadBalancerID = lbID
 	opts.ListenerID = listenerID
@@ -107,7 +107,7 @@ func NewDeleteListenerByIDRequest(lbID, listenerID string) IDeleteListenerByIDRe
 	return opts
 }
 
-func NewGetListenerByIDRequest(lbID, listenerID string) IGetListenerByIDRequest {
+func NewGetListenerByIDRequest(lbID, listenerID string) *GetListenerByIDRequest {
 	opts := new(GetListenerByIDRequest)
 	opts.LoadBalancerID = lbID
 	opts.ListenerID = listenerID

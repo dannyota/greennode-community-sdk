@@ -96,7 +96,7 @@ const (
 )
 
 // create policy request
-func NewCreatePolicyRequest(lbID, lisID string) ICreatePolicyRequest {
+func NewCreatePolicyRequest(lbID, lisID string) *CreatePolicyRequest {
 	return &CreatePolicyRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
@@ -222,7 +222,7 @@ func (r *CreatePolicyRequest) AddUserAgent(agent ...string) ICreatePolicyRequest
 }
 
 // update policy request
-func NewUpdatePolicyRequest(lbID, lisID, policyID string) IUpdatePolicyRequest {
+func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 	return &UpdatePolicyRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
@@ -320,7 +320,7 @@ func (r *UpdatePolicyRequest) AddUserAgent(agent ...string) IUpdatePolicyRequest
 }
 
 // get policy by id request
-func NewGetPolicyByIDRequest(lbID, lisID, policyID string) IGetPolicyByIDRequest {
+func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest {
 	return &GetPolicyByIDRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
@@ -343,7 +343,7 @@ type GetPolicyByIDRequest struct {
 }
 
 // delete policy by id request
-func NewDeletePolicyByIDRequest(lbID, lisID, policyID string) IDeletePolicyByIDRequest {
+func NewDeletePolicyByIDRequest(lbID, lisID, policyID string) *DeletePolicyByIDRequest {
 	return &DeletePolicyByIDRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
@@ -370,7 +370,7 @@ type policyPositionRequest struct {
 	PolicyID string `json:"policyId"`
 }
 
-func NewReorderPoliciesRequest(lbID, lisID string) IReorderPoliciesRequest {
+func NewReorderPoliciesRequest(lbID, lisID string) *ReorderPoliciesRequest {
 	return &ReorderPoliciesRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
@@ -413,7 +413,7 @@ func (r *ReorderPoliciesRequest) ToRequestBody() any {
 
 
 // list policies request
-func NewListPoliciesRequest(lbID, lisID string) IListPoliciesRequest {
+func NewListPoliciesRequest(lbID, lisID string) *ListPoliciesRequest {
 	return &ListPoliciesRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},

@@ -127,7 +127,7 @@ const (
 	defaultFakeDomainName = "nip.io"
 )
 
-func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest {
+func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest {
 	opts := new(CreatePoolRequest)
 	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
@@ -137,7 +137,7 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest
 	return opts
 }
 
-func NewUpdatePoolRequest(lbID, poolID string) IUpdatePoolRequest {
+func NewUpdatePoolRequest(lbID, poolID string) *UpdatePoolRequest {
 	opts := new(UpdatePoolRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
@@ -145,7 +145,7 @@ func NewUpdatePoolRequest(lbID, poolID string) IUpdatePoolRequest {
 	return opts
 }
 
-func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) IGetPoolHealthMonitorByIDRequest {
+func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) *GetPoolHealthMonitorByIDRequest {
 	opts := new(GetPoolHealthMonitorByIDRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
@@ -158,14 +158,14 @@ func (r *GetPoolHealthMonitorByIDRequest) AddUserAgent(agent ...string) IGetPool
 	return r
 }
 
-func NewListPoolsByLoadBalancerIDRequest(lbID string) IListPoolsByLoadBalancerIDRequest {
+func NewListPoolsByLoadBalancerIDRequest(lbID string) *ListPoolsByLoadBalancerIDRequest {
 	opts := new(ListPoolsByLoadBalancerIDRequest)
 	opts.LoadBalancerID = lbID
 
 	return opts
 }
 
-func NewUpdatePoolMembersRequest(lbID, poolID string) IUpdatePoolMembersRequest {
+func NewUpdatePoolMembersRequest(lbID, poolID string) *UpdatePoolMembersRequest {
 	opts := new(UpdatePoolMembersRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
@@ -174,7 +174,7 @@ func NewUpdatePoolMembersRequest(lbID, poolID string) IUpdatePoolMembersRequest 
 	return opts
 }
 
-func NewListPoolMembersRequest(lbID, poolID string) IListPoolMembersRequest {
+func NewListPoolMembersRequest(lbID, poolID string) *ListPoolMembersRequest {
 	opts := new(ListPoolMembersRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
@@ -182,7 +182,7 @@ func NewListPoolMembersRequest(lbID, poolID string) IListPoolMembersRequest {
 	return opts
 }
 
-func NewDeletePoolByIDRequest(lbID, poolID string) IDeletePoolByIDRequest {
+func NewDeletePoolByIDRequest(lbID, poolID string) *DeletePoolByIDRequest {
 	opts := new(DeletePoolByIDRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
@@ -190,7 +190,7 @@ func NewDeletePoolByIDRequest(lbID, poolID string) IDeletePoolByIDRequest {
 	return opts
 }
 
-func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
+func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
 	opts := new(HealthMonitor)
 	opts.HealthCheckProtocol = checkProtocol
 	opts.HealthyThreshold = 3
@@ -201,7 +201,7 @@ func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
 	return opts
 }
 
-func NewMember(name, ipAddress string, port int, monitorPort int) IMemberRequest {
+func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
 	return &Member{
 		Backup:      false,
 		IpAddress:   ipAddress,
@@ -212,7 +212,7 @@ func NewMember(name, ipAddress string, port int, monitorPort int) IMemberRequest
 	}
 }
 
-func NewGetPoolByIDRequest(lbID, poolID string) IGetPoolByIDRequest {
+func NewGetPoolByIDRequest(lbID, poolID string) *GetPoolByIDRequest {
 	opts := new(GetPoolByIDRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID

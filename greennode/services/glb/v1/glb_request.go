@@ -84,7 +84,7 @@ const (
 )
 
 
-func NewListGlobalLoadBalancersRequest(offset, limit int) IListGlobalLoadBalancersRequest {
+func NewListGlobalLoadBalancersRequest(offset, limit int) *ListGlobalLoadBalancersRequest {
 	opts := &ListGlobalLoadBalancersRequest{
 		Name:   "",
 		Offset: offset,
@@ -228,7 +228,7 @@ func (r *CreateGlobalLoadBalancerRequest) ToMap() map[string]any {
 	}
 }
 
-func NewCreateGlobalLoadBalancerRequest(name string) ICreateGlobalLoadBalancerRequest {
+func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRequest {
 	opts := &CreateGlobalLoadBalancerRequest{
 		Description:    "",
 		Name:           name,
@@ -259,7 +259,7 @@ func (r *DeleteGlobalLoadBalancerRequest) AddUserAgent(agent ...string) IDeleteG
 	return r
 }
 
-func NewDeleteGlobalLoadBalancerRequest(lbID string) IDeleteGlobalLoadBalancerRequest {
+func NewDeleteGlobalLoadBalancerRequest(lbID string) *DeleteGlobalLoadBalancerRequest {
 	opts := &DeleteGlobalLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,
@@ -280,7 +280,7 @@ func (r *ListGlobalPackagesRequest) AddUserAgent(agent ...string) IListGlobalPac
 	return r
 }
 
-func NewListGlobalPackagesRequest() IListGlobalPackagesRequest {
+func NewListGlobalPackagesRequest() *ListGlobalPackagesRequest {
 	opts := &ListGlobalPackagesRequest{}
 	return opts
 }
@@ -297,7 +297,7 @@ func (r *ListGlobalRegionsRequest) AddUserAgent(agent ...string) IListGlobalRegi
 	return r
 }
 
-func NewListGlobalRegionsRequest() IListGlobalRegionsRequest {
+func NewListGlobalRegionsRequest() *ListGlobalRegionsRequest {
 	opts := &ListGlobalRegionsRequest{}
 	return opts
 }
@@ -357,7 +357,7 @@ func (r *GetGlobalLoadBalancerUsageHistoriesRequest) AddUserAgent(agent ...strin
 	return r
 }
 
-func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) *GetGlobalLoadBalancerUsageHistoriesRequest {
 	opts := &GetGlobalLoadBalancerUsageHistoriesRequest{
 		From: from,
 		To:   to,
@@ -387,7 +387,7 @@ func (r *GetGlobalLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetGlo
 	return r
 }
 
-func NewGetGlobalLoadBalancerByIDRequest(lbID string) IGetGlobalLoadBalancerByIDRequest {
+func NewGetGlobalLoadBalancerByIDRequest(lbID string) *GetGlobalLoadBalancerByIDRequest {
 	opts := &GetGlobalLoadBalancerByIDRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,

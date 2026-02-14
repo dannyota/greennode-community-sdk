@@ -34,7 +34,7 @@ func (r *GetHostedZoneByIDRequest) ToMap() map[string]any {
 	}
 }
 
-func NewGetHostedZoneByIDRequest(hostedZoneID string) IGetHostedZoneByIDRequest {
+func NewGetHostedZoneByIDRequest(hostedZoneID string) *GetHostedZoneByIDRequest {
 	return &GetHostedZoneByIDRequest{
 		HostedZoneID: hostedZoneID,
 	}
@@ -70,7 +70,7 @@ func (r *ListHostedZonesRequest) ToMap() map[string]any {
 	}
 }
 
-func NewListHostedZonesRequest() IListHostedZonesRequest {
+func NewListHostedZonesRequest() *ListHostedZonesRequest {
 	return &ListHostedZonesRequest{}
 }
 
@@ -133,7 +133,7 @@ func (r *CreateHostedZoneRequest) ToMap() map[string]any {
 	}
 }
 
-func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneType HostedZoneType) ICreateHostedZoneRequest {
+func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneType HostedZoneType) *CreateHostedZoneRequest {
 	return &CreateHostedZoneRequest{
 		DomainName:  domainName,
 		AssocVpcIDs: assocVpcIDs,
@@ -171,7 +171,7 @@ func (r *DeleteHostedZoneRequest) ToMap() map[string]any {
 	}
 }
 
-func NewDeleteHostedZoneRequest(hostedZoneID string) IDeleteHostedZoneRequest {
+func NewDeleteHostedZoneRequest(hostedZoneID string) *DeleteHostedZoneRequest {
 	return &DeleteHostedZoneRequest{
 		HostedZoneID: hostedZoneID,
 	}
@@ -231,7 +231,7 @@ func (r *UpdateHostedZoneRequest) ToMap() map[string]any {
 	}
 }
 
-func NewUpdateHostedZoneRequest(hostedZoneID string) IUpdateHostedZoneRequest {
+func NewUpdateHostedZoneRequest(hostedZoneID string) *UpdateHostedZoneRequest {
 	return &UpdateHostedZoneRequest{
 		HostedZoneID: hostedZoneID,
 	}

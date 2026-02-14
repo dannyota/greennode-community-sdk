@@ -1,6 +1,6 @@
 package inter
 
-func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) ICreateLoadBalancerRequest {
+func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) *CreateLoadBalancerRequest {
 	opt := new(CreateLoadBalancerRequest)
 	opt.SetPortalUserID(userID)
 	opt.Name = name

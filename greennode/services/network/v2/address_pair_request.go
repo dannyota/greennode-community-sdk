@@ -28,7 +28,7 @@ type ICreateAddressPairRequest interface {
 	WithMode(mode AddressPairMode) ICreateAddressPairRequest
 }
 
-func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) IGetAllAddressPairByVirtualSubnetIDRequest {
+func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) *GetAllAddressPairByVirtualSubnetIDRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIDRequest)
 	opt.VirtualSubnetID = subnetID
 	return opt
@@ -44,7 +44,7 @@ func (r *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string 
 }
 
 
-func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
+func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) *SetAddressPairInVirtualSubnetRequest {
 	opt := new(SetAddressPairInVirtualSubnetRequest)
 	opt.VirtualSubnetID = subnetID
 	opt.AddressPairRequest = AddressPairRequest{
@@ -74,7 +74,7 @@ type AddressPairRequest struct {
 }
 
 
-func NewDeleteAddressPairRequest(addressPairID string) IDeleteAddressPairRequest {
+func NewDeleteAddressPairRequest(addressPairID string) *DeleteAddressPairRequest {
 	opt := new(DeleteAddressPairRequest)
 	opt.AddressPairID = addressPairID
 	return opt

@@ -126,7 +126,7 @@ func (r *CreateCertificateRequest) ToMap() map[string]any {
 	return re
 }
 
-func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) ICreateCertificateRequest {
+func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) *CreateCertificateRequest {
 	return &CreateCertificateRequest{
 		Name:             name,
 		Type:             typeVal,

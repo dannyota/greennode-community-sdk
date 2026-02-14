@@ -8,7 +8,7 @@ type IGetNetworkByIDRequest interface {
 	ParseUserAgent() string
 }
 
-func NewGetNetworkByIDRequest(networkID string) IGetNetworkByIDRequest {
+func NewGetNetworkByIDRequest(networkID string) *GetNetworkByIDRequest {
 	opt := new(GetNetworkByIDRequest)
 	opt.NetworkID = networkID
 	return opt

@@ -17,7 +17,7 @@ type IUpdateSubnetByIDRequest interface {
 	ToRequestBody() any
 }
 
-func NewGetSubnetByIDRequest(networkID, subnetID string) IGetSubnetByIDRequest {
+func NewGetSubnetByIDRequest(networkID, subnetID string) *GetSubnetByIDRequest {
 	opt := new(GetSubnetByIDRequest)
 	opt.NetworkID = networkID
 	opt.SubnetID = subnetID
@@ -45,7 +45,7 @@ type UpdateSubnetBody struct {
 	SecondarySubnetRequests []SecondarySubnetUpdateBody `json:"secondarySubnetRequests"`
 }
 
-func NewUpdateSubnetByIDRequest(networkID, subnetID string, updateBody *UpdateSubnetBody) IUpdateSubnetByIDRequest {
+func NewUpdateSubnetByIDRequest(networkID, subnetID string, updateBody *UpdateSubnetBody) *UpdateSubnetByIDRequest {
 	opt := new(UpdateSubnetByIDRequest)
 	opt.NetworkID = networkID
 	opt.SubnetID = subnetID

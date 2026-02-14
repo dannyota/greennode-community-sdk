@@ -47,7 +47,7 @@ func (r *ListRecordsRequest) ToMap() map[string]any {
 	}
 }
 
-func NewListRecordsRequest(hostedZoneID string) IListRecordsRequest {
+func NewListRecordsRequest(hostedZoneID string) *ListRecordsRequest {
 	return &ListRecordsRequest{
 		HostedZoneID: hostedZoneID,
 	}
@@ -96,7 +96,7 @@ func (r *GetRecordRequest) ToMap() map[string]any {
 	}
 }
 
-func NewGetRecordRequest(hostedZoneID, recordID string) IGetRecordRequest {
+func NewGetRecordRequest(hostedZoneID, recordID string) *GetRecordRequest {
 	return &GetRecordRequest{
 		HostedZoneID: hostedZoneID,
 		RecordID:     recordID,
@@ -212,7 +212,7 @@ func (r *UpdateRecordRequest) ToMap() map[string]any {
 	return m
 }
 
-func NewUpdateRecordRequest(hostedZoneID, recordID string) IUpdateRecordRequest {
+func NewUpdateRecordRequest(hostedZoneID, recordID string) *UpdateRecordRequest {
 	return &UpdateRecordRequest{
 		HostedZoneID: hostedZoneID,
 		RecordID:     recordID,
@@ -262,7 +262,7 @@ func (r *DeleteRecordRequest) ToMap() map[string]any {
 	}
 }
 
-func NewDeleteRecordRequest(hostedZoneID, recordID string) IDeleteRecordRequest {
+func NewDeleteRecordRequest(hostedZoneID, recordID string) *DeleteRecordRequest {
 	return &DeleteRecordRequest{
 		HostedZoneID: hostedZoneID,
 		RecordID:     recordID,
@@ -371,7 +371,7 @@ func (r *CreateDnsRecordRequest) ToMap() map[string]any {
 	return m
 }
 
-func NewCreateDnsRecordRequest(hostedZoneID, subDomain string, ttl int, recordType DnsRecordType, routingPolicy RoutingPolicy, value []RecordValueRequest) ICreateDnsRecordRequest {
+func NewCreateDnsRecordRequest(hostedZoneID, subDomain string, ttl int, recordType DnsRecordType, routingPolicy RoutingPolicy, value []RecordValueRequest) *CreateDnsRecordRequest {
 	return &CreateDnsRecordRequest{
 		HostedZoneID:  hostedZoneID,
 		SubDomain:     subDomain,
