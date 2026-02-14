@@ -78,9 +78,9 @@ type CreateListenerRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateListenerRequest) AddUserAgent(agent ...string) ICreateListenerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateListenerRequest) AddUserAgent(agent ...string) ICreateListenerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type UpdateListenerRequest struct {
@@ -99,9 +99,9 @@ type UpdateListenerRequest struct {
 	common.UserAgent
 }
 
-func (s *UpdateListenerRequest) AddUserAgent(agent ...string) IUpdateListenerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *UpdateListenerRequest) AddUserAgent(agent ...string) IUpdateListenerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type ListListenersByLoadBalancerIDRequest struct {
@@ -109,9 +109,9 @@ type ListListenersByLoadBalancerIDRequest struct {
 	common.UserAgent
 }
 
-func (s *ListListenersByLoadBalancerIDRequest) AddUserAgent(agent ...string) IListListenersByLoadBalancerIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListListenersByLoadBalancerIDRequest) AddUserAgent(agent ...string) IListListenersByLoadBalancerIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type DeleteListenerByIDRequest struct {
@@ -120,9 +120,9 @@ type DeleteListenerByIDRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteListenerByIDRequest) AddUserAgent(agent ...string) IDeleteListenerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteListenerByIDRequest) AddUserAgent(agent ...string) IDeleteListenerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type GetListenerByIDRequest struct {
@@ -131,94 +131,94 @@ type GetListenerByIDRequest struct {
 	common.UserAgent
 }
 
-func (s *GetListenerByIDRequest) AddUserAgent(agent ...string) IGetListenerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetListenerByIDRequest) AddUserAgent(agent ...string) IGetListenerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateListenerRequest) ToRequestBody() interface{} {
-	if s == nil {
+func (r *CreateListenerRequest) ToRequestBody() interface{} {
+	if r == nil {
 		return nil
 	}
 
-	if s.ListenerProtocol == ListenerProtocolHTTPS {
-		return s
+	if r.ListenerProtocol == ListenerProtocolHTTPS {
+		return r
 	}
 
-	s.CertificateAuthorities = nil
-	s.ClientCertificate = nil
-	s.DefaultCertificateAuthority = nil
+	r.CertificateAuthorities = nil
+	r.ClientCertificate = nil
+	r.DefaultCertificateAuthority = nil
 
-	return s
+	return r
 }
 
-func (s *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
 	if len(cidrs) < 1 {
-		return s
+		return r
 	}
 
-	s.AllowedCidrs = strings.Join(cidrs, ",")
-	return s
+	r.AllowedCidrs = strings.Join(cidrs, ",")
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
-	s.TimeoutClient = toc
-	return s
+func (r *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
+	r.TimeoutClient = toc
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
-	s.TimeoutConnection = toc
-	return s
+func (r *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
+	r.TimeoutConnection = toc
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
-	s.TimeoutMember = tom
-	return s
+func (r *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
+	r.TimeoutMember = tom
+	return r
 }
 
-func (s *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
 	if len(cidrs) < 1 {
-		return s
+		return r
 	}
 
-	if s.AllowedCidrs == "" {
-		return s.WithAllowedCidrs(cidrs...)
+	if r.AllowedCidrs == "" {
+		return r.WithAllowedCidrs(cidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(cidrs, ",")
+		r.AllowedCidrs = r.AllowedCidrs + "," + strings.Join(cidrs, ",")
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
-	s.LoadBalancerID = lbid
-	return s
+func (r *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
+	r.LoadBalancerID = lbid
+	return r
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
-	s.DefaultPoolID = &poolID
-	return s
+func (r *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
+	r.DefaultPoolID = &poolID
+	return r
 }
 
-func (s *CreateListenerRequest) WithCertificateAuthorities(ca *[]string) ICreateListenerRequest {
-	s.CertificateAuthorities = ca
-	return s
+func (r *CreateListenerRequest) WithCertificateAuthorities(ca *[]string) ICreateListenerRequest {
+	r.CertificateAuthorities = ca
+	return r
 }
 
-func (s *CreateListenerRequest) WithClientCertificate(clientCert *string) ICreateListenerRequest {
-	s.ClientCertificate = clientCert
-	return s
+func (r *CreateListenerRequest) WithClientCertificate(clientCert *string) ICreateListenerRequest {
+	r.ClientCertificate = clientCert
+	return r
 }
 
-func (s *CreateListenerRequest) WithDefaultCertificateAuthority(defaultCA *string) ICreateListenerRequest {
-	s.DefaultCertificateAuthority = defaultCA
-	return s
+func (r *CreateListenerRequest) WithDefaultCertificateAuthority(defaultCA *string) ICreateListenerRequest {
+	r.DefaultCertificateAuthority = defaultCA
+	return r
 }
 
-func (s *CreateListenerRequest) WithInsertHeaders(pheaders ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithInsertHeaders(pheaders ...string) ICreateListenerRequest {
 	if len(pheaders) < 1 {
-		s.InsertHeaders = nil
-		return s
+		r.InsertHeaders = nil
+		return r
 	}
 
 	headers := make([]entity.ListenerInsertHeader, 0)
@@ -231,64 +231,64 @@ func (s *CreateListenerRequest) WithInsertHeaders(pheaders ...string) ICreateLis
 			HeaderValue: pheaders[i+1],
 		})
 	}
-	s.InsertHeaders = &headers
-	return s
+	r.InsertHeaders = &headers
+	return r
 }
 
-func (s *CreateListenerRequest) ToMap() map[string]interface{} {
+func (r *CreateListenerRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"listenerName":                s.ListenerName,
-		"listenerProtocol":            s.ListenerProtocol,
-		"listenerProtocolPort":        s.ListenerProtocolPort,
-		"timeoutClient":               s.TimeoutClient,
-		"timeoutConnection":           s.TimeoutConnection,
-		"timeoutMember":               s.TimeoutMember,
-		"allowedCidrs":                s.AllowedCidrs,
-		"defaultPoolId":               s.DefaultPoolID,
-		"certificateAuthorities":      s.CertificateAuthorities,
-		"clientCertificate":           s.ClientCertificate,
-		"defaultCertificateAuthority": s.DefaultCertificateAuthority,
-		"insertHeaders":               s.InsertHeaders,
+		"listenerName":                r.ListenerName,
+		"listenerProtocol":            r.ListenerProtocol,
+		"listenerProtocolPort":        r.ListenerProtocolPort,
+		"timeoutClient":               r.TimeoutClient,
+		"timeoutConnection":           r.TimeoutConnection,
+		"timeoutMember":               r.TimeoutMember,
+		"allowedCidrs":                r.AllowedCidrs,
+		"defaultPoolId":               r.DefaultPoolID,
+		"certificateAuthorities":      r.CertificateAuthorities,
+		"clientCertificate":           r.ClientCertificate,
+		"defaultCertificateAuthority": r.DefaultCertificateAuthority,
+		"insertHeaders":               r.InsertHeaders,
 	}
 }
 
-func (s *UpdateListenerRequest) ToRequestBody() interface{} {
-	return s
+func (r *UpdateListenerRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *UpdateListenerRequest) WithCidrs(cidrs ...string) IUpdateListenerRequest {
+func (r *UpdateListenerRequest) WithCidrs(cidrs ...string) IUpdateListenerRequest {
 	if len(cidrs) < 1 {
-		return s
+		return r
 	}
 
-	s.AllowedCidrs = strings.Join(cidrs, ",")
-	return s
+	r.AllowedCidrs = strings.Join(cidrs, ",")
+	return r
 }
 
-func (s *UpdateListenerRequest) WithTimeoutClient(toc int) IUpdateListenerRequest {
-	s.TimeoutClient = toc
-	return s
+func (r *UpdateListenerRequest) WithTimeoutClient(toc int) IUpdateListenerRequest {
+	r.TimeoutClient = toc
+	return r
 }
 
-func (s *UpdateListenerRequest) WithTimeoutConnection(toc int) IUpdateListenerRequest {
-	s.TimeoutConnection = toc
-	return s
+func (r *UpdateListenerRequest) WithTimeoutConnection(toc int) IUpdateListenerRequest {
+	r.TimeoutConnection = toc
+	return r
 }
 
-func (s *UpdateListenerRequest) WithTimeoutMember(tom int) IUpdateListenerRequest {
-	s.TimeoutMember = tom
-	return s
+func (r *UpdateListenerRequest) WithTimeoutMember(tom int) IUpdateListenerRequest {
+	r.TimeoutMember = tom
+	return r
 }
 
-func (s *UpdateListenerRequest) WithDefaultPoolID(poolID string) IUpdateListenerRequest {
-	s.DefaultPoolID = poolID
-	return s
+func (r *UpdateListenerRequest) WithDefaultPoolID(poolID string) IUpdateListenerRequest {
+	r.DefaultPoolID = poolID
+	return r
 }
 
-func (s *UpdateListenerRequest) WithInsertHeaders(pheaders ...string) IUpdateListenerRequest {
+func (r *UpdateListenerRequest) WithInsertHeaders(pheaders ...string) IUpdateListenerRequest {
 	if len(pheaders) < 1 {
-		s.InsertHeaders = nil
-		return s
+		r.InsertHeaders = nil
+		return r
 	}
 
 	headers := make([]entity.ListenerInsertHeader, 0)
@@ -301,21 +301,21 @@ func (s *UpdateListenerRequest) WithInsertHeaders(pheaders ...string) IUpdateLis
 			HeaderValue: pheaders[i+1],
 		})
 	}
-	s.InsertHeaders = &headers
-	return s
+	r.InsertHeaders = &headers
+	return r
 }
 
-func (s *UpdateListenerRequest) WithCertificateAuthorities(ca ...string) IUpdateListenerRequest {
-	s.CertificateAuthorities = &ca
-	return s
+func (r *UpdateListenerRequest) WithCertificateAuthorities(ca ...string) IUpdateListenerRequest {
+	r.CertificateAuthorities = &ca
+	return r
 }
 
-func (s *UpdateListenerRequest) WithClientCertificate(clientCert string) IUpdateListenerRequest {
-	s.ClientCertificate = &clientCert
-	return s
+func (r *UpdateListenerRequest) WithClientCertificate(clientCert string) IUpdateListenerRequest {
+	r.ClientCertificate = &clientCert
+	return r
 }
 
-func (s *UpdateListenerRequest) WithDefaultCertificateAuthority(defaultCA string) IUpdateListenerRequest {
-	s.DefaultCertificateAuthority = &defaultCA
-	return s
+func (r *UpdateListenerRequest) WithDefaultCertificateAuthority(defaultCA string) IUpdateListenerRequest {
+	r.DefaultCertificateAuthority = &defaultCA
+	return r
 }

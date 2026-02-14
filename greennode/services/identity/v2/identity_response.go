@@ -13,9 +13,9 @@ type GetAccessTokenResponse struct {
 	RefreshExpiresIn int    `json:"refresh_expires_in"`
 }
 
-func (s *GetAccessTokenResponse) ToEntityAccessToken() *entity.AccessToken {
+func (r *GetAccessTokenResponse) ToEntityAccessToken() *entity.AccessToken {
 	return &entity.AccessToken{
-		Token:     s.AccessToken,
-		ExpiresAt: time.Now().Add(time.Duration(s.ExpiresIn) * time.Second).UnixNano(),
+		Token:     r.AccessToken,
+		ExpiresAt: time.Now().Add(time.Duration(r.ExpiresIn) * time.Second).UnixNano(),
 	}
 }

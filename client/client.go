@@ -45,197 +45,197 @@ func NewSdkConfigure() SdkConfigure {
 	return &sdkConfigure{}
 }
 
-func (s *client) WithHTTPClient(client svcclient.HTTPClient) Client {
-	s.httpClient = client
-	return s
+func (c *client) WithHTTPClient(client svcclient.HTTPClient) Client {
+	c.httpClient = client
+	return c
 }
 
-func (s *client) WithContext(ctx context.Context) Client {
-	s.context = ctx
-	return s
+func (c *client) WithContext(ctx context.Context) Client {
+	c.context = ctx
+	return c
 }
 
-func (s *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfigure) Client {
-	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHTTPClient(s.context)
+func (c *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfigure) Client {
+	if c.httpClient == nil {
+		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	s.authOpt = authOpts // Assign the auth option to the client
+	c.authOpt = authOpts // Assign the auth option to the client
 
 	switch authOpts {
 	case svcclient.IamOauth2:
-		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(authConfig)).
+		c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	default:
-		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(authConfig)).
+		c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	}
 
-	return s
+	return c
 }
 
-func (s *client) WithRetryCount(retry int) Client {
-	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHTTPClient(s.context)
+func (c *client) WithRetryCount(retry int) Client {
+	if c.httpClient == nil {
+		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	s.httpClient.WithRetryCount(retry)
-	return s
+	c.httpClient.WithRetryCount(retry)
+	return c
 }
 
-func (s *client) WithKvDefaultHeaders(args ...string) Client {
-	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHTTPClient(s.context)
+func (c *client) WithKvDefaultHeaders(args ...string) Client {
+	if c.httpClient == nil {
+		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	s.httpClient.WithKvDefaultHeaders(args...)
-	return s
+	c.httpClient.WithKvDefaultHeaders(args...)
+	return c
 }
 
-func (s *client) WithSleep(sleep time.Duration) Client {
-	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHTTPClient(s.context)
+func (c *client) WithSleep(sleep time.Duration) Client {
+	if c.httpClient == nil {
+		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	s.httpClient.WithSleep(sleep)
-	return s
+	c.httpClient.WithSleep(sleep)
+	return c
 }
 
-func (s *client) WithProjectID(projectID string) Client {
-	s.projectID = projectID
-	if s.httpClient == nil {
-		return s
+func (c *client) WithProjectID(projectID string) Client {
+	c.projectID = projectID
+	if c.httpClient == nil {
+		return c
 	}
 
 	// So it needs to reconfigure the gateway project id
-	if s.vserverGateway != nil {
-		s.vserverGateway = gateway.NewVServerGateway(s.vserverGateway.GetEndpoint(), s.projectID, s.httpClient)
+	if c.vserverGateway != nil {
+		c.vserverGateway = gateway.NewVServerGateway(c.vserverGateway.GetEndpoint(), c.projectID, c.httpClient)
 	}
 
-	if s.vlbGateway != nil {
-		s.vlbGateway = gateway.NewVLBGateway(
-			s.vlbGateway.GetEndpoint(),
-			s.vserverGateway.GetEndpoint(),
-			s.projectID,
-			s.httpClient,
+	if c.vlbGateway != nil {
+		c.vlbGateway = gateway.NewVLBGateway(
+			c.vlbGateway.GetEndpoint(),
+			c.vserverGateway.GetEndpoint(),
+			c.projectID,
+			c.httpClient,
 		)
 	}
 
-	if s.vnetworkGateway != nil {
-		s.vnetworkGateway = gateway.NewVNetworkGateway(
-			s.vnetworkGateway.GetEndpoint(),
-			s.zoneID,
-			s.projectID,
-			s.userID,
-			s.httpClient,
+	if c.vnetworkGateway != nil {
+		c.vnetworkGateway = gateway.NewVNetworkGateway(
+			c.vnetworkGateway.GetEndpoint(),
+			c.zoneID,
+			c.projectID,
+			c.userID,
+			c.httpClient,
 		)
 	}
 
-	if s.vdnsGateway != nil {
-		s.vdnsGateway = gateway.NewVDnsGateway(s.vdnsGateway.GetEndpoint(), s.projectID, s.httpClient)
+	if c.vdnsGateway != nil {
+		c.vdnsGateway = gateway.NewVDnsGateway(c.vdnsGateway.GetEndpoint(), c.projectID, c.httpClient)
 	}
 
-	return s
+	return c
 }
 
-func (s *client) WithUserID(userID string) Client {
-	s.userID = userID
-	if s.vnetworkGateway != nil {
-		s.vnetworkGateway = gateway.NewVNetworkGateway(
-			s.vnetworkGateway.GetEndpoint(),
-			s.zoneID,
-			s.projectID,
-			s.userID,
-			s.httpClient,
+func (c *client) WithUserID(userID string) Client {
+	c.userID = userID
+	if c.vnetworkGateway != nil {
+		c.vnetworkGateway = gateway.NewVNetworkGateway(
+			c.vnetworkGateway.GetEndpoint(),
+			c.zoneID,
+			c.projectID,
+			c.userID,
+			c.httpClient,
 		)
 	}
 
-	return s
+	return c
 }
 
-func (s *client) Configure(sdkCfg SdkConfigure) Client {
-	s.projectID = sdkCfg.GetProjectID()
-	s.userID = sdkCfg.GetUserID()
-	if s.httpClient == nil {
-		s.httpClient = svcclient.NewHTTPClient(s.context)
+func (c *client) Configure(sdkCfg SdkConfigure) Client {
+	c.projectID = sdkCfg.GetProjectID()
+	c.userID = sdkCfg.GetUserID()
+	if c.httpClient == nil {
+		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	if s.iamGateway == nil && sdkCfg.IamEndpoint() != "" {
-		s.iamGateway = gateway.NewIamGateway(sdkCfg.IamEndpoint(), s.projectID, s.httpClient)
+	if c.iamGateway == nil && sdkCfg.IamEndpoint() != "" {
+		c.iamGateway = gateway.NewIamGateway(sdkCfg.IamEndpoint(), c.projectID, c.httpClient)
 	}
 
-	if s.vserverGateway == nil && sdkCfg.VServerEndpoint() != "" {
-		s.vserverGateway = gateway.NewVServerGateway(
+	if c.vserverGateway == nil && sdkCfg.VServerEndpoint() != "" {
+		c.vserverGateway = gateway.NewVServerGateway(
 			sdkCfg.VServerEndpoint(),
-			s.projectID,
-			s.httpClient,
+			c.projectID,
+			c.httpClient,
 		)
 	}
 
-	if s.vlbGateway == nil && sdkCfg.VLBEndpoint() != "" && sdkCfg.VServerEndpoint() != "" {
-		s.vlbGateway = gateway.NewVLBGateway(
+	if c.vlbGateway == nil && sdkCfg.VLBEndpoint() != "" && sdkCfg.VServerEndpoint() != "" {
+		c.vlbGateway = gateway.NewVLBGateway(
 			sdkCfg.VLBEndpoint(),
 			sdkCfg.VServerEndpoint(),
-			s.projectID,
-			s.httpClient,
+			c.projectID,
+			c.httpClient,
 		)
 	}
 
-	if s.vnetworkGateway == nil && sdkCfg.VNetworkEndpoint() != "" {
-		s.vnetworkGateway = gateway.NewVNetworkGateway(
+	if c.vnetworkGateway == nil && sdkCfg.VNetworkEndpoint() != "" {
+		c.vnetworkGateway = gateway.NewVNetworkGateway(
 			sdkCfg.VNetworkEndpoint(),
 			sdkCfg.GetZoneID(),
-			s.projectID,
-			s.userID,
-			s.httpClient,
+			c.projectID,
+			c.userID,
+			c.httpClient,
 		)
 	}
 
-	if s.glbGateway == nil && sdkCfg.GLBEndpoint() != "" {
-		s.glbGateway = gateway.NewGLBGateway(sdkCfg.GLBEndpoint(), s.httpClient)
+	if c.glbGateway == nil && sdkCfg.GLBEndpoint() != "" {
+		c.glbGateway = gateway.NewGLBGateway(sdkCfg.GLBEndpoint(), c.httpClient)
 	}
 
-	if s.vdnsGateway == nil && sdkCfg.VDnsEndpoint() != "" {
-		s.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.VDnsEndpoint(), s.projectID, s.httpClient)
+	if c.vdnsGateway == nil && sdkCfg.VDnsEndpoint() != "" {
+		c.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.VDnsEndpoint(), c.projectID, c.httpClient)
 	}
 
-	s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(sdkCfg))
-	s.userAgent = sdkCfg.UserAgent()
+	c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(sdkCfg))
+	c.userAgent = sdkCfg.UserAgent()
 
-	return s
+	return c
 }
 
-func (s *client) IamGateway() gateway.IamGateway {
-	return s.iamGateway
+func (c *client) IamGateway() gateway.IamGateway {
+	return c.iamGateway
 }
 
-func (s *client) VServerGateway() gateway.VServerGateway {
-	return s.vserverGateway
+func (c *client) VServerGateway() gateway.VServerGateway {
+	return c.vserverGateway
 }
 
-func (s *client) VLBGateway() gateway.VLBGateway {
-	return s.vlbGateway
+func (c *client) VLBGateway() gateway.VLBGateway {
+	return c.vlbGateway
 }
 
-func (s *client) VBackUpGateway() gateway.VBackUpGateway {
-	return s.vbackupGateway
+func (c *client) VBackUpGateway() gateway.VBackUpGateway {
+	return c.vbackupGateway
 }
 
-func (s *client) VNetworkGateway() gateway.VNetworkGateway {
-	return s.vnetworkGateway
+func (c *client) VNetworkGateway() gateway.VNetworkGateway {
+	return c.vnetworkGateway
 }
 
-func (s *client) GLBGateway() gateway.GLBGateway {
-	return s.glbGateway
+func (c *client) GLBGateway() gateway.GLBGateway {
+	return c.glbGateway
 }
 
-func (s *client) VDnsGateway() gateway.VDnsGateway {
-	return s.vdnsGateway
+func (c *client) VDnsGateway() gateway.VDnsGateway {
+	return c.vdnsGateway
 }
 
-func (s *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
+func (c *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
 	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
-		token, err := s.iamGateway.V2().IdentityService().GetAccessToken(
+		token, err := c.iamGateway.V2().IdentityService().GetAccessToken(
 			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))
 		if err != nil {
 			return nil, err
@@ -247,6 +247,6 @@ func (s *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svc
 	return authFunc
 }
 
-func (s *client) UserAgent() string {
-	return s.userAgent
+func (c *client) UserAgent() string {
+	return c.userAgent
 }

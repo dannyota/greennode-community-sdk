@@ -4,14 +4,14 @@ type BlockVolumeCommon struct {
 	BlockVolumeID string
 }
 
-func (s *BlockVolumeCommon) GetBlockVolumeID() string {
-	return s.BlockVolumeID
+func (b *BlockVolumeCommon) GetBlockVolumeID() string {
+	return b.BlockVolumeID
 }
 
 type VolumeTypeCommon struct {
 	VolumeTypeID string
 }
 
-func (s *VolumeTypeCommon) GetVolumeTypeID() string {
-	return s.VolumeTypeID
+func (v *VolumeTypeCommon) GetVolumeTypeID() string {
+	return v.VolumeTypeID
 }

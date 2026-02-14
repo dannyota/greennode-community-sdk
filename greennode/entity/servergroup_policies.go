@@ -11,18 +11,18 @@ type ListServerGroupPolicies struct {
 	Items []*ServerGroupPolicy
 }
 
-func (s *ListServerGroupPolicies) Add(item *ServerGroupPolicy) {
-	s.Items = append(s.Items, item)
+func (l *ListServerGroupPolicies) Add(item *ServerGroupPolicy) {
+	l.Items = append(l.Items, item)
 }
 
-func (s *ListServerGroupPolicies) At(idx int) *ServerGroupPolicy {
-	if idx < 0 || idx >= s.Len() {
+func (l *ListServerGroupPolicies) At(idx int) *ServerGroupPolicy {
+	if idx < 0 || idx >= l.Len() {
 		return nil
 	}
 
-	return s.Items[idx]
+	return l.Items[idx]
 }
 
-func (s *ListServerGroupPolicies) Len() int {
-	return len(s.Items)
+func (l *ListServerGroupPolicies) Len() int {
+	return len(l.Items)
 }

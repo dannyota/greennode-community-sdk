@@ -126,51 +126,51 @@ func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc client.HT
 	}
 }
 
-func (s *iamGateway) V2() IamGatewayV2 {
-	return s.iamGatewayV2
+func (g *iamGateway) V2() IamGatewayV2 {
+	return g.iamGatewayV2
 }
 
-func (s *vserverGateway) V1() VServerGatewayV1 {
-	return s.vserverGatewayV1
+func (g *vserverGateway) V1() VServerGatewayV1 {
+	return g.vserverGatewayV1
 }
 
-func (s *vserverGateway) V2() VServerGatewayV2 {
-	return s.vserverGatewayV2
+func (g *vserverGateway) V2() VServerGatewayV2 {
+	return g.vserverGatewayV2
 }
-func (s *vserverGateway) InternalV1() VServerGatewayInternalV1 {
-	return s.vserverGatewayInternalV1
-}
-
-func (s *vlbGateway) Internal() VLBGatewayInternal {
-	return s.vlbGatewayInternal
+func (g *vserverGateway) InternalV1() VServerGatewayInternalV1 {
+	return g.vserverGatewayInternalV1
 }
 
-func (s *vlbGateway) V2() VLBGatewayV2 {
-	return s.vlbGatewayV2
+func (g *vlbGateway) Internal() VLBGatewayInternal {
+	return g.vlbGatewayInternal
 }
 
-func (s *vserverGateway) GetEndpoint() string {
-	return s.endpoint
+func (g *vlbGateway) V2() VLBGatewayV2 {
+	return g.vlbGatewayV2
 }
 
-func (s *vlbGateway) GetEndpoint() string {
-	return s.endpoint
+func (g *vserverGateway) GetEndpoint() string {
+	return g.endpoint
 }
 
-func (s *vnetworkGateway) V1() VNetworkGatewayV1 {
-	return s.vnetworkGatewayV1
+func (g *vlbGateway) GetEndpoint() string {
+	return g.endpoint
 }
 
-func (s *vnetworkGateway) V2() VNetworkGatewayV1 {
-	return s.vnetworkGatewayV2
+func (g *vnetworkGateway) V1() VNetworkGatewayV1 {
+	return g.vnetworkGatewayV1
 }
 
-func (s *vnetworkGateway) GetEndpoint() string {
-	return s.endpoint
+func (g *vnetworkGateway) V2() VNetworkGatewayV1 {
+	return g.vnetworkGatewayV2
 }
 
-func (s *vnetworkGateway) InternalV1() VNetworkGatewayInternalV1 {
-	return s.vnetworkGatewayInternalV1
+func (g *vnetworkGateway) GetEndpoint() string {
+	return g.endpoint
+}
+
+func (g *vnetworkGateway) InternalV1() VNetworkGatewayInternalV1 {
+	return g.vnetworkGatewayInternalV1
 }
 
 var _ GLBGateway = &glbGateway{}
@@ -191,8 +191,8 @@ func NewGLBGateway(endpoint string, hc client.HTTPClient) GLBGateway {
 	}
 }
 
-func (s *glbGateway) V1() GLBGatewayV1 {
-	return s.glbGatewayV1
+func (g *glbGateway) V1() GLBGatewayV1 {
+	return g.glbGatewayV1
 }
 
 var _ GLBGatewayV1 = &glbGatewayV1{}
@@ -201,8 +201,8 @@ type glbGatewayV1 struct {
 	glbService glb.GLBServiceV1
 }
 
-func (s *glbGatewayV1) GLBService() glb.GLBServiceV1 {
-	return s.glbService
+func (g *glbGatewayV1) GLBService() glb.GLBServiceV1 {
+	return g.glbService
 }
 
 func NewGLBGatewayV1(svcClient client.ServiceClient) GLBGatewayV1 {
@@ -237,20 +237,20 @@ func NewVDnsGateway(endpoint, projectID string, hc client.HTTPClient) VDnsGatewa
 	}
 }
 
-func (s *vdnsGateway) V1() VDnsGatewayV1 {
+func (g *vdnsGateway) V1() VDnsGatewayV1 {
 	return &vdnsGatewayV1{
-		dnsService: s.dnsService,
+		dnsService: g.dnsService,
 	}
 }
 
-func (s *vdnsGateway) Internal() VDnsGatewayInternal {
+func (g *vdnsGateway) Internal() VDnsGatewayInternal {
 	return &vdnsGatewayInternal{
-		dnsService: s.dnsServiceInternal,
+		dnsService: g.dnsServiceInternal,
 	}
 }
 
-func (s *vdnsGateway) GetEndpoint() string {
-	return s.endpoint
+func (g *vdnsGateway) GetEndpoint() string {
+	return g.endpoint
 }
 
 var _ VDnsGatewayV1 = &vdnsGatewayV1{}
@@ -259,8 +259,8 @@ type vdnsGatewayV1 struct {
 	dnsService dns.VDnsServiceV1
 }
 
-func (s *vdnsGatewayV1) DnsService() dns.VDnsServiceV1 {
-	return s.dnsService
+func (g *vdnsGatewayV1) DnsService() dns.VDnsServiceV1 {
+	return g.dnsService
 }
 
 var _ VDnsGatewayInternal = &vdnsGatewayInternal{}
@@ -269,6 +269,6 @@ type vdnsGatewayInternal struct {
 	dnsService dns.VDnsServiceInternal
 }
 
-func (s *vdnsGatewayInternal) DnsService() dns.VDnsServiceInternal {
-	return s.dnsService
+func (g *vdnsGatewayInternal) DnsService() dns.VDnsServiceInternal {
+	return g.dnsService
 }

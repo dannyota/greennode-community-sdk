@@ -30,9 +30,9 @@ func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) IDeleteSecgroupRule
 	return opt
 }
 
-func (s *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) IListSecgroupRulesBySecgroupIDRequest {
@@ -79,26 +79,26 @@ type ( //_______________________________________________________________________
 	SecgroupRuleProtocol  string
 )
 
-func (s *CreateSecgroupRuleRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateSecgroupRuleRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateSecgroupRuleRequest) ToMap() map[string]interface{} {
+func (r *CreateSecgroupRuleRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"description":     s.Description,
-		"direction":       s.Direction,
-		"etherType":       s.EtherType,
-		"portRangeMax":    s.PortRangeMax,
-		"portRangeMin":    s.PortRangeMin,
-		"protocol":        s.Protocol,
-		"remoteIpPrefix":  s.RemoteIPPrefix,
-		"securityGroupId": s.SecurityGroupID,
+		"description":     r.Description,
+		"direction":       r.Direction,
+		"etherType":       r.EtherType,
+		"portRangeMax":    r.PortRangeMax,
+		"portRangeMin":    r.PortRangeMin,
+		"protocol":        r.Protocol,
+		"remoteIpPrefix":  r.RemoteIPPrefix,
+		"securityGroupId": r.SecurityGroupID,
 	}
 }
 
-func (s *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) ICreateSecgroupRuleRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) ICreateSecgroupRuleRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type DeleteSecgroupRuleByIDRequest struct { //__________________________________________________________________________
@@ -108,8 +108,8 @@ type DeleteSecgroupRuleByIDRequest struct { //__________________________________
 	common.SecgroupCommon
 }
 
-func (s *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
-	return s.SecgroupRuleID
+func (r *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
+	return r.SecgroupRuleID
 }
 
 type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________________________________________________
@@ -117,7 +117,7 @@ type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________
 	common.UserAgent
 }
 
-func (s *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }

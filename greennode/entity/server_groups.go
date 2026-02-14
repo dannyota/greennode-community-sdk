@@ -22,12 +22,12 @@ type ListServerGroups struct {
 	TotalItem int
 }
 
-func (s *ListServerGroups) Add(item *ServerGroup) {
-	s.Items = append(s.Items, item)
+func (l *ListServerGroups) Add(item *ServerGroup) {
+	l.Items = append(l.Items, item)
 }
 
-func (s *ListServerGroups) FindServerGroupByServerGroupID(serverGroupID string) (*ServerGroup, bool) {
-	for _, item := range s.Items {
+func (l *ListServerGroups) FindServerGroupByServerGroupID(serverGroupID string) (*ServerGroup, bool) {
+	for _, item := range l.Items {
 		if item.UUID == serverGroupID {
 			return item, true
 		}

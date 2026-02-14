@@ -40,14 +40,14 @@ type ListGlobalLoadBalancersRequest struct {
 	common.UserAgent
 }
 
-func (s *ListGlobalLoadBalancersRequest) WithName(name string) IListGlobalLoadBalancersRequest {
-	s.Name = name
-	return s
+func (r *ListGlobalLoadBalancersRequest) WithName(name string) IListGlobalLoadBalancersRequest {
+	r.Name = name
+	return r
 }
 
-func (s *ListGlobalLoadBalancersRequest) WithTags(tags ...string) IListGlobalLoadBalancersRequest {
-	if s.Tags == nil {
-		s.Tags = make([]common.Tag, 0)
+func (r *ListGlobalLoadBalancersRequest) WithTags(tags ...string) IListGlobalLoadBalancersRequest {
+	if r.Tags == nil {
+		r.Tags = make([]common.Tag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -55,20 +55,20 @@ func (s *ListGlobalLoadBalancersRequest) WithTags(tags ...string) IListGlobalLoa
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
+func (r *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	v := url.Values{}
-	v.Set("name", s.Name)
-	v.Set("offset", strconv.Itoa(s.Offset))
-	v.Set("limit", strconv.Itoa(s.Limit))
+	v.Set("name", r.Name)
+	v.Set("offset", strconv.Itoa(r.Offset))
+	v.Set("limit", strconv.Itoa(r.Limit))
 
-	tuples := make([]string, 0, len(s.Tags))
-	for _, tag := range s.Tags {
+	tuples := make([]string, 0, len(r.Tags))
+	for _, tag := range r.Tags {
 		if tag.Key == "" {
 			continue
 		}
@@ -87,13 +87,13 @@ func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (s *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
+func (r *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d", defaultOffsetListGlobalLoadBalancer, defaultLimitListGlobalLoadBalancer)
 }
 
-func (s *ListGlobalLoadBalancersRequest) AddUserAgent(agent ...string) IListGlobalLoadBalancersRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListGlobalLoadBalancersRequest) AddUserAgent(agent ...string) IListGlobalLoadBalancersRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 // --------------------------------------------------------------------------
@@ -112,57 +112,57 @@ type CreateGlobalLoadBalancerRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithDescription(desc string) ICreateGlobalLoadBalancerRequest {
-	s.Description = desc
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithDescription(desc string) ICreateGlobalLoadBalancerRequest {
+	r.Description = desc
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithName(name string) ICreateGlobalLoadBalancerRequest {
-	s.Name = name
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithName(name string) ICreateGlobalLoadBalancerRequest {
+	r.Name = name
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithType(typeVal GlobalLoadBalancerType) ICreateGlobalLoadBalancerRequest {
-	s.Type = typeVal
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithType(typeVal GlobalLoadBalancerType) ICreateGlobalLoadBalancerRequest {
+	r.Type = typeVal
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithPackage(packageID string) ICreateGlobalLoadBalancerRequest {
-	s.Package = packageID
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithPackage(packageID string) ICreateGlobalLoadBalancerRequest {
+	r.Package = packageID
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithPaymentFlow(paymentFlow GlobalLoadBalancerPaymentFlow) ICreateGlobalLoadBalancerRequest {
-	s.PaymentFlow = paymentFlow
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithPaymentFlow(paymentFlow GlobalLoadBalancerPaymentFlow) ICreateGlobalLoadBalancerRequest {
+	r.PaymentFlow = paymentFlow
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithGlobalListener(listener ICreateGlobalListenerRequest) ICreateGlobalLoadBalancerRequest {
-	s.GlobalListener = listener
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithGlobalListener(listener ICreateGlobalListenerRequest) ICreateGlobalLoadBalancerRequest {
+	r.GlobalListener = listener
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool ICreateGlobalPoolRequest) ICreateGlobalLoadBalancerRequest {
-	s.GlobalPool = pool
-	return s
+func (r *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool ICreateGlobalPoolRequest) ICreateGlobalLoadBalancerRequest {
+	r.GlobalPool = pool
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateGlobalLoadBalancerRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) ICreateGlobalLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) ICreateGlobalLoadBalancerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateGlobalLoadBalancerRequest) ToMap() map[string]interface{} {
+func (r *CreateGlobalLoadBalancerRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"description":    s.Description,
-		"name":           s.Name,
-		"type":           s.Type,
-		"globalListener": s.GlobalListener,
-		"globalPool":     s.GlobalPool,
+		"description":    r.Description,
+		"name":           r.Name,
+		"type":           r.Type,
+		"globalListener": r.GlobalListener,
+		"globalPool":     r.GlobalPool,
 	}
 }
 
@@ -188,14 +188,14 @@ type DeleteGlobalLoadBalancerRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest {
-	s.LoadBalancerID = lbID
-	return s
+func (r *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest {
+	r.LoadBalancerID = lbID
+	return r
 }
 
-func (s *DeleteGlobalLoadBalancerRequest) AddUserAgent(agent ...string) IDeleteGlobalLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteGlobalLoadBalancerRequest) AddUserAgent(agent ...string) IDeleteGlobalLoadBalancerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewDeleteGlobalLoadBalancerRequest(lbID string) IDeleteGlobalLoadBalancerRequest {
@@ -215,9 +215,9 @@ type ListGlobalPackagesRequest struct {
 	common.UserAgent
 }
 
-func (s *ListGlobalPackagesRequest) AddUserAgent(agent ...string) IListGlobalPackagesRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListGlobalPackagesRequest) AddUserAgent(agent ...string) IListGlobalPackagesRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewListGlobalPackagesRequest() IListGlobalPackagesRequest {
@@ -233,9 +233,9 @@ type ListGlobalRegionsRequest struct {
 	common.UserAgent
 }
 
-func (s *ListGlobalRegionsRequest) AddUserAgent(agent ...string) IListGlobalRegionsRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListGlobalRegionsRequest) AddUserAgent(agent ...string) IListGlobalRegionsRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewListGlobalRegionsRequest() IListGlobalRegionsRequest {
@@ -256,47 +256,47 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.LoadBalancerID = lbID
-	return s
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	r.LoadBalancerID = lbID
+	return r
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithFrom(from string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.From = from
-	return s
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithFrom(from string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	r.From = from
+	return r
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithTo(to string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.To = to
-	return s
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithTo(to string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	r.To = to
+	return r
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithType(typeVal string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.Type = typeVal
-	return s
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithType(typeVal string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	r.Type = typeVal
+	return r
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, error) {
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, error) {
 	v := url.Values{}
-	if s.From != "" {
-		v.Set("from", s.From)
+	if r.From != "" {
+		v.Set("from", r.From)
 	}
-	if s.To != "" {
-		v.Set("to", s.To)
+	if r.To != "" {
+		v.Set("to", r.To)
 	}
-	if s.Type != "" {
-		v.Set("type", s.Type)
+	if r.Type != "" {
+		v.Set("type", r.Type)
 	}
 	return v.Encode(), nil
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {
 	return ""
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerUsageHistoriesRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerUsageHistoriesRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) IGetGlobalLoadBalancerUsageHistoriesRequest {
@@ -320,14 +320,14 @@ type GetGlobalLoadBalancerByIDRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest {
-	s.LoadBalancerID = lbID
-	return s
+func (r *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest {
+	r.LoadBalancerID = lbID
+	return r
 }
 
-func (s *GetGlobalLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetGlobalLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewGetGlobalLoadBalancerByIDRequest(lbID string) IGetGlobalLoadBalancerByIDRequest {

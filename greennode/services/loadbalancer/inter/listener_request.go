@@ -45,79 +45,79 @@ type CreateListenerRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateListenerRequest) ToRequestBody() interface{} {
-	if s == nil {
+func (r *CreateListenerRequest) ToRequestBody() interface{} {
+	if r == nil {
 		return nil
 	}
 
-	if s.ListenerProtocol == ListenerProtocolHTTPS {
-		return s
+	if r.ListenerProtocol == ListenerProtocolHTTPS {
+		return r
 	}
 
-	s.CertificateAuthorities = nil
-	s.ClientCertificate = nil
-	s.DefaultCertificateAuthority = nil
+	r.CertificateAuthorities = nil
+	r.ClientCertificate = nil
+	r.DefaultCertificateAuthority = nil
 
-	return s
+	return r
 }
 
-func (s *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
 	if len(cidrs) < 1 {
-		return s
+		return r
 	}
 
-	s.AllowedCidrs = strings.Join(cidrs, ",")
-	return s
+	r.AllowedCidrs = strings.Join(cidrs, ",")
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
-	s.TimeoutClient = toc
-	return s
+func (r *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
+	r.TimeoutClient = toc
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
-	s.TimeoutConnection = toc
-	return s
+func (r *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
+	r.TimeoutConnection = toc
+	return r
 }
 
-func (s *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
-	s.TimeoutMember = tom
-	return s
+func (r *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
+	r.TimeoutMember = tom
+	return r
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
-	s.LoadBalancerID = lbid
-	return s
+func (r *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
+	r.LoadBalancerID = lbid
+	return r
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
-	s.DefaultPoolID = &poolID
-	return s
+func (r *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
+	r.DefaultPoolID = &poolID
+	return r
 }
 
-func (s *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
 	if len(cidrs) < 1 {
-		return s
+		return r
 	}
 
-	if s.AllowedCidrs == "" {
-		return s.WithAllowedCidrs(cidrs...)
+	if r.AllowedCidrs == "" {
+		return r.WithAllowedCidrs(cidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(cidrs, ",")
+		r.AllowedCidrs = r.AllowedCidrs + "," + strings.Join(cidrs, ",")
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateListenerRequest) ToMap() map[string]interface{} {
+func (r *CreateListenerRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"listenerName":         s.ListenerName,
-		"listenerProtocol":     s.ListenerProtocol,
-		"listenerProtocolPort": s.ListenerProtocolPort,
-		"timeoutClient":        s.TimeoutClient,
-		"timeoutConnection":    s.TimeoutConnection,
-		"timeoutMember":        s.TimeoutMember,
-		"allowedCidrs":         s.AllowedCidrs,
-		"defaultPoolId":        s.DefaultPoolID,
+		"listenerName":         r.ListenerName,
+		"listenerProtocol":     r.ListenerProtocol,
+		"listenerProtocolPort": r.ListenerProtocolPort,
+		"timeoutClient":        r.TimeoutClient,
+		"timeoutConnection":    r.TimeoutConnection,
+		"timeoutMember":        r.TimeoutMember,
+		"allowedCidrs":         r.AllowedCidrs,
+		"defaultPoolId":        r.DefaultPoolID,
 	}
 }

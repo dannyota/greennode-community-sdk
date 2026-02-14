@@ -46,112 +46,112 @@ type sdkConfigure struct {
 	userAgent        string
 }
 
-func (s *sdkConfigure) GetClientID() string {
-	return s.clientID
+func (c *sdkConfigure) GetClientID() string {
+	return c.clientID
 }
 
-func (s *sdkConfigure) GetClientSecret() string {
-	return s.clientSecret
+func (c *sdkConfigure) GetClientSecret() string {
+	return c.clientSecret
 }
 
-func (s *sdkConfigure) GetProjectID() string {
-	return s.projectID
+func (c *sdkConfigure) GetProjectID() string {
+	return c.projectID
 }
 
-func (s *sdkConfigure) GetUserID() string {
-	return s.userID
+func (c *sdkConfigure) GetUserID() string {
+	return c.userID
 }
 
-func (s *sdkConfigure) GetZoneID() string {
-	return s.zoneID
+func (c *sdkConfigure) GetZoneID() string {
+	return c.zoneID
 }
 
-func (s *sdkConfigure) IamEndpoint() string {
-	return s.iamEndpoint
+func (c *sdkConfigure) IamEndpoint() string {
+	return c.iamEndpoint
 }
 
-func (s *sdkConfigure) VServerEndpoint() string {
-	return s.vserverEndpoint
+func (c *sdkConfigure) VServerEndpoint() string {
+	return c.vserverEndpoint
 }
 
-func (s *sdkConfigure) VLBEndpoint() string {
-	return s.vlbEndpoint
+func (c *sdkConfigure) VLBEndpoint() string {
+	return c.vlbEndpoint
 }
 
-func (s *sdkConfigure) GLBEndpoint() string {
-	return s.glbEndpoint
+func (c *sdkConfigure) GLBEndpoint() string {
+	return c.glbEndpoint
 }
 
-func (s *sdkConfigure) VNetworkEndpoint() string {
-	return s.vnetworkEndpoint
+func (c *sdkConfigure) VNetworkEndpoint() string {
+	return c.vnetworkEndpoint
 }
 
-func (s *sdkConfigure) VDnsEndpoint() string {
-	return s.vdnsEndpoint
+func (c *sdkConfigure) VDnsEndpoint() string {
+	return c.vdnsEndpoint
 }
 
-func (s *sdkConfigure) UserAgent() string {
-	return s.userAgent
+func (c *sdkConfigure) UserAgent() string {
+	return c.userAgent
 }
 
-func (s *sdkConfigure) WithUserAgent(userAgent string) SdkConfigure {
-	s.userAgent = userAgent
-	return s
+func (c *sdkConfigure) WithUserAgent(userAgent string) SdkConfigure {
+	c.userAgent = userAgent
+	return c
 }
 
-func (s *sdkConfigure) WithClientID(clientID string) SdkConfigure {
-	s.clientID = clientID
-	return s
+func (c *sdkConfigure) WithClientID(clientID string) SdkConfigure {
+	c.clientID = clientID
+	return c
 }
 
-func (s *sdkConfigure) WithClientSecret(clientSecret string) SdkConfigure {
-	s.clientSecret = clientSecret
-	return s
+func (c *sdkConfigure) WithClientSecret(clientSecret string) SdkConfigure {
+	c.clientSecret = clientSecret
+	return c
 }
 
-func (s *sdkConfigure) WithUserID(userID string) SdkConfigure {
-	s.userID = userID
-	return s
+func (c *sdkConfigure) WithUserID(userID string) SdkConfigure {
+	c.userID = userID
+	return c
 }
 
-func (s *sdkConfigure) WithZoneID(zoneID string) SdkConfigure {
-	s.zoneID = zoneID
-	return s
+func (c *sdkConfigure) WithZoneID(zoneID string) SdkConfigure {
+	c.zoneID = zoneID
+	return c
 }
 
-func (s *sdkConfigure) WithProjectID(projectID string) SdkConfigure {
-	s.projectID = projectID
-	return s
+func (c *sdkConfigure) WithProjectID(projectID string) SdkConfigure {
+	c.projectID = projectID
+	return c
 }
 
-func (s *sdkConfigure) WithIamEndpoint(iamEndpoint string) SdkConfigure {
-	s.iamEndpoint = normalizeURL(iamEndpoint)
-	return s
+func (c *sdkConfigure) WithIamEndpoint(iamEndpoint string) SdkConfigure {
+	c.iamEndpoint = normalizeURL(iamEndpoint)
+	return c
 }
 
-func (s *sdkConfigure) WithVServerEndpoint(vserverEndpoint string) SdkConfigure {
-	s.vserverEndpoint = normalizeURL(vserverEndpoint)
-	return s
+func (c *sdkConfigure) WithVServerEndpoint(vserverEndpoint string) SdkConfigure {
+	c.vserverEndpoint = normalizeURL(vserverEndpoint)
+	return c
 }
 
-func (s *sdkConfigure) WithVLBEndpoint(vlbEndpoint string) SdkConfigure {
-	s.vlbEndpoint = normalizeURL(vlbEndpoint)
-	return s
+func (c *sdkConfigure) WithVLBEndpoint(vlbEndpoint string) SdkConfigure {
+	c.vlbEndpoint = normalizeURL(vlbEndpoint)
+	return c
 }
 
-func (s *sdkConfigure) WithVNetworkEndpoint(vnetworkEndpoint string) SdkConfigure {
-	s.vnetworkEndpoint = normalizeURL(vnetworkEndpoint)
-	return s
+func (c *sdkConfigure) WithVNetworkEndpoint(vnetworkEndpoint string) SdkConfigure {
+	c.vnetworkEndpoint = normalizeURL(vnetworkEndpoint)
+	return c
 }
 
-func (s *sdkConfigure) WithVDnsEndpoint(vdnsEndpoint string) SdkConfigure {
-	s.vdnsEndpoint = normalizeURL(vdnsEndpoint)
-	return s
+func (c *sdkConfigure) WithVDnsEndpoint(vdnsEndpoint string) SdkConfigure {
+	c.vdnsEndpoint = normalizeURL(vdnsEndpoint)
+	return c
 }
 
-func (s *sdkConfigure) WithGLBEndpoint(vlbEndpoint string) SdkConfigure {
-	s.glbEndpoint = normalizeURL(vlbEndpoint)
-	return s
+func (c *sdkConfigure) WithGLBEndpoint(vlbEndpoint string) SdkConfigure {
+	c.glbEndpoint = normalizeURL(vlbEndpoint)
+	return c
 }
 
 func normalizeURL(u string) string {

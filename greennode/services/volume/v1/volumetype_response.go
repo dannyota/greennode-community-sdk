@@ -37,55 +37,55 @@ type ListVolumeTypeResponse struct {
 	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
-func (s *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
-	if len(s.VolumeTypes) == 0 {
+func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
+	if len(r.VolumeTypes) == 0 {
 		return nil
 	}
 
-	return s.VolumeTypes[0].toEntityVolumeType()
+	return r.VolumeTypes[0].toEntityVolumeType()
 }
 
-func (s *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
+func (r *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
 	return &entity.VolumeType{
-		ID:     s.ID,
-		ZoneID: s.ZoneID,
+		ID:     r.ID,
+		ZoneID: r.ZoneID,
 	}
 }
 
-func (s VolumeType) toEntityVolumeType() *entity.VolumeType {
+func (v VolumeType) toEntityVolumeType() *entity.VolumeType {
 	return &entity.VolumeType{
-		ID:         s.ID,
-		Iops:       s.Iops,
-		MaxSize:    s.MaxSize,
-		MinSize:    s.MinSize,
-		Name:       s.Name,
-		ThroughPut: s.ThroughPut,
-		ZoneID:     s.ZoneID,
+		ID:         v.ID,
+		Iops:       v.Iops,
+		MaxSize:    v.MaxSize,
+		MinSize:    v.MinSize,
+		Name:       v.Name,
+		ThroughPut: v.ThroughPut,
+		ZoneID:     v.ZoneID,
 	}
 }
 
-func (s VolumeTypeZone) toEntityVolumeTypeZone() *entity.VolumeTypeZone {
+func (v VolumeTypeZone) toEntityVolumeTypeZone() *entity.VolumeTypeZone {
 	return &entity.VolumeTypeZone{
-		ID:       s.ID,
-		Name:     s.Name,
-		PoolName: s.PoolName,
+		ID:       v.ID,
+		Name:     v.Name,
+		PoolName: v.PoolName,
 	}
 }
 
-func (s *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.ListVolumeTypeZones {
+func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.ListVolumeTypeZones {
 	sl := new(entity.ListVolumeTypeZones)
 
-	for _, item := range s.VolumeTypeZones {
+	for _, item := range r.VolumeTypeZones {
 		sl.VolumeTypeZones = append(sl.VolumeTypeZones, item.toEntityVolumeTypeZone())
 	}
 
 	return sl
 }
 
-func (s *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeType {
+func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeType {
 	sl := new(entity.ListVolumeType)
 
-	for _, item := range s.VolumeTypes {
+	for _, item := range r.VolumeTypes {
 		sl.VolumeTypes = append(sl.VolumeTypes, item.toEntityVolumeType())
 	}
 

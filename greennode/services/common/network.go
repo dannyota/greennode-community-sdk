@@ -4,24 +4,24 @@ type NetworkCommon struct {
 	NetworkID string
 }
 
-func (s *NetworkCommon) GetNetworkID() string {
-	return s.NetworkID
+func (n *NetworkCommon) GetNetworkID() string {
+	return n.NetworkID
 }
 
 type InternalNetworkInterfaceCommon struct {
 	InternalNetworkInterfaceID string
 }
 
-func (s *InternalNetworkInterfaceCommon) GetInternalNetworkInterfaceID() string {
-	return s.InternalNetworkInterfaceID
+func (i *InternalNetworkInterfaceCommon) GetInternalNetworkInterfaceID() string {
+	return i.InternalNetworkInterfaceID
 }
 
 type WanCommon struct {
 	WanID string
 }
 
-func (s *WanCommon) GetWanID() string {
-	return s.WanID
+func (w *WanCommon) GetWanID() string {
+	return w.WanID
 }
 
 type SecgroupCommon struct {

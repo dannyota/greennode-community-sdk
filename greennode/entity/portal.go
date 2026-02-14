@@ -17,8 +17,8 @@ type ListQuotas struct {
 	Items []*Quota
 }
 
-func (s *ListQuotas) FindQuotaByName(name string) *Quota {
-	for _, q := range s.Items {
+func (l *ListQuotas) FindQuotaByName(name string) *Quota {
+	for _, q := range l.Items {
 		if q.Name == name {
 			return q
 		}
@@ -37,10 +37,10 @@ func NewListPortals() *ListPortals {
 	}
 }
 
-func (s *ListPortals) At(index int) *Portal {
-	if index < 0 || index >= len(s.Items) {
+func (l *ListPortals) At(index int) *Portal {
+	if index < 0 || index >= len(l.Items) {
 		return nil
 	}
 
-	return s.Items[index]
+	return l.Items[index]
 }

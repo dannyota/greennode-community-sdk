@@ -15,6 +15,6 @@ func NewIamGatewayV2(svcClient client.ServiceClient) IamGatewayV2 {
 	}
 }
 
-func (s *iamGatewayV2) IdentityService() identity.IdentityServiceV2 {
-	return s.identityService
+func (g *iamGatewayV2) IdentityService() identity.IdentityServiceV2 {
+	return g.identityService
 }

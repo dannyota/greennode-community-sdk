@@ -37,18 +37,18 @@ type GetListVolumeTypeRequest struct {
 	VolumeTypeZoneID string
 }
 
-func (s *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
+func (r *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("zoneId=%s", defaultZoneGetVolumeTypeZonesRequest)
 }
 
-func (s *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
+func (r *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
 	v := url.Values{}
-	if s.ZoneID != "" {
-		v.Set("zoneId", s.ZoneID)
+	if r.ZoneID != "" {
+		v.Set("zoneId", r.ZoneID)
 	}
 	return v.Encode(), nil
 }
 
-func (s *GetListVolumeTypeRequest) GetVolumeTypeZoneID() string {
-	return s.VolumeTypeZoneID
+func (r *GetListVolumeTypeRequest) GetVolumeTypeZoneID() string {
+	return r.VolumeTypeZoneID
 }

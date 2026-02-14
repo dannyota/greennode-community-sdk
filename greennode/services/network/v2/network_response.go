@@ -11,13 +11,13 @@ type GetNetworkByIDResponse struct {
 	Cidr        string   `json:"cidr"`
 }
 
-func (s *GetNetworkByIDResponse) ToEntityNetwork() *entity.Network {
+func (r *GetNetworkByIDResponse) ToEntityNetwork() *entity.Network {
 	return &entity.Network{
-		Status:     s.Status,
-		ElasticIps: s.ElasticIps,
-		Name:       s.DisplayName,
-		ID:         s.ID,
-		CreatedAt:  s.CreatedAt,
-		Cidr:       s.Cidr,
+		Status:     r.Status,
+		ElasticIps: r.ElasticIps,
+		Name:       r.DisplayName,
+		ID:         r.ID,
+		CreatedAt:  r.CreatedAt,
+		Cidr:       r.Cidr,
 	}
 }

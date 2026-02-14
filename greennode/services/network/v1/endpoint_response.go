@@ -23,14 +23,14 @@ type EndpointTag struct {
 	UpdatedAt    string `json:"updatedAt,omitempty"`
 }
 
-func (s *Endpoint) toEntityEndpoint() *entity.Endpoint {
+func (e *Endpoint) toEntityEndpoint() *entity.Endpoint {
 	return &entity.Endpoint{
-		ID:          s.Uuid,
-		Name:        s.EndpointName,
-		VpcID:       s.VpcID,
-		IPv4Address: s.EndpointIp,
-		EndpointURL: s.EndpointURL,
-		Status:      s.Status,
+		ID:          e.Uuid,
+		Name:        e.EndpointName,
+		VpcID:       e.VpcID,
+		IPv4Address: e.EndpointIp,
+		EndpointURL: e.EndpointURL,
+		Status:      e.Status,
 	}
 }
 
@@ -38,8 +38,8 @@ type GetEndpointByIDResponse struct {
 	Data Endpoint `json:"data"`
 }
 
-func (s *GetEndpointByIDResponse) ToEntityEndpoint() *entity.Endpoint {
-	return s.Data.toEntityEndpoint()
+func (r *GetEndpointByIDResponse) ToEntityEndpoint() *entity.Endpoint {
+	return r.Data.toEntityEndpoint()
 }
 
 type CreateEndpointResponse struct {
@@ -49,10 +49,10 @@ type CreateEndpointResponse struct {
 	} `json:"data"`
 }
 
-func (s *CreateEndpointResponse) ToEntityEndpoint() *entity.Endpoint {
+func (r *CreateEndpointResponse) ToEntityEndpoint() *entity.Endpoint {
 	return &entity.Endpoint{
-		ID:   s.Data.Uuid,
-		Name: s.Data.Name,
+		ID:   r.Data.Uuid,
+		Name: r.Data.Name,
 	}
 }
 
@@ -64,17 +64,17 @@ type ListEndpointsResponse struct {
 	Total     int        `json:"total"`
 }
 
-func (s *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
-	items := make([]*entity.Endpoint, 0, len(s.Data))
-	for _, item := range s.Data {
+func (r *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
+	items := make([]*entity.Endpoint, 0, len(r.Data))
+	for _, item := range r.Data {
 		items = append(items, item.toEntityEndpoint())
 	}
 	return &entity.ListEndpoints{
 		Items:     items,
-		Page:      s.Page,
-		PageSize:  s.Size,
-		TotalPage: s.TotalPage,
-		TotalItem: s.Total,
+		Page:      r.Page,
+		PageSize:  r.Size,
+		TotalPage: r.TotalPage,
+		TotalItem: r.Total,
 	}
 }
 
@@ -82,9 +82,9 @@ type ListTagsByEndpointIDResponse struct {
 	Data []EndpointTag `json:"data"`
 }
 
-func (s *ListTagsByEndpointIDResponse) ToEntityListTags() *entity.ListTags {
-	items := make([]*entity.Tag, 0, len(s.Data))
-	for _, item := range s.Data {
+func (r *ListTagsByEndpointIDResponse) ToEntityListTags() *entity.ListTags {
+	items := make([]*entity.Tag, 0, len(r.Data))
+	for _, item := range r.Data {
 		items = append(items, &entity.Tag{
 			Key:        item.TagKey,
 			Value:      item.TagValue,

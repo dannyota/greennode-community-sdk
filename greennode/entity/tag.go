@@ -12,14 +12,14 @@ type ListTags struct {
 	Items []*Tag
 }
 
-func (s *ListTags) Len() int {
-	return len(s.Items)
+func (l *ListTags) Len() int {
+	return len(l.Items)
 }
 
-func (s *ListTags) Empty() bool {
-	return s.Len() < 1
+func (l *ListTags) Empty() bool {
+	return l.Len() < 1
 }
 
-func (s *ListTags) Add(tags ...*Tag) {
-	s.Items = append(s.Items, tags...)
+func (l *ListTags) Add(tags ...*Tag) {
+	l.Items = append(l.Items, tags...)
 }

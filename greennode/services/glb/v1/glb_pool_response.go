@@ -19,21 +19,21 @@ type GlobalPoolResponse struct {
 	GlobalPoolMembersResponse *[]GlobalPoolMemberResponse `json:"globalPoolMembers"`
 }
 
-func (s *GlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+func (r *GlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 	return &entity.GlobalPool{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		Algorithm:            s.Algorithm,
-		StickySession:        s.StickySession,
-		TLSEnabled:           s.TLSEnabled,
-		Protocol:             s.Protocol,
-		Status:               s.Status,
-		Health:               s.Health.ToEntityGlobalPoolHealthMonitor(),
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		Algorithm:            r.Algorithm,
+		StickySession:        r.StickySession,
+		TLSEnabled:           r.TLSEnabled,
+		Protocol:             r.Protocol,
+		Status:               r.Status,
+		Health:               r.Health.ToEntityGlobalPoolHealthMonitor(),
 	}
 }
 
@@ -57,25 +57,25 @@ type HealthResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *HealthResponse) ToEntityGlobalPoolHealthMonitor() *entity.GlobalPoolHealthMonitor {
+func (r *HealthResponse) ToEntityGlobalPoolHealthMonitor() *entity.GlobalPoolHealthMonitor {
 	return &entity.GlobalPoolHealthMonitor{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		GlobalPoolID:         s.GlobalPoolID,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		Protocol:             s.Protocol,
-		Path:                 s.Path,
-		Timeout:              s.Timeout,
-		IntervalTime:         s.IntervalTime,
-		HealthyThreshold:     s.HealthyThreshold,
-		UnhealthyThreshold:   s.UnhealthyThreshold,
-		DomainName:           s.DomainName,
-		HTTPVersion:          s.HTTPVersion,
-		HTTPMethod:           s.HTTPMethod,
-		SuccessCode:          s.SuccessCode,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		GlobalPoolID:         r.GlobalPoolID,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		Protocol:             r.Protocol,
+		Path:                 r.Path,
+		Timeout:              r.Timeout,
+		IntervalTime:         r.IntervalTime,
+		HealthyThreshold:     r.HealthyThreshold,
+		UnhealthyThreshold:   r.UnhealthyThreshold,
+		DomainName:           r.DomainName,
+		HTTPVersion:          r.HTTPVersion,
+		HTTPMethod:           r.HTTPMethod,
+		SuccessCode:          r.SuccessCode,
+		Status:               r.Status,
 	}
 }
 
@@ -96,25 +96,25 @@ type GlobalPoolMemberResponse struct {
 	Members              []*GlobalMemberResponse `json:"members"`
 }
 
-func (s *GlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
-	members := make([]*entity.GlobalPoolMemberDetail, 0, len(s.Members))
-	for _, member := range s.Members {
+func (r *GlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+	members := make([]*entity.GlobalPoolMemberDetail, 0, len(r.Members))
+	for _, member := range r.Members {
 		members = append(members, member.ToEntityGlobalMember())
 	}
 	return &entity.GlobalPoolMember{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Region:               s.Region,
-		GlobalPoolID:         s.GlobalPoolID,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		TrafficDial:          s.TrafficDial,
-		VpcID:                s.VpcID,
-		Type:                 s.Type,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Region:               r.Region,
+		GlobalPoolID:         r.GlobalPoolID,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		TrafficDial:          r.TrafficDial,
+		VpcID:                r.VpcID,
+		Type:                 r.Type,
+		Status:               r.Status,
 		Members:              &entity.ListGlobalMembers{Items: members},
 	}
 }
@@ -137,23 +137,23 @@ type GlobalMemberResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *GlobalMemberResponse) ToEntityGlobalMember() *entity.GlobalPoolMemberDetail {
+func (r *GlobalMemberResponse) ToEntityGlobalMember() *entity.GlobalPoolMemberDetail {
 	return &entity.GlobalPoolMemberDetail{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		GlobalPoolMemberID:   s.GlobalPoolMemberID,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		SubnetID:             s.SubnetID,
-		Address:              s.Address,
-		Weight:               s.Weight,
-		Port:                 s.Port,
-		MonitorPort:          s.MonitorPort,
-		BackupRole:           s.BackupRole,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		GlobalPoolMemberID:   r.GlobalPoolMemberID,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		SubnetID:             r.SubnetID,
+		Address:              r.Address,
+		Weight:               r.Weight,
+		Port:                 r.Port,
+		MonitorPort:          r.MonitorPort,
+		BackupRole:           r.BackupRole,
+		Status:               r.Status,
 	}
 }
 
@@ -161,16 +161,16 @@ func (s *GlobalMemberResponse) ToEntityGlobalMember() *entity.GlobalPoolMemberDe
 
 type ListGlobalPoolsResponse []*GlobalPoolResponse
 
-func (s *ListGlobalPoolsResponse) ToEntityListGlobalPools() *entity.ListGlobalPools {
+func (r *ListGlobalPoolsResponse) ToEntityListGlobalPools() *entity.ListGlobalPools {
 	result := &entity.ListGlobalPools{
 		Items: make([]*entity.GlobalPool, 0),
 	}
 
-	if s == nil || len(*s) < 1 {
+	if r == nil || len(*r) < 1 {
 		return result
 	}
 
-	for _, pool := range *s {
+	for _, pool := range *r {
 		result.Items = append(result.Items, pool.ToEntityPool())
 	}
 
@@ -192,16 +192,16 @@ type CreateGlobalPoolResponse struct {
 	GlobalPoolMembers    []*GlobalPoolMemberResponse `json:"globalPoolMembers"`
 }
 
-func (s *CreateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+func (r *CreateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 	return &entity.GlobalPool{
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		Algorithm:            s.Algorithm,
-		StickySession:        s.StickySession,
-		TLSEnabled:           s.TLSEnabled,
-		Protocol:             s.Protocol,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		Algorithm:            r.Algorithm,
+		StickySession:        r.StickySession,
+		TLSEnabled:           r.TLSEnabled,
+		Protocol:             r.Protocol,
 	}
 }
 
@@ -211,9 +211,9 @@ type UpdateGlobalPoolResponse struct {
 	ID string `json:"id"`
 }
 
-func (s *UpdateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+func (r *UpdateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 	return &entity.GlobalPool{
-		ID: s.ID,
+		ID: r.ID,
 	}
 }
 
@@ -221,16 +221,16 @@ func (s *UpdateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 
 type ListGlobalPoolMembersResponse []*GlobalPoolMemberResponse
 
-func (s *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *entity.ListGlobalPoolMembers {
+func (r *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *entity.ListGlobalPoolMembers {
 	result := &entity.ListGlobalPoolMembers{
 		Items: make([]*entity.GlobalPoolMember, 0),
 	}
 
-	if s == nil || len(*s) < 1 {
+	if r == nil || len(*r) < 1 {
 		return result
 	}
 
-	for _, member := range *s {
+	for _, member := range *r {
 		result.Items = append(result.Items, member.ToEntityGlobalPoolMember())
 	}
 
@@ -241,25 +241,25 @@ func (s *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *entity.
 
 type GetGlobalPoolMemberResponse GlobalPoolMemberResponse
 
-func (s *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
-	members := make([]*entity.GlobalPoolMemberDetail, 0, len(s.Members))
-	for _, member := range s.Members {
+func (r *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+	members := make([]*entity.GlobalPoolMemberDetail, 0, len(r.Members))
+	for _, member := range r.Members {
 		members = append(members, member.ToEntityGlobalMember())
 	}
 	return &entity.GlobalPoolMember{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Region:               s.Region,
-		GlobalPoolID:         s.GlobalPoolID,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		TrafficDial:          s.TrafficDial,
-		VpcID:                s.VpcID,
-		Type:                 s.Type,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Region:               r.Region,
+		GlobalPoolID:         r.GlobalPoolID,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		TrafficDial:          r.TrafficDial,
+		VpcID:                r.VpcID,
+		Type:                 r.Type,
+		Status:               r.Status,
 		Members:              &entity.ListGlobalMembers{Items: members},
 	}
 }
@@ -273,12 +273,12 @@ type UpdateGlobalPoolMemberResponse struct {
 	TrafficDial          int    `json:"trafficDial"`
 }
 
-func (s *UpdateGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+func (r *UpdateGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
 	return &entity.GlobalPoolMember{
-		ID:                   s.ID,
-		GlobalPoolID:         s.GlobalPoolID,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		TrafficDial:          s.TrafficDial,
+		ID:                   r.ID,
+		GlobalPoolID:         r.GlobalPoolID,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		TrafficDial:          r.TrafficDial,
 	}
 }
 

@@ -4,6 +4,6 @@ type VirtualAddressCommon struct {
 	VirtualAddressID string
 }
 
-func (s *VirtualAddressCommon) GetVirtualAddressID() string {
-	return s.VirtualAddressID
+func (v *VirtualAddressCommon) GetVirtualAddressID() string {
+	return v.VirtualAddressID
 }

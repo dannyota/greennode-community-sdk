@@ -11,21 +11,21 @@ type ListTagResponse struct {
 
 type ListTagsResponse []ListTagResponse
 
-func (s ListTagResponse) ToEntityTag() *entity.Tag {
+func (r ListTagResponse) ToEntityTag() *entity.Tag {
 	return &entity.Tag{
-		Key:       s.Key,
-		Value:     s.Value,
-		SystemTag: s.SystemTag,
+		Key:       r.Key,
+		Value:     r.Value,
+		SystemTag: r.SystemTag,
 	}
 }
 
-func (s *ListTagsResponse) ToEntityListTags() *entity.ListTags {
+func (r *ListTagsResponse) ToEntityListTags() *entity.ListTags {
 	result := new(entity.ListTags)
-	if s == nil {
+	if r == nil {
 		return result
 	}
 
-	for _, item := range *s {
+	for _, item := range *r {
 		result.Add(item.ToEntityTag())
 	}
 

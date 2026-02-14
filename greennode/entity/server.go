@@ -99,8 +99,8 @@ type ListServers struct {
 	Items []*Server
 }
 
-func (s *Server) CanDelete() bool {
-	switch strings.ToUpper(s.Status) {
+func (sv *Server) CanDelete() bool {
+	switch strings.ToUpper(sv.Status) {
 	case ServerStatusActive, ServerStatusError, ServerStatusStopped:
 		return true
 	}
@@ -108,8 +108,8 @@ func (s *Server) CanDelete() bool {
 	return false
 }
 
-func (s *Server) IsRunning() bool {
-	switch strings.ToUpper(s.Status) {
+func (sv *Server) IsRunning() bool {
+	switch strings.ToUpper(sv.Status) {
 	case ServerStatusActive:
 		return true
 	}
@@ -117,8 +117,8 @@ func (s *Server) IsRunning() bool {
 	return false
 }
 
-func (s *Server) GetInternalInterfaceWanInfo() (string, string, string, bool) {
-	for _, i := range s.InternalInterfaces {
+func (sv *Server) GetInternalInterfaceWanInfo() (string, string, string, bool) {
+	for _, i := range sv.InternalInterfaces {
 		if i.FloatingIp != "" {
 			return i.Uuid, i.FloatingIpID, i.FloatingIp, true
 		}
@@ -127,25 +127,25 @@ func (s *Server) GetInternalInterfaceWanInfo() (string, string, string, bool) {
 	return "", "", "", false
 }
 
-func (s *Server) GetInternalNetworkInterfaceIDs() []string {
-	ids := make([]string, 0, len(s.InternalInterfaces))
-	for _, i := range s.InternalInterfaces {
+func (sv *Server) GetInternalNetworkInterfaceIDs() []string {
+	ids := make([]string, 0, len(sv.InternalInterfaces))
+	for _, i := range sv.InternalInterfaces {
 		ids = append(ids, i.Uuid)
 	}
 
 	return ids
 }
 
-func (s *Server) InternalNetworkInterfacePossible() bool {
-	return len(s.InternalInterfaces) > 0
+func (sv *Server) InternalNetworkInterfacePossible() bool {
+	return len(sv.InternalInterfaces) > 0
 }
 
-func (s *Server) CanAttachFloatingIp() bool {
-	if !s.InternalNetworkInterfacePossible() {
+func (sv *Server) CanAttachFloatingIp() bool {
+	if !sv.InternalNetworkInterfacePossible() {
 		return false
 	}
 
-	for _, i := range s.InternalInterfaces {
+	for _, i := range sv.InternalInterfaces {
 		if i.FloatingIp != "" {
 			return false
 		}

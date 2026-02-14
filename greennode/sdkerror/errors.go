@@ -48,42 +48,42 @@ func NewErrorResponse(typeVal int) ErrorResponse {
 	}
 }
 
-func (s *IamErrorResponse) GetMessage() string {
-	if len(s.Errors) < 1 {
+func (r *IamErrorResponse) GetMessage() string {
+	if len(r.Errors) < 1 {
 		return ""
 	}
 
-	return s.Errors[0].Message
+	return r.Errors[0].Message
 }
 
-func (s *IamErrorResponse) Err() error {
-	if len(s.Errors) < 1 {
+func (r *IamErrorResponse) Err() error {
+	if len(r.Errors) < 1 {
 		return nil
 	}
 
-	return fmt.Errorf("%s", s.Errors[0].Code)
+	return fmt.Errorf("%s", r.Errors[0].Code)
 }
 
-func (s *NormalErrorResponse) GetMessage() string {
-	return s.Message
+func (r *NormalErrorResponse) GetMessage() string {
+	return r.Message
 }
 
-func (s *NormalErrorResponse) Err() error {
-	return fmt.Errorf("%s", s.Message)
+func (r *NormalErrorResponse) Err() error {
+	return fmt.Errorf("%s", r.Message)
 }
 
-func (s *NetworkGatewayErrorResponse) GetMessage() string {
-	return fmt.Sprintf("%s/%d/%s", s.ErrorCode, s.Code, s.Message)
+func (r *NetworkGatewayErrorResponse) GetMessage() string {
+	return fmt.Sprintf("%s/%d/%s", r.ErrorCode, r.Code, r.Message)
 }
 
-func (s *NetworkGatewayErrorResponse) Err() error {
-	return fmt.Errorf("%s", s.ErrorCode)
+func (r *NetworkGatewayErrorResponse) Err() error {
+	return fmt.Errorf("%s", r.ErrorCode)
 }
 
-func (s *GlobalLoadBalancerErrorResponse) GetMessage() string {
-	return s.Error
+func (r *GlobalLoadBalancerErrorResponse) GetMessage() string {
+	return r.Error
 }
 
-func (s *GlobalLoadBalancerErrorResponse) Err() error {
-	return fmt.Errorf("%s", s.Code)
+func (r *GlobalLoadBalancerErrorResponse) Err() error {
+	return fmt.Errorf("%s", r.Code)
 }

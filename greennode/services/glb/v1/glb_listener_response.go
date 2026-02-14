@@ -21,32 +21,32 @@ type GlobalListenerResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *GlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+func (r *GlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
 	return &entity.GlobalListener{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Protocol:             s.Protocol,
-		Port:                 s.Port,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		GlobalPoolID:         s.GlobalPoolID,
-		TimeoutClient:        s.TimeoutClient,
-		TimeoutMember:        s.TimeoutMember,
-		TimeoutConnection:    s.TimeoutConnection,
-		AllowedCidrs:         s.AllowedCidrs,
-		Headers:              s.Headers,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Protocol:             r.Protocol,
+		Port:                 r.Port,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		GlobalPoolID:         r.GlobalPoolID,
+		TimeoutClient:        r.TimeoutClient,
+		TimeoutMember:        r.TimeoutMember,
+		TimeoutConnection:    r.TimeoutConnection,
+		AllowedCidrs:         r.AllowedCidrs,
+		Headers:              r.Headers,
+		Status:               r.Status,
 	}
 }
 
 type ListGlobalListenersResponse []GlobalListenerResponse
 
-func (s ListGlobalListenersResponse) ToEntityListGlobalListeners() *entity.ListGlobalListeners {
+func (r ListGlobalListenersResponse) ToEntityListGlobalListeners() *entity.ListGlobalListeners {
 	listeners := &entity.ListGlobalListeners{}
-	for _, itemListener := range s {
+	for _, itemListener := range r {
 		listeners.Items = append(listeners.Items, itemListener.ToEntityGlobalListener())
 	}
 	return listeners
@@ -56,24 +56,24 @@ func (s ListGlobalListenersResponse) ToEntityListGlobalListeners() *entity.ListG
 
 type CreateGlobalListenerResponse GlobalListenerResponse
 
-func (s *CreateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+func (r *CreateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
 	return &entity.GlobalListener{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Protocol:             s.Protocol,
-		Port:                 s.Port,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		GlobalPoolID:         s.GlobalPoolID,
-		TimeoutClient:        s.TimeoutClient,
-		TimeoutMember:        s.TimeoutMember,
-		TimeoutConnection:    s.TimeoutConnection,
-		AllowedCidrs:         s.AllowedCidrs,
-		Headers:              s.Headers,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Protocol:             r.Protocol,
+		Port:                 r.Port,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		GlobalPoolID:         r.GlobalPoolID,
+		TimeoutClient:        r.TimeoutClient,
+		TimeoutMember:        r.TimeoutMember,
+		TimeoutConnection:    r.TimeoutConnection,
+		AllowedCidrs:         r.AllowedCidrs,
+		Headers:              r.Headers,
+		Status:               r.Status,
 	}
 }
 
@@ -81,24 +81,24 @@ func (s *CreateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalLi
 
 type UpdateGlobalListenerResponse GlobalListenerResponse
 
-func (s *UpdateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+func (r *UpdateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
 	return &entity.GlobalListener{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Protocol:             s.Protocol,
-		Port:                 s.Port,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		GlobalPoolID:         s.GlobalPoolID,
-		TimeoutClient:        s.TimeoutClient,
-		TimeoutMember:        s.TimeoutMember,
-		TimeoutConnection:    s.TimeoutConnection,
-		AllowedCidrs:         s.AllowedCidrs,
-		Headers:              s.Headers,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Protocol:             r.Protocol,
+		Port:                 r.Port,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		GlobalPoolID:         r.GlobalPoolID,
+		TimeoutClient:        r.TimeoutClient,
+		TimeoutMember:        r.TimeoutMember,
+		TimeoutConnection:    r.TimeoutConnection,
+		AllowedCidrs:         r.AllowedCidrs,
+		Headers:              r.Headers,
+		Status:               r.Status,
 	}
 }
 
@@ -106,23 +106,23 @@ func (s *UpdateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalLi
 
 type GetGlobalListenerResponse GlobalListenerResponse
 
-func (s *GetGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+func (r *GetGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
 	return &entity.GlobalListener{
-		CreatedAt:            s.CreatedAt,
-		UpdatedAt:            s.UpdatedAt,
-		DeletedAt:            s.DeletedAt,
-		ID:                   s.ID,
-		Name:                 s.Name,
-		Description:          s.Description,
-		Protocol:             s.Protocol,
-		Port:                 s.Port,
-		GlobalLoadBalancerID: s.GlobalLoadBalancerID,
-		GlobalPoolID:         s.GlobalPoolID,
-		TimeoutClient:        s.TimeoutClient,
-		TimeoutMember:        s.TimeoutMember,
-		TimeoutConnection:    s.TimeoutConnection,
-		AllowedCidrs:         s.AllowedCidrs,
-		Headers:              s.Headers,
-		Status:               s.Status,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
+		DeletedAt:            r.DeletedAt,
+		ID:                   r.ID,
+		Name:                 r.Name,
+		Description:          r.Description,
+		Protocol:             r.Protocol,
+		Port:                 r.Port,
+		GlobalLoadBalancerID: r.GlobalLoadBalancerID,
+		GlobalPoolID:         r.GlobalPoolID,
+		TimeoutClient:        r.TimeoutClient,
+		TimeoutMember:        r.TimeoutMember,
+		TimeoutConnection:    r.TimeoutConnection,
+		AllowedCidrs:         r.AllowedCidrs,
+		Headers:              r.Headers,
+		Status:               r.Status,
 	}
 }

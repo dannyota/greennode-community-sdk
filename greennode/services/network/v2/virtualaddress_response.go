@@ -17,17 +17,17 @@ type VirtualAddressDataResponse struct {
 	AddressPairIps []string `json:"addressPairIps"`
 }
 
-func (s *VirtualAddressDataResponse) toEntityVirtualAddress() *entity.VirtualAddress {
+func (r *VirtualAddressDataResponse) toEntityVirtualAddress() *entity.VirtualAddress {
 	return &entity.VirtualAddress{
-		ID:              s.UUID,
-		Name:            s.Name,
-		EndpointAddress: s.IPAddress,
-		VpcID:           s.NetworkID,
-		SubnetID:        s.SubnetID,
-		Description:     s.Description,
-		SubnetCidr:      s.SubnetCIDR,
-		VpcCidr:         s.NetworkCIDR,
-		AddressPairIps:  s.AddressPairIps,
+		ID:              r.UUID,
+		Name:            r.Name,
+		EndpointAddress: r.IPAddress,
+		VpcID:           r.NetworkID,
+		SubnetID:        r.SubnetID,
+		Description:     r.Description,
+		SubnetCidr:      r.SubnetCIDR,
+		VpcCidr:         r.NetworkCIDR,
+		AddressPairIps:  r.AddressPairIps,
 	}
 }
 
@@ -37,8 +37,8 @@ type CreateVirtualAddressCrossProjectResponse struct {
 	Data VirtualAddressDataResponse `json:"data"`
 }
 
-func (s *CreateVirtualAddressCrossProjectResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
-	return s.Data.toEntityVirtualAddress()
+func (r *CreateVirtualAddressCrossProjectResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
+	return r.Data.toEntityVirtualAddress()
 }
 
 // Response struct for API get virtual address by ID
@@ -46,8 +46,8 @@ type GetVirtualAddressByIDResponse struct {
 	Data VirtualAddressDataResponse `json:"data"`
 }
 
-func (s *GetVirtualAddressByIDResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
-	return s.Data.toEntityVirtualAddress()
+func (r *GetVirtualAddressByIDResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
+	return r.Data.toEntityVirtualAddress()
 }
 
 // Response struct for API list address pair by virtual address ID
@@ -55,9 +55,9 @@ type ListAddressPairsByVirtualAddressIDResponse struct {
 	Data []AddressPairResponse `json:"data"`
 }
 
-func (s *ListAddressPairsByVirtualAddressIDResponse) ToEntityListAddressPairs() *entity.ListAddressPairs {
-	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
-	for _, addressPair := range s.Data {
+func (r *ListAddressPairsByVirtualAddressIDResponse) ToEntityListAddressPairs() *entity.ListAddressPairs {
+	addressPairs := make([]*entity.AddressPair, 0, len(r.Data))
+	for _, addressPair := range r.Data {
 		addressPairs = append(addressPairs, &entity.AddressPair{
 			ID:                 addressPair.UUID,
 			VirtualIpAddressID: addressPair.VirtualIpAddressID,

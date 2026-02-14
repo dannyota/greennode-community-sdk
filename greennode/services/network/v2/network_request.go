@@ -13,7 +13,7 @@ type GetNetworkByIDRequest struct {
 	common.UserAgent
 }
 
-func (s *GetNetworkByIDRequest) AddUserAgent(agent ...string) IGetNetworkByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetNetworkByIDRequest) AddUserAgent(agent ...string) IGetNetworkByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }

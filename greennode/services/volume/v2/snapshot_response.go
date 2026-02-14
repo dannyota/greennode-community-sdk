@@ -68,17 +68,17 @@ type (
 	}
 )
 
-func (s *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *entity.ListSnapshots {
+func (r *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *entity.ListSnapshots {
 	sl := new(entity.ListSnapshots)
 
-	for _, item := range s.Items {
+	for _, item := range r.Items {
 		sl.Items = append(sl.Items, item.toEntitySnapshot())
 	}
 
-	sl.TotalPages = s.TotalPages
-	sl.Page = s.Page
-	sl.PageSize = s.PageSize
-	sl.TotalItems = s.TotalItems
+	sl.TotalPages = r.TotalPages
+	sl.Page = r.Page
+	sl.PageSize = r.PageSize
+	sl.TotalItems = r.TotalItems
 
 	return sl
 }
@@ -94,6 +94,6 @@ func (s *Snapshot) toEntitySnapshot() *entity.Snapshot {
 	}
 }
 
-func (s *CreateSnapshotByBlockVolumeIDResponse) ToEntitySnapshot() *entity.Snapshot {
-	return s.toEntitySnapshot()
+func (r *CreateSnapshotByBlockVolumeIDResponse) ToEntitySnapshot() *entity.Snapshot {
+	return r.toEntitySnapshot()
 }

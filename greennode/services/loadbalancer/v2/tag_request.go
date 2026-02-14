@@ -11,9 +11,9 @@ func NewListTagsRequest(lbID string) IListTagsRequest {
 	return opt
 }
 
-func (s *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewCreateTagsRequest(lbID string) ICreateTagsRequest {
@@ -50,9 +50,9 @@ type CreateTagsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *CreateTagsRequest) AddUserAgent(agent ...string) ICreateTagsRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateTagsRequest) AddUserAgent(agent ...string) ICreateTagsRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type UpdateTagsRequest struct {
@@ -64,27 +64,27 @@ type UpdateTagsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *CreateTagsRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateTagsRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *UpdateTagsRequest) AddUserAgent(agent ...string) IUpdateTagsRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *UpdateTagsRequest) AddUserAgent(agent ...string) IUpdateTagsRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateTagsRequest) WithTags(tags ...string) ICreateTagsRequest {
+func (r *CreateTagsRequest) WithTags(tags ...string) ICreateTagsRequest {
 	if len(tags)%2 != 0 {
 		tags = append(tags, "none")
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.TagRequestList = append(r.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
-	return s
+	return r
 }
 
-func (s *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) interface{} {
+func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) interface{} {
 	st := map[string]common.Tag{}
 	for _, tag := range lstTags.Items {
 		st[tag.Key] = common.Tag{
@@ -94,33 +94,33 @@ func (s *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) interface{} 
 		}
 	}
 
-	for _, tag := range s.TagRequestList {
+	for _, tag := range r.TagRequestList {
 		st[tag.Key] = tag
 	}
 
-	s.TagRequestList = make([]common.Tag, 0)
+	r.TagRequestList = make([]common.Tag, 0)
 	for _, tag := range st {
-		s.TagRequestList = append(s.TagRequestList, tag)
+		r.TagRequestList = append(r.TagRequestList, tag)
 	}
 
-	return s
+	return r
 }
 
-func (s *UpdateTagsRequest) WithTags(tags ...string) IUpdateTagsRequest {
+func (r *UpdateTagsRequest) WithTags(tags ...string) IUpdateTagsRequest {
 	if len(tags)%2 != 0 {
 		tags = append(tags, "none")
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.TagRequestList = append(r.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *UpdateTagsRequest) ToMap() map[string]interface{} {
+func (r *UpdateTagsRequest) ToMap() map[string]interface{} {
 	res := make(map[string]interface{})
-	for _, tag := range s.TagRequestList {
+	for _, tag := range r.TagRequestList {
 		res[tag.Key] = tag.Value
 	}
 	return res

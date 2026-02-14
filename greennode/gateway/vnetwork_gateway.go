@@ -13,12 +13,12 @@ type vnetworkGatewayInternalV1 struct {
 	networkService network.NetworkServiceInternalV1
 }
 
-func (s *vnetworkGatewayV1) NetworkService() network.NetworkServiceV1 {
-	return s.networkService
+func (g *vnetworkGatewayV1) NetworkService() network.NetworkServiceV1 {
+	return g.networkService
 }
 
-func (s *vnetworkGatewayInternalV1) NetworkService() network.NetworkServiceInternalV1 {
-	return s.networkService
+func (g *vnetworkGatewayInternalV1) NetworkService() network.NetworkServiceInternalV1 {
+	return g.networkService
 }
 
 func NewVNetworkGatewayV1(svcClient client.ServiceClient) VNetworkGatewayV1 {

@@ -19,12 +19,12 @@ type CreateSecgroupResponse struct { //_________________________________________
 	} `json:"data"`
 }
 
-func (s *CreateSecgroupResponse) ToEntitySecgroup() *entity.Secgroup {
+func (r *CreateSecgroupResponse) ToEntitySecgroup() *entity.Secgroup {
 	return &entity.Secgroup{
-		ID:          s.Data.UUID,
-		Name:        s.Data.SecgroupName,
-		Description: s.Data.Description,
-		Status:      s.Data.Status,
+		ID:          r.Data.UUID,
+		Name:        r.Data.SecgroupName,
+		Description: r.Data.Description,
+		Status:      r.Data.Status,
 	}
 }
 
@@ -39,12 +39,12 @@ type GetSecgroupByIDResponse struct { //________________________________________
 	} `json:"data"`
 }
 
-func (s *GetSecgroupByIDResponse) ToEntitySecgroup() *entity.Secgroup {
+func (r *GetSecgroupByIDResponse) ToEntitySecgroup() *entity.Secgroup {
 	return &entity.Secgroup{
-		ID:          s.Data.ID,
-		Name:        s.Data.Name,
-		Description: s.Data.Description,
-		Status:      s.Data.Status,
+		ID:          r.Data.ID,
+		Name:        r.Data.Name,
+		Description: r.Data.Description,
+		Status:      r.Data.Status,
 	}
 }
 
@@ -63,9 +63,9 @@ type ListSecgroupResponse struct { //___________________________________________
 	TotalItem int `json:"totalItem"`
 }
 
-func (s *ListSecgroupResponse) ToListEntitySecgroups() *entity.ListSecgroups {
-	items := make([]*entity.Secgroup, 0, len(s.ListData))
-	for _, item := range s.ListData {
+func (r *ListSecgroupResponse) ToListEntitySecgroups() *entity.ListSecgroups {
+	items := make([]*entity.Secgroup, 0, len(r.ListData))
+	for _, item := range r.ListData {
 		items = append(items, &entity.Secgroup{
 			ID:          item.ID,
 			Name:        item.Name,

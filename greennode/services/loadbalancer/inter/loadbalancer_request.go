@@ -35,59 +35,59 @@ type CreateLoadBalancerRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
+func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"name":            s.Name,
-		"packageId":       s.PackageID,
-		"scheme":          s.Scheme,
-		"subnetId":        s.SubnetID,
-		"backendSubnetId": s.BackEndSubnetID,
-		"projectId":       s.ProjectID,
-		"type":            s.Type,
-		"tags":            s.Tags,
-		"zoneId":          s.ZoneID,
+		"name":            r.Name,
+		"packageId":       r.PackageID,
+		"scheme":          r.Scheme,
+		"subnetId":        r.SubnetID,
+		"backendSubnetId": r.BackEndSubnetID,
+		"projectId":       r.ProjectID,
+		"type":            r.Type,
+		"tags":            r.Tags,
+		"zoneId":          r.ZoneID,
 	}
 }
 
-func (s *CreateLoadBalancerRequest) ToRequestBody() interface{} {
-	if s.Pool != nil {
-		s.Pool = s.Pool.ToRequestBody().(*CreatePoolRequest)
+func (r *CreateLoadBalancerRequest) ToRequestBody() interface{} {
+	if r.Pool != nil {
+		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
 	}
 
-	if s.Listener != nil {
-		s.Listener = s.Listener.ToRequestBody().(*CreateListenerRequest)
+	if r.Listener != nil {
+		r.Listener = r.Listener.ToRequestBody().(*CreateListenerRequest)
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithProjectID(projectID string) ICreateLoadBalancerRequest {
-	s.ProjectID = projectID
-	return s
+func (r *CreateLoadBalancerRequest) WithProjectID(projectID string) ICreateLoadBalancerRequest {
+	r.ProjectID = projectID
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) GetMapHeaders() map[string]string {
-	return s.PortalUser.GetMapHeaders()
+func (r *CreateLoadBalancerRequest) GetMapHeaders() map[string]string {
+	return r.PortalUser.GetMapHeaders()
 }
 
-func (s *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
-	s.Listener = listener
-	return s
+func (r *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
+	r.Listener = listener
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
-	s.Pool = pool
-	return s
+func (r *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
+	r.Pool = pool
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
-	if s.Tags == nil {
-		s.Tags = make([]common.Tag, 0)
+func (r *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
+	if r.Tags == nil {
+		r.Tags = make([]common.Tag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -95,13 +95,13 @@ func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancer
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneID = &zoneID
-	return s
+func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
+	r.ZoneID = &zoneID
+	return r
 }

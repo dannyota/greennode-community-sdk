@@ -37,56 +37,56 @@ type Listener struct {
 	InsertHeaders                   []entity.ListenerInsertHeader `json:"insertHeaders"`
 }
 
-func (s *CreateListenerResponse) ToEntityListener() *entity.Listener {
+func (r *CreateListenerResponse) ToEntityListener() *entity.Listener {
 	return &entity.Listener{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
-func (s *ListListenersByLoadBalancerIDResponse) ToEntityListListeners() *entity.ListListeners {
+func (r *ListListenersByLoadBalancerIDResponse) ToEntityListListeners() *entity.ListListeners {
 	listeners := &entity.ListListeners{}
-	for _, itemListener := range s.Data {
+	for _, itemListener := range r.Data {
 		listeners.Add(itemListener.toEntityListener())
 	}
 	return listeners
 }
 
-func (s *Listener) toEntityListener() *entity.Listener {
-	if s == nil {
+func (l *Listener) toEntityListener() *entity.Listener {
+	if l == nil {
 		return nil
 	}
 	// Convert the slice of insertHeaderResponse to the slice of insertHeader
-	insertHeaders := make([]entity.ListenerInsertHeader, len(s.InsertHeaders))
-	for i, header := range s.InsertHeaders {
+	insertHeaders := make([]entity.ListenerInsertHeader, len(l.InsertHeaders))
+	for i, header := range l.InsertHeaders {
 		insertHeaders[i] = entity.ListenerInsertHeader{
 			HeaderName:  header.HeaderName,
 			HeaderValue: header.HeaderValue,
 		}
 	}
 	return &entity.Listener{
-		UUID:                            s.UUID,
-		Name:                            s.Name,
-		Description:                     s.Description,
-		Protocol:                        s.Protocol,
-		ProtocolPort:                    s.ProtocolPort,
-		ConnectionLimit:                 s.ConnectionLimit,
-		DefaultPoolID:                   s.DefaultPoolID,
-		DefaultPoolName:                 s.DefaultPoolName,
-		TimeoutClient:                   s.TimeoutClient,
-		TimeoutMember:                   s.TimeoutMember,
-		TimeoutConnection:               s.TimeoutConnection,
-		AllowedCidrs:                    s.AllowedCidrs,
-		CertificateAuthorities:          s.CertificateAuthorities,
-		DisplayStatus:                   s.DisplayStatus,
-		CreatedAt:                       s.CreatedAt,
-		UpdatedAt:                       s.UpdatedAt,
-		DefaultCertificateAuthority:     s.DefaultCertificateAuthority,
-		ClientCertificateAuthentication: s.ClientCertificateAuthentication,
-		ProgressStatus:                  s.ProgressStatus,
+		UUID:                            l.UUID,
+		Name:                            l.Name,
+		Description:                     l.Description,
+		Protocol:                        l.Protocol,
+		ProtocolPort:                    l.ProtocolPort,
+		ConnectionLimit:                 l.ConnectionLimit,
+		DefaultPoolID:                   l.DefaultPoolID,
+		DefaultPoolName:                 l.DefaultPoolName,
+		TimeoutClient:                   l.TimeoutClient,
+		TimeoutMember:                   l.TimeoutMember,
+		TimeoutConnection:               l.TimeoutConnection,
+		AllowedCidrs:                    l.AllowedCidrs,
+		CertificateAuthorities:          l.CertificateAuthorities,
+		DisplayStatus:                   l.DisplayStatus,
+		CreatedAt:                       l.CreatedAt,
+		UpdatedAt:                       l.UpdatedAt,
+		DefaultCertificateAuthority:     l.DefaultCertificateAuthority,
+		ClientCertificateAuthentication: l.ClientCertificateAuthentication,
+		ProgressStatus:                  l.ProgressStatus,
 		InsertHeaders:                   insertHeaders,
 	}
 }
 
-func (s *GetListenerByIDResponse) ToEntityListener() *entity.Listener {
-	return s.Data.toEntityListener()
+func (r *GetListenerByIDResponse) ToEntityListener() *entity.Listener {
+	return r.Data.toEntityListener()
 }

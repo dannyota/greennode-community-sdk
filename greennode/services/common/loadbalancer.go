@@ -4,38 +4,38 @@ type LoadBalancerCommon struct {
 	LoadBalancerID string
 }
 
-func (s *LoadBalancerCommon) GetLoadBalancerID() string {
-	return s.LoadBalancerID
+func (l *LoadBalancerCommon) GetLoadBalancerID() string {
+	return l.LoadBalancerID
 }
 
 type ListenerCommon struct {
 	ListenerID string
 }
 
-func (s *ListenerCommon) GetListenerID() string {
-	return s.ListenerID
+func (l *ListenerCommon) GetListenerID() string {
+	return l.ListenerID
 }
 
 type PoolCommon struct {
 	PoolID string
 }
 
-func (s *PoolCommon) GetPoolID() string {
-	return s.PoolID
+func (p *PoolCommon) GetPoolID() string {
+	return p.PoolID
 }
 
 type PolicyCommon struct {
 	PolicyID string
 }
 
-func (s *PolicyCommon) GetPolicyID() string {
-	return s.PolicyID
+func (p *PolicyCommon) GetPolicyID() string {
+	return p.PolicyID
 }
 
 type PoolMemberCommon struct {
 	PoolMemberID string
 }
 
-func (s *PoolMemberCommon) GetPoolMemberID() string {
-	return s.PoolMemberID
+func (p *PoolMemberCommon) GetPoolMemberID() string {
+	return p.PoolMemberID
 }

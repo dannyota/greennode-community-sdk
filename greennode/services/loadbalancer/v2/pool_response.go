@@ -22,26 +22,26 @@ type GetPoolHealthMonitorByIDResponse struct {
 	} `json:"data"`
 }
 
-func (s *GetPoolHealthMonitorByIDResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
-	if s == nil {
+func (r *GetPoolHealthMonitorByIDResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
+	if r == nil {
 		return nil
 	}
 
 	return &entity.HealthMonitor{
-		Timeout:             s.Data.Timeout,
-		CreatedAt:           s.Data.CreatedAt,
-		UpdatedAt:           s.Data.UpdatedAt,
-		DomainName:          s.Data.DomainName,
-		HTTPVersion:         s.Data.HTTPVersion,
-		HealthCheckProtocol: s.Data.HealthCheckProtocol,
-		Interval:            s.Data.Interval,
-		HealthyThreshold:    s.Data.HealthyThreshold,
-		UnhealthyThreshold:  s.Data.UnhealthyThreshold,
-		HealthCheckMethod:   s.Data.HealthCheckMethod,
-		HealthCheckPath:     s.Data.HealthCheckPath,
-		SuccessCode:         s.Data.SuccessCode,
-		ProgressStatus:      s.Data.ProgressStatus,
-		DisplayStatus:       s.Data.DisplayStatus,
+		Timeout:             r.Data.Timeout,
+		CreatedAt:           r.Data.CreatedAt,
+		UpdatedAt:           r.Data.UpdatedAt,
+		DomainName:          r.Data.DomainName,
+		HTTPVersion:         r.Data.HTTPVersion,
+		HealthCheckProtocol: r.Data.HealthCheckProtocol,
+		Interval:            r.Data.Interval,
+		HealthyThreshold:    r.Data.HealthyThreshold,
+		UnhealthyThreshold:  r.Data.UnhealthyThreshold,
+		HealthCheckMethod:   r.Data.HealthCheckMethod,
+		HealthCheckPath:     r.Data.HealthCheckPath,
+		SuccessCode:         r.Data.SuccessCode,
+		ProgressStatus:      r.Data.ProgressStatus,
+		DisplayStatus:       r.Data.DisplayStatus,
 	}
 }
 
@@ -93,69 +93,69 @@ type PoolMember struct {
 	Weight         int    `json:"weight"`
 }
 
-func (s *CreatePoolResponse) ToEntityPool() *entity.Pool {
+func (r *CreatePoolResponse) ToEntityPool() *entity.Pool {
 	return &entity.Pool{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
-func (s *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *entity.ListPools {
+func (r *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *entity.ListPools {
 	listPools := new(entity.ListPools)
-	for _, pool := range s.Data {
+	for _, pool := range r.Data {
 		listPools.Add(pool.toEntityPool())
 	}
 
 	return listPools
 }
 
-func (s *PoolMember) toEntityMember() *entity.Member {
+func (p *PoolMember) toEntityMember() *entity.Member {
 	return &entity.Member{
-		Address:        s.Address,
-		Backup:         s.Backup,
-		Name:           s.Name,
-		UUID:           s.UUID,
-		DisplayStatus:  s.DisplayStatus,
-		ProtocolPort:   s.ProtocolPort,
-		MonitorPort:    s.MonitorPort,
-		SubnetID:       s.SubnetID,
-		TypeCreate:     s.TypeCreate,
-		CreatedAt:      s.CreatedAt,
-		Weight:         s.Weight,
-		PoolID:         s.PoolID,
-		ProgressStatus: s.ProgressStatus,
+		Address:        p.Address,
+		Backup:         p.Backup,
+		Name:           p.Name,
+		UUID:           p.UUID,
+		DisplayStatus:  p.DisplayStatus,
+		ProtocolPort:   p.ProtocolPort,
+		MonitorPort:    p.MonitorPort,
+		SubnetID:       p.SubnetID,
+		TypeCreate:     p.TypeCreate,
+		CreatedAt:      p.CreatedAt,
+		Weight:         p.Weight,
+		PoolID:         p.PoolID,
+		ProgressStatus: p.ProgressStatus,
 	}
 }
 
-func (s *Pool) toEntityListMembers() *entity.ListMembers {
+func (p *Pool) toEntityListMembers() *entity.ListMembers {
 	listMembers := &entity.ListMembers{}
-	for _, member := range s.Members {
+	for _, member := range p.Members {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (s *Pool) toEntityPool() *entity.Pool {
+func (p *Pool) toEntityPool() *entity.Pool {
 	return &entity.Pool{
-		UUID:              s.UUID,
-		Name:              s.Name,
-		Protocol:          s.Protocol,
-		Description:       s.Description,
-		LoadBalanceMethod: s.LoadBalanceMethod,
-		Status:            s.DisplayStatus,
-		Stickiness:        s.Stickiness,
-		TLSEncryption:     s.TLSEncryption,
-		Members:           s.toEntityListMembers(),
+		UUID:              p.UUID,
+		Name:              p.Name,
+		Protocol:          p.Protocol,
+		Description:       p.Description,
+		LoadBalanceMethod: p.LoadBalanceMethod,
+		Status:            p.DisplayStatus,
+		Stickiness:        p.Stickiness,
+		TLSEncryption:     p.TLSEncryption,
+		Members:           p.toEntityListMembers(),
 	}
 }
 
-func (s *ListPoolMembersResponse) ToEntityListMembers() *entity.ListMembers {
+func (r *ListPoolMembersResponse) ToEntityListMembers() *entity.ListMembers {
 	listMembers := &entity.ListMembers{}
-	for _, member := range s.Data {
+	for _, member := range r.Data {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (s *GetPoolByIDResponse) ToEntityPool() *entity.Pool {
-	return s.Data.toEntityPool()
+func (r *GetPoolByIDResponse) ToEntityPool() *entity.Pool {
+	return r.Data.toEntityPool()
 }

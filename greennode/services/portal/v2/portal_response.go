@@ -27,32 +27,32 @@ type ListAllQuotaUsedResponse struct {
 	Data []Quota `json:"data"`
 }
 
-func (s *ListAllQuotaUsedResponse) ToEntityListQuotas() *entity.ListQuotas {
+func (r *ListAllQuotaUsedResponse) ToEntityListQuotas() *entity.ListQuotas {
 	listQuotas := &entity.ListQuotas{
 		Items: make([]*entity.Quota, 0),
 	}
-	for _, q := range s.Data {
+	for _, q := range r.Data {
 		listQuotas.Items = append(listQuotas.Items, q.ToEntityQuota())
 	}
 
 	return listQuotas
 }
 
-func (s *Quota) ToEntityQuota() *entity.Quota {
+func (q *Quota) ToEntityQuota() *entity.Quota {
 	var (
 		used int
 		err  error
 	)
 
-	if used, err = strconv.Atoi(s.Used); err != nil {
+	if used, err = strconv.Atoi(q.Used); err != nil {
 		used = 0
 	}
 
 	return &entity.Quota{
-		Description: s.Description,
-		Name:        string(s.Name),
-		Type:        string(s.Type),
-		Limit:       s.Limit,
+		Description: q.Description,
+		Name:        string(q.Name),
+		Type:        string(q.Type),
+		Limit:       q.Limit,
 		Used:        used,
 	}
 }

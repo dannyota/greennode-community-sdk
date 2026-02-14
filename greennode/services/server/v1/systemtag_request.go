@@ -19,25 +19,25 @@ type CreateSystemTagRequest struct { // ________________________________________
 	common.UserAgent
 }
 
-func (s *CreateSystemTagRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateSystemTagRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateSystemTagRequest) AddUserAgent(agent ...string) ICreateSystemTagRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateSystemTagRequest) AddUserAgent(agent ...string) ICreateSystemTagRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateSystemTagRequest) GetResourceID() string {
-	return s.ResourceID
+func (r *CreateSystemTagRequest) GetResourceID() string {
+	return r.ResourceID
 }
 
-func (s *CreateSystemTagRequest) GetResourceType() ResourceType {
-	return s.ResourceType
+func (r *CreateSystemTagRequest) GetResourceType() ResourceType {
+	return r.ResourceType
 }
 
-func (s *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagRequest {
-	s.Tags = append(s.Tags, struct {
+func (r *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagRequest {
+	r.Tags = append(r.Tags, struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`
 	}{
@@ -45,20 +45,20 @@ func (s *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagReque
 		Value: value,
 	})
 
-	return s
+	return r
 }
 
-func (s *CreateSystemTagRequest) ToMap() map[string]interface{} {
+func (r *CreateSystemTagRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceId":   s.ResourceID,
-		"resourceType": s.ResourceType,
+		"resourceId":   r.ResourceID,
+		"resourceType": r.ResourceType,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
-	res["tags"] = s.Tags
+	res["tags"] = r.Tags
 
 	return res
 }

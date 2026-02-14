@@ -32,30 +32,30 @@ type ListListeners struct {
 	Items []*Listener
 }
 
-func (s *ListListeners) Add(listeners ...*Listener) {
-	s.Items = append(s.Items, listeners...)
+func (ll *ListListeners) Add(listeners ...*Listener) {
+	ll.Items = append(ll.Items, listeners...)
 }
 
-func (s *ListListeners) Len() int {
-	return len(s.Items)
+func (ll *ListListeners) Len() int {
+	return len(ll.Items)
 }
 
-func (s *ListListeners) Empty() bool {
-	return s.Len() < 1
+func (ll *ListListeners) Empty() bool {
+	return ll.Len() < 1
 }
 
-func (s *Listener) GetID() string {
-	return s.UUID
+func (l *Listener) GetID() string {
+	return l.UUID
 }
 
-func (s *Listener) GetDefaultPoolID() string {
-	return s.DefaultPoolID
+func (l *Listener) GetDefaultPoolID() string {
+	return l.DefaultPoolID
 }
 
-func (s *ListListeners) At(index int) *Listener {
-	if index < 0 || index >= len(s.Items) {
+func (ll *ListListeners) At(index int) *Listener {
+	if index < 0 || index >= len(ll.Items) {
 		return nil
 	}
 
-	return s.Items[index]
+	return ll.Items[index]
 }

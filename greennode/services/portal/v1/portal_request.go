@@ -6,15 +6,15 @@ type GetPortalInfoRequest struct {
 	BackEndProjectID string
 }
 
-func (s *GetPortalInfoRequest) GetBackEndProjectID() string {
-	return s.BackEndProjectID
+func (r *GetPortalInfoRequest) GetBackEndProjectID() string {
+	return r.BackEndProjectID
 }
 
 type ListProjectsRequest struct {
 	common.UserAgent
 }
 
-func (s *ListProjectsRequest) AddUserAgent(agent ...string) IListProjectsRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListProjectsRequest) AddUserAgent(agent ...string) IListProjectsRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }

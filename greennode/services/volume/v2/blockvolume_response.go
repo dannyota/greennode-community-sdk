@@ -30,8 +30,8 @@ type Zone struct {
 	Uuid string `json:"uuid"`
 }
 
-func (s *GetBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
-	return s.Data.toEntityVolume()
+func (r *GetBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
+	return r.Data.toEntityVolume()
 }
 
 type (
@@ -60,42 +60,42 @@ type (
 	}
 )
 
-func (s *CreateBlockVolumeResponse) ToEntityVolume() *entity.Volume {
-	return s.Data.toEntityVolume()
+func (r *CreateBlockVolumeResponse) ToEntityVolume() *entity.Volume {
+	return r.Data.toEntityVolume()
 }
 
-func (s *ListBlockVolumesResponse) ToEntityListVolumes() *entity.ListVolumes {
+func (r *ListBlockVolumesResponse) ToEntityListVolumes() *entity.ListVolumes {
 	lstVolumes := new(entity.ListVolumes)
-	for _, vol := range s.ListData {
+	for _, vol := range r.ListData {
 		lstVolumes.Items = append(lstVolumes.Items, vol.toEntityVolume())
 	}
 
 	return lstVolumes
 }
 
-func (s *BlockVolume) toEntityVolume() *entity.Volume {
+func (b *BlockVolume) toEntityVolume() *entity.Volume {
 	return &entity.Volume{
-		ID:              s.UUID,
-		Name:            s.Name,
-		Size:            s.Size,
-		Status:          s.Status,
-		CreatedAt:       s.CreatedAt,
-		UpdatedAt:       s.UpdatedAt,
-		VmID:            s.ServerID,
-		AttachedMachine: s.ServerIDList,
-		VolumeTypeID:    s.VolumeTypeID,
-		MigrateState:    s.MigrateState,
-		MultiAttach:     s.MultiAttach,
-		ZoneID:          s.Zone.Uuid,
+		ID:              b.UUID,
+		Name:            b.Name,
+		Size:            b.Size,
+		Status:          b.Status,
+		CreatedAt:       b.CreatedAt,
+		UpdatedAt:       b.UpdatedAt,
+		VmID:            b.ServerID,
+		AttachedMachine: b.ServerIDList,
+		VolumeTypeID:    b.VolumeTypeID,
+		MigrateState:    b.MigrateState,
+		MultiAttach:     b.MultiAttach,
+		ZoneID:          b.Zone.Uuid,
 	}
 }
 
-func (s *ResizeBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
-	return s.Data.toEntityVolume()
+func (r *ResizeBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
+	return r.Data.toEntityVolume()
 }
 
-func (s *GetUnderBlockVolumeIDResponse) ToEntityVolume() *entity.Volume {
+func (r *GetUnderBlockVolumeIDResponse) ToEntityVolume() *entity.Volume {
 	return &entity.Volume{
-		UnderID: s.Uuid,
+		UnderID: r.Uuid,
 	}
 }

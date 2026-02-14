@@ -15,24 +15,24 @@ func NewGetAccessTokenRequest(clientID, clientSecret string) IGetAccessTokenRequ
 	}
 }
 
-func (s *GetAccessTokenRequest) WithClientID(clientID string) IGetAccessTokenRequest {
-	s.ClientID = clientID
-	return s
+func (r *GetAccessTokenRequest) WithClientID(clientID string) IGetAccessTokenRequest {
+	r.ClientID = clientID
+	return r
 }
 
-func (s *GetAccessTokenRequest) WithClientSecret(clientSecret string) IGetAccessTokenRequest {
-	s.ClientSecret = clientSecret
-	return s
+func (r *GetAccessTokenRequest) WithClientSecret(clientSecret string) IGetAccessTokenRequest {
+	r.ClientSecret = clientSecret
+	return r
 }
 
-func (s *GetAccessTokenRequest) GetClientID() string {
-	return s.ClientID
+func (r *GetAccessTokenRequest) GetClientID() string {
+	return r.ClientID
 }
 
-func (s *GetAccessTokenRequest) GetClientSecret() string {
-	return s.ClientSecret
+func (r *GetAccessTokenRequest) GetClientSecret() string {
+	return r.ClientSecret
 }
 
-func (s *GetAccessTokenRequest) ToRequestBody() interface{} {
-	return s
+func (r *GetAccessTokenRequest) ToRequestBody() interface{} {
+	return r
 }

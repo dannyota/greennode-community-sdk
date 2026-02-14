@@ -27,9 +27,9 @@ type GetEndpointByIDRequest struct {
 	common.EndpointCommon
 }
 
-func (s *GetEndpointByIDRequest) AddUserAgent(agent ...string) IGetEndpointByIDRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *GetEndpointByIDRequest) AddUserAgent(agent ...string) IGetEndpointByIDRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
 type CreateEndpointRequest struct {
@@ -64,134 +64,134 @@ type CreateEndpointRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateEndpointRequest) ToMap() map[string]interface{} {
+func (r *CreateEndpointRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceType":      s.ResourceType,
-		"action":            s.Action,
-		"isBuyMorePoc":      s.ResourceInfo.IsBuyMorePoc,
-		"isPoc":             s.ResourceInfo.IsPoc,
-		"isEnableAutoRenew": s.ResourceInfo.IsEnableAutoRenew,
-		"endpointName":      s.ResourceInfo.EndpointName,
-		"categoryID":        s.ResourceInfo.CategoryUuid,
-		"serviceId":         s.ResourceInfo.ServiceUuid,
-		"packageId":         s.ResourceInfo.PackageUuid,
-		"vpcId":             s.ResourceInfo.VpcUuid,
-		"subnetId":          s.ResourceInfo.SubnetUuid,
-		"regionId":          s.ResourceInfo.RegionUuid,
-		"projectId":         s.ResourceInfo.ProjectUuid,
-		"description":       s.ResourceInfo.Description,
-		"enableAZ":          s.ResourceInfo.EnableAZ,
-		"enableDnsName":     s.ResourceInfo.EnableDnsName,
-		"networking":        s.ResourceInfo.Networking,
-		"scaling":           s.ResourceInfo.Scaling,
+		"resourceType":      r.ResourceType,
+		"action":            r.Action,
+		"isBuyMorePoc":      r.ResourceInfo.IsBuyMorePoc,
+		"isPoc":             r.ResourceInfo.IsPoc,
+		"isEnableAutoRenew": r.ResourceInfo.IsEnableAutoRenew,
+		"endpointName":      r.ResourceInfo.EndpointName,
+		"categoryID":        r.ResourceInfo.CategoryUuid,
+		"serviceId":         r.ResourceInfo.ServiceUuid,
+		"packageId":         r.ResourceInfo.PackageUuid,
+		"vpcId":             r.ResourceInfo.VpcUuid,
+		"subnetId":          r.ResourceInfo.SubnetUuid,
+		"regionId":          r.ResourceInfo.RegionUuid,
+		"projectId":         r.ResourceInfo.ProjectUuid,
+		"description":       r.ResourceInfo.Description,
+		"enableAZ":          r.ResourceInfo.EnableAZ,
+		"enableDnsName":     r.ResourceInfo.EnableDnsName,
+		"networking":        r.ResourceInfo.Networking,
+		"scaling":           r.ResourceInfo.Scaling,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
 }
 
-func (s *CreateEndpointRequest) AddUserAgent(agent ...string) ICreateEndpointRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *CreateEndpointRequest) AddUserAgent(agent ...string) ICreateEndpointRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) interface{} {
-	s.ResourceType = "endpoint"
-	s.Action = "create"
-	s.ResourceInfo.EnableAZ = true
-	s.ResourceInfo.RegionUuid = svc.GetZoneID()
-	s.ResourceInfo.ProjectUuid = svc.GetProjectID()
+func (r *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+	r.ResourceType = "endpoint"
+	r.Action = "create"
+	r.ResourceInfo.EnableAZ = true
+	r.ResourceInfo.RegionUuid = svc.GetZoneID()
+	r.ResourceInfo.ProjectUuid = svc.GetProjectID()
 
-	return s
+	return r
 }
 
-func (s *CreateEndpointRequest) WithEndpointName(endpointName string) ICreateEndpointRequest {
-	s.ResourceInfo.EndpointName = endpointName
-	return s
+func (r *CreateEndpointRequest) WithEndpointName(endpointName string) ICreateEndpointRequest {
+	r.ResourceInfo.EndpointName = endpointName
+	return r
 }
 
-func (s *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.CategoryUuid = categoryUuid
-	return s
+func (r *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.CategoryUuid = categoryUuid
+	return r
 }
 
-func (s *CreateEndpointRequest) WithServiceUuid(serviceUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.ServiceUuid = serviceUuid
-	return s
+func (r *CreateEndpointRequest) WithServiceUuid(serviceUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.ServiceUuid = serviceUuid
+	return r
 }
 
-func (s *CreateEndpointRequest) WithPackageUuid(packageUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.PackageUuid = packageUuid
-	return s
+func (r *CreateEndpointRequest) WithPackageUuid(packageUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.PackageUuid = packageUuid
+	return r
 }
 
-func (s *CreateEndpointRequest) WithVpcUuid(vpcUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.VpcUuid = vpcUuid
-	return s
+func (r *CreateEndpointRequest) WithVpcUuid(vpcUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.VpcUuid = vpcUuid
+	return r
 }
 
-func (s *CreateEndpointRequest) WithPortalUserID(portalUserID string) ICreateEndpointRequest {
-	s.ResourceInfo.PortalUserID = portalUserID
-	return s
+func (r *CreateEndpointRequest) WithPortalUserID(portalUserID string) ICreateEndpointRequest {
+	r.ResourceInfo.PortalUserID = portalUserID
+	return r
 }
 
-func (s *CreateEndpointRequest) GetPortalUserID() string {
-	return s.ResourceInfo.PortalUserID
+func (r *CreateEndpointRequest) GetPortalUserID() string {
+	return r.ResourceInfo.PortalUserID
 }
 
-func (s *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.SubnetUuid = subnetUuid
-	return s
+func (r *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.SubnetUuid = subnetUuid
+	return r
 }
 
-func (s *CreateEndpointRequest) WithDescription(desp string) ICreateEndpointRequest {
-	s.ResourceInfo.Description = desp
-	return s
+func (r *CreateEndpointRequest) WithDescription(desp string) ICreateEndpointRequest {
+	r.ResourceInfo.Description = desp
+	return r
 }
 
-func (s *CreateEndpointRequest) WithPoc(yes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsPoc = yes
-	return s
+func (r *CreateEndpointRequest) WithPoc(yes bool) ICreateEndpointRequest {
+	r.ResourceInfo.IsPoc = yes
+	return r
 }
 
-func (s *CreateEndpointRequest) WithEnableDnsName(yes bool) ICreateEndpointRequest {
-	s.ResourceInfo.EnableDnsName = yes
-	return s
+func (r *CreateEndpointRequest) WithEnableDnsName(yes bool) ICreateEndpointRequest {
+	r.ResourceInfo.EnableDnsName = yes
+	return r
 }
 
-func (s *CreateEndpointRequest) WithBuyMorePoc(yes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsBuyMorePoc = yes
-	return s
+func (r *CreateEndpointRequest) WithBuyMorePoc(yes bool) ICreateEndpointRequest {
+	r.ResourceInfo.IsBuyMorePoc = yes
+	return r
 }
 
-func (s *CreateEndpointRequest) WithEnableAutoRenew(yes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsEnableAutoRenew = yes
-	return s
+func (r *CreateEndpointRequest) WithEnableAutoRenew(yes bool) ICreateEndpointRequest {
+	r.ResourceInfo.IsEnableAutoRenew = yes
+	return r
 }
 
-func (s *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.Networking = append(s.ResourceInfo.Networking, struct {
+func (r *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) ICreateEndpointRequest {
+	r.ResourceInfo.Networking = append(r.ResourceInfo.Networking, struct {
 		Zone       string `json:"zone"`
 		SubnetUuid string `json:"subnetUuid"`
 	}{
 		Zone:       zone,
 		SubnetUuid: subnetUuid,
 	})
-	return s
+	return r
 }
 
-func (s *CreateEndpointRequest) WithScaling(minSize int, maxSize int) ICreateEndpointRequest {
-	s.ResourceInfo.Scaling = struct {
+func (r *CreateEndpointRequest) WithScaling(minSize int, maxSize int) ICreateEndpointRequest {
+	r.ResourceInfo.Scaling = struct {
 		MinSize int `json:"minSize"`
 		MaxSize int `json:"maxSize"`
 	}{
 		MinSize: minSize,
 		MaxSize: maxSize,
 	}
-	return s
+	return r
 }
 
 type DeleteEndpointByIDRequest struct {
@@ -205,29 +205,29 @@ type DeleteEndpointByIDRequest struct {
 	common.EndpointCommon
 }
 
-func (s *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) IDeleteEndpointByIDRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) IDeleteEndpointByIDRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) interface{} {
-	s.ProjectUuid = svc.GetProjectID()
-	s.RegionUuid = svc.GetZoneID()
+func (r *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+	r.ProjectUuid = svc.GetProjectID()
+	r.RegionUuid = svc.GetZoneID()
 
-	return s
+	return r
 }
 
-func (s *DeleteEndpointByIDRequest) ToMap() map[string]interface{} {
+func (r *DeleteEndpointByIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"serviceId":  s.EndpointServiceUuid,
-		"endpointId": s.EndpointID,
-		"projectId":  s.ProjectUuid,
-		"regionId":   s.RegionUuid,
-		"vpcId":      s.VpcUuid,
+		"serviceId":  r.EndpointServiceUuid,
+		"endpointId": r.EndpointID,
+		"projectId":  r.ProjectUuid,
+		"regionId":   r.RegionUuid,
+		"vpcId":      r.VpcUuid,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
@@ -241,67 +241,67 @@ type ListEndpointsRequest struct {
 	common.UserAgent
 }
 
-func (s *ListEndpointsRequest) ToMap() map[string]interface{} {
+func (r *ListEndpointsRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"page":  s.Page,
-		"size":  s.Size,
-		"vpcId": s.VpcID,
-		"uuid":  s.Uuid,
+		"page":  r.Page,
+		"size":  r.Size,
+		"vpcId": r.VpcID,
+		"uuid":  r.Uuid,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
 }
 
-func (s *ListEndpointsRequest) WithPage(page int) IListEndpointsRequest {
-	s.Page = page
-	return s
+func (r *ListEndpointsRequest) WithPage(page int) IListEndpointsRequest {
+	r.Page = page
+	return r
 }
 
-func (s *ListEndpointsRequest) WithSize(size int) IListEndpointsRequest {
-	s.Size = size
-	return s
+func (r *ListEndpointsRequest) WithSize(size int) IListEndpointsRequest {
+	r.Size = size
+	return r
 }
 
-func (s *ListEndpointsRequest) WithVpcID(vpcID string) IListEndpointsRequest {
-	s.VpcID = vpcID
-	return s
+func (r *ListEndpointsRequest) WithVpcID(vpcID string) IListEndpointsRequest {
+	r.VpcID = vpcID
+	return r
 }
 
-func (s *ListEndpointsRequest) WithUuid(uuid string) IListEndpointsRequest {
-	s.Uuid = uuid
-	return s
+func (r *ListEndpointsRequest) WithUuid(uuid string) IListEndpointsRequest {
+	r.Uuid = uuid
+	return r
 }
 
-func (s *ListEndpointsRequest) ToListQuery() (string, error) {
+func (r *ListEndpointsRequest) ToListQuery() (string, error) {
 	var params []string
-	if s.VpcID != "" {
-		params = append(params, fmt.Sprintf(`{"field":"vpcId","value":"%s"}`, s.VpcID))
+	if r.VpcID != "" {
+		params = append(params, fmt.Sprintf(`{"field":"vpcId","value":"%s"}`, r.VpcID))
 	}
 
-	if s.Uuid != "" {
-		params = append(params, fmt.Sprintf(`{"field":"uuid","value":"%s"}`, s.Uuid))
+	if r.Uuid != "" {
+		params = append(params, fmt.Sprintf(`{"field":"uuid","value":"%s"}`, r.Uuid))
 	}
 
 	paramsFilter := strings.Join(params, ",")
-	query := fmt.Sprintf(`{"page":%d,"size":%d,"search":[%s]}`, s.Page, s.Size, paramsFilter)
+	query := fmt.Sprintf(`{"page":%d,"size":%d,"search":[%s]}`, r.Page, r.Size, paramsFilter)
 	query = "params=" + url.QueryEscape(query)
 
 	return query, nil
 }
 
-func (s *ListEndpointsRequest) GetDefaultQuery() string {
+func (r *ListEndpointsRequest) GetDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
 	return query
 }
 
-func (s *ListEndpointsRequest) AddUserAgent(agent ...string) IListEndpointsRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *ListEndpointsRequest) AddUserAgent(agent ...string) IListEndpointsRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
 // _____________________________________________________________________ ListTagsByEndpointIdRequest
@@ -315,43 +315,43 @@ type ListTagsByEndpointIDRequest struct {
 	ID        string
 }
 
-func (s *ListTagsByEndpointIDRequest) ToListQuery() (string, error) {
+func (r *ListTagsByEndpointIDRequest) ToListQuery() (string, error) {
 	v := url.Values{}
-	if s.ID != "" {
-		v.Set("resourceUuid", s.ID)
+	if r.ID != "" {
+		v.Set("resourceUuid", r.ID)
 	}
 	return v.Encode(), nil
 }
 
-func (s *ListTagsByEndpointIDRequest) GetProjectID() string {
-	return s.ProjectID
+func (r *ListTagsByEndpointIDRequest) GetProjectID() string {
+	return r.ProjectID
 }
 
-func (s *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
+func (r *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
 	return query
 }
 
-func (s *ListTagsByEndpointIDRequest) ToMap() map[string]interface{} {
+func (r *ListTagsByEndpointIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceUuid": s.ID,
+		"resourceUuid": r.ID,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
 }
 
-func (s *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
-	return s.PortalUser.GetMapHeaders()
+func (r *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
+	return r.PortalUser.GetMapHeaders()
 }
 
-func (s *ListTagsByEndpointIDRequest) AddUserAgent(agent ...string) IListTagsByEndpointIDRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *ListTagsByEndpointIDRequest) AddUserAgent(agent ...string) IListTagsByEndpointIDRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
 // _________________________________________________________________ CreateTagsWithEndpointIdRequest
@@ -371,31 +371,31 @@ type CreateTagsWithEndpointIDRequest struct {
 	SystemTag bool `json:"systemTag"`
 }
 
-func (s *CreateTagsWithEndpointIDRequest) ToMap() map[string]interface{} {
+func (r *CreateTagsWithEndpointIDRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"resourceUuid": s.ID,
+		"resourceUuid": r.ID,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
-	res["tags"] = s.Tags
+	res["tags"] = r.Tags
 
 	return res
 }
 
-func (s *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
-	return s.PortalUser.GetMapHeaders()
+func (r *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
+	return r.PortalUser.GetMapHeaders()
 }
 
-func (s *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsWithEndpointIDRequest {
-	s.Tags = append(s.Tags, struct {
+func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsWithEndpointIDRequest {
+	r.Tags = append(r.Tags, struct {
 		TagKey   string `json:"tagKey"`
 		TagValue string `json:"tagValue"`
 	}{
@@ -403,15 +403,15 @@ func (s *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsW
 		TagValue: value,
 	})
 
-	return s
+	return r
 }
 
-func (s *CreateTagsWithEndpointIDRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateTagsWithEndpointIDRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateTagsWithEndpointIDRequest) GetProjectID() string {
-	return s.ProjectID
+func (r *CreateTagsWithEndpointIDRequest) GetProjectID() string {
+	return r.ProjectID
 }
 
 // ____________________________________________________________________ DeleteTagByEndpointIdRequest
@@ -424,33 +424,33 @@ type DeleteTagOfEndpointRequest struct {
 	TagID     string
 }
 
-func (s *DeleteTagOfEndpointRequest) ToMap() map[string]interface{} {
+func (r *DeleteTagOfEndpointRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"tagId": s.TagID,
+		"tagId": r.TagID,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
 }
 
-func (s *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *DeleteTagOfEndpointRequest) GetMapHeaders() map[string]string {
-	return s.PortalUser.GetMapHeaders()
+func (r *DeleteTagOfEndpointRequest) GetMapHeaders() map[string]string {
+	return r.PortalUser.GetMapHeaders()
 }
 
-func (s *DeleteTagOfEndpointRequest) GetTagID() string {
-	return s.TagID
+func (r *DeleteTagOfEndpointRequest) GetTagID() string {
+	return r.TagID
 }
 
-func (s *DeleteTagOfEndpointRequest) GetProjectID() string {
-	return s.ProjectID
+func (r *DeleteTagOfEndpointRequest) GetProjectID() string {
+	return r.ProjectID
 }
 
 // _________________________________________________________________ UpdateTagValueOfEndpointRequest
@@ -464,36 +464,36 @@ type UpdateTagValueOfEndpointRequest struct {
 	TagValue  string `json:"tagValue"`
 }
 
-func (s *UpdateTagValueOfEndpointRequest) ToMap() map[string]interface{} {
+func (r *UpdateTagValueOfEndpointRequest) ToMap() map[string]interface{} {
 	res := map[string]interface{}{
-		"tagId":    s.TagID,
-		"tagValue": s.TagValue,
+		"tagId":    r.TagID,
+		"tagValue": r.TagValue,
 	}
 
-	if len(s.Agent) > 0 {
-		res["userAgent"] = s.Agent
+	if len(r.Agent) > 0 {
+		res["userAgent"] = r.Agent
 	}
 
 	return res
 }
 
-func (s *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest {
-	s.Agent = append(s.Agent, agent...)
-	return s
+func (r *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest {
+	r.Agent = append(r.Agent, agent...)
+	return r
 }
 
-func (s *UpdateTagValueOfEndpointRequest) GetMapHeaders() map[string]string {
-	return s.PortalUser.GetMapHeaders()
+func (r *UpdateTagValueOfEndpointRequest) GetMapHeaders() map[string]string {
+	return r.PortalUser.GetMapHeaders()
 }
 
-func (s *UpdateTagValueOfEndpointRequest) GetTagID() string {
-	return s.TagID
+func (r *UpdateTagValueOfEndpointRequest) GetTagID() string {
+	return r.TagID
 }
 
-func (s *UpdateTagValueOfEndpointRequest) ToRequestBody() interface{} {
-	return s
+func (r *UpdateTagValueOfEndpointRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *UpdateTagValueOfEndpointRequest) GetProjectID() string {
-	return s.ProjectID
+func (r *UpdateTagValueOfEndpointRequest) GetProjectID() string {
+	return r.ProjectID
 }

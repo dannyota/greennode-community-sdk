@@ -31,14 +31,14 @@ type l7Rule struct {
 	OperatingStatus    string `json:"operatingStatus"`
 }
 
-func (s *l7Rule) toL7Rule() *entity.L7Rule {
+func (l *l7Rule) toL7Rule() *entity.L7Rule {
 	return &entity.L7Rule{
-		UUID:               s.UUID,
-		CompareType:        s.CompareType,
-		RuleValue:          s.RuleValue,
-		RuleType:           s.RuleType,
-		ProvisioningStatus: s.ProvisioningStatus,
-		OperatingStatus:    s.OperatingStatus,
+		UUID:               l.UUID,
+		CompareType:        l.CompareType,
+		RuleValue:          l.RuleValue,
+		RuleType:           l.RuleType,
+		ProvisioningStatus: l.ProvisioningStatus,
+		OperatingStatus:    l.OperatingStatus,
 	}
 }
 
@@ -52,13 +52,13 @@ type ListPoliciesResponse struct {
 	TotalItem int            `json:"totalItem"`
 }
 
-func (s *ListPoliciesResponse) ToEntityListPolicies() *entity.ListPolicies {
-	if s == nil || s.ListData == nil {
+func (r *ListPoliciesResponse) ToEntityListPolicies() *entity.ListPolicies {
+	if r == nil || r.ListData == nil {
 		return nil
 	}
 
-	items := make([]*entity.Policy, 0, len(s.ListData))
-	for _, item := range s.ListData {
+	items := make([]*entity.Policy, 0, len(r.ListData))
+	for _, item := range r.ListData {
 		l7Rule := make([]*entity.L7Rule, 0)
 		for _, rule := range item.L7Rules {
 			l7Rule = append(l7Rule, rule.toL7Rule())
@@ -92,12 +92,12 @@ type CreatePolicyResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *CreatePolicyResponse) ToEntityPolicy() *entity.Policy {
-	if s == nil {
+func (r *CreatePolicyResponse) ToEntityPolicy() *entity.Policy {
+	if r == nil {
 		return nil
 	}
 	return &entity.Policy{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
@@ -107,29 +107,29 @@ type GetPolicyResponse struct {
 	Data responseData `json:"data"`
 }
 
-func (s *GetPolicyResponse) ToEntityPolicy() *entity.Policy {
-	if s == nil {
+func (r *GetPolicyResponse) ToEntityPolicy() *entity.Policy {
+	if r == nil {
 		return nil
 	}
 	l7Rule := make([]*entity.L7Rule, 0)
-	for _, rule := range s.Data.L7Rules {
+	for _, rule := range r.Data.L7Rules {
 		l7Rule = append(l7Rule, rule.toL7Rule())
 	}
 	return &entity.Policy{
-		UUID:             s.Data.UUID,
-		Name:             s.Data.Name,
-		Description:      s.Data.Description,
-		RedirectPoolID:   s.Data.RedirectPoolID,
-		RedirectPoolName: s.Data.RedirectPoolName,
-		Action:           s.Data.Action,
-		RedirectURL:      s.Data.RedirectURL,
-		RedirectHTTPCode: s.Data.RedirectHTTPCode,
-		KeepQueryString:  s.Data.KeepQueryString,
-		Position:         s.Data.Position,
-		DisplayStatus:    s.Data.DisplayStatus,
-		CreatedAt:        s.Data.CreatedAt,
-		UpdatedAt:        s.Data.UpdatedAt,
-		ProgressStatus:   s.Data.ProgressStatus,
+		UUID:             r.Data.UUID,
+		Name:             r.Data.Name,
+		Description:      r.Data.Description,
+		RedirectPoolID:   r.Data.RedirectPoolID,
+		RedirectPoolName: r.Data.RedirectPoolName,
+		Action:           r.Data.Action,
+		RedirectURL:      r.Data.RedirectURL,
+		RedirectHTTPCode: r.Data.RedirectHTTPCode,
+		KeepQueryString:  r.Data.KeepQueryString,
+		Position:         r.Data.Position,
+		DisplayStatus:    r.Data.DisplayStatus,
+		CreatedAt:        r.Data.CreatedAt,
+		UpdatedAt:        r.Data.UpdatedAt,
+		ProgressStatus:   r.Data.ProgressStatus,
 		L7Rules:          l7Rule,
 	}
 }

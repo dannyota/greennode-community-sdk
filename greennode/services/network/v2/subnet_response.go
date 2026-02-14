@@ -23,9 +23,9 @@ type GetSubnetByIDResponse struct {
 	} `json:"zone"`
 }
 
-func (s *GetSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
-	secondaryRange := make([]entity.SubnetSecondaryRange, 0, len(s.SecondarySubnets))
-	for _, sr := range s.SecondarySubnets {
+func (r *GetSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
+	secondaryRange := make([]entity.SubnetSecondaryRange, 0, len(r.SecondarySubnets))
+	for _, sr := range r.SecondarySubnets {
 		secondaryRange = append(secondaryRange, entity.SubnetSecondaryRange{
 			ID:   sr.UUID,
 			Name: sr.Name,
@@ -33,16 +33,16 @@ func (s *GetSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
 		})
 	}
 	return &entity.Subnet{
-		ID:                     s.UUID,
-		NetworkID:              s.NetworkUuid,
-		Name:                   s.Name,
-		Status:                 s.Status,
-		Cidr:                   s.Cidr,
-		RouteTableID:           s.RouteTableUuid,
-		InterfaceAclPolicyID:   s.InterfaceAclPolicyUuid,
-		InterfaceAclPolicyName: s.InterfaceAclPolicyName,
+		ID:                     r.UUID,
+		NetworkID:              r.NetworkUuid,
+		Name:                   r.Name,
+		Status:                 r.Status,
+		Cidr:                   r.Cidr,
+		RouteTableID:           r.RouteTableUuid,
+		InterfaceAclPolicyID:   r.InterfaceAclPolicyUuid,
+		InterfaceAclPolicyName: r.InterfaceAclPolicyName,
 		SecondarySubnets:       secondaryRange,
-		ZoneID:                 s.Zone.UUID,
+		ZoneID:                 r.Zone.UUID,
 	}
 }
 
@@ -51,6 +51,6 @@ type UpdateSubnetByIDResponse struct {
 	Data GetSubnetByIDResponse `json:"data"`
 }
 
-func (s *UpdateSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
-	return s.Data.ToEntitySubnet()
+func (r *UpdateSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
+	return r.Data.ToEntitySubnet()
 }

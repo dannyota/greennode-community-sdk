@@ -44,9 +44,9 @@ type (
 	}
 )
 
-func (s *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
-	vips := make([]*entity.GlobalLoadBalancerVIP, 0, len(s.Vips))
-	for _, vip := range s.Vips {
+func (r *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
+	vips := make([]*entity.GlobalLoadBalancerVIP, 0, len(r.Vips))
+	for _, vip := range r.Vips {
 		vips = append(vips, &entity.GlobalLoadBalancerVIP{
 			ID:                   vip.ID,
 			CreatedAt:            vip.CreatedAt,
@@ -59,8 +59,8 @@ func (s *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.Global
 		})
 	}
 
-	domains := make([]*entity.GlobalLoadBalancerDomain, 0, len(s.Domains))
-	for _, domain := range s.Domains {
+	domains := make([]*entity.GlobalLoadBalancerDomain, 0, len(r.Domains))
+	for _, domain := range r.Domains {
 		domains = append(domains, &entity.GlobalLoadBalancerDomain{
 			CreatedAt:            domain.CreatedAt,
 			UpdatedAt:            domain.UpdatedAt,
@@ -75,16 +75,16 @@ func (s *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.Global
 	}
 
 	return &entity.GlobalLoadBalancer{
-		CreatedAt:   s.CreatedAt,
-		UpdatedAt:   s.UpdatedAt,
-		DeletedAt:   s.DeletedAt,
-		ID:          s.ID,
-		Name:        s.Name,
-		Description: s.Description,
-		Status:      s.Status,
-		Package:     s.Package,
-		Type:        s.Type,
-		UserID:      s.UserID,
+		CreatedAt:   r.CreatedAt,
+		UpdatedAt:   r.UpdatedAt,
+		DeletedAt:   r.DeletedAt,
+		ID:          r.ID,
+		Name:        r.Name,
+		Description: r.Description,
+		Status:      r.Status,
+		Package:     r.Package,
+		Type:        r.Type,
+		UserID:      r.UserID,
 		Vips:        vips,
 		Domains:     domains,
 	}
@@ -98,7 +98,7 @@ type ListGlobalLoadBalancersResponse struct {
 	Offset int                          `json:"offset"`
 }
 
-func (s *ListGlobalLoadBalancersResponse) ToEntityListGlobalLoadBalancers() *entity.ListGlobalLoadBalancers {
+func (r *ListGlobalLoadBalancersResponse) ToEntityListGlobalLoadBalancers() *entity.ListGlobalLoadBalancers {
 	result := &entity.ListGlobalLoadBalancers{
 		Items:  make([]*entity.GlobalLoadBalancer, 0),
 		Limit:  0,
@@ -106,15 +106,15 @@ func (s *ListGlobalLoadBalancersResponse) ToEntityListGlobalLoadBalancers() *ent
 		Offset: 0,
 	}
 
-	if s == nil || s.Items == nil || len(s.Items) < 1 {
+	if r == nil || r.Items == nil || len(r.Items) < 1 {
 		return result
 	}
 
-	result.Limit = s.Limit
-	result.Total = s.Total
-	result.Offset = s.Offset
+	result.Limit = r.Limit
+	result.Total = r.Total
+	result.Offset = r.Offset
 
-	for _, itemLb := range s.Items {
+	for _, itemLb := range r.Items {
 		result.Items = append(result.Items, itemLb.ToEntityGlobalLoadBalancer())
 	}
 
@@ -129,16 +129,16 @@ type CreateGlobalLoadBalancerResponse struct {
 	GlobalPool         GlobalPoolResponse         `json:"globalPool"`
 }
 
-func (s *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
-	return s.GlobalLoadBalancer.ToEntityGlobalLoadBalancer()
+func (r *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
+	return r.GlobalLoadBalancer.ToEntityGlobalLoadBalancer()
 }
 
 // --------------------------------------------------
 
 type GetGlobalLoadBalancerByIDResponse GlobalLoadBalancerResponse
 
-func (s *GetGlobalLoadBalancerByIDResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
-	return (*GlobalLoadBalancerResponse)(s).ToEntityGlobalLoadBalancer()
+func (r *GetGlobalLoadBalancerByIDResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
+	return (*GlobalLoadBalancerResponse)(r).ToEntityGlobalLoadBalancer()
 }
 
 // --------------------------------------------------
@@ -172,19 +172,19 @@ type VlbGlobalPackageResponse struct {
 	CreatedAt    string `json:"created_at"`
 }
 
-func (s *ListGlobalPackagesResponse) ToEntityListGlobalPackages() *entity.ListGlobalPackages {
+func (r *ListGlobalPackagesResponse) ToEntityListGlobalPackages() *entity.ListGlobalPackages {
 	packages := make([]entity.GlobalPackage, 0)
-	if s != nil {
-		for _, item := range *s {
+	if r != nil {
+		for _, item := range *r {
 			packages = append(packages, *item.ToEntityGlobalPackage())
 		}
 	}
 	return &entity.ListGlobalPackages{Items: packages}
 }
 
-func (s *GlobalPackageResponse) ToEntityGlobalPackage() *entity.GlobalPackage {
-	vlbPackages := make([]entity.VlbPackage, 0, len(s.VlbPackages))
-	for _, vlb := range s.VlbPackages {
+func (r *GlobalPackageResponse) ToEntityGlobalPackage() *entity.GlobalPackage {
+	vlbPackages := make([]entity.VlbPackage, 0, len(r.VlbPackages))
+	for _, vlb := range r.VlbPackages {
 		vlbPackages = append(vlbPackages, entity.VlbPackage{
 			ID:           vlb.ID,
 			GlbPackageID: vlb.GlbPackageID,
@@ -195,21 +195,21 @@ func (s *GlobalPackageResponse) ToEntityGlobalPackage() *entity.GlobalPackage {
 	}
 
 	return &entity.GlobalPackage{
-		ID:                          s.ID,
-		Name:                        s.Name,
-		Description:                 s.Description,
-		DescriptionEn:               s.DescriptionEn,
-		Detail:                      s.Detail,
-		Enabled:                     s.Enabled,
-		BaseSku:                     s.BaseSku,
-		BaseConnectionRate:          s.BaseConnectionRate,
-		BaseDomesticTrafficTotal:    s.BaseDomesticTrafficTotal,
-		BaseNonDomesticTrafficTotal: s.BaseNonDomesticTrafficTotal,
-		ConnectionSku:               s.ConnectionSku,
-		DomesticTrafficSku:          s.DomesticTrafficSku,
-		NonDomesticTrafficSku:       s.NonDomesticTrafficSku,
-		CreatedAt:                   s.CreatedAt,
-		UpdatedAt:                   s.UpdatedAt,
+		ID:                          r.ID,
+		Name:                        r.Name,
+		Description:                 r.Description,
+		DescriptionEn:               r.DescriptionEn,
+		Detail:                      r.Detail,
+		Enabled:                     r.Enabled,
+		BaseSku:                     r.BaseSku,
+		BaseConnectionRate:          r.BaseConnectionRate,
+		BaseDomesticTrafficTotal:    r.BaseDomesticTrafficTotal,
+		BaseNonDomesticTrafficTotal: r.BaseNonDomesticTrafficTotal,
+		ConnectionSku:               r.ConnectionSku,
+		DomesticTrafficSku:          r.DomesticTrafficSku,
+		NonDomesticTrafficSku:       r.NonDomesticTrafficSku,
+		CreatedAt:                   r.CreatedAt,
+		UpdatedAt:                   r.UpdatedAt,
 		VlbPackages:                 vlbPackages,
 	}
 }
@@ -226,23 +226,23 @@ type GlobalRegionResponse struct {
 	UIServerEndpoint string `json:"uiServerEndpoint"`
 }
 
-func (s *ListGlobalRegionsResponse) ToEntityListGlobalRegions() *entity.ListGlobalRegions {
+func (r *ListGlobalRegionsResponse) ToEntityListGlobalRegions() *entity.ListGlobalRegions {
 	regions := make([]entity.GlobalRegion, 0)
-	if s != nil {
-		for _, item := range *s {
+	if r != nil {
+		for _, item := range *r {
 			regions = append(regions, *item.ToEntityGlobalRegion())
 		}
 	}
 	return &entity.ListGlobalRegions{Items: regions}
 }
 
-func (s *GlobalRegionResponse) ToEntityGlobalRegion() *entity.GlobalRegion {
+func (r *GlobalRegionResponse) ToEntityGlobalRegion() *entity.GlobalRegion {
 	return &entity.GlobalRegion{
-		ID:               s.ID,
-		Name:             s.Name,
-		VServerEndpoint:  s.VServerEndpoint,
-		VlbEndpoint:      s.VlbEndpoint,
-		UIServerEndpoint: s.UIServerEndpoint,
+		ID:               r.ID,
+		Name:             r.Name,
+		VServerEndpoint:  r.VServerEndpoint,
+		VlbEndpoint:      r.VlbEndpoint,
+		UIServerEndpoint: r.UIServerEndpoint,
 	}
 }
 
@@ -261,25 +261,25 @@ type GlobalLoadBalancerUsageHistoryResponse struct {
 	Type      string  `json:"type"`
 }
 
-func (s *GetGlobalLoadBalancerUsageHistoriesResponse) ToEntityGlobalLoadBalancerUsageHistories() *entity.ListGlobalLoadBalancerUsageHistories {
+func (r *GetGlobalLoadBalancerUsageHistoriesResponse) ToEntityGlobalLoadBalancerUsageHistories() *entity.ListGlobalLoadBalancerUsageHistories {
 	histories := make([]entity.GlobalLoadBalancerUsageHistory, 0)
-	if s != nil && s.Items != nil {
-		for _, item := range s.Items {
+	if r != nil && r.Items != nil {
+		for _, item := range r.Items {
 			histories = append(histories, *item.ToEntityGlobalLoadBalancerUsageHistory())
 		}
 	}
 	return &entity.ListGlobalLoadBalancerUsageHistories{
-		Type:  s.Type,
+		Type:  r.Type,
 		Items: histories,
-		From:  s.From,
-		To:    s.To,
+		From:  r.From,
+		To:    r.To,
 	}
 }
 
-func (s *GlobalLoadBalancerUsageHistoryResponse) ToEntityGlobalLoadBalancerUsageHistory() *entity.GlobalLoadBalancerUsageHistory {
+func (r *GlobalLoadBalancerUsageHistoryResponse) ToEntityGlobalLoadBalancerUsageHistory() *entity.GlobalLoadBalancerUsageHistory {
 	return &entity.GlobalLoadBalancerUsageHistory{
-		Timestamp: s.Timestamp,
-		Value:     s.Value,
-		Type:      s.Type,
+		Timestamp: r.Timestamp,
+		Value:     r.Value,
+		Type:      r.Type,
 	}
 }

@@ -11,12 +11,12 @@ type Project struct {
 	ID string
 }
 
-func (s *Project) GetProjectID() string {
-	return s.ID
+func (pr *Project) GetProjectID() string {
+	return pr.ID
 }
 
-func (s *Project) SetProjectID(id string) {
-	s.ID = id
+func (pr *Project) SetProjectID(id string) {
+	pr.ID = id
 }
 
 type Paging struct {
@@ -34,22 +34,22 @@ const (
 	HAN_01_1A_ZONE     Zone = "HAN01-1A"
 )
 
-func (s *Paging) GetPage() int {
-	return s.Page
+func (p *Paging) GetPage() int {
+	return p.Page
 }
 
-func (s *Paging) GetSize() int {
-	return s.Size
+func (p *Paging) GetSize() int {
+	return p.Size
 }
 
-func (s *Paging) SetPage(page int) *Paging {
-	s.Page = page
-	return s
+func (p *Paging) SetPage(page int) *Paging {
+	p.Page = page
+	return p
 }
 
-func (s *Paging) SetSize(size int) *Paging {
-	s.Size = size
-	return s
+func (p *Paging) SetSize(size int) *Paging {
+	p.Size = size
+	return p
 }
 
 type Tag struct {
@@ -62,34 +62,34 @@ type UserAgent struct {
 	Agent []string
 }
 
-func (s *UserAgent) ParseUserAgent() string {
+func (ua *UserAgent) ParseUserAgent() string {
 	// Parse the array into string
-	return strings.Join(s.Agent, "; ")
+	return strings.Join(ua.Agent, "; ")
 }
 
-func (s *UserAgent) AddUserAgent(pagent ...string) *UserAgent {
+func (ua *UserAgent) AddUserAgent(pagent ...string) *UserAgent {
 	for _, agent := range pagent {
-		if !slices.Contains(s.Agent, agent) {
-			s.Agent = append(s.Agent, agent)
+		if !slices.Contains(ua.Agent, agent) {
+			ua.Agent = append(ua.Agent, agent)
 		}
 	}
-	return s
+	return ua
 }
 
 type PortalUser struct {
 	ID string
 }
 
-func (s *PortalUser) GetPortalUserID() string {
-	return s.ID
+func (pu *PortalUser) GetPortalUserID() string {
+	return pu.ID
 }
 
-func (s *PortalUser) SetPortalUserID(id string) {
-	s.ID = id
+func (pu *PortalUser) SetPortalUserID(id string) {
+	pu.ID = id
 }
 
-func (s *PortalUser) GetMapHeaders() map[string]string {
+func (pu *PortalUser) GetMapHeaders() map[string]string {
 	return map[string]string{
-		"portal-user-id": s.ID,
+		"portal-user-id": pu.ID,
 	}
 }

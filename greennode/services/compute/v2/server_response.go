@@ -125,17 +125,17 @@ type (
 	}
 )
 
-func (s Image) toEntityImage() entity.Image {
+func (i Image) toEntityImage() entity.Image {
 	return entity.Image{
-		FlavorZoneIDs: s.FlavorZoneIDs,
-		ID:            s.ID,
-		ImageType:     s.ImageType,
-		ImageVersion:  s.ImageVersion,
-		Licence:       s.Licence,
+		FlavorZoneIDs: i.FlavorZoneIDs,
+		ID:            i.ID,
+		ImageType:     i.ImageType,
+		ImageVersion:  i.ImageVersion,
+		Licence:       i.Licence,
 		PackageLimit: entity.PackageLimit{
-			Cpu:      s.PackageLimit.Cpu,
-			DiskSize: s.PackageLimit.DiskSize,
-			Memory:   s.PackageLimit.Memory,
+			Cpu:      i.PackageLimit.Cpu,
+			DiskSize: i.PackageLimit.DiskSize,
+			Memory:   i.PackageLimit.Memory,
 		},
 	}
 }
@@ -152,23 +152,23 @@ func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *entity.ServerGroupPol
 	}
 }
 
-func (s NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
+func (n NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
 	return entity.NetworkInterface{
-		CreatedAt:     s.CreatedAt,
-		FixedIp:       s.FixedIp,
-		FloatingIp:    s.FloatingIp,
-		FloatingIpID:  s.FloatingIpID,
-		InterfaceType: s.InterfaceType,
-		Mac:           s.Mac,
-		NetworkUuid:   s.NetworkUuid,
-		PortUuid:      s.PortUuid,
-		Product:       s.Product,
-		ServerUuid:    s.ServerUuid,
-		Status:        s.Status,
-		SubnetUuid:    s.SubnetUuid,
-		Type:          s.Type,
-		UpdatedAt:     s.UpdatedAt,
-		Uuid:          s.Uuid,
+		CreatedAt:     n.CreatedAt,
+		FixedIp:       n.FixedIp,
+		FloatingIp:    n.FloatingIp,
+		FloatingIpID:  n.FloatingIpID,
+		InterfaceType: n.InterfaceType,
+		Mac:           n.Mac,
+		NetworkUuid:   n.NetworkUuid,
+		PortUuid:      n.PortUuid,
+		Product:       n.Product,
+		ServerUuid:    n.ServerUuid,
+		Status:        n.Status,
+		SubnetUuid:    n.SubnetUuid,
+		Type:          n.Type,
+		UpdatedAt:     n.UpdatedAt,
+		Uuid:          n.Uuid,
 	}
 }
 
@@ -179,54 +179,54 @@ func (s ServerSecgroup) toEntityServerSecgroup() entity.ServerSecgroup {
 	}
 }
 
-func (s Flavor) toEntityFlavor() entity.Flavor {
+func (f Flavor) toEntityFlavor() entity.Flavor {
 	return entity.Flavor{
-		Bandwidth:              s.Bandwidth,
-		BandwidthUnit:          s.BandwidthUnit,
-		Cpu:                    s.Cpu,
-		CpuPlatformDescription: s.CpuPlatformDescription,
-		FlavorID:               s.FlavorID,
-		Gpu:                    s.Gpu,
-		Group:                  s.Group,
-		Memory:                 s.Memory,
-		MetaData:               s.MetaData,
-		Name:                   s.Name,
-		RemainingVms:           s.RemainingVms,
-		ZoneID:                 s.ZoneID,
+		Bandwidth:              f.Bandwidth,
+		BandwidthUnit:          f.BandwidthUnit,
+		Cpu:                    f.Cpu,
+		CpuPlatformDescription: f.CpuPlatformDescription,
+		FlavorID:               f.FlavorID,
+		Gpu:                    f.Gpu,
+		Group:                  f.Group,
+		Memory:                 f.Memory,
+		MetaData:               f.MetaData,
+		Name:                   f.Name,
+		RemainingVms:           f.RemainingVms,
+		ZoneID:                 f.ZoneID,
 	}
 }
 
-func (s Server) toEntityServer() *entity.Server {
+func (sv Server) toEntityServer() *entity.Server {
 	server := new(entity.Server)
-	server.BootVolumeID = s.BootVolumeID
-	server.CreatedAt = s.CreatedAt
-	server.EncryptionVolume = s.EncryptionVolume
-	server.Licence = s.Licence
-	server.Location = s.Location
-	server.Metadata = s.Metadata
-	server.MigrateState = s.MigrateState
-	server.Name = s.Name
-	server.Product = s.Product
-	server.ServerGroupID = s.ServerGroupID
-	server.ServerGroupName = s.ServerGroupName
-	server.SshKeyName = s.SshKeyName
-	server.Status = s.Status
-	server.StopBeforeMigrate = s.StopBeforeMigrate
-	server.User = s.User
-	server.Uuid = s.Uuid
-	server.Image = s.Image.toEntityImage()
-	server.Flavor = s.Flavor.toEntityFlavor()
-	server.ZoneID = s.ZoneID
+	server.BootVolumeID = sv.BootVolumeID
+	server.CreatedAt = sv.CreatedAt
+	server.EncryptionVolume = sv.EncryptionVolume
+	server.Licence = sv.Licence
+	server.Location = sv.Location
+	server.Metadata = sv.Metadata
+	server.MigrateState = sv.MigrateState
+	server.Name = sv.Name
+	server.Product = sv.Product
+	server.ServerGroupID = sv.ServerGroupID
+	server.ServerGroupName = sv.ServerGroupName
+	server.SshKeyName = sv.SshKeyName
+	server.Status = sv.Status
+	server.StopBeforeMigrate = sv.StopBeforeMigrate
+	server.User = sv.User
+	server.Uuid = sv.Uuid
+	server.Image = sv.Image.toEntityImage()
+	server.Flavor = sv.Flavor.toEntityFlavor()
+	server.ZoneID = sv.ZoneID
 
-	for _, secGroup := range s.SecGroups {
+	for _, secGroup := range sv.SecGroups {
 		server.SecGroups = append(server.SecGroups, secGroup.toEntityServerSecgroup())
 	}
 
-	for _, externalInterface := range s.ExternalInterfaces {
+	for _, externalInterface := range sv.ExternalInterfaces {
 		server.ExternalInterfaces = append(server.ExternalInterfaces, externalInterface.toEntityNetworkInterface())
 	}
 
-	for _, internalInterface := range s.InternalInterfaces {
+	for _, internalInterface := range sv.InternalInterfaces {
 		server.InternalInterfaces = append(server.InternalInterfaces, internalInterface.toEntityNetworkInterface())
 	}
 
@@ -237,37 +237,37 @@ type CreateServerResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *CreateServerResponse) ToEntityServer() *entity.Server {
-	return s.Data.toEntityServer()
+func (r *CreateServerResponse) ToEntityServer() *entity.Server {
+	return r.Data.toEntityServer()
 }
 
 type GetServerByIDResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *GetServerByIDResponse) ToEntityServer() *entity.Server {
-	return s.Data.toEntityServer()
+func (r *GetServerByIDResponse) ToEntityServer() *entity.Server {
+	return r.Data.toEntityServer()
 }
 
 type UpdateServerSecgroupsByServerIDResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *UpdateServerSecgroupsByServerIDResponse) ToEntityServer() *entity.Server {
-	return s.Data.toEntityServer()
+func (r *UpdateServerSecgroupsByServerIDResponse) ToEntityServer() *entity.Server {
+	return r.Data.toEntityServer()
 }
 
-func (s *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *entity.ListServerGroupPolicies {
+func (r *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *entity.ListServerGroupPolicies {
 	serverGroupPolicies := &entity.ListServerGroupPolicies{}
-	for _, itemServerGroupPolicy := range s.Data {
+	for _, itemServerGroupPolicy := range r.Data {
 		serverGroupPolicies.Add(itemServerGroupPolicy.toEntityServerGroupPolicy())
 	}
 	return serverGroupPolicies
 }
 
-func (s *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServerGroups {
+func (r *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServerGroups {
 	serverGroups := &entity.ListServerGroups{}
-	for _, itemServerGroup := range s.ListData {
+	for _, itemServerGroup := range r.ListData {
 		serverGroup := &entity.ServerGroup{
 			UUID:        itemServerGroup.UUID,
 			Name:        itemServerGroup.Name,
@@ -285,19 +285,19 @@ func (s *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServer
 		serverGroups.Add(serverGroup)
 	}
 
-	serverGroups.Page = s.Page
-	serverGroups.PageSize = s.PageSize
-	serverGroups.TotalPage = s.TotalPage
-	serverGroups.TotalItem = s.TotalItem
+	serverGroups.Page = r.Page
+	serverGroups.PageSize = r.PageSize
+	serverGroups.TotalPage = r.TotalPage
+	serverGroups.TotalItem = r.TotalItem
 
 	return serverGroups
 }
 
-func (s *CreateServerGroupResponse) ToEntityServerGroup() *entity.ServerGroup {
+func (r *CreateServerGroupResponse) ToEntityServerGroup() *entity.ServerGroup {
 	return &entity.ServerGroup{
-		UUID:        s.Data.UUID,
-		Name:        s.Data.Name,
-		Description: s.Data.Description,
-		PolicyID:    s.Data.PolicyID,
+		UUID:        r.Data.UUID,
+		Name:        r.Data.Name,
+		Description: r.Data.Description,
+		PolicyID:    r.Data.PolicyID,
 	}
 }

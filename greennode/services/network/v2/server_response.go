@@ -10,9 +10,9 @@ type ListAllServersBySecgroupIDResponse struct {
 	} `json:"data"`
 }
 
-func (s *ListAllServersBySecgroupIDResponse) ToEntityListServers() *entity.ListServers {
-	servers := make([]*entity.Server, 0, len(s.Data))
-	for _, server := range s.Data {
+func (r *ListAllServersBySecgroupIDResponse) ToEntityListServers() *entity.ListServers {
+	servers := make([]*entity.Server, 0, len(r.Data))
+	for _, server := range r.Data {
 		servers = append(servers, &entity.Server{
 			Name:   server.Name,
 			Uuid:   server.UUID,

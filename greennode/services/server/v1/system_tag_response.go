@@ -9,11 +9,11 @@ type SystemTagResponse struct {
 	SystemTag bool   `json:"systemTag"`
 }
 
-func (s *SystemTagResponse) toSystemTag() entity.SystemTag {
+func (r *SystemTagResponse) toSystemTag() entity.SystemTag {
 	return entity.SystemTag{
-		Key:       s.Key,
-		Value:     s.Value,
-		CreatedAt: s.CreatedAt,
-		SystemTag: s.SystemTag,
+		Key:       r.Key,
+		Value:     r.Value,
+		CreatedAt: r.CreatedAt,
+		SystemTag: r.SystemTag,
 	}
 }

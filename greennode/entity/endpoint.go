@@ -9,36 +9,36 @@ type Endpoint struct {
 	Name        string
 }
 
-func (s *Endpoint) IsUsable() bool {
-	return s.Status == "ACTIVE"
+func (e *Endpoint) IsUsable() bool {
+	return e.Status == "ACTIVE"
 }
 
-func (s *Endpoint) GetID() string {
-	return s.ID
+func (e *Endpoint) GetID() string {
+	return e.ID
 }
 
-func (s *Endpoint) GetName() string {
-	return s.Name
+func (e *Endpoint) GetName() string {
+	return e.Name
 }
 
-func (s *Endpoint) GetIPv4Address() string {
-	return s.IPv4Address
+func (e *Endpoint) GetIPv4Address() string {
+	return e.IPv4Address
 }
 
-func (s *Endpoint) GetEndpointURL() string {
-	return s.EndpointURL
+func (e *Endpoint) GetEndpointURL() string {
+	return e.EndpointURL
 }
 
-func (s *Endpoint) GetVpcID() string {
-	return s.VpcID
+func (e *Endpoint) GetVpcID() string {
+	return e.VpcID
 }
 
-func (s *Endpoint) GetStatus() string {
-	return s.Status
+func (e *Endpoint) GetStatus() string {
+	return e.Status
 }
 
-func (s *Endpoint) IsError() bool {
-	return s.Status == "ERROR"
+func (e *Endpoint) IsError() bool {
+	return e.Status == "ERROR"
 }
 
 type ListEndpoints struct {
@@ -49,14 +49,14 @@ type ListEndpoints struct {
 	TotalItem int
 }
 
-func (s *ListEndpoints) Len() int {
-	return len(s.Items)
+func (l *ListEndpoints) Len() int {
+	return len(l.Items)
 }
 
-func (s *ListEndpoints) At(idx int) *Endpoint {
-	if idx < 0 || idx >= s.Len() {
+func (l *ListEndpoints) At(idx int) *Endpoint {
+	if idx < 0 || idx >= l.Len() {
 		return nil
 	}
 
-	return s.Items[idx]
+	return l.Items[idx]
 }

@@ -10,6 +10,6 @@ func NewGetQuotaByNameRequest(name QuotaName) IGetQuotaByNameRequest {
 	}
 }
 
-func (s *GetQuotaByNameRequest) GetName() QuotaName {
-	return s.Name
+func (r *GetQuotaByNameRequest) GetName() QuotaName {
+	return r.Name
 }

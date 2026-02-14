@@ -14,9 +14,9 @@ type ResizeLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (r *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	return &entity.LoadBalancer{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
@@ -24,9 +24,9 @@ type ScaleLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (r *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	return &entity.LoadBalancer{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
@@ -106,14 +106,14 @@ type (
 	}
 )
 
-func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (r *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	return &entity.LoadBalancer{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }
 
-func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *entity.ListLoadBalancerPackages {
-	if s == nil || s.ListData == nil || len(s.ListData) < 1 {
+func (r *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *entity.ListLoadBalancerPackages {
+	if r == nil || r.ListData == nil || len(r.ListData) < 1 {
 		return &entity.ListLoadBalancerPackages{
 			Items: make([]*entity.LoadBalancerPackage, 0),
 		}
@@ -123,7 +123,7 @@ func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *e
 		Items: make([]*entity.LoadBalancerPackage, 0),
 	}
 
-	for _, item := range s.ListData {
+	for _, item := range r.ListData {
 		result.Items = append(result.Items, &entity.LoadBalancerPackage{
 			UUID:             item.UUID,
 			Name:             item.Name,
@@ -139,16 +139,16 @@ func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *e
 	return result
 }
 
-func (s *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
-	if s == nil {
+func (r *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+	if r == nil {
 		return nil
 	}
 
-	return s.Data.toEntityLoadBalancer()
+	return r.Data.toEntityLoadBalancer()
 }
 
-func (s *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoadBalancers {
-	if s == nil || s.ListData == nil || len(s.ListData) < 1 {
+func (r *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoadBalancers {
+	if r == nil || r.ListData == nil || len(r.ListData) < 1 {
 		return &entity.ListLoadBalancers{
 			Page:      0,
 			PageSize:  0,
@@ -159,25 +159,25 @@ func (s *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoad
 	}
 
 	result := &entity.ListLoadBalancers{
-		Page:      s.Page,
-		PageSize:  s.PageSize,
-		TotalPage: s.TotalPage,
-		TotalItem: s.TotalItem,
+		Page:      r.Page,
+		PageSize:  r.PageSize,
+		TotalPage: r.TotalPage,
+		TotalItem: r.TotalItem,
 	}
 
-	for _, itemLb := range s.ListData {
+	for _, itemLb := range r.ListData {
 		result.Add(itemLb.toEntityLoadBalancer())
 	}
 
 	return result
 }
 
-func (s *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
-	internal := strings.TrimSpace(strings.ToUpper(s.LoadBalancerSchema)) == "INTERNAL"
+func (lb *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
+	internal := strings.TrimSpace(strings.ToUpper(lb.LoadBalancerSchema)) == "INTERNAL"
 
 	// Convert nodes from response to entity
-	nodes := make([]*entity.Node, 0, len(s.Nodes))
-	for _, node := range s.Nodes {
+	nodes := make([]*entity.Node, 0, len(lb.Nodes))
+	for _, node := range lb.Nodes {
 		nodes = append(nodes, &entity.Node{
 			Status:   node.Status,
 			ZoneID:   node.ZoneID,
@@ -187,36 +187,36 @@ func (s *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
 	}
 
 	return &entity.LoadBalancer{
-		UUID:               s.UUID,
-		Name:               s.Name,
-		Address:            s.Address,
-		DisplayStatus:      s.DisplayStatus,
-		PrivateSubnetID:    s.PrivateSubnetID,
-		PrivateSubnetCidr:  s.PrivateSubnetCidr,
-		Type:               s.Type,
-		DisplayType:        s.DisplayType,
-		LoadBalancerSchema: s.LoadBalancerSchema,
-		PackageID:          s.PackageID,
-		Description:        s.Description,
-		Location:           s.Location,
-		CreatedAt:          s.CreatedAt,
-		UpdatedAt:          s.UpdatedAt,
-		ProgressStatus:     s.ProgressStatus,
-		AutoScalable:       s.AutoScalable,
-		ZoneID:             s.Zone.UUID,
-		MinSize:            s.MinSize,
-		MaxSize:            s.MaxSize,
-		TotalNodes:         s.TotalNodes,
+		UUID:               lb.UUID,
+		Name:               lb.Name,
+		Address:            lb.Address,
+		DisplayStatus:      lb.DisplayStatus,
+		PrivateSubnetID:    lb.PrivateSubnetID,
+		PrivateSubnetCidr:  lb.PrivateSubnetCidr,
+		Type:               lb.Type,
+		DisplayType:        lb.DisplayType,
+		LoadBalancerSchema: lb.LoadBalancerSchema,
+		PackageID:          lb.PackageID,
+		Description:        lb.Description,
+		Location:           lb.Location,
+		CreatedAt:          lb.CreatedAt,
+		UpdatedAt:          lb.UpdatedAt,
+		ProgressStatus:     lb.ProgressStatus,
+		AutoScalable:       lb.AutoScalable,
+		ZoneID:             lb.Zone.UUID,
+		MinSize:            lb.MinSize,
+		MaxSize:            lb.MaxSize,
+		TotalNodes:         lb.TotalNodes,
 		Nodes:              nodes,
 		BackendSubnetID: func() string {
-			if s.BackendSubnetID != "" {
-				return s.BackendSubnetID
+			if lb.BackendSubnetID != "" {
+				return lb.BackendSubnetID
 			}
-			return s.PrivateSubnetID
+			return lb.PrivateSubnetID
 		}(),
 
 		// will be removed
-		Status:   s.DisplayStatus,
+		Status:   lb.DisplayStatus,
 		Internal: internal,
 	}
 }

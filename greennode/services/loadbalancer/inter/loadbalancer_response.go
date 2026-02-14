@@ -6,8 +6,8 @@ type CreateLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (r *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	return &entity.LoadBalancer{
-		UUID: s.UUID,
+		UUID: r.UUID,
 	}
 }

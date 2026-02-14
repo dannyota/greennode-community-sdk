@@ -15,9 +15,9 @@ type GetSubnetByIDRequest struct {
 	common.NetworkCommon
 }
 
-func (s *GetSubnetByIDRequest) AddUserAgent(agent ...string) IGetSubnetByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetSubnetByIDRequest) AddUserAgent(agent ...string) IGetSubnetByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 // --------------------------------------------------------
@@ -46,11 +46,11 @@ type UpdateSubnetByIDRequest struct {
 	common.NetworkCommon
 }
 
-func (s *UpdateSubnetByIDRequest) ToRequestBody() interface{} {
-	return s.UpdateSubnetBody
+func (r *UpdateSubnetByIDRequest) ToRequestBody() interface{} {
+	return r.UpdateSubnetBody
 }
 
-func (s *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) IUpdateSubnetByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) IUpdateSubnetByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }

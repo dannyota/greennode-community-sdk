@@ -24,13 +24,13 @@ type (
 	ErrorCategory string
 )
 
-func (s *SdkError) IsError(errCode ErrorCode) bool {
-	return s.errorCode == errCode
+func (e *SdkError) IsError(errCode ErrorCode) bool {
+	return e.errorCode == errCode
 }
 
-func (s *SdkError) IsErrorAny(errCodes ...ErrorCode) bool {
+func (e *SdkError) IsErrorAny(errCodes ...ErrorCode) bool {
 	for _, perrCode := range errCodes {
-		if s.errorCode == perrCode {
+		if e.errorCode == perrCode {
 			return true
 		}
 	}
@@ -38,82 +38,82 @@ func (s *SdkError) IsErrorAny(errCodes ...ErrorCode) bool {
 	return false
 }
 
-func (s *SdkError) IsCategory(category ErrorCategory) bool {
-	if s.categories == nil {
+func (e *SdkError) IsCategory(category ErrorCategory) bool {
+	if e.categories == nil {
 		return false
 	}
 
-	_, ok := s.categories[category]
+	_, ok := e.categories[category]
 	return ok
 }
 
-func (s *SdkError) IsCategories(categories ...ErrorCategory) bool {
-	if s.categories == nil {
+func (e *SdkError) IsCategories(categories ...ErrorCategory) bool {
+	if e.categories == nil {
 		return false
 	}
 
 	for _, c := range categories {
-		if _, ok := s.categories[c]; ok {
+		if _, ok := e.categories[c]; ok {
 			return true
 		}
 	}
 	return false
 }
 
-func (s *SdkError) WithErrorCode(errCode ErrorCode) Error {
-	s.errorCode = errCode
-	return s
+func (e *SdkError) WithErrorCode(errCode ErrorCode) Error {
+	e.errorCode = errCode
+	return e
 }
 
-func (s *SdkError) WithMessage(msg string) Error {
-	s.message = msg
-	return s
+func (e *SdkError) WithMessage(msg string) Error {
+	e.message = msg
+	return e
 }
 
-func (s *SdkError) WithErrors(errs ...error) Error {
+func (e *SdkError) WithErrors(errs ...error) Error {
 	if len(errs) == 0 {
-		return s
+		return e
 	}
 
 	if len(errs) == 1 {
-		s.error = errs[0]
-		return s
+		e.error = errs[0]
+		return e
 	}
 
 	for _, err := range errs {
-		s.error = errors.Join(s.error, err)
+		e.error = errors.Join(e.error, err)
 	}
 
-	return s
+	return e
 }
 
-func (s *SdkError) WithErrorCategories(categories ...ErrorCategory) Error {
-	if s.categories == nil {
-		s.categories = make(map[ErrorCategory]struct{})
+func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) Error {
+	if e.categories == nil {
+		e.categories = make(map[ErrorCategory]struct{})
 	}
 	for _, c := range categories {
-		s.categories[c] = struct{}{}
+		e.categories[c] = struct{}{}
 	}
 
-	return s
+	return e
 }
 
-func (s *SdkError) WithParameters(params map[string]interface{}) Error {
-	if s.parameters == nil {
-		s.parameters = new(sync.Map)
-		return s
+func (e *SdkError) WithParameters(params map[string]interface{}) Error {
+	if e.parameters == nil {
+		e.parameters = new(sync.Map)
+		return e
 	}
 
 	for key, val := range params {
-		s.parameters.Store(key, val)
+		e.parameters.Store(key, val)
 	}
 
-	return s
+	return e
 }
 
-func (s *SdkError) WithKVparameters(params ...interface{}) Error {
-	if s.parameters == nil {
-		s.parameters = new(sync.Map)
+func (e *SdkError) WithKVparameters(params ...interface{}) Error {
+	if e.parameters == nil {
+		e.parameters = new(sync.Map)
 	}
 
 	// Always make sure that the length of pparams is even
@@ -127,32 +127,32 @@ func (s *SdkError) WithKVparameters(params ...interface{}) Error {
 			continue
 		}
 
-		s.parameters.Store(key, params[i+1])
+		e.parameters.Store(key, params[i+1])
 	}
 
-	return s
+	return e
 }
 
-func (s *SdkError) Err() error {
-	return s.error
+func (e *SdkError) Err() error {
+	return e.error
 }
 
-func (s *SdkError) GetMessage() string {
-	return s.message
+func (e *SdkError) GetMessage() string {
+	return e.message
 }
 
-func (s *SdkError) ErrorCode() ErrorCode {
-	return s.errorCode
+func (e *SdkError) ErrorCode() ErrorCode {
+	return e.errorCode
 }
 
-func (s *SdkError) StringErrorCode() string {
-	return string(s.errorCode)
+func (e *SdkError) StringErrorCode() string {
+	return string(e.errorCode)
 }
 
-func (s *SdkError) Parameters() map[string]interface{} {
+func (e *SdkError) Parameters() map[string]interface{} {
 	res := make(map[string]interface{})
-	if s.parameters != nil {
-		s.parameters.Range(func(key, val interface{}) bool {
+	if e.parameters != nil {
+		e.parameters.Range(func(key, val interface{}) bool {
 			res[key.(string)] = val
 			return true
 		})
@@ -161,29 +161,29 @@ func (s *SdkError) Parameters() map[string]interface{} {
 	return res
 }
 
-func (s *SdkError) ErrorCategories() []ErrorCategory {
-	result := make([]ErrorCategory, 0, len(s.categories))
-	for c := range s.categories {
+func (e *SdkError) ErrorCategories() []ErrorCategory {
+	result := make([]ErrorCategory, 0, len(e.categories))
+	for c := range e.categories {
 		result = append(result, c)
 	}
 	return result
 }
 
-func (s *SdkError) ErrorMessages() string {
-	if s.error == nil {
-		return s.message
+func (e *SdkError) ErrorMessages() string {
+	if e.error == nil {
+		return e.message
 	}
 
-	return fmt.Sprintf("%s: %s", s.message, s.error.Error())
+	return fmt.Sprintf("%s: %s", e.message, e.error.Error())
 }
 
-func (s *SdkError) ListParameters() []interface{} {
+func (e *SdkError) ListParameters() []interface{} {
 	var result []interface{}
-	if s.parameters == nil {
+	if e.parameters == nil {
 		return result
 	}
 
-	s.parameters.Range(func(key, val interface{}) bool {
+	e.parameters.Range(func(key, val interface{}) bool {
 		result = append(result, key, val)
 		return true
 	})
@@ -191,24 +191,24 @@ func (s *SdkError) ListParameters() []interface{} {
 	return result
 }
 
-func (s *SdkError) RemoveCategories(categories ...ErrorCategory) Error {
-	if s.categories == nil {
-		return s
+func (e *SdkError) RemoveCategories(categories ...ErrorCategory) Error {
+	if e.categories == nil {
+		return e
 	}
 
 	for _, c := range categories {
-		delete(s.categories, c)
+		delete(e.categories, c)
 	}
-	return s
+	return e
 }
 
-func (s *SdkError) AppendCategories(categories ...ErrorCategory) Error {
-	if s.categories == nil {
-		s.categories = make(map[ErrorCategory]struct{})
+func (e *SdkError) AppendCategories(categories ...ErrorCategory) Error {
+	if e.categories == nil {
+		e.categories = make(map[ErrorCategory]struct{})
 	}
 
 	for _, c := range categories {
-		s.categories[c] = struct{}{}
+		e.categories[c] = struct{}{}
 	}
-	return s
+	return e
 }

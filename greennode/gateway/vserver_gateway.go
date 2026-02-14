@@ -47,30 +47,30 @@ func NewVServerGatewayInternalV1(svcClient client.ServiceClient) VServerGatewayI
 	}
 }
 
-func (s *vserverGatewayV1) PortalService() portal.PortalServiceV1 {
-	return s.portalService
+func (g *vserverGatewayV1) PortalService() portal.PortalServiceV1 {
+	return g.portalService
 }
 
-func (s *vserverGatewayV1) VolumeService() volume.VolumeServiceV1 {
-	return s.volumeService
+func (g *vserverGatewayV1) VolumeService() volume.VolumeServiceV1 {
+	return g.volumeService
 }
 
-func (s *vserverGatewayV2) NetworkService() network.NetworkServiceV2 {
-	return s.networkService
+func (g *vserverGatewayV2) NetworkService() network.NetworkServiceV2 {
+	return g.networkService
 }
 
-func (s *vserverGatewayV2) ComputeService() compute.ComputeServiceV2 {
-	return s.computeService
+func (g *vserverGatewayV2) ComputeService() compute.ComputeServiceV2 {
+	return g.computeService
 }
 
-func (s *vserverGatewayV2) PortalService() portal.PortalServiceV2 {
-	return s.portalService
+func (g *vserverGatewayV2) PortalService() portal.PortalServiceV2 {
+	return g.portalService
 }
 
-func (s *vserverGatewayV2) VolumeService() volume.VolumeServiceV2 {
-	return s.volumeService
+func (g *vserverGatewayV2) VolumeService() volume.VolumeServiceV2 {
+	return g.volumeService
 }
 
-func (s *vServerGatewayInternalV1) ServerService() server.ServerServiceInternalV1 {
-	return s.serverService
+func (g *vServerGatewayInternalV1) ServerService() server.ServerServiceInternalV1 {
+	return g.serverService
 }

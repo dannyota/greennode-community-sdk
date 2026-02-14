@@ -25,10 +25,10 @@ func NewVLBGatewayInternal(svcClient client.ServiceClient) VLBGatewayInternal {
 	}
 }
 
-func (s *vlbGatewayInternal) LoadBalancerService() loadbalancer.LoadBalancerServiceInternal {
-	return s.lbService
+func (g *vlbGatewayInternal) LoadBalancerService() loadbalancer.LoadBalancerServiceInternal {
+	return g.lbService
 }
 
-func (s *vlbGatewayV2) LoadBalancerService() loadbalancer.LoadBalancerServiceV2 {
-	return s.lbService
+func (g *vlbGatewayV2) LoadBalancerService() loadbalancer.LoadBalancerServiceV2 {
+	return g.lbService
 }

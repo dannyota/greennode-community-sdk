@@ -7,10 +7,10 @@ type GetPortalInfoResponse struct {
 	UserID    int    `json:"userId"`
 }
 
-func (s *GetPortalInfoResponse) ToEntityPortal() *entity.Portal {
+func (r *GetPortalInfoResponse) ToEntityPortal() *entity.Portal {
 	return &entity.Portal{
-		ProjectID: s.ProjectID,
-		UserID:    s.UserID,
+		ProjectID: r.ProjectID,
+		UserID:    r.UserID,
 	}
 }
 
@@ -21,9 +21,9 @@ type ListProjectsResponse struct {
 	}
 }
 
-func (s *ListProjectsResponse) ToEntityListPortals() *entity.ListPortals {
+func (r *ListProjectsResponse) ToEntityListPortals() *entity.ListPortals {
 	listPortals := entity.NewListPortals()
-	for _, p := range s.Projects {
+	for _, p := range r.Projects {
 		listPortals.Items = append(listPortals.Items, &entity.Portal{
 			ProjectID: p.ProjectID,
 			UserID:    p.UserID,

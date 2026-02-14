@@ -50,9 +50,9 @@ type HealthMonitor struct {
 	DisplayStatus       string  `json:"displayStatus"`
 }
 
-func (s *HealthMonitor) String() string {
+func (h *HealthMonitor) String() string {
 	// parse to string and return
-	out, err := json.Marshal(s)
+	out, err := json.Marshal(h)
 	if err != nil {
 		return "Error parsing to string"
 	}
@@ -67,30 +67,30 @@ type ListMembers struct {
 	Items []*Member
 }
 
-func (s *Pool) GetID() string {
-	return s.UUID
+func (p *Pool) GetID() string {
+	return p.UUID
 }
 
-func (s *ListPools) Add(pools ...*Pool) {
-	s.Items = append(s.Items, pools...)
+func (l *ListPools) Add(pools ...*Pool) {
+	l.Items = append(l.Items, pools...)
 }
 
-func (s *ListMembers) Add(members ...*Member) {
-	s.Items = append(s.Items, members...)
+func (l *ListMembers) Add(members ...*Member) {
+	l.Items = append(l.Items, members...)
 }
 
-func (s *ListPools) Len() int {
-	return len(s.Items)
+func (l *ListPools) Len() int {
+	return len(l.Items)
 }
 
-func (s *ListPools) Empty() bool {
-	return s.Len() < 1
+func (l *ListPools) Empty() bool {
+	return l.Len() < 1
 }
 
-func (s *ListPools) At(index int) *Pool {
-	if index < 0 || index >= s.Len() {
+func (l *ListPools) At(index int) *Pool {
+	if index < 0 || index >= l.Len() {
 		return nil
 	}
 
-	return s.Items[index]
+	return l.Items[index]
 }

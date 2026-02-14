@@ -23,17 +23,17 @@ type CreateSecgroupRuleResponse struct {
 	} `json:"data"`
 }
 
-func (s *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule {
+func (r *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule {
 	return &entity.SecgroupRule{
-		ID:             s.Data.UUID,
-		SecgroupID:     s.Data.SecgroupUuid,
-		Direction:      s.Data.Direction,
-		EtherType:      s.Data.EtherType,
-		PortRangeMax:   s.Data.PortRangeMax,
-		PortRangeMin:   s.Data.PortRangeMin,
-		Protocol:       s.Data.Protocol,
-		Description:    s.Data.Description,
-		RemoteIPPrefix: s.Data.RemoteIpPrefix,
+		ID:             r.Data.UUID,
+		SecgroupID:     r.Data.SecgroupUuid,
+		Direction:      r.Data.Direction,
+		EtherType:      r.Data.EtherType,
+		PortRangeMax:   r.Data.PortRangeMax,
+		PortRangeMin:   r.Data.PortRangeMin,
+		Protocol:       r.Data.Protocol,
+		Description:    r.Data.Description,
+		RemoteIPPrefix: r.Data.RemoteIpPrefix,
 	}
 }
 
@@ -53,12 +53,12 @@ type ListSecgroupRulesBySecgroupIDResponse struct {
 	} `json:"data"`
 }
 
-func (s *ListSecgroupRulesBySecgroupIDResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
+func (r *ListSecgroupRulesBySecgroupIDResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
 	lsr := &entity.ListSecgroupRules{
 		Items: make([]*entity.SecgroupRule, 0),
 	}
 
-	for _, rule := range s.Data {
+	for _, rule := range r.Data {
 		lsr.Items = append(lsr.Items, &entity.SecgroupRule{
 			ID:             rule.ID,
 			Direction:      rule.Direction,

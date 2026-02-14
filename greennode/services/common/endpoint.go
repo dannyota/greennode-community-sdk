@@ -4,6 +4,6 @@ type EndpointCommon struct {
 	EndpointID string
 }
 
-func (s *EndpointCommon) GetEndpointID() string {
-	return s.EndpointID
+func (e *EndpointCommon) GetEndpointID() string {
+	return e.EndpointID
 }

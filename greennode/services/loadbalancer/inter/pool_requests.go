@@ -112,65 +112,65 @@ type Member struct {
 	Weight      int    `json:"weight"`
 }
 
-func (s *CreatePoolRequest) ToRequestBody() interface{} {
-	s.HealthMonitor = s.HealthMonitor.(*HealthMonitor).toRequestBody()
-	return s
+func (r *CreatePoolRequest) ToRequestBody() interface{} {
+	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
+	return r
 }
 
-func (s *HealthMonitor) toRequestBody() IHealthMonitorRequest {
-	switch s.HealthCheckProtocol {
+func (h *HealthMonitor) toRequestBody() IHealthMonitorRequest {
+	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
-		s.HealthCheckPath = nil
-		s.HTTPVersion = nil
-		s.SuccessCode = nil
-		s.HealthCheckMethod = nil
-		s.DomainName = nil
+		h.HealthCheckPath = nil
+		h.HTTPVersion = nil
+		h.SuccessCode = nil
+		h.HealthCheckMethod = nil
+		h.DomainName = nil
 
 	case HealthCheckProtocolHTTP, HealthCheckProtocolHTTPs:
-		if s.HTTPVersion != nil {
-			switch opt := *s.HTTPVersion; opt {
+		if h.HTTPVersion != nil {
+			switch opt := *h.HTTPVersion; opt {
 			case HealthCheckHTTPVersionHttp1:
-				s.DomainName = nil
+				h.DomainName = nil
 			case HealthCheckHTTPVersionHttp1Minor1:
-				if s.DomainName == nil ||
-					(s.DomainName != nil && len(*s.DomainName) < 1) {
+				if h.DomainName == nil ||
+					(h.DomainName != nil && len(*h.DomainName) < 1) {
 
 					fakeDomainName := defaultFakeDomainName
-					s.DomainName = &fakeDomainName
+					h.DomainName = &fakeDomainName
 				}
 			}
 		}
 	}
 
-	return s
+	return h
 }
 
-func (s *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
-	s.HealthMonitor = monitor
-	return s
+func (r *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
+	r.HealthMonitor = monitor
+	return r
 }
 
-func (s *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
-	s.Members = append(s.Members, members...)
-	return s
+func (r *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
+	r.Members = append(r.Members, members...)
+	return r
 }
 
-func (s *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
-	s.LoadBalancerID = lbID
-	return s
+func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
+	r.LoadBalancerID = lbID
+	return r
 }
 
-func (s *CreatePoolRequest) ToMap() map[string]interface{} {
+func (r *CreatePoolRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"algorithm":     s.Algorithm,
-		"poolName":      s.PoolName,
-		"poolProtocol":  s.PoolProtocol,
-		"stickiness":    s.Stickiness,
-		"tlsEncryption": s.TLSEncryption,
-		"healthMonitor": s.HealthMonitor.ToMap(),
+		"algorithm":     r.Algorithm,
+		"poolName":      r.PoolName,
+		"poolProtocol":  r.PoolProtocol,
+		"stickiness":    r.Stickiness,
+		"tlsEncryption": r.TLSEncryption,
+		"healthMonitor": r.HealthMonitor.ToMap(),
 		"members": func() []map[string]interface{} {
-			members := make([]map[string]interface{}, 0, len(s.Members))
-			for _, member := range s.Members {
+			members := make([]map[string]interface{}, 0, len(r.Members))
+			for _, member := range r.Members {
 				members = append(members, member.ToMap())
 			}
 			return members
@@ -178,102 +178,102 @@ func (s *CreatePoolRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
-	s.Algorithm = algorithm
-	return s
+func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
+	r.Algorithm = algorithm
+	return r
 }
 
-func (s *HealthMonitor) ToRequestBody() interface{} {
-	return s
+func (h *HealthMonitor) ToRequestBody() interface{} {
+	return h
 }
 
-func (s *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
 	if ht < 1 {
 		ht = 3
 	}
 
-	s.HealthyThreshold = ht
-	return s
+	h.HealthyThreshold = ht
+	return h
 }
 
-func (s *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
 	if uht < 1 {
 		uht = 3
 	}
 
-	s.UnhealthyThreshold = uht
-	return s
+	h.UnhealthyThreshold = uht
+	return h
 }
 
-func (s *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
 	if interval < 1 {
 		interval = 30
 	}
 
-	s.Interval = interval
-	return s
+	h.Interval = interval
+	return h
 }
 
-func (s *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
 	if to < 1 {
 		to = 5
 	}
 
-	s.Timeout = to
-	return s
+	h.Timeout = to
+	return h
 }
 
-func (s *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest {
-	s.HealthCheckMethod = &method
-	return s
+func (h *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest {
+	h.HealthCheckMethod = &method
+	return h
 }
 
-func (s *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest {
-	s.HTTPVersion = &version
-	return s
+func (h *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest {
+	h.HTTPVersion = &version
+	return h
 }
 
-func (s *HealthMonitor) WithHealthCheckPath(path string) IHealthMonitorRequest {
-	s.HealthCheckPath = &path
-	return s
+func (h *HealthMonitor) WithHealthCheckPath(path string) IHealthMonitorRequest {
+	h.HealthCheckPath = &path
+	return h
 }
 
-func (s *HealthMonitor) WithDomainName(domain string) IHealthMonitorRequest {
-	s.DomainName = &domain
-	return s
+func (h *HealthMonitor) WithDomainName(domain string) IHealthMonitorRequest {
+	h.DomainName = &domain
+	return h
 }
 
-func (s *HealthMonitor) WithSuccessCode(code string) IHealthMonitorRequest {
-	s.SuccessCode = &code
-	return s
+func (h *HealthMonitor) WithSuccessCode(code string) IHealthMonitorRequest {
+	h.SuccessCode = &code
+	return h
 }
 
-func (s *HealthMonitor) ToMap() map[string]interface{} {
+func (h *HealthMonitor) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"healthCheckProtocol": s.HealthCheckProtocol,
-		"healthyThreshold":    s.HealthyThreshold,
-		"unhealthyThreshold":  s.UnhealthyThreshold,
-		"interval":            s.Interval,
-		"timeout":             s.Timeout,
-		"healthCheckMethod":   s.HealthCheckMethod,
-		"httpVersion":         s.HTTPVersion,
-		"healthCheckPath":     s.HealthCheckPath,
-		"domainName":          s.DomainName,
-		"successCode":         s.SuccessCode,
+		"healthCheckProtocol": h.HealthCheckProtocol,
+		"healthyThreshold":    h.HealthyThreshold,
+		"unhealthyThreshold":  h.UnhealthyThreshold,
+		"interval":            h.Interval,
+		"timeout":             h.Timeout,
+		"healthCheckMethod":   h.HealthCheckMethod,
+		"httpVersion":         h.HTTPVersion,
+		"healthCheckPath":     h.HealthCheckPath,
+		"domainName":          h.DomainName,
+		"successCode":         h.SuccessCode,
 	}
 }
 
-func (s *Member) ToRequestBody() interface{} {
-	return s
+func (m *Member) ToRequestBody() interface{} {
+	return m
 }
 
-func (s *Member) ToMap() map[string]interface{} {
+func (m *Member) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"backup":      s.Backup,
-		"ipAddress":   s.IpAddress,
-		"monitorPort": s.MonitorPort,
-		"name":        s.Name,
-		"port":        s.Port,
-		"weight":      s.Weight,
+		"backup":      m.Backup,
+		"ipAddress":   m.IpAddress,
+		"monitorPort": m.MonitorPort,
+		"name":        m.Name,
+		"port":        m.Port,
+		"weight":      m.Weight,
 	}
 }

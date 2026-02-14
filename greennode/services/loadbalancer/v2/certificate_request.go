@@ -10,9 +10,9 @@ type ListCertificatesRequest struct {
 	common.UserAgent
 }
 
-func (s *ListCertificatesRequest) AddUserAgent(agent ...string) IListCertificatesRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListCertificatesRequest) AddUserAgent(agent ...string) IListCertificatesRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewListCertificatesRequest() *ListCertificatesRequest {
@@ -32,9 +32,9 @@ func (r *GetCertificateByIDRequest) GetCertificateID() string {
 	return r.CertificateID
 }
 
-func (s *GetCertificateByIDRequest) AddUserAgent(agent ...string) IGetCertificateByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetCertificateByIDRequest) AddUserAgent(agent ...string) IGetCertificateByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewGetCertificateByIDRequest(certificateID string) *GetCertificateByIDRequest {
@@ -111,9 +111,9 @@ func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) I
 	}
 }
 
-func (s *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertificateRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertificateRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 // --------------------------------------------------------
@@ -129,9 +129,9 @@ func (r *DeleteCertificateByIDRequest) GetCertificateID() string {
 	return r.CertificateID
 }
 
-func (s *DeleteCertificateByIDRequest) AddUserAgent(agent ...string) IDeleteCertificateByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteCertificateByIDRequest) AddUserAgent(agent ...string) IDeleteCertificateByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewDeleteCertificateByIDRequest(certificateID string) *DeleteCertificateByIDRequest {

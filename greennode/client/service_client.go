@@ -22,80 +22,80 @@ func NewServiceClient() ServiceClient {
 	return &serviceClient{}
 }
 
-func (s *serviceClient) WithEndpoint(endpoint string) ServiceClient {
-	s.endpoint = normalizeURL(endpoint)
-	return s
+func (sc *serviceClient) WithEndpoint(endpoint string) ServiceClient {
+	sc.endpoint = normalizeURL(endpoint)
+	return sc
 }
 
-func (s *serviceClient) WithName(name string) ServiceClient {
-	s.name = name
-	return s
+func (sc *serviceClient) WithName(name string) ServiceClient {
+	sc.name = name
+	return sc
 }
 
-func (s *serviceClient) WithZoneID(zoneID string) ServiceClient {
-	s.zoneID = zoneID
-	return s
+func (sc *serviceClient) WithZoneID(zoneID string) ServiceClient {
+	sc.zoneID = zoneID
+	return sc
 }
 
-func (s *serviceClient) WithUserID(userID string) ServiceClient {
-	s.userID = userID
-	return s
+func (sc *serviceClient) WithUserID(userID string) ServiceClient {
+	sc.userID = userID
+	return sc
 }
 
-func (s *serviceClient) WithProjectID(projectID string) ServiceClient {
-	s.projectID = projectID
-	return s
+func (sc *serviceClient) WithProjectID(projectID string) ServiceClient {
+	sc.projectID = projectID
+	return sc
 }
 
-func (s *serviceClient) WithMoreHeaders(moreHeaders map[string]string) ServiceClient {
-	s.moreHeaders = moreHeaders
-	return s
+func (sc *serviceClient) WithMoreHeaders(moreHeaders map[string]string) ServiceClient {
+	sc.moreHeaders = moreHeaders
+	return sc
 }
 
-func (s *serviceClient) WithKVheader(key string, value string) ServiceClient {
-	s.moreHeaders[key] = value
-	return s
+func (sc *serviceClient) WithKVheader(key string, value string) ServiceClient {
+	sc.moreHeaders[key] = value
+	return sc
 }
 
-func (s *serviceClient) WithClient(client HTTPClient) ServiceClient {
-	s.client = client
-	return s
+func (sc *serviceClient) WithClient(client HTTPClient) ServiceClient {
+	sc.client = client
+	return sc
 }
 
-func (s *serviceClient) ServiceURL(parts ...string) string {
-	return s.endpoint + strings.Join(parts, "/")
+func (sc *serviceClient) ServiceURL(parts ...string) string {
+	return sc.endpoint + strings.Join(parts, "/")
 }
 
-func (s *serviceClient) Post(url string, req Request) (*req.Response, sdkerror.Error) {
-	return s.client.DoRequest(url, req.WithRequestMethod(MethodPost))
+func (sc *serviceClient) Post(url string, req Request) (*req.Response, sdkerror.Error) {
+	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPost))
 }
 
-func (s *serviceClient) Get(url string, req Request) (*req.Response, sdkerror.Error) {
-	return s.client.DoRequest(url, req.WithRequestMethod(MethodGet))
+func (sc *serviceClient) Get(url string, req Request) (*req.Response, sdkerror.Error) {
+	return sc.client.DoRequest(url, req.WithRequestMethod(MethodGet))
 }
 
-func (s *serviceClient) Delete(url string, req Request) (*req.Response, sdkerror.Error) {
-	return s.client.DoRequest(url, req.WithRequestMethod(MethodDelete))
+func (sc *serviceClient) Delete(url string, req Request) (*req.Response, sdkerror.Error) {
+	return sc.client.DoRequest(url, req.WithRequestMethod(MethodDelete))
 }
 
-func (s *serviceClient) Put(url string, req Request) (*req.Response, sdkerror.Error) {
-	return s.client.DoRequest(url, req.WithRequestMethod(MethodPut))
+func (sc *serviceClient) Put(url string, req Request) (*req.Response, sdkerror.Error) {
+	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPut))
 }
 
-func (s *serviceClient) Patch(url string, req Request) (*req.Response, sdkerror.Error) {
-	return s.client.DoRequest(url, req.WithRequestMethod(MethodPatch))
+func (sc *serviceClient) Patch(url string, req Request) (*req.Response, sdkerror.Error) {
+	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPatch))
 }
 
-func (s *serviceClient) GetProjectID() string {
-	return s.projectID
+func (sc *serviceClient) GetProjectID() string {
+	return sc.projectID
 }
 
-func (s *serviceClient) GetZoneID() string {
-	return s.zoneID
+func (sc *serviceClient) GetZoneID() string {
+	return sc.zoneID
 }
 
-func (s *serviceClient) GetUserID() string {
-	return s.userID
+func (sc *serviceClient) GetUserID() string {
+	return sc.userID
 }
 
 type sdkAuthentication struct {
@@ -107,36 +107,36 @@ func NewSdkAuthentication() SdkAuthentication {
 	return &sdkAuthentication{}
 }
 
-func (s *sdkAuthentication) WithAccessToken(accessToken string) SdkAuthentication {
-	s.accessToken = accessToken
-	return s
+func (a *sdkAuthentication) WithAccessToken(accessToken string) SdkAuthentication {
+	a.accessToken = accessToken
+	return a
 }
 
-func (s *sdkAuthentication) WithExpiresAt(expiresAt int64) SdkAuthentication {
-	s.expiresAt = expiresAt
-	return s
+func (a *sdkAuthentication) WithExpiresAt(expiresAt int64) SdkAuthentication {
+	a.expiresAt = expiresAt
+	return a
 }
 
-func (s *sdkAuthentication) NeedReauth() bool {
-	if s.accessToken == "" {
+func (a *sdkAuthentication) NeedReauth() bool {
+	if a.accessToken == "" {
 		return true
 	}
 
-	ea := time.Unix(0, s.expiresAt)
+	ea := time.Unix(0, a.expiresAt)
 	return time.Until(ea) < 5*time.Minute
 }
 
-func (s *sdkAuthentication) UpdateAuth(auth SdkAuthentication) {
-	s.accessToken = auth.AccessToken()
-	s.expiresAt = auth.ExpiresAt()
+func (a *sdkAuthentication) UpdateAuth(auth SdkAuthentication) {
+	a.accessToken = auth.AccessToken()
+	a.expiresAt = auth.ExpiresAt()
 }
 
-func (s *sdkAuthentication) AccessToken() string {
-	return s.accessToken
+func (a *sdkAuthentication) AccessToken() string {
+	return a.accessToken
 }
 
-func (s *sdkAuthentication) ExpiresAt() int64 {
-	return s.expiresAt
+func (a *sdkAuthentication) ExpiresAt() int64 {
+	return a.expiresAt
 }
 
 func normalizeURL(u string) string {

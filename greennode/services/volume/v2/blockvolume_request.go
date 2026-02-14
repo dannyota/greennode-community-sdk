@@ -142,115 +142,115 @@ type (
 	}
 )
 
-func (s *CreateBlockVolumeRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateBlockVolumeRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithZone(zone string) ICreateBlockVolumeRequest {
-	s.Zone = zone
-	return s
+func (r *CreateBlockVolumeRequest) WithZone(zone string) ICreateBlockVolumeRequest {
+	r.Zone = zone
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithPoolName(poolName string) ICreateBlockVolumeRequest {
-	s.PoolName = poolName
-	return s
+func (r *CreateBlockVolumeRequest) WithPoolName(poolName string) ICreateBlockVolumeRequest {
+	r.PoolName = poolName
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) ToMap() map[string]interface{} {
+func (r *CreateBlockVolumeRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"backupVolumePointId": s.BackupVolumePointID,
-		"createdFrom":         s.CreatedFrom,
-		"encryptionType":      s.EncryptionType,
-		"multiAttach":         s.MultiAttach,
-		"name":                s.Name,
-		"size":                s.Size,
-		"volumeTypeId":        s.VolumeTypeID,
-		"tags":                s.Tags,
-		"isPoc":               s.IsPoc,
-		"isEnableAutoRenew":   s.IsEnableAutoRenew,
-		"configVolumeRestore": s.ConfigureVolumeRestore,
+		"backupVolumePointId": r.BackupVolumePointID,
+		"createdFrom":         r.CreatedFrom,
+		"encryptionType":      r.EncryptionType,
+		"multiAttach":         r.MultiAttach,
+		"name":                r.Name,
+		"size":                r.Size,
+		"volumeTypeId":        r.VolumeTypeID,
+		"tags":                r.Tags,
+		"isPoc":               r.IsPoc,
+		"isEnableAutoRenew":   r.IsEnableAutoRenew,
+		"configVolumeRestore": r.ConfigureVolumeRestore,
 	}
 }
 
-func (s *CreateBlockVolumeRequest) ListParameters() []interface{} {
+func (r *CreateBlockVolumeRequest) ListParameters() []interface{} {
 	return []interface{}{
-		"backupVolumePointId", s.BackupVolumePointID,
-		"createdFrom", s.CreatedFrom,
-		"encryptionType", s.EncryptionType,
-		"multiAttach", s.MultiAttach,
-		"name", s.Name,
-		"size", s.Size,
-		"volumeTypeId", s.VolumeTypeID,
-		"tags", s.Tags,
-		"isPoc", s.IsPoc,
-		"isEnableAutoRenew", s.IsEnableAutoRenew,
-		"configVolumeRestore", s.ConfigureVolumeRestore,
+		"backupVolumePointId", r.BackupVolumePointID,
+		"createdFrom", r.CreatedFrom,
+		"encryptionType", r.EncryptionType,
+		"multiAttach", r.MultiAttach,
+		"name", r.Name,
+		"size", r.Size,
+		"volumeTypeId", r.VolumeTypeID,
+		"tags", r.Tags,
+		"isPoc", r.IsPoc,
+		"isEnableAutoRenew", r.IsEnableAutoRenew,
+		"configVolumeRestore", r.ConfigureVolumeRestore,
 	}
 }
 
-func (s *CreateBlockVolumeRequest) GetVolumeName() string {
-	return s.Name
+func (r *CreateBlockVolumeRequest) GetVolumeName() string {
+	return r.Name
 }
 
-func (s *CreateBlockVolumeRequest) GetVolumeType() string {
-	return s.VolumeTypeID
+func (r *CreateBlockVolumeRequest) GetVolumeType() string {
+	return r.VolumeTypeID
 }
 
-func (s *CreateBlockVolumeRequest) GetZone() string {
-	return s.Zone
+func (r *CreateBlockVolumeRequest) GetZone() string {
+	return r.Zone
 }
 
-func (s *CreateBlockVolumeRequest) GetPoolName() string {
-	return s.PoolName
+func (r *CreateBlockVolumeRequest) GetPoolName() string {
+	return r.PoolName
 }
 
-func (s *CreateBlockVolumeRequest) GetSize() int64 {
-	return s.Size
+func (r *CreateBlockVolumeRequest) GetSize() int64 {
+	return r.Size
 }
 
-func (s *CreateBlockVolumeRequest) WithPoc(isPoc bool) ICreateBlockVolumeRequest {
-	s.IsPoc = isPoc
-	return s
+func (r *CreateBlockVolumeRequest) WithPoc(isPoc bool) ICreateBlockVolumeRequest {
+	r.IsPoc = isPoc
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithAutoRenew(val bool) ICreateBlockVolumeRequest {
-	s.IsEnableAutoRenew = val
-	return s
+func (r *CreateBlockVolumeRequest) WithAutoRenew(val bool) ICreateBlockVolumeRequest {
+	r.IsEnableAutoRenew = val
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithMultiAttach(multiAttach bool) ICreateBlockVolumeRequest {
-	s.MultiAttach = multiAttach
-	return s
+func (r *CreateBlockVolumeRequest) WithMultiAttach(multiAttach bool) ICreateBlockVolumeRequest {
+	r.MultiAttach = multiAttach
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithSize(size int64) ICreateBlockVolumeRequest {
-	s.Size = size
-	return s
+func (r *CreateBlockVolumeRequest) WithSize(size int64) ICreateBlockVolumeRequest {
+	r.Size = size
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithEncryptionType(et EncryptType) ICreateBlockVolumeRequest {
-	s.EncryptionType = et
-	return s
+func (r *CreateBlockVolumeRequest) WithEncryptionType(et EncryptType) ICreateBlockVolumeRequest {
+	r.EncryptionType = et
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithVolumeType(volumeTypeID string) ICreateBlockVolumeRequest {
-	s.VolumeTypeID = volumeTypeID
-	return s
+func (r *CreateBlockVolumeRequest) WithVolumeType(volumeTypeID string) ICreateBlockVolumeRequest {
+	r.VolumeTypeID = volumeTypeID
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) ICreateBlockVolumeRequest {
-	s.CreatedFrom = CreateFromSnapshot
-	s.ConfigureVolumeRestore = &ConfigureVolumeRestore{
+func (r *CreateBlockVolumeRequest) WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) ICreateBlockVolumeRequest {
+	r.CreatedFrom = CreateFromSnapshot
+	r.ConfigureVolumeRestore = &ConfigureVolumeRestore{
 		SnapshotVolumePointID: snapshotID,
 		VolumeTypeID:          volumeTypeID,
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateBlockVolumeRequest) WithTags(tags ...string) ICreateBlockVolumeRequest {
-	if s.Tags == nil {
-		s.Tags = make([]VolumeTag, 0)
+func (r *CreateBlockVolumeRequest) WithTags(tags ...string) ICreateBlockVolumeRequest {
+	if r.Tags == nil {
+		r.Tags = make([]VolumeTag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -258,60 +258,60 @@ func (s *CreateBlockVolumeRequest) WithTags(tags ...string) ICreateBlockVolumeRe
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, VolumeTag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, VolumeTag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *ListBlockVolumesRequest) ToQuery() (string, error) {
+func (r *ListBlockVolumesRequest) ToQuery() (string, error) {
 	v := url.Values{}
-	v.Set("name", s.Name)
-	if s.Page > 0 {
-		v.Set("page", strconv.Itoa(s.Page))
+	v.Set("name", r.Name)
+	if r.Page > 0 {
+		v.Set("page", strconv.Itoa(r.Page))
 	}
-	if s.Size > 0 {
-		v.Set("size", strconv.Itoa(s.Size))
+	if r.Size > 0 {
+		v.Set("size", strconv.Itoa(r.Size))
 	}
 	return v.Encode(), nil
 }
 
-func (s *ListBlockVolumesRequest) GetDefaultQuery() string {
+func (r *ListBlockVolumesRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
 }
 
-func (s *ListBlockVolumesRequest) ToMap() map[string]interface{} {
+func (r *ListBlockVolumesRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"name": s.Name,
-		"page": s.Page,
-		"size": s.Size,
+		"name": r.Name,
+		"page": r.Page,
+		"size": r.Size,
 	}
 }
 
-func (s *ListBlockVolumesRequest) WithName(name string) IListBlockVolumesRequest {
-	s.Name = name
-	return s
+func (r *ListBlockVolumesRequest) WithName(name string) IListBlockVolumesRequest {
+	r.Name = name
+	return r
 }
 
-func (s *ResizeBlockVolumeByIDRequest) ToRequestBody() interface{} {
-	return s
+func (r *ResizeBlockVolumeByIDRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *ResizeBlockVolumeByIDRequest) GetSize() int {
-	return s.NewSize
+func (r *ResizeBlockVolumeByIDRequest) GetSize() int {
+	return r.NewSize
 }
 
-func (s *ResizeBlockVolumeByIDRequest) GetVolumeTypeID() string {
-	return s.VolumeTypeID
+func (r *ResizeBlockVolumeByIDRequest) GetVolumeTypeID() string {
+	return r.VolumeTypeID
 }
 
-func (s *MigrateBlockVolumeByIDRequest) ToRequestBody() interface{} {
-	return s
+func (r *MigrateBlockVolumeByIDRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) IMigrateBlockVolumeByIDRequest {
-	if s.Tags == nil {
-		s.Tags = make([]common.Tag, 0)
+func (r *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) IMigrateBlockVolumeByIDRequest {
+	if r.Tags == nil {
+		r.Tags = make([]common.Tag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -319,28 +319,28 @@ func (s *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) IMigrateBlockVo
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *MigrateBlockVolumeByIDRequest) WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest {
+func (r *MigrateBlockVolumeByIDRequest) WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest {
 	switch action {
 	case InitMigrateAction, ProcessMigrateAction, ConfirmMigrateAction:
-		s.Action = action
+		r.Action = action
 	default:
-		s.Action = InitMigrateAction
+		r.Action = InitMigrateAction
 	}
 
-	return s
+	return r
 }
 
-func (s *MigrateBlockVolumeByIDRequest) WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest {
-	s.ConfirmMigrate = confirm
-	return s
+func (r *MigrateBlockVolumeByIDRequest) WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest {
+	r.ConfirmMigrate = confirm
+	return r
 }
 
-func (s *MigrateBlockVolumeByIDRequest) IsConfirm() bool {
-	return s.ConfirmMigrate
+func (r *MigrateBlockVolumeByIDRequest) IsConfirm() bool {
+	return r.ConfirmMigrate
 }

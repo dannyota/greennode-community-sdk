@@ -13,8 +13,8 @@ type GetAllAddressPairByVirtualSubnetIDRequest struct {
 	VirtualSubnetID string
 }
 
-func (s *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string {
-	return s.VirtualSubnetID
+func (r *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string {
+	return r.VirtualSubnetID
 }
 
 // --------------------------------------------------------
@@ -35,12 +35,12 @@ type SetAddressPairInVirtualSubnetRequest struct {
 	AddressPairRequest AddressPairRequest
 }
 
-func (s *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
-	return s.VirtualSubnetID
+func (r *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
+	return r.VirtualSubnetID
 }
 
-func (s *SetAddressPairInVirtualSubnetRequest) ToRequestBody() interface{} {
-	return s.AddressPairRequest
+func (r *SetAddressPairInVirtualSubnetRequest) ToRequestBody() interface{} {
+	return r.AddressPairRequest
 }
 
 type AddressPairRequest struct {
@@ -61,13 +61,13 @@ type DeleteAddressPairRequest struct {
 	AddressPairID string
 }
 
-func (s *DeleteAddressPairRequest) GetAddressPairID() string {
-	return s.AddressPairID
+func (r *DeleteAddressPairRequest) GetAddressPairID() string {
+	return r.AddressPairID
 }
 
-func (s *DeleteAddressPairRequest) AddUserAgent(agent ...string) IDeleteAddressPairRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteAddressPairRequest) AddUserAgent(agent ...string) IDeleteAddressPairRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 // --------------------------------------------------------
@@ -92,28 +92,28 @@ type CreateAddressPairRequest struct {
 	common.VirtualAddressCommon
 }
 
-func (s *CreateAddressPairRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateAddressPairRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateAddressPairRequest) ToMap() map[string]interface{} {
+func (r *CreateAddressPairRequest) ToMap() map[string]interface{} {
 	mode := "active-standby"
-	if s.Mode != nil {
-		mode = string(*s.Mode)
+	if r.Mode != nil {
+		mode = string(*r.Mode)
 	}
 
 	return map[string]interface{}{
-		"internalNetworkInterfaceId": s.InternalNetworkInterfaceID,
+		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
 		"mode":                       mode,
 	}
 }
 
-func (s *CreateAddressPairRequest) AddUserAgent(agent ...string) ICreateAddressPairRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateAddressPairRequest) AddUserAgent(agent ...string) ICreateAddressPairRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateAddressPairRequest) WithMode(mode AddressPairMode) ICreateAddressPairRequest {
-	s.Mode = &mode
-	return s
+func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) ICreateAddressPairRequest {
+	r.Mode = &mode
+	return r
 }

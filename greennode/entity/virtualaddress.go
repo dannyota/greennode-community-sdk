@@ -12,38 +12,38 @@ type VirtualAddress struct {
 	AddressPairIps  []string
 }
 
-func (s *VirtualAddress) GetID() string {
-	return s.ID
+func (va *VirtualAddress) GetID() string {
+	return va.ID
 }
 
-func (s *VirtualAddress) GetName() string {
-	return s.Name
+func (va *VirtualAddress) GetName() string {
+	return va.Name
 }
 
-func (s *VirtualAddress) GetEndpointAddress() string {
-	return s.EndpointAddress
+func (va *VirtualAddress) GetEndpointAddress() string {
+	return va.EndpointAddress
 }
 
-func (s *VirtualAddress) GetVpcID() string {
-	return s.VpcID
+func (va *VirtualAddress) GetVpcID() string {
+	return va.VpcID
 }
 
-func (s *VirtualAddress) GetSubnetID() string {
-	return s.SubnetID
+func (va *VirtualAddress) GetSubnetID() string {
+	return va.SubnetID
 }
 
-func (s *VirtualAddress) GetDescription() string {
-	return s.Description
+func (va *VirtualAddress) GetDescription() string {
+	return va.Description
 }
 
-func (s *VirtualAddress) GetSubnetCidr() string {
-	return s.SubnetCidr
+func (va *VirtualAddress) GetSubnetCidr() string {
+	return va.SubnetCidr
 }
 
-func (s *VirtualAddress) GetVpcCidr() string {
-	return s.VpcCidr
+func (va *VirtualAddress) GetVpcCidr() string {
+	return va.VpcCidr
 }
 
-func (s *VirtualAddress) GetAddressPairIps() []string {
-	return s.AddressPairIps
+func (va *VirtualAddress) GetAddressPairIps() []string {
+	return va.AddressPairIps
 }

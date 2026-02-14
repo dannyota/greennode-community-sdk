@@ -6,9 +6,9 @@ type ListSecgroupRequest struct {
 	common.UserAgent
 }
 
-func (s *ListSecgroupRequest) AddUserAgent(agent ...string) IListSecgroupRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListSecgroupRequest) AddUserAgent(agent ...string) IListSecgroupRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type DeleteSecgroupByIDRequest struct { //__________________________________________________________________________________
@@ -16,9 +16,9 @@ type DeleteSecgroupByIDRequest struct { //______________________________________
 	common.SecgroupCommon
 }
 
-func (s *DeleteSecgroupByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteSecgroupByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type CreateSecgroupRequest struct { //__________________________________________________________________________________
@@ -28,17 +28,17 @@ type CreateSecgroupRequest struct { //__________________________________________
 	common.UserAgent
 }
 
-func (s *CreateSecgroupRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateSecgroupRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateSecgroupRequest) AddUserAgent(agent ...string) ICreateSecgroupRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateSecgroupRequest) AddUserAgent(agent ...string) ICreateSecgroupRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *CreateSecgroupRequest) GetSecgroupName() string {
-	return s.Name
+func (r *CreateSecgroupRequest) GetSecgroupName() string {
+	return r.Name
 }
 
 type GetSecgroupByIDRequest struct { //_________________________________________________________________________________
@@ -46,7 +46,7 @@ type GetSecgroupByIDRequest struct { //_________________________________________
 	common.UserAgent
 }
 
-func (s *GetSecgroupByIDRequest) AddUserAgent(agent ...string) IGetSecgroupByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetSecgroupByIDRequest) AddUserAgent(agent ...string) IGetSecgroupByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }

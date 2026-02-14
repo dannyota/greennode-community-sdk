@@ -72,9 +72,9 @@ func NewListLoadBalancersRequest(page, size int) IListLoadBalancersRequest {
 	return opts
 }
 
-func (s *ListLoadBalancersRequest) AddUserAgent(agent ...string) IListLoadBalancersRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListLoadBalancersRequest) AddUserAgent(agent ...string) IListLoadBalancersRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 func NewDeleteLoadBalancerByIDRequest(lbID string) IDeleteLoadBalancerByIDRequest {
@@ -137,9 +137,9 @@ type DeleteLoadBalancerByIDRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *DeleteLoadBalancerByIDRequest) AddUserAgent(agent ...string) IDeleteLoadBalancerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *DeleteLoadBalancerByIDRequest) AddUserAgent(agent ...string) IDeleteLoadBalancerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type ResizeLoadBalancerByIDRequest struct {
@@ -149,9 +149,9 @@ type ResizeLoadBalancerByIDRequest struct {
 	PackageID string `json:"packageId"`
 }
 
-func (s *ResizeLoadBalancerByIDRequest) AddUserAgent(agent ...string) IResizeLoadBalancerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ResizeLoadBalancerByIDRequest) AddUserAgent(agent ...string) IResizeLoadBalancerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
 type ScaleLoadBalancerRequest struct {
@@ -162,92 +162,92 @@ type ScaleLoadBalancerRequest struct {
 	Networking *NetworkingConfig `json:"networking"`
 }
 
-func (s *ScaleLoadBalancerRequest) AddUserAgent(agent ...string) IScaleLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ScaleLoadBalancerRequest) AddUserAgent(agent ...string) IScaleLoadBalancerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *ScaleLoadBalancerRequest) WithScaling(scaling *ScalingConfig) IScaleLoadBalancerRequest {
-	s.Scaling = scaling
-	return s
+func (r *ScaleLoadBalancerRequest) WithScaling(scaling *ScalingConfig) IScaleLoadBalancerRequest {
+	r.Scaling = scaling
+	return r
 }
 
-func (s *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) IScaleLoadBalancerRequest {
-	s.Networking = networking
-	return s
+func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) IScaleLoadBalancerRequest {
+	r.Networking = networking
+	return r
 }
 
-func (s *ScaleLoadBalancerRequest) ToRequestBody() interface{} {
-	return s
+func (r *ScaleLoadBalancerRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *ScaleLoadBalancerRequest) ToMap() map[string]interface{} {
+func (r *ScaleLoadBalancerRequest) ToMap() map[string]interface{} {
 	result := map[string]interface{}{}
-	if s.Scaling != nil {
+	if r.Scaling != nil {
 		result["scaling"] = map[string]interface{}{
-			"minSize": s.Scaling.MinNodes,
-			"maxSize": s.Scaling.MaxNodes,
+			"minSize": r.Scaling.MinNodes,
+			"maxSize": r.Scaling.MaxNodes,
 		}
 	}
-	if s.Networking != nil {
+	if r.Networking != nil {
 		result["networking"] = map[string]interface{}{
-			"subnets": s.Networking.Subnets,
+			"subnets": r.Networking.Subnets,
 		}
 	}
 	return result
 }
 
-func (s *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
+func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
 	err := map[string]interface{}{
-		"name":         s.Name,
-		"packageId":    s.PackageID,
-		"scheme":       s.Scheme,
-		"autoScalable": s.AutoScalable,
-		"subnetId":     s.SubnetID,
-		"type":         s.Type,
-		"tags":         s.Tags,
+		"name":         r.Name,
+		"packageId":    r.PackageID,
+		"scheme":       r.Scheme,
+		"autoScalable": r.AutoScalable,
+		"subnetId":     r.SubnetID,
+		"type":         r.Type,
+		"tags":         r.Tags,
 	}
 
-	if s.Listener != nil {
-		err["listener"] = s.Listener.ToMap()
+	if r.Listener != nil {
+		err["listener"] = r.Listener.ToMap()
 	}
 
-	if s.Pool != nil {
-		err["pool"] = s.Pool.ToMap()
+	if r.Pool != nil {
+		err["pool"] = r.Pool.ToMap()
 	}
 
 	return err
 }
 
-func (s *CreateLoadBalancerRequest) ToRequestBody() interface{} {
-	if s.Pool != nil {
-		s.Pool = s.Pool.ToRequestBody().(*CreatePoolRequest)
+func (r *CreateLoadBalancerRequest) ToRequestBody() interface{} {
+	if r.Pool != nil {
+		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
 	}
 
-	if s.Listener != nil {
-		s.Listener = s.Listener.ToRequestBody().(*CreateListenerRequest)
+	if r.Listener != nil {
+		r.Listener = r.Listener.ToRequestBody().(*CreateListenerRequest)
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
-func (s *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
-	s.Listener = listener
-	return s
-}
-
-func (s *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
-	s.Pool = pool
-	return s
+func (r *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
+	r.Listener = listener
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
-	if s.Tags == nil {
-		s.Tags = make([]common.Tag, 0)
+func (r *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
+	r.Pool = pool
+	return r
+}
+
+func (r *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
+	if r.Tags == nil {
+		r.Tags = make([]common.Tag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -255,92 +255,92 @@ func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancer
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithScheme(scheme LoadBalancerScheme) ICreateLoadBalancerRequest {
-	s.Scheme = scheme
-	return s
+func (r *CreateLoadBalancerRequest) WithScheme(scheme LoadBalancerScheme) ICreateLoadBalancerRequest {
+	r.Scheme = scheme
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithAutoScalable(autoScalable bool) ICreateLoadBalancerRequest {
-	s.AutoScalable = autoScalable
-	return s
+func (r *CreateLoadBalancerRequest) WithAutoScalable(autoScalable bool) ICreateLoadBalancerRequest {
+	r.AutoScalable = autoScalable
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithPackageID(packageID string) ICreateLoadBalancerRequest {
-	s.PackageID = packageID
-	return s
+func (r *CreateLoadBalancerRequest) WithPackageID(packageID string) ICreateLoadBalancerRequest {
+	r.PackageID = packageID
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithSubnetID(subnetID string) ICreateLoadBalancerRequest {
-	s.SubnetID = subnetID
-	return s
+func (r *CreateLoadBalancerRequest) WithSubnetID(subnetID string) ICreateLoadBalancerRequest {
+	r.SubnetID = subnetID
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithType(typeVal LoadBalancerType) ICreateLoadBalancerRequest {
-	s.Type = typeVal
-	return s
+func (r *CreateLoadBalancerRequest) WithType(typeVal LoadBalancerType) ICreateLoadBalancerRequest {
+	r.Type = typeVal
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithPoc(isPoc bool) ICreateLoadBalancerRequest {
-	s.IsPoc = isPoc
-	return s
+func (r *CreateLoadBalancerRequest) WithPoc(isPoc bool) ICreateLoadBalancerRequest {
+	r.IsPoc = isPoc
+	return r
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneID = &zoneID
-	return s
+func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest {
+	r.ZoneID = &zoneID
+	return r
 }
 
-func (s *ResizeLoadBalancerRequest) ToRequestBody() interface{} {
-	return s
+func (r *ResizeLoadBalancerRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *ResizeLoadBalancerRequest) AddUserAgent(agent ...string) IResizeLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ResizeLoadBalancerRequest) AddUserAgent(agent ...string) IResizeLoadBalancerRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *ResizeLoadBalancerRequest) WithPackageID(packageID string) IResizeLoadBalancerRequest {
-	s.PackageID = packageID
-	return s
+func (r *ResizeLoadBalancerRequest) WithPackageID(packageID string) IResizeLoadBalancerRequest {
+	r.PackageID = packageID
+	return r
 }
 
-func (s *ListLoadBalancerPackagesRequest) AddUserAgent(agent ...string) IListLoadBalancerPackagesRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *ListLoadBalancerPackagesRequest) AddUserAgent(agent ...string) IListLoadBalancerPackagesRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *ListLoadBalancerPackagesRequest) WithZoneID(zoneID common.Zone) IListLoadBalancerPackagesRequest {
-	s.ZoneID = zoneID
-	return s
+func (r *ListLoadBalancerPackagesRequest) WithZoneID(zoneID common.Zone) IListLoadBalancerPackagesRequest {
+	r.ZoneID = zoneID
+	return r
 }
 
-func (s *ListLoadBalancerPackagesRequest) GetZoneID() string {
-	return string(s.ZoneID)
+func (r *ListLoadBalancerPackagesRequest) GetZoneID() string {
+	return string(r.ZoneID)
 }
 
-func (s *ListLoadBalancerPackagesRequest) ToMap() map[string]interface{} {
+func (r *ListLoadBalancerPackagesRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{}
 }
 
-func (s *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest {
-	s.UserAgent.AddUserAgent(agent...)
-	return s
+func (r *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest {
+	r.UserAgent.AddUserAgent(agent...)
+	return r
 }
 
-func (s *ListLoadBalancersRequest) WithName(name string) IListLoadBalancersRequest {
-	s.Name = name
-	return s
+func (r *ListLoadBalancersRequest) WithName(name string) IListLoadBalancersRequest {
+	r.Name = name
+	return r
 }
 
-func (s *ListLoadBalancersRequest) WithTags(tags ...string) IListLoadBalancersRequest {
-	if s.Tags == nil {
-		s.Tags = make([]common.Tag, 0)
+func (r *ListLoadBalancersRequest) WithTags(tags ...string) IListLoadBalancersRequest {
+	if r.Tags == nil {
+		r.Tags = make([]common.Tag, 0)
 	}
 
 	if len(tags)%2 != 0 {
@@ -348,20 +348,20 @@ func (s *ListLoadBalancersRequest) WithTags(tags ...string) IListLoadBalancersRe
 	}
 
 	for i := 0; i < len(tags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
+		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
-	return s
+	return r
 }
 
-func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
+func (r *ListLoadBalancersRequest) ToListQuery() (string, error) {
 	v := url.Values{}
-	v.Set("name", s.Name)
-	v.Set("page", strconv.Itoa(s.Page))
-	v.Set("size", strconv.Itoa(s.Size))
+	v.Set("name", r.Name)
+	v.Set("page", strconv.Itoa(r.Page))
+	v.Set("size", strconv.Itoa(r.Size))
 
-	tuples := make([]string, 0, len(s.Tags))
-	for _, tag := range s.Tags {
+	tuples := make([]string, 0, len(r.Tags))
+	for _, tag := range r.Tags {
 		if tag.Key == "" {
 			continue
 		}
@@ -380,17 +380,17 @@ func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (s *ListLoadBalancersRequest) GetDefaultQuery() string {
+func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 
-func (s *ResizeLoadBalancerByIDRequest) ToMap() map[string]interface{} {
+func (r *ResizeLoadBalancerByIDRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"packageId":      s.PackageID,
-		"loadBalancerId": s.LoadBalancerID,
+		"packageId":      r.PackageID,
+		"loadBalancerId": r.LoadBalancerID,
 	}
 }
 
-func (s *ResizeLoadBalancerByIDRequest) ToRequestBody() interface{} {
-	return s
+func (r *ResizeLoadBalancerByIDRequest) ToRequestBody() interface{} {
+	return r
 }

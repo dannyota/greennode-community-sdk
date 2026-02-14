@@ -54,36 +54,36 @@ type DeleteSnapshotByIDRequest struct {
 	common.SnapshotCommon
 }
 
-func (s *ListSnapshotsByBlockVolumeIDRequest) GetDefaultQuery() string {
+func (r *ListSnapshotsByBlockVolumeIDRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIDRequest, defaultSizeListSnapshotsByBlockVolumeIDRequest)
 }
 
-func (s *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
+func (r *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
 	v := url.Values{}
-	if s.Page > 0 {
-		v.Set("page", strconv.Itoa(s.Page))
+	if r.Page > 0 {
+		v.Set("page", strconv.Itoa(r.Page))
 	}
-	if s.Size > 0 {
-		v.Set("size", strconv.Itoa(s.Size))
+	if r.Size > 0 {
+		v.Set("size", strconv.Itoa(r.Size))
 	}
 	return v.Encode(), nil
 }
 
-func (s *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() interface{} {
-	return s
+func (r *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() interface{} {
+	return r
 }
 
-func (s *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest {
-	s.Description = desc
-	return s
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest {
+	r.Description = desc
+	return r
 }
 
-func (s *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest {
-	s.Permanently = val
-	return s
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest {
+	r.Permanently = val
+	return r
 }
 
-func (s *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest {
-	s.RetainedDay = val
-	return s
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest {
+	r.RetainedDay = val
+	return r
 }

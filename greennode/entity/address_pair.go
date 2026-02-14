@@ -9,22 +9,22 @@ type AddressPair struct {
 	CIDR               string
 }
 
-func (s *AddressPair) GetID() string {
-	return s.ID
+func (ap *AddressPair) GetID() string {
+	return ap.ID
 }
 
 type ListAddressPairs struct {
 	Items []*AddressPair
 }
 
-func (s *ListAddressPairs) Len() int {
-	return len(s.Items)
+func (l *ListAddressPairs) Len() int {
+	return len(l.Items)
 }
 
-func (s *ListAddressPairs) At(idx int) *AddressPair {
-	if idx < 0 || idx >= len(s.Items) {
+func (l *ListAddressPairs) At(idx int) *AddressPair {
+	if idx < 0 || idx >= len(l.Items) {
 		return nil
 	}
 
-	return s.Items[idx]
+	return l.Items[idx]
 }

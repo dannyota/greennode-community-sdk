@@ -21,20 +21,20 @@ type AddressPairResponse struct {
 	// DeletedAt       string `json:"deletedAt"`
 }
 
-func (s *AddressPairResponse) toAddressPair() *entity.AddressPair {
+func (r *AddressPairResponse) toAddressPair() *entity.AddressPair {
 	return &entity.AddressPair{
-		ID:                 s.UUID,
-		VirtualIpAddressID: s.VirtualIpAddressID,
-		VirtualSubnetID:    s.VirtualSubnetID,
-		NetworkInterfaceIp: s.NetworkInterfaceIp,
-		NetworkInterfaceID: s.NetworkInterfaceID,
-		CIDR:               s.CIDR,
+		ID:                 r.UUID,
+		VirtualIpAddressID: r.VirtualIpAddressID,
+		VirtualSubnetID:    r.VirtualSubnetID,
+		NetworkInterfaceIp: r.NetworkInterfaceIp,
+		NetworkInterfaceID: r.NetworkInterfaceID,
+		CIDR:               r.CIDR,
 	}
 }
 
-func (s *GetAllAddressPairByVirtualSubnetIDResponse) ToListAddressPair() []*entity.AddressPair {
-	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
-	for _, addressPair := range s.Data {
+func (r *GetAllAddressPairByVirtualSubnetIDResponse) ToListAddressPair() []*entity.AddressPair {
+	addressPairs := make([]*entity.AddressPair, 0, len(r.Data))
+	for _, addressPair := range r.Data {
 		addressPairs = append(addressPairs, addressPair.toAddressPair())
 	}
 	return addressPairs
@@ -44,14 +44,14 @@ type SetAddressPairInVirtualSubnetResponse struct {
 	Data *AddressPairResponse `json:"data"`
 }
 
-func (s *SetAddressPairInVirtualSubnetResponse) ToAddressPair() *entity.AddressPair {
-	return s.Data.toAddressPair()
+func (r *SetAddressPairInVirtualSubnetResponse) ToAddressPair() *entity.AddressPair {
+	return r.Data.toAddressPair()
 }
 
 type CreateAddressPairResponse struct {
 	Data AddressPairResponse `json:"data"`
 }
 
-func (s *CreateAddressPairResponse) ToAddressPair() *entity.AddressPair {
-	return s.Data.toAddressPair()
+func (r *CreateAddressPairResponse) ToAddressPair() *entity.AddressPair {
+	return r.Data.toAddressPair()
 }

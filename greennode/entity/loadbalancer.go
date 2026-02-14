@@ -42,36 +42,36 @@ type ListLoadBalancers struct {
 	TotalItem int
 }
 
-func (s *LoadBalancer) GetID() string {
-	return s.UUID
+func (lb *LoadBalancer) GetID() string {
+	return lb.UUID
 }
 
-func (s *LoadBalancer) GetName() string {
-	return s.Name
+func (lb *LoadBalancer) GetName() string {
+	return lb.Name
 }
 
-func (s *LoadBalancer) GetAddress() string {
-	return s.Address
+func (lb *LoadBalancer) GetAddress() string {
+	return lb.Address
 }
 
-func (s *ListLoadBalancers) Len() int {
-	return len(s.Items)
+func (l *ListLoadBalancers) Len() int {
+	return len(l.Items)
 }
 
-func (s *ListLoadBalancers) Empty() bool {
-	return s.Len() < 1
+func (l *ListLoadBalancers) Empty() bool {
+	return l.Len() < 1
 }
 
-func (s *ListLoadBalancers) Add(item *LoadBalancer) {
-	s.Items = append(s.Items, item)
+func (l *ListLoadBalancers) Add(item *LoadBalancer) {
+	l.Items = append(l.Items, item)
 }
 
-func (s *ListLoadBalancers) At(idx int) *LoadBalancer {
-	if idx < 0 || idx >= s.Len() {
+func (l *ListLoadBalancers) At(idx int) *LoadBalancer {
+	if idx < 0 || idx >= l.Len() {
 		return nil
 	}
 
-	return s.Items[idx]
+	return l.Items[idx]
 }
 
 type ListLoadBalancerPackages struct {
