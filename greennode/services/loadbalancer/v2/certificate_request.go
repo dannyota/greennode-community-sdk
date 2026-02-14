@@ -4,6 +4,34 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type IListCertificatesRequest interface {
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListCertificatesRequest
+}
+
+type IGetCertificateByIDRequest interface {
+	GetCertificateID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IGetCertificateByIDRequest
+}
+
+type ICreateCertificateRequest interface {
+	ToRequestBody() any
+	ParseUserAgent() string
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) ICreateCertificateRequest
+
+	WithCertificateChain(chain string) ICreateCertificateRequest
+	WithPassphrase(passphrase string) ICreateCertificateRequest
+	WithPrivateKey(privateKey string) ICreateCertificateRequest
+}
+
+type IDeleteCertificateByIDRequest interface {
+	GetCertificateID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IDeleteCertificateByIDRequest
+}
+
 var _ IListCertificatesRequest = &ListCertificatesRequest{}
 
 type ListCertificatesRequest struct {

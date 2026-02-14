@@ -6,8 +6,91 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
+
+type ICreateLoadBalancerRequest interface {
+	ToRequestBody() any
+	AddUserAgent(agent ...string) ICreateLoadBalancerRequest
+	WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest
+	WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest
+	WithTags(tags ...string) ICreateLoadBalancerRequest
+	WithScheme(scheme LoadBalancerScheme) ICreateLoadBalancerRequest
+	WithAutoScalable(autoScalable bool) ICreateLoadBalancerRequest
+	WithPackageID(packageID string) ICreateLoadBalancerRequest
+	WithSubnetID(subnetID string) ICreateLoadBalancerRequest
+	WithType(typeVal LoadBalancerType) ICreateLoadBalancerRequest
+	WithPoc(poc bool) ICreateLoadBalancerRequest
+	WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest
+	ParseUserAgent() string
+	ToMap() map[string]any
+}
+
+type IResizeLoadBalancerRequest interface {
+	ToRequestBody() any
+	AddUserAgent(agent ...string) IResizeLoadBalancerRequest
+	WithPackageID(packageID string) IResizeLoadBalancerRequest
+	ParseUserAgent() string
+
+	GetLoadBalancerID() string
+}
+
+type IListLoadBalancerPackagesRequest interface {
+	WithZoneID(zoneID common.Zone) IListLoadBalancerPackagesRequest
+	GetZoneID() string
+	AddUserAgent(agent ...string) IListLoadBalancerPackagesRequest
+	ParseUserAgent() string
+	ToMap() map[string]any
+}
+
+type IGetLoadBalancerByIDRequest interface {
+	AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+}
+
+type IListLoadBalancersRequest interface {
+	WithName(name string) IListLoadBalancersRequest
+	WithTags(tags ...string) IListLoadBalancersRequest
+	ToListQuery() (string, error)
+	ParseUserAgent() string
+	GetDefaultQuery() string
+	AddUserAgent(agent ...string) IListLoadBalancersRequest
+}
+
+type IDeleteLoadBalancerByIDRequest interface {
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IDeleteLoadBalancerByIDRequest
+}
+
+type IResizeLoadBalancerByIDRequest interface {
+	GetLoadBalancerID() string
+	ToMap() map[string]any
+	ParseUserAgent() string
+	ToRequestBody() any
+	AddUserAgent(agent ...string) IResizeLoadBalancerByIDRequest
+}
+
+type IScaleLoadBalancerRequest interface {
+	GetLoadBalancerID() string
+	ToMap() map[string]any
+	ParseUserAgent() string
+	ToRequestBody() any
+	AddUserAgent(agent ...string) IScaleLoadBalancerRequest
+	WithScaling(scaling *ScalingConfig) IScaleLoadBalancerRequest
+	WithNetworking(networking *NetworkingConfig) IScaleLoadBalancerRequest
+}
+
+type IUpdateTagsRequest interface {
+	GetLoadBalancerID() string
+	ToRequestBody(lstTags *entity.ListTags) any
+	ParseUserAgent() string
+	WithTags(tags ...string) IUpdateTagsRequest
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) IUpdateTagsRequest
+}
 
 const (
 	InternalLoadBalancerScheme LoadBalancerScheme = "Internal"

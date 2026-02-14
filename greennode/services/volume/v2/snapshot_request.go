@@ -8,6 +8,25 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type IListSnapshotsByBlockVolumeIDRequest interface {
+	GetBlockVolumeID() string
+	ToQuery() (string, error)
+	GetDefaultQuery() string
+}
+
+type ICreateSnapshotByBlockVolumeIDRequest interface {
+	GetBlockVolumeID() string
+	ToRequestBody() any
+	WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest
+	WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest
+	WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest
+}
+
+type IDeleteSnapshotByIDRequest interface {
+	GetSnapshotID() string
+	GetBlockVolumeID() string
+}
+
 func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) IListSnapshotsByBlockVolumeIDRequest {
 	opt := new(ListSnapshotsByBlockVolumeIDRequest)
 	opt.BlockVolumeID = blockVolumeID

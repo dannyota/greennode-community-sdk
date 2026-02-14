@@ -2,6 +2,32 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IGetAllAddressPairByVirtualSubnetIDRequest interface {
+	GetVirtualSubnetID() string
+	ParseUserAgent() string
+}
+
+type ISetAddressPairInVirtualSubnetRequest interface {
+	GetVirtualSubnetID() string
+	ParseUserAgent() string
+	ToRequestBody() any
+}
+
+type IDeleteAddressPairRequest interface {
+	ParseUserAgent() string
+	GetAddressPairID() string
+	AddUserAgent(agent ...string) IDeleteAddressPairRequest
+}
+
+type ICreateAddressPairRequest interface {
+	GetVirtualAddressID() string
+	ToRequestBody() any
+	ParseUserAgent() string
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) ICreateAddressPairRequest
+	WithMode(mode AddressPairMode) ICreateAddressPairRequest
+}
+
 func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) IGetAllAddressPairByVirtualSubnetIDRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIDRequest)
 	opt.VirtualSubnetID = subnetID

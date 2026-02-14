@@ -9,6 +9,70 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type IListGlobalLoadBalancersRequest interface {
+	WithName(name string) IListGlobalLoadBalancersRequest
+	WithTags(tags ...string) IListGlobalLoadBalancersRequest
+	ToListQuery() (string, error)
+	GetDefaultQuery() string
+
+	AddUserAgent(agent ...string) IListGlobalLoadBalancersRequest
+	ParseUserAgent() string
+}
+
+type ICreateGlobalLoadBalancerRequest interface {
+	WithDescription(desc string) ICreateGlobalLoadBalancerRequest
+	WithName(name string) ICreateGlobalLoadBalancerRequest
+	WithType(typeVal GlobalLoadBalancerType) ICreateGlobalLoadBalancerRequest
+	WithGlobalListener(listener ICreateGlobalListenerRequest) ICreateGlobalLoadBalancerRequest
+	WithGlobalPool(pool ICreateGlobalPoolRequest) ICreateGlobalLoadBalancerRequest
+	WithPackage(packageID string) ICreateGlobalLoadBalancerRequest
+	WithPaymentFlow(paymentFlow GlobalLoadBalancerPaymentFlow) ICreateGlobalLoadBalancerRequest
+
+	AddUserAgent(agent ...string) ICreateGlobalLoadBalancerRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IDeleteGlobalLoadBalancerRequest interface {
+	WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) IDeleteGlobalLoadBalancerRequest
+	ParseUserAgent() string
+}
+
+type IGetGlobalLoadBalancerByIDRequest interface {
+	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) IGetGlobalLoadBalancerByIDRequest
+	ParseUserAgent() string
+}
+
+type IListGlobalPackagesRequest interface {
+	AddUserAgent(agent ...string) IListGlobalPackagesRequest
+	ParseUserAgent() string
+}
+
+type IListGlobalRegionsRequest interface {
+	AddUserAgent(agent ...string) IListGlobalRegionsRequest
+	ParseUserAgent() string
+}
+
+type IGetGlobalLoadBalancerUsageHistoriesRequest interface {
+	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	WithFrom(from string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	WithTo(to string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	WithType(typeVal string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) IGetGlobalLoadBalancerUsageHistoriesRequest
+	ParseUserAgent() string
+	ToListQuery() (string, error)
+	GetDefaultQuery() string
+}
+
 type (
 	GlobalLoadBalancerType        string
 	GlobalLoadBalancerPaymentFlow string

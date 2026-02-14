@@ -2,6 +2,78 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IListPoliciesRequest interface {
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	AddUserAgent(agent ...string) IListPoliciesRequest
+}
+
+type ICreatePolicyRequest interface {
+	ToRequestBody() any
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) ICreatePolicyRequest
+
+	WithName(name string) ICreatePolicyRequest
+	WithRules(rules ...L7RuleRequest) ICreatePolicyRequest
+	WithAction(action PolicyAction) ICreatePolicyRequest
+
+	// only for action redirect to pool
+	WithRedirectPoolID(redirectPoolID string) ICreatePolicyRequest
+
+	// only for action redirect to url
+	WithRedirectURL(redirectURL string) ICreatePolicyRequest
+	// only for action redirect to url
+	WithRedirectHTTPCode(redirectHTTPCode int) ICreatePolicyRequest
+	// only for action redirect to url
+	WithKeepQueryString(keepQueryString bool) ICreatePolicyRequest
+}
+
+type IGetPolicyByIDRequest interface {
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
+	AddUserAgent(agent ...string) IGetPolicyByIDRequest
+}
+
+type IUpdatePolicyRequest interface {
+	ToRequestBody() any
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
+	AddUserAgent(agent ...string) IUpdatePolicyRequest
+
+	WithAction(action PolicyAction) IUpdatePolicyRequest
+	WithRules(rules ...L7RuleRequest) IUpdatePolicyRequest
+	WithRedirectPoolID(redirectPoolID string) IUpdatePolicyRequest
+	WithRedirectURL(redirectURL string) IUpdatePolicyRequest
+	WithRedirectHTTPCode(redirectHTTPCode int) IUpdatePolicyRequest
+	WithKeepQueryString(keepQueryString bool) IUpdatePolicyRequest
+}
+
+type IDeletePolicyByIDRequest interface {
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	GetPolicyID() string
+	AddUserAgent(agent ...string) IDeletePolicyByIDRequest
+}
+
+type IReorderPoliciesRequest interface {
+	ToRequestBody() any
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	GetListenerID() string
+	AddUserAgent(agent ...string) IReorderPoliciesRequest
+
+	WithPoliciesOrder(lstPolicies []string) IReorderPoliciesRequest
+}
+
 type (
 	PolicyAction      string
 	PolicyCompareType string

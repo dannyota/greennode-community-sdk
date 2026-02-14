@@ -7,6 +7,74 @@ import (
 	// "strings"
 )
 
+type IListGlobalListenersRequest interface {
+	WithLoadBalancerID(lbID string) IListGlobalListenersRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) IListGlobalListenersRequest
+	ParseUserAgent() string
+}
+
+type IGetGlobalListenerRequest interface {
+	WithLoadBalancerID(lbID string) IGetGlobalListenerRequest
+	WithListenerID(listenerID string) IGetGlobalListenerRequest
+	GetLoadBalancerID() string
+	GetListenerID() string
+
+	AddUserAgent(agent ...string) IGetGlobalListenerRequest
+	ParseUserAgent() string
+}
+
+type ICreateGlobalListenerRequest interface {
+	WithAllowedCidrs(cidrs ...string) ICreateGlobalListenerRequest
+	WithDescription(desc string) ICreateGlobalListenerRequest
+	WithHeaders(headers ...string) ICreateGlobalListenerRequest
+	WithName(name string) ICreateGlobalListenerRequest
+	WithPort(port int) ICreateGlobalListenerRequest
+	WithProtocol(protocol GlobalListenerProtocol) ICreateGlobalListenerRequest
+	WithTimeoutClient(toc int) ICreateGlobalListenerRequest
+	WithTimeoutConnection(toc int) ICreateGlobalListenerRequest
+	WithTimeoutMember(tom int) ICreateGlobalListenerRequest
+	WithGlobalPoolID(poolID string) ICreateGlobalListenerRequest
+
+	WithLoadBalancerID(lbid string) ICreateGlobalListenerRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) ICreateGlobalListenerRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IUpdateGlobalListenerRequest interface {
+	WithAllowedCidrs(cidrs ...string) IUpdateGlobalListenerRequest
+	WithTimeoutClient(toc int) IUpdateGlobalListenerRequest
+	WithTimeoutMember(tom int) IUpdateGlobalListenerRequest
+	WithTimeoutConnection(toc int) IUpdateGlobalListenerRequest
+	WithHeaders(headers ...string) IUpdateGlobalListenerRequest
+	WithGlobalPoolID(poolID string) IUpdateGlobalListenerRequest
+
+	WithLoadBalancerID(lbID string) IUpdateGlobalListenerRequest
+	WithListenerID(listenerID string) IUpdateGlobalListenerRequest
+	GetLoadBalancerID() string
+	GetListenerID() string
+
+	AddUserAgent(agent ...string) IUpdateGlobalListenerRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IDeleteGlobalListenerRequest interface {
+	WithLoadBalancerID(lbID string) IDeleteGlobalListenerRequest
+	WithListenerID(listenerID string) IDeleteGlobalListenerRequest
+	GetLoadBalancerID() string
+	GetListenerID() string
+
+	AddUserAgent(agent ...string) IDeleteGlobalListenerRequest
+	ParseUserAgent() string
+}
+
 type GlobalListenerProtocol string
 
 const (

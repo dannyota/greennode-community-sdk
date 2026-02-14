@@ -2,6 +2,27 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type ICreateSecgroupRuleRequest interface {
+	GetSecgroupID() string
+	ToRequestBody() any
+	AddUserAgent(agent ...string) ICreateSecgroupRuleRequest
+	ParseUserAgent() string
+	ToMap() map[string]any
+}
+
+type IDeleteSecgroupRuleByIDRequest interface {
+	GetSecgroupID() string
+	GetSecgroupRuleID() string
+	AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest
+	ParseUserAgent() string
+}
+
+type IListSecgroupRulesBySecgroupIDRequest interface {
+	GetSecgroupID() string
+	AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest
+	ParseUserAgent() string
+}
+
 func NewCreateSecgroupRuleRequest(
 	direction SecgroupRuleDirection,
 	etherType SecgroupRuleEtherType,

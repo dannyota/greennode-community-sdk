@@ -7,6 +7,63 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type ICreateListenerRequest interface {
+	ToRequestBody() any
+	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
+	WithLoadBalancerID(lbid string) ICreateListenerRequest
+	WithDefaultPoolID(poolID string) ICreateListenerRequest
+	WithTimeoutClient(toc int) ICreateListenerRequest
+	WithTimeoutConnection(toc int) ICreateListenerRequest
+	WithTimeoutMember(tom int) ICreateListenerRequest
+	WithInsertHeaders(headers ...string) ICreateListenerRequest
+	WithDefaultCertificateAuthority(defaultCA *string) ICreateListenerRequest
+	WithCertificateAuthorities(ca *[]string) ICreateListenerRequest
+	WithClientCertificate(clientCert *string) ICreateListenerRequest
+	AddCidrs(cidrs ...string) ICreateListenerRequest
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) ICreateListenerRequest
+}
+
+type IUpdateListenerRequest interface {
+	GetLoadBalancerID() string
+	GetListenerID() string
+	ToRequestBody() any
+	WithCidrs(cidrs ...string) IUpdateListenerRequest
+	WithTimeoutClient(toc int) IUpdateListenerRequest
+	WithTimeoutConnection(toc int) IUpdateListenerRequest
+	WithTimeoutMember(tom int) IUpdateListenerRequest
+	WithDefaultPoolID(poolID string) IUpdateListenerRequest
+	WithInsertHeaders(headers ...string) IUpdateListenerRequest
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IUpdateListenerRequest
+
+	WithCertificateAuthorities(ca ...string) IUpdateListenerRequest
+	WithClientCertificate(clientCert string) IUpdateListenerRequest
+	WithDefaultCertificateAuthority(defaultCA string) IUpdateListenerRequest
+}
+
+type IListListenersByLoadBalancerIDRequest interface {
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListListenersByLoadBalancerIDRequest
+}
+
+type IDeleteListenerByIDRequest interface {
+	GetLoadBalancerID() string
+	GetListenerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IDeleteListenerByIDRequest
+}
+
+type IGetListenerByIDRequest interface {
+	GetLoadBalancerID() string
+	GetListenerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IGetListenerByIDRequest
+}
+
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
 	ListenerProtocolUDP   ListenerProtocol = "UDP"

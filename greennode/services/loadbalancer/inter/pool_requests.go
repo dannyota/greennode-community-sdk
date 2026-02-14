@@ -2,6 +2,32 @@ package inter
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type ICreatePoolRequest interface {
+	ToRequestBody() any
+	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
+	WithMembers(members ...IMemberRequest) ICreatePoolRequest
+	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
+}
+
+type IHealthMonitorRequest interface {
+	ToRequestBody() any
+	ToMap() map[string]any
+	WithHealthyThreshold(ht int) IHealthMonitorRequest
+	WithUnhealthyThreshold(uht int) IHealthMonitorRequest
+	WithInterval(interval int) IHealthMonitorRequest
+	WithTimeout(to int) IHealthMonitorRequest
+	WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest
+	WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest
+	WithHealthCheckPath(path string) IHealthMonitorRequest
+	WithSuccessCode(code string) IHealthMonitorRequest
+	WithDomainName(domain string) IHealthMonitorRequest
+}
+
+type IMemberRequest interface {
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
 	PoolAlgorithmLeastConn  PoolAlgorithm = "LEAST_CONNECTIONS"

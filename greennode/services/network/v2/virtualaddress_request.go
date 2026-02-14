@@ -2,6 +2,41 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IListAllServersBySecgroupIDRequest interface {
+	GetSecgroupID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListAllServersBySecgroupIDRequest
+}
+
+type ICreateVirtualAddressCrossProjectRequest interface {
+	ToRequestBody() any
+	ParseUserAgent() string
+	ToMap() map[string]any
+	AddUserAgent(agent ...string) ICreateVirtualAddressCrossProjectRequest
+	WithDescription(description string) ICreateVirtualAddressCrossProjectRequest
+}
+
+type IDeleteVirtualAddressByIDRequest interface {
+	GetVirtualAddressID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IDeleteVirtualAddressByIDRequest
+	ToMap() map[string]any
+}
+
+type IGetVirtualAddressByIDRequest interface {
+	GetVirtualAddressID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IGetVirtualAddressByIDRequest
+	ToMap() map[string]any
+}
+
+type IListAddressPairsByVirtualAddressIDRequest interface {
+	GetVirtualAddressID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIDRequest
+	ToMap() map[string]any
+}
+
 /**
  * The group of Virtual Address APIs
  */

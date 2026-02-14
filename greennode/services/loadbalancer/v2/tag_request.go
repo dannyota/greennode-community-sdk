@@ -5,6 +5,20 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type IListTagsRequest interface {
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListTagsRequest
+}
+
+type ICreateTagsRequest interface {
+	GetLoadBalancerID() string
+	ToRequestBody() any
+	ParseUserAgent() string
+	WithTags(tags ...string) ICreateTagsRequest
+	AddUserAgent(agent ...string) ICreateTagsRequest
+}
+
 func NewListTagsRequest(lbID string) IListTagsRequest {
 	opt := new(ListTagsRequest)
 	opt.LoadBalancerID = lbID

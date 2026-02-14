@@ -2,6 +2,15 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IGetPortalInfoRequest interface {
+	GetBackEndProjectID() string
+}
+
+type IListProjectsRequest interface {
+	AddUserAgent(agent ...string) IListProjectsRequest
+	ParseUserAgent() string
+}
+
 type GetPortalInfoRequest struct {
 	BackEndProjectID string
 }

@@ -2,6 +2,164 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IListGlobalPoolsRequest interface {
+	WithLoadBalancerID(lbID string) IListGlobalPoolsRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) IListGlobalPoolsRequest
+	ParseUserAgent() string
+}
+
+type ICreateGlobalPoolRequest interface {
+	WithAlgorithm(algorithm GlobalPoolAlgorithm) ICreateGlobalPoolRequest
+	WithDescription(desc string) ICreateGlobalPoolRequest
+	WithName(name string) ICreateGlobalPoolRequest
+	WithProtocol(protocol GlobalPoolProtocol) ICreateGlobalPoolRequest
+	WithHealthMonitor(monitor IGlobalHealthMonitorRequest) ICreateGlobalPoolRequest
+	WithMembers(members ...ICreateGlobalPoolMemberRequest) ICreateGlobalPoolRequest
+
+	WithLoadBalancerID(lbID string) ICreateGlobalPoolRequest
+	GetLoadBalancerID() string
+
+	AddUserAgent(agent ...string) ICreateGlobalPoolRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IGlobalHealthMonitorRequest interface {
+	WithHealthyThreshold(ht int) IGlobalHealthMonitorRequest
+	WithInterval(interval int) IGlobalHealthMonitorRequest
+	WithProtocol(protocol GlobalPoolHealthCheckProtocol) IGlobalHealthMonitorRequest
+	WithTimeout(to int) IGlobalHealthMonitorRequest
+	WithUnhealthyThreshold(uht int) IGlobalHealthMonitorRequest
+
+	WithHealthCheckMethod(method *GlobalPoolHealthCheckMethod) IGlobalHealthMonitorRequest
+	WithHTTPVersion(version *GlobalPoolHealthCheckHTTPVersion) IGlobalHealthMonitorRequest
+	WithPath(path *string) IGlobalHealthMonitorRequest
+	WithSuccessCode(code *string) IGlobalHealthMonitorRequest
+	WithDomainName(domain *string) IGlobalHealthMonitorRequest
+
+	AddUserAgent(agent ...string) IGlobalHealthMonitorRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type ICreateGlobalPoolMemberRequest interface {
+	WithName(name string) ICreateGlobalPoolMemberRequest
+	WithDescription(desc string) ICreateGlobalPoolMemberRequest
+	WithRegion(region string) ICreateGlobalPoolMemberRequest
+	WithVPCID(vpcID string) ICreateGlobalPoolMemberRequest
+	WithTrafficDial(dial int) ICreateGlobalPoolMemberRequest
+	WithMembers(members ...IGlobalMemberRequest) ICreateGlobalPoolMemberRequest
+	WithType(typeVal GlobalPoolMemberType) ICreateGlobalPoolMemberRequest
+
+	WithLoadBalancerID(lbID string) ICreateGlobalPoolMemberRequest
+	WithPoolID(poolID string) ICreateGlobalPoolMemberRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+
+	AddUserAgent(agent ...string) ICreateGlobalPoolMemberRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IGlobalMemberRequest interface {
+	WithAddress(addr string) IGlobalMemberRequest
+	WithBackupRole(backup bool) IGlobalMemberRequest
+	WithDescription(desc string) IGlobalMemberRequest
+	WithMonitorPort(port int) IGlobalMemberRequest
+	WithName(name string) IGlobalMemberRequest
+	WithPort(port int) IGlobalMemberRequest
+	WithSubnetID(subnetID string) IGlobalMemberRequest
+	WithWeight(weight int) IGlobalMemberRequest
+
+	AddUserAgent(agent ...string) IGlobalMemberRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IUpdateGlobalPoolRequest interface {
+	WithAlgorithm(algorithm GlobalPoolAlgorithm) IUpdateGlobalPoolRequest
+	WithHealthMonitor(monitor IGlobalHealthMonitorRequest) IUpdateGlobalPoolRequest
+
+	WithLoadBalancerID(lbID string) IUpdateGlobalPoolRequest
+	WithPoolID(poolID string) IUpdateGlobalPoolRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+
+	AddUserAgent(agent ...string) IUpdateGlobalPoolRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IDeleteGlobalPoolRequest interface {
+	WithLoadBalancerID(lbID string) IDeleteGlobalPoolRequest
+	WithPoolID(poolID string) IDeleteGlobalPoolRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+
+	AddUserAgent(agent ...string) IDeleteGlobalPoolRequest
+	ParseUserAgent() string
+}
+
+type IListGlobalPoolMembersRequest interface {
+	WithLoadBalancerID(lbID string) IListGlobalPoolMembersRequest
+	WithPoolID(poolID string) IListGlobalPoolMembersRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+
+	AddUserAgent(agent ...string) IListGlobalPoolMembersRequest
+	ParseUserAgent() string
+}
+
+type IGetGlobalPoolMemberRequest interface {
+	WithLoadBalancerID(lbID string) IGetGlobalPoolMemberRequest
+	WithPoolID(poolID string) IGetGlobalPoolMemberRequest
+	WithPoolMemberID(poolMemberID string) IGetGlobalPoolMemberRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+	GetPoolMemberID() string
+
+	AddUserAgent(agent ...string) IGetGlobalPoolMemberRequest
+	ParseUserAgent() string
+}
+
+type IDeleteGlobalPoolMemberRequest interface {
+	WithLoadBalancerID(lbID string) IDeleteGlobalPoolMemberRequest
+	WithPoolID(poolID string) IDeleteGlobalPoolMemberRequest
+	WithPoolMemberID(poolMemberID string) IDeleteGlobalPoolMemberRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+	GetPoolMemberID() string
+
+	AddUserAgent(agent ...string) IDeleteGlobalPoolMemberRequest
+	ParseUserAgent() string
+}
+
+type IPatchGlobalPoolMembersRequest interface {
+	WithBulkAction(action ...IBulkActionRequest) IPatchGlobalPoolMembersRequest
+
+	WithLoadBalancerID(lbID string) IPatchGlobalPoolMembersRequest
+	WithPoolID(poolID string) IPatchGlobalPoolMembersRequest
+	GetLoadBalancerID() string
+	GetPoolID() string
+
+	AddUserAgent(agent ...string) IPatchGlobalPoolMembersRequest
+	ParseUserAgent() string
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
+type IBulkActionRequest interface {
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
 type (
 	GlobalPoolAlgorithm              string
 	GlobalPoolProtocol               string

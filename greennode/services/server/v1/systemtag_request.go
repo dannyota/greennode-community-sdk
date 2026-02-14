@@ -2,6 +2,16 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type ICreateSystemTagRequest interface {
+	ToRequestBody() any
+	AddUserAgent(agent ...string) ICreateSystemTagRequest
+	ToMap() map[string]any
+	AddTag(key, value string) ICreateSystemTagRequest
+	ParseUserAgent() string
+	GetResourceID() string
+	GetResourceType() ResourceType
+}
+
 const (
 	Volume       ResourceType = "VOLUME"
 	Server       ResourceType = "SERVER"

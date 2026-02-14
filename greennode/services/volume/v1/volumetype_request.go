@@ -7,6 +7,19 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type IGetVolumeTypeByIDRequest interface {
+	GetVolumeTypeID() string
+}
+
+type IGetListVolumeTypeRequest interface {
+	GetVolumeTypeZoneID() string
+}
+
+type IGetVolumeTypeZonesRequest interface {
+	ToQuery() (string, error)
+	GetDefaultQuery() string
+}
+
 func NewGetVolumeTypeByIDRequest(volumeTypeID string) IGetVolumeTypeByIDRequest {
 	opt := new(GetVolumeTypeByIDRequest)
 	opt.VolumeTypeID = volumeTypeID

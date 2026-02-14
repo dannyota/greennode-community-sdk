@@ -2,6 +2,19 @@ package inter
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type ICreateLoadBalancerRequest interface {
+	ToRequestBody() any
+	AddUserAgent(agent ...string) ICreateLoadBalancerRequest
+	WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest
+	WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest
+	WithProjectID(projectID string) ICreateLoadBalancerRequest
+	WithTags(tags ...string) ICreateLoadBalancerRequest
+	WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest
+	GetMapHeaders() map[string]string
+	ParseUserAgent() string
+	ToMap() map[string]any
+}
+
 const (
 	InterVpcLoadBalancerScheme LoadBalancerScheme = "InterVPC"
 	InternalLoadBalancerScheme LoadBalancerScheme = "Internal"

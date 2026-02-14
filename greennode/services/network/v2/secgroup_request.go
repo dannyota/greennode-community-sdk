@@ -2,6 +2,30 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type IGetSecgroupByIDRequest interface {
+	AddUserAgent(agent ...string) IGetSecgroupByIDRequest
+	ParseUserAgent() string
+	GetSecgroupID() string
+}
+
+type ICreateSecgroupRequest interface {
+	ToRequestBody() any
+	GetSecgroupName() string
+	AddUserAgent(agent ...string) ICreateSecgroupRequest
+	ParseUserAgent() string
+}
+
+type IDeleteSecgroupByIDRequest interface {
+	GetSecgroupID() string
+	AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest
+	ParseUserAgent() string
+}
+
+type IListSecgroupRequest interface {
+	AddUserAgent(agent ...string) IListSecgroupRequest
+	ParseUserAgent() string
+}
+
 type ListSecgroupRequest struct {
 	common.UserAgent
 }

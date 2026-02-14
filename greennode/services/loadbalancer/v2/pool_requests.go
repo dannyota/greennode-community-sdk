@@ -2,6 +2,96 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
+type ICreatePoolRequest interface {
+	ToRequestBody() any
+	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
+	WithMembers(members ...IMemberRequest) ICreatePoolRequest
+	WithLoadBalancerID(lbID string) ICreatePoolRequest
+	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
+	ToMap() map[string]any
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) ICreatePoolRequest
+}
+
+type IUpdatePoolRequest interface {
+	GetPoolID() string
+	ToRequestBody() any
+	WithHealthMonitor(monitor IHealthMonitorRequest) IUpdatePoolRequest
+	WithLoadBalancerID(lbID string) IUpdatePoolRequest
+	WithAlgorithm(algorithm PoolAlgorithm) IUpdatePoolRequest
+	WithStickiness(v *bool) IUpdatePoolRequest
+	WithTLSEncryption(v *bool) IUpdatePoolRequest
+	ToMap() map[string]any
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IUpdatePoolRequest
+}
+
+type IGetPoolHealthMonitorByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IGetPoolHealthMonitorByIDRequest
+}
+
+type IListPoolMembersRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListPoolMembersRequest
+}
+
+type IDeletePoolByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IDeletePoolByIDRequest
+}
+
+type IGetPoolByIDRequest interface {
+	GetLoadBalancerID() string
+	GetPoolID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IGetPoolByIDRequest
+}
+
+type IListPoolsByLoadBalancerIDRequest interface {
+	GetLoadBalancerID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IListPoolsByLoadBalancerIDRequest
+}
+
+type IUpdatePoolMembersRequest interface {
+	WithMembers(members ...IMemberRequest) IUpdatePoolMembersRequest
+	ToRequestBody() any
+	GetLoadBalancerID() string
+	GetPoolID() string
+	ParseUserAgent() string
+	AddUserAgent(agent ...string) IUpdatePoolMembersRequest
+}
+
+type IHealthMonitorRequest interface {
+	ToRequestBody() any
+	ToMap() map[string]any
+	WithHealthCheckProtocol(protocol HealthCheckProtocol) IHealthMonitorRequest
+	WithHealthyThreshold(ht int) IHealthMonitorRequest
+	WithUnhealthyThreshold(uht int) IHealthMonitorRequest
+	WithInterval(interval int) IHealthMonitorRequest
+	WithTimeout(to int) IHealthMonitorRequest
+	WithHealthCheckMethod(method *HealthCheckMethod) IHealthMonitorRequest
+	WithHTTPVersion(version *HealthCheckHTTPVersion) IHealthMonitorRequest
+	WithHealthCheckPath(path *string) IHealthMonitorRequest
+	WithSuccessCode(code *string) IHealthMonitorRequest
+	WithDomainName(domain *string) IHealthMonitorRequest
+	AddUserAgent(agent ...string) IHealthMonitorRequest
+}
+
+type IMemberRequest interface {
+	ToRequestBody() any
+	ToMap() map[string]any
+}
+
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
 	PoolAlgorithmLeastConn  PoolAlgorithm = "LEAST_CONNECTIONS"

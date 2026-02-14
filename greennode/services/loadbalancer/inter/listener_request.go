@@ -6,6 +6,20 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type ICreateListenerRequest interface {
+	ToRequestBody() any
+	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
+	WithLoadBalancerID(lbid string) ICreateListenerRequest
+	WithDefaultPoolID(poolID string) ICreateListenerRequest
+	WithTimeoutClient(toc int) ICreateListenerRequest
+	WithTimeoutConnection(toc int) ICreateListenerRequest
+	WithTimeoutMember(tom int) ICreateListenerRequest
+	AddCidrs(cidrs ...string) ICreateListenerRequest
+	ParseUserAgent() string
+	GetLoadBalancerID() string
+	ToMap() map[string]any
+}
+
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
 	ListenerProtocolUDP   ListenerProtocol = "UDP"
