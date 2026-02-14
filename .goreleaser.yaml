@@ -1,3 +1,0 @@
-# .goreleaser.yaml
-builds:
-  - skip: true
