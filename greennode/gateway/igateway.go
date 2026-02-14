@@ -1,15 +1,15 @@
 package gateway
 
 import (
-	lscomputeSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/compute"
-	lsdnsSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/dns"
-	"github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/glb"
-	lsidentitySvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/identity"
-	lslbSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer"
-	lsnetworkSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/network"
-	lsportalSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/portal"
-	lsServerSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/server"
-	lsvolumeSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/volume"
+	lscomputeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
+	lsdnsSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
+	lsidentitySvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity"
+	lslbSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
+	lsnetworkSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
+	lsportalSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
+	lsServerSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
+	lsvolumeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
 type IIamGateway interface {

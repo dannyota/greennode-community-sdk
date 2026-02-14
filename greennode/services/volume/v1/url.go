@@ -1,6 +1,6 @@
 package v1
 
-import lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
+import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 func getVolumeTypeByIdUrl(psc lsclient.IServiceClient, popts IGetVolumeTypeByIdRequest) string {
 	return psc.ServiceURL(

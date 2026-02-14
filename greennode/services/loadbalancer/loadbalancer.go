@@ -1,9 +1,9 @@
 package loadbalancer
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsloadbalancerInternal "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer/inter"
-	lsloadbalancerV2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer/v2"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsloadbalancerInternal "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
+	lsloadbalancerV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )
 
 func NewLoadBalancerServiceV2(plbSvcClient, pserverSvcClient lsclient.IServiceClient) ILoadBalancerServiceV2 {

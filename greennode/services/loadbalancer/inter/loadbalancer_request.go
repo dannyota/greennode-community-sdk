@@ -1,6 +1,6 @@
 package inter
 
-import lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	InterVpcLoadBalancerScheme LoadBalancerScheme = "InterVPC"

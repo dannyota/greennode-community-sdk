@@ -1,12 +1,12 @@
 package gateway
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lscomputeSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/compute"
-	lsnetworkSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/network"
-	lsportalSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/portal"
-	lsServerSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/server"
-	lsvolumeSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/volume"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lscomputeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
+	lsnetworkSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
+	lsportalSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
+	lsServerSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
+	lsvolumeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
 type vserverGatewayV1 struct {

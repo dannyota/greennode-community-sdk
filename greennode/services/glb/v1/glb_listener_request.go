@@ -3,7 +3,7 @@ package v1
 import (
 	"strings"
 
-	lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	// lstr "strings"
 )
 

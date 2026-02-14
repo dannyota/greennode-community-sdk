@@ -3,9 +3,9 @@ package test
 import (
 	ltesting "testing"
 
-	lsserverSvcV1 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/server/v1"
+	lsserverSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server/v1"
 
-	lscomputeSvcV2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/compute/v2"
+	lscomputeSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 )
 
 func TestCreateServerFailed(t *ltesting.T) {

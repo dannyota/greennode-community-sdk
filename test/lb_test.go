@@ -3,9 +3,9 @@ package test
 import (
 	ltesting "testing"
 
-	"github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
-	lsinter "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer/inter"
-	lslbv2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer/v2"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	lsinter "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
+	lslbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )
 
 func TestCreateInterLoadBalancerSuccess1(t *ltesting.T) {

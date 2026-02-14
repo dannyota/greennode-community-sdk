@@ -7,7 +7,7 @@ import (
 
 	ljset "github.com/cuongpiger/joat/data-structure/set"
 
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 type IHttpClient interface {

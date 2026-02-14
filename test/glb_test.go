@@ -5,7 +5,7 @@ import (
 	ltesting "testing"
 	"time"
 
-	v1 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/glb/v1"
+	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
 func TestGetGlobalListenerSuccess(t *ltesting.T) {

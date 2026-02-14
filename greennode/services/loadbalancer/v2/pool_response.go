@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
+import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetPoolHealthMonitorByIdResponse struct {
 	Data struct {

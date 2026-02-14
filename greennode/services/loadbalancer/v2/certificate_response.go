@@ -1,6 +1,6 @@
 package v2
 
-import "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type certResponseData struct {
 	UUID               string `json:"uuid"`

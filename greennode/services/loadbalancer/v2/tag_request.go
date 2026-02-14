@@ -1,8 +1,8 @@
 package v2
 
 import (
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
-	lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewListTagsRequest(plbId string) IListTagsRequest {

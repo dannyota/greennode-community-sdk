@@ -1,10 +1,10 @@
 package network
 
 import (
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
-	lsnetworkSvcV1 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/network/v1"
-	lsnetworkSvcV2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/network/v2"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	lsnetworkSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
+	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
 type INetworkServiceV1 interface {

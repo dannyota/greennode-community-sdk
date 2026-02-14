@@ -4,10 +4,10 @@ import (
 	lctx "context"
 	ltime "time"
 
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsgateway "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/gateway"
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
-	lssvcIdentityV2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/identity/v2"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsgateway "github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	lssvcIdentityV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
 var (

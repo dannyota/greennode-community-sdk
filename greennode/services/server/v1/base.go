@@ -1,7 +1,7 @@
 package v1
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 )
 
 type ServerServiceInternalV1 struct {

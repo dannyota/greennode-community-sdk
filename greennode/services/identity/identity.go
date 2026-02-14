@@ -1,8 +1,8 @@
 package identity
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsidentitySvcV2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/identity/v2"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsidentitySvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
 func NewIdentityService(psvcClient lsclient.IServiceClient) IIdentityServiceV2 {

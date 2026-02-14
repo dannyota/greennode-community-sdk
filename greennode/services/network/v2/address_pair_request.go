@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetAllAddressPairByVirtualSubnetIdRequest(psubnetId string) IGetAllAddressPairByVirtualSubnetIdRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIdRequest)

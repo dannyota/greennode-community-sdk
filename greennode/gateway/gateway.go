@@ -1,9 +1,9 @@
 package gateway
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsdnsSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/dns"
-	"github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/glb"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsdnsSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
 )
 
 var _ IIamGateway = &iamGateway{}

@@ -1,10 +1,10 @@
 package dns
 
 import (
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
-	lsdnsSvcInternal "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/dns/internal_system/v1"
-	lsdnsSvcV1 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/dns/v1"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	lsdnsSvcInternal "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
+	lsdnsSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
 type IVDnsServiceV1 interface {

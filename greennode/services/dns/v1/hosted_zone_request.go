@@ -1,8 +1,8 @@
 package v1
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type IGetHostedZoneByIdRequest interface {

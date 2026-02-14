@@ -6,7 +6,7 @@ import (
 
 	ljutils "github.com/cuongpiger/joat/utils"
 	lreq "github.com/imroc/req/v3"
-	lsdkErr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
+	lsdkErr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 type serviceClient struct {

@@ -4,8 +4,8 @@ import (
 	lctx "context"
 	ltime "time"
 
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsgateway "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/gateway"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsgateway "github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
 )
 
 type IClient interface {

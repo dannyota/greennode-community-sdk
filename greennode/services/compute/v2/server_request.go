@@ -4,7 +4,7 @@ import (
 	lfmt "fmt"
 
 	ljparser "github.com/cuongpiger/joat/parser"
-	lscommon "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (

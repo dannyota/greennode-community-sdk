@@ -1,9 +1,9 @@
 package inter
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 func (s *LoadBalancerServiceInternal) CreateLoadBalancer(popts ICreateLoadBalancerRequest) (*lsentity.LoadBalancer, lserr.IError) {

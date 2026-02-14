@@ -1,8 +1,8 @@
 package gateway
 
 import (
-	lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
-	lsnwSvc "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/network"
+	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	lsnwSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
 )
 
 type vnetworkGatewayV1 struct {

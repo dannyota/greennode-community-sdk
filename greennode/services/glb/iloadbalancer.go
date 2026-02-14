@@ -1,9 +1,9 @@
 package glb
 
 import (
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
-	lserr "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/sdk_error"
-	v1 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/glb/v1"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
 type IGLBServiceV1 interface {

@@ -1,7 +1,7 @@
 package v1
 
 import (
-	lsentity "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/entity"
+	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type GetHostedZoneByIdResponse struct {

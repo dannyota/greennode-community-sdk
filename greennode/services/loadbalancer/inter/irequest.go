@@ -1,6 +1,6 @@
 package inter
 
-import "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type ICreateLoadBalancerRequest interface {
 	ToRequestBody() interface{}

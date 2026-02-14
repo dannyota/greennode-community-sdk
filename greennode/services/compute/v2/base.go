@@ -1,6 +1,6 @@
 package v2
 
-import lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/client"
+import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 type ComputeServiceV2 struct {
 	VServerClient lsclient.IServiceClient
