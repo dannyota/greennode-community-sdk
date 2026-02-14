@@ -4,76 +4,7 @@ import (
 	"strings"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-	// "strings"
 )
-
-type IListGlobalListenersRequest interface {
-	WithLoadBalancerID(lbID string) IListGlobalListenersRequest
-	GetLoadBalancerID() string
-
-	AddUserAgent(agent ...string) IListGlobalListenersRequest
-	ParseUserAgent() string
-}
-
-type IGetGlobalListenerRequest interface {
-	WithLoadBalancerID(lbID string) IGetGlobalListenerRequest
-	WithListenerID(listenerID string) IGetGlobalListenerRequest
-	GetLoadBalancerID() string
-	GetListenerID() string
-
-	AddUserAgent(agent ...string) IGetGlobalListenerRequest
-	ParseUserAgent() string
-}
-
-type ICreateGlobalListenerRequest interface {
-	WithAllowedCidrs(cidrs ...string) ICreateGlobalListenerRequest
-	WithDescription(desc string) ICreateGlobalListenerRequest
-	WithHeaders(headers ...string) ICreateGlobalListenerRequest
-	WithName(name string) ICreateGlobalListenerRequest
-	WithPort(port int) ICreateGlobalListenerRequest
-	WithProtocol(protocol GlobalListenerProtocol) ICreateGlobalListenerRequest
-	WithTimeoutClient(toc int) ICreateGlobalListenerRequest
-	WithTimeoutConnection(toc int) ICreateGlobalListenerRequest
-	WithTimeoutMember(tom int) ICreateGlobalListenerRequest
-	WithGlobalPoolID(poolID string) ICreateGlobalListenerRequest
-
-	WithLoadBalancerID(lbid string) ICreateGlobalListenerRequest
-	GetLoadBalancerID() string
-
-	AddUserAgent(agent ...string) ICreateGlobalListenerRequest
-	ParseUserAgent() string
-	ToRequestBody() any
-	ToMap() map[string]any
-}
-
-type IUpdateGlobalListenerRequest interface {
-	WithAllowedCidrs(cidrs ...string) IUpdateGlobalListenerRequest
-	WithTimeoutClient(toc int) IUpdateGlobalListenerRequest
-	WithTimeoutMember(tom int) IUpdateGlobalListenerRequest
-	WithTimeoutConnection(toc int) IUpdateGlobalListenerRequest
-	WithHeaders(headers ...string) IUpdateGlobalListenerRequest
-	WithGlobalPoolID(poolID string) IUpdateGlobalListenerRequest
-
-	WithLoadBalancerID(lbID string) IUpdateGlobalListenerRequest
-	WithListenerID(listenerID string) IUpdateGlobalListenerRequest
-	GetLoadBalancerID() string
-	GetListenerID() string
-
-	AddUserAgent(agent ...string) IUpdateGlobalListenerRequest
-	ParseUserAgent() string
-	ToRequestBody() any
-	ToMap() map[string]any
-}
-
-type IDeleteGlobalListenerRequest interface {
-	WithLoadBalancerID(lbID string) IDeleteGlobalListenerRequest
-	WithListenerID(listenerID string) IDeleteGlobalListenerRequest
-	GetLoadBalancerID() string
-	GetListenerID() string
-
-	AddUserAgent(agent ...string) IDeleteGlobalListenerRequest
-	ParseUserAgent() string
-}
 
 type GlobalListenerProtocol string
 
@@ -81,19 +12,17 @@ const (
 	GlobalListenerProtocolTCP GlobalListenerProtocol = "TCP"
 )
 
-var _ IListGlobalListenersRequest = &ListGlobalListenersRequest{}
-
 type ListGlobalListenersRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 }
 
-func (r *ListGlobalListenersRequest) WithLoadBalancerID(lbID string) IListGlobalListenersRequest {
+func (r *ListGlobalListenersRequest) WithLoadBalancerID(lbID string) *ListGlobalListenersRequest {
 	r.LoadBalancerID = lbID
 	return r
 }
 
-func (r *ListGlobalListenersRequest) AddUserAgent(agent ...string) IListGlobalListenersRequest {
+func (r *ListGlobalListenersRequest) AddUserAgent(agent ...string) *ListGlobalListenersRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -104,19 +33,6 @@ func NewListGlobalListenersRequest(lbID string) *ListGlobalListenersRequest {
 	return opts
 }
 
-
-var _ ICreateGlobalListenerRequest = &CreateGlobalListenerRequest{}
-
-// WithAllowedCidrs(pcidrs ...string) ICreateGlobalListenerRequest
-// WithDescription(pdesc string) ICreateGlobalListenerRequest
-// WithHeaders(pheaders ...string) ICreateGlobalListenerRequest
-// WithName(pname string) ICreateGlobalListenerRequest
-// WithPort(pport int) ICreateGlobalListenerRequest
-// WithProtocol(pprotocol GlobalListenerProtocol) ICreateGlobalListenerRequest
-// WithTimeoutClient(ptoc int) ICreateGlobalListenerRequest
-// WithTimeoutConnection(ptoc int) ICreateGlobalListenerRequest
-// WithTimeoutMember(ptom int) ICreateGlobalListenerRequest
-// WithDefaultPoolId(ppoolId string) ICreateGlobalListenerRequest
 type CreateGlobalListenerRequest struct {
 	AllowedCidrs      string                 `json:"allowedCidrs"`
 	Description       string                 `json:"description"`
@@ -133,57 +49,57 @@ type CreateGlobalListenerRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (r *CreateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateGlobalListenerRequest {
 	r.AllowedCidrs = strings.Join(cidrs, ",")
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithDescription(desc string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithDescription(desc string) *CreateGlobalListenerRequest {
 	r.Description = desc
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithHeaders(headers ...string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithHeaders(headers ...string) *CreateGlobalListenerRequest {
 	r.Headers = headers
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithName(name string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithName(name string) *CreateGlobalListenerRequest {
 	r.Name = name
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithPort(port int) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithPort(port int) *CreateGlobalListenerRequest {
 	r.Port = port
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithProtocol(protocol GlobalListenerProtocol) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithProtocol(protocol GlobalListenerProtocol) *CreateGlobalListenerRequest {
 	r.Protocol = protocol
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithTimeoutClient(toc int) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithTimeoutClient(toc int) *CreateGlobalListenerRequest {
 	r.TimeoutClient = toc
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithTimeoutConnection(toc int) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithTimeoutConnection(toc int) *CreateGlobalListenerRequest {
 	r.TimeoutConnection = toc
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithTimeoutMember(tom int) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithTimeoutMember(tom int) *CreateGlobalListenerRequest {
 	r.TimeoutMember = tom
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithGlobalPoolID(poolID string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithGlobalPoolID(poolID string) *CreateGlobalListenerRequest {
 	r.GlobalPoolID = poolID
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) *CreateGlobalListenerRequest {
 	r.LoadBalancerID = lbid
 	return r
 }
@@ -207,7 +123,7 @@ func (r *CreateGlobalListenerRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreateGlobalListenerRequest) AddUserAgent(agent ...string) ICreateGlobalListenerRequest {
+func (r *CreateGlobalListenerRequest) AddUserAgent(agent ...string) *CreateGlobalListenerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -231,9 +147,6 @@ func NewCreateGlobalListenerRequest(lbID, name string) *CreateGlobalListenerRequ
 	return opts
 }
 
-
-var _ IUpdateGlobalListenerRequest = &UpdateGlobalListenerRequest{}
-
 type UpdateGlobalListenerRequest struct {
 	AllowedCidrs      string  `json:"allowedCidrs"`
 	TimeoutClient     int     `json:"timeoutClient"`
@@ -247,43 +160,43 @@ type UpdateGlobalListenerRequest struct {
 	common.ListenerCommon
 }
 
-func (r *UpdateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *UpdateGlobalListenerRequest {
 	r.AllowedCidrs = strings.Join(cidrs, ",")
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithTimeoutClient(toc int) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithTimeoutClient(toc int) *UpdateGlobalListenerRequest {
 	r.TimeoutClient = toc
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithTimeoutMember(tom int) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithTimeoutMember(tom int) *UpdateGlobalListenerRequest {
 	r.TimeoutMember = tom
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithTimeoutConnection(toc int) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithTimeoutConnection(toc int) *UpdateGlobalListenerRequest {
 	r.TimeoutConnection = toc
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithHeaders(headers ...string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithHeaders(headers ...string) *UpdateGlobalListenerRequest {
 	h := strings.Join(headers, ",")
 	r.Headers = &h
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithGlobalPoolID(poolID string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithGlobalPoolID(poolID string) *UpdateGlobalListenerRequest {
 	r.GlobalPoolID = poolID
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithLoadBalancerID(lbid string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithLoadBalancerID(lbid string) *UpdateGlobalListenerRequest {
 	r.LoadBalancerID = lbid
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) *UpdateGlobalListenerRequest {
 	r.ListenerID = lid
 	return r
 }
@@ -303,7 +216,7 @@ func (r *UpdateGlobalListenerRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *UpdateGlobalListenerRequest) AddUserAgent(agent ...string) IUpdateGlobalListenerRequest {
+func (r *UpdateGlobalListenerRequest) AddUserAgent(agent ...string) *UpdateGlobalListenerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -326,26 +239,23 @@ func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerReque
 	return opts
 }
 
-
-var _ IDeleteGlobalListenerRequest = &DeleteGlobalListenerRequest{}
-
 type DeleteGlobalListenerRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }
 
-func (r *DeleteGlobalListenerRequest) WithLoadBalancerID(lbid string) IDeleteGlobalListenerRequest {
+func (r *DeleteGlobalListenerRequest) WithLoadBalancerID(lbid string) *DeleteGlobalListenerRequest {
 	r.LoadBalancerID = lbid
 	return r
 }
 
-func (r *DeleteGlobalListenerRequest) WithListenerID(lid string) IDeleteGlobalListenerRequest {
+func (r *DeleteGlobalListenerRequest) WithListenerID(lid string) *DeleteGlobalListenerRequest {
 	r.ListenerID = lid
 	return r
 }
 
-func (r *DeleteGlobalListenerRequest) AddUserAgent(agent ...string) IDeleteGlobalListenerRequest {
+func (r *DeleteGlobalListenerRequest) AddUserAgent(agent ...string) *DeleteGlobalListenerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -362,26 +272,23 @@ func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerReque
 	return opts
 }
 
-
-var _ IGetGlobalListenerRequest = &GetGlobalListenerRequest{}
-
 type GetGlobalListenerRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }
 
-func (r *GetGlobalListenerRequest) WithLoadBalancerID(lbid string) IGetGlobalListenerRequest {
+func (r *GetGlobalListenerRequest) WithLoadBalancerID(lbid string) *GetGlobalListenerRequest {
 	r.LoadBalancerID = lbid
 	return r
 }
 
-func (r *GetGlobalListenerRequest) WithListenerID(lid string) IGetGlobalListenerRequest {
+func (r *GetGlobalListenerRequest) WithListenerID(lid string) *GetGlobalListenerRequest {
 	r.ListenerID = lid
 	return r
 }
 
-func (r *GetGlobalListenerRequest) AddUserAgent(agent ...string) IGetGlobalListenerRequest {
+func (r *GetGlobalListenerRequest) AddUserAgent(agent ...string) *GetGlobalListenerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

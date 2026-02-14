@@ -8,7 +8,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *GLBServiceV1) ListGlobalPools(opts IListGlobalPoolsRequest) (*entity.ListGlobalPools, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalPools(opts *ListGlobalPoolsRequest) (*entity.ListGlobalPools, sdkerror.Error) {
 	url := listGlobalPoolsURL(s.VLBClient, opts)
 	resp := new(ListGlobalPoolsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -28,8 +28,7 @@ func (s *GLBServiceV1) ListGlobalPools(opts IListGlobalPoolsRequest) (*entity.Li
 	return resp.ToEntityListGlobalPools(), nil
 }
 
-
-func (s *GLBServiceV1) CreateGlobalPool(opts ICreateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
+func (s *GLBServiceV1) CreateGlobalPool(opts *CreateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
 	url := createGlobalPoolURL(s.VLBClient, opts)
 	resp := new(CreateGlobalPoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -51,8 +50,7 @@ func (s *GLBServiceV1) CreateGlobalPool(opts ICreateGlobalPoolRequest) (*entity.
 	return resp.ToEntityPool(), nil
 }
 
-
-func (s *GLBServiceV1) UpdateGlobalPool(opts IUpdateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
+func (s *GLBServiceV1) UpdateGlobalPool(opts *UpdateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
 	url := updateGlobalPoolURL(s.VLBClient, opts)
 	resp := new(UpdateGlobalPoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -73,8 +71,7 @@ func (s *GLBServiceV1) UpdateGlobalPool(opts IUpdateGlobalPoolRequest) (*entity.
 	return resp.ToEntityPool(), nil
 }
 
-
-func (s *GLBServiceV1) DeleteGlobalPool(opts IDeleteGlobalPoolRequest) sdkerror.Error {
+func (s *GLBServiceV1) DeleteGlobalPool(opts *DeleteGlobalPoolRequest) sdkerror.Error {
 	url := deleteGlobalPoolURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
@@ -91,8 +88,7 @@ func (s *GLBServiceV1) DeleteGlobalPool(opts IDeleteGlobalPoolRequest) sdkerror.
 	return nil
 }
 
-
-func (s *GLBServiceV1) ListGlobalPoolMembers(opts IListGlobalPoolMembersRequest) (*entity.ListGlobalPoolMembers, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalPoolMembers(opts *ListGlobalPoolMembersRequest) (*entity.ListGlobalPoolMembers, sdkerror.Error) {
 	url := listGlobalPoolMembersURL(s.VLBClient, opts)
 	resp := new(ListGlobalPoolMembersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -111,8 +107,7 @@ func (s *GLBServiceV1) ListGlobalPoolMembers(opts IListGlobalPoolMembersRequest)
 	return resp.ToEntityListGlobalPoolMembers(), nil
 }
 
-
-func (s *GLBServiceV1) GetGlobalPoolMember(opts IGetGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
+func (s *GLBServiceV1) GetGlobalPoolMember(opts *GetGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
 	url := getGlobalPoolMemberURL(s.VLBClient, opts)
 	resp := new(GetGlobalPoolMemberResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -134,8 +129,7 @@ func (s *GLBServiceV1) GetGlobalPoolMember(opts IGetGlobalPoolMemberRequest) (*e
 	return resp.ToEntityGlobalPoolMember(), nil
 }
 
-
-func (s *GLBServiceV1) DeleteGlobalPoolMember(opts IDeleteGlobalPoolMemberRequest) sdkerror.Error {
+func (s *GLBServiceV1) DeleteGlobalPoolMember(opts *DeleteGlobalPoolMemberRequest) sdkerror.Error {
 	url := deleteGlobalPoolMemberURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
@@ -155,8 +149,7 @@ func (s *GLBServiceV1) DeleteGlobalPoolMember(opts IDeleteGlobalPoolMemberReques
 	return nil
 }
 
-
-func (s *GLBServiceV1) UpdateGlobalPoolMember(opts IUpdateGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
+func (s *GLBServiceV1) UpdateGlobalPoolMember(opts *UpdateGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
 	url := updateGlobalPoolMemberURL(s.VLBClient, opts)
 	resp := new(UpdateGlobalPoolMemberResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -177,8 +170,7 @@ func (s *GLBServiceV1) UpdateGlobalPoolMember(opts IUpdateGlobalPoolMemberReques
 	return resp.ToEntityGlobalPoolMember(), nil
 }
 
-
-func (s *GLBServiceV1) PatchGlobalPoolMembers(opts IPatchGlobalPoolMembersRequest) sdkerror.Error {
+func (s *GLBServiceV1) PatchGlobalPoolMembers(opts *PatchGlobalPoolMembersRequest) sdkerror.Error {
 	url := patchGlobalPoolMembersURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
@@ -197,8 +189,7 @@ func (s *GLBServiceV1) PatchGlobalPoolMembers(opts IPatchGlobalPoolMembersReques
 	return nil
 }
 
-
-func (s *GLBServiceV1) ListGlobalListeners(opts IListGlobalListenersRequest) (*entity.ListGlobalListeners, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalListeners(opts *ListGlobalListenersRequest) (*entity.ListGlobalListeners, sdkerror.Error) {
 	url := listGlobalListenersURL(s.VLBClient, opts)
 	resp := new(ListGlobalListenersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -217,8 +208,7 @@ func (s *GLBServiceV1) ListGlobalListeners(opts IListGlobalListenersRequest) (*e
 	return resp.ToEntityListGlobalListeners(), nil
 }
 
-
-func (s *GLBServiceV1) CreateGlobalListener(opts ICreateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
+func (s *GLBServiceV1) CreateGlobalListener(opts *CreateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := createGlobalListenerURL(s.VLBClient, opts)
 	resp := new(CreateGlobalListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -239,8 +229,7 @@ func (s *GLBServiceV1) CreateGlobalListener(opts ICreateGlobalListenerRequest) (
 	return resp.ToEntityGlobalListener(), nil
 }
 
-
-func (s *GLBServiceV1) UpdateGlobalListener(opts IUpdateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
+func (s *GLBServiceV1) UpdateGlobalListener(opts *UpdateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := updateGlobalListenerURL(s.VLBClient, opts)
 	resp := new(UpdateGlobalListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -262,8 +251,7 @@ func (s *GLBServiceV1) UpdateGlobalListener(opts IUpdateGlobalListenerRequest) (
 	return resp.ToEntityGlobalListener(), nil
 }
 
-
-func (s *GLBServiceV1) GetGlobalListener(opts IGetGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
+func (s *GLBServiceV1) GetGlobalListener(opts *GetGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := getGlobalListenerURL(s.VLBClient, opts)
 	resp := new(GetGlobalListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -284,8 +272,7 @@ func (s *GLBServiceV1) GetGlobalListener(opts IGetGlobalListenerRequest) (*entit
 	return resp.ToEntityGlobalListener(), nil
 }
 
-
-func (s *GLBServiceV1) DeleteGlobalListener(opts IDeleteGlobalListenerRequest) sdkerror.Error {
+func (s *GLBServiceV1) DeleteGlobalListener(opts *DeleteGlobalListenerRequest) sdkerror.Error {
 	url := deleteGlobalListenerURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
@@ -302,8 +289,7 @@ func (s *GLBServiceV1) DeleteGlobalListener(opts IDeleteGlobalListenerRequest) s
 	return nil
 }
 
-
-func (s *GLBServiceV1) ListGlobalLoadBalancers(opts IListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalLoadBalancers(opts *ListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.Error) {
 	url := listGlobalLoadBalancersURL(s.VLBClient, opts)
 	resp := new(ListGlobalLoadBalancersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -321,9 +307,8 @@ func (s *GLBServiceV1) ListGlobalLoadBalancers(opts IListGlobalLoadBalancersRequ
 	return resp.ToEntityListGlobalLoadBalancers(), nil
 }
 
-
 func (s *GLBServiceV1) CreateGlobalLoadBalancer(
-	opts ICreateGlobalLoadBalancerRequest,
+	opts *CreateGlobalLoadBalancerRequest,
 ) (*entity.GlobalLoadBalancer, sdkerror.Error) {
 	url := createGlobalLoadBalancerURL(s.VLBClient, opts)
 	resp := new(CreateGlobalLoadBalancerResponse)
@@ -344,8 +329,7 @@ func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 	return resp.ToEntityGlobalLoadBalancer(), nil
 }
 
-
-func (s *GLBServiceV1) DeleteGlobalLoadBalancer(opts IDeleteGlobalLoadBalancerRequest) sdkerror.Error {
+func (s *GLBServiceV1) DeleteGlobalLoadBalancer(opts *DeleteGlobalLoadBalancerRequest) sdkerror.Error {
 	url := deleteGlobalLoadBalancerURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
@@ -362,9 +346,8 @@ func (s *GLBServiceV1) DeleteGlobalLoadBalancer(opts IDeleteGlobalLoadBalancerRe
 	return nil
 }
 
-
 func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
-	opts IGetGlobalLoadBalancerByIDRequest,
+	opts *GetGlobalLoadBalancerByIDRequest,
 ) (*entity.GlobalLoadBalancer, sdkerror.Error) {
 	url := getGlobalLoadBalancerByIDURL(s.VLBClient, opts)
 	resp := new(GetGlobalLoadBalancerByIDResponse)
@@ -384,7 +367,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
 	return resp.ToEntityGlobalLoadBalancer(), nil
 }
 
-func (s *GLBServiceV1) ListGlobalPackages(opts IListGlobalPackagesRequest) (*entity.ListGlobalPackages, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalPackages(opts *ListGlobalPackagesRequest) (*entity.ListGlobalPackages, sdkerror.Error) {
 	url := listGlobalPackagesURL(s.VLBClient, opts)
 	resp := new(ListGlobalPackagesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -402,7 +385,7 @@ func (s *GLBServiceV1) ListGlobalPackages(opts IListGlobalPackagesRequest) (*ent
 	return resp.ToEntityListGlobalPackages(), nil
 }
 
-func (s *GLBServiceV1) ListGlobalRegions(opts IListGlobalRegionsRequest) (*entity.ListGlobalRegions, sdkerror.Error) {
+func (s *GLBServiceV1) ListGlobalRegions(opts *ListGlobalRegionsRequest) (*entity.ListGlobalRegions, sdkerror.Error) {
 	url := listGlobalRegionsURL(s.VLBClient, opts)
 	resp := new(ListGlobalRegionsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
@@ -421,7 +404,7 @@ func (s *GLBServiceV1) ListGlobalRegions(opts IListGlobalRegionsRequest) (*entit
 }
 
 func (s *GLBServiceV1) GetGlobalLoadBalancerUsageHistories(
-	opts IGetGlobalLoadBalancerUsageHistoriesRequest,
+	opts *GetGlobalLoadBalancerUsageHistoriesRequest,
 ) (*entity.ListGlobalLoadBalancerUsageHistories, sdkerror.Error) {
 	url := getGlobalLoadBalancerUsageHistoriesURL(s.VLBClient, opts)
 	resp := new(GetGlobalLoadBalancerUsageHistoriesResponse)

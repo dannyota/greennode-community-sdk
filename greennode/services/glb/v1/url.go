@@ -2,8 +2,7 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-
-func createGlobalPoolURL(sc client.ServiceClient, opts ICreateGlobalPoolRequest) string {
+func createGlobalPoolURL(sc client.ServiceClient, opts *CreateGlobalPoolRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -11,7 +10,7 @@ func createGlobalPoolURL(sc client.ServiceClient, opts ICreateGlobalPoolRequest)
 	)
 }
 
-func listGlobalPoolsURL(sc client.ServiceClient, opts IListGlobalPoolsRequest) string {
+func listGlobalPoolsURL(sc client.ServiceClient, opts *ListGlobalPoolsRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -19,16 +18,7 @@ func listGlobalPoolsURL(sc client.ServiceClient, opts IListGlobalPoolsRequest) s
 	)
 }
 
-func updateGlobalPoolURL(sc client.ServiceClient, opts IUpdateGlobalPoolRequest) string {
-	return sc.ServiceURL(
-		"global-load-balancers",
-		opts.GetLoadBalancerID(),
-		"global-pools",
-		opts.GetPoolID(),
-	)
-}
-
-func deleteGlobalPoolURL(sc client.ServiceClient, opts IDeleteGlobalPoolRequest) string {
+func updateGlobalPoolURL(sc client.ServiceClient, opts *UpdateGlobalPoolRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -37,17 +27,16 @@ func deleteGlobalPoolURL(sc client.ServiceClient, opts IDeleteGlobalPoolRequest)
 	)
 }
 
-func listGlobalPoolMembersURL(sc client.ServiceClient, opts IListGlobalPoolMembersRequest) string {
+func deleteGlobalPoolURL(sc client.ServiceClient, opts *DeleteGlobalPoolRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
 		"global-pools",
 		opts.GetPoolID(),
-		"pool-members",
 	)
 }
 
-func patchGlobalPoolMembersURL(sc client.ServiceClient, opts IPatchGlobalPoolMembersRequest) string {
+func listGlobalPoolMembersURL(sc client.ServiceClient, opts *ListGlobalPoolMembersRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -57,18 +46,17 @@ func patchGlobalPoolMembersURL(sc client.ServiceClient, opts IPatchGlobalPoolMem
 	)
 }
 
-func getGlobalPoolMemberURL(sc client.ServiceClient, opts IGetGlobalPoolMemberRequest) string {
+func patchGlobalPoolMembersURL(sc client.ServiceClient, opts *PatchGlobalPoolMembersRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
 		"global-pools",
 		opts.GetPoolID(),
 		"pool-members",
-		opts.GetPoolMemberID(),
 	)
 }
 
-func deleteGlobalPoolMemberURL(sc client.ServiceClient, opts IDeleteGlobalPoolMemberRequest) string {
+func getGlobalPoolMemberURL(sc client.ServiceClient, opts *GetGlobalPoolMemberRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -79,7 +67,7 @@ func deleteGlobalPoolMemberURL(sc client.ServiceClient, opts IDeleteGlobalPoolMe
 	)
 }
 
-func updateGlobalPoolMemberURL(sc client.ServiceClient, opts IUpdateGlobalPoolMemberRequest) string {
+func deleteGlobalPoolMemberURL(sc client.ServiceClient, opts *DeleteGlobalPoolMemberRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -90,7 +78,18 @@ func updateGlobalPoolMemberURL(sc client.ServiceClient, opts IUpdateGlobalPoolMe
 	)
 }
 
-func listGlobalListenersURL(sc client.ServiceClient, opts IListGlobalListenersRequest) string {
+func updateGlobalPoolMemberURL(sc client.ServiceClient, opts *UpdateGlobalPoolMemberRequest) string {
+	return sc.ServiceURL(
+		"global-load-balancers",
+		opts.GetLoadBalancerID(),
+		"global-pools",
+		opts.GetPoolID(),
+		"pool-members",
+		opts.GetPoolMemberID(),
+	)
+}
+
+func listGlobalListenersURL(sc client.ServiceClient, opts *ListGlobalListenersRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -98,7 +97,7 @@ func listGlobalListenersURL(sc client.ServiceClient, opts IListGlobalListenersRe
 	)
 }
 
-func createGlobalListenerURL(sc client.ServiceClient, opts ICreateGlobalListenerRequest) string {
+func createGlobalListenerURL(sc client.ServiceClient, opts *CreateGlobalListenerRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -106,25 +105,7 @@ func createGlobalListenerURL(sc client.ServiceClient, opts ICreateGlobalListener
 	)
 }
 
-func updateGlobalListenerURL(sc client.ServiceClient, opts IUpdateGlobalListenerRequest) string {
-	return sc.ServiceURL(
-		"global-load-balancers",
-		opts.GetLoadBalancerID(),
-		"global-listeners",
-		opts.GetListenerID(),
-	)
-}
-
-func deleteGlobalListenerURL(sc client.ServiceClient, opts IDeleteGlobalListenerRequest) string {
-	return sc.ServiceURL(
-		"global-load-balancers",
-		opts.GetLoadBalancerID(),
-		"global-listeners",
-		opts.GetListenerID(),
-	)
-}
-
-func getGlobalListenerURL(sc client.ServiceClient, opts IGetGlobalListenerRequest) string {
+func updateGlobalListenerURL(sc client.ServiceClient, opts *UpdateGlobalListenerRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
@@ -133,8 +114,25 @@ func getGlobalListenerURL(sc client.ServiceClient, opts IGetGlobalListenerReques
 	)
 }
 
+func deleteGlobalListenerURL(sc client.ServiceClient, opts *DeleteGlobalListenerRequest) string {
+	return sc.ServiceURL(
+		"global-load-balancers",
+		opts.GetLoadBalancerID(),
+		"global-listeners",
+		opts.GetListenerID(),
+	)
+}
 
-func listGlobalLoadBalancersURL(sc client.ServiceClient, opts IListGlobalLoadBalancersRequest) string {
+func getGlobalListenerURL(sc client.ServiceClient, opts *GetGlobalListenerRequest) string {
+	return sc.ServiceURL(
+		"global-load-balancers",
+		opts.GetLoadBalancerID(),
+		"global-listeners",
+		opts.GetListenerID(),
+	)
+}
+
+func listGlobalLoadBalancersURL(sc client.ServiceClient, opts *ListGlobalLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -143,33 +141,33 @@ func listGlobalLoadBalancersURL(sc client.ServiceClient, opts IListGlobalLoadBal
 	return sc.ServiceURL("global-load-balancers") + query
 }
 
-func createGlobalLoadBalancerURL(sc client.ServiceClient, _ ICreateGlobalLoadBalancerRequest) string {
+func createGlobalLoadBalancerURL(sc client.ServiceClient, _ *CreateGlobalLoadBalancerRequest) string {
 	return sc.ServiceURL("global-load-balancers")
 }
 
-func deleteGlobalLoadBalancerURL(sc client.ServiceClient, opts IDeleteGlobalLoadBalancerRequest) string {
+func deleteGlobalLoadBalancerURL(sc client.ServiceClient, opts *DeleteGlobalLoadBalancerRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
 	)
 }
 
-func getGlobalLoadBalancerByIDURL(sc client.ServiceClient, opts IGetGlobalLoadBalancerByIDRequest) string {
+func getGlobalLoadBalancerByIDURL(sc client.ServiceClient, opts *GetGlobalLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		"global-load-balancers",
 		opts.GetLoadBalancerID(),
 	)
 }
 
-func listGlobalPackagesURL(sc client.ServiceClient, _ IListGlobalPackagesRequest) string {
+func listGlobalPackagesURL(sc client.ServiceClient, _ *ListGlobalPackagesRequest) string {
 	return sc.ServiceURL("packages")
 }
 
-func listGlobalRegionsURL(sc client.ServiceClient, _ IListGlobalRegionsRequest) string {
+func listGlobalRegionsURL(sc client.ServiceClient, _ *ListGlobalRegionsRequest) string {
 	return sc.ServiceURL("regions")
 }
 
-func getGlobalLoadBalancerUsageHistoriesURL(sc client.ServiceClient, opts IGetGlobalLoadBalancerUsageHistoriesRequest) string {
+func getGlobalLoadBalancerUsageHistoriesURL(sc client.ServiceClient, opts *GetGlobalLoadBalancerUsageHistoriesRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
