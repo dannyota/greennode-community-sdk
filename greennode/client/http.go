@@ -7,7 +7,6 @@ import (
 	lsync "sync"
 	ltime "time"
 
-	ljtime "github.com/cuongpiger/joat/timer"
 	lreq "github.com/imroc/req/v3"
 
 	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
@@ -53,7 +52,7 @@ func NewHttpClient(pctx lctx.Context) IHttpClient {
 		client: lreq.NewClient().
 			SetCommonRetryCount(3).
 			SetCommonRetryFixedInterval(10).
-			SetTimeout(ljtime.Second(120)),
+			SetTimeout(120 * ltime.Second),
 		mut:       new(lsync.RWMutex),
 		reauthmut: new(reauthlock),
 	}

@@ -2,8 +2,8 @@ package v2
 
 import (
 	lfmt "fmt"
-
-	ljparser "github.com/cuongpiger/joat/parser"
+	lurl "net/url"
+	lstrconv "strconv"
 
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -34,8 +34,8 @@ func NewDeleteSnapshotByIdRequest(psnapshotId string) IDeleteSnapshotByIdRequest
 }
 
 type ListSnapshotsByBlockVolumeIdRequest struct {
-	Page int `q:"page"`
-	Size int `q:"size"`
+	Page int
+	Size int
 
 	lscommon.BlockVolumeCommon
 }
@@ -59,14 +59,14 @@ func (s *ListSnapshotsByBlockVolumeIdRequest) GetDefaultQuery() string {
 }
 
 func (s *ListSnapshotsByBlockVolumeIdRequest) ToQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-
-	if err != nil {
-		return "", err
+	v := lurl.Values{}
+	if s.Page > 0 {
+		v.Set("page", lstrconv.Itoa(s.Page))
 	}
-
-	return url.String(), err
+	if s.Size > 0 {
+		v.Set("size", lstrconv.Itoa(s.Size))
+	}
+	return v.Encode(), nil
 }
 
 func (s *CreateSnapshotByBlockVolumeIdRequest) ToRequestBody() interface{} {

@@ -3,8 +3,7 @@ package test
 import (
 	ltesting "testing"
 
-	"k8s.io/utils/ptr"
-
+	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
@@ -64,11 +63,11 @@ func TestCreateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-				WithHealthCheckMethod(ptr.To(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(ptr.To("/sfdsaf")).
-				WithHttpVersion(ptr.To(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
-				WithSuccessCode(ptr.To("200")).
-				WithDomainName(ptr.To("example.com")),
+				WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
+				WithPath(lscommon.Ptr("/sfdsaf")).
+				WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithSuccessCode(lscommon.Ptr("200")).
+				WithDomainName(lscommon.Ptr("example.com")),
 		).
 		WithMembers(poolMember)
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
@@ -92,10 +91,10 @@ func TestCreateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 func TestUpdateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 	vngcloud := validSdkConfig()
 	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-		WithDomainName(ptr.To("exampleee.com")).
-		WithHealthCheckMethod(ptr.To(v1.GlobalPoolHealthCheckMethodPOST)).
-		WithPath(ptr.To("/hghjgj")).
-		WithHttpVersion(ptr.To(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1))
+		WithDomainName(lscommon.Ptr("exampleee.com")).
+		WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
+		WithPath(lscommon.Ptr("/hghjgj")).
+		WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1))
 	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
 		WithHealthMonitor(httpMonitor)
 
@@ -289,11 +288,11 @@ func TestCreateGlobalLoadBalancerSuccess(t *ltesting.T) {
 		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-				WithHealthCheckMethod(ptr.To(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(ptr.To("/sfdsaf")).
-				WithHttpVersion(ptr.To(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
-				WithSuccessCode(ptr.To("200")).
-				WithDomainName(ptr.To("example.com")),
+				WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
+				WithPath(lscommon.Ptr("/sfdsaf")).
+				WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithSuccessCode(lscommon.Ptr("200")).
+				WithDomainName(lscommon.Ptr("example.com")),
 		).
 		WithMembers(
 			v1.NewGlobalPoolMemberRequest(

@@ -5,8 +5,6 @@ import (
 	lurl "net/url"
 	lstr "strings"
 
-	ljparser "github.com/cuongpiger/joat/parser"
-
 	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -314,17 +312,15 @@ type ListTagsByEndpointIdRequest struct {
 	lscommon.PortalUser
 
 	ProjectId string
-	Id        string `q:"resourceUuid"`
+	Id        string
 }
 
 func (s *ListTagsByEndpointIdRequest) ToListQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-	if err != nil {
-		return "", err
+	v := lurl.Values{}
+	if s.Id != "" {
+		v.Set("resourceUuid", s.Id)
 	}
-
-	return url.String(), err
+	return v.Encode(), nil
 }
 
 func (s *ListTagsByEndpointIdRequest) GetProjectId() string {

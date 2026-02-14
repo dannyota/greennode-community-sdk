@@ -1,19 +1,43 @@
 package test
 
 import (
+	"bufio"
 	lctx "context"
 	"fmt"
+	"os"
+	lstr "strings"
 	ltesting "testing"
-
-	lgodotenv "github.com/joho/godotenv"
 
 	lsclient "github.com/dannyota/greennode-community-sdk/v2/client"
 	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 	lsidentityV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
+func readEnvFile(path string) (map[string]string, error) {
+	data, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer data.Close()
+
+	result := make(map[string]string)
+	scanner := bufio.NewScanner(data)
+	for scanner.Scan() {
+		line := lstr.TrimSpace(scanner.Text())
+		if line == "" || lstr.HasPrefix(line, "#") {
+			continue
+		}
+		key, value, ok := lstr.Cut(line, "=")
+		if !ok {
+			continue
+		}
+		result[lstr.TrimSpace(key)] = lstr.TrimSpace(value)
+	}
+	return result, scanner.Err()
+}
+
 func getEnv() (string, string) {
-	envFile, _ := lgodotenv.Read("./env.yaml")
+	envFile, _ := readEnvFile("./env.yaml")
 	clientId := envFile["VNGCLOUD_CLIENT_ID"]
 	clientSecret := envFile["VNGCLOUD_CLIENT_SECRET"]
 
@@ -21,7 +45,7 @@ func getEnv() (string, string) {
 }
 
 func getEnvCuongDm4() (string, string) {
-	envFile, _ := lgodotenv.Read("/Users/cuongdm8499/Me/git-cuongpiger/secret/work/vngcloud/iam/env")
+	envFile, _ := readEnvFile("./env.yaml")
 	clientId := envFile["CUONGDM4_CLIENT_ID"]
 	clientSecret := envFile["CUONGDM4_CLIENT_SECRET"]
 
@@ -29,7 +53,7 @@ func getEnvCuongDm4() (string, string) {
 }
 
 func getEnvDevOps() (string, string) {
-	envFile, _ := lgodotenv.Read("./env.yaml")
+	envFile, _ := readEnvFile("./env.yaml")
 	clientId := envFile["CLIENT_ID_DEVOPS"]
 	clientSecret := envFile["CLIENT_SECRET_DEVOPS"]
 
@@ -37,7 +61,7 @@ func getEnvDevOps() (string, string) {
 }
 
 func getValueOfEnv(pkey string) string {
-	envFile, _ := lgodotenv.Read("./env.yaml")
+	envFile, _ := readEnvFile("./env.yaml")
 	value := envFile[pkey]
 	return value
 }

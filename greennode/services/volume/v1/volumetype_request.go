@@ -2,8 +2,8 @@ package v1
 
 import (
 	lfmt "fmt"
+	lurl "net/url"
 
-	ljparser "github.com/cuongpiger/joat/parser"
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -30,7 +30,7 @@ type GetVolumeTypeByIdRequest struct {
 }
 
 type GetVolumeTypeZonesRequest struct {
-	ZoneId string `q:"zoneId"`
+	ZoneId string
 }
 
 type GetListVolumeTypeRequest struct {
@@ -42,14 +42,11 @@ func (s *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
 }
 
 func (s *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-
-	if err != nil {
-		return "", err
+	v := lurl.Values{}
+	if s.ZoneId != "" {
+		v.Set("zoneId", s.ZoneId)
 	}
-
-	return url.String(), err
+	return v.Encode(), nil
 }
 
 func (s *GetListVolumeTypeRequest) GetVolumeTypeZoneId() string {

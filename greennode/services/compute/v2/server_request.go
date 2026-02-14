@@ -2,8 +2,9 @@ package v2
 
 import (
 	lfmt "fmt"
+	lurl "net/url"
+	lstrconv "strconv"
 
-	ljparser "github.com/cuongpiger/joat/parser"
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -340,9 +341,9 @@ func (s *DeleteServerGroupByIdRequest) ToMap() map[string]interface{} {
 }
 
 type ListServerGroupsRequest struct {
-	Name string `q:"name,beempty"`
-	Page int    `q:"page"`
-	Size int    `q:"size"`
+	Name string
+	Page int
+	Size int
 
 	lscommon.UserAgent
 }
@@ -353,13 +354,15 @@ func (s *ListServerGroupsRequest) WithName(pname string) IListServerGroupsReques
 }
 
 func (s *ListServerGroupsRequest) ToListQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-	if err != nil {
-		return "", err
+	v := lurl.Values{}
+	v.Set("name", s.Name)
+	if s.Page > 0 {
+		v.Set("page", lstrconv.Itoa(s.Page))
 	}
-
-	return url.String(), err
+	if s.Size > 0 {
+		v.Set("size", lstrconv.Itoa(s.Size))
+	}
+	return v.Encode(), nil
 }
 
 func (s *ListServerGroupsRequest) GetDefaultQuery() string {

@@ -5,8 +5,6 @@ import (
 
 	lreq "github.com/imroc/req/v3"
 
-	ljset "github.com/cuongpiger/joat/data-structure/set"
-
 	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
@@ -34,7 +32,6 @@ type IRequest interface {
 	GetRequestBody() interface{}
 	GetRequestMethod() string
 	GetMoreHeaders() map[string]string
-	GetOmitHeaders() ljset.Set[string]
 	GetJsonResponse() interface{}
 	GetJsonError() interface{}
 

@@ -4,8 +4,6 @@ import (
 	lerrors "errors"
 	lfmt "fmt"
 	lsync "sync"
-
-	ljset "github.com/cuongpiger/joat/data-structure/set"
 )
 
 var (
@@ -17,7 +15,7 @@ type (
 		error      error
 		errorCode  ErrorCode
 		message    string
-		categories ljset.Set[ErrorCategory]
+		categories map[ErrorCategory]struct{}
 		parameters *lsync.Map
 	}
 
@@ -45,7 +43,8 @@ func (s *SdkError) IsCategory(pcategory ErrorCategory) bool {
 		return false
 	}
 
-	return s.categories.ContainsOne(pcategory)
+	_, ok := s.categories[pcategory]
+	return ok
 }
 
 func (s *SdkError) IsCategories(pcategories ...ErrorCategory) bool {
@@ -53,7 +52,12 @@ func (s *SdkError) IsCategories(pcategories ...ErrorCategory) bool {
 		return false
 	}
 
-	return s.categories.ContainsAny(pcategories...)
+	for _, c := range pcategories {
+		if _, ok := s.categories[c]; ok {
+			return true
+		}
+	}
+	return false
 }
 
 func (s *SdkError) WithErrorCode(perrCode ErrorCode) IError {
@@ -85,9 +89,10 @@ func (s *SdkError) WithErrors(perrs ...error) IError {
 
 func (s *SdkError) WithErrorCategories(pcategories ...ErrorCategory) IError {
 	if s.categories == nil {
-		s.categories = ljset.NewSet[ErrorCategory](pcategories...)
-	} else {
-		s.categories.Append(pcategories...)
+		s.categories = make(map[ErrorCategory]struct{})
+	}
+	for _, c := range pcategories {
+		s.categories[c] = struct{}{}
 	}
 
 	return s
@@ -156,8 +161,12 @@ func (s *SdkError) GetParameters() map[string]interface{} {
 	return res
 }
 
-func (s *SdkError) GetErrorCategories() ljset.Set[ErrorCategory] {
-	return s.categories
+func (s *SdkError) GetErrorCategories() []ErrorCategory {
+	result := make([]ErrorCategory, 0, len(s.categories))
+	for c := range s.categories {
+		result = append(result, c)
+	}
+	return result
 }
 
 func (s *SdkError) GetErrorMessages() string {
@@ -187,16 +196,19 @@ func (s *SdkError) RemoveCategories(pcategories ...ErrorCategory) IError {
 		return s
 	}
 
-	s.categories.RemoveAll(pcategories...)
+	for _, c := range pcategories {
+		delete(s.categories, c)
+	}
 	return s
 }
 
 func (s *SdkError) AppendCategories(pcategories ...ErrorCategory) IError {
 	if s.categories == nil {
-		s.categories = ljset.NewSet[ErrorCategory](pcategories...)
-		return s
+		s.categories = make(map[ErrorCategory]struct{})
 	}
 
-	s.categories.Append(pcategories...)
+	for _, c := range pcategories {
+		s.categories[c] = struct{}{}
+	}
 	return s
 }

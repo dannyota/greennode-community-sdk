@@ -2,9 +2,10 @@ package v1
 
 import (
 	lfmt "fmt"
+	lurl "net/url"
 	lstr "strings"
+	lstrconv "strconv"
 
-	ljparser "github.com/cuongpiger/joat/parser"
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -31,9 +32,9 @@ func NewListGlobalLoadBalancersRequest(offset, limit int) IListGlobalLoadBalance
 }
 
 type ListGlobalLoadBalancersRequest struct {
-	Name   string `q:"name,beempty"`
-	Offset int    `q:"offset"`
-	Limit  int    `q:"limit"`
+	Name   string
+	Offset int
+	Limit  int
 
 	Tags []lscommon.Tag
 	lscommon.UserAgent
@@ -61,11 +62,10 @@ func (s *ListGlobalLoadBalancersRequest) WithTags(ptags ...string) IListGlobalLo
 }
 
 func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-	if err != nil {
-		return "", err
-	}
+	v := lurl.Values{}
+	v.Set("name", s.Name)
+	v.Set("offset", lstrconv.Itoa(s.Offset))
+	v.Set("limit", lstrconv.Itoa(s.Limit))
 
 	tuples := make([]string, 0, len(s.Tags))
 	for _, tag := range s.Tags {
@@ -81,10 +81,10 @@ func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	}
 
 	if len(tuples) > 0 {
-		return url.String() + "&" + lstr.Join(tuples, "&"), nil
+		return v.Encode() + "&" + lstr.Join(tuples, "&"), nil
 	}
 
-	return url.String(), err
+	return v.Encode(), nil
 }
 
 func (s *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
@@ -248,9 +248,9 @@ func NewListGlobalRegionsRequest() IListGlobalRegionsRequest {
 var _ IGetGlobalLoadBalancerUsageHistoriesRequest = &GetGlobalLoadBalancerUsageHistoriesRequest{}
 
 type GetGlobalLoadBalancerUsageHistoriesRequest struct {
-	From string `q:"from"`
-	To   string `q:"to"`
-	Type string `q:"type"`
+	From string
+	To   string
+	Type string
 
 	lscommon.UserAgent
 	lscommon.LoadBalancerCommon
@@ -277,9 +277,17 @@ func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithType(ptype string) IGet
 }
 
 func (s *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-	return url.String(), err
+	v := lurl.Values{}
+	if s.From != "" {
+		v.Set("from", s.From)
+	}
+	if s.To != "" {
+		v.Set("to", s.To)
+	}
+	if s.Type != "" {
+		v.Set("type", s.Type)
+	}
+	return v.Encode(), nil
 }
 
 func (s *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {

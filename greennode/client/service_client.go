@@ -4,7 +4,6 @@ import (
 	lstr "strings"
 	ltime "time"
 
-	ljutils "github.com/cuongpiger/joat/utils"
 	lreq "github.com/imroc/req/v3"
 	lsdkErr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
@@ -24,7 +23,7 @@ func NewServiceClient() IServiceClient {
 }
 
 func (s *serviceClient) WithEndpoint(pendpoint string) IServiceClient {
-	s.endpoint = ljutils.NormalizeURL(pendpoint)
+	s.endpoint = normalizeURL(pendpoint)
 	return s
 }
 
@@ -134,4 +133,11 @@ func (s *SdkAuthentication) GetAccessToken() string {
 
 func (s *SdkAuthentication) GetExpiresAt() int64 {
 	return s.expiresAt
+}
+
+func normalizeURL(u string) string {
+	if !lstr.HasSuffix(u, "/") {
+		return u + "/"
+	}
+	return u
 }

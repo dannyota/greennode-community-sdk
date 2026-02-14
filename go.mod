@@ -1,13 +1,8 @@
 module github.com/dannyota/greennode-community-sdk/v2
 
-go 1.22.2
+go 1.24
 
-require (
-	github.com/cuongpiger/joat v1.0.17
-	github.com/imroc/req/v3 v3.44.0
-	github.com/joho/godotenv v1.5.1
-	k8s.io/utils v0.0.0-20251002143259-bc988d571ff4
-)
+require github.com/imroc/req/v3 v3.44.0
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
@@ -21,6 +16,7 @@ require (
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/quic-go v0.41.0 // indirect
 	github.com/refraction-networking/utls v1.6.3 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect

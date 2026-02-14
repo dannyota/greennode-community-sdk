@@ -5,6 +5,8 @@ import (
 	lstr "strings"
 )
 
+func Ptr[T any](v T) *T { return &v }
+
 type Project struct {
 	Id string
 }

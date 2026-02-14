@@ -2,9 +2,10 @@ package v2
 
 import (
 	lfmt "fmt"
+	lurl "net/url"
 	lstr "strings"
+	lstrconv "strconv"
 
-	ljparser "github.com/cuongpiger/joat/parser"
 	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -123,9 +124,9 @@ type GetLoadBalancerByIdRequest struct {
 }
 
 type ListLoadBalancersRequest struct {
-	Name string `q:"name,beempty"`
-	Page int    `q:"page"`
-	Size int    `q:"size"`
+	Name string
+	Page int
+	Size int
 
 	Tags []lscommon.Tag
 	lscommon.UserAgent
@@ -354,11 +355,10 @@ func (s *ListLoadBalancersRequest) WithTags(ptags ...string) IListLoadBalancersR
 }
 
 func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
-	parser, _ := ljparser.GetParser()
-	url, err := parser.UrlMe(s)
-	if err != nil {
-		return "", err
-	}
+	v := lurl.Values{}
+	v.Set("name", s.Name)
+	v.Set("page", lstrconv.Itoa(s.Page))
+	v.Set("size", lstrconv.Itoa(s.Size))
 
 	tuples := make([]string, 0, len(s.Tags))
 	for _, tag := range s.Tags {
@@ -374,10 +374,10 @@ func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
 	}
 
 	if len(tuples) > 0 {
-		return url.String() + "&" + lstr.Join(tuples, "&"), nil
+		return v.Encode() + "&" + lstr.Join(tuples, "&"), nil
 	}
 
-	return url.String(), err
+	return v.Encode(), nil
 }
 
 func (s *ListLoadBalancersRequest) GetDefaultQuery() string {

@@ -1,6 +1,6 @@
 package client
 
-import ljutils "github.com/cuongpiger/joat/utils"
+import lstr "strings"
 
 type (
 	ISdkConfigure interface {
@@ -125,31 +125,38 @@ func (s *sdkConfigure) WithProjectId(pprojectId string) ISdkConfigure {
 }
 
 func (s *sdkConfigure) WithIamEndpoint(piamEndpoint string) ISdkConfigure {
-	s.iamEndpoint = ljutils.NormalizeURL(piamEndpoint)
+	s.iamEndpoint = normalizeURL(piamEndpoint)
 	return s
 }
 
 func (s *sdkConfigure) WithVServerEndpoint(pvserverEndpoint string) ISdkConfigure {
-	s.vserverEndpoint = ljutils.NormalizeURL(pvserverEndpoint)
+	s.vserverEndpoint = normalizeURL(pvserverEndpoint)
 	return s
 }
 
 func (s *sdkConfigure) WithVLBEndpoint(pvlbEndpoint string) ISdkConfigure {
-	s.vlbEndpoint = ljutils.NormalizeURL(pvlbEndpoint)
+	s.vlbEndpoint = normalizeURL(pvlbEndpoint)
 	return s
 }
 
 func (s *sdkConfigure) WithVNetworkEndpoint(pvnetworkEndpoint string) ISdkConfigure {
-	s.vnetworkEndpoint = ljutils.NormalizeURL(pvnetworkEndpoint)
+	s.vnetworkEndpoint = normalizeURL(pvnetworkEndpoint)
 	return s
 }
 
 func (s *sdkConfigure) WithVDnsEndpoint(pvdnsEndpoint string) ISdkConfigure {
-	s.vdnsEndpoint = ljutils.NormalizeURL(pvdnsEndpoint)
+	s.vdnsEndpoint = normalizeURL(pvdnsEndpoint)
 	return s
 }
 
 func (s *sdkConfigure) WithGLBEndpoint(pvlbEndpoint string) ISdkConfigure {
-	s.glbEndpoint = ljutils.NormalizeURL(pvlbEndpoint)
+	s.glbEndpoint = normalizeURL(pvlbEndpoint)
 	return s
+}
+
+func normalizeURL(u string) string {
+	if !lstr.HasSuffix(u, "/") {
+		return u + "/"
+	}
+	return u
 }

@@ -2,10 +2,6 @@ package v1
 
 import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func PointerOf[T any](t T) *T {
-	return &t
-}
-
 type (
 	GlobalPoolAlgorithm              string
 	GlobalPoolProtocol               string
@@ -279,11 +275,11 @@ func NewGlobalHealthMonitor(pcheckProtocol GlobalPoolHealthCheckProtocol) IGloba
 		SuccessCode:         nil,
 	}
 	if pcheckProtocol == GlobalPoolHealthCheckProtocolHTTP || pcheckProtocol == GlobalPoolHealthCheckProtocolHTTPs {
-		opts.HttpMethod = PointerOf(GlobalPoolHealthCheckMethodGET)
-		opts.HttpVersion = PointerOf(GlobalPoolHealthCheckHttpVersionHttp1Minor1)
-		opts.Path = PointerOf("/")
-		opts.DomainName = PointerOf("")
-		opts.SuccessCode = PointerOf("200")
+		opts.HttpMethod = lscommon.Ptr(GlobalPoolHealthCheckMethodGET)
+		opts.HttpVersion = lscommon.Ptr(GlobalPoolHealthCheckHttpVersionHttp1Minor1)
+		opts.Path = lscommon.Ptr("/")
+		opts.DomainName = lscommon.Ptr("")
+		opts.SuccessCode = lscommon.Ptr("200")
 	}
 	return opts
 }
