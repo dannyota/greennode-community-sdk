@@ -26,9 +26,8 @@ All function parameters have been stripped of the `p` prefix (~1,456 occurrences
 across 140 files). Natural words starting with `p` (e.g., `portalUserID`,
 `poolID`, `path`, `policies`) were correctly excluded.
 
-**Known residuals:** `psdkErr` in function-type parameters within
-`sdkerror/common.go` and `perrResp` in `test/error_test.go` were not caught by
-the AST tool (they appear in function types, not direct function signatures).
+Residual `psdkErr` in `sdkerror/common.go` and `perrResp` in `test/error_test.go`
+(function-type parameters missed by the AST tool) have also been fixed.
 
 ### 1.3 `s` receiver name on all types — **RESOLVED**
 
@@ -179,22 +178,9 @@ files. When producer-side interfaces are eliminated (§2.1), these files can be
 removed entirely. Any types worth keeping move into the main source file for
 their package.
 
-### 3.2 Horizontal separator comments
+### 3.2 Horizontal separator comments — **RESOLVED**
 
-~119 occurrences of decorative separator lines:
-
-```go
-// -----------------------------------------------------------------------
-```
-
-Found across ~23+ files, concentrated in:
-
-- `greennode/services/glb/v1/` (56 instances across 5 files)
-- `greennode/services/loadbalancer/v2/` (multiple files)
-- `test/lb_global_test.go`
-
-**Go convention:** Use godoc section comments or blank lines for visual
-grouping. Horizontal rules add noise and no semantic value.
+All ~113 decorative `// ---...` separator lines have been removed across 24 files.
 
 ---
 
@@ -267,23 +253,10 @@ when the struct is large. Mixing receiver types on a single type is discouraged,
 so this is a judgment call per type, but the blanket use of pointer receivers
 everywhere is not idiomatic.
 
-### 5.3 `interface{}` instead of `any`
+### 5.3 `interface{}` instead of `any` — **RESOLVED**
 
-| Metric | Value |
-|--------|-------|
-| `interface{}` occurrences | ~411 |
-| Files affected | ~47 |
-
-Since Go 1.18, `any` is a built-in alias for `interface{}`. All 411 occurrences
-can be mechanically replaced:
-
-```go
-// Before
-jsonBody interface{}
-
-// After
-jsonBody any
-```
+All ~411 `interface{}` occurrences across ~47 files have been replaced with `any`
+using `gofmt -r 'interface{} -> any'`.
 
 ### 5.4 Overuse of `var _` compile-time assertions
 
@@ -312,24 +285,11 @@ function, and method.
 
 ## 6. Potential Bugs
 
-### 6.1 V2/V1 return-type mismatch
+### 6.1 V2/V1 return-type mismatch — **RESOLVED**
 
-```go
-// greennode/gateway/gateway.go:164
-func (g *vnetworkGateway) V2() VNetworkGatewayV1 {
-    return g.vnetworkGatewayV2
-}
-```
-
-The `V2()` method declares return type `VNetworkGatewayV1`. The interface
-definition in `igateway.go:33` mirrors this:
-
-```go
-V2() VNetworkGatewayV1
-```
-
-This likely means callers of `V2()` get the V1 API surface. Either the method
-should return `VNetworkGatewayV2`, or the naming is misleading.
+Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
+`VNetworkGateway.V2()` now correctly returns `VNetworkGatewayV2` (backed by
+`NetworkServiceV2`) instead of `VNetworkGatewayV1`.
 
 ---
 
@@ -338,7 +298,7 @@ should return `VNetworkGatewayV2`, or the naming is misleading.
 | Category | Items | Scope | Status |
 |----------|-------|-------|--------|
 | `I`-prefix interfaces | 184 interfaces | 34 files | **Done** (non-request); ~106 `I*Request` remain |
-| `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** (2 residuals in func types) |
+| `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** |
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
@@ -347,10 +307,10 @@ should return `VNetworkGatewayV2`, or the naming is misleading.
 | Interface-per-type | all request types | codebase-wide | Open |
 | God interfaces (>10 methods) | 5 interfaces | 3 packages | Open |
 | `i`-prefixed filenames | 34 files | codebase-wide | Open |
-| Horizontal separators | ~119 occurrences | ~23 files | Open |
+| Horizontal separators | ~113 occurrences | 24 files | **Done** |
 | Custom error framework | 1 package | `sdkerror` | Open |
 | Constructors returning interfaces | ~30 functions | gateways, clients | Open |
-| `interface{}` → `any` | ~411 occurrences | ~47 files | Open |
+| `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
 | `var _` assertions | ~45 | codebase-wide | Open |
 | Missing godoc | ~97% of exports | codebase-wide | Open |
-| V2/V1 mismatch bug | 1 | `gateway/gateway.go` | Open |
+| V2/V1 mismatch bug | 1 | `gateway/gateway.go` | **Done** |
