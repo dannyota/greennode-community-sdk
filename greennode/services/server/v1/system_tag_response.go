@@ -1,6 +1,6 @@
 package v1
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type SystemTagResponse struct {
 	Key       string `json:"key"`
@@ -9,8 +9,8 @@ type SystemTagResponse struct {
 	SystemTag bool   `json:"systemTag"`
 }
 
-func (s *SystemTagResponse) toSystemTag() lsentity.SystemTag {
-	return lsentity.SystemTag{
+func (s *SystemTagResponse) toSystemTag() entity.SystemTag {
+	return entity.SystemTag{
 		Key:       s.Key,
 		Value:     s.Value,
 		CreatedAt: s.CreatedAt,

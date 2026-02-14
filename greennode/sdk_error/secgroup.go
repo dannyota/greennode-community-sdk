@@ -1,6 +1,6 @@
 package sdk_error
 
-import lstr "strings"
+import "strings"
 
 const (
 	patternSecgroupNotFound          = "cannot get security group with id"
@@ -16,7 +16,7 @@ func WithErrorSecgroupNotFound(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSecgroupNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNotFound) {
 			sdkError.WithErrorCode(EcVServerSecgroupNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -31,7 +31,7 @@ func WithErrorSecgroupNameAlreadyExists(perrResp IErrorRespone) func(sdkError IE
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSecgroupNameAlreadyExists) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNameAlreadyExists) {
 			sdkError.WithErrorCode(EcVServerSecgroupNameAlreadyExists).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -46,7 +46,7 @@ func WithErrorSecgroupExceedQuota(perrResp IErrorRespone) func(sdkError IError) 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSecgroupExceedQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupExceedQuota) {
 			sdkError.WithErrorCode(EcVServerSecgroupExceedQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -62,7 +62,7 @@ func WithErrorSecgroupInUse(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSecgroupInUse) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupInUse) {
 			sdkError.WithErrorCode(EcVServerSecgroupInUse).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())

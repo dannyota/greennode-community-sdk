@@ -1,31 +1,31 @@
 package v2
 
 import (
-	lbase64 "encoding/base64"
+	"encoding/base64"
 
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *IdentityServiceV2) GetAccessToken(popts IGetAccessTokenRequest) (*lsentity.AccessToken, lserr.IError) {
+func (s *IdentityServiceV2) GetAccessToken(popts IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.IError) {
 	url := getAccessTokenUrl(s.IamClient)
 	resp := new(GetAccessTokenResponse)
-	errResp := lserr.NewErrorResponse(lserr.IamErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.IamErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithSkipAuth(true).
 		WithJsonError(errResp).
 		WithJsonBody(popts.ToRequestBody()).
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
-		WithHeader("Authorization", "Basic "+lbase64.StdEncoding.EncodeToString([]byte(popts.GetClientId()+":"+popts.GetClientSecret())))
+		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(popts.GetClientId()+":"+popts.GetClientSecret())))
 
 	if _, sdkErr := s.IamClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorTooManyFailedLogin(errResp),
-			lserr.WithErrorAuthenticationFailed(errResp),
-			lserr.WithErrorUnknownAuthFailure(errResp)). // Always put this handler at the end
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorTooManyFailedLogin(errResp),
+			sdkerror.WithErrorAuthenticationFailed(errResp),
+			sdkerror.WithErrorUnknownAuthFailure(errResp)). // Always put this handler at the end
 			WithKVparameters("clientId", popts.GetClientId())
 	}
 

@@ -1,27 +1,27 @@
 package v1
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type GetHostedZoneByIdResponse struct {
-	Data *lsentity.HostedZone `json:"data"`
+	Data *entity.HostedZone `json:"data"`
 }
 
-func (r *GetHostedZoneByIdResponse) ToEntityHostedZone() *lsentity.HostedZone {
+func (r *GetHostedZoneByIdResponse) ToEntityHostedZone() *entity.HostedZone {
 	return r.Data
 }
 
 type ListHostedZonesResponse struct {
-	ListData  []*lsentity.HostedZone `json:"listData"`
+	ListData  []*entity.HostedZone `json:"listData"`
 	Page      int                    `json:"page"`
 	PageSize  int                    `json:"pageSize"`
 	TotalPage int                    `json:"totalPage"`
 	TotalItem int                    `json:"totalItem"`
 }
 
-func (r *ListHostedZonesResponse) ToEntityListHostedZones() *lsentity.ListHostedZone {
-	return &lsentity.ListHostedZone{
+func (r *ListHostedZonesResponse) ToEntityListHostedZones() *entity.ListHostedZone {
+	return &entity.ListHostedZone{
 		ListData:  r.ListData,
 		Page:      r.Page,
 		PageSize:  r.PageSize,
@@ -31,9 +31,9 @@ func (r *ListHostedZonesResponse) ToEntityListHostedZones() *lsentity.ListHosted
 }
 
 type CreateHostedZoneResponse struct {
-	Data *lsentity.HostedZone `json:"data"`
+	Data *entity.HostedZone `json:"data"`
 }
 
-func (r *CreateHostedZoneResponse) ToEntityHostedZone() *lsentity.HostedZone {
+func (r *CreateHostedZoneResponse) ToEntityHostedZone() *entity.HostedZone {
 	return r.Data
 }

@@ -1,6 +1,6 @@
 package v1
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type (
 	GlobalPoolAlgorithm              string
@@ -50,8 +50,8 @@ const (
 var _ IListGlobalPoolsRequest = &ListGlobalPoolsRequest{}
 
 type ListGlobalPoolsRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *ListGlobalPoolsRequest) WithLoadBalancerId(plbId string) IListGlobalPoolsRequest {
@@ -84,8 +84,8 @@ type CreateGlobalPoolRequest struct {
 	HealthMonitor     IGlobalHealthMonitorRequest      `json:"health"`
 	GlobalPoolMembers []ICreateGlobalPoolMemberRequest `json:"globalPoolMembers"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *CreateGlobalPoolRequest) WithAlgorithm(palgorithm GlobalPoolAlgorithm) ICreateGlobalPoolRequest {
@@ -182,7 +182,7 @@ type GlobalHealthMonitorRequest struct {
 	DomainName          *string                           `json:"domainName,omitempty"`
 	SuccessCode         *string                           `json:"successCode,omitempty"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *GlobalHealthMonitorRequest) WithHealthyThreshold(pthreshold int) IGlobalHealthMonitorRequest {
@@ -275,11 +275,11 @@ func NewGlobalHealthMonitor(pcheckProtocol GlobalPoolHealthCheckProtocol) IGloba
 		SuccessCode:         nil,
 	}
 	if pcheckProtocol == GlobalPoolHealthCheckProtocolHTTP || pcheckProtocol == GlobalPoolHealthCheckProtocolHTTPs {
-		opts.HttpMethod = lscommon.Ptr(GlobalPoolHealthCheckMethodGET)
-		opts.HttpVersion = lscommon.Ptr(GlobalPoolHealthCheckHttpVersionHttp1Minor1)
-		opts.Path = lscommon.Ptr("/")
-		opts.DomainName = lscommon.Ptr("")
-		opts.SuccessCode = lscommon.Ptr("200")
+		opts.HttpMethod = common.Ptr(GlobalPoolHealthCheckMethodGET)
+		opts.HttpVersion = common.Ptr(GlobalPoolHealthCheckHttpVersionHttp1Minor1)
+		opts.Path = common.Ptr("/")
+		opts.DomainName = common.Ptr("")
+		opts.SuccessCode = common.Ptr("200")
 	}
 	return opts
 }
@@ -297,9 +297,9 @@ type GlobalPoolMemberRequest struct {
 	Type        GlobalPoolMemberType   `json:"type"`
 	Members     []IGlobalMemberRequest `json:"members"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 func (s *GlobalPoolMemberRequest) WithName(pname string) ICreateGlobalPoolMemberRequest {
@@ -400,7 +400,7 @@ type GlobalMemberRequest struct {
 	SubnetID    string `json:"subnetId"`
 	Weight      int    `json:"weight"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *GlobalMemberRequest) WithAddress(paddress string) IGlobalMemberRequest {
@@ -487,9 +487,9 @@ var _ IUpdateGlobalPoolRequest = &UpdateGlobalPoolRequest{}
 type UpdateGlobalPoolRequest struct {
 	Algorithm     GlobalPoolAlgorithm         `json:"algorithm"`
 	HealthMonitor IGlobalHealthMonitorRequest `json:"health"`
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 func (s *UpdateGlobalPoolRequest) WithAlgorithm(palgorithm GlobalPoolAlgorithm) IUpdateGlobalPoolRequest {
@@ -533,10 +533,10 @@ func NewUpdateGlobalPoolRequest(plbId, poolId string) IUpdateGlobalPoolRequest {
 	opts := &UpdateGlobalPoolRequest{
 		Algorithm:     GlobalPoolAlgorithmRoundRobin,
 		HealthMonitor: nil,
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
 	}
@@ -548,9 +548,9 @@ func NewUpdateGlobalPoolRequest(plbId, poolId string) IUpdateGlobalPoolRequest {
 var _ IDeleteGlobalPoolRequest = &DeleteGlobalPoolRequest{}
 
 type DeleteGlobalPoolRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 func (s *DeleteGlobalPoolRequest) WithLoadBalancerId(plbId string) IDeleteGlobalPoolRequest {
@@ -570,10 +570,10 @@ func (s *DeleteGlobalPoolRequest) AddUserAgent(pagent ...string) IDeleteGlobalPo
 
 func NewDeleteGlobalPoolRequest(plbId, poolId string) IDeleteGlobalPoolRequest {
 	opts := &DeleteGlobalPoolRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
 	}
@@ -585,9 +585,9 @@ func NewDeleteGlobalPoolRequest(plbId, poolId string) IDeleteGlobalPoolRequest {
 var _ IListGlobalPoolMembersRequest = &ListGlobalPoolMembersRequest{}
 
 type ListGlobalPoolMembersRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 func (s *ListGlobalPoolMembersRequest) WithLoadBalancerId(plbId string) IListGlobalPoolMembersRequest {
@@ -607,10 +607,10 @@ func (s *ListGlobalPoolMembersRequest) AddUserAgent(pagent ...string) IListGloba
 
 func NewListGlobalPoolMembersRequest(plbId, poolId string) IListGlobalPoolMembersRequest {
 	opts := &ListGlobalPoolMembersRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
 	}
@@ -623,9 +623,9 @@ var _ IPatchGlobalPoolMembersRequest = &PatchGlobalPoolMembersRequest{}
 
 type PatchGlobalPoolMembersRequest struct {
 	BulkActions []IBulkActionRequest `json:"bulkActions"`
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 func (s *PatchGlobalPoolMembersRequest) WithBulkAction(paction ...IBulkActionRequest) IPatchGlobalPoolMembersRequest {
@@ -667,10 +667,10 @@ func (s *PatchGlobalPoolMembersRequest) ToRequestBody() interface{} {
 func NewPatchGlobalPoolMembersRequest(plbId, poolId string) IPatchGlobalPoolMembersRequest {
 	opts := &PatchGlobalPoolMembersRequest{
 		BulkActions: make([]IBulkActionRequest, 0),
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
 	}
@@ -783,10 +783,10 @@ type UpdateGlobalPoolMemberRequest struct {
 	TrafficDial int                    `json:"trafficDial"`
 	Members     []IGlobalMemberRequest `json:"members"`
 
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.PoolMemberCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.PoolMemberCommon
 }
 
 func (s *UpdateGlobalPoolMemberRequest) WithTrafficDial(pdial int) IUpdateGlobalPoolMemberRequest {
@@ -840,13 +840,13 @@ func NewUpdateGlobalPoolMemberRequest(plbId, poolId, poolMemberId string, pdial 
 	opts := &UpdateGlobalPoolMemberRequest{
 		TrafficDial: pdial,
 		Members:     make([]IGlobalMemberRequest, 0),
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
-		PoolMemberCommon: lscommon.PoolMemberCommon{
+		PoolMemberCommon: common.PoolMemberCommon{
 			PoolMemberId: poolMemberId,
 		},
 	}
@@ -858,10 +858,10 @@ func NewUpdateGlobalPoolMemberRequest(plbId, poolId, poolMemberId string, pdial 
 var _ IDeleteGlobalPoolMemberRequest = &DeleteGlobalPoolMemberRequest{}
 
 type DeleteGlobalPoolMemberRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.PoolMemberCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.PoolMemberCommon
 }
 
 func (s *DeleteGlobalPoolMemberRequest) WithLoadBalancerId(plbId string) IDeleteGlobalPoolMemberRequest {
@@ -886,13 +886,13 @@ func (s *DeleteGlobalPoolMemberRequest) AddUserAgent(pagent ...string) IDeleteGl
 
 func NewDeleteGlobalPoolMemberRequest(plbId, poolId, poolMemberId string) IDeleteGlobalPoolMemberRequest {
 	opts := &DeleteGlobalPoolMemberRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
-		PoolMemberCommon: lscommon.PoolMemberCommon{
+		PoolMemberCommon: common.PoolMemberCommon{
 			PoolMemberId: poolMemberId,
 		},
 	}
@@ -904,10 +904,10 @@ func NewDeleteGlobalPoolMemberRequest(plbId, poolId, poolMemberId string) IDelet
 var _ IGetGlobalPoolMemberRequest = &GetGlobalPoolMemberRequest{}
 
 type GetGlobalPoolMemberRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.PoolMemberCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.PoolMemberCommon
 }
 
 func (s *GetGlobalPoolMemberRequest) WithLoadBalancerId(plbId string) IGetGlobalPoolMemberRequest {
@@ -932,13 +932,13 @@ func (s *GetGlobalPoolMemberRequest) AddUserAgent(pagent ...string) IGetGlobalPo
 
 func NewGetGlobalPoolMemberRequest(plbId, poolId, poolMemberId string) IGetGlobalPoolMemberRequest {
 	opts := &GetGlobalPoolMemberRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
-		PoolCommon: lscommon.PoolCommon{
+		PoolCommon: common.PoolCommon{
 			PoolId: poolId,
 		},
-		PoolMemberCommon: lscommon.PoolMemberCommon{
+		PoolMemberCommon: common.PoolMemberCommon{
 			PoolMemberId: poolMemberId,
 		},
 	}

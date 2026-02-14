@@ -1,36 +1,36 @@
 package dns
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lsdnsSvcInternal "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
-	lsdnsSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
 type IVDnsServiceV1 interface {
-	GetHostedZoneById(popts lsdnsSvcV1.IGetHostedZoneByIdRequest) (*lsentity.HostedZone, lserr.IError)
-	ListHostedZones(popts lsdnsSvcV1.IListHostedZonesRequest) (*lsentity.ListHostedZone, lserr.IError)
-	CreateHostedZone(popts lsdnsSvcV1.ICreateHostedZoneRequest) (*lsentity.HostedZone, lserr.IError)
-	UpdateHostedZone(popts lsdnsSvcV1.IUpdateHostedZoneRequest) lserr.IError
-	DeleteHostedZone(popts lsdnsSvcV1.IDeleteHostedZoneRequest) lserr.IError
+	GetHostedZoneById(popts dnsv1.IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.IError)
+	ListHostedZones(popts dnsv1.IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.IError)
+	CreateHostedZone(popts dnsv1.ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.IError)
+	UpdateHostedZone(popts dnsv1.IUpdateHostedZoneRequest) sdkerror.IError
+	DeleteHostedZone(popts dnsv1.IDeleteHostedZoneRequest) sdkerror.IError
 
-	ListRecords(popts lsdnsSvcV1.IListRecordsRequest) (*lsentity.ListDnsRecords, lserr.IError)
-	GetRecord(popts lsdnsSvcV1.IGetRecordRequest) (*lsentity.DnsRecord, lserr.IError)
-	CreateDnsRecord(popts lsdnsSvcV1.ICreateDnsRecordRequest) (*lsentity.DnsRecord, lserr.IError)
-	UpdateRecord(popts lsdnsSvcV1.IUpdateRecordRequest) lserr.IError
-	DeleteRecord(popts lsdnsSvcV1.IDeleteRecordRequest) lserr.IError
+	ListRecords(popts dnsv1.IListRecordsRequest) (*entity.ListDnsRecords, sdkerror.IError)
+	GetRecord(popts dnsv1.IGetRecordRequest) (*entity.DnsRecord, sdkerror.IError)
+	CreateDnsRecord(popts dnsv1.ICreateDnsRecordRequest) (*entity.DnsRecord, sdkerror.IError)
+	UpdateRecord(popts dnsv1.IUpdateRecordRequest) sdkerror.IError
+	DeleteRecord(popts dnsv1.IDeleteRecordRequest) sdkerror.IError
 }
 
 type IVDnsServiceInternal interface {
-	GetHostedZoneById(popts lsdnsSvcInternal.IGetHostedZoneByIdRequest, portalUserId string) (*lsentity.HostedZone, lserr.IError)
-	ListHostedZones(popts lsdnsSvcInternal.IListHostedZonesRequest, portalUserId string) (*lsentity.ListHostedZone, lserr.IError)
-	CreateHostedZone(popts lsdnsSvcInternal.ICreateHostedZoneRequest, portalUserId string) (*lsentity.HostedZone, lserr.IError)
-	UpdateHostedZone(popts lsdnsSvcInternal.IUpdateHostedZoneRequest, portalUserId string) lserr.IError
-	DeleteHostedZone(popts lsdnsSvcInternal.IDeleteHostedZoneRequest, portalUserId string) lserr.IError
+	GetHostedZoneById(popts dnsinternalv1.IGetHostedZoneByIdRequest, portalUserId string) (*entity.HostedZone, sdkerror.IError)
+	ListHostedZones(popts dnsinternalv1.IListHostedZonesRequest, portalUserId string) (*entity.ListHostedZone, sdkerror.IError)
+	CreateHostedZone(popts dnsinternalv1.ICreateHostedZoneRequest, portalUserId string) (*entity.HostedZone, sdkerror.IError)
+	UpdateHostedZone(popts dnsinternalv1.IUpdateHostedZoneRequest, portalUserId string) sdkerror.IError
+	DeleteHostedZone(popts dnsinternalv1.IDeleteHostedZoneRequest, portalUserId string) sdkerror.IError
 
-	ListRecords(popts lsdnsSvcInternal.IListRecordsRequest, portalUserId string) (*lsentity.ListDnsRecords, lserr.IError)
-	GetRecord(popts lsdnsSvcInternal.IGetRecordRequest, portalUserId string) (*lsentity.DnsRecord, lserr.IError)
-	CreateDnsRecord(popts lsdnsSvcInternal.ICreateDnsRecordRequest, portalUserId string) (*lsentity.DnsRecord, lserr.IError)
-	UpdateRecord(popts lsdnsSvcInternal.IUpdateRecordRequest, portalUserId string) lserr.IError
-	DeleteRecord(popts lsdnsSvcInternal.IDeleteRecordRequest, portalUserId string) lserr.IError
+	ListRecords(popts dnsinternalv1.IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.IError)
+	GetRecord(popts dnsinternalv1.IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError)
+	CreateDnsRecord(popts dnsinternalv1.ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError)
+	UpdateRecord(popts dnsinternalv1.IUpdateRecordRequest, portalUserId string) sdkerror.IError
+	DeleteRecord(popts dnsinternalv1.IDeleteRecordRequest, portalUserId string) sdkerror.IError
 }

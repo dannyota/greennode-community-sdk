@@ -1,14 +1,14 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsvolume "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v1"
+	volumev1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v1"
 )
 
-func TestGetVolumeTypeFailure(t *ltesting.T) {
+func TestGetVolumeTypeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsvolume.NewGetVolumeTypeByIdRequest("fake-id")
+	opt := volumev1.NewGetVolumeTypeByIdRequest("fake-id")
 	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeById(opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -22,9 +22,9 @@ func TestGetVolumeTypeFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetVolumeTypeSuccess(t *ltesting.T) {
+func TestGetVolumeTypeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsvolume.NewGetVolumeTypeByIdRequest("vtype-2fc64a6c-38e3-4f08-93a5-18018cb3ab23")
+	opt := volumev1.NewGetVolumeTypeByIdRequest("vtype-2fc64a6c-38e3-4f08-93a5-18018cb3ab23")
 	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeById(opt)
 
 	if sdkerr != nil {
@@ -39,7 +39,7 @@ func TestGetVolumeTypeSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetDefaultVolumeType(t *ltesting.T) {
+func TestGetDefaultVolumeType(t *testing.T) {
 	vngcloud := validSdkConfig()
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetDefaultVolumeType()
 
@@ -48,9 +48,9 @@ func TestGetDefaultVolumeType(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetVolumeTypeZones(t *ltesting.T) {
+func TestGetVolumeTypeZones(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsvolume.NewGetVolumeTypeZonesRequest("HCM03-1A")
+	opt := volumev1.NewGetVolumeTypeZonesRequest("HCM03-1A")
 
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeZones(opt)
 
@@ -59,9 +59,9 @@ func TestGetVolumeTypeZones(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetVolumeTypes(t *ltesting.T) {
+func TestGetVolumeTypes(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsvolume.NewListVolumeTypeRequest("0745BE12-9433-4DD4-90A1-384631504EBE")
+	opt := volumev1.NewListVolumeTypeRequest("0745BE12-9433-4DD4-90A1-384631504EBE")
 
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetListVolumeTypes(opt)
 

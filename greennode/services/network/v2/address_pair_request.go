@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetAllAddressPairByVirtualSubnetIdRequest(psubnetId string) IGetAllAddressPairByVirtualSubnetIdRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIdRequest)
@@ -9,7 +9,7 @@ func NewGetAllAddressPairByVirtualSubnetIdRequest(psubnetId string) IGetAllAddre
 }
 
 type GetAllAddressPairByVirtualSubnetIdRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	VirtualSubnetId string
 }
 
@@ -30,7 +30,7 @@ func NewSetAddressPairInVirtualSubnetRequest(psubnetId, networkInterfaceID, CIDR
 }
 
 type SetAddressPairInVirtualSubnetRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	VirtualSubnetId    string
 	AddressPairRequest AddressPairRequest
 }
@@ -57,7 +57,7 @@ func NewDeleteAddressPairRequest(addressPairID string) IDeleteAddressPairRequest
 }
 
 type DeleteAddressPairRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	AddressPairID string
 }
 
@@ -87,9 +87,9 @@ type CreateAddressPairRequest struct {
 	// Is the pair mode of the address pair.
 	Mode *AddressPairMode `json:"mode,omitempty"`
 
-	lscommon.InternalNetworkInterfaceCommon
-	lscommon.UserAgent
-	lscommon.VirtualAddressCommon
+	common.InternalNetworkInterfaceCommon
+	common.UserAgent
+	common.VirtualAddressCommon
 }
 
 func (s *CreateAddressPairRequest) ToRequestBody() interface{} {

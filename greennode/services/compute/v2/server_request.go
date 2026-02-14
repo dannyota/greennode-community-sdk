@@ -1,11 +1,11 @@
 package v2
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstrconv "strconv"
+	"fmt"
+	"net/url"
+	"strconv"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -47,7 +47,7 @@ type CreateServerRequest struct {
 	AutoRenew              bool                     `json:"isEnableAutoRenew,omitempty"`
 	Networks               []ServerNetworkInterface `json:"networks,omitempty"`
 	Zone                   string                   `json:"zoneId,omitempty"`
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 type ServerNetworkInterface struct {
@@ -58,13 +58,13 @@ type ServerNetworkInterface struct {
 }
 
 type AttachBlockVolumeRequest struct {
-	lscommon.BlockVolumeCommon
-	lscommon.ServerCommon
+	common.BlockVolumeCommon
+	common.ServerCommon
 }
 
 type DetachBlockVolumeRequest struct {
-	lscommon.BlockVolumeCommon
-	lscommon.ServerCommon
+	common.BlockVolumeCommon
+	common.ServerCommon
 }
 
 type DataDiskEncryptionType string
@@ -208,8 +208,8 @@ func (s *CreateServerRequest) ToMap() map[string]interface{} {
 }
 
 type GetServerByIdRequest struct {
-	lscommon.ServerCommon
-	lscommon.UserAgent
+	common.ServerCommon
+	common.UserAgent
 }
 
 func (s *GetServerByIdRequest) AddUserAgent(pagent ...string) IGetServerByIdRequest {
@@ -225,8 +225,8 @@ func (s *GetServerByIdRequest) ToMap() map[string]interface{} {
 
 type DeleteServerByIdRequest struct {
 	DeleteAllVolume bool `json:"deleteAllVolume"`
-	lscommon.ServerCommon
-	lscommon.UserAgent
+	common.ServerCommon
+	common.UserAgent
 }
 
 func (s *DeleteServerByIdRequest) WithDeleteAllVolume(pok bool) IDeleteServerByIdRequest {
@@ -246,8 +246,8 @@ func (s *DeleteServerByIdRequest) ToRequestBody() interface{} {
 type UpdateServerSecgroupsByServerIdRequest struct {
 	Secgroups []string `json:"securityGroup"`
 
-	lscommon.ServerCommon
-	lscommon.UserAgent
+	common.ServerCommon
+	common.UserAgent
 }
 
 func (s *UpdateServerSecgroupsByServerIdRequest) AddUserAgent(pagent ...string) IUpdateServerSecgroupsByServerIdRequest {
@@ -266,9 +266,9 @@ func (s *UpdateServerSecgroupsByServerIdRequest) GetListSecgroupsIds() []string 
 type AttachFloatingIpRequest struct {
 	NetworkInterfaceId string `json:"networkInterfaceId"`
 
-	lscommon.InternalNetworkInterfaceCommon
-	lscommon.ServerCommon
-	lscommon.UserAgent
+	common.InternalNetworkInterfaceCommon
+	common.ServerCommon
+	common.UserAgent
 }
 
 func (s *AttachFloatingIpRequest) ToRequestBody() interface{} {
@@ -291,10 +291,10 @@ func (s *AttachFloatingIpRequest) ToMap() map[string]interface{} {
 type DetachFloatingIpRequest struct {
 	NetworkInterfaceId string `json:"networkInterfaceId"`
 
-	lscommon.ServerCommon
-	lscommon.WanCommon
-	lscommon.InternalNetworkInterfaceCommon
-	lscommon.UserAgent
+	common.ServerCommon
+	common.WanCommon
+	common.InternalNetworkInterfaceCommon
+	common.UserAgent
 }
 
 func (s *DetachFloatingIpRequest) ToRequestBody() interface{} {
@@ -316,7 +316,7 @@ func (s *DetachFloatingIpRequest) ToMap() map[string]interface{} {
 }
 
 type ListServerGroupPoliciesRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListServerGroupPoliciesRequest) AddUserAgent(pagent ...string) IListServerGroupPoliciesRequest {
@@ -325,8 +325,8 @@ func (s *ListServerGroupPoliciesRequest) AddUserAgent(pagent ...string) IListSer
 }
 
 type DeleteServerGroupByIdRequest struct {
-	lscommon.ServerGroupCommon
-	lscommon.UserAgent
+	common.ServerGroupCommon
+	common.UserAgent
 }
 
 func (s *DeleteServerGroupByIdRequest) AddUserAgent(pagent ...string) IDeleteServerGroupByIdRequest {
@@ -345,7 +345,7 @@ type ListServerGroupsRequest struct {
 	Page int
 	Size int
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListServerGroupsRequest) WithName(pname string) IListServerGroupsRequest {
@@ -354,19 +354,19 @@ func (s *ListServerGroupsRequest) WithName(pname string) IListServerGroupsReques
 }
 
 func (s *ListServerGroupsRequest) ToListQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	v.Set("name", s.Name)
 	if s.Page > 0 {
-		v.Set("page", lstrconv.Itoa(s.Page))
+		v.Set("page", strconv.Itoa(s.Page))
 	}
 	if s.Size > 0 {
-		v.Set("size", lstrconv.Itoa(s.Size))
+		v.Set("size", strconv.Itoa(s.Size))
 	}
 	return v.Encode(), nil
 }
 
 func (s *ListServerGroupsRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
+	return fmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
 }
 
 func (s *ListServerGroupsRequest) ToMap() map[string]interface{} {
@@ -387,7 +387,7 @@ type CreateServerGroupRequest struct {
 	Description string `json:"description,omitempty"`
 	PolicyId    string `json:"policyId,omitempty"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateServerGroupRequest) ToRequestBody() interface{} {

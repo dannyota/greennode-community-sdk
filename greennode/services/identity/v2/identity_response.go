@@ -1,9 +1,9 @@
 package v2
 
 import (
-	ltime "time"
+	"time"
 
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type GetAccessTokenResponse struct {
@@ -13,9 +13,9 @@ type GetAccessTokenResponse struct {
 	RefreshExpiresIn int    `json:"refresh_expires_in"`
 }
 
-func (s *GetAccessTokenResponse) ToEntityAccessToken() *lsentity.AccessToken {
-	return &lsentity.AccessToken{
+func (s *GetAccessTokenResponse) ToEntityAccessToken() *entity.AccessToken {
+	return &entity.AccessToken{
 		Token:     s.AccessToken,
-		ExpiresAt: ltime.Now().Add(ltime.Duration(s.ExpiresIn) * ltime.Second).UnixNano(),
+		ExpiresAt: time.Now().Add(time.Duration(s.ExpiresIn) * time.Second).UnixNano(),
 	}
 }

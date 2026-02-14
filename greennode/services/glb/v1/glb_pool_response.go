@@ -1,6 +1,6 @@
 package v1
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GlobalPoolResponse struct {
 	CreatedAt                 string                      `json:"createdAt"`
@@ -19,8 +19,8 @@ type GlobalPoolResponse struct {
 	GlobalPoolMembersResponse *[]GlobalPoolMemberResponse `json:"globalPoolMembers"`
 }
 
-func (s *GlobalPoolResponse) ToEntityPool() *lsentity.GlobalPool {
-	return &lsentity.GlobalPool{
+func (s *GlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+	return &entity.GlobalPool{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -57,8 +57,8 @@ type HealthResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *HealthResponse) ToEntityGlobalPoolHealthMonitor() *lsentity.GlobalPoolHealthMonitor {
-	return &lsentity.GlobalPoolHealthMonitor{
+func (s *HealthResponse) ToEntityGlobalPoolHealthMonitor() *entity.GlobalPoolHealthMonitor {
+	return &entity.GlobalPoolHealthMonitor{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -96,12 +96,12 @@ type GlobalPoolMemberResponse struct {
 	Members              []*GlobalMemberResponse `json:"members"`
 }
 
-func (s *GlobalPoolMemberResponse) ToEntityGlobalPoolMember() *lsentity.GlobalPoolMember {
-	members := make([]*lsentity.GlobalPoolMemberDetail, 0, len(s.Members))
+func (s *GlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+	members := make([]*entity.GlobalPoolMemberDetail, 0, len(s.Members))
 	for _, member := range s.Members {
 		members = append(members, member.ToEntityGlobalMember())
 	}
-	return &lsentity.GlobalPoolMember{
+	return &entity.GlobalPoolMember{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -115,7 +115,7 @@ func (s *GlobalPoolMemberResponse) ToEntityGlobalPoolMember() *lsentity.GlobalPo
 		VpcID:                s.VpcID,
 		Type:                 s.Type,
 		Status:               s.Status,
-		Members:              &lsentity.ListGlobalMembers{Items: members},
+		Members:              &entity.ListGlobalMembers{Items: members},
 	}
 }
 
@@ -137,8 +137,8 @@ type GlobalMemberResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *GlobalMemberResponse) ToEntityGlobalMember() *lsentity.GlobalPoolMemberDetail {
-	return &lsentity.GlobalPoolMemberDetail{
+func (s *GlobalMemberResponse) ToEntityGlobalMember() *entity.GlobalPoolMemberDetail {
+	return &entity.GlobalPoolMemberDetail{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -161,9 +161,9 @@ func (s *GlobalMemberResponse) ToEntityGlobalMember() *lsentity.GlobalPoolMember
 
 type ListGlobalPoolsResponse []*GlobalPoolResponse
 
-func (s *ListGlobalPoolsResponse) ToEntityListGlobalPools() *lsentity.ListGlobalPools {
-	result := &lsentity.ListGlobalPools{
-		Items: make([]*lsentity.GlobalPool, 0),
+func (s *ListGlobalPoolsResponse) ToEntityListGlobalPools() *entity.ListGlobalPools {
+	result := &entity.ListGlobalPools{
+		Items: make([]*entity.GlobalPool, 0),
 	}
 
 	if s == nil || len(*s) < 1 {
@@ -192,8 +192,8 @@ type CreateGlobalPoolResponse struct {
 	GlobalPoolMembers    []*GlobalPoolMemberResponse `json:"globalPoolMembers"`
 }
 
-func (s *CreateGlobalPoolResponse) ToEntityPool() *lsentity.GlobalPool {
-	return &lsentity.GlobalPool{
+func (s *CreateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+	return &entity.GlobalPool{
 		ID:                   s.ID,
 		Name:                 s.Name,
 		Description:          s.Description,
@@ -211,8 +211,8 @@ type UpdateGlobalPoolResponse struct {
 	ID string `json:"id"`
 }
 
-func (s *UpdateGlobalPoolResponse) ToEntityPool() *lsentity.GlobalPool {
-	return &lsentity.GlobalPool{
+func (s *UpdateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
+	return &entity.GlobalPool{
 		ID: s.ID,
 	}
 }
@@ -221,9 +221,9 @@ func (s *UpdateGlobalPoolResponse) ToEntityPool() *lsentity.GlobalPool {
 
 type ListGlobalPoolMembersResponse []*GlobalPoolMemberResponse
 
-func (s *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *lsentity.ListGlobalPoolMembers {
-	result := &lsentity.ListGlobalPoolMembers{
-		Items: make([]*lsentity.GlobalPoolMember, 0),
+func (s *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *entity.ListGlobalPoolMembers {
+	result := &entity.ListGlobalPoolMembers{
+		Items: make([]*entity.GlobalPoolMember, 0),
 	}
 
 	if s == nil || len(*s) < 1 {
@@ -241,12 +241,12 @@ func (s *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *lsentit
 
 type GetGlobalPoolMemberResponse GlobalPoolMemberResponse
 
-func (s *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *lsentity.GlobalPoolMember {
-	members := make([]*lsentity.GlobalPoolMemberDetail, 0, len(s.Members))
+func (s *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+	members := make([]*entity.GlobalPoolMemberDetail, 0, len(s.Members))
 	for _, member := range s.Members {
 		members = append(members, member.ToEntityGlobalMember())
 	}
-	return &lsentity.GlobalPoolMember{
+	return &entity.GlobalPoolMember{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -260,7 +260,7 @@ func (s *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *lsentity.Globa
 		VpcID:                s.VpcID,
 		Type:                 s.Type,
 		Status:               s.Status,
-		Members:              &lsentity.ListGlobalMembers{Items: members},
+		Members:              &entity.ListGlobalMembers{Items: members},
 	}
 }
 
@@ -273,8 +273,8 @@ type UpdateGlobalPoolMemberResponse struct {
 	TrafficDial          int    `json:"trafficDial"`
 }
 
-func (s *UpdateGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *lsentity.GlobalPoolMember {
-	return &lsentity.GlobalPoolMember{
+func (s *UpdateGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalPoolMember {
+	return &entity.GlobalPoolMember{
 		ID:                   s.ID,
 		GlobalPoolID:         s.GlobalPoolID,
 		GlobalLoadBalancerID: s.GlobalLoadBalancerID,

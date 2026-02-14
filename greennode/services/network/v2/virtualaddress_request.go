@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 /**
  * The group of Virtual Address APIs
@@ -27,7 +27,7 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	} `json:"crossProjectRequest"` // required
 
 	// others...
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateVirtualAddressCrossProjectRequest) ToRequestBody() interface{} {
@@ -58,8 +58,8 @@ func (s *CreateVirtualAddressCrossProjectRequest) WithDescription(pdescription s
 
 // API Delete virtual address by ID
 type DeleteVirtualAddressByIdRequest struct {
-	lscommon.VirtualAddressCommon
-	lscommon.UserAgent
+	common.VirtualAddressCommon
+	common.UserAgent
 }
 
 func (s *DeleteVirtualAddressByIdRequest) AddUserAgent(pagent ...string) IDeleteVirtualAddressByIdRequest {
@@ -76,8 +76,8 @@ func (s *DeleteVirtualAddressByIdRequest) ToMap() map[string]interface{} {
 // Api Get virtual address by ID
 
 type GetVirtualAddressByIdRequest struct {
-	lscommon.VirtualAddressCommon
-	lscommon.UserAgent
+	common.VirtualAddressCommon
+	common.UserAgent
 }
 
 func (s *GetVirtualAddressByIdRequest) AddUserAgent(pagent ...string) IGetVirtualAddressByIdRequest {
@@ -94,8 +94,8 @@ func (s *GetVirtualAddressByIdRequest) ToMap() map[string]interface{} {
 // Api list address pairs by virtual address ID
 
 type ListAddressPairsByVirtualAddressIdRequest struct {
-	lscommon.VirtualAddressCommon
-	lscommon.UserAgent
+	common.VirtualAddressCommon
+	common.UserAgent
 }
 
 func (s *ListAddressPairsByVirtualAddressIdRequest) AddUserAgent(pagent ...string) IListAddressPairsByVirtualAddressIdRequest {

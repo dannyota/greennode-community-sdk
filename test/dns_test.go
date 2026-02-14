@@ -1,13 +1,13 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
-func TestDnsServiceV1_GetHostedZoneById(t *ltesting.T) {
+func TestDnsServiceV1_GetHostedZoneById(t *testing.T) {
 
 	vngcloud := validSdkConfig()
 	opt := v1.NewGetHostedZoneByIdRequest(
@@ -26,7 +26,7 @@ func TestDnsServiceV1_GetHostedZoneById(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_ListHostedZonesDefault(t *ltesting.T) {
+func TestDnsServiceV1_ListHostedZonesDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListHostedZonesRequest()
 	listHostedZones, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListHostedZones(opt)
@@ -44,7 +44,7 @@ func TestDnsServiceV1_ListHostedZonesDefault(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_ListHostedZonesWithFilter(t *ltesting.T) {
+func TestDnsServiceV1_ListHostedZonesWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListHostedZonesRequest().WithName("annd2")
 	listHostedZones, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListHostedZones(opt)
@@ -62,7 +62,7 @@ func TestDnsServiceV1_ListHostedZonesWithFilter(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_ListRecordsDefault(t *ltesting.T) {
+func TestDnsServiceV1_ListRecordsDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a")
 	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(opt)
@@ -80,7 +80,7 @@ func TestDnsServiceV1_ListRecordsDefault(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_ListRecordsWithFilter(t *ltesting.T) {
+func TestDnsServiceV1_ListRecordsWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a").WithName("k8s")
 	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(opt)
@@ -98,7 +98,7 @@ func TestDnsServiceV1_ListRecordsWithFilter(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_CreateHostedZone(t *ltesting.T) {
+func TestDnsServiceV1_CreateHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewCreateHostedZoneRequest(
 		"test-sdk.example.com",
@@ -119,7 +119,7 @@ func TestDnsServiceV1_CreateHostedZone(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_DeleteHostedZone(t *ltesting.T) {
+func TestDnsServiceV1_DeleteHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteHostedZoneRequest("hosted-zone-8d556e58-e84c-4dff-aeda-dc246b296f32")
 
@@ -132,7 +132,7 @@ func TestDnsServiceV1_DeleteHostedZone(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_UpdateHostedZone(t *ltesting.T) {
+func TestDnsServiceV1_UpdateHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewUpdateHostedZoneRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a").
 		WithAssocVpcIds([]string{"net-dc14bb60-d500-40b5-945f-218540990187"}).
@@ -147,12 +147,12 @@ func TestDnsServiceV1_UpdateHostedZone(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
+func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 	vngcloud := validSdkConfig()
 	hostedZoneId := "hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a"
 
 	// Test 1: A record with multiple IP addresses
-	t.Run("CreateARecord", func(t *ltesting.T) {
+	t.Run("CreateARecord", func(t *testing.T) {
 		weight1, weight2 := 10, 20
 		aRecordValues := []v1.RecordValueRequest{
 			v1.NewRecordValueRequest("10.0.0.1", nil, &weight1),
@@ -176,7 +176,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
 	})
 
 	// Test 2: CNAME record
-	t.Run("CreateCNAMERecord", func(t *ltesting.T) {
+	t.Run("CreateCNAMERecord", func(t *testing.T) {
 		cnameValues := []v1.RecordValueRequest{
 			v1.NewRecordValueRequest("www.example.com", nil, nil),
 		}
@@ -198,7 +198,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
 	})
 
 	// Test 3: TXT record with multiple values
-	t.Run("CreateTXTRecord", func(t *ltesting.T) {
+	t.Run("CreateTXTRecord", func(t *testing.T) {
 		txtValues := []v1.RecordValueRequest{
 			v1.NewRecordValueRequest("v=spf1 include:_spf.google.com ~all", nil, nil),
 			v1.NewRecordValueRequest("google-site-verification=abcd1234", nil, nil),
@@ -221,7 +221,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
 	})
 
 	// Test 4: MX record with multiple mail servers
-	t.Run("CreateMXRecord", func(t *ltesting.T) {
+	t.Run("CreateMXRecord", func(t *testing.T) {
 		mxValues := []v1.RecordValueRequest{
 			v1.NewRecordValueRequest("10 mail1.example.com", nil, nil),
 			v1.NewRecordValueRequest("20 mail2.example.com", nil, nil),
@@ -245,7 +245,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
 	})
 
 	// Test 5: SRV record with multiple services
-	t.Run("CreateSRVRecord", func(t *ltesting.T) {
+	t.Run("CreateSRVRecord", func(t *testing.T) {
 		weight1, weight2 := 5, 10
 		srvValues := []v1.RecordValueRequest{
 			v1.NewRecordValueRequest("10 5 443 target1.example.com", nil, &weight1),
@@ -271,7 +271,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *ltesting.T) {
 	t.Log("All DNS Record types created successfully")
 }
 
-func TestDnsServiceV1_GetRecord(t *ltesting.T) {
+func TestDnsServiceV1_GetRecord(t *testing.T) {
 	vngcloud := validSdkConfig()
 
 	// Use one of the existing records for testing
@@ -310,7 +310,7 @@ func TestDnsServiceV1_GetRecord(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_UpdateRecord(t *ltesting.T) {
+func TestDnsServiceV1_UpdateRecord(t *testing.T) {
 	vngcloud := validSdkConfig()
 
 	hostedZoneId := "hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a"
@@ -327,7 +327,7 @@ func TestDnsServiceV1_UpdateRecord(t *ltesting.T) {
 	}
 
 	// Find a record that's not NS or SOA (system records that can't be modified)
-	var targetRecord *lsentity.DnsRecord
+	var targetRecord *entity.DnsRecord
 	for _, record := range listRecords.ListData {
 		if record.Type != "NS" && record.Type != "SOA" {
 			targetRecord = record
@@ -364,7 +364,7 @@ func TestDnsServiceV1_UpdateRecord(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDnsServiceV1_DeleteRecord(t *ltesting.T) {
+func TestDnsServiceV1_DeleteRecord(t *testing.T) {
 	vngcloud := validSdkConfig()
 
 	hostedZoneId := "hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a"

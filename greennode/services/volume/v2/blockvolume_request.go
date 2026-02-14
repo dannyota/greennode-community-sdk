@@ -1,11 +1,11 @@
 package v2
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstrconv "strconv"
+	"fmt"
+	"net/url"
+	"strconv"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewCreateBlockVolumeRequest(pvolumeName, pvolumeType string, psize int64) ICreateBlockVolumeRequest {
@@ -88,13 +88,13 @@ type CreateBlockVolumeRequest struct {
 }
 
 type DeleteBlockVolumeByIdRequest struct {
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type ResizeBlockVolumeByIdRequest struct {
 	NewSize      int    `json:"newSize"`         // NewSize is the new size of the volume, in GB
 	VolumeTypeID string `json:"newVolumeTypeId"` // VolumeTypeID is the type of the volume
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type ListBlockVolumesRequest struct {
@@ -104,26 +104,26 @@ type ListBlockVolumesRequest struct {
 }
 
 type AttachBlockVolumeRequest struct {
-	lscommon.BlockVolumeCommon
-	lscommon.ServerCommon
+	common.BlockVolumeCommon
+	common.ServerCommon
 }
 
 type GetBlockVolumeByIdRequest struct {
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type GetUnderBlockVolumeIdRequest struct {
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type MigrateBlockVolumeByIdRequest struct {
 	Action         MigrateAction `json:"action"`
 	ConfirmMigrate bool
-	Tags           []lscommon.Tag `json:"tags"`
+	Tags           []common.Tag `json:"tags"`
 	VolumeTypeId   string         `json:"volumeTypeId"`
 	Auto           bool
 
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type (
@@ -265,19 +265,19 @@ func (s *CreateBlockVolumeRequest) WithTags(ptags ...string) ICreateBlockVolumeR
 }
 
 func (s *ListBlockVolumesRequest) ToQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	v.Set("name", s.Name)
 	if s.Page > 0 {
-		v.Set("page", lstrconv.Itoa(s.Page))
+		v.Set("page", strconv.Itoa(s.Page))
 	}
 	if s.Size > 0 {
-		v.Set("size", lstrconv.Itoa(s.Size))
+		v.Set("size", strconv.Itoa(s.Size))
 	}
 	return v.Encode(), nil
 }
 
 func (s *ListBlockVolumesRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
+	return fmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
 }
 
 func (s *ListBlockVolumesRequest) ToMap() map[string]interface{} {
@@ -311,7 +311,7 @@ func (s *MigrateBlockVolumeByIdRequest) ToRequestBody() interface{} {
 
 func (s *MigrateBlockVolumeByIdRequest) WithTags(ptags ...string) IMigrateBlockVolumeByIdRequest {
 	if s.Tags == nil {
-		s.Tags = make([]lscommon.Tag, 0)
+		s.Tags = make([]common.Tag, 0)
 	}
 
 	if len(ptags)%2 != 0 {
@@ -319,7 +319,7 @@ func (s *MigrateBlockVolumeByIdRequest) WithTags(ptags ...string) IMigrateBlockV
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s

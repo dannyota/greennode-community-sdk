@@ -1,29 +1,29 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *PortalServiceV2) ListAllQuotaUsed() (*lsentity.ListQuotas, lserr.IError) {
+func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.IError) {
 	url := listAllQuotaUsedUrl(s.PortalClient)
 	resp := new(ListAllQuotaUsedResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectId())
 	}
 
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*lsentity.Quota, lserr.IError) {
+func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.IError) {
 	listQuotas, sdkErr := s.ListAllQuotaUsed()
 	if sdkErr != nil {
 		return nil, sdkErr
@@ -31,7 +31,7 @@ func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*lsentit
 
 	quota := listQuotas.FindQuotaByName(string(popts.GetName()))
 	if quota == nil {
-		return nil, lserr.ErrorHandler(nil, lserr.WithErrorQuotaNotFound(nil)).WithKVparameters("quotaName", popts.GetName())
+		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorQuotaNotFound(nil)).WithKVparameters("quotaName", popts.GetName())
 	}
 
 	return quota, nil

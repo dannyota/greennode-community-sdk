@@ -1,8 +1,8 @@
 package sdk_error
 
 import (
-	lregexp "regexp"
-	lstr "strings"
+	"regexp"
+	"strings"
 )
 
 const (
@@ -31,7 +31,7 @@ const (
 )
 
 var (
-	regexErrorServerFlavorNotSupported = lregexp.MustCompile(patternServerFlavorNotSupported)
+	regexErrorServerFlavorNotSupported = regexp.MustCompile(patternServerFlavorNotSupported)
 )
 
 func WithErrorServerFlavorNotSupported(perrResp IErrorRespone) func(sdkError IError) {
@@ -40,7 +40,7 @@ func WithErrorServerFlavorNotSupported(perrResp IErrorRespone) func(sdkError IEr
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorServerFlavorNotSupported.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerFlavorNotSupported).
 				WithMessage(errMsg).
@@ -56,7 +56,7 @@ func WithErrorServerNotFound(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerNotFound) {
 			sdkError.WithErrorCode(EcVServerServerNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -70,8 +70,8 @@ func WithErrorImageNotFound(perrResp IErrorRespone) func(sdkError IError) {
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, patternImageNotFound) {
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, patternImageNotFound) {
 			sdkError.WithErrorCode(EcVServerImageNotFound).
 				WithMessage(perrResp.GetMessage()).
 				WithErrors(perrResp.GetError())
@@ -86,7 +86,7 @@ func WithErrorServerFlavorSystemExceedQuota(perrResp IErrorRespone) func(sdkErro
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerFlavorSystemExceedQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerFlavorSystemExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerFlavorSystemExceedQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -102,7 +102,7 @@ func WithErrorServerDeleteCreatingServer(perrResp IErrorRespone) func(sdkError I
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerCreating) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCreating) {
 			sdkError.WithErrorCode(EcVServerServerDeleteCreatingServer).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -117,7 +117,7 @@ func WithErrorServerExpired(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerExpired) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExpired) {
 			sdkError.WithErrorCode(EcVServerServerExpired).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -132,9 +132,9 @@ func WithErrorServerUpdatingSecgroups(perrResp IErrorRespone) func(sdkError IErr
 		}
 
 		errMsg := perrResp.GetMessage()
-		stdErrMsg := lstr.ToLower(lstr.TrimSpace(errMsg))
-		if lstr.Contains(stdErrMsg, patternServerUpdatingSecgroups) ||
-			lstr.Contains(stdErrMsg, patternServerDeleteServerUpdatingSecgroups) {
+		stdErrMsg := strings.ToLower(strings.TrimSpace(errMsg))
+		if strings.Contains(stdErrMsg, patternServerUpdatingSecgroups) ||
+			strings.Contains(stdErrMsg, patternServerDeleteServerUpdatingSecgroups) {
 			sdkError.WithErrorCode(EcVServerServerUpdatingSecgroups).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -149,7 +149,7 @@ func WithErrorServerExceedCpuQuota(perrResp IErrorRespone) func(sdkError IError)
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerExceedCpuQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedCpuQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedCpuQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -165,7 +165,7 @@ func WithErrorServerExceedFloatingIpQuota(perrResp IErrorRespone) func(sdkError 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerExceedFloatingIpQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedFloatingIpQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedFloatingIpQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -181,9 +181,9 @@ func WithErrorServerImageNotSupported(perrResp IErrorRespone) func(sdkError IErr
 		}
 
 		errMsg := perrResp.GetMessage()
-		lowerErrMsg := lstr.ToLower(lstr.TrimSpace(errMsg))
-		if lstr.Contains(lowerErrMsg, patternServerImageNotSupported) ||
-			lstr.Contains(lowerErrMsg, patternImageNotSupport) {
+		lowerErrMsg := strings.ToLower(strings.TrimSpace(errMsg))
+		if strings.Contains(lowerErrMsg, patternServerImageNotSupported) ||
+			strings.Contains(lowerErrMsg, patternImageNotSupport) {
 			sdkError.WithErrorCode(EcVServerServerImageNotSupported).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -198,7 +198,7 @@ func WithErrorServerExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerExceedQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -214,7 +214,7 @@ func WithErrorServerDeleteDeletingServer(perrResp IErrorRespone) func(sdkError I
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerDeleting) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerDeleting) {
 			sdkError.WithErrorCode(EcVServerServerDeleteDeletingServer).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -229,7 +229,7 @@ func WithErrorServerDeleteBillingServer(perrResp IErrorRespone) func(sdkError IE
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerBilling) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerBilling) {
 			sdkError.WithErrorCode(EcVServerServerDeleteBillingServer).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -243,8 +243,8 @@ func WithErrorServerCreateBillingPaymentMethodNotAllowed(perrResp IErrorRespone)
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, patternBillingPaymentMethodNotAllowed) {
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, patternBillingPaymentMethodNotAllowed) {
 			sdkError.WithErrorCode(EcVServerCreateBillingPaymentMethodNotAllowed).
 				WithMessage(perrResp.GetMessage()).
 				WithErrors(perrResp.GetError())
@@ -259,7 +259,7 @@ func WithErrorServerAttachVolumeQuotaExceeded(perrResp IErrorRespone) func(sdkEr
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerAttachVolumeQuotaExceeded) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachVolumeQuotaExceeded) {
 			sdkError.WithErrorCode(EcVServerServerVolumeAttachQuotaExceeded).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -275,7 +275,7 @@ func WithErrorServerAttachEncryptedVolume(perrResp IErrorRespone) func(sdkError 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerAttachEncryptedVolume) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachEncryptedVolume) {
 			sdkError.WithErrorCode(EcVServerServerAttachEncryptedVolume).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -290,7 +290,7 @@ func WithErrorServerCanNotAttachFloatingIp(perrResp IErrorRespone) func(sdkError
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerCanNotAttachFloatingIp) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCanNotAttachFloatingIp) {
 			sdkError.WithErrorCode(EcVServerServerCanNotAttachFloatingIp).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -305,7 +305,7 @@ func WithErrorServerGroupNotFound(perrResp IErrorRespone) func(sdkError IError) 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerGroupNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNotFound) {
 			sdkError.WithErrorCode(EcVServerServerGroupNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -320,7 +320,7 @@ func WithErrorServerGroupInUse(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerGroupInUse) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupInUse) {
 			sdkError.WithErrorCode(EcVServerServerGroupInUse).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -335,7 +335,7 @@ func WithErrorServerGroupNameMustBeUnique(perrResp IErrorRespone) func(sdkError 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternServerGroupNameMustBeUnique) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNameMustBeUnique) {
 			sdkError.WithErrorCode(EcVServerServerGroupNameMustBeUnique).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())

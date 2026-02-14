@@ -1,11 +1,11 @@
 package sdk_error
 
 import (
-	lfmt "fmt"
-	lregexp "regexp"
-	lstr "strings"
+	"fmt"
+	"regexp"
+	"strings"
 
-	lreq "github.com/imroc/req/v3"
+	"github.com/imroc/req/v3"
 )
 
 const (
@@ -17,7 +17,7 @@ const (
 )
 
 var (
-	regexErrorProjectConflict = lregexp.MustCompile(patternProjectConflict)
+	regexErrorProjectConflict = regexp.MustCompile(patternProjectConflict)
 )
 
 func ErrorHandler(perr error, popts ...func(psdkErr IError)) IError {
@@ -27,10 +27,10 @@ func ErrorHandler(perr error, popts ...func(psdkErr IError)) IError {
 		message:   "Unknown error",
 	}
 
-	if perr != nil && lstr.Contains(lstr.ToLower(lstr.TrimSpace(perr.Error())), patternServiceMaintenance) {
+	if perr != nil && strings.Contains(strings.ToLower(strings.TrimSpace(perr.Error())), patternServiceMaintenance) {
 		sdkErr.errorCode = EcServiceMaintenance
 		sdkErr.message = "Service Maintenance"
-		sdkErr.error = lfmt.Errorf("service is under maintenance")
+		sdkErr.error = fmt.Errorf("service is under maintenance")
 
 		return sdkErr
 	}
@@ -76,7 +76,7 @@ func WithErrorInternalServerError() func(IError) {
 	return func(sdkErr IError) {
 		sdkErr.WithErrorCode(EcInternalServerError).
 			WithMessage("Internal Server Error").
-			WithErrors(lfmt.Errorf("internal server error from making request to external service"))
+			WithErrors(fmt.Errorf("internal server error from making request to external service"))
 	}
 }
 
@@ -84,7 +84,7 @@ func WithErrorServiceMaintenance() func(IError) {
 	return func(sdkErr IError) {
 		sdkErr.WithErrorCode(EcServiceMaintenance).
 			WithMessage("Service Maintenance").
-			WithErrors(lfmt.Errorf("service is under maintenance"))
+			WithErrors(fmt.Errorf("service is under maintenance"))
 	}
 }
 
@@ -92,7 +92,7 @@ func WithErrorPermissionDenied() func(IError) {
 	return func(sdkErr IError) {
 		sdkErr.WithErrorCode(EcPermissionDenied).
 			WithMessage("Permission Denied").
-			WithErrors(lfmt.Errorf("permission denied when making request to external service"))
+			WithErrors(fmt.Errorf("permission denied when making request to external service"))
 	}
 }
 
@@ -103,7 +103,7 @@ func WithErrorPurchaseIssue(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternPurchaseIssue) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPurchaseIssue) {
 			sdkError.WithErrorCode(EcPurchaseIssue).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -119,7 +119,7 @@ func WithErrorTagKeyInvalid(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternTagKeyInvalid) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternTagKeyInvalid) {
 			sdkError.WithErrorCode(EcTagKeyInvalid).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -134,7 +134,7 @@ func WithErrorPagingInvalid(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternPagingInvalid) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPagingInvalid) {
 			sdkError.WithErrorCode(EcPagingInvalid).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -142,10 +142,10 @@ func WithErrorPagingInvalid(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorUnexpected(presponse *lreq.Response) func(IError) {
+func WithErrorUnexpected(presponse *req.Response) func(IError) {
 	statusCode := 0
 	url := ""
-	err := lfmt.Errorf("unexpected error from making request to external service")
+	err := fmt.Errorf("unexpected error from making request to external service")
 	if presponse != nil {
 		if presponse.Response != nil && presponse.StatusCode != 0 {
 			statusCode = presponse.StatusCode
@@ -177,8 +177,8 @@ func WithErrorPaymentMethodNotAllow(perrResp IErrorRespone) func(sdkError IError
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, "ext_pm_payment_method_not_allow") {
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, "ext_pm_payment_method_not_allow") {
 			sdkError.WithErrorCode(EcPaymentMethodNotAllow).
 				WithMessage(perrResp.GetMessage()).
 				WithErrors(perrResp.GetError())
@@ -192,8 +192,8 @@ func WithErrorCreditNotEnough(perrResp IErrorRespone) func(sdkError IError) {
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, "ext_pm_credit_not_enough") {
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, "ext_pm_credit_not_enough") {
 			sdkError.WithErrorCode(EcCreditNotEnough).
 				WithMessage(perrResp.GetMessage()).
 				WithErrors(perrResp.GetError())
@@ -207,7 +207,7 @@ func WithErrorProjectConflict(perrResp IErrorRespone) func(sdkError IError) {
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorProjectConflict.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcProjectConflict).
 				WithMessage(errMsg).

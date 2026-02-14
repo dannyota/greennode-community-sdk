@@ -1,19 +1,19 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest) (*[]lsentity.SystemTag, lserr.IError) {
+func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.IError) {
 
 	url := createSystemTagUrl(s.VServerClient)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 
 	rawResp := new([]SystemTagResponse)
 
-	req := lsclient.NewRequest().
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonBody(popts.ToRequestBody()).
@@ -21,10 +21,10 @@ func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp)
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
-	result := make([]lsentity.SystemTag, 0, len(*rawResp))
+	result := make([]entity.SystemTag, 0, len(*rawResp))
 
 	for _, r := range *rawResp {
 		result = append(result, r.toSystemTag())

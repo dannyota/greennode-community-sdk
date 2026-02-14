@@ -1,40 +1,40 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*lsentity.Portal, lserr.IError) {
+func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Portal, sdkerror.IError) {
 	url := getPortalInfoUrl(s.PortalClient, popts)
 	resp := new(GetPortalInfoResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("backendProjectId", popts.GetBackEndProjectId())
 	}
 
 	return resp.ToEntityPortal(), nil
 }
 
-func (s *PortalServiceV1) ListProjects(popts IListProjectsRequest) (*lsentity.ListPortals, lserr.IError) {
+func (s *PortalServiceV1) ListProjects(popts IListProjectsRequest) (*entity.ListPortals, sdkerror.IError) {
 	url := listProjectsUrl(s.PortalClient)
 	resp := new(ListProjectsResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp)
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
 	return resp.ToEntityListPortals(), nil

@@ -1,6 +1,6 @@
 package v1
 
-import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 type IGetEndpointByIdRequest interface {
 	GetEndpointId() string
@@ -8,7 +8,7 @@ type IGetEndpointByIdRequest interface {
 }
 
 type ICreateEndpointRequest interface {
-	ToRequestBody(psvc lsclient.IServiceClient) interface{}
+	ToRequestBody(psvc client.IServiceClient) interface{}
 	WithDescription(pdesp string) ICreateEndpointRequest
 	WithSubnetUuid(psubnetUuid string) ICreateEndpointRequest
 	WithVpcUuid(pvpcUuid string) ICreateEndpointRequest
@@ -32,7 +32,7 @@ type IDeleteEndpointByIdRequest interface {
 	GetEndpointId() string
 	AddUserAgent(pagent ...string) IDeleteEndpointByIdRequest
 	ParseUserAgent() string
-	ToRequestBody(psvc lsclient.IServiceClient) interface{}
+	ToRequestBody(psvc client.IServiceClient) interface{}
 	ToMap() map[string]interface{}
 }
 

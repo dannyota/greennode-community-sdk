@@ -1,18 +1,18 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestCreateVirtualAddressCrossProject(t *ltesting.T) {
+func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	virtualAddressName := "cuongdm3-test-virtual-address"
 	projectId := "pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491"
 	subnetId := "sub-33ec4719-915f-4818-85b0-f17bdf7f899b"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := lsnetworkSvcV2.NewCreateVirtualAddressCrossProjectRequest(
+	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
 		virtualAddressName, projectId, subnetId).
 		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.").
 		AddUserAgent(vngcloud.GetUserAgent())
@@ -30,11 +30,11 @@ func TestCreateVirtualAddressCrossProject(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVirtualAddressById(t *ltesting.T) {
+func TestDeleteVirtualAddressById(t *testing.T) {
 	virtualAddressId := "vip-1a17ffb3-28e5-4a7a-a4e0-17af09de28aa"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := lsnetworkSvcV2.NewDeleteVirtualAddressByIdRequest(virtualAddressId).
+	opt := networkv2.NewDeleteVirtualAddressByIdRequest(virtualAddressId).
 		AddUserAgent(vngcloud.GetUserAgent())
 	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressById(opt)
 
@@ -45,11 +45,11 @@ func TestDeleteVirtualAddressById(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetVirtualAddessById(t *ltesting.T) {
+func TestGetVirtualAddessById(t *testing.T) {
 	virtualAddressId := "vip-0d2402cf-49e8-43bf-abbe-b707597320e0"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := lsnetworkSvcV2.NewGetVirtualAddressByIdRequest(virtualAddressId).
+	opt := networkv2.NewGetVirtualAddressByIdRequest(virtualAddressId).
 		AddUserAgent(vngcloud.GetUserAgent())
 	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressById(opt)
 
@@ -65,11 +65,11 @@ func TestGetVirtualAddessById(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListAddressPairsByVirtualAddressId(t *ltesting.T) {
+func TestListAddressPairsByVirtualAddressId(t *testing.T) {
 	virtualAddressId := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := lsnetworkSvcV2.NewListAddressPairsByVirtualAddressIdRequest(virtualAddressId).
+	opt := networkv2.NewListAddressPairsByVirtualAddressIdRequest(virtualAddressId).
 		AddUserAgent(vngcloud.GetUserAgent())
 	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressId(opt)
 

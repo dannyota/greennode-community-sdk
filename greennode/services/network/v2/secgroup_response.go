@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type CreateSecgroupResponse struct { //_________________________________________________________________________________
 	Data struct {
@@ -19,8 +19,8 @@ type CreateSecgroupResponse struct { //_________________________________________
 	} `json:"data"`
 }
 
-func (s *CreateSecgroupResponse) ToEntitySecgroup() *lsentity.Secgroup {
-	return &lsentity.Secgroup{
+func (s *CreateSecgroupResponse) ToEntitySecgroup() *entity.Secgroup {
+	return &entity.Secgroup{
 		Id:          s.Data.UUID,
 		Name:        s.Data.SecgroupName,
 		Description: s.Data.Description,
@@ -39,8 +39,8 @@ type GetSecgroupByIdResponse struct { //________________________________________
 	} `json:"data"`
 }
 
-func (s *GetSecgroupByIdResponse) ToEntitySecgroup() *lsentity.Secgroup {
-	return &lsentity.Secgroup{
+func (s *GetSecgroupByIdResponse) ToEntitySecgroup() *entity.Secgroup {
+	return &entity.Secgroup{
 		Id:          s.Data.ID,
 		Name:        s.Data.Name,
 		Description: s.Data.Description,
@@ -63,15 +63,15 @@ type ListSecgroupResponse struct { //___________________________________________
 	TotalItem int `json:"totalItem"`
 }
 
-func (s *ListSecgroupResponse) ToListEntitySecgroups() *lsentity.ListSecgroups {
-	items := make([]*lsentity.Secgroup, 0, len(s.ListData))
+func (s *ListSecgroupResponse) ToListEntitySecgroups() *entity.ListSecgroups {
+	items := make([]*entity.Secgroup, 0, len(s.ListData))
 	for _, item := range s.ListData {
-		items = append(items, &lsentity.Secgroup{
+		items = append(items, &entity.Secgroup{
 			Id:          item.ID,
 			Name:        item.Name,
 			Description: item.Description,
 			Status:      item.Status,
 		})
 	}
-	return &lsentity.ListSecgroups{Items: items}
+	return &entity.ListSecgroups{Items: items}
 }

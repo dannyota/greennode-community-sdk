@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type ListSnapshotsByBlockVolumeIdResponse struct {
 	Items      []Snapshot `json:"items"`
@@ -68,8 +68,8 @@ type (
 	}
 )
 
-func (s *ListSnapshotsByBlockVolumeIdResponse) ToEntityListSnapshots() *lsentity.ListSnapshots {
-	sl := new(lsentity.ListSnapshots)
+func (s *ListSnapshotsByBlockVolumeIdResponse) ToEntityListSnapshots() *entity.ListSnapshots {
+	sl := new(entity.ListSnapshots)
 
 	for _, item := range s.Items {
 		sl.Items = append(sl.Items, item.toEntitySnapshot())
@@ -83,8 +83,8 @@ func (s *ListSnapshotsByBlockVolumeIdResponse) ToEntityListSnapshots() *lsentity
 	return sl
 }
 
-func (s *Snapshot) toEntitySnapshot() *lsentity.Snapshot {
-	return &lsentity.Snapshot{
+func (s *Snapshot) toEntitySnapshot() *entity.Snapshot {
+	return &entity.Snapshot{
 		Id:        s.ID,
 		Name:      s.Name,
 		CreatedAt: s.CreatedAt,
@@ -94,6 +94,6 @@ func (s *Snapshot) toEntitySnapshot() *lsentity.Snapshot {
 	}
 }
 
-func (s *CreateSnapshotByBlockVolumeIdResponse) ToEntitySnapshot() *lsentity.Snapshot {
+func (s *CreateSnapshotByBlockVolumeIdResponse) ToEntitySnapshot() *entity.Snapshot {
 	return s.toEntitySnapshot()
 }

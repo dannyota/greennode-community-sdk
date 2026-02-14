@@ -1,6 +1,6 @@
 package v1
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GlobalListenerResponse struct {
 	CreatedAt            string  `json:"createdAt"`
@@ -21,8 +21,8 @@ type GlobalListenerResponse struct {
 	Status               string  `json:"status"`
 }
 
-func (s *GlobalListenerResponse) ToEntityGlobalListener() *lsentity.GlobalListener {
-	return &lsentity.GlobalListener{
+func (s *GlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+	return &entity.GlobalListener{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -44,8 +44,8 @@ func (s *GlobalListenerResponse) ToEntityGlobalListener() *lsentity.GlobalListen
 
 type ListGlobalListenersResponse []GlobalListenerResponse
 
-func (s ListGlobalListenersResponse) ToEntityListGlobalListeners() *lsentity.ListGlobalListeners {
-	listeners := &lsentity.ListGlobalListeners{}
+func (s ListGlobalListenersResponse) ToEntityListGlobalListeners() *entity.ListGlobalListeners {
+	listeners := &entity.ListGlobalListeners{}
 	for _, itemListener := range s {
 		listeners.Items = append(listeners.Items, itemListener.ToEntityGlobalListener())
 	}
@@ -56,8 +56,8 @@ func (s ListGlobalListenersResponse) ToEntityListGlobalListeners() *lsentity.Lis
 
 type CreateGlobalListenerResponse GlobalListenerResponse
 
-func (s *CreateGlobalListenerResponse) ToEntityGlobalListener() *lsentity.GlobalListener {
-	return &lsentity.GlobalListener{
+func (s *CreateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+	return &entity.GlobalListener{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -81,8 +81,8 @@ func (s *CreateGlobalListenerResponse) ToEntityGlobalListener() *lsentity.Global
 
 type UpdateGlobalListenerResponse GlobalListenerResponse
 
-func (s *UpdateGlobalListenerResponse) ToEntityGlobalListener() *lsentity.GlobalListener {
-	return &lsentity.GlobalListener{
+func (s *UpdateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+	return &entity.GlobalListener{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,
@@ -106,8 +106,8 @@ func (s *UpdateGlobalListenerResponse) ToEntityGlobalListener() *lsentity.Global
 
 type GetGlobalListenerResponse GlobalListenerResponse
 
-func (s *GetGlobalListenerResponse) ToEntityGlobalListener() *lsentity.GlobalListener {
-	return &lsentity.GlobalListener{
+func (s *GetGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalListener {
+	return &entity.GlobalListener{
 		CreatedAt:            s.CreatedAt,
 		UpdatedAt:            s.UpdatedAt,
 		DeletedAt:            s.DeletedAt,

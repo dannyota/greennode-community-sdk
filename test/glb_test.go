@@ -1,14 +1,14 @@
 package test
 
 import (
-	lfmt "fmt"
-	ltesting "testing"
+	"fmt"
+	"testing"
 	"time"
 
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
-func TestGetGlobalListenerSuccess(t *ltesting.T) {
+func TestGetGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewGetGlobalListenerRequest(
 		"glb-a9799830-f7ef-40a8-ad05-ba7f81a8bb8d",
@@ -27,7 +27,7 @@ func TestGetGlobalListenerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetGlobalPoolMemberSuccess(t *ltesting.T) {
+func TestGetGlobalPoolMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewGetGlobalPoolMemberRequest(
 		"glb-a9799830-f7ef-40a8-ad05-ba7f81a8bb8d",
@@ -55,7 +55,7 @@ func TestGetGlobalPoolMemberSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteGlobalPoolMemberSuccess(t *ltesting.T) {
+func TestDeleteGlobalPoolMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalPoolMemberRequest(
 		"glb-a9799830-f7ef-40a8-ad05-ba7f81a8bb8d",
@@ -71,7 +71,7 @@ func TestDeleteGlobalPoolMemberSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateGlobalPoolMemberSuccess(t *ltesting.T) {
+func TestUpdateGlobalPoolMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewUpdateGlobalPoolMemberRequest(
 		"glb-a9799830-f7ef-40a8-ad05-ba7f81a8bb8d",
@@ -96,7 +96,7 @@ func TestUpdateGlobalPoolMemberSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListGlobalPackagesSuccess(t *ltesting.T) {
+func TestListGlobalPackagesSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalPackagesRequest()
 	packages, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalPackages(opt)
@@ -120,7 +120,7 @@ func TestListGlobalPackagesSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListGlobalRegionsSuccess(t *ltesting.T) {
+func TestListGlobalRegionsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalRegionsRequest()
 	regions, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalRegions(opt)
@@ -144,13 +144,13 @@ func TestListGlobalRegionsSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetGlobalLoadBalancerUsageHistoriesSuccess(t *ltesting.T) {
+func TestGetGlobalLoadBalancerUsageHistoriesSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	// Using timestamps from 1 day ago to current moment
 	now := time.Now().Unix()
 	oneDayAgo := now - 86400 // 86400 seconds = 24 hours
-	from := lfmt.Sprintf("%d", oneDayAgo)
-	to := lfmt.Sprintf("%d", now)
+	from := fmt.Sprintf("%d", oneDayAgo)
+	to := fmt.Sprintf("%d", now)
 	usageType := "connection_rate"
 	opt := v1.NewGetGlobalLoadBalancerUsageHistoriesRequest("glb-a9799830-f7ef-40a8-ad05-ba7f81a8bb8d", from, to, usageType)
 	histories, sdkerr := vngcloud.GLBGateway().V1().GLBService().GetGlobalLoadBalancerUsageHistories(opt)

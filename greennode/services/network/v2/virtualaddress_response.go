@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type VirtualAddressDataResponse struct {
 	Name           string   `json:"name"`
@@ -17,8 +17,8 @@ type VirtualAddressDataResponse struct {
 	AddressPairIps []string `json:"addressPairIps"`
 }
 
-func (s *VirtualAddressDataResponse) toEntityVirtualAddress() *lsentity.VirtualAddress {
-	return &lsentity.VirtualAddress{
+func (s *VirtualAddressDataResponse) toEntityVirtualAddress() *entity.VirtualAddress {
+	return &entity.VirtualAddress{
 		Id:              s.UUID,
 		Name:            s.Name,
 		EndpointAddress: s.IPAddress,
@@ -37,7 +37,7 @@ type CreateVirtualAddressCrossProjectResponse struct {
 	Data VirtualAddressDataResponse `json:"data"`
 }
 
-func (s *CreateVirtualAddressCrossProjectResponse) ToEntityVirtualAddress() *lsentity.VirtualAddress {
+func (s *CreateVirtualAddressCrossProjectResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
 	return s.Data.toEntityVirtualAddress()
 }
 
@@ -46,7 +46,7 @@ type GetVirtualAddressByIdResponse struct {
 	Data VirtualAddressDataResponse `json:"data"`
 }
 
-func (s *GetVirtualAddressByIdResponse) ToEntityVirtualAddress() *lsentity.VirtualAddress {
+func (s *GetVirtualAddressByIdResponse) ToEntityVirtualAddress() *entity.VirtualAddress {
 	return s.Data.toEntityVirtualAddress()
 }
 
@@ -55,10 +55,10 @@ type ListAddressPairsByVirtualAddressIdResponse struct {
 	Data []AddressPairResponse `json:"data"`
 }
 
-func (s *ListAddressPairsByVirtualAddressIdResponse) ToEntityListAddressPairs() *lsentity.ListAddressPairs {
-	addressPairs := make([]*lsentity.AddressPair, 0, len(s.Data))
+func (s *ListAddressPairsByVirtualAddressIdResponse) ToEntityListAddressPairs() *entity.ListAddressPairs {
+	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
 	for _, addressPair := range s.Data {
-		addressPairs = append(addressPairs, &lsentity.AddressPair{
+		addressPairs = append(addressPairs, &entity.AddressPair{
 			Id:                 addressPair.UUID,
 			VirtualIpAddressId: addressPair.VirtualIpAddressId,
 			VirtualSubnetId:    addressPair.VirtualSubnetId,
@@ -67,5 +67,5 @@ func (s *ListAddressPairsByVirtualAddressIdResponse) ToEntityListAddressPairs() 
 			CIDR:               addressPair.CIDR,
 		})
 	}
-	return &lsentity.ListAddressPairs{Items: addressPairs}
+	return &entity.ListAddressPairs{Items: addressPairs}
 }

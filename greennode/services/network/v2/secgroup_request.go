@@ -1,9 +1,9 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type ListSecgroupRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListSecgroupRequest) AddUserAgent(pagent ...string) IListSecgroupRequest {
@@ -12,8 +12,8 @@ func (s *ListSecgroupRequest) AddUserAgent(pagent ...string) IListSecgroupReques
 }
 
 type DeleteSecgroupByIdRequest struct { //__________________________________________________________________________________
-	lscommon.UserAgent
-	lscommon.SecgroupCommon
+	common.UserAgent
+	common.SecgroupCommon
 }
 
 func (s *DeleteSecgroupByIdRequest) AddUserAgent(pagent ...string) IDeleteSecgroupByIdRequest {
@@ -25,7 +25,7 @@ type CreateSecgroupRequest struct { //__________________________________________
 	Name        string `json:"name"`
 	Description string `json:"description"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateSecgroupRequest) ToRequestBody() interface{} {
@@ -42,8 +42,8 @@ func (s *CreateSecgroupRequest) GetSecgroupName() string {
 }
 
 type GetSecgroupByIdRequest struct { //_________________________________________________________________________________
-	lscommon.SecgroupCommon
-	lscommon.UserAgent
+	common.SecgroupCommon
+	common.UserAgent
 }
 
 func (s *GetSecgroupByIdRequest) AddUserAgent(pagent ...string) IGetSecgroupByIdRequest {

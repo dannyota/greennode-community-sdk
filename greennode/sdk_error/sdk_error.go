@@ -1,9 +1,9 @@
 package sdk_error
 
 import (
-	lerrors "errors"
-	lfmt "fmt"
-	lsync "sync"
+	"errors"
+	"fmt"
+	"sync"
 )
 
 var (
@@ -16,7 +16,7 @@ type (
 		errorCode  ErrorCode
 		message    string
 		categories map[ErrorCategory]struct{}
-		parameters *lsync.Map
+		parameters *sync.Map
 	}
 
 	ErrorCode string
@@ -81,7 +81,7 @@ func (s *SdkError) WithErrors(perrs ...error) IError {
 	}
 
 	for _, err := range perrs {
-		s.error = lerrors.Join(s.error, err)
+		s.error = errors.Join(s.error, err)
 	}
 
 	return s
@@ -100,7 +100,7 @@ func (s *SdkError) WithErrorCategories(pcategories ...ErrorCategory) IError {
 
 func (s *SdkError) WithParameters(pparams map[string]interface{}) IError {
 	if s.parameters == nil {
-		s.parameters = new(lsync.Map)
+		s.parameters = new(sync.Map)
 		return s
 	}
 
@@ -113,7 +113,7 @@ func (s *SdkError) WithParameters(pparams map[string]interface{}) IError {
 
 func (s *SdkError) WithKVparameters(pparams ...interface{}) IError {
 	if s.parameters == nil {
-		s.parameters = new(lsync.Map)
+		s.parameters = new(sync.Map)
 	}
 
 	// Always make sure that the length of pparams is even
@@ -174,7 +174,7 @@ func (s *SdkError) GetErrorMessages() string {
 		return s.message
 	}
 
-	return lfmt.Sprintf("%s: %s", s.message, s.error.Error())
+	return fmt.Sprintf("%s: %s", s.message, s.error.Error())
 }
 
 func (s *SdkError) GetListParameters() []interface{} {

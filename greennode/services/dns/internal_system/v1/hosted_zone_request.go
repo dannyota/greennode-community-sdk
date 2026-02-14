@@ -1,8 +1,8 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type IGetHostedZoneByIdRequest interface {
@@ -16,7 +16,7 @@ type IGetHostedZoneByIdRequest interface {
 type GetHostedZoneByIdRequest struct {
 	HostedZoneId string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *GetHostedZoneByIdRequest) GetHostedZoneId() string {
@@ -53,7 +53,7 @@ type IListHostedZonesRequest interface {
 type ListHostedZonesRequest struct {
 	Name string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *ListHostedZonesRequest) GetName() string {
@@ -82,7 +82,7 @@ type ICreateHostedZoneRequest interface {
 	WithAssocVpcIds(assocVpcIds []string) ICreateHostedZoneRequest
 	WithType(zoneType HostedZoneType) ICreateHostedZoneRequest
 	WithDescription(description string) ICreateHostedZoneRequest
-	ToRequestBody(psc lsclient.IServiceClient) map[string]interface{}
+	ToRequestBody(psc client.IServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -94,7 +94,7 @@ type CreateHostedZoneRequest struct {
 	Type        HostedZoneType `json:"type"`
 	Description string         `json:"description"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *CreateHostedZoneRequest) WithDomainName(domainName string) ICreateHostedZoneRequest {
@@ -117,7 +117,7 @@ func (r *CreateHostedZoneRequest) WithDescription(description string) ICreateHos
 	return r
 }
 
-func (r *CreateHostedZoneRequest) ToRequestBody(psc lsclient.IServiceClient) map[string]interface{} {
+func (r *CreateHostedZoneRequest) ToRequestBody(psc client.IServiceClient) map[string]interface{} {
 	return map[string]interface{}{
 		"domainName":  r.DomainName,
 		"assocVpcIds": r.AssocVpcIds,
@@ -156,7 +156,7 @@ type IDeleteHostedZoneRequest interface {
 type DeleteHostedZoneRequest struct {
 	HostedZoneId string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *DeleteHostedZoneRequest) GetHostedZoneId() string {
@@ -187,7 +187,7 @@ type IUpdateHostedZoneRequest interface {
 	WithHostedZoneId(hostedZoneId string) IUpdateHostedZoneRequest
 	WithAssocVpcIds(assocVpcIds []string) IUpdateHostedZoneRequest
 	WithDescription(description string) IUpdateHostedZoneRequest
-	ToRequestBody(psc lsclient.IServiceClient) map[string]interface{}
+	ToRequestBody(psc client.IServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -198,7 +198,7 @@ type UpdateHostedZoneRequest struct {
 	AssocVpcIds  []string `json:"assocVpcIds"`
 	Description  string   `json:"description"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *UpdateHostedZoneRequest) GetHostedZoneId() string {
@@ -220,7 +220,7 @@ func (r *UpdateHostedZoneRequest) WithDescription(description string) IUpdateHos
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) ToRequestBody(psc lsclient.IServiceClient) map[string]interface{} {
+func (r *UpdateHostedZoneRequest) ToRequestBody(psc client.IServiceClient) map[string]interface{} {
 	return map[string]interface{}{
 		"assocVpcIds": r.AssocVpcIds,
 		"description": r.Description,

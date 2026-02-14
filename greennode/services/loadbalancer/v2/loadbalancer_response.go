@@ -1,9 +1,9 @@
 package v2
 
 import (
-	lstr "strings"
+	"strings"
 
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type CreateLoadBalancerResponse struct {
@@ -14,8 +14,8 @@ type ResizeLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *lsentity.LoadBalancer {
-	return &lsentity.LoadBalancer{
+func (s *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+	return &entity.LoadBalancer{
 		UUID: s.UUID,
 	}
 }
@@ -24,8 +24,8 @@ type ScaleLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *lsentity.LoadBalancer {
-	return &lsentity.LoadBalancer{
+func (s *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+	return &entity.LoadBalancer{
 		UUID: s.UUID,
 	}
 }
@@ -106,25 +106,25 @@ type (
 	}
 )
 
-func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *lsentity.LoadBalancer {
-	return &lsentity.LoadBalancer{
+func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+	return &entity.LoadBalancer{
 		UUID: s.UUID,
 	}
 }
 
-func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *lsentity.ListLoadBalancerPackages {
+func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *entity.ListLoadBalancerPackages {
 	if s == nil || s.ListData == nil || len(s.ListData) < 1 {
-		return &lsentity.ListLoadBalancerPackages{
-			Items: make([]*lsentity.LoadBalancerPackage, 0),
+		return &entity.ListLoadBalancerPackages{
+			Items: make([]*entity.LoadBalancerPackage, 0),
 		}
 	}
 
-	result := &lsentity.ListLoadBalancerPackages{
-		Items: make([]*lsentity.LoadBalancerPackage, 0),
+	result := &entity.ListLoadBalancerPackages{
+		Items: make([]*entity.LoadBalancerPackage, 0),
 	}
 
 	for _, item := range s.ListData {
-		result.Items = append(result.Items, &lsentity.LoadBalancerPackage{
+		result.Items = append(result.Items, &entity.LoadBalancerPackage{
 			UUID:             item.UUID,
 			Name:             item.Name,
 			Type:             item.Type,
@@ -139,7 +139,7 @@ func (s *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *l
 	return result
 }
 
-func (s *GetLoadBalancerByIdResponse) ToEntityLoadBalancer() *lsentity.LoadBalancer {
+func (s *GetLoadBalancerByIdResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
 	if s == nil {
 		return nil
 	}
@@ -147,18 +147,18 @@ func (s *GetLoadBalancerByIdResponse) ToEntityLoadBalancer() *lsentity.LoadBalan
 	return s.Data.toEntityLoadBalancer()
 }
 
-func (s *ListLoadBalancersResponse) ToEntityListLoadBalancers() *lsentity.ListLoadBalancers {
+func (s *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoadBalancers {
 	if s == nil || s.ListData == nil || len(s.ListData) < 1 {
-		return &lsentity.ListLoadBalancers{
+		return &entity.ListLoadBalancers{
 			Page:      0,
 			PageSize:  0,
 			TotalPage: 0,
 			TotalItem: 0,
-			Items:     make([]*lsentity.LoadBalancer, 0),
+			Items:     make([]*entity.LoadBalancer, 0),
 		}
 	}
 
-	result := &lsentity.ListLoadBalancers{
+	result := &entity.ListLoadBalancers{
 		Page:      s.Page,
 		PageSize:  s.PageSize,
 		TotalPage: s.TotalPage,
@@ -172,13 +172,13 @@ func (s *ListLoadBalancersResponse) ToEntityListLoadBalancers() *lsentity.ListLo
 	return result
 }
 
-func (s *LoadBalancer) toEntityLoadBalancer() *lsentity.LoadBalancer {
-	internal := lstr.TrimSpace(lstr.ToUpper(s.LoadBalancerSchema)) == "INTERNAL"
+func (s *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
+	internal := strings.TrimSpace(strings.ToUpper(s.LoadBalancerSchema)) == "INTERNAL"
 
 	// Convert nodes from response to entity
-	nodes := make([]*lsentity.Node, 0, len(s.Nodes))
+	nodes := make([]*entity.Node, 0, len(s.Nodes))
 	for _, node := range s.Nodes {
-		nodes = append(nodes, &lsentity.Node{
+		nodes = append(nodes, &entity.Node{
 			Status:   node.Status,
 			ZoneID:   node.ZoneID,
 			ZoneName: node.ZoneName,
@@ -186,7 +186,7 @@ func (s *LoadBalancer) toEntityLoadBalancer() *lsentity.LoadBalancer {
 		})
 	}
 
-	return &lsentity.LoadBalancer{
+	return &entity.LoadBalancer{
 		UUID:               s.UUID,
 		Name:               s.Name,
 		Address:            s.Address,

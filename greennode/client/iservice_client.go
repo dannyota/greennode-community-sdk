@@ -1,9 +1,9 @@
 package client
 
 import (
-	lreq "github.com/imroc/req/v3"
+	"github.com/imroc/req/v3"
 
-	lsdkErr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 type IServiceClient interface {
@@ -20,11 +20,11 @@ type IServiceClient interface {
 	GetZoneId() string
 	GetUserId() string
 
-	Post(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError)
-	Get(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError)
-	Delete(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError)
-	Put(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError)
-	Patch(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError)
+	Post(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	Get(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	Delete(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	Put(purl string, preq IRequest) (*req.Response, sdkerror.IError)
+	Patch(purl string, preq IRequest) (*req.Response, sdkerror.IError)
 }
 
 type ISdkAuthentication interface {

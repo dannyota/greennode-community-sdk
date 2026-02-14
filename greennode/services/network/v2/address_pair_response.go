@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetAllAddressPairByVirtualSubnetIdResponse struct {
 	Data []*AddressPairResponse `json:"data"`
@@ -21,8 +21,8 @@ type AddressPairResponse struct {
 	// DeletedAt       string `json:"deletedAt"`
 }
 
-func (s *AddressPairResponse) toAddressPair() *lsentity.AddressPair {
-	return &lsentity.AddressPair{
+func (s *AddressPairResponse) toAddressPair() *entity.AddressPair {
+	return &entity.AddressPair{
 		Id:                 s.UUID,
 		VirtualIpAddressId: s.VirtualIpAddressId,
 		VirtualSubnetId:    s.VirtualSubnetId,
@@ -32,8 +32,8 @@ func (s *AddressPairResponse) toAddressPair() *lsentity.AddressPair {
 	}
 }
 
-func (s *GetAllAddressPairByVirtualSubnetIdResponse) ToListAddressPair() []*lsentity.AddressPair {
-	addressPairs := make([]*lsentity.AddressPair, 0, len(s.Data))
+func (s *GetAllAddressPairByVirtualSubnetIdResponse) ToListAddressPair() []*entity.AddressPair {
+	addressPairs := make([]*entity.AddressPair, 0, len(s.Data))
 	for _, addressPair := range s.Data {
 		addressPairs = append(addressPairs, addressPair.toAddressPair())
 	}
@@ -44,7 +44,7 @@ type SetAddressPairInVirtualSubnetResponse struct {
 	Data *AddressPairResponse `json:"data"`
 }
 
-func (s *SetAddressPairInVirtualSubnetResponse) ToAddressPair() *lsentity.AddressPair {
+func (s *SetAddressPairInVirtualSubnetResponse) ToAddressPair() *entity.AddressPair {
 	return s.Data.toAddressPair()
 }
 
@@ -52,6 +52,6 @@ type CreateAddressPairResponse struct {
 	Data AddressPairResponse `json:"data"`
 }
 
-func (s *CreateAddressPairResponse) ToAddressPair() *lsentity.AddressPair {
+func (s *CreateAddressPairResponse) ToAddressPair() *entity.AddressPair {
 	return s.Data.toAddressPair()
 }

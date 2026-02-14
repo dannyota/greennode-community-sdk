@@ -1,10 +1,10 @@
 package v1
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
+	"fmt"
+	"net/url"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewGetVolumeTypeByIdRequest(pvolumeTypeId string) IGetVolumeTypeByIdRequest {
@@ -26,7 +26,7 @@ func NewGetVolumeTypeZonesRequest(zoneId string) IGetVolumeTypeZonesRequest {
 }
 
 type GetVolumeTypeByIdRequest struct {
-	lscommon.VolumeTypeCommon
+	common.VolumeTypeCommon
 }
 
 type GetVolumeTypeZonesRequest struct {
@@ -38,11 +38,11 @@ type GetListVolumeTypeRequest struct {
 }
 
 func (s *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("zoneId=%s", defaultZoneGetVolumeTypeZonesRequest)
+	return fmt.Sprintf("zoneId=%s", defaultZoneGetVolumeTypeZonesRequest)
 }
 
 func (s *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	if s.ZoneId != "" {
 		v.Set("zoneId", s.ZoneId)
 	}

@@ -1,12 +1,12 @@
 package v1
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstr "strings"
-	lstrconv "strconv"
+	"fmt"
+	"net/url"
+	"strings"
+	"strconv"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type (
@@ -26,7 +26,7 @@ func NewListGlobalLoadBalancersRequest(offset, limit int) IListGlobalLoadBalance
 		Name:   "",
 		Offset: offset,
 		Limit:  limit,
-		Tags:   make([]lscommon.Tag, 0),
+		Tags:   make([]common.Tag, 0),
 	}
 	return opts
 }
@@ -36,8 +36,8 @@ type ListGlobalLoadBalancersRequest struct {
 	Offset int
 	Limit  int
 
-	Tags []lscommon.Tag
-	lscommon.UserAgent
+	Tags []common.Tag
+	common.UserAgent
 }
 
 func (s *ListGlobalLoadBalancersRequest) WithName(pname string) IListGlobalLoadBalancersRequest {
@@ -47,7 +47,7 @@ func (s *ListGlobalLoadBalancersRequest) WithName(pname string) IListGlobalLoadB
 
 func (s *ListGlobalLoadBalancersRequest) WithTags(ptags ...string) IListGlobalLoadBalancersRequest {
 	if s.Tags == nil {
-		s.Tags = make([]lscommon.Tag, 0)
+		s.Tags = make([]common.Tag, 0)
 	}
 
 	if len(ptags)%2 != 0 {
@@ -55,17 +55,17 @@ func (s *ListGlobalLoadBalancersRequest) WithTags(ptags ...string) IListGlobalLo
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s
 }
 
 func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	v.Set("name", s.Name)
-	v.Set("offset", lstrconv.Itoa(s.Offset))
-	v.Set("limit", lstrconv.Itoa(s.Limit))
+	v.Set("offset", strconv.Itoa(s.Offset))
+	v.Set("limit", strconv.Itoa(s.Limit))
 
 	tuples := make([]string, 0, len(s.Tags))
 	for _, tag := range s.Tags {
@@ -81,14 +81,14 @@ func (s *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	}
 
 	if len(tuples) > 0 {
-		return v.Encode() + "&" + lstr.Join(tuples, "&"), nil
+		return v.Encode() + "&" + strings.Join(tuples, "&"), nil
 	}
 
 	return v.Encode(), nil
 }
 
 func (s *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("offset=%d&limit=%d", defaultOffsetListGlobalLoadBalancer, defaultLimitListGlobalLoadBalancer)
+	return fmt.Sprintf("offset=%d&limit=%d", defaultOffsetListGlobalLoadBalancer, defaultLimitListGlobalLoadBalancer)
 }
 
 func (s *ListGlobalLoadBalancersRequest) AddUserAgent(pagent ...string) IListGlobalLoadBalancersRequest {
@@ -109,7 +109,7 @@ type CreateGlobalLoadBalancerRequest struct {
 	GlobalListener ICreateGlobalListenerRequest  `json:"globalListener"`
 	GlobalPool     ICreateGlobalPoolRequest      `json:"globalPool"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateGlobalLoadBalancerRequest) WithDescription(pdesc string) ICreateGlobalLoadBalancerRequest {
@@ -184,8 +184,8 @@ func NewCreateGlobalLoadBalancerRequest(name string) ICreateGlobalLoadBalancerRe
 var _ IDeleteGlobalLoadBalancerRequest = &DeleteGlobalLoadBalancerRequest{}
 
 type DeleteGlobalLoadBalancerRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *DeleteGlobalLoadBalancerRequest) WithLoadBalancerId(plbId string) IDeleteGlobalLoadBalancerRequest {
@@ -200,7 +200,7 @@ func (s *DeleteGlobalLoadBalancerRequest) AddUserAgent(pagent ...string) IDelete
 
 func NewDeleteGlobalLoadBalancerRequest(lbId string) IDeleteGlobalLoadBalancerRequest {
 	opts := &DeleteGlobalLoadBalancerRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: lbId,
 		},
 	}
@@ -212,7 +212,7 @@ func NewDeleteGlobalLoadBalancerRequest(lbId string) IDeleteGlobalLoadBalancerRe
 var _ IListGlobalPackagesRequest = &ListGlobalPackagesRequest{}
 
 type ListGlobalPackagesRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListGlobalPackagesRequest) AddUserAgent(pagent ...string) IListGlobalPackagesRequest {
@@ -230,7 +230,7 @@ func NewListGlobalPackagesRequest() IListGlobalPackagesRequest {
 var _ IListGlobalRegionsRequest = &ListGlobalRegionsRequest{}
 
 type ListGlobalRegionsRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListGlobalRegionsRequest) AddUserAgent(pagent ...string) IListGlobalRegionsRequest {
@@ -252,8 +252,8 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	To   string
 	Type string
 
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerId(plbId string) IGetGlobalLoadBalancerUsageHistoriesRequest {
@@ -277,7 +277,7 @@ func (s *GetGlobalLoadBalancerUsageHistoriesRequest) WithType(ptype string) IGet
 }
 
 func (s *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	if s.From != "" {
 		v.Set("from", s.From)
 	}
@@ -304,7 +304,7 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbId, from, to, usageType str
 		From: from,
 		To:   to,
 		Type: usageType,
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: lbId,
 		},
 	}
@@ -316,8 +316,8 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbId, from, to, usageType str
 var _ IGetGlobalLoadBalancerByIdRequest = &GetGlobalLoadBalancerByIdRequest{}
 
 type GetGlobalLoadBalancerByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *GetGlobalLoadBalancerByIdRequest) WithLoadBalancerId(plbId string) IGetGlobalLoadBalancerByIdRequest {
@@ -332,7 +332,7 @@ func (s *GetGlobalLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IGetGl
 
 func NewGetGlobalLoadBalancerByIdRequest(lbId string) IGetGlobalLoadBalancerByIdRequest {
 	opts := &GetGlobalLoadBalancerByIdRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: lbId,
 		},
 	}

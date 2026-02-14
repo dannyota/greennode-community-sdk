@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetNetworkByIdResponse struct {
 	Status      string   `json:"status"`
@@ -11,8 +11,8 @@ type GetNetworkByIdResponse struct {
 	Cidr        string   `json:"cidr"`
 }
 
-func (s *GetNetworkByIdResponse) ToEntityNetwork() *lsentity.Network {
-	return &lsentity.Network{
+func (s *GetNetworkByIdResponse) ToEntityNetwork() *entity.Network {
+	return &entity.Network{
 		Status:     s.Status,
 		ElasticIps: s.ElasticIps,
 		Name:       s.DisplayName,

@@ -1,89 +1,89 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *VDnsServiceV1) ListRecords(popts IListRecordsRequest) (*lsentity.ListDnsRecords, lserr.IError) {
+func (s *VDnsServiceV1) ListRecords(popts IListRecordsRequest) (*entity.ListDnsRecords, sdkerror.IError) {
 	url := listRecordsUrl(s.DnsClient, popts)
 	resp := new(ListRecordsResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListRecords(), nil
 }
 
-func (s *VDnsServiceV1) GetRecord(popts IGetRecordRequest) (*lsentity.DnsRecord, lserr.IError) {
+func (s *VDnsServiceV1) GetRecord(popts IGetRecordRequest) (*entity.DnsRecord, sdkerror.IError) {
 	url := getRecordUrl(s.DnsClient, popts)
 	resp := new(GetRecordResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil
 }
 
-func (s *VDnsServiceV1) UpdateRecord(popts IUpdateRecordRequest) lserr.IError {
+func (s *VDnsServiceV1) UpdateRecord(popts IUpdateRecordRequest) sdkerror.IError {
 	url := updateRecordUrl(s.DnsClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonBody(popts.ToRequestBody(s.DnsClient)).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
 }
 
-func (s *VDnsServiceV1) DeleteRecord(popts IDeleteRecordRequest) lserr.IError {
+func (s *VDnsServiceV1) DeleteRecord(popts IDeleteRecordRequest) sdkerror.IError {
 	url := deleteRecordUrl(s.DnsClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
 }
 
-func (s *VDnsServiceV1) CreateDnsRecord(popts ICreateDnsRecordRequest) (*lsentity.DnsRecord, lserr.IError) {
+func (s *VDnsServiceV1) CreateDnsRecord(popts ICreateDnsRecordRequest) (*entity.DnsRecord, sdkerror.IError) {
 	url := createDnsRecordUrl(s.DnsClient, popts)
 	resp := new(CreateDnsRecordResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonBody(popts.ToRequestBody(s.DnsClient)).
@@ -91,9 +91,9 @@ func (s *VDnsServiceV1) CreateDnsRecord(popts ICreateDnsRecordRequest) (*lsentit
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil

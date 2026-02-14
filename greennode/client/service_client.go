@@ -1,11 +1,11 @@
 package client
 
 import (
-	lstr "strings"
-	ltime "time"
+	"strings"
+	"time"
 
-	lreq "github.com/imroc/req/v3"
-	lsdkErr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/imroc/req/v3"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 type serviceClient struct {
@@ -63,26 +63,26 @@ func (s *serviceClient) WithClient(pclient IHttpClient) IServiceClient {
 }
 
 func (s *serviceClient) ServiceURL(pparts ...string) string {
-	return s.endpoint + lstr.Join(pparts, "/")
+	return s.endpoint + strings.Join(pparts, "/")
 }
 
-func (s *serviceClient) Post(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError) {
+func (s *serviceClient) Post(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	return s.client.DoRequest(purl, preq.WithRequestMethod(MethodPost))
 }
 
-func (s *serviceClient) Get(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError) {
+func (s *serviceClient) Get(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	return s.client.DoRequest(purl, preq.WithRequestMethod(MethodGet))
 }
 
-func (s *serviceClient) Delete(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError) {
+func (s *serviceClient) Delete(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	return s.client.DoRequest(purl, preq.WithRequestMethod(MethodDelete))
 }
 
-func (s *serviceClient) Put(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError) {
+func (s *serviceClient) Put(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	return s.client.DoRequest(purl, preq.WithRequestMethod(MethodPut))
 }
 
-func (s *serviceClient) Patch(purl string, preq IRequest) (*lreq.Response, lsdkErr.IError) {
+func (s *serviceClient) Patch(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	return s.client.DoRequest(purl, preq.WithRequestMethod(MethodPatch))
 }
 
@@ -118,8 +118,8 @@ func (s *SdkAuthentication) NeedReauth() bool {
 		return true
 	}
 
-	ea := ltime.Unix(0, s.expiresAt)
-	return ltime.Until(ea) < 5*ltime.Minute
+	ea := time.Unix(0, s.expiresAt)
+	return time.Until(ea) < 5*time.Minute
 }
 
 func (s *SdkAuthentication) UpdateAuth(pauth ISdkAuthentication) {
@@ -136,7 +136,7 @@ func (s *SdkAuthentication) GetExpiresAt() int64 {
 }
 
 func normalizeURL(u string) string {
-	if !lstr.HasSuffix(u, "/") {
+	if !strings.HasSuffix(u, "/") {
 		return u + "/"
 	}
 	return u

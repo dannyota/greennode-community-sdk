@@ -1,15 +1,15 @@
 package gateway
 
 import (
-	lscomputeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
-	lsdnsSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
-	lsidentitySvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity"
-	lslbSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
-	lsnetworkSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
-	lsportalSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
-	lsServerSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
-	lsvolumeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
 type IIamGateway interface {
@@ -17,7 +17,7 @@ type IIamGateway interface {
 }
 
 type IIamGatewayV2 interface {
-	IdentityService() lsidentitySvc.IIdentityServiceV2
+	IdentityService() identity.IIdentityServiceV2
 }
 
 type IVServerGateway interface {
@@ -36,39 +36,39 @@ type IVNetworkGateway interface {
 }
 
 type IVServerGatewayV1 interface {
-	PortalService() lsportalSvc.IPortalServiceV1
-	VolumeService() lsvolumeSvc.IVolumeServiceV1
+	PortalService() portal.IPortalServiceV1
+	VolumeService() volume.IVolumeServiceV1
 }
 
 type IVServerGatewayInternalV1 interface {
-	ServerService() lsServerSvc.IServerServiceInternalV1
+	ServerService() server.IServerServiceInternalV1
 }
 
 type IVServerGatewayV2 interface {
-	NetworkService() lsnetworkSvc.INetworkServiceV2
-	ComputeService() lscomputeSvc.IComputeServiceV2
-	PortalService() lsportalSvc.IPortalServiceV2
-	VolumeService() lsvolumeSvc.IVolumeServiceV2
+	NetworkService() network.INetworkServiceV2
+	ComputeService() compute.IComputeServiceV2
+	PortalService() portal.IPortalServiceV2
+	VolumeService() volume.IVolumeServiceV2
 }
 
 type IVLBGatewayV2 interface {
-	LoadBalancerService() lslbSvc.ILoadBalancerServiceV2
+	LoadBalancerService() loadbalancer.ILoadBalancerServiceV2
 }
 
 type IVNetworkGatewayV1 interface {
-	NetworkService() lsnetworkSvc.INetworkServiceV1
+	NetworkService() network.INetworkServiceV1
 }
 
 type IVNetworkGatewayV2 interface {
-	NetworkService() lsnetworkSvc.INetworkServiceV2
+	NetworkService() network.INetworkServiceV2
 }
 
 type IVNetworkGatewayInternalV1 interface {
-	NetworkService() lsnetworkSvc.INetworkServiceInternalV1
+	NetworkService() network.INetworkServiceInternalV1
 }
 
 type IVLBGatewayInternal interface {
-	LoadBalancerService() lslbSvc.ILoadBalancerServiceInternal
+	LoadBalancerService() loadbalancer.ILoadBalancerServiceInternal
 }
 
 type IVLBGateway interface {
@@ -94,9 +94,9 @@ type IVDnsGateway interface {
 }
 
 type IVDnsGatewayV1 interface {
-	DnsService() lsdnsSvc.IVDnsServiceV1
+	DnsService() dns.IVDnsServiceV1
 }
 
 type IVDnsGatewayInternal interface {
-	DnsService() lsdnsSvc.IVDnsServiceInternal
+	DnsService() dns.IVDnsServiceInternal
 }

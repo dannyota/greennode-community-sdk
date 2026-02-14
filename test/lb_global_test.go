@@ -1,13 +1,13 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
-func TestListGlobalPoolsSuccess(t *ltesting.T) {
+func TestListGlobalPoolsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalPoolsRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
 	pools, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalPools(opt)
@@ -27,7 +27,7 @@ func TestListGlobalPoolsSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateGlobalPoolSuccess(t *ltesting.T) {
+func TestCreateGlobalPoolSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePublic)
@@ -54,7 +54,7 @@ func TestCreateGlobalPoolSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateGlobalPoolHTTPSSuccess(t *ltesting.T) {
+func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePrivate)
@@ -63,11 +63,11 @@ func TestCreateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-				WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(lscommon.Ptr("/sfdsaf")).
-				WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
-				WithSuccessCode(lscommon.Ptr("200")).
-				WithDomainName(lscommon.Ptr("example.com")),
+				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
+				WithPath(common.Ptr("/sfdsaf")).
+				WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithSuccessCode(common.Ptr("200")).
+				WithDomainName(common.Ptr("example.com")),
 		).
 		WithMembers(poolMember)
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
@@ -88,13 +88,13 @@ func TestCreateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateGlobalPoolHTTPSSuccess(t *ltesting.T) {
+func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-		WithDomainName(lscommon.Ptr("exampleee.com")).
-		WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
-		WithPath(lscommon.Ptr("/hghjgj")).
-		WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1))
+		WithDomainName(common.Ptr("exampleee.com")).
+		WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
+		WithPath(common.Ptr("/hghjgj")).
+		WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1))
 	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
 		WithHealthMonitor(httpMonitor)
 
@@ -116,7 +116,7 @@ func TestUpdateGlobalPoolHTTPSSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteGlobalPoolSuccess(t *ltesting.T) {
+func TestDeleteGlobalPoolSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-1ffbe2f4-0bb5-4272-afe9-0dfa8a4365df")
 	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalPool(opt)
@@ -132,7 +132,7 @@ func TestDeleteGlobalPoolSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListGlobalPoolMembersSuccess(t *ltesting.T) {
+func TestListGlobalPoolMembersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalPoolMembersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-0f4ba08b-e09d-4a1c-b953-523179cea006")
 	members, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalPoolMembers(opt)
@@ -154,7 +154,7 @@ func TestListGlobalPoolMembersSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestPatchGlobalPoolMemberSuccess(t *ltesting.T) {
+func TestPatchGlobalPoolMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	createAction := v1.NewPatchGlobalPoolCreateBulkActionRequest(
 		v1.NewGlobalPoolMemberRequest("patch_name", "hcm", "net-86b7c84a-b3dd-4e6a-b66b-d28f36f3fc5f", 100, v1.GlobalPoolMemberTypePublic).
@@ -184,7 +184,7 @@ func TestPatchGlobalPoolMemberSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListGlobalListenersSuccess(t *ltesting.T) {
+func TestListGlobalListenersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalListenersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
 	listeners, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalListeners(opt)
@@ -203,7 +203,7 @@ func TestListGlobalListenersSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateGlobalListenerSuccess(t *ltesting.T) {
+func TestCreateGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "annd2-test").
 		WithDescription("hihi").
@@ -225,7 +225,7 @@ func TestCreateGlobalListenerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateGlobalListenerSuccess(t *ltesting.T) {
+func TestUpdateGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewUpdateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "glis-7ffc4f19-7218-4d38-8016-e3ad2401e3bd").
 		WithTimeoutClient(60).
@@ -245,7 +245,7 @@ func TestUpdateGlobalListenerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteGlobalListenerSuccess(t *ltesting.T) {
+func TestDeleteGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "glis-7ffc4f19-7218-4d38-8016-e3ad2401e3bd")
 	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalListener(opt)
@@ -258,7 +258,7 @@ func TestDeleteGlobalListenerSuccess(t *ltesting.T) {
 
 // --------------------------------------------------
 
-func TestListGlobalLoadBalancerSuccess(t *ltesting.T) {
+func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalLoadBalancersRequest(0, 10)
 	lbs, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalLoadBalancers(opt)
@@ -283,16 +283,16 @@ func TestListGlobalLoadBalancerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateGlobalLoadBalancerSuccess(t *ltesting.T) {
+func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 	pool := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerId("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
-				WithHealthCheckMethod(lscommon.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(lscommon.Ptr("/sfdsaf")).
-				WithHttpVersion(lscommon.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
-				WithSuccessCode(lscommon.Ptr("200")).
-				WithDomainName(lscommon.Ptr("example.com")),
+				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
+				WithPath(common.Ptr("/sfdsaf")).
+				WithHttpVersion(common.Ptr(v1.GlobalPoolHealthCheckHttpVersionHttp1Minor1)).
+				WithSuccessCode(common.Ptr("200")).
+				WithDomainName(common.Ptr("example.com")),
 		).
 		WithMembers(
 			v1.NewGlobalPoolMemberRequest(
@@ -331,7 +331,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteGlobalLoadBalancerSuccess(t *ltesting.T) {
+func TestDeleteGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalLoadBalancerRequest("glb-3fd57a7e-7bb3-4152-a329-adba6d779c4a")
 	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalLoadBalancer(opt)
@@ -342,7 +342,7 @@ func TestDeleteGlobalLoadBalancerSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetGlobalLoadBalancerSuccess(t *ltesting.T) {
+func TestGetGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewGetGlobalLoadBalancerByIdRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
 	lb, sdkerr := vngcloud.GLBGateway().V1().GLBService().GetGlobalLoadBalancerById(opt)

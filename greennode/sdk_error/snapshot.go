@@ -1,6 +1,6 @@
 package sdk_error
 
-import lstr "strings"
+import "strings"
 
 const (
 	patternSnapshotNameNotValid = "only letters (a-z, a-z, 0-9, '.', '@', '_', '-', space) are allowed. your input data length must be between 5 and 50" // "Volume name is not valid"
@@ -14,7 +14,7 @@ func WithErrorSnapshotNameNotValid(perrResp IErrorRespone) func(sdkError IError)
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSnapshotNameNotValid) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNameNotValid) {
 			sdkError.WithErrorCode(EcVServerSnapshotNameNotValid).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -29,7 +29,7 @@ func WithErrorSnapshotNameNotFound(perrResp IErrorRespone) func(sdkError IError)
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternSnapshotNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNotFound) {
 			sdkError.WithErrorCode(EcVServerSnapshotNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())

@@ -1,6 +1,6 @@
 package sdk_error
 
-import lfmt "fmt"
+import "fmt"
 
 type (
 	IamErrorResponse struct {
@@ -61,7 +61,7 @@ func (s *IamErrorResponse) GetError() error {
 		return nil
 	}
 
-	return lfmt.Errorf("%s", s.Errors[0].Code)
+	return fmt.Errorf("%s", s.Errors[0].Code)
 }
 
 func (s *NormalErrorResponse) GetMessage() string {
@@ -69,15 +69,15 @@ func (s *NormalErrorResponse) GetMessage() string {
 }
 
 func (s *NormalErrorResponse) GetError() error {
-	return lfmt.Errorf("%s", s.Message)
+	return fmt.Errorf("%s", s.Message)
 }
 
 func (s *NetworkGatewayErrorResponse) GetMessage() string {
-	return lfmt.Sprintf("%s/%d/%s", s.ErrorCode, s.Code, s.Message)
+	return fmt.Sprintf("%s/%d/%s", s.ErrorCode, s.Code, s.Message)
 }
 
 func (s *NetworkGatewayErrorResponse) GetError() error {
-	return lfmt.Errorf("%s", s.ErrorCode)
+	return fmt.Errorf("%s", s.ErrorCode)
 }
 
 func (s *GlobalLoadBalancerErrorResponse) GetMessage() string {
@@ -85,5 +85,5 @@ func (s *GlobalLoadBalancerErrorResponse) GetMessage() string {
 }
 
 func (s *GlobalLoadBalancerErrorResponse) GetError() error {
-	return lfmt.Errorf("%s", s.Code)
+	return fmt.Errorf("%s", s.Code)
 }

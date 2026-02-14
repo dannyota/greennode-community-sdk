@@ -1,14 +1,14 @@
 package v2
 
-import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createLoadBalancerUrl(psc lsclient.IServiceClient) string {
+func createLoadBalancerUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers")
 }
 
-func resizeLoadBalancerUrl(psc lsclient.IServiceClient, popts IResizeLoadBalancerRequest) string {
+func resizeLoadBalancerUrl(psc client.IServiceClient, popts IResizeLoadBalancerRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -16,20 +16,20 @@ func resizeLoadBalancerUrl(psc lsclient.IServiceClient, popts IResizeLoadBalance
 		"resize")
 }
 
-func listLoadBalancerPackagesUrl(psc lsclient.IServiceClient, popts IListLoadBalancerPackagesRequest) string {
+func listLoadBalancerPackagesUrl(psc client.IServiceClient, popts IListLoadBalancerPackagesRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers", "packages") + "?zoneId=" + popts.GetZoneId()
 }
 
-func getLoadBalancerByIdUrl(psc lsclient.IServiceClient, popts IGetLoadBalancerByIdRequest) string {
+func getLoadBalancerByIdUrl(psc client.IServiceClient, popts IGetLoadBalancerByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
 		popts.GetLoadBalancerId())
 }
 
-func listLoadBalancersUrl(psc lsclient.IServiceClient, popts IListLoadBalancersRequest) string {
+func listLoadBalancersUrl(psc client.IServiceClient, popts IListLoadBalancersRequest) string {
 	query, err := popts.ToListQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -38,7 +38,7 @@ func listLoadBalancersUrl(psc lsclient.IServiceClient, popts IListLoadBalancersR
 	return psc.ServiceURL(psc.GetProjectId(), "loadBalancers") + query
 }
 
-func getPoolHealthMonitorByIdUrl(psc lsclient.IServiceClient, popts IGetPoolHealthMonitorByIdRequest) string {
+func getPoolHealthMonitorByIdUrl(psc client.IServiceClient, popts IGetPoolHealthMonitorByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -48,7 +48,7 @@ func getPoolHealthMonitorByIdUrl(psc lsclient.IServiceClient, popts IGetPoolHeal
 		"healthMonitor")
 }
 
-func createPoolUrl(psc lsclient.IServiceClient, popts ICreatePoolRequest) string {
+func createPoolUrl(psc client.IServiceClient, popts ICreatePoolRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -56,7 +56,7 @@ func createPoolUrl(psc lsclient.IServiceClient, popts ICreatePoolRequest) string
 		"pools")
 }
 
-func updatePoolUrl(psc lsclient.IServiceClient, popts IUpdatePoolRequest) string {
+func updatePoolUrl(psc client.IServiceClient, popts IUpdatePoolRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -65,7 +65,7 @@ func updatePoolUrl(psc lsclient.IServiceClient, popts IUpdatePoolRequest) string
 		popts.GetPoolId())
 }
 
-func createListenerUrl(psc lsclient.IServiceClient, popts ICreateListenerRequest) string {
+func createListenerUrl(psc client.IServiceClient, popts ICreateListenerRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -73,7 +73,7 @@ func createListenerUrl(psc lsclient.IServiceClient, popts ICreateListenerRequest
 		"listeners")
 }
 
-func updateListenerUrl(psc lsclient.IServiceClient, popts IUpdateListenerRequest) string {
+func updateListenerUrl(psc client.IServiceClient, popts IUpdateListenerRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -82,7 +82,7 @@ func updateListenerUrl(psc lsclient.IServiceClient, popts IUpdateListenerRequest
 		popts.GetListenerId())
 }
 
-func listListenersByLoadBalancerIdUrl(psc lsclient.IServiceClient, popts IListListenersByLoadBalancerIdRequest) string {
+func listListenersByLoadBalancerIdUrl(psc client.IServiceClient, popts IListListenersByLoadBalancerIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -90,7 +90,7 @@ func listListenersByLoadBalancerIdUrl(psc lsclient.IServiceClient, popts IListLi
 		"listeners")
 }
 
-func listPoolsByLoadBalancerIdUrl(psc lsclient.IServiceClient, popts IListPoolsByLoadBalancerIdRequest) string {
+func listPoolsByLoadBalancerIdUrl(psc client.IServiceClient, popts IListPoolsByLoadBalancerIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -98,7 +98,7 @@ func listPoolsByLoadBalancerIdUrl(psc lsclient.IServiceClient, popts IListPoolsB
 		"pools")
 }
 
-func updatePoolMembersUrl(psc lsclient.IServiceClient, popts IUpdatePoolMembersRequest) string {
+func updatePoolMembersUrl(psc client.IServiceClient, popts IUpdatePoolMembersRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -108,7 +108,7 @@ func updatePoolMembersUrl(psc lsclient.IServiceClient, popts IUpdatePoolMembersR
 		"members")
 }
 
-func listPoolMembersUrl(psc lsclient.IServiceClient, popts IListPoolMembersRequest) string {
+func listPoolMembersUrl(psc client.IServiceClient, popts IListPoolMembersRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -118,7 +118,7 @@ func listPoolMembersUrl(psc lsclient.IServiceClient, popts IListPoolMembersReque
 		"members")
 }
 
-func deletePoolByIdUrl(psc lsclient.IServiceClient, popts IDeletePoolByIdRequest) string {
+func deletePoolByIdUrl(psc client.IServiceClient, popts IDeletePoolByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -127,7 +127,7 @@ func deletePoolByIdUrl(psc lsclient.IServiceClient, popts IDeletePoolByIdRequest
 		popts.GetPoolId())
 }
 
-func deleteListenerByIdUrl(psc lsclient.IServiceClient, popts IDeleteListenerByIdRequest) string {
+func deleteListenerByIdUrl(psc client.IServiceClient, popts IDeleteListenerByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -136,14 +136,14 @@ func deleteListenerByIdUrl(psc lsclient.IServiceClient, popts IDeleteListenerByI
 		popts.GetListenerId())
 }
 
-func deleteLoadBalancerByIdUrl(psc lsclient.IServiceClient, popts IDeleteLoadBalancerByIdRequest) string {
+func deleteLoadBalancerByIdUrl(psc client.IServiceClient, popts IDeleteLoadBalancerByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
 		popts.GetLoadBalancerId())
 }
 
-func listTagsUrl(psc lsclient.IServiceClient, popts IListTagsRequest) string {
+func listTagsUrl(psc client.IServiceClient, popts IListTagsRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"tag",
@@ -151,7 +151,7 @@ func listTagsUrl(psc lsclient.IServiceClient, popts IListTagsRequest) string {
 		popts.GetLoadBalancerId())
 }
 
-func createTagsUrl(psc lsclient.IServiceClient, popts ICreateTagsRequest) string {
+func createTagsUrl(psc client.IServiceClient, popts ICreateTagsRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"tag",
@@ -159,7 +159,7 @@ func createTagsUrl(psc lsclient.IServiceClient, popts ICreateTagsRequest) string
 		popts.GetLoadBalancerId())
 }
 
-func updateTagsUrl(psc lsclient.IServiceClient, popts IUpdateTagsRequest) string {
+func updateTagsUrl(psc client.IServiceClient, popts IUpdateTagsRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"tag",
@@ -169,7 +169,7 @@ func updateTagsUrl(psc lsclient.IServiceClient, popts IUpdateTagsRequest) string
 
 // Policy
 
-func listPoliciesUrl(psc lsclient.IServiceClient, popts IListPoliciesRequest) string {
+func listPoliciesUrl(psc client.IServiceClient, popts IListPoliciesRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -180,7 +180,7 @@ func listPoliciesUrl(psc lsclient.IServiceClient, popts IListPoliciesRequest) st
 	)
 }
 
-func createPolicyUrl(psc lsclient.IServiceClient, popts ICreatePolicyRequest) string {
+func createPolicyUrl(psc client.IServiceClient, popts ICreatePolicyRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -191,19 +191,7 @@ func createPolicyUrl(psc lsclient.IServiceClient, popts ICreatePolicyRequest) st
 	)
 }
 
-func getPolicyByIdUrl(psc lsclient.IServiceClient, popts IGetPolicyByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
-		"loadBalancers",
-		popts.GetLoadBalancerId(),
-		"listeners",
-		popts.GetListenerId(),
-		"l7policies",
-		popts.GetPolicyId(),
-	)
-}
-
-func updatePolicyUrl(psc lsclient.IServiceClient, popts IUpdatePolicyRequest) string {
+func getPolicyByIdUrl(psc client.IServiceClient, popts IGetPolicyByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -215,7 +203,7 @@ func updatePolicyUrl(psc lsclient.IServiceClient, popts IUpdatePolicyRequest) st
 	)
 }
 
-func deletePolicyByIdUrl(psc lsclient.IServiceClient, popts IDeletePolicyByIdRequest) string {
+func updatePolicyUrl(psc client.IServiceClient, popts IUpdatePolicyRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -227,7 +215,19 @@ func deletePolicyByIdUrl(psc lsclient.IServiceClient, popts IDeletePolicyByIdReq
 	)
 }
 
-func reorderPoliciesUrl(psc lsclient.IServiceClient, popts IReorderPoliciesRequest) string {
+func deletePolicyByIdUrl(psc client.IServiceClient, popts IDeletePolicyByIdRequest) string {
+	return psc.ServiceURL(
+		psc.GetProjectId(),
+		"loadBalancers",
+		popts.GetLoadBalancerId(),
+		"listeners",
+		popts.GetListenerId(),
+		"l7policies",
+		popts.GetPolicyId(),
+	)
+}
+
+func reorderPoliciesUrl(psc client.IServiceClient, popts IReorderPoliciesRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -237,7 +237,7 @@ func reorderPoliciesUrl(psc lsclient.IServiceClient, popts IReorderPoliciesReque
 		"reorderL7Policies")
 }
 
-func getPoolByIdUrl(psc lsclient.IServiceClient, popts IGetPoolByIdRequest) string {
+func getPoolByIdUrl(psc client.IServiceClient, popts IGetPoolByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -246,7 +246,7 @@ func getPoolByIdUrl(psc lsclient.IServiceClient, popts IGetPoolByIdRequest) stri
 		popts.GetPoolId())
 }
 
-func getListenerByIdUrl(psc lsclient.IServiceClient, popts IGetListenerByIdRequest) string {
+func getListenerByIdUrl(psc client.IServiceClient, popts IGetListenerByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -255,7 +255,7 @@ func getListenerByIdUrl(psc lsclient.IServiceClient, popts IGetListenerByIdReque
 		popts.GetListenerId())
 }
 
-func resizeLoadBalancerByIdUrl(psc lsclient.IServiceClient, popts IResizeLoadBalancerByIdRequest) string {
+func resizeLoadBalancerByIdUrl(psc client.IServiceClient, popts IResizeLoadBalancerByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -263,7 +263,7 @@ func resizeLoadBalancerByIdUrl(psc lsclient.IServiceClient, popts IResizeLoadBal
 		"resize")
 }
 
-func scaleLoadBalancerUrl(psc lsclient.IServiceClient, popts IScaleLoadBalancerRequest) string {
+func scaleLoadBalancerUrl(psc client.IServiceClient, popts IScaleLoadBalancerRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"loadBalancers",
@@ -273,26 +273,26 @@ func scaleLoadBalancerUrl(psc lsclient.IServiceClient, popts IScaleLoadBalancerR
 
 // --------------------------------------------------------
 
-func listCertificatesUrl(psc lsclient.IServiceClient) string {
+func listCertificatesUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"cas")
 }
 
-func createCertificateUrl(psc lsclient.IServiceClient) string {
+func createCertificateUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"cas")
 }
 
-func getCertificateByIdUrl(psc lsclient.IServiceClient, popts IGetCertificateByIdRequest) string {
+func getCertificateByIdUrl(psc client.IServiceClient, popts IGetCertificateByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"cas",
 		popts.GetCertificateId())
 }
 
-func deleteCertificateByIdUrl(psc lsclient.IServiceClient, popts IDeleteCertificateByIdRequest) string {
+func deleteCertificateByIdUrl(psc client.IServiceClient, popts IDeleteCertificateByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"cas",

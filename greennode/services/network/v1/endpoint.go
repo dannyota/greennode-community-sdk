@@ -1,37 +1,37 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *NetworkServiceV1) GetEndpointById(popts IGetEndpointByIdRequest) (*lsentity.Endpoint, lserr.IError) {
+func (s *NetworkServiceV1) GetEndpointById(popts IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.IError) {
 	url := getEndpointByIdUrl(s.VNetworkClient, popts)
 	resp := new(GetEndpointByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		// WithUserId(s.getUserId()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"endpointId", popts.GetEndpointId(),
 				"projectId", s.getProjectId()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*lsentity.Endpoint, lserr.IError) {
+func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError) {
 	url := createEndpointUrl(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithOkCodes(201).
 		WithUserId(popts.GetPortalUserId()).
 		WithJsonBody(popts.ToRequestBody(s.VNetworkClient)).
@@ -39,27 +39,27 @@ func (s *NetworkServiceV1) CreateEndpoint(popts ICreateEndpointRequest) (*lsenti
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointOfVpcExists(errResp),
-			lserr.WithErrorLockOnProcess(errResp),
-			lserr.WithErrorNetworkNotFound(errResp),
-			lserr.WithErrorPurchaseIssue(errResp),
-			lserr.WithErrorPaymentMethodNotAllow(errResp),
-			lserr.WithErrorCreditNotEnough(errResp),
-			lserr.WithErrorSubnetNotFound(errResp),
-			lserr.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
-			lserr.WithErrorContainInvalidCharacter(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointOfVpcExists(errResp),
+			sdkerror.WithErrorLockOnProcess(errResp),
+			sdkerror.WithErrorNetworkNotFound(errResp),
+			sdkerror.WithErrorPurchaseIssue(errResp),
+			sdkerror.WithErrorPaymentMethodNotAllow(errResp),
+			sdkerror.WithErrorCreditNotEnough(errResp),
+			sdkerror.WithErrorSubnetNotFound(errResp),
+			sdkerror.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
+			sdkerror.WithErrorContainInvalidCharacter(errResp)).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) lserr.IError {
+func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) sdkerror.IError {
 	url := deleteEndpointByIdUrl(s.VNetworkClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonBody(popts.ToRequestBody(s.VNetworkClient)).
@@ -67,22 +67,22 @@ func (s *NetworkServiceV1) DeleteEndpointById(popts IDeleteEndpointByIdRequest) 
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointStatusInvalid(errResp),
-			lserr.WithErrorNetworkNotFound(errResp),
-			lserr.WithErrorSubnetNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointStatusInvalid(errResp),
+			sdkerror.WithErrorNetworkNotFound(errResp),
+			sdkerror.WithErrorSubnetNotFound(errResp)).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*lsentity.ListEndpoints, lserr.IError) {
+func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.IError) {
 	url := listEndpointsUrl(s.VNetworkClient, popts)
 	resp := new(ListEndpointsResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		// WithUserId(s.getUserId()).
@@ -90,10 +90,10 @@ func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*lsentity
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectId()).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityListEndpoints(), nil
@@ -101,11 +101,11 @@ func (s *NetworkServiceV1) ListEndpoints(popts IListEndpointsRequest) (*lsentity
 
 // ________________________________________________________________________ NetworkServiceInternalV1
 
-func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpointIdRequest) (*lsentity.ListTags, lserr.IError) {
+func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.IError) {
 	url := listTagsByEndpointIdUrl(s.VNetworkClient, popts)
 	resp := new(ListTagsByEndpointIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithMapHeaders(popts.GetMapHeaders()).
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
@@ -113,19 +113,19 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointId(popts IListTagsByEndpoin
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectId()).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWithEndpointIdRequest) lserr.IError {
+func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWithEndpointIdRequest) sdkerror.IError {
 	url := createTagsWithEndpointIdUrl(s.VNetworkClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithMapHeaders(popts.GetMapHeaders()).
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
@@ -133,41 +133,41 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointId(popts ICreateTagsWit
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointTagExisted(errResp),
-			lserr.WithErrorEndpointTagNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointTagExisted(errResp),
+			sdkerror.WithErrorEndpointTagNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId()).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(popts IDeleteTagOfEndpointRequest) lserr.IError {
+func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(popts IDeleteTagOfEndpointRequest) sdkerror.IError {
 	url := deleteTagOfEndpointUrl(s.VNetworkClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithMapHeaders(popts.GetMapHeaders()).
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointTagNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointTagNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId()).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValueOfEndpointRequest) lserr.IError {
+func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValueOfEndpointRequest) sdkerror.IError {
 	url := updateTagValueOfEndpointUrl(s.VNetworkClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithMapHeaders(popts.GetMapHeaders()).
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
@@ -175,21 +175,21 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(popts IUpdateTagValu
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointTagNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointTagNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId()).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) CreateEndpoint(popts ICreateEndpointRequest) (*lsentity.Endpoint, lserr.IError) {
+func (s *NetworkServiceInternalV1) CreateEndpoint(popts ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError) {
 	url := createEndpointUrl(s.VNetworkClient)
 	resp := new(CreateEndpointResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithOkCodes(201).
 		// WithUserId(s.getUserId()).
 		WithJsonBody(popts.ToRequestBody(s.VNetworkClient)).
@@ -197,18 +197,18 @@ func (s *NetworkServiceInternalV1) CreateEndpoint(popts ICreateEndpointRequest) 
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorEndpointOfVpcExists(errResp),
-			lserr.WithErrorLockOnProcess(errResp),
-			lserr.WithErrorNetworkNotFound(errResp),
-			lserr.WithErrorPurchaseIssue(errResp),
-			lserr.WithErrorPaymentMethodNotAllow(errResp),
-			lserr.WithErrorCreditNotEnough(errResp),
-			lserr.WithErrorSubnetNotFound(errResp),
-			lserr.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
-			lserr.WithErrorContainInvalidCharacter(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorEndpointOfVpcExists(errResp),
+			sdkerror.WithErrorLockOnProcess(errResp),
+			sdkerror.WithErrorNetworkNotFound(errResp),
+			sdkerror.WithErrorPurchaseIssue(errResp),
+			sdkerror.WithErrorPaymentMethodNotAllow(errResp),
+			sdkerror.WithErrorCreditNotEnough(errResp),
+			sdkerror.WithErrorSubnetNotFound(errResp),
+			sdkerror.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
+			sdkerror.WithErrorContainInvalidCharacter(errResp)).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVNetwork)
+			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil

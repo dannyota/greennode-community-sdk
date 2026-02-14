@@ -1,8 +1,8 @@
 package sdk_error
 
 import (
-	lregexp "regexp"
-	lstr "strings"
+	"regexp"
+	"strings"
 )
 
 const (
@@ -29,13 +29,13 @@ const (
 )
 
 var (
-	regexErrorLoadBalancerNotReady            = lregexp.MustCompile(patternLoadBalancerNotReady)
-	regexErrorListenerNotReady                = lregexp.MustCompile(patternListenerNotReady)
-	regexErrorPoolIsUpdating                  = lregexp.MustCompile(patternPoolIsUpdating)
-	regexErrorLoadBalancerIsDeleting          = lregexp.MustCompile(patternLoadBalancerIsDeleting)
-	regexErrorLoadBalancerIsCreating          = lregexp.MustCompile(patternLoadBalancerIsCreating)
-	regexErrorLoadBalancerIsUpdating          = lregexp.MustCompile(patternLoadBalancerIsUpdating)
-	regexErrorListenerNotBelongToLoadBalancer = lregexp.MustCompile(patternListenerNotBelongToLoadBalancer)
+	regexErrorLoadBalancerNotReady            = regexp.MustCompile(patternLoadBalancerNotReady)
+	regexErrorListenerNotReady                = regexp.MustCompile(patternListenerNotReady)
+	regexErrorPoolIsUpdating                  = regexp.MustCompile(patternPoolIsUpdating)
+	regexErrorLoadBalancerIsDeleting          = regexp.MustCompile(patternLoadBalancerIsDeleting)
+	regexErrorLoadBalancerIsCreating          = regexp.MustCompile(patternLoadBalancerIsCreating)
+	regexErrorLoadBalancerIsUpdating          = regexp.MustCompile(patternLoadBalancerIsUpdating)
+	regexErrorListenerNotBelongToLoadBalancer = regexp.MustCompile(patternListenerNotBelongToLoadBalancer)
 )
 
 func WithErrorLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError IError) {
@@ -45,8 +45,8 @@ func WithErrorLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError IError)
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerNotBelongToProject) ||
-			lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerNotBelongToProject) ||
+			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerNotFound) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -62,7 +62,7 @@ func WithErrorLoadBalancerNotFound2(perrResp IErrorRespone) func(sdkError IError
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerNotFound2) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerNotFound2) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -77,7 +77,7 @@ func WithErrorLoadBalancerExceedQuota(perrResp IErrorRespone) func(sdkError IErr
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerExceedQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerExceedQuota) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerExceedQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -93,7 +93,7 @@ func WithErrorLoadBalancerDuplicatePoolName(perrResp IErrorRespone) func(sdkErro
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerDuplicatePoolName) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerDuplicatePoolName) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerDuplicatePoolName).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -108,7 +108,7 @@ func WithErrorListenerDuplicateProtocolOrPort(perrResp IErrorRespone) func(sdkEr
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternListenerDuplicateProtocolOrPort) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternListenerDuplicateProtocolOrPort) {
 			sdkError.WithErrorCode(EcVLBListenerDuplicateProtocolOrPort).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -123,7 +123,7 @@ func WithErrorListenerDuplicateName(perrResp IErrorRespone) func(sdkError IError
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternListenerDuplicateName) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternListenerDuplicateName) {
 			sdkError.WithErrorCode(EcVLBListenerDuplicateName).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -138,7 +138,7 @@ func WithErrorPoolNotFound(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternPoolNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPoolNotFound) {
 			sdkError.WithErrorCode(EcVLBPoolNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -153,7 +153,7 @@ func WithErrorPoolInUse(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternPoolInUse) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPoolInUse) {
 			sdkError.WithErrorCode(EcVLBPoolInUse).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -167,7 +167,7 @@ func WithErrorLoadBalancerNotReady(perrResp IErrorRespone) func(sdkError IError)
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorLoadBalancerNotReady.FindString(errMsg) != "" ||
 			regexErrorListenerNotReady.FindString(errMsg) != "" ||
 			regexErrorPoolIsUpdating.FindString(errMsg) != "" ||
@@ -185,7 +185,7 @@ func WithErrorLoadBalancerIsDeleting(perrResp IErrorRespone) func(sdkError IErro
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorLoadBalancerIsDeleting.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsDeleting).
 				WithMessage(errMsg).
@@ -200,7 +200,7 @@ func WithErrorLoadBalancerIsCreating(perrResp IErrorRespone) func(sdkError IErro
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorLoadBalancerIsCreating.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsCreating).
 				WithMessage(errMsg).
@@ -215,7 +215,7 @@ func WithErrorLoadBalancerIsUpdating(perrResp IErrorRespone) func(sdkError IErro
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorLoadBalancerIsUpdating.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBLoadBalancerIsUpdating).
 				WithMessage(errMsg).
@@ -230,8 +230,8 @@ func WithErrorListenerNotFound(perrResp IErrorRespone) func(sdkError IError) {
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, patternListenerNotFound) ||
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, patternListenerNotFound) ||
 			regexErrorListenerNotBelongToLoadBalancer.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVLBListenerNotFound).
 				WithMessage(errMsg).
@@ -247,7 +247,7 @@ func WithErrorMemberMustIdentical(perrResp IErrorRespone) func(sdkError IError) 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternMemberMustIdentical) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternMemberMustIdentical) {
 			sdkError.WithErrorCode(EcVLBMemberMustIdentical).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -262,7 +262,7 @@ func WithErrorLoadBalancerResizeSamePackage(perrResp IErrorRespone) func(sdkErro
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadBalancerResizeSamePackage) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadBalancerResizeSamePackage) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerResizeSamePackage).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -277,7 +277,7 @@ func WithErrorLoadBalancerPackageNotFound(perrResp IErrorRespone) func(sdkError 
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternLoadbalancerPackageNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternLoadbalancerPackageNotFound) {
 			sdkError.WithErrorCode(EcVLBLoadBalancerPackageNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())
@@ -292,7 +292,7 @@ func WithErrorGlobalLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError I
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), lstr.ToLower("Global load balancer is not found")) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), strings.ToLower("Global load balancer is not found")) {
 			sdkError.WithErrorCode(EcGlobalLoadBalancerNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())

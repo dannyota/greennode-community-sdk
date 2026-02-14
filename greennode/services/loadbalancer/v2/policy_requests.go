@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type (
 	PolicyAction      string
@@ -26,17 +26,17 @@ const (
 // create policy request
 func NewCreatePolicyRequest(lbID, lisID string) ICreatePolicyRequest {
 	return &CreatePolicyRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
 	}
 }
 
 var _ ICreatePolicyRequest = &CreatePolicyRequest{}
 
 type CreatePolicyRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
 
 	Name             string          `json:"name"`
 	Action           PolicyAction    `json:"action"`
@@ -152,19 +152,19 @@ func (s *CreatePolicyRequest) AddUserAgent(pagent ...string) ICreatePolicyReques
 // update policy request
 func NewUpdatePolicyRequest(lbID, lisID, policyID string) IUpdatePolicyRequest {
 	return &UpdatePolicyRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
-		PolicyCommon:       lscommon.PolicyCommon{PolicyId: policyID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
+		PolicyCommon:       common.PolicyCommon{PolicyId: policyID},
 	}
 }
 
 var _ IUpdatePolicyRequest = &UpdatePolicyRequest{}
 
 type UpdatePolicyRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.PolicyCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.PolicyCommon
 
 	Action           PolicyAction    `json:"action"`
 	Rules            []L7RuleRequest `json:"rules"`
@@ -250,9 +250,9 @@ func (s *UpdatePolicyRequest) AddUserAgent(pagent ...string) IUpdatePolicyReques
 // get policy by id request
 func NewGetPolicyByIdRequest(lbID, lisID, policyID string) IGetPolicyByIdRequest {
 	return &GetPolicyByIdRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
-		PolicyCommon:       lscommon.PolicyCommon{PolicyId: policyID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
+		PolicyCommon:       common.PolicyCommon{PolicyId: policyID},
 	}
 }
 
@@ -264,18 +264,18 @@ func (s *GetPolicyByIdRequest) AddUserAgent(pagent ...string) IGetPolicyByIdRequ
 var _ IGetPolicyByIdRequest = &GetPolicyByIdRequest{}
 
 type GetPolicyByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.PolicyCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.PolicyCommon
 }
 
 // delete policy by id request
 func NewDeletePolicyByIdRequest(lbID, lisID, policyID string) IDeletePolicyByIdRequest {
 	return &DeletePolicyByIdRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
-		PolicyCommon:       lscommon.PolicyCommon{PolicyId: policyID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
+		PolicyCommon:       common.PolicyCommon{PolicyId: policyID},
 	}
 }
 
@@ -287,10 +287,10 @@ func (s *DeletePolicyByIdRequest) AddUserAgent(pagent ...string) IDeletePolicyBy
 var _ IDeletePolicyByIdRequest = &DeletePolicyByIdRequest{}
 
 type DeletePolicyByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.PolicyCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.PolicyCommon
 }
 
 type policyPositionRequest struct {
@@ -300,8 +300,8 @@ type policyPositionRequest struct {
 
 func NewReorderPoliciesRequest(lbID, lisID string) IReorderPoliciesRequest {
 	return &ReorderPoliciesRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
 
 		policyPositions: make([]policyPositionRequest, 0),
 	}
@@ -310,9 +310,9 @@ func NewReorderPoliciesRequest(lbID, lisID string) IReorderPoliciesRequest {
 var _ IReorderPoliciesRequest = &ReorderPoliciesRequest{}
 
 type ReorderPoliciesRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
 
 	policyPositions []policyPositionRequest
 }
@@ -344,8 +344,8 @@ func (s *ReorderPoliciesRequest) ToRequestBody() interface{} {
 // list policies request
 func NewListPoliciesRequest(lbID, lisID string) IListPoliciesRequest {
 	return &ListPoliciesRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{LoadBalancerId: lbID},
-		ListenerCommon:     lscommon.ListenerCommon{ListenerId: lisID},
+		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerId: lbID},
+		ListenerCommon:     common.ListenerCommon{ListenerId: lisID},
 	}
 }
 
@@ -357,7 +357,7 @@ func (s *ListPoliciesRequest) AddUserAgent(pagent ...string) IListPoliciesReques
 var _ IListPoliciesRequest = &ListPoliciesRequest{}
 
 type ListPoliciesRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
 }

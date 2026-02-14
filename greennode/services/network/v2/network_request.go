@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetNetworkByIdRequest(pnetworkId string) IGetNetworkByIdRequest {
 	opt := new(GetNetworkByIdRequest)
@@ -9,8 +9,8 @@ func NewGetNetworkByIdRequest(pnetworkId string) IGetNetworkByIdRequest {
 }
 
 type GetNetworkByIdRequest struct {
-	lscommon.NetworkCommon
-	lscommon.UserAgent
+	common.NetworkCommon
+	common.UserAgent
 }
 
 func (s *GetNetworkByIdRequest) AddUserAgent(pagent ...string) IGetNetworkByIdRequest {

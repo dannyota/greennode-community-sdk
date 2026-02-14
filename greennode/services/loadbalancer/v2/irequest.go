@@ -1,7 +1,7 @@
 package v2
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -209,7 +209,7 @@ type ICreateTagsRequest interface {
 
 type IUpdateTagsRequest interface {
 	GetLoadBalancerId() string
-	ToRequestBody(plstTags *lsentity.ListTags) interface{}
+	ToRequestBody(plstTags *entity.ListTags) interface{}
 	ParseUserAgent() string
 	WithTags(ptags ...string) IUpdateTagsRequest
 	ToMap() map[string]interface{}

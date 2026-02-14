@@ -1,21 +1,21 @@
 package v2
 
-import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createBlockVolumeUrl(psc lsclient.IServiceClient) string {
+func createBlockVolumeUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes")
 }
 
-func deleteBlockVolumeByIdUrl(psc lsclient.IServiceClient, popts IDeleteBlockVolumeByIdRequest) string {
+func deleteBlockVolumeByIdUrl(psc client.IServiceClient, popts IDeleteBlockVolumeByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
 		popts.GetBlockVolumeId())
 }
 
-func listBlockVolumesUrl(psc lsclient.IServiceClient, popts IListBlockVolumesRequest) string {
+func listBlockVolumesUrl(psc client.IServiceClient, popts IListBlockVolumesRequest) string {
 	query, err := popts.ToQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -26,14 +26,14 @@ func listBlockVolumesUrl(psc lsclient.IServiceClient, popts IListBlockVolumesReq
 		"volumes") + query
 }
 
-func getBlockVolumeByIdUrl(psc lsclient.IServiceClient, popts IGetBlockVolumeByIdRequest) string {
+func getBlockVolumeByIdUrl(psc client.IServiceClient, popts IGetBlockVolumeByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
 		popts.GetBlockVolumeId())
 }
 
-func resizeBlockVolumeByIdUrl(psc lsclient.IServiceClient, popts IResizeBlockVolumeByIdRequest) string {
+func resizeBlockVolumeByIdUrl(psc client.IServiceClient, popts IResizeBlockVolumeByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
@@ -41,7 +41,7 @@ func resizeBlockVolumeByIdUrl(psc lsclient.IServiceClient, popts IResizeBlockVol
 		"resize")
 }
 
-func listSnapshotsByBlockVolumeIdUrl(psc lsclient.IServiceClient, popts IListSnapshotsByBlockVolumeIdRequest) string {
+func listSnapshotsByBlockVolumeIdUrl(psc client.IServiceClient, popts IListSnapshotsByBlockVolumeIdRequest) string {
 	query, err := popts.ToQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -55,7 +55,7 @@ func listSnapshotsByBlockVolumeIdUrl(psc lsclient.IServiceClient, popts IListSna
 	) + query
 }
 
-func createSnapshotByBlockVolumeIdUrl(psc lsclient.IServiceClient, popts ICreateSnapshotByBlockVolumeIdRequest) string {
+func createSnapshotByBlockVolumeIdUrl(psc client.IServiceClient, popts ICreateSnapshotByBlockVolumeIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
@@ -63,7 +63,7 @@ func createSnapshotByBlockVolumeIdUrl(psc lsclient.IServiceClient, popts ICreate
 		"snapshots")
 }
 
-func deleteSnapshotByIdUrl(psc lsclient.IServiceClient, popts IDeleteSnapshotByIdRequest) string {
+func deleteSnapshotByIdUrl(psc client.IServiceClient, popts IDeleteSnapshotByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
@@ -73,7 +73,7 @@ func deleteSnapshotByIdUrl(psc lsclient.IServiceClient, popts IDeleteSnapshotByI
 	)
 }
 
-func getUnderBlockVolumeIdUrl(psc lsclient.IServiceClient, popts IGetUnderBlockVolumeIdRequest) string {
+func getUnderBlockVolumeIdUrl(psc client.IServiceClient, popts IGetUnderBlockVolumeIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",
@@ -82,7 +82,7 @@ func getUnderBlockVolumeIdUrl(psc lsclient.IServiceClient, popts IGetUnderBlockV
 	)
 }
 
-func migrateBlockVolumeByIdUrl(psc lsclient.IServiceClient, popts IMigrateBlockVolumeByIdRequest) string {
+func migrateBlockVolumeByIdUrl(psc client.IServiceClient, popts IMigrateBlockVolumeByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetProjectId(),
 		"volumes",

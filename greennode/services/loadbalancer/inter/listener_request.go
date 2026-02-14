@@ -1,9 +1,9 @@
 package inter
 
 import (
-	lstr "strings"
+	"strings"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -41,8 +41,8 @@ type CreateListenerRequest struct {
 	ClientCertificate           *string          `json:"clientCertificate"`
 	DefaultCertificateAuthority *string          `json:"defaultCertificateAuthority"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *CreateListenerRequest) ToRequestBody() interface{} {
@@ -66,7 +66,7 @@ func (s *CreateListenerRequest) WithAllowedCidrs(pcidrs ...string) ICreateListen
 		return s
 	}
 
-	s.AllowedCidrs = lstr.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(pcidrs, ",")
 	return s
 }
 
@@ -103,7 +103,7 @@ func (s *CreateListenerRequest) AddCidrs(pcidrs ...string) ICreateListenerReques
 	if s.AllowedCidrs == "" {
 		return s.WithAllowedCidrs(pcidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + lstr.Join(pcidrs, ",")
+		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(pcidrs, ",")
 	}
 
 	return s

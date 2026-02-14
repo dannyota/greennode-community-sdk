@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetSubnetByIdResponse struct {
 	UUID                   string `json:"uuid"`
@@ -23,16 +23,16 @@ type GetSubnetByIdResponse struct {
 	} `json:"zone"`
 }
 
-func (s *GetSubnetByIdResponse) ToEntitySubnet() *lsentity.Subnet {
-	secondaryRange := make([]lsentity.SubnetSecondaryRange, 0, len(s.SecondarySubnets))
+func (s *GetSubnetByIdResponse) ToEntitySubnet() *entity.Subnet {
+	secondaryRange := make([]entity.SubnetSecondaryRange, 0, len(s.SecondarySubnets))
 	for _, sr := range s.SecondarySubnets {
-		secondaryRange = append(secondaryRange, lsentity.SubnetSecondaryRange{
+		secondaryRange = append(secondaryRange, entity.SubnetSecondaryRange{
 			Id:   sr.UUID,
 			Name: sr.Name,
 			Cidr: sr.Cidr,
 		})
 	}
-	return &lsentity.Subnet{
+	return &entity.Subnet{
 		Id:                     s.UUID,
 		NetworkId:              s.NetworkUuid,
 		Name:                   s.Name,
@@ -51,6 +51,6 @@ type UpdateSubnetByIdResponse struct {
 	Data GetSubnetByIdResponse `json:"data"`
 }
 
-func (s *UpdateSubnetByIdResponse) ToEntitySubnet() *lsentity.Subnet {
+func (s *UpdateSubnetByIdResponse) ToEntitySubnet() *entity.Subnet {
 	return s.Data.ToEntitySubnet()
 }

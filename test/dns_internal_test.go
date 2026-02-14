@@ -1,16 +1,16 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsdnsSvcPortal "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
+	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
 )
 
-func TestDnsServiceInternal_ListHostedZonesDefault(t *ltesting.T) {
+func TestDnsServiceInternal_ListHostedZonesDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 
-	req := lsdnsSvcPortal.NewListHostedZonesRequest().WithName("")
+	req := dnsinternalv1.NewListHostedZonesRequest().WithName("")
 
 	resp, sdkErr := vngcloud.VDnsGateway().Internal().DnsService().ListHostedZones(req, portalUserId)
 	if sdkErr != nil {
@@ -27,12 +27,12 @@ func TestDnsServiceInternal_ListHostedZonesDefault(t *ltesting.T) {
 	}
 }
 
-func TestDnsServiceInternal_ListRecordsDefault(t *ltesting.T) {
+func TestDnsServiceInternal_ListRecordsDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 	hostedZoneId := "hosted-zone-5ba95110-e8d1-40f5-92b2-50eefa33bde2"
 
-	req := lsdnsSvcPortal.NewListRecordsRequest(hostedZoneId)
+	req := dnsinternalv1.NewListRecordsRequest(hostedZoneId)
 
 	resp, sdkErr := vngcloud.VDnsGateway().Internal().DnsService().ListRecords(req, portalUserId)
 	if sdkErr != nil {
@@ -49,13 +49,13 @@ func TestDnsServiceInternal_ListRecordsDefault(t *ltesting.T) {
 	}
 }
 
-func TestDnsServiceInternal_DeleteRecord(t *ltesting.T) {
+func TestDnsServiceInternal_DeleteRecord(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 	hostedZoneId := "hosted-zone-a6acbf48-9f7b-455d-b5be-efa9081722f9"
 	recordId := "record-test-id"
 
-	req := lsdnsSvcPortal.NewDeleteRecordRequest(hostedZoneId, recordId)
+	req := dnsinternalv1.NewDeleteRecordRequest(hostedZoneId, recordId)
 
 	sdkErr := vngcloud.VDnsGateway().Internal().DnsService().DeleteRecord(req, portalUserId)
 	if sdkErr != nil {
@@ -65,12 +65,12 @@ func TestDnsServiceInternal_DeleteRecord(t *ltesting.T) {
 	t.Logf("Successfully deleted record with ID: %s", recordId)
 }
 
-func TestDnsServiceInternal_DeleteHostedZone(t *ltesting.T) {
+func TestDnsServiceInternal_DeleteHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 	hostedZoneId := "hosted-zone-243d64ba-c955-4aa1-8640-95d3463446d8"
 
-	req := lsdnsSvcPortal.NewDeleteHostedZoneRequest(hostedZoneId)
+	req := dnsinternalv1.NewDeleteHostedZoneRequest(hostedZoneId)
 
 	sdkErr := vngcloud.VDnsGateway().Internal().DnsService().DeleteHostedZone(req, portalUserId)
 	if sdkErr != nil {
@@ -80,13 +80,13 @@ func TestDnsServiceInternal_DeleteHostedZone(t *ltesting.T) {
 	t.Logf("Successfully deleted hosted zone with ID: %s", hostedZoneId)
 }
 
-func TestDnsServiceInternal_ListHostedZonesByVpc(t *ltesting.T) {
+func TestDnsServiceInternal_ListHostedZonesByVpc(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 	targetVpcId := "net-5ed4bdc1-99d9-4d20-aea8-ce4049d9261d" // Replace with actual VPC ID to test
 
 	// List all hosted zones
-	req := lsdnsSvcPortal.NewListHostedZonesRequest()
+	req := dnsinternalv1.NewListHostedZonesRequest()
 	resp, sdkErr := vngcloud.VDnsGateway().Internal().DnsService().ListHostedZones(req, portalUserId)
 	if sdkErr != nil {
 		t.Fatalf("Failed to list hosted zones: %v", sdkErr.GetError())
@@ -131,13 +131,13 @@ func TestDnsServiceInternal_ListHostedZonesByVpc(t *ltesting.T) {
 	}
 }
 
-func TestDnsServiceInternal_ListAndDeleteAllRecords(t *ltesting.T) {
+func TestDnsServiceInternal_ListAndDeleteAllRecords(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserId := "53461"
 	hostedZoneId := "hosted-zone-243d64ba-c955-4aa1-8640-95d3463446d8"
 
 	// First, list all records in the hosted zone
-	listReq := lsdnsSvcPortal.NewListRecordsRequest(hostedZoneId)
+	listReq := dnsinternalv1.NewListRecordsRequest(hostedZoneId)
 	listResp, sdkErr := vngcloud.VDnsGateway().Internal().DnsService().ListRecords(listReq, portalUserId)
 	if sdkErr != nil {
 		t.Fatalf("Failed to list records: %v", sdkErr.GetError())
@@ -168,7 +168,7 @@ func TestDnsServiceInternal_ListAndDeleteAllRecords(t *ltesting.T) {
 			continue
 		}
 
-		deleteReq := lsdnsSvcPortal.NewDeleteRecordRequest(hostedZoneId, record.RecordId)
+		deleteReq := dnsinternalv1.NewDeleteRecordRequest(hostedZoneId, record.RecordId)
 		sdkErr := vngcloud.VDnsGateway().Internal().DnsService().DeleteRecord(deleteReq, portalUserId)
 		if sdkErr != nil {
 			t.Logf("Failed to delete record %s: %v", record.RecordId, sdkErr.GetError())
@@ -178,7 +178,7 @@ func TestDnsServiceInternal_ListAndDeleteAllRecords(t *ltesting.T) {
 		t.Logf("Successfully deleted record: %s", record.RecordId)
 	}
 
-	// req := lsdnsSvcPortal.NewDeleteHostedZoneRequest(hostedZoneId)
+	// req := dnsinternalv1.NewDeleteHostedZoneRequest(hostedZoneId)
 
 	// sdkErr = vngcloud.VDnsGateway().Internal().DnsService().DeleteHostedZone(req, portalUserId)
 	// if sdkErr != nil {

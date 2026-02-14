@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
@@ -147,8 +147,8 @@ type CreatePoolRequest struct {
 	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
 	Members       []IMemberRequest      `json:"members"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *CreatePoolRequest) AddUserAgent(pagent ...string) ICreatePoolRequest {
@@ -162,21 +162,21 @@ type UpdatePoolRequest struct {
 	TLSEncryption *bool                 `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
 	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 type GetPoolHealthMonitorByIdRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
+	common.UserAgent
 }
 
 type ListPoolMembersRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
 }
 
 func (s *ListPoolMembersRequest) AddUserAgent(pagent ...string) IListPoolMembersRequest {
@@ -185,9 +185,9 @@ func (s *ListPoolMembersRequest) AddUserAgent(pagent ...string) IListPoolMembers
 }
 
 type DeletePoolByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
 }
 
 func (s *DeletePoolByIdRequest) AddUserAgent(pagent ...string) IDeletePoolByIdRequest {
@@ -196,9 +196,9 @@ func (s *DeletePoolByIdRequest) AddUserAgent(pagent ...string) IDeletePoolByIdRe
 }
 
 type GetPoolByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
 }
 
 func (s *GetPoolByIdRequest) AddUserAgent(pagent ...string) IGetPoolByIdRequest {
@@ -218,7 +218,7 @@ type HealthMonitor struct {
 	DomainName          *string                 `json:"domainName,omitempty"`
 	SuccessCode         *string                 `json:"successCode,omitempty"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 type Member struct {
@@ -231,8 +231,8 @@ type Member struct {
 }
 
 type ListPoolsByLoadBalancerIdRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *ListPoolsByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IListPoolsByLoadBalancerIdRequest {
@@ -243,9 +243,9 @@ func (s *ListPoolsByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IListP
 type UpdatePoolMembersRequest struct {
 	Members []IMemberRequest `json:"members"`
 
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
-	lscommon.PoolCommon
+	common.UserAgent
+	common.LoadBalancerCommon
+	common.PoolCommon
 }
 
 func (s *UpdatePoolMembersRequest) AddUserAgent(pagent ...string) IUpdatePoolMembersRequest {

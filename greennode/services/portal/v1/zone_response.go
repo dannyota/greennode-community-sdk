@@ -1,7 +1,7 @@
 package v1
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type Zone struct {
@@ -14,9 +14,9 @@ type ListZoneResponse struct {
 	Data []Zone `json:"data"`
 }
 
-func (s *ListZoneResponse) ToEntityListZones() *lsentity.ListZones {
-	listZones := &lsentity.ListZones{
-		Items: make([]*lsentity.Zone, 0),
+func (s *ListZoneResponse) ToEntityListZones() *entity.ListZones {
+	listZones := &entity.ListZones{
+		Items: make([]*entity.Zone, 0),
 	}
 	for _, q := range s.Data {
 		listZones.Items = append(listZones.Items, q.ToEntityZone())
@@ -25,9 +25,9 @@ func (s *ListZoneResponse) ToEntityListZones() *lsentity.ListZones {
 	return listZones
 }
 
-func (s *Zone) ToEntityZone() *lsentity.Zone {
+func (s *Zone) ToEntityZone() *entity.Zone {
 
-	return &lsentity.Zone{
+	return &entity.Zone{
 		Uuid:          s.Uuid,
 		Name:          s.Name,
 		OpenstackZone: s.OpenstackZone,

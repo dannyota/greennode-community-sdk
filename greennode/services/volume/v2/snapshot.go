@@ -1,22 +1,22 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(popts IListSnapshotsByBlockVolumeIdRequest) (*lsentity.ListSnapshots, lserr.IError) {
+func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(popts IListSnapshotsByBlockVolumeIdRequest) (*entity.ListSnapshots, sdkerror.IError) {
 	url := listSnapshotsByBlockVolumeIdUrl(s.VServerClient, popts)
 	resp := new(ListSnapshotsByBlockVolumeIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
 				"volumeId", popts.GetBlockVolumeId())
@@ -25,20 +25,20 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(popts IListSnapshotsByBlo
 	return resp.ToEntityListSnapshots(), nil
 }
 
-func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(popts ICreateSnapshotByBlockVolumeIdRequest) (*lsentity.Snapshot, lserr.IError) {
+func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(popts ICreateSnapshotByBlockVolumeIdRequest) (*entity.Snapshot, sdkerror.IError) {
 	url := createSnapshotByBlockVolumeIdUrl(s.VServerClient, popts)
 	resp := new(CreateSnapshotByBlockVolumeIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp).
 		WithJsonBody(popts.ToRequestBody())
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeNotFound(errResp),
-			lserr.WithErrorSnapshotNameNotValid(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeNotFound(errResp),
+			sdkerror.WithErrorSnapshotNameNotValid(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
 				"volumeId", popts.GetBlockVolumeId())
@@ -47,16 +47,16 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(popts ICreateSnapshotByB
 	return resp.ToEntitySnapshot(), nil
 }
 
-func (s *VolumeServiceV2) DeleteSnapshotById(popts IDeleteSnapshotByIdRequest) lserr.IError {
+func (s *VolumeServiceV2) DeleteSnapshotById(popts IDeleteSnapshotByIdRequest) sdkerror.IError {
 	url := deleteSnapshotByIdUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorSnapshotNameNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorSnapshotNameNotFound(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
 				"snapshotId", popts.GetSnapshotId())

@@ -1,6 +1,6 @@
 package client
 
-import lstr "strings"
+import "strings"
 
 type (
 	ISdkConfigure interface {
@@ -155,7 +155,7 @@ func (s *sdkConfigure) WithGLBEndpoint(pvlbEndpoint string) ISdkConfigure {
 }
 
 func normalizeURL(u string) string {
-	if !lstr.HasSuffix(u, "/") {
+	if !strings.HasSuffix(u, "/") {
 		return u + "/"
 	}
 	return u

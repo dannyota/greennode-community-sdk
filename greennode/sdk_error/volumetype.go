@@ -1,6 +1,6 @@
 package sdk_error
 
-import lstr "strings"
+import "strings"
 
 const (
 	patternVolumeTypeNotFound = "cannot get volume type with id"
@@ -13,7 +13,7 @@ func WithErrorVolumeTypeNotFound(perrResp IErrorRespone) func(sdkError IError) {
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternVolumeTypeNotFound) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeTypeNotFound) {
 			sdkError.WithErrorCode(EcVServerVolumeTypeNotFound).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError())

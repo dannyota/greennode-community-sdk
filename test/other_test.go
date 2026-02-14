@@ -1,22 +1,22 @@
 package test
 
 import (
-	ltesting "testing"
-	ltime "time"
+	"testing"
+	"time"
 )
 
-func TestUnixNano(t *ltesting.T) {
-	now := ltime.Now()
+func TestUnixNano(t *testing.T) {
+	now := time.Now()
 
 	t.Log(now.UnixNano())
 
 	// convert unix nano to time
-	me := ltime.Unix(0, now.UnixNano())
-	ltime.Sleep(5 * ltime.Second)
+	me := time.Unix(0, now.UnixNano())
+	time.Sleep(5 * time.Second)
 	t.Log(me.UnixNano())
 
-	now = ltime.Now()
+	now = time.Now()
 	t.Log(now.UnixNano())
 
-	t.Log(now.Sub(me) >= 5*ltime.Second)
+	t.Log(now.Sub(me) >= 5*time.Second)
 }

@@ -1,16 +1,16 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserId string) (*lsentity.ListDnsRecords, lserr.IError) {
+func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.IError) {
 	url := listRecordsUrl(s.DnsClient, popts)
 	resp := new(ListRecordsResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
@@ -18,19 +18,19 @@ func (s *VDnsServiceInternal) ListRecords(popts IListRecordsRequest, portalUserI
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListRecords(), nil
 }
 
-func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId string) (*lsentity.DnsRecord, lserr.IError) {
+func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError) {
 	url := getRecordUrl(s.DnsClient, popts)
 	resp := new(GetRecordResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
@@ -38,18 +38,18 @@ func (s *VDnsServiceInternal) GetRecord(popts IGetRecordRequest, portalUserId st
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil
 }
 
-func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUserId string) lserr.IError {
+func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUserId string) sdkerror.IError {
 	url := updateRecordUrl(s.DnsClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(204).
@@ -57,37 +57,37 @@ func (s *VDnsServiceInternal) UpdateRecord(popts IUpdateRecordRequest, portalUse
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
 }
 
-func (s *VDnsServiceInternal) DeleteRecord(popts IDeleteRecordRequest, portalUserId string) lserr.IError {
+func (s *VDnsServiceInternal) DeleteRecord(popts IDeleteRecordRequest, portalUserId string) sdkerror.IError {
 	url := deleteRecordUrl(s.DnsClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
 }
 
-func (s *VDnsServiceInternal) CreateDnsRecord(popts ICreateDnsRecordRequest, portalUserId string) (*lsentity.DnsRecord, lserr.IError) {
+func (s *VDnsServiceInternal) CreateDnsRecord(popts ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.IError) {
 	url := createDnsRecordUrl(s.DnsClient, popts)
 	resp := new(CreateDnsRecordResponse)
-	errResp := lserr.NewErrorResponse(lserr.NetworkGatewayErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
@@ -96,9 +96,9 @@ func (s *VDnsServiceInternal) CreateDnsRecord(popts ICreateDnsRecordRequest, por
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatProductVdns)
+			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil

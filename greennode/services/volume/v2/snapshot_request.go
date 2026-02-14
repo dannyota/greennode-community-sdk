@@ -1,11 +1,11 @@
 package v2
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstrconv "strconv"
+	"fmt"
+	"net/url"
+	"strconv"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewListSnapshotsByBlockVolumeIdRequest(ppage, psize int, pblockVolumeId string) IListSnapshotsByBlockVolumeIdRequest {
@@ -37,7 +37,7 @@ type ListSnapshotsByBlockVolumeIdRequest struct {
 	Page int
 	Size int
 
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type CreateSnapshotByBlockVolumeIdRequest struct {
@@ -46,25 +46,25 @@ type CreateSnapshotByBlockVolumeIdRequest struct {
 	Permanently bool   `json:"isPermanently"`
 	RetainedDay uint64 `json:"retainedDay"`
 
-	lscommon.BlockVolumeCommon
+	common.BlockVolumeCommon
 }
 
 type DeleteSnapshotByIdRequest struct {
-	lscommon.BlockVolumeCommon
-	lscommon.SnapshotCommon
+	common.BlockVolumeCommon
+	common.SnapshotCommon
 }
 
 func (s *ListSnapshotsByBlockVolumeIdRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIdRequest, defaultSizeListSnapshotsByBlockVolumeIdRequest)
+	return fmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIdRequest, defaultSizeListSnapshotsByBlockVolumeIdRequest)
 }
 
 func (s *ListSnapshotsByBlockVolumeIdRequest) ToQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	if s.Page > 0 {
-		v.Set("page", lstrconv.Itoa(s.Page))
+		v.Set("page", strconv.Itoa(s.Page))
 	}
 	if s.Size > 0 {
-		v.Set("size", lstrconv.Itoa(s.Size))
+		v.Set("size", strconv.Itoa(s.Size))
 	}
 	return v.Encode(), nil
 }

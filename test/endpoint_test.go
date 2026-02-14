@@ -2,14 +2,14 @@ package test
 
 import (
 	"net/url"
-	ltesting "testing"
+	"testing"
 
-	lsnwv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
+	networkv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
 )
 
-func TestGetEndpointSuccess(t *ltesting.T) {
+func TestGetEndpointSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnwv1.NewGetEndpointByIdRequest("enp-7575cb25-0033-4c26-9145-53cd90d7778c")
+	opt := networkv1.NewGetEndpointByIdRequest("enp-7575cb25-0033-4c26-9145-53cd90d7778c")
 
 	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().GetEndpointById(opt)
 	if sdkerr != nil {
@@ -24,9 +24,9 @@ func TestGetEndpointSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateEndpoint(t *ltesting.T) {
+func TestCreateEndpoint(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnwv1.NewCreateEndpointRequest(
+	opt := networkv1.NewCreateEndpointRequest(
 		"cuongdm3-test",
 		"f3d11a4c-f071-4009-88a6-4a21346c8708",
 		"net-5ac170fc-834a-4621-b512-481e09b82fc8",
@@ -49,9 +49,9 @@ func TestCreateEndpoint(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateEndpointInternal(t *ltesting.T) {
+func TestCreateEndpointInternal(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := lsnwv1.NewCreateEndpointRequest(
+	opt := networkv1.NewCreateEndpointRequest(
 		"tytv2-test",
 		"c36bb265-f569-4748-a03a-fca52c7588ea",
 		"net-dc14bb60-d500-40b5-945f-218540990187",
@@ -77,9 +77,9 @@ func TestCreateEndpointInternal(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteEndpoint(t *ltesting.T) {
+func TestDeleteEndpoint(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnwv1.NewDeleteEndpointByIdRequest(
+	opt := networkv1.NewDeleteEndpointByIdRequest(
 		"enp-56d7359f-4b9a-4f01-a210-54523c6d0c88",
 		"net-5ac170fc-834a-4621-b512-481e09b82fc8",
 		"b9ba2b16-389e-48b7-9e75-4c991239da27",
@@ -93,9 +93,9 @@ func TestDeleteEndpoint(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListEndpoints(t *ltesting.T) {
+func TestListEndpoints(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnwv1.NewListEndpointsRequest(1, 100).WithUuid("enp-9349271b-af44-4e39-8829-615d945fa6c2")
+	opt := networkv1.NewListEndpointsRequest(1, 100).WithUuid("enp-9349271b-af44-4e39-8829-615d945fa6c2")
 
 	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().ListEndpoints(opt)
 	if sdkerr != nil {
@@ -110,16 +110,16 @@ func TestListEndpoints(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestEndpoint(t *ltesting.T) {
+func TestEndpoint(t *testing.T) {
 	raw := `{"page":1,"size":10,"search":[{"field":"vpcId","value":"net-5ac170fc-834a-4621-b512-481e09b82fc8"}]}`
 	encode := url.QueryEscape(raw)
 
 	t.Log("Encode: ", encode)
 }
 
-func TestListEndpointTags(t *ltesting.T) {
+func TestListEndpointTags(t *testing.T) {
 	vngcloud := validSuperSdkHcm03bConfig()
-	opt := lsnwv1.NewListTagsByEndpointIdRequest(
+	opt := networkv1.NewListTagsByEndpointIdRequest(
 		"95174",
 		"pro-b2fff1cf-6d72-4643-a8e7-5907bc9e439c",
 		"enp-3fe5d1e9-679e-4eb8-ad35-d9ce53243259",
@@ -138,9 +138,9 @@ func TestListEndpointTags(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateEndpointTags(t *ltesting.T) {
+func TestCreateEndpointTags(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := lsnwv1.NewCreateTagsWithEndpointIdRequest(
+	opt := networkv1.NewCreateTagsWithEndpointIdRequest(
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"enp-7e8e4476-feeb-414c-ac03-3501aae607d0",
@@ -155,9 +155,9 @@ func TestCreateEndpointTags(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteTagByEndpointId(t *ltesting.T) {
+func TestDeleteTagByEndpointId(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := lsnwv1.NewDeleteTagOfEndpointRequest(
+	opt := networkv1.NewDeleteTagOfEndpointRequest(
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"tag-6ceb41e1-47e9-43f0-94dd-521a1af870ee",
@@ -172,9 +172,9 @@ func TestDeleteTagByEndpointId(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateEndpointTag(t *ltesting.T) {
+func TestUpdateEndpointTag(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := lsnwv1.NewUpdateTagValueOfEndpointRequest(
+	opt := networkv1.NewUpdateTagValueOfEndpointRequest(
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"tag-c6d6e343-ed13-4bf1-bf2e-e63a1a5e0eab",

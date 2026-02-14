@@ -1,51 +1,51 @@
 package loadbalancer
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lslbSvcIn "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
-	lslbSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
+	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )
 
 type ILoadBalancerServiceV2 interface {
-	CreateLoadBalancer(popts lslbSvcV2.ICreateLoadBalancerRequest) (*lsentity.LoadBalancer, lserr.IError)
-	ResizeLoadBalancer(popts lslbSvcV2.IResizeLoadBalancerRequest) (*lsentity.LoadBalancer, lserr.IError)
-	ListLoadBalancerPackages(popts lslbSvcV2.IListLoadBalancerPackagesRequest) (*lsentity.ListLoadBalancerPackages, lserr.IError)
-	GetLoadBalancerById(popts lslbSvcV2.IGetLoadBalancerByIdRequest) (*lsentity.LoadBalancer, lserr.IError)
-	ListLoadBalancers(popts lslbSvcV2.IListLoadBalancersRequest) (*lsentity.ListLoadBalancers, lserr.IError)
-	GetPoolHealthMonitorById(popts lslbSvcV2.IGetPoolHealthMonitorByIdRequest) (*lsentity.HealthMonitor, lserr.IError)
-	CreatePool(popts lslbSvcV2.ICreatePoolRequest) (*lsentity.Pool, lserr.IError)
-	UpdatePool(popts lslbSvcV2.IUpdatePoolRequest) lserr.IError
-	CreateListener(popts lslbSvcV2.ICreateListenerRequest) (*lsentity.Listener, lserr.IError)
-	UpdateListener(popts lslbSvcV2.IUpdateListenerRequest) lserr.IError
-	ListListenersByLoadBalancerId(popts lslbSvcV2.IListListenersByLoadBalancerIdRequest) (*lsentity.ListListeners, lserr.IError)
-	ListPoolsByLoadBalancerId(popts lslbSvcV2.IListPoolsByLoadBalancerIdRequest) (*lsentity.ListPools, lserr.IError)
-	UpdatePoolMembers(popts lslbSvcV2.IUpdatePoolMembersRequest) lserr.IError
-	ListPoolMembers(popts lslbSvcV2.IListPoolMembersRequest) (*lsentity.ListMembers, lserr.IError)
-	DeletePoolById(popt lslbSvcV2.IDeletePoolByIdRequest) lserr.IError
-	DeleteListenerById(popts lslbSvcV2.IDeleteListenerByIdRequest) lserr.IError
-	DeleteLoadBalancerById(popts lslbSvcV2.IDeleteLoadBalancerByIdRequest) lserr.IError
-	ListTags(popts lslbSvcV2.IListTagsRequest) (*lsentity.ListTags, lserr.IError)
-	CreateTags(popts lslbSvcV2.ICreateTagsRequest) lserr.IError
-	UpdateTags(popts lslbSvcV2.IUpdateTagsRequest) lserr.IError
+	CreateLoadBalancer(popts lbv2.ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.IError)
+	ResizeLoadBalancer(popts lbv2.IResizeLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.IError)
+	ListLoadBalancerPackages(popts lbv2.IListLoadBalancerPackagesRequest) (*entity.ListLoadBalancerPackages, sdkerror.IError)
+	GetLoadBalancerById(popts lbv2.IGetLoadBalancerByIdRequest) (*entity.LoadBalancer, sdkerror.IError)
+	ListLoadBalancers(popts lbv2.IListLoadBalancersRequest) (*entity.ListLoadBalancers, sdkerror.IError)
+	GetPoolHealthMonitorById(popts lbv2.IGetPoolHealthMonitorByIdRequest) (*entity.HealthMonitor, sdkerror.IError)
+	CreatePool(popts lbv2.ICreatePoolRequest) (*entity.Pool, sdkerror.IError)
+	UpdatePool(popts lbv2.IUpdatePoolRequest) sdkerror.IError
+	CreateListener(popts lbv2.ICreateListenerRequest) (*entity.Listener, sdkerror.IError)
+	UpdateListener(popts lbv2.IUpdateListenerRequest) sdkerror.IError
+	ListListenersByLoadBalancerId(popts lbv2.IListListenersByLoadBalancerIdRequest) (*entity.ListListeners, sdkerror.IError)
+	ListPoolsByLoadBalancerId(popts lbv2.IListPoolsByLoadBalancerIdRequest) (*entity.ListPools, sdkerror.IError)
+	UpdatePoolMembers(popts lbv2.IUpdatePoolMembersRequest) sdkerror.IError
+	ListPoolMembers(popts lbv2.IListPoolMembersRequest) (*entity.ListMembers, sdkerror.IError)
+	DeletePoolById(popt lbv2.IDeletePoolByIdRequest) sdkerror.IError
+	DeleteListenerById(popts lbv2.IDeleteListenerByIdRequest) sdkerror.IError
+	DeleteLoadBalancerById(popts lbv2.IDeleteLoadBalancerByIdRequest) sdkerror.IError
+	ListTags(popts lbv2.IListTagsRequest) (*entity.ListTags, sdkerror.IError)
+	CreateTags(popts lbv2.ICreateTagsRequest) sdkerror.IError
+	UpdateTags(popts lbv2.IUpdateTagsRequest) sdkerror.IError
 
-	ListPolicies(popts lslbSvcV2.IListPoliciesRequest) (*lsentity.ListPolicies, lserr.IError)
-	CreatePolicy(popts lslbSvcV2.ICreatePolicyRequest) (*lsentity.Policy, lserr.IError)
-	GetPolicyById(popts lslbSvcV2.IGetPolicyByIdRequest) (*lsentity.Policy, lserr.IError)
-	UpdatePolicy(popts lslbSvcV2.IUpdatePolicyRequest) lserr.IError
-	DeletePolicyById(popts lslbSvcV2.IDeletePolicyByIdRequest) lserr.IError
-	GetPoolById(popts lslbSvcV2.IGetPoolByIdRequest) (*lsentity.Pool, lserr.IError)
-	GetListenerById(popts lslbSvcV2.IGetListenerByIdRequest) (*lsentity.Listener, lserr.IError)
-	ResizeLoadBalancerById(popts lslbSvcV2.IResizeLoadBalancerByIdRequest) lserr.IError
-	ScaleLoadBalancer(popts lslbSvcV2.IScaleLoadBalancerRequest) (*lsentity.LoadBalancer, lserr.IError)
-	ReorderPolicies(popts lslbSvcV2.IReorderPoliciesRequest) lserr.IError
+	ListPolicies(popts lbv2.IListPoliciesRequest) (*entity.ListPolicies, sdkerror.IError)
+	CreatePolicy(popts lbv2.ICreatePolicyRequest) (*entity.Policy, sdkerror.IError)
+	GetPolicyById(popts lbv2.IGetPolicyByIdRequest) (*entity.Policy, sdkerror.IError)
+	UpdatePolicy(popts lbv2.IUpdatePolicyRequest) sdkerror.IError
+	DeletePolicyById(popts lbv2.IDeletePolicyByIdRequest) sdkerror.IError
+	GetPoolById(popts lbv2.IGetPoolByIdRequest) (*entity.Pool, sdkerror.IError)
+	GetListenerById(popts lbv2.IGetListenerByIdRequest) (*entity.Listener, sdkerror.IError)
+	ResizeLoadBalancerById(popts lbv2.IResizeLoadBalancerByIdRequest) sdkerror.IError
+	ScaleLoadBalancer(popts lbv2.IScaleLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.IError)
+	ReorderPolicies(popts lbv2.IReorderPoliciesRequest) sdkerror.IError
 
-	ListCertificates(popts lslbSvcV2.IListCertificatesRequest) (*lsentity.ListCertificates, lserr.IError)
-	GetCertificateById(popts lslbSvcV2.IGetCertificateByIdRequest) (*lsentity.Certificate, lserr.IError)
-	CreateCertificate(popts lslbSvcV2.ICreateCertificateRequest) (*lsentity.Certificate, lserr.IError)
-	DeleteCertificateById(popts lslbSvcV2.IDeleteCertificateByIdRequest) lserr.IError
+	ListCertificates(popts lbv2.IListCertificatesRequest) (*entity.ListCertificates, sdkerror.IError)
+	GetCertificateById(popts lbv2.IGetCertificateByIdRequest) (*entity.Certificate, sdkerror.IError)
+	CreateCertificate(popts lbv2.ICreateCertificateRequest) (*entity.Certificate, sdkerror.IError)
+	DeleteCertificateById(popts lbv2.IDeleteCertificateByIdRequest) sdkerror.IError
 }
 
 type ILoadBalancerServiceInternal interface {
-	CreateLoadBalancer(popts lslbSvcIn.ICreateLoadBalancerRequest) (*lsentity.LoadBalancer, lserr.IError)
+	CreateLoadBalancer(popts inter.ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.IError)
 }

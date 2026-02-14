@@ -1,76 +1,76 @@
 package gateway
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lscomputeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
-	lsnetworkSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
-	lsportalSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
-	lsServerSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
-	lsvolumeSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
 type vserverGatewayV1 struct {
-	portalService lsportalSvc.IPortalServiceV1
-	volumeService lsvolumeSvc.IVolumeServiceV1
+	portalService portal.IPortalServiceV1
+	volumeService volume.IVolumeServiceV1
 }
 
 type vServerGatewayInternalV1 struct {
-	serverService lsServerSvc.IServerServiceInternalV1
+	serverService server.IServerServiceInternalV1
 }
 
 type vserverGatewayV2 struct {
-	networkService lsnetworkSvc.INetworkServiceV2
-	computeService lscomputeSvc.IComputeServiceV2
-	portalService  lsportalSvc.IPortalServiceV2
-	volumeService  lsvolumeSvc.IVolumeServiceV2
+	networkService network.INetworkServiceV2
+	computeService compute.IComputeServiceV2
+	portalService  portal.IPortalServiceV2
+	volumeService  volume.IVolumeServiceV2
 }
 
-func NewVServerGatewayV1(psvcClient lsclient.IServiceClient) IVServerGatewayV1 {
+func NewVServerGatewayV1(psvcClient client.IServiceClient) IVServerGatewayV1 {
 	return &vserverGatewayV1{
-		portalService: lsportalSvc.NewPortalServiceV1(psvcClient),
-		volumeService: lsvolumeSvc.NewVolumeServiceV1(psvcClient),
+		portalService: portal.NewPortalServiceV1(psvcClient),
+		volumeService: volume.NewVolumeServiceV1(psvcClient),
 	}
 }
 
-func NewVServerGatewayV2(psvcClient lsclient.IServiceClient) IVServerGatewayV2 {
+func NewVServerGatewayV2(psvcClient client.IServiceClient) IVServerGatewayV2 {
 	return &vserverGatewayV2{
-		networkService: lsnetworkSvc.NewNetworkServiceV2(psvcClient),
-		computeService: lscomputeSvc.NewComputeServiceV2(psvcClient),
-		portalService:  lsportalSvc.NewPortalServiceV2(psvcClient),
-		volumeService:  lsvolumeSvc.NewVolumeServiceV2(psvcClient),
+		networkService: network.NewNetworkServiceV2(psvcClient),
+		computeService: compute.NewComputeServiceV2(psvcClient),
+		portalService:  portal.NewPortalServiceV2(psvcClient),
+		volumeService:  volume.NewVolumeServiceV2(psvcClient),
 	}
 }
 
-func NewVServerGatewayInternalV1(psvcClient lsclient.IServiceClient) IVServerGatewayInternalV1 {
+func NewVServerGatewayInternalV1(psvcClient client.IServiceClient) IVServerGatewayInternalV1 {
 	return &vServerGatewayInternalV1{
-		serverService: lsServerSvc.NewServerServiceInternalV1(psvcClient),
+		serverService: server.NewServerServiceInternalV1(psvcClient),
 	}
 }
 
-func (s *vserverGatewayV1) PortalService() lsportalSvc.IPortalServiceV1 {
+func (s *vserverGatewayV1) PortalService() portal.IPortalServiceV1 {
 	return s.portalService
 }
 
-func (s *vserverGatewayV1) VolumeService() lsvolumeSvc.IVolumeServiceV1 {
+func (s *vserverGatewayV1) VolumeService() volume.IVolumeServiceV1 {
 	return s.volumeService
 }
 
-func (s *vserverGatewayV2) NetworkService() lsnetworkSvc.INetworkServiceV2 {
+func (s *vserverGatewayV2) NetworkService() network.INetworkServiceV2 {
 	return s.networkService
 }
 
-func (s *vserverGatewayV2) ComputeService() lscomputeSvc.IComputeServiceV2 {
+func (s *vserverGatewayV2) ComputeService() compute.IComputeServiceV2 {
 	return s.computeService
 }
 
-func (s *vserverGatewayV2) PortalService() lsportalSvc.IPortalServiceV2 {
+func (s *vserverGatewayV2) PortalService() portal.IPortalServiceV2 {
 	return s.portalService
 }
 
-func (s *vserverGatewayV2) VolumeService() lsvolumeSvc.IVolumeServiceV2 {
+func (s *vserverGatewayV2) VolumeService() volume.IVolumeServiceV2 {
 	return s.volumeService
 }
 
-func (s *vServerGatewayInternalV1) ServerService() lsServerSvc.IServerServiceInternalV1 {
+func (s *vServerGatewayInternalV1) ServerService() server.IServerServiceInternalV1 {
 	return s.serverService
 }

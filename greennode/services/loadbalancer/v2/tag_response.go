@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type ListTagResponse struct {
 	Key       string `json:"key"`
@@ -11,16 +11,16 @@ type ListTagResponse struct {
 
 type ListTagsResponse []ListTagResponse
 
-func (s ListTagResponse) ToEntityTag() *lsentity.Tag {
-	return &lsentity.Tag{
+func (s ListTagResponse) ToEntityTag() *entity.Tag {
+	return &entity.Tag{
 		Key:       s.Key,
 		Value:     s.Value,
 		SystemTag: s.SystemTag,
 	}
 }
 
-func (s *ListTagsResponse) ToEntityListTags() *lsentity.ListTags {
-	result := new(lsentity.ListTags)
+func (s *ListTagsResponse) ToEntityListTags() *entity.ListTags {
+	result := new(entity.ListTags)
 	if s == nil {
 		return result
 	}

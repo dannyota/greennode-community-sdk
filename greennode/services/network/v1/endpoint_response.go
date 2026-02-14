@@ -1,6 +1,6 @@
 package v1
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type Endpoint struct {
 	Uuid              string `json:"uuid,omitempty"`
@@ -23,8 +23,8 @@ type EndpointTag struct {
 	UpdatedAt    string `json:"updatedAt,omitempty"`
 }
 
-func (s *Endpoint) toEntityEndpoint() *lsentity.Endpoint {
-	return &lsentity.Endpoint{
+func (s *Endpoint) toEntityEndpoint() *entity.Endpoint {
+	return &entity.Endpoint{
 		Id:          s.Uuid,
 		Name:        s.EndpointName,
 		VpcId:       s.VpcId,
@@ -38,7 +38,7 @@ type GetEndpointByIdResponse struct {
 	Data Endpoint `json:"data"`
 }
 
-func (s *GetEndpointByIdResponse) ToEntityEndpoint() *lsentity.Endpoint {
+func (s *GetEndpointByIdResponse) ToEntityEndpoint() *entity.Endpoint {
 	return s.Data.toEntityEndpoint()
 }
 
@@ -49,8 +49,8 @@ type CreateEndpointResponse struct {
 	} `json:"data"`
 }
 
-func (s *CreateEndpointResponse) ToEntityEndpoint() *lsentity.Endpoint {
-	return &lsentity.Endpoint{
+func (s *CreateEndpointResponse) ToEntityEndpoint() *entity.Endpoint {
+	return &entity.Endpoint{
 		Id:   s.Data.Uuid,
 		Name: s.Data.Name,
 	}
@@ -64,12 +64,12 @@ type ListEndpointsResponse struct {
 	Total     int        `json:"total"`
 }
 
-func (s *ListEndpointsResponse) ToEntityListEndpoints() *lsentity.ListEndpoints {
-	items := make([]*lsentity.Endpoint, 0, len(s.Data))
+func (s *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
+	items := make([]*entity.Endpoint, 0, len(s.Data))
 	for _, item := range s.Data {
 		items = append(items, item.toEntityEndpoint())
 	}
-	return &lsentity.ListEndpoints{
+	return &entity.ListEndpoints{
 		Items:     items,
 		Page:      s.Page,
 		PageSize:  s.Size,
@@ -82,10 +82,10 @@ type ListTagsByEndpointIdResponse struct {
 	Data []EndpointTag `json:"data"`
 }
 
-func (s *ListTagsByEndpointIdResponse) ToEntityListTags() *lsentity.ListTags {
-	items := make([]*lsentity.Tag, 0, len(s.Data))
+func (s *ListTagsByEndpointIdResponse) ToEntityListTags() *entity.ListTags {
+	items := make([]*entity.Tag, 0, len(s.Data))
 	for _, item := range s.Data {
-		items = append(items, &lsentity.Tag{
+		items = append(items, &entity.Tag{
 			Key:        item.TagKey,
 			Value:      item.TagValue,
 			SystemTag:  item.SystemTag,
@@ -93,7 +93,7 @@ func (s *ListTagsByEndpointIdResponse) ToEntityListTags() *lsentity.ListTags {
 			TagId:      item.Uuid,
 		})
 	}
-	return &lsentity.ListTags{
+	return &entity.ListTags{
 		Items: items,
 	}
 }

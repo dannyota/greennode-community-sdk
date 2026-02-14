@@ -1,6 +1,6 @@
 package inter
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
@@ -86,8 +86,8 @@ type CreatePoolRequest struct {
 	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
 	Members       []IMemberRequest      `json:"members"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 type HealthMonitor struct {

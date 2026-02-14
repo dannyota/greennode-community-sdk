@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewListAllServersBySecgroupIdRequest(psecgroupId string) IListAllServersBySecgroupIdRequest {
 	opt := new(ListAllServersBySecgroupIdRequest)
@@ -9,8 +9,8 @@ func NewListAllServersBySecgroupIdRequest(psecgroupId string) IListAllServersByS
 }
 
 type ListAllServersBySecgroupIdRequest struct {
-	lscommon.SecgroupCommon
-	lscommon.UserAgent
+	common.SecgroupCommon
+	common.UserAgent
 }
 
 func (s *ListAllServersBySecgroupIdRequest) AddUserAgent(pagent ...string) IListAllServersBySecgroupIdRequest {

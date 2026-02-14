@@ -1,13 +1,13 @@
 package inter
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type CreateLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *lsentity.LoadBalancer {
-	return &lsentity.LoadBalancer{
+func (s *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+	return &entity.LoadBalancer{
 		UUID: s.UUID,
 	}
 }

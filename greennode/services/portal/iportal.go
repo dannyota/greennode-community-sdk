@@ -1,19 +1,19 @@
 package portal
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lsportalV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
-	lsportalV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
+	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
 )
 
 type IPortalServiceV1 interface {
-	ListZones() (*lsentity.ListZones, lserr.IError)
-	GetPortalInfo(popts lsportalV1.IGetPortalInfoRequest) (*lsentity.Portal, lserr.IError)
-	ListProjects(popts lsportalV1.IListProjectsRequest) (*lsentity.ListPortals, lserr.IError)
+	ListZones() (*entity.ListZones, sdkerror.IError)
+	GetPortalInfo(popts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.IError)
+	ListProjects(popts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.IError)
 }
 
 type IPortalServiceV2 interface {
-	ListAllQuotaUsed() (*lsentity.ListQuotas, lserr.IError)
-	GetQuotaByName(popts lsportalV2.IGetQuotaByNameRequest) (*lsentity.Quota, lserr.IError)
+	ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.IError)
+	GetQuotaByName(popts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.IError)
 }

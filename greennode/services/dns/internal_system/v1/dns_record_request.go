@@ -1,8 +1,8 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type IListRecordsRequest interface {
@@ -19,7 +19,7 @@ type ListRecordsRequest struct {
 	HostedZoneId string
 	Name         string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *ListRecordsRequest) GetHostedZoneId() string {
@@ -69,7 +69,7 @@ type GetRecordRequest struct {
 	HostedZoneId string
 	RecordId     string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *GetRecordRequest) GetHostedZoneId() string {
@@ -117,7 +117,7 @@ type IUpdateRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) IUpdateRecordRequest
 	WithEnableStickySession(enable bool) IUpdateRecordRequest
 	WithValue(value []RecordValueRequest) IUpdateRecordRequest
-	ToRequestBody(psc lsclient.IServiceClient) map[string]interface{}
+	ToRequestBody(psc client.IServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -133,7 +133,7 @@ type UpdateRecordRequest struct {
 	EnableStickySession *bool                `json:"enableStickySession,omitempty"`
 	Value               []RecordValueRequest `json:"value"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *UpdateRecordRequest) GetHostedZoneId() string {
@@ -184,7 +184,7 @@ func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) IUpdateRecor
 	return r
 }
 
-func (r *UpdateRecordRequest) ToRequestBody(psc lsclient.IServiceClient) map[string]interface{} {
+func (r *UpdateRecordRequest) ToRequestBody(psc client.IServiceClient) map[string]interface{} {
 	body := map[string]interface{}{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
@@ -237,7 +237,7 @@ type DeleteRecordRequest struct {
 	HostedZoneId string
 	RecordId     string
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *DeleteRecordRequest) GetHostedZoneId() string {
@@ -283,7 +283,7 @@ type ICreateDnsRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) ICreateDnsRecordRequest
 	WithEnableStickySession(enable bool) ICreateDnsRecordRequest
 	WithValue(value []RecordValueRequest) ICreateDnsRecordRequest
-	ToRequestBody(psc lsclient.IServiceClient) map[string]interface{}
+	ToRequestBody(psc client.IServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -304,7 +304,7 @@ type CreateDnsRecordRequest struct {
 	EnableStickySession *bool                `json:"enableStickySession,omitempty"`
 	Value               []RecordValueRequest `json:"value"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (r *CreateDnsRecordRequest) GetHostedZoneId() string {
@@ -346,7 +346,7 @@ func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) ICreateDn
 	return r
 }
 
-func (r *CreateDnsRecordRequest) ToRequestBody(psc lsclient.IServiceClient) map[string]interface{} {
+func (r *CreateDnsRecordRequest) ToRequestBody(psc client.IServiceClient) map[string]interface{} {
 	body := map[string]interface{}{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,

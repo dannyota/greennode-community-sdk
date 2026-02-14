@@ -1,13 +1,13 @@
 package client
 
 import (
-	lctx "context"
-	ltime "time"
+	"context"
+	"time"
 
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsgateway "github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lssvcIdentityV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
+	svcclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
 var (
@@ -16,25 +16,25 @@ var (
 
 type (
 	client struct {
-		context    lctx.Context
+		context    context.Context
 		projectId  string
 		zoneId     string
 		userId     string
-		httpClient lsclient.IHttpClient
+		httpClient svcclient.IHttpClient
 		userAgent  string
-		authOpt    lsclient.AuthOpts
+		authOpt    svcclient.AuthOpts
 
-		iamGateway      lsgateway.IIamGateway
-		vserverGateway  lsgateway.IVServerGateway
-		vlbGateway      lsgateway.IVLBGateway
-		vbackupGateway  lsgateway.IVBackUpGateway
-		vnetworkGateway lsgateway.IVNetworkGateway
-		glbGateway      lsgateway.IGLBGateway
-		vdnsGateway     lsgateway.IVDnsGateway
+		iamGateway      gateway.IIamGateway
+		vserverGateway  gateway.IVServerGateway
+		vlbGateway      gateway.IVLBGateway
+		vbackupGateway  gateway.IVBackUpGateway
+		vnetworkGateway gateway.IVNetworkGateway
+		glbGateway      gateway.IGLBGateway
+		vdnsGateway     gateway.IVDnsGateway
 	}
 )
 
-func NewClient(pctx lctx.Context) IClient {
+func NewClient(pctx context.Context) IClient {
 	c := new(client)
 	c.context = pctx
 
@@ -45,29 +45,29 @@ func NewSdkConfigure() ISdkConfigure {
 	return &sdkConfigure{}
 }
 
-func (s *client) WithHttpClient(pclient lsclient.IHttpClient) IClient {
+func (s *client) WithHttpClient(pclient svcclient.IHttpClient) IClient {
 	s.httpClient = pclient
 	return s
 }
 
-func (s *client) WithContext(pctx lctx.Context) IClient {
+func (s *client) WithContext(pctx context.Context) IClient {
 	s.context = pctx
 	return s
 }
 
-func (s *client) WithAuthOption(pauthOpts lsclient.AuthOpts, pauthConfig ISdkConfigure) IClient {
+func (s *client) WithAuthOption(pauthOpts svcclient.AuthOpts, pauthConfig ISdkConfigure) IClient {
 	if s.httpClient == nil {
-		s.httpClient = lsclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
 	s.authOpt = pauthOpts // Assign the auth option to the client
 
 	switch pauthOpts {
-	case lsclient.IamOauth2:
-		s.httpClient.WithReauthFunc(lsclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
+	case svcclient.IamOauth2:
+		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	default:
-		s.httpClient.WithReauthFunc(lsclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
+		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	}
 
@@ -76,7 +76,7 @@ func (s *client) WithAuthOption(pauthOpts lsclient.AuthOpts, pauthConfig ISdkCon
 
 func (s *client) WithRetryCount(pretry int) IClient {
 	if s.httpClient == nil {
-		s.httpClient = lsclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
 	s.httpClient.WithRetryCount(pretry)
@@ -85,16 +85,16 @@ func (s *client) WithRetryCount(pretry int) IClient {
 
 func (s *client) WithKvDefaultHeaders(pargs ...string) IClient {
 	if s.httpClient == nil {
-		s.httpClient = lsclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
 	s.httpClient.WithKvDefaultHeaders(pargs...)
 	return s
 }
 
-func (s *client) WithSleep(psleep ltime.Duration) IClient {
+func (s *client) WithSleep(psleep time.Duration) IClient {
 	if s.httpClient == nil {
-		s.httpClient = lsclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
 	s.httpClient.WithSleep(psleep)
@@ -109,11 +109,11 @@ func (s *client) WithProjectId(pprojectId string) IClient {
 
 	// So it needs to reconfigure the gateway project id
 	if s.vserverGateway != nil {
-		s.vserverGateway = lsgateway.NewVServerGateway(s.vserverGateway.GetEndpoint(), s.projectId, s.httpClient)
+		s.vserverGateway = gateway.NewVServerGateway(s.vserverGateway.GetEndpoint(), s.projectId, s.httpClient)
 	}
 
 	if s.vlbGateway != nil {
-		s.vlbGateway = lsgateway.NewVLBGateway(
+		s.vlbGateway = gateway.NewVLBGateway(
 			s.vlbGateway.GetEndpoint(),
 			s.vserverGateway.GetEndpoint(),
 			s.projectId,
@@ -122,7 +122,7 @@ func (s *client) WithProjectId(pprojectId string) IClient {
 	}
 
 	if s.vnetworkGateway != nil {
-		s.vnetworkGateway = lsgateway.NewVNetworkGateway(
+		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			s.vnetworkGateway.GetEndpoint(),
 			s.zoneId,
 			s.projectId,
@@ -132,7 +132,7 @@ func (s *client) WithProjectId(pprojectId string) IClient {
 	}
 
 	if s.vdnsGateway != nil {
-		s.vdnsGateway = lsgateway.NewVDnsGateway(s.vdnsGateway.GetEndpoint(), s.projectId, s.httpClient)
+		s.vdnsGateway = gateway.NewVDnsGateway(s.vdnsGateway.GetEndpoint(), s.projectId, s.httpClient)
 	}
 
 	return s
@@ -141,7 +141,7 @@ func (s *client) WithProjectId(pprojectId string) IClient {
 func (s *client) WithUserId(puserId string) IClient {
 	s.userId = puserId
 	if s.vnetworkGateway != nil {
-		s.vnetworkGateway = lsgateway.NewVNetworkGateway(
+		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			s.vnetworkGateway.GetEndpoint(),
 			s.zoneId,
 			s.projectId,
@@ -157,15 +157,15 @@ func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
 	s.projectId = psdkCfg.GetProjectId()
 	s.userId = psdkCfg.GetUserId()
 	if s.httpClient == nil {
-		s.httpClient = lsclient.NewHttpClient(s.context)
+		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
 	if s.iamGateway == nil && psdkCfg.GetIamEndpoint() != "" {
-		s.iamGateway = lsgateway.NewIamGateway(psdkCfg.GetIamEndpoint(), s.projectId, s.httpClient)
+		s.iamGateway = gateway.NewIamGateway(psdkCfg.GetIamEndpoint(), s.projectId, s.httpClient)
 	}
 
 	if s.vserverGateway == nil && psdkCfg.GetVServerEndpoint() != "" {
-		s.vserverGateway = lsgateway.NewVServerGateway(
+		s.vserverGateway = gateway.NewVServerGateway(
 			psdkCfg.GetVServerEndpoint(),
 			s.projectId,
 			s.httpClient,
@@ -173,7 +173,7 @@ func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
 	}
 
 	if s.vlbGateway == nil && psdkCfg.GetVLBEndpoint() != "" && psdkCfg.GetVServerEndpoint() != "" {
-		s.vlbGateway = lsgateway.NewVLBGateway(
+		s.vlbGateway = gateway.NewVLBGateway(
 			psdkCfg.GetVLBEndpoint(),
 			psdkCfg.GetVServerEndpoint(),
 			s.projectId,
@@ -182,7 +182,7 @@ func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
 	}
 
 	if s.vnetworkGateway == nil && psdkCfg.GetVNetworkEndpoint() != "" {
-		s.vnetworkGateway = lsgateway.NewVNetworkGateway(
+		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			psdkCfg.GetVNetworkEndpoint(),
 			psdkCfg.GetZoneId(),
 			s.projectId,
@@ -192,51 +192,51 @@ func (s *client) Configure(psdkCfg ISdkConfigure) IClient {
 	}
 
 	if s.glbGateway == nil && psdkCfg.GetGLBEndpoint() != "" {
-		s.glbGateway = lsgateway.NewGLBGateway(psdkCfg.GetGLBEndpoint(), s.httpClient)
+		s.glbGateway = gateway.NewGLBGateway(psdkCfg.GetGLBEndpoint(), s.httpClient)
 	}
 
 	if s.vdnsGateway == nil && psdkCfg.GetVDnsEndpoint() != "" {
-		s.vdnsGateway = lsgateway.NewVDnsGateway(psdkCfg.GetVDnsEndpoint(), s.projectId, s.httpClient)
+		s.vdnsGateway = gateway.NewVDnsGateway(psdkCfg.GetVDnsEndpoint(), s.projectId, s.httpClient)
 	}
 
-	s.httpClient.WithReauthFunc(lsclient.IamOauth2, s.usingIamOauth2AsAuthOption(psdkCfg))
+	s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(psdkCfg))
 	s.userAgent = psdkCfg.GetUserAgent()
 
 	return s
 }
 
-func (s *client) IamGateway() lsgateway.IIamGateway {
+func (s *client) IamGateway() gateway.IIamGateway {
 	return s.iamGateway
 }
 
-func (s *client) VServerGateway() lsgateway.IVServerGateway {
+func (s *client) VServerGateway() gateway.IVServerGateway {
 	return s.vserverGateway
 }
 
-func (s *client) VLBGateway() lsgateway.IVLBGateway {
+func (s *client) VLBGateway() gateway.IVLBGateway {
 	return s.vlbGateway
 }
 
-func (s *client) VBackUpGateway() lsgateway.IVBackUpGateway {
+func (s *client) VBackUpGateway() gateway.IVBackUpGateway {
 	return s.vbackupGateway
 }
 
-func (s *client) VNetworkGateway() lsgateway.IVNetworkGateway {
+func (s *client) VNetworkGateway() gateway.IVNetworkGateway {
 	return s.vnetworkGateway
 }
 
-func (s *client) GLBGateway() lsgateway.IGLBGateway {
+func (s *client) GLBGateway() gateway.IGLBGateway {
 	return s.glbGateway
 }
 
-func (s *client) VDnsGateway() lsgateway.IVDnsGateway {
+func (s *client) VDnsGateway() gateway.IVDnsGateway {
 	return s.vdnsGateway
 }
 
-func (s *client) usingIamOauth2AsAuthOption(pauthConfig ISdkConfigure) func() (lsclient.ISdkAuthentication, lserr.IError) {
-	authFunc := func() (lsclient.ISdkAuthentication, lserr.IError) {
+func (s *client) usingIamOauth2AsAuthOption(pauthConfig ISdkConfigure) func() (svcclient.ISdkAuthentication, sdkerror.IError) {
+	authFunc := func() (svcclient.ISdkAuthentication, sdkerror.IError) {
 		token, err := s.iamGateway.V2().IdentityService().GetAccessToken(
-			lssvcIdentityV2.NewGetAccessTokenRequest(pauthConfig.GetClientId(), pauthConfig.GetClientSecret()))
+			identityv2.NewGetAccessTokenRequest(pauthConfig.GetClientId(), pauthConfig.GetClientSecret()))
 		if err != nil {
 			return nil, err
 		}

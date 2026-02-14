@@ -1,21 +1,21 @@
 package client
 
 import (
-	ltime "time"
+	"time"
 
-	lreq "github.com/imroc/req/v3"
+	"github.com/imroc/req/v3"
 
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 type IHttpClient interface {
 	WithRetryCount(pretryCount int) IHttpClient
-	WithTimeout(ptimeout ltime.Duration) IHttpClient
-	WithSleep(psleep ltime.Duration) IHttpClient
+	WithTimeout(ptimeout time.Duration) IHttpClient
+	WithSleep(psleep time.Duration) IHttpClient
 	WithKvDefaultHeaders(pargs ...string) IHttpClient
-	WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (ISdkAuthentication, lserr.IError)) IHttpClient
+	WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (ISdkAuthentication, sdkerror.IError)) IHttpClient
 
-	DoRequest(purl string, preq IRequest) (*lreq.Response, lserr.IError)
+	DoRequest(purl string, preq IRequest) (*req.Response, sdkerror.IError)
 }
 
 type IRequest interface {

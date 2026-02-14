@@ -1,8 +1,8 @@
 package v2
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewListTagsRequest(plbId string) IListTagsRequest {
@@ -21,7 +21,7 @@ func NewCreateTagsRequest(plbId string) ICreateTagsRequest {
 	opts.LoadBalancerId = plbId
 	opts.ResourceID = plbId
 	opts.ResourceType = "LOAD-BALANCER"
-	opts.TagRequestList = make([]lscommon.Tag, 0)
+	opts.TagRequestList = make([]common.Tag, 0)
 
 	return opts
 }
@@ -31,23 +31,23 @@ func NewUpdateTagsRequest(plbId string) IUpdateTagsRequest {
 	opts.LoadBalancerId = plbId
 	opts.ResourceID = plbId
 	opts.ResourceType = "LOAD-BALANCER"
-	opts.TagRequestList = make([]lscommon.Tag, 0)
+	opts.TagRequestList = make([]common.Tag, 0)
 
 	return opts
 }
 
 type ListTagsRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 type CreateTagsRequest struct {
 	ResourceID     string         `json:"resourceId"`
 	ResourceType   string         `json:"resourceType"`
-	TagRequestList []lscommon.Tag `json:"tagRequestList"`
+	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *CreateTagsRequest) AddUserAgent(pagent ...string) ICreateTagsRequest {
@@ -58,10 +58,10 @@ func (s *CreateTagsRequest) AddUserAgent(pagent ...string) ICreateTagsRequest {
 type UpdateTagsRequest struct {
 	ResourceID     string         `json:"resourceId"`
 	ResourceType   string         `json:"resourceType"`
-	TagRequestList []lscommon.Tag `json:"tagRequestList"`
+	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *CreateTagsRequest) ToRequestBody() interface{} {
@@ -79,15 +79,15 @@ func (s *CreateTagsRequest) WithTags(ptags ...string) ICreateTagsRequest {
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 	return s
 }
 
-func (s *UpdateTagsRequest) ToRequestBody(plstTags *lsentity.ListTags) interface{} {
-	st := map[string]lscommon.Tag{}
+func (s *UpdateTagsRequest) ToRequestBody(plstTags *entity.ListTags) interface{} {
+	st := map[string]common.Tag{}
 	for _, tag := range plstTags.Items {
-		st[tag.Key] = lscommon.Tag{
+		st[tag.Key] = common.Tag{
 			IsEdited: false,
 			Key:      tag.Key,
 			Value:    tag.Value,
@@ -98,7 +98,7 @@ func (s *UpdateTagsRequest) ToRequestBody(plstTags *lsentity.ListTags) interface
 		st[tag.Key] = tag
 	}
 
-	s.TagRequestList = make([]lscommon.Tag, 0)
+	s.TagRequestList = make([]common.Tag, 0)
 	for _, tag := range st {
 		s.TagRequestList = append(s.TagRequestList, tag)
 	}
@@ -112,7 +112,7 @@ func (s *UpdateTagsRequest) WithTags(ptags ...string) IUpdateTagsRequest {
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s

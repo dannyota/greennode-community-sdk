@@ -1,6 +1,6 @@
 package v1
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	Volume       ResourceType = "VOLUME"
@@ -16,7 +16,7 @@ type CreateSystemTagRequest struct { // ________________________________________
 		Key   string `json:"key"`
 		Value string `json:"value"`
 	} `json:"tagRequestList"`
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateSystemTagRequest) ToRequestBody() interface{} {

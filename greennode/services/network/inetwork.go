@@ -1,60 +1,60 @@
 package network
 
 import (
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lsnetworkSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
-	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	networkv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
 type INetworkServiceV1 interface {
-	GetEndpointById(pops lsnetworkSvcV1.IGetEndpointByIdRequest) (*lsentity.Endpoint, lserr.IError)
-	CreateEndpoint(popts lsnetworkSvcV1.ICreateEndpointRequest) (*lsentity.Endpoint, lserr.IError)
-	DeleteEndpointById(popts lsnetworkSvcV1.IDeleteEndpointByIdRequest) lserr.IError
-	ListEndpoints(popts lsnetworkSvcV1.IListEndpointsRequest) (*lsentity.ListEndpoints, lserr.IError)
+	GetEndpointById(pops networkv1.IGetEndpointByIdRequest) (*entity.Endpoint, sdkerror.IError)
+	CreateEndpoint(popts networkv1.ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError)
+	DeleteEndpointById(popts networkv1.IDeleteEndpointByIdRequest) sdkerror.IError
+	ListEndpoints(popts networkv1.IListEndpointsRequest) (*entity.ListEndpoints, sdkerror.IError)
 }
 
 type INetworkServiceInternalV1 interface {
-	ListTagsByEndpointId(popts lsnetworkSvcV1.IListTagsByEndpointIdRequest) (*lsentity.ListTags, lserr.IError)
-	CreateTagsWithEndpointId(popts lsnetworkSvcV1.ICreateTagsWithEndpointIdRequest) lserr.IError
-	DeleteTagOfEndpoint(popts lsnetworkSvcV1.IDeleteTagOfEndpointRequest) lserr.IError
-	UpdateTagValueOfEndpoint(popts lsnetworkSvcV1.IUpdateTagValueOfEndpointRequest) lserr.IError
-	CreateEndpoint(popts lsnetworkSvcV1.ICreateEndpointRequest) (*lsentity.Endpoint, lserr.IError)
+	ListTagsByEndpointId(popts networkv1.IListTagsByEndpointIdRequest) (*entity.ListTags, sdkerror.IError)
+	CreateTagsWithEndpointId(popts networkv1.ICreateTagsWithEndpointIdRequest) sdkerror.IError
+	DeleteTagOfEndpoint(popts networkv1.IDeleteTagOfEndpointRequest) sdkerror.IError
+	UpdateTagValueOfEndpoint(popts networkv1.IUpdateTagValueOfEndpointRequest) sdkerror.IError
+	CreateEndpoint(popts networkv1.ICreateEndpointRequest) (*entity.Endpoint, sdkerror.IError)
 }
 
 type INetworkServiceV2 interface {
 	// The group of Network APIs
-	GetNetworkById(popts lsnetworkSvcV2.IGetNetworkByIdRequest) (*lsentity.Network, lserr.IError)
+	GetNetworkById(popts networkv2.IGetNetworkByIdRequest) (*entity.Network, sdkerror.IError)
 
 	// The group of Secgroup APIs
 
-	GetSecgroupById(popts lsnetworkSvcV2.IGetSecgroupByIdRequest) (*lsentity.Secgroup, lserr.IError)
-	CreateSecgroup(popts lsnetworkSvcV2.ICreateSecgroupRequest) (*lsentity.Secgroup, lserr.IError)
-	ListSecgroup(popts lsnetworkSvcV2.IListSecgroupRequest) (*lsentity.ListSecgroups, lserr.IError)
-	DeleteSecgroupById(popts lsnetworkSvcV2.IDeleteSecgroupByIdRequest) lserr.IError
+	GetSecgroupById(popts networkv2.IGetSecgroupByIdRequest) (*entity.Secgroup, sdkerror.IError)
+	CreateSecgroup(popts networkv2.ICreateSecgroupRequest) (*entity.Secgroup, sdkerror.IError)
+	ListSecgroup(popts networkv2.IListSecgroupRequest) (*entity.ListSecgroups, sdkerror.IError)
+	DeleteSecgroupById(popts networkv2.IDeleteSecgroupByIdRequest) sdkerror.IError
 
 	// The group of SecgroupRule APIs
 
-	CreateSecgroupRule(popts lsnetworkSvcV2.ICreateSecgroupRuleRequest) (*lsentity.SecgroupRule, lserr.IError)
-	DeleteSecgroupRuleById(popts lsnetworkSvcV2.IDeleteSecgroupRuleByIdRequest) lserr.IError
-	ListSecgroupRulesBySecgroupId(popts lsnetworkSvcV2.IListSecgroupRulesBySecgroupIdRequest) (*lsentity.ListSecgroupRules, lserr.IError)
+	CreateSecgroupRule(popts networkv2.ICreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.IError)
+	DeleteSecgroupRuleById(popts networkv2.IDeleteSecgroupRuleByIdRequest) sdkerror.IError
+	ListSecgroupRulesBySecgroupId(popts networkv2.IListSecgroupRulesBySecgroupIdRequest) (*entity.ListSecgroupRules, sdkerror.IError)
 
 	// Subnet
-	GetSubnetById(popts lsnetworkSvcV2.IGetSubnetByIdRequest) (*lsentity.Subnet, lserr.IError)
-	UpdateSubnetById(popts lsnetworkSvcV2.IUpdateSubnetByIdRequest) (*lsentity.Subnet, lserr.IError)
+	GetSubnetById(popts networkv2.IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.IError)
+	UpdateSubnetById(popts networkv2.IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.IError)
 
 	// Address Pair
-	GetAllAddressPairByVirtualSubnetId(popts lsnetworkSvcV2.IGetAllAddressPairByVirtualSubnetIdRequest) ([]*lsentity.AddressPair, lserr.IError)
-	SetAddressPairInVirtualSubnet(popts lsnetworkSvcV2.ISetAddressPairInVirtualSubnetRequest) (*lsentity.AddressPair, lserr.IError)
-	DeleteAddressPair(popts lsnetworkSvcV2.IDeleteAddressPairRequest) lserr.IError
-	CreateAddressPair(popts lsnetworkSvcV2.ICreateAddressPairRequest) (*lsentity.AddressPair, lserr.IError)
+	GetAllAddressPairByVirtualSubnetId(popts networkv2.IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.IError)
+	SetAddressPairInVirtualSubnet(popts networkv2.ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.IError)
+	DeleteAddressPair(popts networkv2.IDeleteAddressPairRequest) sdkerror.IError
+	CreateAddressPair(popts networkv2.ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.IError)
 
 	// Servers
-	ListAllServersBySecgroupId(popts lsnetworkSvcV2.IListAllServersBySecgroupIdRequest) (*lsentity.ListServers, lserr.IError)
+	ListAllServersBySecgroupId(popts networkv2.IListAllServersBySecgroupIdRequest) (*entity.ListServers, sdkerror.IError)
 
 	// Virtual Address API group
-	CreateVirtualAddressCrossProject(popts lsnetworkSvcV2.ICreateVirtualAddressCrossProjectRequest) (*lsentity.VirtualAddress, lserr.IError)
-	DeleteVirtualAddressById(popts lsnetworkSvcV2.IDeleteVirtualAddressByIdRequest) lserr.IError
-	GetVirtualAddressById(popts lsnetworkSvcV2.IGetVirtualAddressByIdRequest) (*lsentity.VirtualAddress, lserr.IError)
-	ListAddressPairsByVirtualAddressId(popts lsnetworkSvcV2.IListAddressPairsByVirtualAddressIdRequest) (*lsentity.ListAddressPairs, lserr.IError)
+	CreateVirtualAddressCrossProject(popts networkv2.ICreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, sdkerror.IError)
+	DeleteVirtualAddressById(popts networkv2.IDeleteVirtualAddressByIdRequest) sdkerror.IError
+	GetVirtualAddressById(popts networkv2.IGetVirtualAddressByIdRequest) (*entity.VirtualAddress, sdkerror.IError)
+	ListAddressPairsByVirtualAddressId(popts networkv2.IListAddressPairsByVirtualAddressIdRequest) (*entity.ListAddressPairs, sdkerror.IError)
 }

@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type CreateListenerResponse struct {
 	UUID string `json:"uuid"`
@@ -34,36 +34,36 @@ type Listener struct {
 	DefaultCertificateAuthority     *string                         `json:"defaultCertificateAuthority"`
 	ClientCertificateAuthentication *string                         `json:"clientCertificateAuthentication"`
 	ProgressStatus                  string                          `json:"progressStatus"`
-	InsertHeaders                   []lsentity.ListenerInsertHeader `json:"insertHeaders"`
+	InsertHeaders                   []entity.ListenerInsertHeader `json:"insertHeaders"`
 }
 
-func (s *CreateListenerResponse) ToEntityListener() *lsentity.Listener {
-	return &lsentity.Listener{
+func (s *CreateListenerResponse) ToEntityListener() *entity.Listener {
+	return &entity.Listener{
 		UUID: s.UUID,
 	}
 }
 
-func (s *ListListenersByLoadBalancerIdResponse) ToEntityListListeners() *lsentity.ListListeners {
-	listeners := &lsentity.ListListeners{}
+func (s *ListListenersByLoadBalancerIdResponse) ToEntityListListeners() *entity.ListListeners {
+	listeners := &entity.ListListeners{}
 	for _, itemListener := range s.Data {
 		listeners.Add(itemListener.toEntityListener())
 	}
 	return listeners
 }
 
-func (s *Listener) toEntityListener() *lsentity.Listener {
+func (s *Listener) toEntityListener() *entity.Listener {
 	if s == nil {
 		return nil
 	}
 	// Convert the slice of insertHeaderResponse to the slice of insertHeader
-	insertHeaders := make([]lsentity.ListenerInsertHeader, len(s.InsertHeaders))
+	insertHeaders := make([]entity.ListenerInsertHeader, len(s.InsertHeaders))
 	for i, header := range s.InsertHeaders {
-		insertHeaders[i] = lsentity.ListenerInsertHeader{
+		insertHeaders[i] = entity.ListenerInsertHeader{
 			HeaderName:  header.HeaderName,
 			HeaderValue: header.HeaderValue,
 		}
 	}
-	return &lsentity.Listener{
+	return &entity.Listener{
 		UUID:                            s.UUID,
 		Name:                            s.Name,
 		Description:                     s.Description,
@@ -87,6 +87,6 @@ func (s *Listener) toEntityListener() *lsentity.Listener {
 	}
 }
 
-func (s *GetListenerByIdResponse) ToEntityListener() *lsentity.Listener {
+func (s *GetListenerByIdResponse) ToEntityListener() *entity.Listener {
 	return s.Data.toEntityListener()
 }

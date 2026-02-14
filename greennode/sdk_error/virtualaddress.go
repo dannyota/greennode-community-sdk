@@ -1,8 +1,8 @@
 package sdk_error
 
 import (
-	lregexp "regexp"
-	lstr "strings"
+	"regexp"
+	"strings"
 )
 
 const (
@@ -14,9 +14,9 @@ const (
 )
 
 var (
-	regexErrorVirtualAddressNotFound = lregexp.MustCompile(patternVirtualAddressNotFound)
-	regexErrorAddressPairNotFound    = lregexp.MustCompile(patternAddressPairNotFound)
-	regexErrorVirtualAddressInUse    = lregexp.MustCompile(patternVirtualAddressInUse)
+	regexErrorVirtualAddressNotFound = regexp.MustCompile(patternVirtualAddressNotFound)
+	regexErrorAddressPairNotFound    = regexp.MustCompile(patternAddressPairNotFound)
+	regexErrorVirtualAddressInUse    = regexp.MustCompile(patternVirtualAddressInUse)
 )
 
 func WithErrorVirtualAddressNotFound(perrResp IErrorRespone) func(sdkError IError) {
@@ -25,7 +25,7 @@ func WithErrorVirtualAddressNotFound(perrResp IErrorRespone) func(sdkError IErro
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorVirtualAddressNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
@@ -40,7 +40,7 @@ func WithErrorAddressPairNotFound(perrResp IErrorRespone) func(sdkError IError) 
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
 		if regexErrorAddressPairNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
@@ -56,7 +56,7 @@ func WithErrorVirtualAddressExceedQuota(perrResp IErrorRespone) func(sdkError IE
 		}
 
 		errMsg := perrResp.GetMessage()
-		if lstr.Contains(lstr.ToLower(lstr.TrimSpace(errMsg)), patternVirtualAddressExceedQuota) {
+		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVirtualAddressExceedQuota) {
 			sdkError.WithErrorCode(EcVServerVirtualAddressExceedQuota).
 				WithMessage(errMsg).
 				WithErrors(perrResp.GetError()).
@@ -71,8 +71,8 @@ func WithErrorVirtualAddressInUse(perrResp IErrorRespone) func(sdkError IError) 
 			return
 		}
 
-		errMsg := lstr.ToLower(lstr.TrimSpace(perrResp.GetMessage()))
-		if lstr.Contains(errMsg, patternVirtualAddressInUse) ||
+		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		if strings.Contains(errMsg, patternVirtualAddressInUse) ||
 			regexErrorVirtualAddressInUse.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressInUse).
 				WithMessage(perrResp.GetMessage()).

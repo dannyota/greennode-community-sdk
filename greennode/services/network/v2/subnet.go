@@ -1,25 +1,25 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*lsentity.Subnet, lserr.IError) {
+func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.IError) {
 	url := getSubnetByIdUrl(s.VserverClient, popts)
 	resp := new(GetSubnetByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorSubnetNotBelongNetwork(sdkErr),
-			lserr.WithErrorSubnetNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorSubnetNotBelongNetwork(sdkErr),
+			sdkerror.WithErrorSubnetNotFound(errResp)).
 			WithKVparameters(
 				"subnetId", popts.GetSubnetId(),
 				"projectId", s.getProjectId())
@@ -28,11 +28,11 @@ func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*lsentity
 	return resp.ToEntitySubnet(), nil
 }
 
-func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*lsentity.Subnet, lserr.IError) {
+func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.IError) {
 	url := updateSubnetByIdUrl(s.VserverClient, popts)
 	resp := new(UpdateSubnetByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJsonBody(popts.ToRequestBody()).
@@ -41,7 +41,7 @@ func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*ls
 
 	_, sdkErr := s.VserverClient.Patch(url, req)
 	if sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp)
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
 	return resp.ToEntitySubnet(), nil

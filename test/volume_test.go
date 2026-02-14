@@ -1,12 +1,12 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
 	v2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v2"
 )
 
-func TestCreateVolumeFailure(t *ltesting.T) {
+func TestCreateVolumeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewCreateBlockVolumeRequest(
 		"testsadsadsada",
@@ -26,7 +26,7 @@ func TestCreateVolumeFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateVolumeSuccess(t *ltesting.T) {
+func TestCreateVolumeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewCreateBlockVolumeRequest(
 		"cuongdm3-test-tags",
@@ -46,7 +46,7 @@ func TestCreateVolumeSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVolumeByIdFailure(t *ltesting.T) {
+func TestDeleteVolumeByIdFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewDeleteBlockVolumeByIdRequest("this-is-fake")
 	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeById(opt)
@@ -58,7 +58,7 @@ func TestDeleteVolumeByIdFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteVolumeByIdSuccess(t *ltesting.T) {
+func TestDeleteVolumeByIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewDeleteBlockVolumeByIdRequest("vol-51f71146-9c20-4615-a73e-a43a39bf03ea")
 	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteBlockVolumeById(opt)
@@ -70,7 +70,7 @@ func TestDeleteVolumeByIdSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListBlockVolumeSuccess(t *ltesting.T) {
+func TestListBlockVolumeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListBlockVolumesRequest(1, 10)
 	volumes, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListBlockVolumes(opt)
@@ -86,7 +86,7 @@ func TestListBlockVolumeSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListBlockVolumeWithNameSuccess(t *ltesting.T) {
+func TestListBlockVolumeWithNameSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListBlockVolumesRequest(1, 10).WithName("pvc-24182151-aa4a-4a55-9572-f551c3d003aa")
 	volumes, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListBlockVolumes(opt)
@@ -106,7 +106,7 @@ func TestListBlockVolumeWithNameSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListBlockVolumeWithFailure(t *ltesting.T) {
+func TestListBlockVolumeWithFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListBlockVolumesRequest(1, -10)
 	volumes, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListBlockVolumes(opt)
@@ -122,7 +122,7 @@ func TestListBlockVolumeWithFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetBlockVolumeByIdFailure(t *ltesting.T) {
+func TestGetBlockVolumeByIdFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewGetBlockVolumeByIdRequest("vol-17dc6df0-43d3-4ad2-be88-69ddaef2f146")
 	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeById(opt)
@@ -138,7 +138,7 @@ func TestGetBlockVolumeByIdFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetBlockVolumeByIdSuccess(t *ltesting.T) {
+func TestGetBlockVolumeByIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewGetBlockVolumeByIdRequest("vol-aa784f76-a13d-4f92-b807-d2df3180e030")
 	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetBlockVolumeById(opt)
@@ -154,7 +154,7 @@ func TestGetBlockVolumeByIdSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestResizeBlockVolumeFailure(t *ltesting.T) {
+func TestResizeBlockVolumeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewResizeBlockVolumeByIdRequest(
 		"vol-ae3fffe5-bd46-475f-bee3-3d5eff4a4b45",
@@ -173,7 +173,7 @@ func TestResizeBlockVolumeFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetUnderVolumeIdFailure(t *ltesting.T) {
+func TestGetUnderVolumeIdFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewGetUnderVolumeIdRequest("vol-ae3fffe5-bd46-475f-besadd")
 	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeId(opt)
@@ -189,7 +189,7 @@ func TestGetUnderVolumeIdFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetUnderVolumeIdSuccess(t *ltesting.T) {
+func TestGetUnderVolumeIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewGetUnderVolumeIdRequest("vol-137f3dfc-9198-4d94-983f-6802e3c39e4f")
 	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().GetUnderBlockVolumeId(opt)
@@ -205,7 +205,7 @@ func TestGetUnderVolumeIdSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestMigrateBlockVolume(t *ltesting.T) {
+func TestMigrateBlockVolume(t *testing.T) {
 	vtNvme := "vtype-7a7a8610-34f5-11ee-be56-0242ac120002"
 	vtSsd := "vtype-7a7a8610-34f5-11ee-be56-0242ac120002"
 	t.Log(vtSsd, vtNvme)

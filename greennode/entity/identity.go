@@ -1,7 +1,7 @@
 package entity
 
 import (
-	lsvcClient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 )
 
 type AccessToken struct {
@@ -9,8 +9,8 @@ type AccessToken struct {
 	ExpiresAt int64
 }
 
-func (s *AccessToken) ToSdkAuthentication() lsvcClient.ISdkAuthentication {
-	return new(lsvcClient.SdkAuthentication).
+func (s *AccessToken) ToSdkAuthentication() client.ISdkAuthentication {
+	return new(client.SdkAuthentication).
 		WithAccessToken(s.Token).
 		WithExpiresAt(s.ExpiresAt)
 }

@@ -1,6 +1,6 @@
 package inter
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	InterVpcLoadBalancerScheme LoadBalancerScheme = "InterVPC"
@@ -28,11 +28,11 @@ type CreateLoadBalancerRequest struct {
 	Type            LoadBalancerType       `json:"type"`
 	Listener        ICreateListenerRequest `json:"listener,omitempty"`
 	Pool            ICreatePoolRequest     `json:"pool,omitempty"`
-	Tags            []lscommon.Tag         `json:"tags,omitempty"`
-	ZoneId          *lscommon.Zone         `json:"zoneId,omitempty"`
+	Tags            []common.Tag         `json:"tags,omitempty"`
+	ZoneId          *common.Zone         `json:"zoneId,omitempty"`
 
-	lscommon.PortalUser
-	lscommon.UserAgent
+	common.PortalUser
+	common.UserAgent
 }
 
 func (s *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
@@ -87,7 +87,7 @@ func (s *CreateLoadBalancerRequest) WithPool(ppool ICreatePoolRequest) ICreateLo
 
 func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalancerRequest {
 	if s.Tags == nil {
-		s.Tags = make([]lscommon.Tag, 0)
+		s.Tags = make([]common.Tag, 0)
 	}
 
 	if len(ptags)%2 != 0 {
@@ -95,13 +95,13 @@ func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalance
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId lscommon.Zone) ICreateLoadBalancerRequest {
+func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId common.Zone) ICreateLoadBalancerRequest {
 	s.ZoneId = &pzoneId
 	return s
 }

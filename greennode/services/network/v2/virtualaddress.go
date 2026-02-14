@@ -1,16 +1,16 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtualAddressCrossProjectRequest) (*lsentity.VirtualAddress, lserr.IError) {
+func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, sdkerror.IError) {
 	url := createVirtualAddressCrossProjectUrl(s.VserverClient)
 	resp := new(CreateVirtualAddressCrossProjectResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJsonBody(popts.ToRequestBody()).
@@ -18,70 +18,70 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(popts ICreateVirtual
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorSubnetNotFound(errResp),
-			lserr.WithErrorVirtualAddressExceedQuota(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorSubnetNotFound(errResp),
+			sdkerror.WithErrorVirtualAddressExceedQuota(errResp)).
 			WithKVparameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatVServer, lserr.ErrCatVirtualAddress)
+			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) DeleteVirtualAddressById(popts IDeleteVirtualAddressByIdRequest) lserr.IError {
+func (s *NetworkServiceV2) DeleteVirtualAddressById(popts IDeleteVirtualAddressByIdRequest) sdkerror.IError {
 	url := deleteVirtualAddressByIdUrl(s.VserverClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVirtualAddressNotFound(errResp),
-			lserr.WithErrorVirtualAddressInUse(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVirtualAddressNotFound(errResp),
+			sdkerror.WithErrorVirtualAddressInUse(errResp)).
 			WithKVparameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatVServer, lserr.ErrCatVirtualAddress)
+			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceV2) GetVirtualAddressById(popts IGetVirtualAddressByIdRequest) (*lsentity.VirtualAddress, lserr.IError) {
+func (s *NetworkServiceV2) GetVirtualAddressById(popts IGetVirtualAddressByIdRequest) (*entity.VirtualAddress, sdkerror.IError) {
 	url := getVirtualAddressByIdUrl(s.VserverClient, popts)
 	resp := new(GetVirtualAddressByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithJsonResponse(resp).
 		WithOkCodes(200).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVirtualAddressNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVirtualAddressNotFound(errResp)).
 			WithKVparameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatVServer, lserr.ErrCatVirtualAddress)
+			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressId(popts IListAddressPairsByVirtualAddressIdRequest) (*lsentity.ListAddressPairs, lserr.IError) {
+func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressId(popts IListAddressPairsByVirtualAddressIdRequest) (*entity.ListAddressPairs, sdkerror.IError) {
 	url := listAddressPairsByVirtualAddressIdUrl(s.VserverClient, popts)
 	resp := new(ListAddressPairsByVirtualAddressIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithJsonResponse(resp).
 		WithOkCodes(200).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVirtualAddressNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVirtualAddressNotFound(errResp)).
 			WithKVparameters(popts.ToMap()).
-			WithErrorCategories(lserr.ErrCatVServer, lserr.ErrCatVirtualAddress)
+			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityListAddressPairs(), nil

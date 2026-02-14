@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type CreateSecgroupRuleResponse struct {
 	Data struct {
@@ -23,8 +23,8 @@ type CreateSecgroupRuleResponse struct {
 	} `json:"data"`
 }
 
-func (s *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *lsentity.SecgroupRule {
-	return &lsentity.SecgroupRule{
+func (s *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule {
+	return &entity.SecgroupRule{
 		Id:             s.Data.UUID,
 		SecgroupId:     s.Data.SecgroupUuid,
 		Direction:      s.Data.Direction,
@@ -53,13 +53,13 @@ type ListSecgroupRulesBySecgroupIdResponse struct {
 	} `json:"data"`
 }
 
-func (s *ListSecgroupRulesBySecgroupIdResponse) ToEntityListSecgroupRules() *lsentity.ListSecgroupRules {
-	lsr := &lsentity.ListSecgroupRules{
-		Items: make([]*lsentity.SecgroupRule, 0),
+func (s *ListSecgroupRulesBySecgroupIdResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
+	lsr := &entity.ListSecgroupRules{
+		Items: make([]*entity.SecgroupRule, 0),
 	}
 
 	for _, rule := range s.Data {
-		lsr.Items = append(lsr.Items, &lsentity.SecgroupRule{
+		lsr.Items = append(lsr.Items, &entity.SecgroupRule{
 			Id:             rule.ID,
 			Direction:      rule.Direction,
 			EtherType:      rule.EtherType,

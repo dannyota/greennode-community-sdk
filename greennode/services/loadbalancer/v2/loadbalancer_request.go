@@ -1,12 +1,12 @@
 package v2
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstr "strings"
-	lstrconv "strconv"
+	"fmt"
+	"net/url"
+	"strings"
+	"strconv"
 
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -48,7 +48,7 @@ func NewCreateLoadBalancerRequest(pname, ppackageId, psubnetId string) ICreateLo
 
 func NewResizeLoadBalancerRequest(plbId, packageID string) IResizeLoadBalancerRequest {
 	return &ResizeLoadBalancerRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
 		PackageID: packageID,
@@ -85,7 +85,7 @@ func NewDeleteLoadBalancerByIdRequest(plbId string) IDeleteLoadBalancerByIdReque
 
 func NewScaleLoadBalancerRequest(plbId string) IScaleLoadBalancerRequest {
 	return &ScaleLoadBalancerRequest{
-		LoadBalancerCommon: lscommon.LoadBalancerCommon{
+		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerId: plbId,
 		},
 	}
@@ -100,27 +100,27 @@ type CreateLoadBalancerRequest struct {
 	Type         LoadBalancerType       `json:"type"`
 	Listener     ICreateListenerRequest `json:"listener"`
 	Pool         ICreatePoolRequest     `json:"pool"`
-	Tags         []lscommon.Tag         `json:"tags,omitempty"`
+	Tags         []common.Tag         `json:"tags,omitempty"`
 	IsPoc        bool                   `json:"isPoc"`
-	ZoneId       *lscommon.Zone         `json:"zoneId"`
+	ZoneId       *common.Zone         `json:"zoneId"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 type ResizeLoadBalancerRequest struct {
 	PackageID string `json:"packageId"`
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 type ListLoadBalancerPackagesRequest struct {
-	lscommon.UserAgent
-	ZoneId lscommon.Zone `q:"zoneId,beempty"`
+	common.UserAgent
+	ZoneId common.Zone `q:"zoneId,beempty"`
 }
 
 type GetLoadBalancerByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 type ListLoadBalancersRequest struct {
@@ -128,13 +128,13 @@ type ListLoadBalancersRequest struct {
 	Page int
 	Size int
 
-	Tags []lscommon.Tag
-	lscommon.UserAgent
+	Tags []common.Tag
+	common.UserAgent
 }
 
 type DeleteLoadBalancerByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 }
 
 func (s *DeleteLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IDeleteLoadBalancerByIdRequest {
@@ -143,8 +143,8 @@ func (s *DeleteLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IDeleteLo
 }
 
 type ResizeLoadBalancerByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 
 	PackageId string `json:"packageId"`
 }
@@ -155,8 +155,8 @@ func (s *ResizeLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IResizeLo
 }
 
 type ScaleLoadBalancerRequest struct {
-	lscommon.UserAgent
-	lscommon.LoadBalancerCommon
+	common.UserAgent
+	common.LoadBalancerCommon
 
 	Scaling    *ScalingConfig    `json:"scaling"`
 	Networking *NetworkingConfig `json:"networking"`
@@ -247,7 +247,7 @@ func (s *CreateLoadBalancerRequest) WithPool(ppool ICreatePoolRequest) ICreateLo
 
 func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalancerRequest {
 	if s.Tags == nil {
-		s.Tags = make([]lscommon.Tag, 0)
+		s.Tags = make([]common.Tag, 0)
 	}
 
 	if len(ptags)%2 != 0 {
@@ -255,7 +255,7 @@ func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalance
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s
@@ -291,7 +291,7 @@ func (s *CreateLoadBalancerRequest) WithPoc(isPoc bool) ICreateLoadBalancerReque
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId lscommon.Zone) ICreateLoadBalancerRequest {
+func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId common.Zone) ICreateLoadBalancerRequest {
 	s.ZoneId = &pzoneId
 	return s
 }
@@ -315,7 +315,7 @@ func (s *ListLoadBalancerPackagesRequest) AddUserAgent(pagent ...string) IListLo
 	return s
 }
 
-func (s *ListLoadBalancerPackagesRequest) WithZoneId(pzoneId lscommon.Zone) IListLoadBalancerPackagesRequest {
+func (s *ListLoadBalancerPackagesRequest) WithZoneId(pzoneId common.Zone) IListLoadBalancerPackagesRequest {
 	s.ZoneId = pzoneId
 	return s
 }
@@ -340,7 +340,7 @@ func (s *ListLoadBalancersRequest) WithName(pname string) IListLoadBalancersRequ
 
 func (s *ListLoadBalancersRequest) WithTags(ptags ...string) IListLoadBalancersRequest {
 	if s.Tags == nil {
-		s.Tags = make([]lscommon.Tag, 0)
+		s.Tags = make([]common.Tag, 0)
 	}
 
 	if len(ptags)%2 != 0 {
@@ -348,17 +348,17 @@ func (s *ListLoadBalancersRequest) WithTags(ptags ...string) IListLoadBalancersR
 	}
 
 	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, lscommon.Tag{Key: ptags[i], Value: ptags[i+1]})
+		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
 	}
 
 	return s
 }
 
 func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	v.Set("name", s.Name)
-	v.Set("page", lstrconv.Itoa(s.Page))
-	v.Set("size", lstrconv.Itoa(s.Size))
+	v.Set("page", strconv.Itoa(s.Page))
+	v.Set("size", strconv.Itoa(s.Size))
 
 	tuples := make([]string, 0, len(s.Tags))
 	for _, tag := range s.Tags {
@@ -374,14 +374,14 @@ func (s *ListLoadBalancersRequest) ToListQuery() (string, error) {
 	}
 
 	if len(tuples) > 0 {
-		return v.Encode() + "&" + lstr.Join(tuples, "&"), nil
+		return v.Encode() + "&" + strings.Join(tuples, "&"), nil
 	}
 
 	return v.Encode(), nil
 }
 
 func (s *ListLoadBalancersRequest) GetDefaultQuery() string {
-	return lfmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
+	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 
 func (s *ResizeLoadBalancerByIdRequest) ToMap() map[string]interface{} {

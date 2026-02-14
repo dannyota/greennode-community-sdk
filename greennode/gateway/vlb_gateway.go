@@ -1,34 +1,34 @@
 package gateway
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lslbSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
 )
 
 type vlbGatewayV2 struct {
-	lbService lslbSvc.ILoadBalancerServiceV2
+	lbService loadbalancer.ILoadBalancerServiceV2
 }
 
 type vlbGatewayInternal struct {
-	lbService lslbSvc.ILoadBalancerServiceInternal
+	lbService loadbalancer.ILoadBalancerServiceInternal
 }
 
-func NewVLBGatewayV2(plbSvcClient, pserverSvcClient lsclient.IServiceClient) IVLBGatewayV2 {
+func NewVLBGatewayV2(plbSvcClient, pserverSvcClient client.IServiceClient) IVLBGatewayV2 {
 	return &vlbGatewayV2{
-		lbService: lslbSvc.NewLoadBalancerServiceV2(plbSvcClient, pserverSvcClient),
+		lbService: loadbalancer.NewLoadBalancerServiceV2(plbSvcClient, pserverSvcClient),
 	}
 }
 
-func NewVLBGatewayInternal(psvcClient lsclient.IServiceClient) IVLBGatewayInternal {
+func NewVLBGatewayInternal(psvcClient client.IServiceClient) IVLBGatewayInternal {
 	return &vlbGatewayInternal{
-		lbService: lslbSvc.NewLoadBalancerServiceInternal(psvcClient),
+		lbService: loadbalancer.NewLoadBalancerServiceInternal(psvcClient),
 	}
 }
 
-func (s *vlbGatewayInternal) LoadBalancerService() lslbSvc.ILoadBalancerServiceInternal {
+func (s *vlbGatewayInternal) LoadBalancerService() loadbalancer.ILoadBalancerServiceInternal {
 	return s.lbService
 }
 
-func (s *vlbGatewayV2) LoadBalancerService() lslbSvc.ILoadBalancerServiceV2 {
+func (s *vlbGatewayV2) LoadBalancerService() loadbalancer.ILoadBalancerServiceV2 {
 	return s.lbService
 }

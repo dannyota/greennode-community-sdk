@@ -1,6 +1,6 @@
 package v1
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type GetPortalInfoRequest struct {
 	BackEndProjectId string
@@ -11,7 +11,7 @@ func (s *GetPortalInfoRequest) GetBackEndProjectId() string {
 }
 
 type ListProjectsRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListProjectsRequest) AddUserAgent(pagent ...string) IListProjectsRequest {

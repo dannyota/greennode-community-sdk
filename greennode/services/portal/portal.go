@@ -1,19 +1,19 @@
 package portal
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsportalSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
-	lsportalSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
+	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
 )
 
-func NewPortalServiceV1(psvcClient lsclient.IServiceClient) IPortalServiceV1 {
-	return &lsportalSvcV1.PortalServiceV1{
+func NewPortalServiceV1(psvcClient client.IServiceClient) IPortalServiceV1 {
+	return &portalv1.PortalServiceV1{
 		PortalClient: psvcClient,
 	}
 }
 
-func NewPortalServiceV2(psvcClient lsclient.IServiceClient) IPortalServiceV2 {
-	return &lsportalSvcV2.PortalServiceV2{
+func NewPortalServiceV2(psvcClient client.IServiceClient) IPortalServiceV2 {
+	return &portalv2.PortalServiceV2{
 		PortalClient: psvcClient,
 	}
 }

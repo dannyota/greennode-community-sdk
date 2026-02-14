@@ -1,8 +1,8 @@
 package v1
 
-import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getEndpointByIdUrl(psc lsclient.IServiceClient, popts IGetEndpointByIdRequest) string {
+func getEndpointByIdUrl(psc client.IServiceClient, popts IGetEndpointByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetZoneId(),
 		psc.GetProjectId(),
@@ -10,14 +10,14 @@ func getEndpointByIdUrl(psc lsclient.IServiceClient, popts IGetEndpointByIdReque
 		popts.GetEndpointId())
 }
 
-func createEndpointUrl(psc lsclient.IServiceClient) string {
+func createEndpointUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL(
 		psc.GetZoneId(),
 		psc.GetProjectId(),
 		"endpoints")
 }
 
-func deleteEndpointByIdUrl(psc lsclient.IServiceClient, popts IDeleteEndpointByIdRequest) string {
+func deleteEndpointByIdUrl(psc client.IServiceClient, popts IDeleteEndpointByIdRequest) string {
 	return psc.ServiceURL(
 		psc.GetZoneId(),
 		psc.GetProjectId(),
@@ -25,7 +25,7 @@ func deleteEndpointByIdUrl(psc lsclient.IServiceClient, popts IDeleteEndpointByI
 		popts.GetEndpointId())
 }
 
-func listEndpointsUrl(psc lsclient.IServiceClient, popts IListEndpointsRequest) string {
+func listEndpointsUrl(psc client.IServiceClient, popts IListEndpointsRequest) string {
 	query, err := popts.ToListQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -34,7 +34,7 @@ func listEndpointsUrl(psc lsclient.IServiceClient, popts IListEndpointsRequest) 
 	return psc.ServiceURL(psc.GetZoneId(), psc.GetProjectId(), "endpoints?") + query
 }
 
-func listTagsByEndpointIdUrl(psc lsclient.IServiceClient, popts IListTagsByEndpointIdRequest) string {
+func listTagsByEndpointIdUrl(psc client.IServiceClient, popts IListTagsByEndpointIdRequest) string {
 	query, err := popts.ToListQuery()
 	if err != nil {
 		query = popts.GetDefaultQuery()
@@ -45,20 +45,20 @@ func listTagsByEndpointIdUrl(psc lsclient.IServiceClient, popts IListTagsByEndpo
 		"tags") + query
 }
 
-func createTagsWithEndpointIdUrl(psc lsclient.IServiceClient, popts ICreateTagsWithEndpointIdRequest) string {
+func createTagsWithEndpointIdUrl(psc client.IServiceClient, popts ICreateTagsWithEndpointIdRequest) string {
 	return psc.ServiceURL(
 		popts.GetProjectId(),
 		"tags")
 }
 
-func deleteTagOfEndpointUrl(psc lsclient.IServiceClient, popts IDeleteTagOfEndpointRequest) string {
+func deleteTagOfEndpointUrl(psc client.IServiceClient, popts IDeleteTagOfEndpointRequest) string {
 	return psc.ServiceURL(
 		popts.GetProjectId(),
 		"tags",
 		popts.GetTagId())
 }
 
-func updateTagValueOfEndpointUrl(psc lsclient.IServiceClient, popts IUpdateTagValueOfEndpointRequest) string {
+func updateTagValueOfEndpointUrl(psc client.IServiceClient, popts IUpdateTagValueOfEndpointRequest) string {
 	return psc.ServiceURL(
 		popts.GetProjectId(),
 		"tags",

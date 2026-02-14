@@ -1,12 +1,12 @@
 package v1
 
 import (
-	lfmt "fmt"
-	lurl "net/url"
-	lstr "strings"
+	"fmt"
+	"net/url"
+	"strings"
 
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -23,8 +23,8 @@ const (
 )
 
 type GetEndpointByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.EndpointCommon
+	common.UserAgent
+	common.EndpointCommon
 }
 
 func (s *GetEndpointByIdRequest) AddUserAgent(pagent ...string) IGetEndpointByIdRequest {
@@ -61,7 +61,7 @@ type CreateEndpointRequest struct {
 		} `json:"scaling"`
 	} `json:"resourceInfo"`
 
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *CreateEndpointRequest) ToMap() map[string]interface{} {
@@ -98,7 +98,7 @@ func (s *CreateEndpointRequest) AddUserAgent(pagent ...string) ICreateEndpointRe
 	return s
 }
 
-func (s *CreateEndpointRequest) ToRequestBody(psvc lsclient.IServiceClient) interface{} {
+func (s *CreateEndpointRequest) ToRequestBody(psvc client.IServiceClient) interface{} {
 	s.ResourceType = "endpoint"
 	s.Action = "create"
 	s.ResourceInfo.EnableAZ = true
@@ -201,8 +201,8 @@ type DeleteEndpointByIdRequest struct {
 	RegionUuid          string `json:"regionUuid"`
 	VpcUuid             string `json:"vpcUuid"`
 
-	lscommon.UserAgent
-	lscommon.EndpointCommon
+	common.UserAgent
+	common.EndpointCommon
 }
 
 func (s *DeleteEndpointByIdRequest) AddUserAgent(pagent ...string) IDeleteEndpointByIdRequest {
@@ -210,7 +210,7 @@ func (s *DeleteEndpointByIdRequest) AddUserAgent(pagent ...string) IDeleteEndpoi
 	return s
 }
 
-func (s *DeleteEndpointByIdRequest) ToRequestBody(psvc lsclient.IServiceClient) interface{} {
+func (s *DeleteEndpointByIdRequest) ToRequestBody(psvc client.IServiceClient) interface{} {
 	s.ProjectUuid = psvc.GetProjectId()
 	s.RegionUuid = psvc.GetZoneId()
 
@@ -238,7 +238,7 @@ type ListEndpointsRequest struct {
 	Size  int
 	VpcId string
 	Uuid  string
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListEndpointsRequest) ToMap() map[string]interface{} {
@@ -279,23 +279,23 @@ func (s *ListEndpointsRequest) WithUuid(puuid string) IListEndpointsRequest {
 func (s *ListEndpointsRequest) ToListQuery() (string, error) {
 	var params []string
 	if s.VpcId != "" {
-		params = append(params, lfmt.Sprintf(`{"field":"vpcId","value":"%s"}`, s.VpcId))
+		params = append(params, fmt.Sprintf(`{"field":"vpcId","value":"%s"}`, s.VpcId))
 	}
 
 	if s.Uuid != "" {
-		params = append(params, lfmt.Sprintf(`{"field":"uuid","value":"%s"}`, s.Uuid))
+		params = append(params, fmt.Sprintf(`{"field":"uuid","value":"%s"}`, s.Uuid))
 	}
 
-	paramsFilter := lstr.Join(params, ",")
-	query := lfmt.Sprintf(`{"page":%d,"size":%d,"search":[%s]}`, s.Page, s.Size, paramsFilter)
-	query = "params=" + lurl.QueryEscape(query)
+	paramsFilter := strings.Join(params, ",")
+	query := fmt.Sprintf(`{"page":%d,"size":%d,"search":[%s]}`, s.Page, s.Size, paramsFilter)
+	query = "params=" + url.QueryEscape(query)
 
 	return query, nil
 }
 
 func (s *ListEndpointsRequest) GetDefaultQuery() string {
-	query := lfmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
-	query = "params=" + lurl.QueryEscape(query)
+	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
+	query = "params=" + url.QueryEscape(query)
 	return query
 }
 
@@ -307,16 +307,16 @@ func (s *ListEndpointsRequest) AddUserAgent(pagent ...string) IListEndpointsRequ
 // _____________________________________________________________________ ListTagsByEndpointIdRequest
 
 type ListTagsByEndpointIdRequest struct {
-	lscommon.UserAgent
-	lscommon.EndpointCommon
-	lscommon.PortalUser
+	common.UserAgent
+	common.EndpointCommon
+	common.PortalUser
 
 	ProjectId string
 	Id        string
 }
 
 func (s *ListTagsByEndpointIdRequest) ToListQuery() (string, error) {
-	v := lurl.Values{}
+	v := url.Values{}
 	if s.Id != "" {
 		v.Set("resourceUuid", s.Id)
 	}
@@ -328,8 +328,8 @@ func (s *ListTagsByEndpointIdRequest) GetProjectId() string {
 }
 
 func (s *ListTagsByEndpointIdRequest) GetDefaultQuery() string {
-	query := lfmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
-	query = "params=" + lurl.QueryEscape(query)
+	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
+	query = "params=" + url.QueryEscape(query)
 	return query
 }
 
@@ -357,9 +357,9 @@ func (s *ListTagsByEndpointIdRequest) AddUserAgent(pagent ...string) IListTagsBy
 // _________________________________________________________________ CreateTagsWithEndpointIdRequest
 
 type CreateTagsWithEndpointIdRequest struct {
-	lscommon.UserAgent
-	lscommon.EndpointCommon
-	lscommon.PortalUser
+	common.UserAgent
+	common.EndpointCommon
+	common.PortalUser
 
 	ProjectId    string
 	ResourceUuid string `json:"resourceUuid"`
@@ -417,8 +417,8 @@ func (s *CreateTagsWithEndpointIdRequest) GetProjectId() string {
 // ____________________________________________________________________ DeleteTagByEndpointIdRequest
 
 type DeleteTagOfEndpointRequest struct {
-	lscommon.UserAgent
-	lscommon.PortalUser
+	common.UserAgent
+	common.PortalUser
 
 	ProjectId string
 	TagId     string
@@ -456,8 +456,8 @@ func (s *DeleteTagOfEndpointRequest) GetProjectId() string {
 // _________________________________________________________________ UpdateTagValueOfEndpointRequest
 
 type UpdateTagValueOfEndpointRequest struct {
-	lscommon.UserAgent
-	lscommon.PortalUser
+	common.UserAgent
+	common.PortalUser
 
 	TagId     string
 	ProjectId string

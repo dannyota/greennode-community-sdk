@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type (
 	Server struct {
@@ -125,14 +125,14 @@ type (
 	}
 )
 
-func (s Image) toEntityImage() lsentity.Image {
-	return lsentity.Image{
+func (s Image) toEntityImage() entity.Image {
+	return entity.Image{
 		FlavorZoneIds: s.FlavorZoneIds,
 		Id:            s.Id,
 		ImageType:     s.ImageType,
 		ImageVersion:  s.ImageVersion,
 		Licence:       s.Licence,
-		PackageLimit: lsentity.PackageLimit{
+		PackageLimit: entity.PackageLimit{
 			Cpu:      s.PackageLimit.Cpu,
 			DiskSize: s.PackageLimit.DiskSize,
 			Memory:   s.PackageLimit.Memory,
@@ -140,8 +140,8 @@ func (s Image) toEntityImage() lsentity.Image {
 	}
 }
 
-func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *lsentity.ServerGroupPolicy {
-	return &lsentity.ServerGroupPolicy{
+func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *entity.ServerGroupPolicy {
+	return &entity.ServerGroupPolicy{
 		Name:   s.Name,
 		UUID:   s.UUID,
 		Status: s.Status,
@@ -152,8 +152,8 @@ func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *lsentity.ServerGroupP
 	}
 }
 
-func (s NetworkInterface) toEntityNetworkInterface() lsentity.NetworkInterface {
-	return lsentity.NetworkInterface{
+func (s NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
+	return entity.NetworkInterface{
 		CreatedAt:     s.CreatedAt,
 		FixedIp:       s.FixedIp,
 		FloatingIp:    s.FloatingIp,
@@ -172,15 +172,15 @@ func (s NetworkInterface) toEntityNetworkInterface() lsentity.NetworkInterface {
 	}
 }
 
-func (s ServerSecgroup) toEntityServerSecgroup() lsentity.ServerSecgroup {
-	return lsentity.ServerSecgroup{
+func (s ServerSecgroup) toEntityServerSecgroup() entity.ServerSecgroup {
+	return entity.ServerSecgroup{
 		Name: s.Name,
 		Uuid: s.Uuid,
 	}
 }
 
-func (s Flavor) toEntityFlavor() lsentity.Flavor {
-	return lsentity.Flavor{
+func (s Flavor) toEntityFlavor() entity.Flavor {
+	return entity.Flavor{
 		Bandwidth:              s.Bandwidth,
 		BandwidthUnit:          s.BandwidthUnit,
 		Cpu:                    s.Cpu,
@@ -196,8 +196,8 @@ func (s Flavor) toEntityFlavor() lsentity.Flavor {
 	}
 }
 
-func (s Server) toEntityServer() *lsentity.Server {
-	server := new(lsentity.Server)
+func (s Server) toEntityServer() *entity.Server {
+	server := new(entity.Server)
 	server.BootVolumeId = s.BootVolumeId
 	server.CreatedAt = s.CreatedAt
 	server.EncryptionVolume = s.EncryptionVolume
@@ -237,7 +237,7 @@ type CreateServerResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *CreateServerResponse) ToEntityServer() *lsentity.Server {
+func (s *CreateServerResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
@@ -245,7 +245,7 @@ type GetServerByIdResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *GetServerByIdResponse) ToEntityServer() *lsentity.Server {
+func (s *GetServerByIdResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
@@ -253,22 +253,22 @@ type UpdateServerSecgroupsByServerIdResponse struct {
 	Data Server `json:"data"`
 }
 
-func (s *UpdateServerSecgroupsByServerIdResponse) ToEntityServer() *lsentity.Server {
+func (s *UpdateServerSecgroupsByServerIdResponse) ToEntityServer() *entity.Server {
 	return s.Data.toEntityServer()
 }
 
-func (s *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *lsentity.ListServerGroupPolicies {
-	serverGroupPolicies := &lsentity.ListServerGroupPolicies{}
+func (s *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *entity.ListServerGroupPolicies {
+	serverGroupPolicies := &entity.ListServerGroupPolicies{}
 	for _, itemServerGroupPolicy := range s.Data {
 		serverGroupPolicies.Add(itemServerGroupPolicy.toEntityServerGroupPolicy())
 	}
 	return serverGroupPolicies
 }
 
-func (s *ListServerGroupsResponse) ToEntityListServerGroups() *lsentity.ListServerGroups {
-	serverGroups := &lsentity.ListServerGroups{}
+func (s *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServerGroups {
+	serverGroups := &entity.ListServerGroups{}
 	for _, itemServerGroup := range s.ListData {
-		serverGroup := &lsentity.ServerGroup{
+		serverGroup := &entity.ServerGroup{
 			UUID:        itemServerGroup.UUID,
 			Name:        itemServerGroup.Name,
 			Description: itemServerGroup.Description,
@@ -277,7 +277,7 @@ func (s *ListServerGroupsResponse) ToEntityListServerGroups() *lsentity.ListServ
 		}
 
 		for _, server := range itemServerGroup.Servers {
-			serverGroup.Servers = append(serverGroup.Servers, lsentity.ServerGroupMember{
+			serverGroup.Servers = append(serverGroup.Servers, entity.ServerGroupMember{
 				Name: server.Name,
 				UUID: server.UUID,
 			})
@@ -293,8 +293,8 @@ func (s *ListServerGroupsResponse) ToEntityListServerGroups() *lsentity.ListServ
 	return serverGroups
 }
 
-func (s *CreateServerGroupResponse) ToEntityServerGroup() *lsentity.ServerGroup {
-	return &lsentity.ServerGroup{
+func (s *CreateServerGroupResponse) ToEntityServerGroup() *entity.ServerGroup {
+	return &entity.ServerGroup{
 		UUID:        s.Data.UUID,
 		Name:        s.Data.Name,
 		Description: s.Data.Description,

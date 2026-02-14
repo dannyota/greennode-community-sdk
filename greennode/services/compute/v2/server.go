@@ -1,16 +1,16 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *ComputeServiceV2) CreateServer(popts ICreateServerRequest) (*lsentity.Server, lserr.IError) {
+func (s *ComputeServiceV2) CreateServer(popts ICreateServerRequest) (*entity.Server, sdkerror.IError) {
 	url := createServerUrl(s.VServerClient)
 	resp := new(CreateServerResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonBody(popts.ToRequestBody()).
@@ -18,44 +18,44 @@ func (s *ComputeServiceV2) CreateServer(popts ICreateServerRequest) (*lsentity.S
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorPurchaseIssue(errResp),
-			lserr.WithErrorSubnetNotFound(errResp),
-			lserr.WithErrorImageNotFound(errResp),
-			lserr.WithErrorServerExceedQuota(errResp),
-			lserr.WithErrorServerExceedCpuQuota(errResp),
-			lserr.WithErrorServerFlavorSystemExceedQuota(errResp),
-			lserr.WithErrorVolumeTypeNotFound(errResp),
-			lserr.WithErrorNetworkNotFound(errResp),
-			lserr.WithErrorVolumeExceedQuota(errResp),
-			lserr.WithErrorVolumeSizeExceedGlobalQuota(errResp),
-			lserr.WithErrorSecgroupNotFound(errResp),
-			lserr.WithErrorServerExceedFloatingIpQuota(errResp),
-			lserr.WithErrorServerImageNotSupported(errResp),
-			lserr.WithErrorServerFlavorNotSupported(errResp),
-			lserr.WithErrorProjectConflict(errResp),
-			lserr.WithErrorServerCreateBillingPaymentMethodNotAllowed(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorPurchaseIssue(errResp),
+			sdkerror.WithErrorSubnetNotFound(errResp),
+			sdkerror.WithErrorImageNotFound(errResp),
+			sdkerror.WithErrorServerExceedQuota(errResp),
+			sdkerror.WithErrorServerExceedCpuQuota(errResp),
+			sdkerror.WithErrorServerFlavorSystemExceedQuota(errResp),
+			sdkerror.WithErrorVolumeTypeNotFound(errResp),
+			sdkerror.WithErrorNetworkNotFound(errResp),
+			sdkerror.WithErrorVolumeExceedQuota(errResp),
+			sdkerror.WithErrorVolumeSizeExceedGlobalQuota(errResp),
+			sdkerror.WithErrorSecgroupNotFound(errResp),
+			sdkerror.WithErrorServerExceedFloatingIpQuota(errResp),
+			sdkerror.WithErrorServerImageNotSupported(errResp),
+			sdkerror.WithErrorServerFlavorNotSupported(errResp),
+			sdkerror.WithErrorProjectConflict(errResp),
+			sdkerror.WithErrorServerCreateBillingPaymentMethodNotAllowed(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId()).
-			WithErrorCategories(lserr.ErrCatVServer)
+			WithErrorCategories(sdkerror.ErrCatVServer)
 	}
 
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) GetServerById(popts IGetServerByIdRequest) (*lsentity.Server, lserr.IError) {
+func (s *ComputeServiceV2) GetServerById(popts IGetServerByIdRequest) (*entity.Server, sdkerror.IError) {
 	url := getServerByIdUrl(s.VServerClient, popts)
 	resp := new(GetServerByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerNotFound(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}
@@ -63,23 +63,23 @@ func (s *ComputeServiceV2) GetServerById(popts IGetServerByIdRequest) (*lsentity
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) DeleteServerById(popts IDeleteServerByIdRequest) lserr.IError {
+func (s *ComputeServiceV2) DeleteServerById(popts IDeleteServerByIdRequest) sdkerror.IError {
 	url := deleteServerByIdUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonBody(popts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorServerDeleteDeletingServer(errResp),
-			lserr.WithErrorServerUpdatingSecgroups(errResp),
-			lserr.WithErrorServerDeleteBillingServer(errResp),
-			lserr.WithErrorServerDeleteCreatingServer(errResp),
-			lserr.WithErrorVolumeInProcess(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorServerDeleteDeletingServer(errResp),
+			sdkerror.WithErrorServerUpdatingSecgroups(errResp),
+			sdkerror.WithErrorServerDeleteBillingServer(errResp),
+			sdkerror.WithErrorServerDeleteCreatingServer(errResp),
+			sdkerror.WithErrorVolumeInProcess(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
 				"serverId", popts.GetServerId())
 	}
@@ -87,11 +87,11 @@ func (s *ComputeServiceV2) DeleteServerById(popts IDeleteServerByIdRequest) lser
 	return nil
 }
 
-func (s *ComputeServiceV2) UpdateServerSecgroupsByServerId(popts IUpdateServerSecgroupsByServerIdRequest) (*lsentity.Server, lserr.IError) {
+func (s *ComputeServiceV2) UpdateServerSecgroupsByServerId(popts IUpdateServerSecgroupsByServerIdRequest) (*entity.Server, sdkerror.IError) {
 	url := updateServerSecgroupsByServerIdUrl(s.VServerClient, popts)
 	resp := new(UpdateServerSecgroupsByServerIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonBody(popts.ToRequestBody()).
@@ -99,11 +99,11 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerId(popts IUpdateServerSe
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorServerExpired(errResp),
-			lserr.WithErrorServerUpdatingSecgroups(errResp),
-			lserr.WithErrorSecgroupNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorServerExpired(errResp),
+			sdkerror.WithErrorServerUpdatingSecgroups(errResp),
+			sdkerror.WithErrorSecgroupNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
 				"serverId", popts.GetServerId(),
 				"secgroupIds", popts.GetListSecgroupsIds())
@@ -112,24 +112,24 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerId(popts IUpdateServerSe
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) AttachBlockVolume(popts IAttachBlockVolumeRequest) lserr.IError {
+func (s *ComputeServiceV2) AttachBlockVolume(popts IAttachBlockVolumeRequest) sdkerror.IError {
 	url := attachBlockVolumeUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJsonBody(map[string]interface{}{}).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeNotFound(errResp),
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorVolumeAvailable(errResp),
-			lserr.WithErrorVolumeInProcess(errResp),
-			lserr.WithErrorVolumeAlreadyAttached(errResp),
-			lserr.WithErrorServerAttachEncryptedVolume(errResp),
-			lserr.WithErrorVolumeAlreadyAttachedThisServer(errResp),
-			lserr.WithErrorServerAttachVolumeQuotaExceeded(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeNotFound(errResp),
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorVolumeAvailable(errResp),
+			sdkerror.WithErrorVolumeInProcess(errResp),
+			sdkerror.WithErrorVolumeAlreadyAttached(errResp),
+			sdkerror.WithErrorServerAttachEncryptedVolume(errResp),
+			sdkerror.WithErrorVolumeAlreadyAttachedThisServer(errResp),
+			sdkerror.WithErrorServerAttachVolumeQuotaExceeded(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
 				"volumeId", popts.GetBlockVolumeId(),
 				"serverId", popts.GetServerId())
@@ -138,21 +138,21 @@ func (s *ComputeServiceV2) AttachBlockVolume(popts IAttachBlockVolumeRequest) ls
 	return nil
 }
 
-func (s *ComputeServiceV2) DetachBlockVolume(popts IDetachBlockVolumeRequest) lserr.IError {
+func (s *ComputeServiceV2) DetachBlockVolume(popts IDetachBlockVolumeRequest) sdkerror.IError {
 	url := detachBlockVolumeUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJsonBody(map[string]interface{}{}).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeNotFound(errResp),
-			lserr.WithErrorVolumeInProcess(errResp),
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorVolumeIsMigrating(errResp),
-			lserr.WithErrorVolumeAvailable(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeNotFound(errResp),
+			sdkerror.WithErrorVolumeInProcess(errResp),
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorVolumeIsMigrating(errResp),
+			sdkerror.WithErrorVolumeAvailable(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
 				"volumeId", popts.GetBlockVolumeId(),
 				"serverId", popts.GetServerId())
@@ -161,20 +161,20 @@ func (s *ComputeServiceV2) DetachBlockVolume(popts IDetachBlockVolumeRequest) ls
 	return nil
 }
 
-func (s *ComputeServiceV2) AttachFloatingIp(popts IAttachFloatingIpRequest) lserr.IError {
+func (s *ComputeServiceV2) AttachFloatingIp(popts IAttachFloatingIpRequest) sdkerror.IError {
 	url := attachFloatingIpUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonBody(popts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorServerCanNotAttachFloatingIp(errResp),
-			lserr.WithErrorInternalNetworkInterfaceNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorServerCanNotAttachFloatingIp(errResp),
+			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}
@@ -182,21 +182,21 @@ func (s *ComputeServiceV2) AttachFloatingIp(popts IAttachFloatingIpRequest) lser
 	return nil
 }
 
-func (s *ComputeServiceV2) DetachFloatingIp(popts IDetachFloatingIpRequest) lserr.IError {
+func (s *ComputeServiceV2) DetachFloatingIp(popts IDetachFloatingIpRequest) sdkerror.IError {
 	url := detachFloatingIpUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonBody(popts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorWanIpAvailable(errResp),
-			lserr.WithErrorServerNotFound(errResp),
-			lserr.WithErrorWanIdNotFound(errResp),
-			lserr.WithErrorInternalNetworkInterfaceNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorWanIpAvailable(errResp),
+			sdkerror.WithErrorServerNotFound(errResp),
+			sdkerror.WithErrorWanIdNotFound(errResp),
+			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}
@@ -204,11 +204,11 @@ func (s *ComputeServiceV2) DetachFloatingIp(popts IDetachFloatingIpRequest) lser
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroupPolicies(popts IListServerGroupPoliciesRequest) (*lsentity.ListServerGroupPolicies, lserr.IError) {
+func (s *ComputeServiceV2) ListServerGroupPolicies(popts IListServerGroupPoliciesRequest) (*entity.ListServerGroupPolicies, sdkerror.IError) {
 	url := listServerGroupPoliciesUrl(s.VServerClient)
 	resp := new(ListServerGroupPoliciesResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -218,25 +218,25 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(popts IListServerGroupPolicie
 	}
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectId())
 	}
 
 	return resp.ToEntityListServerGroupPolicies(), nil
 }
 
-func (s *ComputeServiceV2) DeleteServerGroupById(popts IDeleteServerGroupByIdRequest) lserr.IError {
+func (s *ComputeServiceV2) DeleteServerGroupById(popts IDeleteServerGroupByIdRequest) sdkerror.IError {
 	url := deleteServerGroupByIdUrl(s.VServerClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerGroupNotFound(errResp),
-			lserr.WithErrorServerGroupInUse(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerGroupNotFound(errResp),
+			sdkerror.WithErrorServerGroupInUse(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId(),
 				"serverGroupId", popts.GetServerGroupId())
@@ -245,18 +245,18 @@ func (s *ComputeServiceV2) DeleteServerGroupById(popts IDeleteServerGroupByIdReq
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroups(popts IListServerGroupsRequest) (*lsentity.ListServerGroups, lserr.IError) {
+func (s *ComputeServiceV2) ListServerGroups(popts IListServerGroupsRequest) (*entity.ListServerGroups, sdkerror.IError) {
 	url := listServerGroupsUrl(s.VServerClient, popts)
 	resp := new(ListServerGroupsResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}
@@ -264,11 +264,11 @@ func (s *ComputeServiceV2) ListServerGroups(popts IListServerGroupsRequest) (*ls
 	return resp.ToEntityListServerGroups(), nil
 }
 
-func (s *ComputeServiceV2) CreateServerGroup(popts ICreateServerGroupRequest) (*lsentity.ServerGroup, lserr.IError) {
+func (s *ComputeServiceV2) CreateServerGroup(popts ICreateServerGroupRequest) (*entity.ServerGroup, sdkerror.IError) {
 	url := createServerGroupUrl(s.VServerClient, popts)
 	resp := new(CreateServerGroupResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJsonBody(popts.ToRequestBody()).
@@ -276,8 +276,8 @@ func (s *ComputeServiceV2) CreateServerGroup(popts ICreateServerGroupRequest) (*
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorServerGroupNameMustBeUnique(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorServerGroupNameMustBeUnique(errResp)).
 			WithParameters(popts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}

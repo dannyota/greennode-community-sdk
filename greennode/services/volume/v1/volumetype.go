@@ -1,23 +1,23 @@
 package v1
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*lsentity.VolumeType, lserr.IError) {
+func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*entity.VolumeType, sdkerror.IError) {
 	url := getVolumeTypeByIdUrl(s.VServerClient, popts)
 	resp := new(GetVolumeTypeByIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeTypeNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
 				"volumeTypeId", popts.GetVolumeTypeId())
@@ -26,17 +26,17 @@ func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*l
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetDefaultVolumeType() (*lsentity.VolumeType, lserr.IError) {
+func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.IError) {
 	url := getDefaultVolumeTypeUrl(s.VServerClient)
 	resp := new(GetDefaultVolumeTypeResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectId())
 	}
@@ -44,18 +44,18 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*lsentity.VolumeType, lserr.IE
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (*lsentity.ListVolumeTypeZones, lserr.IError) {
+func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.IError) {
 	url := getVolumeTypeZonesUrl(s.VServerClient, popts)
 	resp := new(ListVolumeTypeZonesResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeTypeNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId())
 	}
 
@@ -63,18 +63,18 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (
 
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*lsentity.ListVolumeType, lserr.IError) {
+func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.IError) {
 	url := getVolumeTypesUrl(s.VServerClient, popts)
 	resp := new(ListVolumeTypeResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorVolumeTypeNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
 				"volumeTypeZoneId", popts.GetVolumeTypeZoneId())
 	}

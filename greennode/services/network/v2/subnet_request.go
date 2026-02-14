@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetSubnetByIdRequest(pnetworkId, psubnetId string) IGetSubnetByIdRequest {
 	opt := new(GetSubnetByIdRequest)
@@ -10,9 +10,9 @@ func NewGetSubnetByIdRequest(pnetworkId, psubnetId string) IGetSubnetByIdRequest
 }
 
 type GetSubnetByIdRequest struct {
-	lscommon.UserAgent
-	lscommon.SubnetCommon
-	lscommon.NetworkCommon
+	common.UserAgent
+	common.SubnetCommon
+	common.NetworkCommon
 }
 
 func (s *GetSubnetByIdRequest) AddUserAgent(pagent ...string) IGetSubnetByIdRequest {
@@ -41,9 +41,9 @@ func NewUpdateSubnetByIdRequest(pnetworkId, psubnetId string, updateBody *Update
 
 type UpdateSubnetByIdRequest struct {
 	UpdateSubnetBody *UpdateSubnetBody `json:"subnet"`
-	lscommon.UserAgent
-	lscommon.SubnetCommon
-	lscommon.NetworkCommon
+	common.UserAgent
+	common.SubnetCommon
+	common.NetworkCommon
 }
 
 func (s *UpdateSubnetByIdRequest) ToRequestBody() interface{} {

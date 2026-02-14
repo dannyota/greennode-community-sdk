@@ -1,6 +1,6 @@
 package v1
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetVolumeTypeByIdResponse struct {
 	VolumeTypes []VolumeType `json:"volumeTypes"`
@@ -37,7 +37,7 @@ type ListVolumeTypeResponse struct {
 	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
-func (s *GetVolumeTypeByIdResponse) ToEntityVolumeType() *lsentity.VolumeType {
+func (s *GetVolumeTypeByIdResponse) ToEntityVolumeType() *entity.VolumeType {
 	if len(s.VolumeTypes) == 0 {
 		return nil
 	}
@@ -45,15 +45,15 @@ func (s *GetVolumeTypeByIdResponse) ToEntityVolumeType() *lsentity.VolumeType {
 	return s.VolumeTypes[0].toEntityVolumeType()
 }
 
-func (s *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *lsentity.VolumeType {
-	return &lsentity.VolumeType{
+func (s *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
+	return &entity.VolumeType{
 		Id:     s.Id,
 		ZoneId: s.ZoneId,
 	}
 }
 
-func (s VolumeType) toEntityVolumeType() *lsentity.VolumeType {
-	return &lsentity.VolumeType{
+func (s VolumeType) toEntityVolumeType() *entity.VolumeType {
+	return &entity.VolumeType{
 		Id:         s.Id,
 		Iops:       s.Iops,
 		MaxSize:    s.MaxSize,
@@ -64,16 +64,16 @@ func (s VolumeType) toEntityVolumeType() *lsentity.VolumeType {
 	}
 }
 
-func (s VolumeTypeZone) toEntityVolumeTypeZone() *lsentity.VolumeTypeZone {
-	return &lsentity.VolumeTypeZone{
+func (s VolumeTypeZone) toEntityVolumeTypeZone() *entity.VolumeTypeZone {
+	return &entity.VolumeTypeZone{
 		Id:       s.Id,
 		Name:     s.Name,
 		PoolName: s.PoolName,
 	}
 }
 
-func (s *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *lsentity.ListVolumeTypeZones {
-	sl := new(lsentity.ListVolumeTypeZones)
+func (s *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.ListVolumeTypeZones {
+	sl := new(entity.ListVolumeTypeZones)
 
 	for _, item := range s.VolumeTypeZones {
 		sl.VolumeTypeZones = append(sl.VolumeTypeZones, item.toEntityVolumeTypeZone())
@@ -82,8 +82,8 @@ func (s *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *lsentity.Li
 	return sl
 }
 
-func (s *ListVolumeTypeResponse) ToEntityListVolumeType() *lsentity.ListVolumeType {
-	sl := new(lsentity.ListVolumeType)
+func (s *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeType {
+	sl := new(entity.ListVolumeType)
 
 	for _, item := range s.VolumeTypes {
 		sl.VolumeTypes = append(sl.VolumeTypes, item.toEntityVolumeType())

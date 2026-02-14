@@ -1,17 +1,17 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestCreateSecgroupRuleSuccess(t *ltesting.T) {
+func TestCreateSecgroupRuleSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewCreateSecgroupRuleRequest(
-		lsnetworkSvcV2.SecgroupRuleDirectionIngress,
-		lsnetworkSvcV2.SecgroupRuleEtherTypeIPv4,
-		lsnetworkSvcV2.SecgroupRuleProtocolTCP,
+	opt := networkv2.NewCreateSecgroupRuleRequest(
+		networkv2.SecgroupRuleDirectionIngress,
+		networkv2.SecgroupRuleEtherTypeIPv4,
+		networkv2.SecgroupRuleProtocolTCP,
 		6444, 6450,
 		"0.0.0.0",
 		"secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee838",
@@ -31,12 +31,12 @@ func TestCreateSecgroupRuleSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestCreateSecgroupRuleFailure(t *ltesting.T) {
+func TestCreateSecgroupRuleFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewCreateSecgroupRuleRequest(
-		lsnetworkSvcV2.SecgroupRuleDirectionIngress,
-		lsnetworkSvcV2.SecgroupRuleEtherTypeIPv4,
-		lsnetworkSvcV2.SecgroupRuleProtocolTCP,
+	opt := networkv2.NewCreateSecgroupRuleRequest(
+		networkv2.SecgroupRuleDirectionIngress,
+		networkv2.SecgroupRuleEtherTypeIPv4,
+		networkv2.SecgroupRuleProtocolTCP,
 		6443, 6443,
 		"0.0.0.0",
 		"secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee840",
@@ -56,9 +56,9 @@ func TestCreateSecgroupRuleFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteSecgroupRuleFailure(t *ltesting.T) {
+func TestDeleteSecgroupRuleFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewDeleteSecgroupRuleByIdRequest("secr-8c44dc7f-3916-4952-8a01-884ad9360f00")
+	opt := networkv2.NewDeleteSecgroupRuleByIdRequest("secr-8c44dc7f-3916-4952-8a01-884ad9360f00")
 	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleById(opt)
 
 	if err == nil {
@@ -69,9 +69,9 @@ func TestDeleteSecgroupRuleFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestDeleteSecgroupRuleSuccess(t *ltesting.T) {
+func TestDeleteSecgroupRuleSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewDeleteSecgroupRuleByIdRequest("secr-d8c83235-93ae-4de1-85c2-365a32494121")
+	opt := networkv2.NewDeleteSecgroupRuleByIdRequest("secr-d8c83235-93ae-4de1-85c2-365a32494121")
 	err := vngcloud.VServerGateway().V2().NetworkService().DeleteSecgroupRuleById(opt)
 
 	if err != nil {
@@ -82,9 +82,9 @@ func TestDeleteSecgroupRuleSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListSecgroupRulesBySecgroupIdFailure(t *ltesting.T) {
+func TestListSecgroupRulesBySecgroupIdFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee840")
+	opt := networkv2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee840")
 	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupId(opt)
 
 	if err != nil {
@@ -99,9 +99,9 @@ func TestListSecgroupRulesBySecgroupIdFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListSecgroupRulesBySecgroupIdSuccess(t *ltesting.T) {
+func TestListSecgroupRulesBySecgroupIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee838")
+	opt := networkv2.NewListSecgroupRulesBySecgroupIdRequest("secg-f5a2de4d-f8a2-4269-bcba-7c50f09ee838")
 	rules, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroupRulesBySecgroupId(opt)
 
 	if err != nil {

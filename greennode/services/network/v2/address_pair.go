@@ -1,25 +1,25 @@
 package v2
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
-func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*lsentity.AddressPair, lserr.IError) {
+func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.IError) {
 	url := getAllAddressPairByVirtualSubnetIdUrl(s.VserverClient, popts)
 	resp := new(GetAllAddressPairByVirtualSubnetIdResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp)
-		// lserr.WithErrorSubnetNotBelongNetwork(sdkErr),
-		// lserr.WithErrorSubnetNotFound(errResp)).
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
+		// sdkerror.WithErrorSubnetNotBelongNetwork(sdkErr),
+		// sdkerror.WithErrorSubnetNotFound(errResp)).
 		// WithKVparameters(
 		// 	"virtualSubnetId", popts.GetVirtualSubnetId(),
 		// 	"projectId", s.getProjectId(),
@@ -28,11 +28,11 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddre
 	return resp.ToListAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairInVirtualSubnetRequest) (*lsentity.AddressPair, lserr.IError) {
+func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.IError) {
 	url := setAddressPairInVirtualSubnetUrl(s.VserverClient, popts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJsonBody(popts.ToRequestBody()).
@@ -40,32 +40,32 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairIn
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp)
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 	return resp.ToAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) lserr.IError {
+func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) sdkerror.IError {
 	url := deleteAddressPairUrl(s.VserverClient, popts)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
-		return lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorAddressPairNotFound(errResp)).
+		return sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorAddressPairNotFound(errResp)).
 			WithKVparameters("addressPairId", popts.GetAddressPairID())
 	}
 	return nil
 }
 
-func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*lsentity.AddressPair, lserr.IError) {
+func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.IError) {
 	url := createAddressPairUrl(s.VserverClient, popts)
 	resp := new(CreateAddressPairResponse)
-	errResp := lserr.NewErrorResponse(lserr.NormalErrorType)
-	req := lsclient.NewRequest().
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
 		WithHeader("User-Agent", popts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJsonBody(popts.ToRequestBody()).
@@ -73,10 +73,10 @@ func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
-		return nil, lserr.SdkErrorHandler(sdkErr, errResp,
-			lserr.WithErrorInternalNetworkInterfaceNotFound(errResp),
-			lserr.WithErrorAddressPairExisted(errResp)).
-			WithErrorCategories(lserr.ErrCatVServer, lserr.ErrCatVirtualAddress)
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp),
+			sdkerror.WithErrorAddressPairExisted(errResp)).
+			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToAddressPair(), nil

@@ -1,19 +1,19 @@
 package dns
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsdnsSvcInternal "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
-	lsdnsSvcV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
-func NewVDnsServiceV1(psvcClient lsclient.IServiceClient) IVDnsServiceV1 {
-	return &lsdnsSvcV1.VDnsServiceV1{
+func NewVDnsServiceV1(psvcClient client.IServiceClient) IVDnsServiceV1 {
+	return &dnsv1.VDnsServiceV1{
 		DnsClient: psvcClient,
 	}
 }
 
-func NewVDnsServiceInternal(psvcClient lsclient.IServiceClient) IVDnsServiceInternal {
-	return &lsdnsSvcInternal.VDnsServiceInternal{
+func NewVDnsServiceInternal(psvcClient client.IServiceClient) IVDnsServiceInternal {
+	return &dnsinternalv1.VDnsServiceInternal{
 		DnsClient: psvcClient,
 	}
 }

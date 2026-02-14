@@ -1,14 +1,14 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestGetNetworkByIdFailure(t *ltesting.T) {
+func TestGetNetworkByIdFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewGetNetworkByIdRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd2")
+	opt := networkv2.NewGetNetworkByIdRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd2")
 	network, err := vngcloud.VServerGateway().V2().NetworkService().GetNetworkById(opt)
 
 	if err == nil {
@@ -23,9 +23,9 @@ func TestGetNetworkByIdFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetNetworkByIdSuccess(t *ltesting.T) {
+func TestGetNetworkByIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewGetNetworkByIdRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3")
+	opt := networkv2.NewGetNetworkByIdRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3")
 	network, err := vngcloud.VServerGateway().V2().NetworkService().GetNetworkById(opt)
 
 	if err != nil {

@@ -1,6 +1,6 @@
 package v2
 
-import lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewCreateSecgroupRuleRequest(
 	pdirection SecgroupRuleDirection,
@@ -70,8 +70,8 @@ type ( //_______________________________________________________________________
 		RemoteIPPrefix  string                `json:"remoteIpPrefix"`
 		SecurityGroupID string                `json:"securityGroupId"`
 
-		lscommon.SecgroupCommon
-		lscommon.UserAgent
+		common.SecgroupCommon
+		common.UserAgent
 	}
 
 	SecgroupRuleDirection string
@@ -104,8 +104,8 @@ func (s *CreateSecgroupRuleRequest) AddUserAgent(pagent ...string) ICreateSecgro
 type DeleteSecgroupRuleByIdRequest struct { //__________________________________________________________________________
 	SecgroupRuleId string
 
-	lscommon.UserAgent
-	lscommon.SecgroupCommon
+	common.UserAgent
+	common.SecgroupCommon
 }
 
 func (s *DeleteSecgroupRuleByIdRequest) GetSecgroupRuleId() string {
@@ -113,8 +113,8 @@ func (s *DeleteSecgroupRuleByIdRequest) GetSecgroupRuleId() string {
 }
 
 type ListSecgroupRulesBySecgroupIdRequest struct { //___________________________________________________________________
-	lscommon.SecgroupCommon
-	lscommon.UserAgent
+	common.SecgroupCommon
+	common.UserAgent
 }
 
 func (s *ListSecgroupRulesBySecgroupIdRequest) AddUserAgent(pagent ...string) IListSecgroupRulesBySecgroupIdRequest {

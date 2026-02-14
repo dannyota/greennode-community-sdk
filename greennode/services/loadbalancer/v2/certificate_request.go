@@ -1,13 +1,13 @@
 package v2
 
 import (
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 var _ IListCertificatesRequest = &ListCertificatesRequest{}
 
 type ListCertificatesRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 }
 
 func (s *ListCertificatesRequest) AddUserAgent(pagent ...string) IListCertificatesRequest {
@@ -24,7 +24,7 @@ func NewListCertificatesRequest() *ListCertificatesRequest {
 var _ IGetCertificateByIdRequest = &GetCertificateByIdRequest{}
 
 type GetCertificateByIdRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	CertificateId string
 }
 
@@ -57,7 +57,7 @@ const (
 var _ ICreateCertificateRequest = &CreateCertificateRequest{}
 
 type CreateCertificateRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	Name        string            `json:"name"`
 	Type        ImportOptsTypeOpt `json:"type"`
 	Certificate string            `json:"certificate"`
@@ -121,7 +121,7 @@ func (s *CreateCertificateRequest) AddUserAgent(pagent ...string) ICreateCertifi
 var _ IDeleteCertificateByIdRequest = &DeleteCertificateByIdRequest{}
 
 type DeleteCertificateByIdRequest struct {
-	lscommon.UserAgent
+	common.UserAgent
 	CertificateId string
 }
 

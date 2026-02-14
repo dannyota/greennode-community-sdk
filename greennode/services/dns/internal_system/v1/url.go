@@ -1,15 +1,15 @@
 package v1
 
-import lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getHostedZoneByIdUrl(psc lsclient.IServiceClient, popts IGetHostedZoneByIdRequest) string {
+func getHostedZoneByIdUrl(psc client.IServiceClient, popts IGetHostedZoneByIdRequest) string {
 	return psc.ServiceURL(
 		"dns",
 		"hosted-zone",
 		popts.GetHostedZoneId())
 }
 
-func listHostedZonesUrl(psc lsclient.IServiceClient, popts IListHostedZonesRequest) string {
+func listHostedZonesUrl(psc client.IServiceClient, popts IListHostedZonesRequest) string {
 	url := psc.ServiceURL("dns", "hosted-zone")
 	if popts.GetName() != "" {
 		url += "?name=" + popts.GetName()
@@ -17,7 +17,7 @@ func listHostedZonesUrl(psc lsclient.IServiceClient, popts IListHostedZonesReque
 	return url
 }
 
-func listRecordsUrl(psc lsclient.IServiceClient, popts IListRecordsRequest) string {
+func listRecordsUrl(psc client.IServiceClient, popts IListRecordsRequest) string {
 	url := psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record")
 	if popts.GetName() != "" {
 		url += "?name=" + popts.GetName()
@@ -25,30 +25,30 @@ func listRecordsUrl(psc lsclient.IServiceClient, popts IListRecordsRequest) stri
 	return url
 }
 
-func createHostedZoneUrl(psc lsclient.IServiceClient) string {
+func createHostedZoneUrl(psc client.IServiceClient) string {
 	return psc.ServiceURL("dns", "hosted-zone")
 }
 
-func deleteHostedZoneUrl(psc lsclient.IServiceClient, popts IDeleteHostedZoneRequest) string {
+func deleteHostedZoneUrl(psc client.IServiceClient, popts IDeleteHostedZoneRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId())
 }
 
-func updateHostedZoneUrl(psc lsclient.IServiceClient, popts IUpdateHostedZoneRequest) string {
+func updateHostedZoneUrl(psc client.IServiceClient, popts IUpdateHostedZoneRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId())
 }
 
-func getRecordUrl(psc lsclient.IServiceClient, popts IGetRecordRequest) string {
+func getRecordUrl(psc client.IServiceClient, popts IGetRecordRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
 }
 
-func updateRecordUrl(psc lsclient.IServiceClient, popts IUpdateRecordRequest) string {
+func updateRecordUrl(psc client.IServiceClient, popts IUpdateRecordRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
 }
 
-func deleteRecordUrl(psc lsclient.IServiceClient, popts IDeleteRecordRequest) string {
+func deleteRecordUrl(psc client.IServiceClient, popts IDeleteRecordRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
 }
 
-func createDnsRecordUrl(psc lsclient.IServiceClient, popts ICreateDnsRecordRequest) string {
+func createDnsRecordUrl(psc client.IServiceClient, popts ICreateDnsRecordRequest) string {
 	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record")
 }

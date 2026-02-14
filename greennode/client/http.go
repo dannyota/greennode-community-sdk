@@ -1,15 +1,15 @@
 package client
 
 import (
-	lctx "context"
-	lhttp "net/http"
-	lstr "strings"
-	lsync "sync"
-	ltime "time"
+	"context"
+	"net/http"
+	"strings"
+	"sync"
+	"time"
 
-	lreq "github.com/imroc/req/v3"
+	"github.com/imroc/req/v3"
 
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
 )
 
 const (
@@ -18,42 +18,42 @@ const (
 
 type (
 	httpClient struct {
-		context    lctx.Context
+		context    context.Context
 		retryCount int
-		client     *lreq.Client
+		client     *req.Client
 
-		reauthFunc   func() (ISdkAuthentication, lserr.IError)
+		reauthFunc   func() (ISdkAuthentication, sdkerror.IError)
 		reauthOption AuthOpts
 
 		accessToken    ISdkAuthentication
 		defaultHeaders map[string]string
 
-		mut       *lsync.RWMutex
+		mut       *sync.RWMutex
 		reauthmut *reauthlock
 	}
 
 	reauthlock struct {
-		lsync.RWMutex
+		sync.RWMutex
 		ongoing *reauthFuture
 	}
 
 	reauthFuture struct {
 		done chan struct{}
-		err  lserr.IError
+		err  sdkerror.IError
 	}
 
 	AuthOpts string
 )
 
-func NewHttpClient(pctx lctx.Context) IHttpClient {
+func NewHttpClient(pctx context.Context) IHttpClient {
 	return &httpClient{
 		context:    pctx,
 		retryCount: 0,
-		client: lreq.NewClient().
+		client: req.NewClient().
 			SetCommonRetryCount(3).
 			SetCommonRetryFixedInterval(10).
-			SetTimeout(120 * ltime.Second),
-		mut:       new(lsync.RWMutex),
+			SetTimeout(120 * time.Second),
+		mut:       new(sync.RWMutex),
 		reauthmut: new(reauthlock),
 	}
 }
@@ -63,12 +63,12 @@ func (s *httpClient) WithRetryCount(pretryCount int) IHttpClient {
 	return s
 }
 
-func (s *httpClient) WithTimeout(ptimeout ltime.Duration) IHttpClient {
+func (s *httpClient) WithTimeout(ptimeout time.Duration) IHttpClient {
 	s.client.SetTimeout(ptimeout)
 	return s
 }
 
-func (s *httpClient) WithSleep(psleep ltime.Duration) IHttpClient {
+func (s *httpClient) WithSleep(psleep time.Duration) IHttpClient {
 	s.client.SetCommonRetryFixedInterval(psleep)
 	return s
 }
@@ -89,13 +89,13 @@ func (s *httpClient) WithKvDefaultHeaders(pargs ...string) IHttpClient {
 	return s
 }
 
-func (s *httpClient) WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (ISdkAuthentication, lserr.IError)) IHttpClient {
+func (s *httpClient) WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (ISdkAuthentication, sdkerror.IError)) IHttpClient {
 	s.reauthFunc = preauthFunc
 	s.reauthOption = pauthOpt
 	return s
 }
 
-func (s *httpClient) DoRequest(purl string, preq IRequest) (*lreq.Response, lserr.IError) {
+func (s *httpClient) DoRequest(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	req := s.prepareRequest(preq)
 
 	resp, sdkErr := s.executeRequest(purl, req, preq)
@@ -106,7 +106,7 @@ func (s *httpClient) DoRequest(purl string, preq IRequest) (*lreq.Response, lser
 	return s.handleResponse(purl, resp, preq)
 }
 
-func (s *httpClient) prepareRequest(preq IRequest) *lreq.Request {
+func (s *httpClient) prepareRequest(preq IRequest) *req.Request {
 	req := s.client.R().SetContext(s.context).SetHeaders(s.getDefaultHeaders()).SetHeaders(preq.GetMoreHeaders())
 
 	if opt := preq.GetRequestBody(); opt != nil {
@@ -124,7 +124,7 @@ func (s *httpClient) prepareRequest(preq IRequest) *lreq.Request {
 	return req
 }
 
-func (s *httpClient) executeRequest(purl string, req *lreq.Request, preq IRequest) (*lreq.Response, lserr.IError) {
+func (s *httpClient) executeRequest(purl string, req *req.Request, preq IRequest) (*req.Response, sdkerror.IError) {
 	if s.needReauth(preq) {
 		return s.handleReauthBeforeRequest(purl, preq)
 	}
@@ -132,14 +132,14 @@ func (s *httpClient) executeRequest(purl string, req *lreq.Request, preq IReques
 	resp, err := s.executeHttpMethod(purl, req, preq)
 
 	if err != nil && resp == nil {
-		return resp, lserr.ErrorHandler(err)
+		return resp, sdkerror.ErrorHandler(err)
 	}
 
 	return resp, nil
 }
 
-func (s *httpClient) executeHttpMethod(purl string, req *lreq.Request, preq IRequest) (*lreq.Response, error) {
-	switch lstr.ToUpper(preq.GetRequestMethod()) {
+func (s *httpClient) executeHttpMethod(purl string, req *req.Request, preq IRequest) (*req.Response, error) {
+	switch strings.ToUpper(preq.GetRequestMethod()) {
 	case "POST":
 		return req.Post(purl)
 	case "GET":
@@ -155,7 +155,7 @@ func (s *httpClient) executeHttpMethod(purl string, req *lreq.Request, preq IReq
 	}
 }
 
-func (s *httpClient) handleReauthBeforeRequest(purl string, preq IRequest) (*lreq.Response, lserr.IError) {
+func (s *httpClient) handleReauthBeforeRequest(purl string, preq IRequest) (*req.Response, sdkerror.IError) {
 	if !preq.SkipAuthentication() && s.reauthFunc != nil {
 		if sdkErr := s.reauthenticate(); sdkErr != nil {
 			return nil, sdkErr
@@ -165,9 +165,9 @@ func (s *httpClient) handleReauthBeforeRequest(purl string, preq IRequest) (*lre
 	return nil, nil
 }
 
-func (s *httpClient) handleResponse(purl string, resp *lreq.Response, preq IRequest) (*lreq.Response, lserr.IError) {
+func (s *httpClient) handleResponse(purl string, resp *req.Response, preq IRequest) (*req.Response, sdkerror.IError) {
 	if resp == nil || resp.Response == nil {
-		return nil, lserr.ErrorHandler(nil, lserr.WithErrorUnexpected(resp))
+		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorUnexpected(resp))
 	}
 
 	if sdkErr := s.handleStatusCode(purl, resp, preq); sdkErr != nil {
@@ -178,34 +178,34 @@ func (s *httpClient) handleResponse(purl string, resp *lreq.Response, preq IRequ
 		return resp, nil
 	}
 
-	return resp, lserr.ErrorHandler(resp.Err)
+	return resp, sdkerror.ErrorHandler(resp.Err)
 }
 
-func (s *httpClient) handleStatusCode(purl string, resp *lreq.Response, preq IRequest) lserr.IError {
+func (s *httpClient) handleStatusCode(purl string, resp *req.Response, preq IRequest) sdkerror.IError {
 	switch resp.StatusCode {
-	case lhttp.StatusUnauthorized:
+	case http.StatusUnauthorized:
 		return s.handleUnauthorized(purl, resp, preq)
-	case lhttp.StatusTooManyRequests:
-		return lserr.SdkErrorHandler(
+	case http.StatusTooManyRequests:
+		return sdkerror.SdkErrorHandler(
 			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
-			lserr.WithErrorPermissionDenied())
-	case lhttp.StatusInternalServerError:
-		return lserr.SdkErrorHandler(
+			sdkerror.WithErrorPermissionDenied())
+	case http.StatusInternalServerError:
+		return sdkerror.SdkErrorHandler(
 			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
-			lserr.WithErrorInternalServerError())
-	case lhttp.StatusServiceUnavailable:
-		return lserr.SdkErrorHandler(
+			sdkerror.WithErrorInternalServerError())
+	case http.StatusServiceUnavailable:
+		return sdkerror.SdkErrorHandler(
 			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
-			lserr.WithErrorServiceMaintenance())
-	case lhttp.StatusForbidden:
-		return lserr.SdkErrorHandler(
+			sdkerror.WithErrorServiceMaintenance())
+	case http.StatusForbidden:
+		return sdkerror.SdkErrorHandler(
 			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
-			lserr.WithErrorPermissionDenied())
+			sdkerror.WithErrorPermissionDenied())
 	}
 	return nil
 }
 
-func (s *httpClient) handleUnauthorized(purl string, resp *lreq.Response, preq IRequest) lserr.IError {
+func (s *httpClient) handleUnauthorized(purl string, resp *req.Response, preq IRequest) sdkerror.IError {
 	if !preq.SkipAuthentication() && s.reauthFunc != nil {
 		if sdkErr := s.reauthenticate(); sdkErr != nil {
 			return sdkErr
@@ -229,9 +229,9 @@ func (s *httpClient) needReauth(preq IRequest) bool {
 	return s.accessToken.NeedReauth()
 }
 
-func (s *httpClient) reauthenticate() lserr.IError {
+func (s *httpClient) reauthenticate() sdkerror.IError {
 	if s.reauthFunc == nil {
-		return lserr.ErrorHandler(nil, lserr.WithErrorReauthFuncNotSet())
+		return sdkerror.ErrorHandler(nil, sdkerror.WithErrorReauthFuncNotSet())
 	}
 
 	s.reauthmut.Lock()
@@ -284,17 +284,17 @@ func newReauthFuture() *reauthFuture {
 	}
 }
 
-func (s *reauthFuture) get() lserr.IError {
+func (s *reauthFuture) get() sdkerror.IError {
 	<-s.done
 	return s.err
 }
 
-func (s *reauthFuture) set(err lserr.IError) {
+func (s *reauthFuture) set(err sdkerror.IError) {
 	s.err = err
 	close(s.done)
 }
 
-func defaultErrorResponse(perr error, purl string, preq IRequest, resp *lreq.Response) lserr.IError {
+func defaultErrorResponse(perr error, purl string, preq IRequest, resp *req.Response) sdkerror.IError {
 	headers := preq.GetMoreHeaders()
 
 	// Remove sensitive information
@@ -302,7 +302,7 @@ func defaultErrorResponse(perr error, purl string, preq IRequest, resp *lreq.Res
 		delete(headers, "Authorization")
 	}
 
-	return lserr.ErrorHandler(perr).WithKVparameters(
+	return sdkerror.ErrorHandler(perr).WithKVparameters(
 		"statusCode", resp.StatusCode,
 		"url", purl,
 		"method", preq.GetRequestMethod(),

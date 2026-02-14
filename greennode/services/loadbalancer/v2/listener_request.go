@@ -1,10 +1,10 @@
 package v2
 
 import (
-	lstr "strings"
+	"strings"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	lscommon "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -74,8 +74,8 @@ type CreateListenerRequest struct {
 	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
 	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *CreateListenerRequest) AddUserAgent(pagent ...string) ICreateListenerRequest {
@@ -94,9 +94,9 @@ type UpdateListenerRequest struct {
 	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
 	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
 
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.UserAgent
 }
 
 func (s *UpdateListenerRequest) AddUserAgent(pagent ...string) IUpdateListenerRequest {
@@ -105,8 +105,8 @@ func (s *UpdateListenerRequest) AddUserAgent(pagent ...string) IUpdateListenerRe
 }
 
 type ListListenersByLoadBalancerIdRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.UserAgent
 }
 
 func (s *ListListenersByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IListListenersByLoadBalancerIdRequest {
@@ -115,9 +115,9 @@ func (s *ListListenersByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IL
 }
 
 type DeleteListenerByIdRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.UserAgent
 }
 
 func (s *DeleteListenerByIdRequest) AddUserAgent(pagent ...string) IDeleteListenerByIdRequest {
@@ -126,9 +126,9 @@ func (s *DeleteListenerByIdRequest) AddUserAgent(pagent ...string) IDeleteListen
 }
 
 type GetListenerByIdRequest struct {
-	lscommon.LoadBalancerCommon
-	lscommon.ListenerCommon
-	lscommon.UserAgent
+	common.LoadBalancerCommon
+	common.ListenerCommon
+	common.UserAgent
 }
 
 func (s *GetListenerByIdRequest) AddUserAgent(pagent ...string) IGetListenerByIdRequest {
@@ -157,7 +157,7 @@ func (s *CreateListenerRequest) WithAllowedCidrs(pcidrs ...string) ICreateListen
 		return s
 	}
 
-	s.AllowedCidrs = lstr.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(pcidrs, ",")
 	return s
 }
 
@@ -184,7 +184,7 @@ func (s *CreateListenerRequest) AddCidrs(pcidrs ...string) ICreateListenerReques
 	if s.AllowedCidrs == "" {
 		return s.WithAllowedCidrs(pcidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + lstr.Join(pcidrs, ",")
+		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(pcidrs, ",")
 	}
 
 	return s
@@ -261,7 +261,7 @@ func (s *UpdateListenerRequest) WithCidrs(pcidrs ...string) IUpdateListenerReque
 		return s
 	}
 
-	s.AllowedCidrs = lstr.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(pcidrs, ",")
 	return s
 }
 

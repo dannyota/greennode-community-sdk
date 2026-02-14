@@ -2,7 +2,7 @@ package common
 
 import (
 	"slices"
-	lstr "strings"
+	"strings"
 )
 
 func Ptr[T any](v T) *T { return &v }
@@ -64,7 +64,7 @@ type UserAgent struct {
 
 func (s *UserAgent) ParseUserAgent() string {
 	// Parse the array into string
-	return lstr.Join(s.Agent, "; ")
+	return strings.Join(s.Agent, "; ")
 }
 
 func (s *UserAgent) AddUserAgent(pagent ...string) *UserAgent {

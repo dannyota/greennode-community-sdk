@@ -1,14 +1,14 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lsnetworkSvcV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func TestGetSubnetByIdSuccess(t *ltesting.T) {
+func TestGetSubnetByIdSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsnetworkSvcV2.NewGetSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"))
+	opt := networkv2.NewGetSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"))
 	network, err := vngcloud.VServerGateway().V2().NetworkService().GetSubnetById(opt)
 
 	if err != nil {
@@ -23,18 +23,18 @@ func TestGetSubnetByIdSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestUpdateSubnetById(t *ltesting.T) {
+func TestUpdateSubnetById(t *testing.T) {
 	vngcloud := validSdkConfig()
-	updateBody := lsnetworkSvcV2.UpdateSubnetBody{
+	updateBody := networkv2.UpdateSubnetBody{
 		Name: "subnet-1",
 		CIDR: "10.30.0.0/24",
-		SecondarySubnetRequests: []lsnetworkSvcV2.SecondarySubnetUpdateBody{
+		SecondarySubnetRequests: []networkv2.SecondarySubnetUpdateBody{
 			{Name: "subnet3", CIDR: "10.30.6.0/24"},
 			{Name: "subnet2", CIDR: "10.30.7.0/24"},
 		},
 	}
 
-	opt := lsnetworkSvcV2.NewUpdateSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"), &updateBody)
+	opt := networkv2.NewUpdateSubnetByIdRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"), &updateBody)
 	network, err := vngcloud.VServerGateway().V2().NetworkService().UpdateSubnetById(opt)
 
 	if err != nil {

@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetPoolHealthMonitorByIdResponse struct {
 	Data struct {
@@ -22,12 +22,12 @@ type GetPoolHealthMonitorByIdResponse struct {
 	} `json:"data"`
 }
 
-func (s *GetPoolHealthMonitorByIdResponse) ToEntityHealthMonitor() *lsentity.HealthMonitor {
+func (s *GetPoolHealthMonitorByIdResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
 	if s == nil {
 		return nil
 	}
 
-	return &lsentity.HealthMonitor{
+	return &entity.HealthMonitor{
 		Timeout:             s.Data.Timeout,
 		CreatedAt:           s.Data.CreatedAt,
 		UpdatedAt:           s.Data.UpdatedAt,
@@ -93,14 +93,14 @@ type PoolMember struct {
 	Weight         int    `json:"weight"`
 }
 
-func (s *CreatePoolResponse) ToEntityPool() *lsentity.Pool {
-	return &lsentity.Pool{
+func (s *CreatePoolResponse) ToEntityPool() *entity.Pool {
+	return &entity.Pool{
 		UUID: s.UUID,
 	}
 }
 
-func (s *ListPoolsByLoadBalancerIdResponse) ToEntityListPools() *lsentity.ListPools {
-	listPools := new(lsentity.ListPools)
+func (s *ListPoolsByLoadBalancerIdResponse) ToEntityListPools() *entity.ListPools {
+	listPools := new(entity.ListPools)
 	for _, pool := range s.Data {
 		listPools.Add(pool.toEntityPool())
 	}
@@ -108,8 +108,8 @@ func (s *ListPoolsByLoadBalancerIdResponse) ToEntityListPools() *lsentity.ListPo
 	return listPools
 }
 
-func (s *PoolMember) toEntityMember() *lsentity.Member {
-	return &lsentity.Member{
+func (s *PoolMember) toEntityMember() *entity.Member {
+	return &entity.Member{
 		Address:        s.Address,
 		Backup:         s.Backup,
 		Name:           s.Name,
@@ -126,16 +126,16 @@ func (s *PoolMember) toEntityMember() *lsentity.Member {
 	}
 }
 
-func (s *Pool) toEntityListMembers() *lsentity.ListMembers {
-	listMembers := &lsentity.ListMembers{}
+func (s *Pool) toEntityListMembers() *entity.ListMembers {
+	listMembers := &entity.ListMembers{}
 	for _, member := range s.Members {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (s *Pool) toEntityPool() *lsentity.Pool {
-	return &lsentity.Pool{
+func (s *Pool) toEntityPool() *entity.Pool {
+	return &entity.Pool{
 		UUID:              s.UUID,
 		Name:              s.Name,
 		Protocol:          s.Protocol,
@@ -148,14 +148,14 @@ func (s *Pool) toEntityPool() *lsentity.Pool {
 	}
 }
 
-func (s *ListPoolMembersResponse) ToEntityListMembers() *lsentity.ListMembers {
-	listMembers := &lsentity.ListMembers{}
+func (s *ListPoolMembersResponse) ToEntityListMembers() *entity.ListMembers {
+	listMembers := &entity.ListMembers{}
 	for _, member := range s.Data {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (s *GetPoolByIdResponse) ToEntityPool() *lsentity.Pool {
+func (s *GetPoolByIdResponse) ToEntityPool() *entity.Pool {
 	return s.Data.toEntityPool()
 }

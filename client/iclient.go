@@ -1,21 +1,21 @@
 package client
 
 import (
-	lctx "context"
-	ltime "time"
+	"context"
+	"time"
 
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsgateway "github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
+	svcclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
 )
 
 type IClient interface {
 	// List of builder methods
-	WithHttpClient(phttpClient lsclient.IHttpClient) IClient
-	WithContext(pctx lctx.Context) IClient
-	WithAuthOption(pauthOption lsclient.AuthOpts, pauthConfig ISdkConfigure) IClient
+	WithHttpClient(phttpClient svcclient.IHttpClient) IClient
+	WithContext(pctx context.Context) IClient
+	WithAuthOption(pauthOption svcclient.AuthOpts, pauthConfig ISdkConfigure) IClient
 	WithKvDefaultHeaders(pargs ...string) IClient
 	WithRetryCount(pretry int) IClient
-	WithSleep(psleep ltime.Duration) IClient
+	WithSleep(psleep time.Duration) IClient
 	WithProjectId(pprojectId string) IClient
 
 	// List of functional methods
@@ -23,11 +23,11 @@ type IClient interface {
 	GetUserAgent() string
 
 	// List of gateways
-	IamGateway() lsgateway.IIamGateway
-	VServerGateway() lsgateway.IVServerGateway
-	VLBGateway() lsgateway.IVLBGateway
-	VBackUpGateway() lsgateway.IVBackUpGateway
-	VNetworkGateway() lsgateway.IVNetworkGateway
-	GLBGateway() lsgateway.IGLBGateway
-	VDnsGateway() lsgateway.IVDnsGateway
+	IamGateway() gateway.IIamGateway
+	VServerGateway() gateway.IVServerGateway
+	VLBGateway() gateway.IVLBGateway
+	VBackUpGateway() gateway.IVBackUpGateway
+	VNetworkGateway() gateway.IVNetworkGateway
+	GLBGateway() gateway.IGLBGateway
+	VDnsGateway() gateway.IVDnsGateway
 }

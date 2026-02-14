@@ -1,17 +1,17 @@
 package test
 
 import (
-	ltesting "testing"
+	"testing"
 
-	lserr "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
-	lsportalV1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
-	lsportalV2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
+	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
 )
 
-func TestGetPortalInfoFailed(t *ltesting.T) {
+func TestGetPortalInfoFailed(t *testing.T) {
 	backendProjectId := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := invalidSdkConfig()
-	opt := lsportalV1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err == nil {
@@ -22,18 +22,18 @@ func TestGetPortalInfoFailed(t *ltesting.T) {
 		t.Errorf("Expect portal to be nil but got %+v", portal)
 	}
 
-	if !err.IsError(lserr.EcAuthenticationFailed) {
-		t.Errorf("Expect error code to be %s but got %s", lserr.EcAuthenticationFailed, err.GetErrorCode())
+	if !err.IsError(sdkerror.EcAuthenticationFailed) {
+		t.Errorf("Expect error code to be %s but got %s", sdkerror.EcAuthenticationFailed, err.GetErrorCode())
 	}
 
 	t.Log("RESULT:", err)
 	t.Log("PASS")
 }
 
-func TestGetPortalInfoSuccess(t *ltesting.T) {
+func TestGetPortalInfoSuccess(t *testing.T) {
 	backendProjectId := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
-	opt := lsportalV1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err != nil {
@@ -48,10 +48,10 @@ func TestGetPortalInfoSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetPortalInfoSuccess2(t *ltesting.T) {
+func TestGetPortalInfoSuccess2(t *testing.T) {
 	backendProjectId := getValueOfEnv("USER_11412_OS_PROJECT_ID")
 	vngcloud := validUser11412SdkConfig()
-	opt := lsportalV1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err != nil {
@@ -66,10 +66,10 @@ func TestGetPortalInfoSuccess2(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetPortalInfoFailure(t *ltesting.T) {
+func TestGetPortalInfoFailure(t *testing.T) {
 	backendProjectId := getValueOfEnv("FAKE_BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
-	opt := lsportalV1.NewGetPortalInfoRequest(backendProjectId)
+	opt := portalv1.NewGetPortalInfoRequest(backendProjectId)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
 
 	if err == nil {
@@ -84,7 +84,7 @@ func TestGetPortalInfoFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListAllQuotaSuccess(t *ltesting.T) {
+func TestListAllQuotaSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	quotas, err := vngcloud.VServerGateway().V2().PortalService().ListAllQuotaUsed()
 
@@ -100,9 +100,9 @@ func TestListAllQuotaSuccess(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetQuotaByNameFailure(t *ltesting.T) {
+func TestGetQuotaByNameFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsportalV2.NewGetQuotaByNameRequest("fake-quota-name")
+	opt := portalv2.NewGetQuotaByNameRequest("fake-quota-name")
 	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(opt)
 
 	if err == nil {
@@ -117,9 +117,9 @@ func TestGetQuotaByNameFailure(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestGetQuotaByNamePass(t *ltesting.T) {
+func TestGetQuotaByNamePass(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lsportalV2.NewGetQuotaByNameRequest(lsportalV2.QtVolumeAttachLimit)
+	opt := portalv2.NewGetQuotaByNameRequest(portalv2.QtVolumeAttachLimit)
 	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(opt)
 
 	if err != nil {
@@ -134,9 +134,9 @@ func TestGetQuotaByNamePass(t *ltesting.T) {
 	t.Log("PASS")
 }
 
-func TestListProjects(t *ltesting.T) {
+func TestListProjects(t *testing.T) {
 	vngcloud := validSdkConfig()
-	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(lsportalV1.NewListProjectsRequest())
+	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(portalv1.NewListProjectsRequest())
 	if err != nil {
 		t.Log("Error: ", err)
 	}
@@ -144,9 +144,9 @@ func TestListProjects(t *ltesting.T) {
 	t.Log("Result: ", projects.At(0))
 }
 
-func TestListPortalUser11412(t *ltesting.T) {
+func TestListPortalUser11412(t *testing.T) {
 	vngcloud := validUser11412()
-	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(lsportalV1.NewListProjectsRequest())
+	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(portalv1.NewListProjectsRequest())
 	if err != nil {
 		t.Log("Error: ", err)
 	}
@@ -154,7 +154,7 @@ func TestListPortalUser11412(t *ltesting.T) {
 	t.Log("Result: ", projects.At(0))
 }
 
-func TestListZones(t *ltesting.T) {
+func TestListZones(t *testing.T) {
 	vngcloud := validSdkConfig()
 	zones, err := vngcloud.VServerGateway().V1().PortalService().ListZones()
 	if err != nil {

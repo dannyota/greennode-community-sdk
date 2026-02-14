@@ -1,6 +1,6 @@
 package entity
 
-import lstr "strings"
+import "strings"
 
 const (
 	ServerStatusActive  = "ACTIVE"
@@ -100,7 +100,7 @@ type ListServers struct {
 }
 
 func (s *Server) CanDelete() bool {
-	switch lstr.ToUpper(s.Status) {
+	switch strings.ToUpper(s.Status) {
 	case ServerStatusActive, ServerStatusError, ServerStatusStopped:
 		return true
 	}
@@ -109,7 +109,7 @@ func (s *Server) CanDelete() bool {
 }
 
 func (s *Server) IsRunning() bool {
-	switch lstr.ToUpper(s.Status) {
+	switch strings.ToUpper(s.Status) {
 	case ServerStatusActive:
 		return true
 	}

@@ -1,6 +1,6 @@
 package v2
 
-import lsentity "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type ListAllServersBySecgroupIdResponse struct {
 	Data []struct {
@@ -10,16 +10,16 @@ type ListAllServersBySecgroupIdResponse struct {
 	} `json:"data"`
 }
 
-func (s *ListAllServersBySecgroupIdResponse) ToEntityListServers() *lsentity.ListServers {
-	servers := make([]*lsentity.Server, 0, len(s.Data))
+func (s *ListAllServersBySecgroupIdResponse) ToEntityListServers() *entity.ListServers {
+	servers := make([]*entity.Server, 0, len(s.Data))
 	for _, server := range s.Data {
-		servers = append(servers, &lsentity.Server{
+		servers = append(servers, &entity.Server{
 			Name:   server.Name,
 			Uuid:   server.UUID,
 			Status: server.Status,
 		})
 	}
-	return &lsentity.ListServers{
+	return &entity.ListServers{
 		Items: servers,
 	}
 }

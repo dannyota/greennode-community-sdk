@@ -1,34 +1,34 @@
 package gateway
 
 import (
-	lsclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	lsnwSvc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
 )
 
 type vnetworkGatewayV1 struct {
-	networkService lsnwSvc.INetworkServiceV1
+	networkService network.INetworkServiceV1
 }
 
 type vnetworkGatewayInternalV1 struct {
-	networkService lsnwSvc.INetworkServiceInternalV1
+	networkService network.INetworkServiceInternalV1
 }
 
-func (s *vnetworkGatewayV1) NetworkService() lsnwSvc.INetworkServiceV1 {
+func (s *vnetworkGatewayV1) NetworkService() network.INetworkServiceV1 {
 	return s.networkService
 }
 
-func (s *vnetworkGatewayInternalV1) NetworkService() lsnwSvc.INetworkServiceInternalV1 {
+func (s *vnetworkGatewayInternalV1) NetworkService() network.INetworkServiceInternalV1 {
 	return s.networkService
 }
 
-func NewVNetworkGatewayV1(psvcClient lsclient.IServiceClient) IVNetworkGatewayV1 {
+func NewVNetworkGatewayV1(psvcClient client.IServiceClient) IVNetworkGatewayV1 {
 	return &vnetworkGatewayV1{
-		networkService: lsnwSvc.NewNetworkServiceV1(psvcClient),
+		networkService: network.NewNetworkServiceV1(psvcClient),
 	}
 }
 
-func NewVNetworkGatewayInternalV1(psvcClient lsclient.IServiceClient) IVNetworkGatewayInternalV1 {
+func NewVNetworkGatewayInternalV1(psvcClient client.IServiceClient) IVNetworkGatewayInternalV1 {
 	return &vnetworkGatewayInternalV1{
-		networkService: lsnwSvc.NewNetworkServiceInternalV1(psvcClient),
+		networkService: network.NewNetworkServiceInternalV1(psvcClient),
 	}
 }
