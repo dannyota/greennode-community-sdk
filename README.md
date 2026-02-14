@@ -1,11 +1,13 @@
 # GreenNode Community SDK
 
-A community Go SDK for GreenNode cloud services, supporting the [hotpot](https://github.com/dannyota/hotpot) project.
+A community Go SDK for GreenNode cloud services.
 
 <hr>
 
 ###### Table of contents
 
+- [GreenNode Community SDK](#greennode-community-sdk)
+          - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Usage](#usage)
 - [Contributing](#contributing)
