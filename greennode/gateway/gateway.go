@@ -34,7 +34,7 @@ var _ VNetworkGateway = &vnetworkGateway{}
 type vnetworkGateway struct {
 	endpoint                  string
 	vnetworkGatewayV1         VNetworkGatewayV1
-	vnetworkGatewayV2         VNetworkGatewayV1
+	vnetworkGatewayV2         VNetworkGatewayV2
 	vnetworkGatewayInternalV1 VNetworkGatewayInternalV1
 }
 
@@ -121,7 +121,7 @@ func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc client.HT
 	return &vnetworkGateway{
 		endpoint:                  endpoint,
 		vnetworkGatewayV1:         NewVNetworkGatewayV1(vnetworkSvcV1),
-		vnetworkGatewayV2:         NewVNetworkGatewayV1(vnetworkSvcV2),
+		vnetworkGatewayV2:         NewVNetworkGatewayV2(vnetworkSvcV2),
 		vnetworkGatewayInternalV1: NewVNetworkGatewayInternalV1(vnetworkSvcInternalV1),
 	}
 }
@@ -161,7 +161,7 @@ func (g *vnetworkGateway) V1() VNetworkGatewayV1 {
 	return g.vnetworkGatewayV1
 }
 
-func (g *vnetworkGateway) V2() VNetworkGatewayV1 {
+func (g *vnetworkGateway) V2() VNetworkGatewayV2 {
 	return g.vnetworkGatewayV2
 }
 

@@ -30,7 +30,7 @@ type VServerGateway interface {
 
 type VNetworkGateway interface {
 	V1() VNetworkGatewayV1
-	V2() VNetworkGatewayV1
+	V2() VNetworkGatewayV2
 	InternalV1() VNetworkGatewayInternalV1
 	GetEndpoint() string
 }

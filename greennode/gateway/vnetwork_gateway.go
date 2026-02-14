@@ -9,11 +9,19 @@ type vnetworkGatewayV1 struct {
 	networkService network.NetworkServiceV1
 }
 
+type vnetworkGatewayV2 struct {
+	networkService network.NetworkServiceV2
+}
+
 type vnetworkGatewayInternalV1 struct {
 	networkService network.NetworkServiceInternalV1
 }
 
 func (g *vnetworkGatewayV1) NetworkService() network.NetworkServiceV1 {
+	return g.networkService
+}
+
+func (g *vnetworkGatewayV2) NetworkService() network.NetworkServiceV2 {
 	return g.networkService
 }
 
@@ -24,6 +32,12 @@ func (g *vnetworkGatewayInternalV1) NetworkService() network.NetworkServiceInter
 func NewVNetworkGatewayV1(svcClient client.ServiceClient) VNetworkGatewayV1 {
 	return &vnetworkGatewayV1{
 		networkService: network.NewNetworkServiceV1(svcClient),
+	}
+}
+
+func NewVNetworkGatewayV2(svcClient client.ServiceClient) VNetworkGatewayV2 {
+	return &vnetworkGatewayV2{
+		networkService: network.NewNetworkServiceV2(svcClient),
 	}
 }
 

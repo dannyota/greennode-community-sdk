@@ -64,7 +64,7 @@ func TestCreateEndpointInternal(t *testing.T) {
 		WithScaling(1, 3).
 		WithEnableDnsName(true).WithBuyMorePoc(false).WithPoc(false).WithEnableAutoRenew(true)
 
-	lb, sdkerr := vngcloud.VNetworkGateway().V2().NetworkService().CreateEndpoint(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().CreateEndpoint(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr.Err())
 	}
