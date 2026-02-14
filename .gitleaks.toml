@@ -3,7 +3,7 @@
 # This gitleaks config extends the default config and ignores secrets in test files,
 # test data, and example code which are intentionally included for SDK testing purposes.
 
-title = "VNGCloud Go SDK GitLeaks Configuration"
+title = "GreenNode Community SDK GitLeaks Configuration"
 
 [extend]
 # Use the default GitLeaks rules as a base
