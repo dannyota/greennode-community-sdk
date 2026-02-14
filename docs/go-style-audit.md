@@ -56,6 +56,7 @@ All acronyms in exported identifiers now use correct ALL CAPS casing:
 | `Json` → `JSON` | Done. `WithJSONBody()`, `WithJSONResponse()`, `WithJSONError()`, etc. |
 | `Http` → `HTTP` | Done. `HTTPClient`, `executeHTTPMethod()` |
 | `Url` → `URL` | Done where applicable. `createServerURL()`, `ServiceURL()`, etc. |
+| `Iam` → `IAM` | Done. `IAMGateway`, `IAMEndpoint()`, `IAMErrorResponse`, etc. |
 
 **Note:** `SetBodyJsonMarshal` is an external method from `imroc/req/v3` — not renamed.
 
@@ -131,11 +132,12 @@ or — better — let consumers define the subset they need (see §2.1).
 
 The `I` prefix has been removed, resolving the stutter:
 
-- `IIamGateway` → `IamGateway`
-- `IIamGatewayV2` → `IamGatewayV2`
+- `IIamGateway` → `IAMGateway`
+- `IIamGatewayV2` → `IAMGatewayV2`
 
-Note: `Iam` was not further changed to `IAM` (that would be a separate acronym
-casing fix beyond scope).
+All `Iam` identifiers have been renamed to `IAM` (e.g., `IamEndpoint` → `IAMEndpoint`,
+`IamErrorResponse` → `IAMErrorResponse`, `ErrCatIam` → `ErrCatIAM`). String values
+in error codes (e.g., `"VngCloudIamAuthenticationFailed"`) are unchanged.
 
 ### 2.5 Empty interface declaration
 

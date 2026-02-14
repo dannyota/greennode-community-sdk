@@ -23,7 +23,7 @@ type Client interface {
 	UserAgent() string
 
 	// List of gateways
-	IamGateway() gateway.IamGateway
+	IAMGateway() gateway.IAMGateway
 	VServerGateway() gateway.VServerGateway
 	VLBGateway() gateway.VLBGateway
 	VBackUpGateway() gateway.VBackUpGateway

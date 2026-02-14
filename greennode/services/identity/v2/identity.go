@@ -9,9 +9,9 @@ import (
 )
 
 func (s *IdentityServiceV2) GetAccessToken(opts IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error) {
-	url := getAccessTokenURL(s.IamClient)
+	url := getAccessTokenURL(s.IAMClient)
 	resp := new(GetAccessTokenResponse)
-	errResp := sdkerror.NewErrorResponse(sdkerror.IamErrorType)
+	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJSONResponse(resp).
@@ -21,7 +21,7 @@ func (s *IdentityServiceV2) GetAccessToken(opts IGetAccessTokenRequest) (*entity
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
 		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.GetClientID()+":"+opts.GetClientSecret())))
 
-	if _, sdkErr := s.IamClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.IAMClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorTooManyFailedLogin(errResp),
 			sdkerror.WithErrorAuthenticationFailed(errResp),

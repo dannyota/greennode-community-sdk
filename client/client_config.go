@@ -9,7 +9,7 @@ type (
 		GetProjectID() string
 		GetUserID() string
 		GetZoneID() string
-		IamEndpoint() string
+		IAMEndpoint() string
 		VServerEndpoint() string
 		VLBEndpoint() string
 		GLBEndpoint() string
@@ -22,7 +22,7 @@ type (
 		WithClientSecret(clientSecret string) SdkConfigure
 		WithUserAgent(userAgent string) SdkConfigure
 		WithProjectID(projectID string) SdkConfigure
-		WithIamEndpoint(iamEndpoint string) SdkConfigure
+		WithIAMEndpoint(iamEndpoint string) SdkConfigure
 		WithVServerEndpoint(vserverEndpoint string) SdkConfigure
 		WithVLBEndpoint(vlbEndpoint string) SdkConfigure
 		WithVNetworkEndpoint(vnetworkEndpoint string) SdkConfigure
@@ -66,7 +66,7 @@ func (c *sdkConfigure) GetZoneID() string {
 	return c.zoneID
 }
 
-func (c *sdkConfigure) IamEndpoint() string {
+func (c *sdkConfigure) IAMEndpoint() string {
 	return c.iamEndpoint
 }
 
@@ -124,7 +124,7 @@ func (c *sdkConfigure) WithProjectID(projectID string) SdkConfigure {
 	return c
 }
 
-func (c *sdkConfigure) WithIamEndpoint(iamEndpoint string) SdkConfigure {
+func (c *sdkConfigure) WithIAMEndpoint(iamEndpoint string) SdkConfigure {
 	c.iamEndpoint = normalizeURL(iamEndpoint)
 	return c
 }

@@ -9,7 +9,7 @@ type iamGatewayV2 struct {
 	identityService identity.IdentityServiceV2
 }
 
-func NewIamGatewayV2(svcClient client.ServiceClient) IamGatewayV2 {
+func NewIAMGatewayV2(svcClient client.ServiceClient) IAMGatewayV2 {
 	return &iamGatewayV2{
 		identityService: identity.NewIdentityService(svcClient),
 	}

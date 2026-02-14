@@ -8,7 +8,7 @@ const (
 // login error category
 
 const (
-	ErrCatIam ErrorCategory = "iam"
+	ErrCatIAM ErrorCategory = "iam"
 )
 
 // infra error category

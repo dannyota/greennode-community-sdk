@@ -6,10 +6,10 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
 )
 
-var _ IamGateway = &iamGateway{}
+var _ IAMGateway = &iamGateway{}
 
 type iamGateway struct {
-	iamGatewayV2 IamGatewayV2
+	iamGatewayV2 IAMGatewayV2
 }
 
 var _ VServerGateway = &vserverGateway{}
@@ -38,14 +38,14 @@ type vnetworkGateway struct {
 	vnetworkGatewayInternalV1 VNetworkGatewayInternalV1
 }
 
-func NewIamGateway(endpoint, projectID string, hc client.HTTPClient) IamGateway {
+func NewIAMGateway(endpoint, projectID string, hc client.HTTPClient) IAMGateway {
 	iamSvcV2 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v2").
 		WithClient(hc).
 		WithProjectID(projectID)
 
 	return &iamGateway{
-		iamGatewayV2: NewIamGatewayV2(iamSvcV2),
+		iamGatewayV2: NewIAMGatewayV2(iamSvcV2),
 	}
 }
 
@@ -126,7 +126,7 @@ func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc client.HT
 	}
 }
 
-func (g *iamGateway) V2() IamGatewayV2 {
+func (g *iamGateway) V2() IAMGatewayV2 {
 	return g.iamGatewayV2
 }
 

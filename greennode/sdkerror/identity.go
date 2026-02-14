@@ -22,7 +22,7 @@ func WithErrorAuthenticationFailed(errResp ErrorResponse) func(Error) {
 			sdkErr.WithErrorCode(EcAuthenticationFailed).
 				WithErrors(errResp.Err()).
 				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
-				WithErrorCategories(ErrCatIam)
+				WithErrorCategories(ErrCatIAM)
 		}
 	}
 }
@@ -49,7 +49,7 @@ func WithErrorTooManyFailedLogin(errResp ErrorResponse) func(Error) {
 			sdkErr.WithErrorCode(EcTooManyFailedLogins).
 				WithErrors(errResp.Err()).
 				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
-				WithErrorCategories(ErrCatIam)
+				WithErrorCategories(ErrCatIAM)
 		}
 	}
 }

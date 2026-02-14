@@ -7,6 +7,6 @@ import (
 
 func NewIdentityService(svcClient client.ServiceClient) IdentityServiceV2 {
 	return &identityv2.IdentityServiceV2{
-		IamClient: svcClient,
+		IAMClient: svcClient,
 	}
 }

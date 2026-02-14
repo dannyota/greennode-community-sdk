@@ -3,7 +3,7 @@ package sdkerror
 import "fmt"
 
 type (
-	IamErrorResponse struct {
+	IAMErrorResponse struct {
 		Errors []struct {
 			Code    string `json:"code,omitempty"`
 			Message string `json:"message,omitempty"`
@@ -30,15 +30,15 @@ type (
 
 const (
 	NormalErrorType = iota
-	IamErrorType
+	IAMErrorType
 	NetworkGatewayErrorType
 	GlobalLoadBalancerErrorType
 )
 
 func NewErrorResponse(typeVal int) ErrorResponse {
 	switch typeVal {
-	case IamErrorType:
-		return new(IamErrorResponse)
+	case IAMErrorType:
+		return new(IAMErrorResponse)
 	case NetworkGatewayErrorType:
 		return new(NetworkGatewayErrorResponse)
 	case GlobalLoadBalancerErrorType:
@@ -48,7 +48,7 @@ func NewErrorResponse(typeVal int) ErrorResponse {
 	}
 }
 
-func (r *IamErrorResponse) GetMessage() string {
+func (r *IAMErrorResponse) GetMessage() string {
 	if len(r.Errors) < 1 {
 		return ""
 	}
@@ -56,7 +56,7 @@ func (r *IamErrorResponse) GetMessage() string {
 	return r.Errors[0].Message
 }
 
-func (r *IamErrorResponse) Err() error {
+func (r *IAMErrorResponse) Err() error {
 	if len(r.Errors) < 1 {
 		return nil
 	}

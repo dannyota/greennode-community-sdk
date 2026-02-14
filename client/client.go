@@ -24,7 +24,7 @@ type (
 		userAgent  string
 		authOpt    svcclient.AuthOpts
 
-		iamGateway      gateway.IamGateway
+		iamGateway      gateway.IAMGateway
 		vserverGateway  gateway.VServerGateway
 		vlbGateway      gateway.VLBGateway
 		vbackupGateway  gateway.VBackUpGateway
@@ -63,11 +63,11 @@ func (c *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfi
 	c.authOpt = authOpts // Assign the auth option to the client
 
 	switch authOpts {
-	case svcclient.IamOauth2:
-		c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(authConfig)).
+	case svcclient.IAMOauth2:
+		c.httpClient.WithReauthFunc(svcclient.IAMOauth2, c.usingIAMOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	default:
-		c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(authConfig)).
+		c.httpClient.WithReauthFunc(svcclient.IAMOauth2, c.usingIAMOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	}
 
@@ -160,8 +160,8 @@ func (c *client) Configure(sdkCfg SdkConfigure) Client {
 		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
 
-	if c.iamGateway == nil && sdkCfg.IamEndpoint() != "" {
-		c.iamGateway = gateway.NewIamGateway(sdkCfg.IamEndpoint(), c.projectID, c.httpClient)
+	if c.iamGateway == nil && sdkCfg.IAMEndpoint() != "" {
+		c.iamGateway = gateway.NewIAMGateway(sdkCfg.IAMEndpoint(), c.projectID, c.httpClient)
 	}
 
 	if c.vserverGateway == nil && sdkCfg.VServerEndpoint() != "" {
@@ -199,13 +199,13 @@ func (c *client) Configure(sdkCfg SdkConfigure) Client {
 		c.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.VDnsEndpoint(), c.projectID, c.httpClient)
 	}
 
-	c.httpClient.WithReauthFunc(svcclient.IamOauth2, c.usingIamOauth2AsAuthOption(sdkCfg))
+	c.httpClient.WithReauthFunc(svcclient.IAMOauth2, c.usingIAMOauth2AsAuthOption(sdkCfg))
 	c.userAgent = sdkCfg.UserAgent()
 
 	return c
 }
 
-func (c *client) IamGateway() gateway.IamGateway {
+func (c *client) IAMGateway() gateway.IAMGateway {
 	return c.iamGateway
 }
 
@@ -233,7 +233,7 @@ func (c *client) VDnsGateway() gateway.VDnsGateway {
 	return c.vdnsGateway
 }
 
-func (c *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
+func (c *client) usingIAMOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
 	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
 		token, err := c.iamGateway.V2().IdentityService().GetAccessToken(
 			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))

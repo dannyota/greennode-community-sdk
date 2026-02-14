@@ -12,11 +12,11 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
 )
 
-type IamGateway interface {
-	V2() IamGatewayV2
+type IAMGateway interface {
+	V2() IAMGatewayV2
 }
 
-type IamGatewayV2 interface {
+type IAMGatewayV2 interface {
 	IdentityService() identity.IdentityServiceV2
 }
 
