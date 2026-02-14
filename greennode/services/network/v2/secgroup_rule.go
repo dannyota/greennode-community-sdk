@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) CreateSecgroupRule(opts ICreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.Error) {
+func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.Error) {
 	url := createSecgroupRuleURL(s.VserverClient, opts)
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -29,7 +29,7 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts ICreateSecgroupRuleRequest) (
 	return resp.ToEntitySecgroupRule(), nil
 }
 
-func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts IDeleteSecgroupRuleByIDRequest) sdkerror.Error {
+func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts *DeleteSecgroupRuleByIDRequest) sdkerror.Error {
 	url := deleteSecgroupRuleByIDURL(s.VserverClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -50,7 +50,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts IDeleteSecgroupRuleByIDRe
 	return nil
 }
 
-func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts IListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, sdkerror.Error) {
+func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts *ListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, sdkerror.Error) {
 	url := listSecgroupRulesBySecgroupIDURL(s.VserverClient, opts)
 	resp := new(ListSecgroupRulesBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

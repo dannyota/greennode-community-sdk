@@ -2,41 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IListAllServersBySecgroupIDRequest interface {
-	GetSecgroupID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListAllServersBySecgroupIDRequest
-}
-
-type ICreateVirtualAddressCrossProjectRequest interface {
-	ToRequestBody() any
-	ParseUserAgent() string
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) ICreateVirtualAddressCrossProjectRequest
-	WithDescription(description string) ICreateVirtualAddressCrossProjectRequest
-}
-
-type IDeleteVirtualAddressByIDRequest interface {
-	GetVirtualAddressID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeleteVirtualAddressByIDRequest
-	ToMap() map[string]any
-}
-
-type IGetVirtualAddressByIDRequest interface {
-	GetVirtualAddressID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetVirtualAddressByIDRequest
-	ToMap() map[string]any
-}
-
-type IListAddressPairsByVirtualAddressIDRequest interface {
-	GetVirtualAddressID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIDRequest
-	ToMap() map[string]any
-}
-
 /**
  * The group of Virtual Address APIs
  */
@@ -81,12 +46,12 @@ func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) AddUserAgent(agent ...string) ICreateVirtualAddressCrossProjectRequest {
+func (r *CreateVirtualAddressCrossProjectRequest) AddUserAgent(agent ...string) *CreateVirtualAddressCrossProjectRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description string) ICreateVirtualAddressCrossProjectRequest {
+func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description string) *CreateVirtualAddressCrossProjectRequest {
 	r.Description = description
 	return r
 }
@@ -97,7 +62,7 @@ type DeleteVirtualAddressByIDRequest struct {
 	common.UserAgent
 }
 
-func (r *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) IDeleteVirtualAddressByIDRequest {
+func (r *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) *DeleteVirtualAddressByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -115,7 +80,7 @@ type GetVirtualAddressByIDRequest struct {
 	common.UserAgent
 }
 
-func (r *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) IGetVirtualAddressByIDRequest {
+func (r *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) *GetVirtualAddressByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -133,7 +98,7 @@ type ListAddressPairsByVirtualAddressIDRequest struct {
 	common.UserAgent
 }
 
-func (r *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIDRequest {
+func (r *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string) *ListAddressPairsByVirtualAddressIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

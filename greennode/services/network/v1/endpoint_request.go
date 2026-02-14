@@ -9,91 +9,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IGetEndpointByIDRequest interface {
-	GetEndpointID() string
-	AddUserAgent(agent ...string) IGetEndpointByIDRequest
-}
-
-type ICreateEndpointRequest interface {
-	ToRequestBody(svc client.ServiceClient) any
-	WithDescription(desp string) ICreateEndpointRequest
-	WithSubnetUuid(subnetUuid string) ICreateEndpointRequest
-	WithVpcUuid(vpcUuid string) ICreateEndpointRequest
-	GetPortalUserID() string
-	WithPortalUserID(portalUserID string) ICreateEndpointRequest
-	WithPackageUuid(packageUuid string) ICreateEndpointRequest
-	WithServiceUuid(serviceUuid string) ICreateEndpointRequest
-	WithCategoryUuid(categoryUuid string) ICreateEndpointRequest
-	WithEndpointName(endpointName string) ICreateEndpointRequest
-	WithPoc(yes bool) ICreateEndpointRequest
-	WithEnableDnsName(yes bool) ICreateEndpointRequest
-	WithBuyMorePoc(yes bool) ICreateEndpointRequest
-	WithEnableAutoRenew(yes bool) ICreateEndpointRequest
-	AddNetworking(zone string, subnetUuid string) ICreateEndpointRequest
-	WithScaling(minSize int, maxSize int) ICreateEndpointRequest
-	AddUserAgent(agent ...string) ICreateEndpointRequest
-	ToMap() map[string]any
-}
-
-type IDeleteEndpointByIDRequest interface {
-	GetEndpointID() string
-	AddUserAgent(agent ...string) IDeleteEndpointByIDRequest
-	ParseUserAgent() string
-	ToRequestBody(svc client.ServiceClient) any
-	ToMap() map[string]any
-}
-
-type IListEndpointsRequest interface {
-	WithPage(page int) IListEndpointsRequest
-	WithSize(size int) IListEndpointsRequest
-	WithVpcID(vpcID string) IListEndpointsRequest
-	WithUuid(uuid string) IListEndpointsRequest
-	ToListQuery() (string, error)
-	GetDefaultQuery() string
-	AddUserAgent(agent ...string) IListEndpointsRequest
-	ParseUserAgent() string
-	ToMap() map[string]any
-}
-
-type IListTagsByEndpointIDRequest interface {
-	ToListQuery() (string, error)
-	GetDefaultQuery() string
-	ToMap() map[string]any
-	GetMapHeaders() map[string]string
-	ParseUserAgent() string
-	GetProjectID() string
-	AddUserAgent(agent ...string) IListTagsByEndpointIDRequest
-}
-
-type ICreateTagsWithEndpointIDRequest interface {
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest
-	GetMapHeaders() map[string]string
-	AddTag(key, value string) ICreateTagsWithEndpointIDRequest
-	ParseUserAgent() string
-	GetProjectID() string
-	ToRequestBody() any
-}
-
-type IDeleteTagOfEndpointRequest interface {
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest
-	GetMapHeaders() map[string]string
-	ParseUserAgent() string
-	GetTagID() string
-	GetProjectID() string
-}
-
-type IUpdateTagValueOfEndpointRequest interface {
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest
-	GetMapHeaders() map[string]string
-	ParseUserAgent() string
-	GetTagID() string
-	GetProjectID() string
-	ToRequestBody() any
-}
-
 const (
 	defaultPackageID = "d391c404-51b0-4f4d-a946-ec35c8a6e2be"
 
@@ -112,7 +27,7 @@ type GetEndpointByIDRequest struct {
 	common.EndpointCommon
 }
 
-func (r *GetEndpointByIDRequest) AddUserAgent(agent ...string) IGetEndpointByIDRequest {
+func (r *GetEndpointByIDRequest) AddUserAgent(agent ...string) *GetEndpointByIDRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -178,7 +93,7 @@ func (r *CreateEndpointRequest) ToMap() map[string]any {
 	return res
 }
 
-func (r *CreateEndpointRequest) AddUserAgent(agent ...string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) AddUserAgent(agent ...string) *CreateEndpointRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -193,32 +108,32 @@ func (r *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) any {
 	return r
 }
 
-func (r *CreateEndpointRequest) WithEndpointName(endpointName string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithEndpointName(endpointName string) *CreateEndpointRequest {
 	r.ResourceInfo.EndpointName = endpointName
 	return r
 }
 
-func (r *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.CategoryUuid = categoryUuid
 	return r
 }
 
-func (r *CreateEndpointRequest) WithServiceUuid(serviceUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithServiceUuid(serviceUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.ServiceUuid = serviceUuid
 	return r
 }
 
-func (r *CreateEndpointRequest) WithPackageUuid(packageUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithPackageUuid(packageUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.PackageUuid = packageUuid
 	return r
 }
 
-func (r *CreateEndpointRequest) WithVpcUuid(vpcUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithVpcUuid(vpcUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.VpcUuid = vpcUuid
 	return r
 }
 
-func (r *CreateEndpointRequest) WithPortalUserID(portalUserID string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithPortalUserID(portalUserID string) *CreateEndpointRequest {
 	r.ResourceInfo.PortalUserID = portalUserID
 	return r
 }
@@ -227,37 +142,37 @@ func (r *CreateEndpointRequest) GetPortalUserID() string {
 	return r.ResourceInfo.PortalUserID
 }
 
-func (r *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.SubnetUuid = subnetUuid
 	return r
 }
 
-func (r *CreateEndpointRequest) WithDescription(desp string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithDescription(desp string) *CreateEndpointRequest {
 	r.ResourceInfo.Description = desp
 	return r
 }
 
-func (r *CreateEndpointRequest) WithPoc(yes bool) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithPoc(yes bool) *CreateEndpointRequest {
 	r.ResourceInfo.IsPoc = yes
 	return r
 }
 
-func (r *CreateEndpointRequest) WithEnableDnsName(yes bool) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithEnableDnsName(yes bool) *CreateEndpointRequest {
 	r.ResourceInfo.EnableDnsName = yes
 	return r
 }
 
-func (r *CreateEndpointRequest) WithBuyMorePoc(yes bool) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithBuyMorePoc(yes bool) *CreateEndpointRequest {
 	r.ResourceInfo.IsBuyMorePoc = yes
 	return r
 }
 
-func (r *CreateEndpointRequest) WithEnableAutoRenew(yes bool) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithEnableAutoRenew(yes bool) *CreateEndpointRequest {
 	r.ResourceInfo.IsEnableAutoRenew = yes
 	return r
 }
 
-func (r *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) *CreateEndpointRequest {
 	r.ResourceInfo.Networking = append(r.ResourceInfo.Networking, struct {
 		Zone       string `json:"zone"`
 		SubnetUuid string `json:"subnetUuid"`
@@ -268,7 +183,7 @@ func (r *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) ICreateEn
 	return r
 }
 
-func (r *CreateEndpointRequest) WithScaling(minSize int, maxSize int) ICreateEndpointRequest {
+func (r *CreateEndpointRequest) WithScaling(minSize int, maxSize int) *CreateEndpointRequest {
 	r.ResourceInfo.Scaling = struct {
 		MinSize int `json:"minSize"`
 		MaxSize int `json:"maxSize"`
@@ -290,7 +205,7 @@ type DeleteEndpointByIDRequest struct {
 	common.EndpointCommon
 }
 
-func (r *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) IDeleteEndpointByIDRequest {
+func (r *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) *DeleteEndpointByIDRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -341,22 +256,22 @@ func (r *ListEndpointsRequest) ToMap() map[string]any {
 	return res
 }
 
-func (r *ListEndpointsRequest) WithPage(page int) IListEndpointsRequest {
+func (r *ListEndpointsRequest) WithPage(page int) *ListEndpointsRequest {
 	r.Page = page
 	return r
 }
 
-func (r *ListEndpointsRequest) WithSize(size int) IListEndpointsRequest {
+func (r *ListEndpointsRequest) WithSize(size int) *ListEndpointsRequest {
 	r.Size = size
 	return r
 }
 
-func (r *ListEndpointsRequest) WithVpcID(vpcID string) IListEndpointsRequest {
+func (r *ListEndpointsRequest) WithVpcID(vpcID string) *ListEndpointsRequest {
 	r.VpcID = vpcID
 	return r
 }
 
-func (r *ListEndpointsRequest) WithUuid(uuid string) IListEndpointsRequest {
+func (r *ListEndpointsRequest) WithUuid(uuid string) *ListEndpointsRequest {
 	r.Uuid = uuid
 	return r
 }
@@ -384,7 +299,7 @@ func (r *ListEndpointsRequest) GetDefaultQuery() string {
 	return query
 }
 
-func (r *ListEndpointsRequest) AddUserAgent(agent ...string) IListEndpointsRequest {
+func (r *ListEndpointsRequest) AddUserAgent(agent ...string) *ListEndpointsRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -434,7 +349,7 @@ func (r *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
 	return r.PortalUser.GetMapHeaders()
 }
 
-func (r *ListTagsByEndpointIDRequest) AddUserAgent(agent ...string) IListTagsByEndpointIDRequest {
+func (r *ListTagsByEndpointIDRequest) AddUserAgent(agent ...string) *ListTagsByEndpointIDRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -470,7 +385,7 @@ func (r *CreateTagsWithEndpointIDRequest) ToMap() map[string]any {
 	return res
 }
 
-func (r *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest {
+func (r *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) *CreateTagsWithEndpointIDRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -479,7 +394,7 @@ func (r *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
 	return r.PortalUser.GetMapHeaders()
 }
 
-func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsWithEndpointIDRequest {
+func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) *CreateTagsWithEndpointIDRequest {
 	r.Tags = append(r.Tags, struct {
 		TagKey   string `json:"tagKey"`
 		TagValue string `json:"tagValue"`
@@ -521,7 +436,7 @@ func (r *DeleteTagOfEndpointRequest) ToMap() map[string]any {
 	return res
 }
 
-func (r *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest {
+func (r *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) *DeleteTagOfEndpointRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }
@@ -562,7 +477,7 @@ func (r *UpdateTagValueOfEndpointRequest) ToMap() map[string]any {
 	return res
 }
 
-func (r *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest {
+func (r *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) *UpdateTagValueOfEndpointRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
 }

@@ -2,21 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IGetSubnetByIDRequest interface {
-	AddUserAgent(agent ...string) IGetSubnetByIDRequest
-	ParseUserAgent() string
-	GetNetworkID() string
-	GetSubnetID() string
-}
-
-type IUpdateSubnetByIDRequest interface {
-	AddUserAgent(agent ...string) IUpdateSubnetByIDRequest
-	ParseUserAgent() string
-	GetNetworkID() string
-	GetSubnetID() string
-	ToRequestBody() any
-}
-
 func NewGetSubnetByIDRequest(networkID, subnetID string) *GetSubnetByIDRequest {
 	opt := new(GetSubnetByIDRequest)
 	opt.NetworkID = networkID
@@ -30,7 +15,7 @@ type GetSubnetByIDRequest struct {
 	common.NetworkCommon
 }
 
-func (r *GetSubnetByIDRequest) AddUserAgent(agent ...string) IGetSubnetByIDRequest {
+func (r *GetSubnetByIDRequest) AddUserAgent(agent ...string) *GetSubnetByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -64,7 +49,7 @@ func (r *UpdateSubnetByIDRequest) ToRequestBody() any {
 	return r.UpdateSubnetBody
 }
 
-func (r *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) IUpdateSubnetByIDRequest {
+func (r *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) *UpdateSubnetByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

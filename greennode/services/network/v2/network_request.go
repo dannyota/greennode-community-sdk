@@ -2,12 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IGetNetworkByIDRequest interface {
-	GetNetworkID() string
-	AddUserAgent(agent ...string) IGetNetworkByIDRequest
-	ParseUserAgent() string
-}
-
 func NewGetNetworkByIDRequest(networkID string) *GetNetworkByIDRequest {
 	opt := new(GetNetworkByIDRequest)
 	opt.NetworkID = networkID
@@ -19,7 +13,7 @@ type GetNetworkByIDRequest struct {
 	common.UserAgent
 }
 
-func (r *GetNetworkByIDRequest) AddUserAgent(agent ...string) IGetNetworkByIDRequest {
+func (r *GetNetworkByIDRequest) AddUserAgent(agent ...string) *GetNetworkByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

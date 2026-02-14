@@ -13,7 +13,7 @@ type ListAllServersBySecgroupIDRequest struct {
 	common.UserAgent
 }
 
-func (r *ListAllServersBySecgroupIDRequest) AddUserAgent(agent ...string) IListAllServersBySecgroupIDRequest {
+func (r *ListAllServersBySecgroupIDRequest) AddUserAgent(agent ...string) *ListAllServersBySecgroupIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

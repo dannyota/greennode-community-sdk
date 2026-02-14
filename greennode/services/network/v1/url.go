@@ -2,7 +2,7 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getEndpointByIDURL(sc client.ServiceClient, opts IGetEndpointByIDRequest) string {
+func getEndpointByIDURL(sc client.ServiceClient, opts *GetEndpointByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetZoneID(),
 		sc.GetProjectID(),
@@ -17,7 +17,7 @@ func createEndpointURL(sc client.ServiceClient) string {
 		"endpoints")
 }
 
-func deleteEndpointByIDURL(sc client.ServiceClient, opts IDeleteEndpointByIDRequest) string {
+func deleteEndpointByIDURL(sc client.ServiceClient, opts *DeleteEndpointByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetZoneID(),
 		sc.GetProjectID(),
@@ -25,7 +25,7 @@ func deleteEndpointByIDURL(sc client.ServiceClient, opts IDeleteEndpointByIDRequ
 		opts.GetEndpointID())
 }
 
-func listEndpointsURL(sc client.ServiceClient, opts IListEndpointsRequest) string {
+func listEndpointsURL(sc client.ServiceClient, opts *ListEndpointsRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -34,7 +34,7 @@ func listEndpointsURL(sc client.ServiceClient, opts IListEndpointsRequest) strin
 	return sc.ServiceURL(sc.GetZoneID(), sc.GetProjectID(), "endpoints?") + query
 }
 
-func listTagsByEndpointIDURL(sc client.ServiceClient, opts IListTagsByEndpointIDRequest) string {
+func listTagsByEndpointIDURL(sc client.ServiceClient, opts *ListTagsByEndpointIDRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -45,20 +45,20 @@ func listTagsByEndpointIDURL(sc client.ServiceClient, opts IListTagsByEndpointID
 		"tags") + query
 }
 
-func createTagsWithEndpointIDURL(sc client.ServiceClient, opts ICreateTagsWithEndpointIDRequest) string {
+func createTagsWithEndpointIDURL(sc client.ServiceClient, opts *CreateTagsWithEndpointIDRequest) string {
 	return sc.ServiceURL(
 		opts.GetProjectID(),
 		"tags")
 }
 
-func deleteTagOfEndpointURL(sc client.ServiceClient, opts IDeleteTagOfEndpointRequest) string {
+func deleteTagOfEndpointURL(sc client.ServiceClient, opts *DeleteTagOfEndpointRequest) string {
 	return sc.ServiceURL(
 		opts.GetProjectID(),
 		"tags",
 		opts.GetTagID())
 }
 
-func updateTagValueOfEndpointURL(sc client.ServiceClient, opts IUpdateTagValueOfEndpointRequest) string {
+func updateTagValueOfEndpointURL(sc client.ServiceClient, opts *UpdateTagValueOfEndpointRequest) string {
 	return sc.ServiceURL(
 		opts.GetProjectID(),
 		"tags",

@@ -2,35 +2,11 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IGetSecgroupByIDRequest interface {
-	AddUserAgent(agent ...string) IGetSecgroupByIDRequest
-	ParseUserAgent() string
-	GetSecgroupID() string
-}
-
-type ICreateSecgroupRequest interface {
-	ToRequestBody() any
-	GetSecgroupName() string
-	AddUserAgent(agent ...string) ICreateSecgroupRequest
-	ParseUserAgent() string
-}
-
-type IDeleteSecgroupByIDRequest interface {
-	GetSecgroupID() string
-	AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest
-	ParseUserAgent() string
-}
-
-type IListSecgroupRequest interface {
-	AddUserAgent(agent ...string) IListSecgroupRequest
-	ParseUserAgent() string
-}
-
 type ListSecgroupRequest struct {
 	common.UserAgent
 }
 
-func (r *ListSecgroupRequest) AddUserAgent(agent ...string) IListSecgroupRequest {
+func (r *ListSecgroupRequest) AddUserAgent(agent ...string) *ListSecgroupRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -40,7 +16,7 @@ type DeleteSecgroupByIDRequest struct { //______________________________________
 	common.SecgroupCommon
 }
 
-func (r *DeleteSecgroupByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIDRequest {
+func (r *DeleteSecgroupByIDRequest) AddUserAgent(agent ...string) *DeleteSecgroupByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -56,7 +32,7 @@ func (r *CreateSecgroupRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateSecgroupRequest) AddUserAgent(agent ...string) ICreateSecgroupRequest {
+func (r *CreateSecgroupRequest) AddUserAgent(agent ...string) *CreateSecgroupRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -70,7 +46,7 @@ type GetSecgroupByIDRequest struct { //_________________________________________
 	common.UserAgent
 }
 
-func (r *GetSecgroupByIDRequest) AddUserAgent(agent ...string) IGetSecgroupByIDRequest {
+func (r *GetSecgroupByIDRequest) AddUserAgent(agent ...string) *GetSecgroupByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

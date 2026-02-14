@@ -2,33 +2,12 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type ICreateSecgroupRuleRequest interface {
-	GetSecgroupID() string
-	ToRequestBody() any
-	AddUserAgent(agent ...string) ICreateSecgroupRuleRequest
-	ParseUserAgent() string
-	ToMap() map[string]any
-}
-
-type IDeleteSecgroupRuleByIDRequest interface {
-	GetSecgroupID() string
-	GetSecgroupRuleID() string
-	AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest
-	ParseUserAgent() string
-}
-
-type IListSecgroupRulesBySecgroupIDRequest interface {
-	GetSecgroupID() string
-	AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest
-	ParseUserAgent() string
-}
-
 func NewCreateSecgroupRuleRequest(
 	direction SecgroupRuleDirection,
 	etherType SecgroupRuleEtherType,
 	protocol SecgroupRuleProtocol,
 	portMinRange, portMaxRange int,
-	remoteIpPrefix, securityGroupID, description string) ICreateSecgroupRuleRequest {
+	remoteIpPrefix, securityGroupID, description string) *CreateSecgroupRuleRequest {
 
 	opt := &CreateSecgroupRuleRequest{
 		Description:     description,
@@ -51,7 +30,7 @@ func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) *DeleteSecgroupRule
 	return opt
 }
 
-func (r *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIDRequest {
+func (r *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) *DeleteSecgroupRuleByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -117,7 +96,7 @@ func (r *CreateSecgroupRuleRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) ICreateSecgroupRuleRequest {
+func (r *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) *CreateSecgroupRuleRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -138,7 +117,7 @@ type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________
 	common.UserAgent
 }
 
-func (r *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIDRequest {
+func (r *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) *ListSecgroupRulesBySecgroupIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }

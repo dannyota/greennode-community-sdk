@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetNetworkByID(opts IGetNetworkByIDRequest) (*entity.Network, sdkerror.Error) {
+func (s *NetworkServiceV2) GetNetworkByID(opts *GetNetworkByIDRequest) (*entity.Network, sdkerror.Error) {
 	url := getNetworkByIDURL(s.VserverClient, opts)
 	resp := new(GetNetworkByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

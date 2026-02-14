@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts IListAllServersBySecgroupIDRequest) (*entity.ListServers, sdkerror.Error) {
+func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts *ListAllServersBySecgroupIDRequest) (*entity.ListServers, sdkerror.Error) {
 	url := listAllServersBySecgroupIDURL(s.VserverClient, opts)
 	resp := new(ListAllServersBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

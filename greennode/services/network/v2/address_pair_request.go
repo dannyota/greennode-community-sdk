@@ -2,32 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IGetAllAddressPairByVirtualSubnetIDRequest interface {
-	GetVirtualSubnetID() string
-	ParseUserAgent() string
-}
-
-type ISetAddressPairInVirtualSubnetRequest interface {
-	GetVirtualSubnetID() string
-	ParseUserAgent() string
-	ToRequestBody() any
-}
-
-type IDeleteAddressPairRequest interface {
-	ParseUserAgent() string
-	GetAddressPairID() string
-	AddUserAgent(agent ...string) IDeleteAddressPairRequest
-}
-
-type ICreateAddressPairRequest interface {
-	GetVirtualAddressID() string
-	ToRequestBody() any
-	ParseUserAgent() string
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) ICreateAddressPairRequest
-	WithMode(mode AddressPairMode) ICreateAddressPairRequest
-}
-
 func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) *GetAllAddressPairByVirtualSubnetIDRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIDRequest)
 	opt.VirtualSubnetID = subnetID
@@ -89,7 +63,7 @@ func (r *DeleteAddressPairRequest) GetAddressPairID() string {
 	return r.AddressPairID
 }
 
-func (r *DeleteAddressPairRequest) AddUserAgent(agent ...string) IDeleteAddressPairRequest {
+func (r *DeleteAddressPairRequest) AddUserAgent(agent ...string) *DeleteAddressPairRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -131,12 +105,12 @@ func (r *CreateAddressPairRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreateAddressPairRequest) AddUserAgent(agent ...string) ICreateAddressPairRequest {
+func (r *CreateAddressPairRequest) AddUserAgent(agent ...string) *CreateAddressPairRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
-func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) ICreateAddressPairRequest {
+func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddressPairRequest {
 	r.Mode = &mode
 	return r
 }

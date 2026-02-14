@@ -2,7 +2,7 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getSecgroupByIDURL(sc client.ServiceClient, opts IGetSecgroupByIDRequest) string {
+func getSecgroupByIDURL(sc client.ServiceClient, opts *GetSecgroupByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
@@ -15,20 +15,20 @@ func createSecgroupURL(sc client.ServiceClient) string {
 		"secgroups")
 }
 
-func listSecgroupURL(sc client.ServiceClient, _ IListSecgroupRequest) string {
+func listSecgroupURL(sc client.ServiceClient, _ *ListSecgroupRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups")
 }
 
-func deleteSecgroupByIDURL(sc client.ServiceClient, opts IDeleteSecgroupByIDRequest) string {
+func deleteSecgroupByIDURL(sc client.ServiceClient, opts *DeleteSecgroupByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
 		opts.GetSecgroupID())
 }
 
-func createSecgroupRuleURL(sc client.ServiceClient, opts ICreateSecgroupRuleRequest) string {
+func createSecgroupRuleURL(sc client.ServiceClient, opts *CreateSecgroupRuleRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
@@ -36,7 +36,7 @@ func createSecgroupRuleURL(sc client.ServiceClient, opts ICreateSecgroupRuleRequ
 		"secgroupRules")
 }
 
-func deleteSecgroupRuleByIDURL(sc client.ServiceClient, opts IDeleteSecgroupRuleByIDRequest) string {
+func deleteSecgroupRuleByIDURL(sc client.ServiceClient, opts *DeleteSecgroupRuleByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
@@ -45,7 +45,7 @@ func deleteSecgroupRuleByIDURL(sc client.ServiceClient, opts IDeleteSecgroupRule
 		opts.GetSecgroupRuleID())
 }
 
-func listSecgroupRulesBySecgroupIDURL(sc client.ServiceClient, opts IListSecgroupRulesBySecgroupIDRequest) string {
+func listSecgroupRulesBySecgroupIDURL(sc client.ServiceClient, opts *ListSecgroupRulesBySecgroupIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
@@ -53,14 +53,14 @@ func listSecgroupRulesBySecgroupIDURL(sc client.ServiceClient, opts IListSecgrou
 		"secGroupRules")
 }
 
-func getNetworkByIDURL(sc client.ServiceClient, opts IGetNetworkByIDRequest) string {
+func getNetworkByIDURL(sc client.ServiceClient, opts *GetNetworkByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"networks",
 		opts.GetNetworkID())
 }
 
-func getSubnetByIDURL(sc client.ServiceClient, opts IGetSubnetByIDRequest) string {
+func getSubnetByIDURL(sc client.ServiceClient, opts *GetSubnetByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"networks",
@@ -69,7 +69,7 @@ func getSubnetByIDURL(sc client.ServiceClient, opts IGetSubnetByIDRequest) strin
 		opts.GetSubnetID())
 }
 
-func updateSubnetByIDURL(sc client.ServiceClient, opts IUpdateSubnetByIDRequest) string {
+func updateSubnetByIDURL(sc client.ServiceClient, opts *UpdateSubnetByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"networks",
@@ -78,7 +78,7 @@ func updateSubnetByIDURL(sc client.ServiceClient, opts IUpdateSubnetByIDRequest)
 		opts.GetSubnetID())
 }
 
-func getAllAddressPairByVirtualSubnetIDURL(sc client.ServiceClient, opts IGetAllAddressPairByVirtualSubnetIDRequest) string {
+func getAllAddressPairByVirtualSubnetIDURL(sc client.ServiceClient, opts *GetAllAddressPairByVirtualSubnetIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtual-subnets",
@@ -86,7 +86,7 @@ func getAllAddressPairByVirtualSubnetIDURL(sc client.ServiceClient, opts IGetAll
 		"addressPairs")
 }
 
-func setAddressPairInVirtualSubnetURL(sc client.ServiceClient, opts IGetAllAddressPairByVirtualSubnetIDRequest) string {
+func setAddressPairInVirtualSubnetURL(sc client.ServiceClient, opts *SetAddressPairInVirtualSubnetRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtual-subnets",
@@ -94,7 +94,7 @@ func setAddressPairInVirtualSubnetURL(sc client.ServiceClient, opts IGetAllAddre
 		"addressPairs")
 }
 
-func deleteAddressPairURL(sc client.ServiceClient, opts IDeleteAddressPairRequest) string {
+func deleteAddressPairURL(sc client.ServiceClient, opts *DeleteAddressPairRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtual-subnets",
@@ -102,7 +102,7 @@ func deleteAddressPairURL(sc client.ServiceClient, opts IDeleteAddressPairReques
 		opts.GetAddressPairID())
 }
 
-func createAddressPairURL(sc client.ServiceClient, opts ICreateAddressPairRequest) string {
+func createAddressPairURL(sc client.ServiceClient, opts *CreateAddressPairRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtualIpAddress",
@@ -110,7 +110,7 @@ func createAddressPairURL(sc client.ServiceClient, opts ICreateAddressPairReques
 		"addressPairs")
 }
 
-func listAllServersBySecgroupIDURL(sc client.ServiceClient, opts IListAllServersBySecgroupIDRequest) string {
+func listAllServersBySecgroupIDURL(sc client.ServiceClient, opts *ListAllServersBySecgroupIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"secgroups",
@@ -124,21 +124,21 @@ func createVirtualAddressCrossProjectURL(sc client.ServiceClient) string {
 		"virtualIpAddress")
 }
 
-func deleteVirtualAddressByIDURL(sc client.ServiceClient, opts IDeleteVirtualAddressByIDRequest) string {
+func deleteVirtualAddressByIDURL(sc client.ServiceClient, opts *DeleteVirtualAddressByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtualIpAddress",
 		opts.GetVirtualAddressID())
 }
 
-func getVirtualAddressByIDURL(sc client.ServiceClient, opts IGetVirtualAddressByIDRequest) string {
+func getVirtualAddressByIDURL(sc client.ServiceClient, opts *GetVirtualAddressByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtualIpAddress",
 		opts.GetVirtualAddressID())
 }
 
-func listAddressPairsByVirtualAddressIDURL(sc client.ServiceClient, opts IListAddressPairsByVirtualAddressIDRequest) string {
+func listAddressPairsByVirtualAddressIDURL(sc client.ServiceClient, opts *ListAddressPairsByVirtualAddressIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtualIpAddress",
