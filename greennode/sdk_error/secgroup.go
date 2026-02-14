@@ -9,7 +9,7 @@ const (
 	patternSecgroupInUse             = "securitygroupinuse"
 )
 
-func WithErrorSecgroupNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSecgroupNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -24,7 +24,7 @@ func WithErrorSecgroupNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorSecgroupNameAlreadyExists(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSecgroupNameAlreadyExists(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -39,7 +39,7 @@ func WithErrorSecgroupNameAlreadyExists(perrResp IErrorRespone) func(sdkError IE
 	}
 }
 
-func WithErrorSecgroupExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSecgroupExceedQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -55,7 +55,7 @@ func WithErrorSecgroupExceedQuota(perrResp IErrorRespone) func(sdkError IError) 
 	}
 }
 
-func WithErrorSecgroupInUse(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSecgroupInUse(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

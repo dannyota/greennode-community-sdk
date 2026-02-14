@@ -19,7 +19,7 @@ var (
 	regexErrorVirtualAddressInUse    = regexp.MustCompile(patternVirtualAddressInUse)
 )
 
-func WithErrorVirtualAddressNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorVirtualAddressNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -34,7 +34,7 @@ func WithErrorVirtualAddressNotFound(perrResp IErrorRespone) func(sdkError IErro
 	}
 }
 
-func WithErrorAddressPairNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorAddressPairNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -49,7 +49,7 @@ func WithErrorAddressPairNotFound(perrResp IErrorRespone) func(sdkError IError) 
 	}
 }
 
-func WithErrorVirtualAddressExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorVirtualAddressExceedQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -65,7 +65,7 @@ func WithErrorVirtualAddressExceedQuota(perrResp IErrorRespone) func(sdkError IE
 	}
 }
 
-func WithErrorVirtualAddressInUse(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorVirtualAddressInUse(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

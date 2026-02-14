@@ -24,7 +24,7 @@ var (
 	regexErrorAddressPairExisted               = regexp.MustCompile(patternAddressPairExisted)
 )
 
-func WithErrorNetworkNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorNetworkNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -40,7 +40,7 @@ func WithErrorNetworkNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorSubnetNotBelongNetwork(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSubnetNotBelongNetwork(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -55,7 +55,7 @@ func WithErrorSubnetNotBelongNetwork(perrResp IErrorRespone) func(sdkError IErro
 	}
 }
 
-func WithErrorSubnetNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorSubnetNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -72,7 +72,7 @@ func WithErrorSubnetNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorInternalNetworkInterfaceNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorInternalNetworkInterfaceNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -87,7 +87,7 @@ func WithErrorInternalNetworkInterfaceNotFound(perrResp IErrorRespone) func(sdkE
 	}
 }
 
-func WithErrorAddressPairExisted(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorAddressPairExisted(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -102,7 +102,7 @@ func WithErrorAddressPairExisted(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorWanIpAvailable(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorWanIpAvailable(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -117,7 +117,7 @@ func WithErrorWanIpAvailable(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorWanIdNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorWanIdNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

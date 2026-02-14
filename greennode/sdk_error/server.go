@@ -34,7 +34,7 @@ var (
 	regexErrorServerFlavorNotSupported = regexp.MustCompile(patternServerFlavorNotSupported)
 )
 
-func WithErrorServerFlavorNotSupported(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerFlavorNotSupported(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -49,7 +49,7 @@ func WithErrorServerFlavorNotSupported(perrResp IErrorRespone) func(sdkError IEr
 	}
 }
 
-func WithErrorServerNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -64,7 +64,7 @@ func WithErrorServerNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorImageNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorImageNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -79,7 +79,7 @@ func WithErrorImageNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorServerFlavorSystemExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerFlavorSystemExceedQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -95,7 +95,7 @@ func WithErrorServerFlavorSystemExceedQuota(perrResp IErrorRespone) func(sdkErro
 	}
 }
 
-func WithErrorServerDeleteCreatingServer(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerDeleteCreatingServer(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -110,7 +110,7 @@ func WithErrorServerDeleteCreatingServer(perrResp IErrorRespone) func(sdkError I
 	}
 }
 
-func WithErrorServerExpired(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerExpired(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -125,7 +125,7 @@ func WithErrorServerExpired(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorServerUpdatingSecgroups(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerUpdatingSecgroups(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -142,7 +142,7 @@ func WithErrorServerUpdatingSecgroups(perrResp IErrorRespone) func(sdkError IErr
 	}
 }
 
-func WithErrorServerExceedCpuQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerExceedCpuQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -158,7 +158,7 @@ func WithErrorServerExceedCpuQuota(perrResp IErrorRespone) func(sdkError IError)
 	}
 }
 
-func WithErrorServerExceedFloatingIpQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerExceedFloatingIpQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -174,7 +174,7 @@ func WithErrorServerExceedFloatingIpQuota(perrResp IErrorRespone) func(sdkError 
 	}
 }
 
-func WithErrorServerImageNotSupported(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerImageNotSupported(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -191,7 +191,7 @@ func WithErrorServerImageNotSupported(perrResp IErrorRespone) func(sdkError IErr
 	}
 }
 
-func WithErrorServerExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerExceedQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -207,7 +207,7 @@ func WithErrorServerExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorServerDeleteDeletingServer(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerDeleteDeletingServer(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -222,7 +222,7 @@ func WithErrorServerDeleteDeletingServer(perrResp IErrorRespone) func(sdkError I
 	}
 }
 
-func WithErrorServerDeleteBillingServer(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerDeleteBillingServer(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -237,7 +237,7 @@ func WithErrorServerDeleteBillingServer(perrResp IErrorRespone) func(sdkError IE
 	}
 }
 
-func WithErrorServerCreateBillingPaymentMethodNotAllowed(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerCreateBillingPaymentMethodNotAllowed(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -252,7 +252,7 @@ func WithErrorServerCreateBillingPaymentMethodNotAllowed(perrResp IErrorRespone)
 	}
 }
 
-func WithErrorServerAttachVolumeQuotaExceeded(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerAttachVolumeQuotaExceeded(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -268,7 +268,7 @@ func WithErrorServerAttachVolumeQuotaExceeded(perrResp IErrorRespone) func(sdkEr
 	}
 }
 
-func WithErrorServerAttachEncryptedVolume(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerAttachEncryptedVolume(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -283,7 +283,7 @@ func WithErrorServerAttachEncryptedVolume(perrResp IErrorRespone) func(sdkError 
 	}
 }
 
-func WithErrorServerCanNotAttachFloatingIp(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerCanNotAttachFloatingIp(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -298,7 +298,7 @@ func WithErrorServerCanNotAttachFloatingIp(perrResp IErrorRespone) func(sdkError
 	}
 }
 
-func WithErrorServerGroupNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerGroupNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -313,7 +313,7 @@ func WithErrorServerGroupNotFound(perrResp IErrorRespone) func(sdkError IError) 
 	}
 }
 
-func WithErrorServerGroupInUse(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerGroupInUse(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -328,7 +328,7 @@ func WithErrorServerGroupInUse(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorServerGroupNameMustBeUnique(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorServerGroupNameMustBeUnique(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

@@ -38,7 +38,7 @@ var (
 	regexErrorListenerNotBelongToLoadBalancer = regexp.MustCompile(patternListenerNotBelongToLoadBalancer)
 )
 
-func WithErrorLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -55,7 +55,7 @@ func WithErrorLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError IError)
 }
 
 // WithErrorLoadBalancerNotFound2 indicate the issue creating Pool with non-existed LoadBalancer
-func WithErrorLoadBalancerNotFound2(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerNotFound2(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -70,7 +70,7 @@ func WithErrorLoadBalancerNotFound2(perrResp IErrorRespone) func(sdkError IError
 	}
 }
 
-func WithErrorLoadBalancerExceedQuota(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerExceedQuota(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -86,7 +86,7 @@ func WithErrorLoadBalancerExceedQuota(perrResp IErrorRespone) func(sdkError IErr
 	}
 }
 
-func WithErrorLoadBalancerDuplicatePoolName(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerDuplicatePoolName(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -101,7 +101,7 @@ func WithErrorLoadBalancerDuplicatePoolName(perrResp IErrorRespone) func(sdkErro
 	}
 }
 
-func WithErrorListenerDuplicateProtocolOrPort(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorListenerDuplicateProtocolOrPort(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -116,7 +116,7 @@ func WithErrorListenerDuplicateProtocolOrPort(perrResp IErrorRespone) func(sdkEr
 	}
 }
 
-func WithErrorListenerDuplicateName(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorListenerDuplicateName(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -131,7 +131,7 @@ func WithErrorListenerDuplicateName(perrResp IErrorRespone) func(sdkError IError
 	}
 }
 
-func WithErrorPoolNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorPoolNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -146,7 +146,7 @@ func WithErrorPoolNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorPoolInUse(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorPoolInUse(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -161,7 +161,7 @@ func WithErrorPoolInUse(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorLoadBalancerNotReady(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerNotReady(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -179,7 +179,7 @@ func WithErrorLoadBalancerNotReady(perrResp IErrorRespone) func(sdkError IError)
 	}
 }
 
-func WithErrorLoadBalancerIsDeleting(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerIsDeleting(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -194,7 +194,7 @@ func WithErrorLoadBalancerIsDeleting(perrResp IErrorRespone) func(sdkError IErro
 	}
 }
 
-func WithErrorLoadBalancerIsCreating(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerIsCreating(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -209,7 +209,7 @@ func WithErrorLoadBalancerIsCreating(perrResp IErrorRespone) func(sdkError IErro
 	}
 }
 
-func WithErrorLoadBalancerIsUpdating(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerIsUpdating(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -224,7 +224,7 @@ func WithErrorLoadBalancerIsUpdating(perrResp IErrorRespone) func(sdkError IErro
 	}
 }
 
-func WithErrorListenerNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorListenerNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -240,7 +240,7 @@ func WithErrorListenerNotFound(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorMemberMustIdentical(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorMemberMustIdentical(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -255,7 +255,7 @@ func WithErrorMemberMustIdentical(perrResp IErrorRespone) func(sdkError IError) 
 	}
 }
 
-func WithErrorLoadBalancerResizeSamePackage(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerResizeSamePackage(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -270,7 +270,7 @@ func WithErrorLoadBalancerResizeSamePackage(perrResp IErrorRespone) func(sdkErro
 	}
 }
 
-func WithErrorLoadBalancerPackageNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorLoadBalancerPackageNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -285,7 +285,7 @@ func WithErrorLoadBalancerPackageNotFound(perrResp IErrorRespone) func(sdkError 
 	}
 }
 
-func WithErrorGlobalLoadBalancerNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorGlobalLoadBalancerNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

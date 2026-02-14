@@ -8,7 +8,7 @@ const (
 	loginFailedPrefixMsg = "There are some problems with your service account key pair, please re-generate a new one. Error message: %s"
 )
 
-func WithErrorAuthenticationFailed(perrResp IErrorRespone) func(IError) {
+func WithErrorAuthenticationFailed(perrResp IErrorResponse) func(IError) {
 	return func(sdkErr IError) {
 		if perrResp == nil {
 			return
@@ -35,7 +35,7 @@ func WithErrorReauthFuncNotSet() func(IError) {
 	}
 }
 
-func WithErrorTooManyFailedLogin(perrResp IErrorRespone) func(IError) {
+func WithErrorTooManyFailedLogin(perrResp IErrorResponse) func(IError) {
 	return func(sdkErr IError) {
 		if perrResp == nil {
 			return
@@ -54,7 +54,7 @@ func WithErrorTooManyFailedLogin(perrResp IErrorRespone) func(IError) {
 	}
 }
 
-func WithErrorUnknownAuthFailure(perrResp IErrorRespone) func(IError) {
+func WithErrorUnknownAuthFailure(perrResp IErrorResponse) func(IError) {
 	return func(sdkErr IError) {
 		if perrResp == nil {
 			return

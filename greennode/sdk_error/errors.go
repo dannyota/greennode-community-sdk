@@ -35,7 +35,7 @@ const (
 	GlobalLoadBalancerErrorType
 )
 
-func NewErrorResponse(ptype int) IErrorRespone {
+func NewErrorResponse(ptype int) IErrorResponse {
 	switch ptype {
 	case IamErrorType:
 		return new(IamErrorResponse)

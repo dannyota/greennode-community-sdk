@@ -11,7 +11,7 @@ type Project struct {
 	Id string
 }
 
-func (s *Project) GetPorjectId() string {
+func (s *Project) GetProjectId() string {
 	return s.Id
 }
 

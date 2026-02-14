@@ -27,7 +27,7 @@ type IError interface {
 	AppendCategories(pcategories ...ErrorCategory) IError
 }
 
-type IErrorRespone interface {
+type IErrorResponse interface {
 	GetMessage() string
 	GetError() error
 }

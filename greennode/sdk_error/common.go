@@ -48,7 +48,7 @@ func ErrorHandler(perr error, popts ...func(psdkErr IError)) IError {
 	return sdkErr
 }
 
-func SdkErrorHandler(psdkErr IError, perrResp IErrorRespone, popts ...func(psdkErr IError)) IError {
+func SdkErrorHandler(psdkErr IError, perrResp IErrorResponse, popts ...func(psdkErr IError)) IError {
 	if psdkErr == nil && perrResp == nil {
 		return nil
 	}
@@ -96,7 +96,7 @@ func WithErrorPermissionDenied() func(IError) {
 	}
 }
 
-func WithErrorPurchaseIssue(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorPurchaseIssue(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -112,7 +112,7 @@ func WithErrorPurchaseIssue(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorTagKeyInvalid(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorTagKeyInvalid(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -127,7 +127,7 @@ func WithErrorTagKeyInvalid(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorPagingInvalid(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorPagingInvalid(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -171,7 +171,7 @@ func WithErrorUnexpected(presponse *req.Response) func(IError) {
 	}
 }
 
-func WithErrorPaymentMethodNotAllow(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorPaymentMethodNotAllow(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -186,7 +186,7 @@ func WithErrorPaymentMethodNotAllow(perrResp IErrorRespone) func(sdkError IError
 	}
 }
 
-func WithErrorCreditNotEnough(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorCreditNotEnough(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
@@ -201,7 +201,7 @@ func WithErrorCreditNotEnough(perrResp IErrorRespone) func(sdkError IError) {
 	}
 }
 
-func WithErrorProjectConflict(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorProjectConflict(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return

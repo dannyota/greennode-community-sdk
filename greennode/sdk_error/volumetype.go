@@ -6,7 +6,7 @@ const (
 	patternVolumeTypeNotFound = "cannot get volume type with id"
 )
 
-func WithErrorVolumeTypeNotFound(perrResp IErrorRespone) func(sdkError IError) {
+func WithErrorVolumeTypeNotFound(perrResp IErrorResponse) func(sdkError IError) {
 	return func(sdkError IError) {
 		if perrResp == nil {
 			return
