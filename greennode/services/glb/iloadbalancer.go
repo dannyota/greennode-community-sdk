@@ -2,7 +2,7 @@ package glb
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 

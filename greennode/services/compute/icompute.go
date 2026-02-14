@@ -2,7 +2,7 @@ package compute
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 )
 

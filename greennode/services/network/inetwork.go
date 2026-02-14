@@ -2,7 +2,7 @@ package network
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	networkv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )

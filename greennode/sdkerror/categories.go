@@ -1,4 +1,4 @@
-package sdk_error
+package sdkerror
 
 // quota error category
 const (

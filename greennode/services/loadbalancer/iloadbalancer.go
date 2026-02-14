@@ -2,7 +2,7 @@ package loadbalancer
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )

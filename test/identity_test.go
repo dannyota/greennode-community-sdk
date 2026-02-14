@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/dannyota/greennode-community-sdk/v2/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 

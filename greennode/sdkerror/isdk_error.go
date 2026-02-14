@@ -1,4 +1,4 @@
-package sdk_error
+package sdkerror
 
 type IError interface {
 	IsError(perrCode ErrorCode) bool

@@ -2,7 +2,7 @@ package dns
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
 	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )

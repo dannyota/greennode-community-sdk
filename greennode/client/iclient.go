@@ -5,7 +5,7 @@ import (
 
 	"github.com/imroc/req/v3"
 
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
 type IHttpClient interface {

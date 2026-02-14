@@ -125,7 +125,7 @@ func (e *Endpoint) Status() string { return e.status }
 
 | Package | Location |
 |---------|----------|
-| `sdk_error` | `greennode/sdk_error/` (18 files) |
+| `sdk_error` | `greennode/sdkerror/` (18 files) |
 
 **Go convention:** Package names are lowercase, single-word, no underscores.
 `sdk_error` → `sdkerror`.
@@ -208,7 +208,7 @@ client/iclient.go
 greennode/client/iclient.go
 greennode/client/iservice_client.go
 greennode/gateway/igateway.go
-greennode/sdk_error/isdk_error.go
+greennode/sdkerror/isdk_error.go
 greennode/services/loadbalancer/iloadbalancer.go
 greennode/services/network/inetwork.go
 greennode/services/glb/iloadbalancer.go

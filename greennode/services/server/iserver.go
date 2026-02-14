@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	serverv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server/v1"
 )
 

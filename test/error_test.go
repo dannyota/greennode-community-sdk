@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
 func TestDeleteListener(t *testing.T) {

@@ -3,7 +3,7 @@ package v1
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
 func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.IError) {

@@ -3,7 +3,7 @@ package v1
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdk_error"
+	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
 func (s *PortalServiceV1) ListZones() (*entity.ListZones, sdkerror.IError) {

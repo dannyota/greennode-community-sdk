@@ -141,14 +141,14 @@ Step  Layer        Code path
 
 ### Interface
 
-`IError` (`greennode/sdk_error/isdk_error.go`) provides:
+`IError` (`greennode/sdkerror/isdk_error.go`) provides:
 - Error code queries: `IsError(code)`, `IsCategory(cat)`
 - Builder methods: `WithErrorCode()`, `WithMessage()`, `WithParameters()`
 - Getters: `GetErrorCode()`, `GetMessage()`, `GetParameters()`
 
 ### Handler Chain
 
-`SdkErrorHandler` (`greennode/sdk_error/common.go`) applies a chain of
+`SdkErrorHandler` (`greennode/sdkerror/common.go`) applies a chain of
 pattern-matching handler functions to classify errors:
 
 ```go
@@ -177,8 +177,8 @@ return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
 
 ### Counts
 
-- **100 error codes** defined in `greennode/sdk_error/error_codes.go`
-- **10 error categories** in `greennode/sdk_error/categories.go`
+- **100 error codes** defined in `greennode/sdkerror/error_codes.go`
+- **10 error categories** in `greennode/sdkerror/categories.go`
   (`ErrCatQuota`, `ErrCatIam`, `ErrCatInfra`, `ErrCatPurchase`, `ErrCatAll`,
   `ErrCatProductVlb`, `ErrCatProductVNetwork`, `ErrCatProductVdns`,
   `ErrCatVServer`, `ErrCatVirtualAddress`)
