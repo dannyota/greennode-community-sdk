@@ -2,10 +2,10 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewGetSubnetByIdRequest(pnetworkId, psubnetId string) IGetSubnetByIdRequest {
+func NewGetSubnetByIdRequest(networkId, subnetId string) IGetSubnetByIdRequest {
 	opt := new(GetSubnetByIdRequest)
-	opt.NetworkId = pnetworkId
-	opt.SubnetId = psubnetId
+	opt.NetworkId = networkId
+	opt.SubnetId = subnetId
 	return opt
 }
 
@@ -15,8 +15,8 @@ type GetSubnetByIdRequest struct {
 	common.NetworkCommon
 }
 
-func (s *GetSubnetByIdRequest) AddUserAgent(pagent ...string) IGetSubnetByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetSubnetByIdRequest) AddUserAgent(agent ...string) IGetSubnetByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -31,10 +31,10 @@ type UpdateSubnetBody struct {
 	SecondarySubnetRequests []SecondarySubnetUpdateBody `json:"secondarySubnetRequests"`
 }
 
-func NewUpdateSubnetByIdRequest(pnetworkId, psubnetId string, updateBody *UpdateSubnetBody) IUpdateSubnetByIdRequest {
+func NewUpdateSubnetByIdRequest(networkId, subnetId string, updateBody *UpdateSubnetBody) IUpdateSubnetByIdRequest {
 	opt := new(UpdateSubnetByIdRequest)
-	opt.NetworkId = pnetworkId
-	opt.SubnetId = psubnetId
+	opt.NetworkId = networkId
+	opt.SubnetId = subnetId
 	opt.UpdateSubnetBody = updateBody
 	return opt
 }
@@ -50,7 +50,7 @@ func (s *UpdateSubnetByIdRequest) ToRequestBody() interface{} {
 	return s.UpdateSubnetBody
 }
 
-func (s *UpdateSubnetByIdRequest) AddUserAgent(pagent ...string) IUpdateSubnetByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdateSubnetByIdRequest) AddUserAgent(agent ...string) IUpdateSubnetByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

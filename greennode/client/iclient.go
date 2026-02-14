@@ -9,25 +9,25 @@ import (
 )
 
 type HttpClient interface {
-	WithRetryCount(pretryCount int) HttpClient
-	WithTimeout(ptimeout time.Duration) HttpClient
-	WithSleep(psleep time.Duration) HttpClient
-	WithKvDefaultHeaders(pargs ...string) HttpClient
-	WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient
+	WithRetryCount(retryCount int) HttpClient
+	WithTimeout(timeout time.Duration) HttpClient
+	WithSleep(sleep time.Duration) HttpClient
+	WithKvDefaultHeaders(args ...string) HttpClient
+	WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient
 
-	DoRequest(purl string, preq Request) (*req.Response, sdkerror.Error)
+	DoRequest(url string, req Request) (*req.Response, sdkerror.Error)
 }
 
 type Request interface {
-	WithOkCodes(pokCodes ...int) Request
-	WithJsonBody(pjsonBody interface{}) Request
-	WithJsonResponse(pjsonResponse interface{}) Request
-	WithJsonError(pjsonError interface{}) Request
-	WithRequestMethod(pmethod requestMethod) Request
-	WithSkipAuth(pskipAuth bool) Request
-	WithHeader(pkey, pvalue string) Request
-	WithMapHeaders(pheaders map[string]string) Request
-	WithUserId(puserId string) Request
+	WithOkCodes(okCodes ...int) Request
+	WithJsonBody(jsonBody interface{}) Request
+	WithJsonResponse(jsonResponse interface{}) Request
+	WithJsonError(jsonError interface{}) Request
+	WithRequestMethod(method requestMethod) Request
+	WithSkipAuth(skipAuth bool) Request
+	WithHeader(key, value string) Request
+	WithMapHeaders(headers map[string]string) Request
+	WithUserId(userId string) Request
 
 	GetRequestBody() interface{}
 	GetRequestMethod() string
@@ -35,9 +35,9 @@ type Request interface {
 	GetJsonResponse() interface{}
 	GetJsonError() interface{}
 
-	SetJsonResponse(pjsonResponse interface{})
-	SetJsonError(pjsonError interface{})
+	SetJsonResponse(jsonResponse interface{})
+	SetJsonError(jsonError interface{})
 
-	ContainsOkCode(pcode ...int) bool
+	ContainsOkCode(code ...int) bool
 	SkipAuthentication() bool
 }

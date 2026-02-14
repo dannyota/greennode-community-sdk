@@ -21,14 +21,14 @@ func (s *vnetworkGatewayInternalV1) NetworkService() network.NetworkServiceInter
 	return s.networkService
 }
 
-func NewVNetworkGatewayV1(psvcClient client.ServiceClient) VNetworkGatewayV1 {
+func NewVNetworkGatewayV1(svcClient client.ServiceClient) VNetworkGatewayV1 {
 	return &vnetworkGatewayV1{
-		networkService: network.NewNetworkServiceV1(psvcClient),
+		networkService: network.NewNetworkServiceV1(svcClient),
 	}
 }
 
-func NewVNetworkGatewayInternalV1(psvcClient client.ServiceClient) VNetworkGatewayInternalV1 {
+func NewVNetworkGatewayInternalV1(svcClient client.ServiceClient) VNetworkGatewayInternalV1 {
 	return &vnetworkGatewayInternalV1{
-		networkService: network.NewNetworkServiceInternalV1(psvcClient),
+		networkService: network.NewNetworkServiceInternalV1(svcClient),
 	}
 }

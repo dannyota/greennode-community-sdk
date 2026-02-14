@@ -9,63 +9,63 @@ const (
 	patternSecgroupInUse             = "securitygroupinuse"
 )
 
-func WithErrorSecgroupNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNotFound) {
 			sdkError.WithErrorCode(EcVServerSecgroupNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorSecgroupNameAlreadyExists(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupNameAlreadyExists(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupNameAlreadyExists) {
 			sdkError.WithErrorCode(EcVServerSecgroupNameAlreadyExists).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorSecgroupExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupExceedQuota) {
 			sdkError.WithErrorCode(EcVServerSecgroupExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorSecgroupInUse(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupInUse(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupInUse) {
 			sdkError.WithErrorCode(EcVServerSecgroupInUse).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }

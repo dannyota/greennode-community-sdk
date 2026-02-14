@@ -2,16 +2,16 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getPortalInfoUrl(psc client.ServiceClient, popts IGetPortalInfoRequest) string {
-	return psc.ServiceURL("projects", popts.GetBackEndProjectId(), "detail")
+func getPortalInfoUrl(sc client.ServiceClient, opts IGetPortalInfoRequest) string {
+	return sc.ServiceURL("projects", opts.GetBackEndProjectId(), "detail")
 }
 
-func listProjectsUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL("projects")
+func listProjectsUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL("projects")
 }
 
-func listZonesUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func listZonesUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"zones")
 }

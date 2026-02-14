@@ -6,14 +6,14 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) CreateSecgroupRule(popts ICreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.Error) {
-	url := createSecgroupRuleUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) CreateSecgroupRule(opts ICreateSecgroupRuleRequest) (*entity.SecgroupRule, sdkerror.Error) {
+	url := createSecgroupRuleUrl(s.VserverClient, opts)
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -22,18 +22,18 @@ func (s *NetworkServiceV2) CreateSecgroupRule(popts ICreateSecgroupRuleRequest) 
 			sdkerror.WithErrorSecgroupNotFound(errResp),
 			sdkerror.WithErrorSecgroupRuleExceedQuota(errResp),
 			sdkerror.WithErrorSecgroupRuleAlreadyExists(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectId())
 	}
 
 	return resp.ToEntitySecgroupRule(), nil
 }
 
-func (s *NetworkServiceV2) DeleteSecgroupRuleById(popts IDeleteSecgroupRuleByIdRequest) sdkerror.Error {
-	url := deleteSecgroupRuleByIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) DeleteSecgroupRuleById(opts IDeleteSecgroupRuleByIdRequest) sdkerror.Error {
+	url := deleteSecgroupRuleByIdUrl(s.VserverClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
@@ -42,20 +42,20 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleById(popts IDeleteSecgroupRuleByIdR
 			sdkerror.WithErrorSecgroupRuleNotFound(errResp),
 			sdkerror.WithErrorSecgroupNotFound(errResp)).
 			WithKVparameters(
-				"secgroupId", popts.GetSecgroupId(),
-				"secgroupRuleId", popts.GetSecgroupRuleId(),
+				"secgroupId", opts.GetSecgroupId(),
+				"secgroupRuleId", opts.GetSecgroupRuleId(),
 				"projectId", s.getProjectId())
 	}
 
 	return nil
 }
 
-func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupId(popts IListSecgroupRulesBySecgroupIdRequest) (*entity.ListSecgroupRules, sdkerror.Error) {
-	url := listSecgroupRulesBySecgroupIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupId(opts IListSecgroupRulesBySecgroupIdRequest) (*entity.ListSecgroupRules, sdkerror.Error) {
+	url := listSecgroupRulesBySecgroupIdUrl(s.VserverClient, opts)
 	resp := new(ListSecgroupRulesBySecgroupIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -63,7 +63,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupId(popts IListSecgroupRule
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorSecgroupNotFound(errResp)).
-			WithKVparameters("projectId", s.getProjectId(), "secgroupId", popts.GetSecgroupId())
+			WithKVparameters("projectId", s.getProjectId(), "secgroupId", opts.GetSecgroupId())
 	}
 
 	return resp.ToEntityListSecgroupRules(), nil

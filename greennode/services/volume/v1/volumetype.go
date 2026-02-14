@@ -6,8 +6,8 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*entity.VolumeType, sdkerror.Error) {
-	url := getVolumeTypeByIdUrl(s.VServerClient, popts)
+func (s *VolumeServiceV1) GetVolumeTypeById(opts IGetVolumeTypeByIdRequest) (*entity.VolumeType, sdkerror.Error) {
+	url := getVolumeTypeByIdUrl(s.VServerClient, opts)
 	resp := new(GetVolumeTypeByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -20,7 +20,7 @@ func (s *VolumeServiceV1) GetVolumeTypeById(popts IGetVolumeTypeByIdRequest) (*e
 			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
-				"volumeTypeId", popts.GetVolumeTypeId())
+				"volumeTypeId", opts.GetVolumeTypeId())
 	}
 
 	return resp.ToEntityVolumeType(), nil
@@ -44,8 +44,8 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.E
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error) {
-	url := getVolumeTypeZonesUrl(s.VServerClient, popts)
+func (s *VolumeServiceV1) GetVolumeTypeZones(opts IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error) {
+	url := getVolumeTypeZonesUrl(s.VServerClient, opts)
 	resp := new(ListVolumeTypeZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -63,8 +63,8 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(popts IGetVolumeTypeZonesRequest) (
 
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error) {
-	url := getVolumeTypesUrl(s.VServerClient, popts)
+func (s *VolumeServiceV1) GetListVolumeTypes(opts IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error) {
+	url := getVolumeTypesUrl(s.VServerClient, opts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -76,7 +76,7 @@ func (s *VolumeServiceV1) GetListVolumeTypes(popts IGetListVolumeTypeRequest) (*
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
 			WithKVparameters("projectId", s.getProjectId(),
-				"volumeTypeZoneId", popts.GetVolumeTypeZoneId())
+				"volumeTypeZoneId", opts.GetVolumeTypeZoneId())
 	}
 
 	return resp.ToEntityListVolumeType(), nil

@@ -16,18 +16,18 @@ type (
 		GetVNetworkEndpoint() string
 		GetVDnsEndpoint() string
 		GetUserAgent() string
-		WithUserId(puserId string) SdkConfigure
-		WithZoneId(pzoneId string) SdkConfigure
-		WithClientId(pclientId string) SdkConfigure
-		WithClientSecret(pclientSecret string) SdkConfigure
-		WithUserAgent(puserAgent string) SdkConfigure
-		WithProjectId(pprojectId string) SdkConfigure
-		WithIamEndpoint(piamEndpoint string) SdkConfigure
-		WithVServerEndpoint(pvserverEndpoint string) SdkConfigure
-		WithVLBEndpoint(pvlbEndpoint string) SdkConfigure
-		WithVNetworkEndpoint(pvnetworkEndpoint string) SdkConfigure
-		WithVDnsEndpoint(pvdnsEndpoint string) SdkConfigure
-		WithGLBEndpoint(pvlbEndpoint string) SdkConfigure
+		WithUserId(userId string) SdkConfigure
+		WithZoneId(zoneId string) SdkConfigure
+		WithClientId(clientId string) SdkConfigure
+		WithClientSecret(clientSecret string) SdkConfigure
+		WithUserAgent(userAgent string) SdkConfigure
+		WithProjectId(projectId string) SdkConfigure
+		WithIamEndpoint(iamEndpoint string) SdkConfigure
+		WithVServerEndpoint(vserverEndpoint string) SdkConfigure
+		WithVLBEndpoint(vlbEndpoint string) SdkConfigure
+		WithVNetworkEndpoint(vnetworkEndpoint string) SdkConfigure
+		WithVDnsEndpoint(vdnsEndpoint string) SdkConfigure
+		WithGLBEndpoint(vlbEndpoint string) SdkConfigure
 	}
 )
 
@@ -94,63 +94,63 @@ func (s *sdkConfigure) GetUserAgent() string {
 	return s.userAgent
 }
 
-func (s *sdkConfigure) WithUserAgent(puserAgent string) SdkConfigure {
-	s.userAgent = puserAgent
+func (s *sdkConfigure) WithUserAgent(userAgent string) SdkConfigure {
+	s.userAgent = userAgent
 	return s
 }
 
-func (s *sdkConfigure) WithClientId(pclientId string) SdkConfigure {
-	s.clientId = pclientId
+func (s *sdkConfigure) WithClientId(clientId string) SdkConfigure {
+	s.clientId = clientId
 	return s
 }
 
-func (s *sdkConfigure) WithClientSecret(pclientSecret string) SdkConfigure {
-	s.clientSecret = pclientSecret
+func (s *sdkConfigure) WithClientSecret(clientSecret string) SdkConfigure {
+	s.clientSecret = clientSecret
 	return s
 }
 
-func (s *sdkConfigure) WithUserId(puserId string) SdkConfigure {
-	s.userId = puserId
+func (s *sdkConfigure) WithUserId(userId string) SdkConfigure {
+	s.userId = userId
 	return s
 }
 
-func (s *sdkConfigure) WithZoneId(pzoneId string) SdkConfigure {
-	s.zoneId = pzoneId
+func (s *sdkConfigure) WithZoneId(zoneId string) SdkConfigure {
+	s.zoneId = zoneId
 	return s
 }
 
-func (s *sdkConfigure) WithProjectId(pprojectId string) SdkConfigure {
-	s.projectId = pprojectId
+func (s *sdkConfigure) WithProjectId(projectId string) SdkConfigure {
+	s.projectId = projectId
 	return s
 }
 
-func (s *sdkConfigure) WithIamEndpoint(piamEndpoint string) SdkConfigure {
-	s.iamEndpoint = normalizeURL(piamEndpoint)
+func (s *sdkConfigure) WithIamEndpoint(iamEndpoint string) SdkConfigure {
+	s.iamEndpoint = normalizeURL(iamEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVServerEndpoint(pvserverEndpoint string) SdkConfigure {
-	s.vserverEndpoint = normalizeURL(pvserverEndpoint)
+func (s *sdkConfigure) WithVServerEndpoint(vserverEndpoint string) SdkConfigure {
+	s.vserverEndpoint = normalizeURL(vserverEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVLBEndpoint(pvlbEndpoint string) SdkConfigure {
-	s.vlbEndpoint = normalizeURL(pvlbEndpoint)
+func (s *sdkConfigure) WithVLBEndpoint(vlbEndpoint string) SdkConfigure {
+	s.vlbEndpoint = normalizeURL(vlbEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVNetworkEndpoint(pvnetworkEndpoint string) SdkConfigure {
-	s.vnetworkEndpoint = normalizeURL(pvnetworkEndpoint)
+func (s *sdkConfigure) WithVNetworkEndpoint(vnetworkEndpoint string) SdkConfigure {
+	s.vnetworkEndpoint = normalizeURL(vnetworkEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithVDnsEndpoint(pvdnsEndpoint string) SdkConfigure {
-	s.vdnsEndpoint = normalizeURL(pvdnsEndpoint)
+func (s *sdkConfigure) WithVDnsEndpoint(vdnsEndpoint string) SdkConfigure {
+	s.vdnsEndpoint = normalizeURL(vdnsEndpoint)
 	return s
 }
 
-func (s *sdkConfigure) WithGLBEndpoint(pvlbEndpoint string) SdkConfigure {
-	s.glbEndpoint = normalizeURL(pvlbEndpoint)
+func (s *sdkConfigure) WithGLBEndpoint(vlbEndpoint string) SdkConfigure {
+	s.glbEndpoint = normalizeURL(vlbEndpoint)
 	return s
 }
 

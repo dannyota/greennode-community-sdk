@@ -2,9 +2,9 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewGetAllAddressPairByVirtualSubnetIdRequest(psubnetId string) IGetAllAddressPairByVirtualSubnetIdRequest {
+func NewGetAllAddressPairByVirtualSubnetIdRequest(subnetId string) IGetAllAddressPairByVirtualSubnetIdRequest {
 	opt := new(GetAllAddressPairByVirtualSubnetIdRequest)
-	opt.VirtualSubnetId = psubnetId
+	opt.VirtualSubnetId = subnetId
 	return opt
 }
 
@@ -19,9 +19,9 @@ func (s *GetAllAddressPairByVirtualSubnetIdRequest) GetVirtualSubnetId() string 
 
 // --------------------------------------------------------
 
-func NewSetAddressPairInVirtualSubnetRequest(psubnetId, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
+func NewSetAddressPairInVirtualSubnetRequest(subnetId, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
 	opt := new(SetAddressPairInVirtualSubnetRequest)
-	opt.VirtualSubnetId = psubnetId
+	opt.VirtualSubnetId = subnetId
 	opt.AddressPairRequest = AddressPairRequest{
 		CIDR:                       CIDR,
 		InternalNetworkInterfaceId: networkInterfaceID,
@@ -65,8 +65,8 @@ func (s *DeleteAddressPairRequest) GetAddressPairID() string {
 	return s.AddressPairID
 }
 
-func (s *DeleteAddressPairRequest) AddUserAgent(pagent ...string) IDeleteAddressPairRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteAddressPairRequest) AddUserAgent(agent ...string) IDeleteAddressPairRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -108,12 +108,12 @@ func (s *CreateAddressPairRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreateAddressPairRequest) AddUserAgent(pagent ...string) ICreateAddressPairRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateAddressPairRequest) AddUserAgent(agent ...string) ICreateAddressPairRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *CreateAddressPairRequest) WithMode(pmode AddressPairMode) ICreateAddressPairRequest {
-	s.Mode = &pmode
+func (s *CreateAddressPairRequest) WithMode(mode AddressPairMode) ICreateAddressPairRequest {
+	s.Mode = &mode
 	return s
 }

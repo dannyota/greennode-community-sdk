@@ -25,25 +25,25 @@ type vserverGatewayV2 struct {
 	volumeService  volume.VolumeServiceV2
 }
 
-func NewVServerGatewayV1(psvcClient client.ServiceClient) VServerGatewayV1 {
+func NewVServerGatewayV1(svcClient client.ServiceClient) VServerGatewayV1 {
 	return &vserverGatewayV1{
-		portalService: portal.NewPortalServiceV1(psvcClient),
-		volumeService: volume.NewVolumeServiceV1(psvcClient),
+		portalService: portal.NewPortalServiceV1(svcClient),
+		volumeService: volume.NewVolumeServiceV1(svcClient),
 	}
 }
 
-func NewVServerGatewayV2(psvcClient client.ServiceClient) VServerGatewayV2 {
+func NewVServerGatewayV2(svcClient client.ServiceClient) VServerGatewayV2 {
 	return &vserverGatewayV2{
-		networkService: network.NewNetworkServiceV2(psvcClient),
-		computeService: compute.NewComputeServiceV2(psvcClient),
-		portalService:  portal.NewPortalServiceV2(psvcClient),
-		volumeService:  volume.NewVolumeServiceV2(psvcClient),
+		networkService: network.NewNetworkServiceV2(svcClient),
+		computeService: compute.NewComputeServiceV2(svcClient),
+		portalService:  portal.NewPortalServiceV2(svcClient),
+		volumeService:  volume.NewVolumeServiceV2(svcClient),
 	}
 }
 
-func NewVServerGatewayInternalV1(psvcClient client.ServiceClient) VServerGatewayInternalV1 {
+func NewVServerGatewayInternalV1(svcClient client.ServiceClient) VServerGatewayInternalV1 {
 	return &vServerGatewayInternalV1{
-		serverService: server.NewServerServiceInternalV1(psvcClient),
+		serverService: server.NewServerServiceInternalV1(svcClient),
 	}
 }
 

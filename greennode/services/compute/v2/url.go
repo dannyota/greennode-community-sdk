@@ -2,104 +2,104 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createServerUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func createServerUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers")
 }
 
-func getServerByIdUrl(psc client.ServiceClient, popts IGetServerByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func getServerByIdUrl(sc client.ServiceClient, opts IGetServerByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers",
-		popts.GetServerId())
+		opts.GetServerId())
 }
 
-func deleteServerByIdUrl(psc client.ServiceClient, popts IDeleteServerByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func deleteServerByIdUrl(sc client.ServiceClient, opts IDeleteServerByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers",
-		popts.GetServerId())
+		opts.GetServerId())
 }
 
-func updateServerSecgroupsByServerIdUrl(psc client.ServiceClient, popts IUpdateServerSecgroupsByServerIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func updateServerSecgroupsByServerIdUrl(sc client.ServiceClient, opts IUpdateServerSecgroupsByServerIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers",
-		popts.GetServerId(),
+		opts.GetServerId(),
 		"update-sec-group")
 }
 
-func attachBlockVolumeUrl(psc client.ServiceClient, popts IAttachBlockVolumeRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func attachBlockVolumeUrl(sc client.ServiceClient, opts IAttachBlockVolumeRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"servers",
-		popts.GetServerId(),
+		opts.GetServerId(),
 		"attach")
 }
 
-func detachBlockVolumeUrl(psc client.ServiceClient, popts IDetachBlockVolumeRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func detachBlockVolumeUrl(sc client.ServiceClient, opts IDetachBlockVolumeRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"servers",
-		popts.GetServerId(),
+		opts.GetServerId(),
 		"detach",
 	)
 }
 
-func attachFloatingIpUrl(psc client.ServiceClient, popts IAttachFloatingIpRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func attachFloatingIpUrl(sc client.ServiceClient, opts IAttachFloatingIpRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers",
-		popts.GetServerId(),
+		opts.GetServerId(),
 		"wan-ips",
 		"auto",
 		"attach")
 
 }
 
-func detachFloatingIpUrl(psc client.ServiceClient, popts IDetachFloatingIpRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func detachFloatingIpUrl(sc client.ServiceClient, opts IDetachFloatingIpRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"servers",
-		popts.GetServerId(),
+		opts.GetServerId(),
 		"wan-ips",
-		popts.GetWanId(),
+		opts.GetWanId(),
 		"detach")
 }
 
-func listServerGroupPoliciesUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func listServerGroupPoliciesUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"serverGroups",
 		"policies",
 	)
 }
 
-func deleteServerGroupByIdUrl(psc client.ServiceClient, popts IDeleteServerGroupByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func deleteServerGroupByIdUrl(sc client.ServiceClient, opts IDeleteServerGroupByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"serverGroups",
-		popts.GetServerGroupId(),
+		opts.GetServerGroupId(),
 	)
 }
 
-func listServerGroupsUrl(psc client.ServiceClient, popts IListServerGroupsRequest) string {
-	query, err := popts.ToListQuery()
+func listServerGroupsUrl(sc client.ServiceClient, opts IListServerGroupsRequest) string {
+	query, err := opts.ToListQuery()
 	if err != nil {
-		query = popts.GetDefaultQuery()
+		query = opts.GetDefaultQuery()
 	}
 
-	return psc.ServiceURL(psc.GetProjectId(), "serverGroups") + query
+	return sc.ServiceURL(sc.GetProjectId(), "serverGroups") + query
 }
 
-func createServerGroupUrl(psc client.ServiceClient, _ ICreateServerGroupRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func createServerGroupUrl(sc client.ServiceClient, _ ICreateServerGroupRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"serverGroups",
 	)
 }

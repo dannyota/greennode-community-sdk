@@ -7,5 +7,5 @@ import (
 )
 
 type IdentityServiceV2 interface {
-	GetAccessToken(popts identityv2.IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error)
+	GetAccessToken(opts identityv2.IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error)
 }

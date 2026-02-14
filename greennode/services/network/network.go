@@ -6,20 +6,20 @@ import (
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
 )
 
-func NewNetworkServiceV2(psvcClient client.ServiceClient) NetworkServiceV2 {
+func NewNetworkServiceV2(svcClient client.ServiceClient) NetworkServiceV2 {
 	return &networkv2.NetworkServiceV2{
-		VserverClient: psvcClient,
+		VserverClient: svcClient,
 	}
 }
 
-func NewNetworkServiceV1(psvcClient client.ServiceClient) NetworkServiceV1 {
+func NewNetworkServiceV1(svcClient client.ServiceClient) NetworkServiceV1 {
 	return &networkv1.NetworkServiceV1{
-		VNetworkClient: psvcClient,
+		VNetworkClient: svcClient,
 	}
 }
 
-func NewNetworkServiceInternalV1(psvcClient client.ServiceClient) NetworkServiceInternalV1 {
+func NewNetworkServiceInternalV1(svcClient client.ServiceClient) NetworkServiceInternalV1 {
 	return &networkv1.NetworkServiceInternalV1{
-		VNetworkClient: psvcClient,
+		VNetworkClient: svcClient,
 	}
 }

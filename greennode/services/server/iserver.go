@@ -7,5 +7,5 @@ import (
 )
 
 type ServerServiceInternalV1 interface {
-	CreateSystemTags(popts serverv1.ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error)
+	CreateSystemTags(opts serverv1.ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error)
 }

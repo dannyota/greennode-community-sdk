@@ -37,19 +37,19 @@ const (
 	defaultFakeDomainName = "nip.io"
 )
 
-func NewCreatePoolRequest(pname string, pprotocol PoolProtocol) ICreatePoolRequest {
+func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest {
 	opts := new(CreatePoolRequest)
-	opts.PoolName = pname
+	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
-	opts.PoolProtocol = pprotocol
+	opts.PoolProtocol = protocol
 	opts.Members = make([]IMemberRequest, 0)
 
 	return opts
 }
 
-func NewHealthMonitor(pcheckProtocol HealthCheckProtocol) IHealthMonitorRequest {
+func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
 	opts := new(HealthMonitor)
-	opts.HealthCheckProtocol = pcheckProtocol
+	opts.HealthCheckProtocol = checkProtocol
 	opts.HealthyThreshold = 3
 	opts.UnhealthyThreshold = 3
 	opts.Interval = 30
@@ -58,13 +58,13 @@ func NewHealthMonitor(pcheckProtocol HealthCheckProtocol) IHealthMonitorRequest 
 	return opts
 }
 
-func NewMember(pname, pipAddress string, pport int, pmonitorPort int) IMemberRequest {
+func NewMember(name, ipAddress string, port int, monitorPort int) IMemberRequest {
 	return &Member{
 		Backup:      false,
-		IpAddress:   pipAddress,
-		MonitorPort: pmonitorPort,
-		Name:        pname,
-		Port:        pport,
+		IpAddress:   ipAddress,
+		MonitorPort: monitorPort,
+		Name:        name,
+		Port:        port,
 		Weight:      1,
 	}
 }
@@ -145,18 +145,18 @@ func (s *HealthMonitor) toRequestBody() IHealthMonitorRequest {
 	return s
 }
 
-func (s *CreatePoolRequest) WithHealthMonitor(pmonitor IHealthMonitorRequest) ICreatePoolRequest {
-	s.HealthMonitor = pmonitor
+func (s *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
+	s.HealthMonitor = monitor
 	return s
 }
 
-func (s *CreatePoolRequest) WithMembers(pmembers ...IMemberRequest) ICreatePoolRequest {
-	s.Members = append(s.Members, pmembers...)
+func (s *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
+	s.Members = append(s.Members, members...)
 	return s
 }
 
-func (s *CreatePoolRequest) WithLoadBalancerId(plbId string) ICreatePoolRequest {
-	s.LoadBalancerId = plbId
+func (s *CreatePoolRequest) WithLoadBalancerId(lbId string) ICreatePoolRequest {
+	s.LoadBalancerId = lbId
 	return s
 }
 
@@ -178,8 +178,8 @@ func (s *CreatePoolRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreatePoolRequest) WithAlgorithm(palgorithm PoolAlgorithm) ICreatePoolRequest {
-	s.Algorithm = palgorithm
+func (s *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
+	s.Algorithm = algorithm
 	return s
 }
 
@@ -187,64 +187,64 @@ func (s *HealthMonitor) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *HealthMonitor) WithHealthyThreshold(pht int) IHealthMonitorRequest {
-	if pht < 1 {
-		pht = 3
+func (s *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
+	if ht < 1 {
+		ht = 3
 	}
 
-	s.HealthyThreshold = pht
+	s.HealthyThreshold = ht
 	return s
 }
 
-func (s *HealthMonitor) WithUnhealthyThreshold(puht int) IHealthMonitorRequest {
-	if puht < 1 {
-		puht = 3
+func (s *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
+	if uht < 1 {
+		uht = 3
 	}
 
-	s.UnhealthyThreshold = puht
+	s.UnhealthyThreshold = uht
 	return s
 }
 
-func (s *HealthMonitor) WithInterval(pinterval int) IHealthMonitorRequest {
-	if pinterval < 1 {
-		pinterval = 30
+func (s *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
+	if interval < 1 {
+		interval = 30
 	}
 
-	s.Interval = pinterval
+	s.Interval = interval
 	return s
 }
 
-func (s *HealthMonitor) WithTimeout(pto int) IHealthMonitorRequest {
-	if pto < 1 {
-		pto = 5
+func (s *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
+	if to < 1 {
+		to = 5
 	}
 
-	s.Timeout = pto
+	s.Timeout = to
 	return s
 }
 
-func (s *HealthMonitor) WithHealthCheckMethod(pmethod HealthCheckMethod) IHealthMonitorRequest {
-	s.HealthCheckMethod = &pmethod
+func (s *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest {
+	s.HealthCheckMethod = &method
 	return s
 }
 
-func (s *HealthMonitor) WithHttpVersion(pversion HealthCheckHttpVersion) IHealthMonitorRequest {
-	s.HttpVersion = &pversion
+func (s *HealthMonitor) WithHttpVersion(version HealthCheckHttpVersion) IHealthMonitorRequest {
+	s.HttpVersion = &version
 	return s
 }
 
-func (s *HealthMonitor) WithHealthCheckPath(ppath string) IHealthMonitorRequest {
-	s.HealthCheckPath = &ppath
+func (s *HealthMonitor) WithHealthCheckPath(path string) IHealthMonitorRequest {
+	s.HealthCheckPath = &path
 	return s
 }
 
-func (s *HealthMonitor) WithDomainName(pdomain string) IHealthMonitorRequest {
-	s.DomainName = &pdomain
+func (s *HealthMonitor) WithDomainName(domain string) IHealthMonitorRequest {
+	s.DomainName = &domain
 	return s
 }
 
-func (s *HealthMonitor) WithSuccessCode(pcode string) IHealthMonitorRequest {
-	s.SuccessCode = &pcode
+func (s *HealthMonitor) WithSuccessCode(code string) IHealthMonitorRequest {
+	s.SuccessCode = &code
 	return s
 }
 

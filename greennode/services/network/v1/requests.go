@@ -1,74 +1,74 @@
 package v1
 
-func NewGetEndpointByIdRequest(pendpointId string) IGetEndpointByIdRequest {
+func NewGetEndpointByIdRequest(endpointId string) IGetEndpointByIdRequest {
 	opt := new(GetEndpointByIdRequest)
-	opt.EndpointId = pendpointId
+	opt.EndpointId = endpointId
 	return opt
 }
 
-func NewCreateEndpointRequest(pname, pserviceId, pvpcId, psubnetId string) ICreateEndpointRequest {
+func NewCreateEndpointRequest(name, serviceId, vpcId, subnetId string) ICreateEndpointRequest {
 	opts := new(CreateEndpointRequest)
-	opts.ResourceInfo.EndpointName = pname
-	opts.ResourceInfo.ServiceUuid = pserviceId
-	opts.ResourceInfo.VpcUuid = pvpcId
-	opts.ResourceInfo.SubnetUuid = psubnetId
+	opts.ResourceInfo.EndpointName = name
+	opts.ResourceInfo.ServiceUuid = serviceId
+	opts.ResourceInfo.VpcUuid = vpcId
+	opts.ResourceInfo.SubnetUuid = subnetId
 	opts.ResourceInfo.PackageUuid = defaultPackageId
 	opts.ResourceInfo.EnableDnsName = false
 	return opts
 }
 
-func NewDeleteEndpointByIdRequest(pendpointId, pvpcId, pendpointServiceId string) IDeleteEndpointByIdRequest {
+func NewDeleteEndpointByIdRequest(endpointId, vpcId, endpointServiceId string) IDeleteEndpointByIdRequest {
 	opt := new(DeleteEndpointByIdRequest)
-	opt.EndpointId = pendpointId
-	opt.EndpointUuid = pendpointId
-	opt.VpcUuid = pvpcId
-	opt.EndpointServiceUuid = pendpointServiceId
+	opt.EndpointId = endpointId
+	opt.EndpointUuid = endpointId
+	opt.VpcUuid = vpcId
+	opt.EndpointServiceUuid = endpointServiceId
 
 	return opt
 }
 
-func NewListEndpointsRequest(ppage, psize int) IListEndpointsRequest {
+func NewListEndpointsRequest(page, size int) IListEndpointsRequest {
 	return &ListEndpointsRequest{
-		Page: ppage,
-		Size: psize,
+		Page: page,
+		Size: size,
 	}
 }
 
-func NewListTagsByEndpointIdRequest(puserId, pprojectId, pendpointId string) IListTagsByEndpointIdRequest {
+func NewListTagsByEndpointIdRequest(userId, projectId, endpointId string) IListTagsByEndpointIdRequest {
 	opt := new(ListTagsByEndpointIdRequest)
-	opt.Id = pendpointId
-	opt.EndpointId = pendpointId
-	opt.ProjectId = pprojectId
-	opt.SetPortalUserId(puserId)
+	opt.Id = endpointId
+	opt.EndpointId = endpointId
+	opt.ProjectId = projectId
+	opt.SetPortalUserId(userId)
 	return opt
 }
 
-func NewCreateTagsWithEndpointIdRequest(puserId, pprojectId, pendpointId string) ICreateTagsWithEndpointIdRequest {
+func NewCreateTagsWithEndpointIdRequest(userId, projectId, endpointId string) ICreateTagsWithEndpointIdRequest {
 	opt := new(CreateTagsWithEndpointIdRequest)
-	opt.ResourceUuid = pendpointId
-	opt.EndpointId = pendpointId
+	opt.ResourceUuid = endpointId
+	opt.EndpointId = endpointId
 	opt.SystemTag = true
-	opt.ProjectId = pprojectId
-	opt.SetPortalUserId(puserId)
+	opt.ProjectId = projectId
+	opt.SetPortalUserId(userId)
 
 	return opt
 }
 
-func NewDeleteTagOfEndpointRequest(puserId, pprojectId, ptagId string) IDeleteTagOfEndpointRequest {
+func NewDeleteTagOfEndpointRequest(userId, projectId, tagId string) IDeleteTagOfEndpointRequest {
 	opt := new(DeleteTagOfEndpointRequest)
-	opt.TagId = ptagId
-	opt.ProjectId = pprojectId
-	opt.SetPortalUserId(puserId)
+	opt.TagId = tagId
+	opt.ProjectId = projectId
+	opt.SetPortalUserId(userId)
 
 	return opt
 }
 
-func NewUpdateTagValueOfEndpointRequest(puserId, pprojectId, ptagId, pvalue string) IUpdateTagValueOfEndpointRequest {
+func NewUpdateTagValueOfEndpointRequest(userId, projectId, tagId, value string) IUpdateTagValueOfEndpointRequest {
 	opt := new(UpdateTagValueOfEndpointRequest)
-	opt.TagId = ptagId
-	opt.TagValue = pvalue
-	opt.ProjectId = pprojectId
-	opt.SetPortalUserId(puserId)
+	opt.TagId = tagId
+	opt.TagValue = value
+	opt.ProjectId = projectId
+	opt.SetPortalUserId(userId)
 
 	return opt
 }

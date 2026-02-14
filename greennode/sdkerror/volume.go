@@ -34,309 +34,309 @@ var (
 	regexErrorVolumeNotFound = regexp.MustCompile(patternVolumeNotFound)
 )
 
-func WithErrorVolumeNameNotValid(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeNameNotValid(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNameNotValid) {
 			sdkError.WithErrorCode(EcVServerVolumeNameNotValid).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeSizeOutOfRange(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeSizeOutOfRange(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeSizeOutOfRange) ||
 			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNewSizeOutOfRange) {
 			sdkError.WithErrorCode(EcVServerVolumeSizeOutOfRange).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeSizeExceedGlobalQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeSizeExceedGlobalQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeSizeExceedGlobalQuota) {
 			sdkError.WithErrorCode(EcVServerVolumeSizeExceedGlobalQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorVolumeExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeExceedQuota) {
 			sdkError.WithErrorCode(EcVServerVolumeExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorVolumeNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorVolumeNotFound.FindString(errMsg) != "" ||
 			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNotFound2) {
 			sdkError.WithErrorCode(EcVServerVolumeNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
 // WithErrorVolumeAvailable indicates that the volume is AVAILABLE state but try to make detach this volume out of server
-func WithErrorVolumeAvailable(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeAvailable(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAvailable) {
 			sdkError.WithErrorCode(EcVServerVolumeAvailable).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeAlreadyAttached(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeAlreadyAttached(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttached) {
 			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttached).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeAlreadyAttachedThisServer(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeAlreadyAttachedThisServer(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttachedThisServer) {
 			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttachedThisServer).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeInProcess(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeInProcess(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeInProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeInProcess).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeUnchanged(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeUnchanged(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeUnchaged) {
 			sdkError.WithErrorCode(EcVServerVolumeUnchanged).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMustSameZone(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMustSameZone(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMustSameZone) {
 			sdkError.WithErrorCode(EcVServerVolumeMustSameZone).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateMissingInit(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateMissingInit(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateMissingInit) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateMissingInit).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateNeedProcess(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateNeedProcess(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedProcess).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateNeedConfirm(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateNeedConfirm(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedConfirm) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedConfirm).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateBeingProcess(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateBeingProcess(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingProcess) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingProcess).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateBeingFinish(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateBeingFinish(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingFinish) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingFinish).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateProcessingConfirm(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateProcessingConfirm(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateProcessingConfirm) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateProcessingConfirm).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
 //
 
-func WithErrorVolumeMigrateBeingMigrating(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateBeingMigrating(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingMigrating) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingMigrating).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeMigrateInSameZone(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeMigrateInSameZone(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateInSameZone) {
 			sdkError.WithErrorCode(EcVServerVolumeMigrateInSameZone).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVolumeIsMigrating(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVolumeIsMigrating(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeIsMigrating) {
 			sdkError.WithErrorCode(EcVServerVolumeIsMigrating).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }

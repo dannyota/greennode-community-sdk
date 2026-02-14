@@ -6,8 +6,8 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(popts IListSnapshotsByBlockVolumeIdRequest) (*entity.ListSnapshots, sdkerror.Error) {
-	url := listSnapshotsByBlockVolumeIdUrl(s.VServerClient, popts)
+func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(opts IListSnapshotsByBlockVolumeIdRequest) (*entity.ListSnapshots, sdkerror.Error) {
+	url := listSnapshotsByBlockVolumeIdUrl(s.VServerClient, opts)
 	resp := new(ListSnapshotsByBlockVolumeIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -19,21 +19,21 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeId(popts IListSnapshotsByBlo
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
-				"volumeId", popts.GetBlockVolumeId())
+				"volumeId", opts.GetBlockVolumeId())
 	}
 
 	return resp.ToEntityListSnapshots(), nil
 }
 
-func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(popts ICreateSnapshotByBlockVolumeIdRequest) (*entity.Snapshot, sdkerror.Error) {
-	url := createSnapshotByBlockVolumeIdUrl(s.VServerClient, popts)
+func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(opts ICreateSnapshotByBlockVolumeIdRequest) (*entity.Snapshot, sdkerror.Error) {
+	url := createSnapshotByBlockVolumeIdUrl(s.VServerClient, opts)
 	resp := new(CreateSnapshotByBlockVolumeIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp).
-		WithJsonBody(popts.ToRequestBody())
+		WithJsonBody(opts.ToRequestBody())
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -41,14 +41,14 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeId(popts ICreateSnapshotByB
 			sdkerror.WithErrorSnapshotNameNotValid(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
-				"volumeId", popts.GetBlockVolumeId())
+				"volumeId", opts.GetBlockVolumeId())
 	}
 
 	return resp.ToEntitySnapshot(), nil
 }
 
-func (s *VolumeServiceV2) DeleteSnapshotById(popts IDeleteSnapshotByIdRequest) sdkerror.Error {
-	url := deleteSnapshotByIdUrl(s.VServerClient, popts)
+func (s *VolumeServiceV2) DeleteSnapshotById(opts IDeleteSnapshotByIdRequest) sdkerror.Error {
+	url := deleteSnapshotByIdUrl(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -59,7 +59,7 @@ func (s *VolumeServiceV2) DeleteSnapshotById(popts IDeleteSnapshotByIdRequest) s
 			sdkerror.WithErrorSnapshotNameNotFound(errResp)).
 			WithKVparameters(
 				"projectId", s.getProjectId(),
-				"snapshotId", popts.GetSnapshotId())
+				"snapshotId", opts.GetSnapshotId())
 	}
 
 	return nil

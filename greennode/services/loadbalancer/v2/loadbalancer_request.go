@@ -36,20 +36,20 @@ type NetworkingConfig struct {
 	Subnets []string `json:"subnets,omitempty"`
 }
 
-func NewCreateLoadBalancerRequest(pname, ppackageId, psubnetId string) ICreateLoadBalancerRequest {
+func NewCreateLoadBalancerRequest(name, packageId, subnetId string) ICreateLoadBalancerRequest {
 	return &CreateLoadBalancerRequest{
-		Name:      pname,
-		PackageID: ppackageId,
+		Name:      name,
+		PackageID: packageId,
 		Scheme:    InternetLoadBalancerScheme,
-		SubnetID:  psubnetId,
+		SubnetID:  subnetId,
 		Type:      LoadBalancerTypeLayer4,
 	}
 }
 
-func NewResizeLoadBalancerRequest(plbId, packageID string) IResizeLoadBalancerRequest {
+func NewResizeLoadBalancerRequest(lbId, packageID string) IResizeLoadBalancerRequest {
 	return &ResizeLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: plbId,
+			LoadBalancerId: lbId,
 		},
 		PackageID: packageID,
 	}
@@ -59,34 +59,34 @@ func NewListLoadBalancerPackagesRequest() IListLoadBalancerPackagesRequest {
 	return &ListLoadBalancerPackagesRequest{}
 }
 
-func NewGetLoadBalancerByIdRequest(plbId string) IGetLoadBalancerByIdRequest {
+func NewGetLoadBalancerByIdRequest(lbId string) IGetLoadBalancerByIdRequest {
 	opts := new(GetLoadBalancerByIdRequest)
-	opts.LoadBalancerId = plbId
+	opts.LoadBalancerId = lbId
 	return opts
 }
 
-func NewListLoadBalancersRequest(ppage, psize int) IListLoadBalancersRequest {
+func NewListLoadBalancersRequest(page, size int) IListLoadBalancersRequest {
 	opts := new(ListLoadBalancersRequest)
-	opts.Page = ppage
-	opts.Size = psize
+	opts.Page = page
+	opts.Size = size
 	return opts
 }
 
-func (s *ListLoadBalancersRequest) AddUserAgent(pagent ...string) IListLoadBalancersRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListLoadBalancersRequest) AddUserAgent(agent ...string) IListLoadBalancersRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewDeleteLoadBalancerByIdRequest(plbId string) IDeleteLoadBalancerByIdRequest {
+func NewDeleteLoadBalancerByIdRequest(lbId string) IDeleteLoadBalancerByIdRequest {
 	opts := new(DeleteLoadBalancerByIdRequest)
-	opts.LoadBalancerId = plbId
+	opts.LoadBalancerId = lbId
 	return opts
 }
 
-func NewScaleLoadBalancerRequest(plbId string) IScaleLoadBalancerRequest {
+func NewScaleLoadBalancerRequest(lbId string) IScaleLoadBalancerRequest {
 	return &ScaleLoadBalancerRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerId: plbId,
+			LoadBalancerId: lbId,
 		},
 	}
 }
@@ -100,9 +100,9 @@ type CreateLoadBalancerRequest struct {
 	Type         LoadBalancerType       `json:"type"`
 	Listener     ICreateListenerRequest `json:"listener"`
 	Pool         ICreatePoolRequest     `json:"pool"`
-	Tags         []common.Tag         `json:"tags,omitempty"`
+	Tags         []common.Tag           `json:"tags,omitempty"`
 	IsPoc        bool                   `json:"isPoc"`
-	ZoneId       *common.Zone         `json:"zoneId"`
+	ZoneId       *common.Zone           `json:"zoneId"`
 
 	common.UserAgent
 }
@@ -137,8 +137,8 @@ type DeleteLoadBalancerByIdRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (s *DeleteLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IDeleteLoadBalancerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteLoadBalancerByIdRequest) AddUserAgent(agent ...string) IDeleteLoadBalancerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -149,8 +149,8 @@ type ResizeLoadBalancerByIdRequest struct {
 	PackageId string `json:"packageId"`
 }
 
-func (s *ResizeLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IResizeLoadBalancerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ResizeLoadBalancerByIdRequest) AddUserAgent(agent ...string) IResizeLoadBalancerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -162,18 +162,18 @@ type ScaleLoadBalancerRequest struct {
 	Networking *NetworkingConfig `json:"networking"`
 }
 
-func (s *ScaleLoadBalancerRequest) AddUserAgent(pagent ...string) IScaleLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ScaleLoadBalancerRequest) AddUserAgent(agent ...string) IScaleLoadBalancerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *ScaleLoadBalancerRequest) WithScaling(pscaling *ScalingConfig) IScaleLoadBalancerRequest {
-	s.Scaling = pscaling
+func (s *ScaleLoadBalancerRequest) WithScaling(scaling *ScalingConfig) IScaleLoadBalancerRequest {
+	s.Scaling = scaling
 	return s
 }
 
-func (s *ScaleLoadBalancerRequest) WithNetworking(pnetworking *NetworkingConfig) IScaleLoadBalancerRequest {
-	s.Networking = pnetworking
+func (s *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) IScaleLoadBalancerRequest {
+	s.Networking = networking
 	return s
 }
 
@@ -231,58 +231,58 @@ func (s *CreateLoadBalancerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) AddUserAgent(pagent ...string) ICreateLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
-func (s *CreateLoadBalancerRequest) WithListener(plistener ICreateListenerRequest) ICreateLoadBalancerRequest {
-	s.Listener = plistener
-	return s
-}
-
-func (s *CreateLoadBalancerRequest) WithPool(ppool ICreatePoolRequest) ICreateLoadBalancerRequest {
-	s.Pool = ppool
+func (s *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
+	s.Listener = listener
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalancerRequest {
+func (s *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
+	s.Pool = pool
+	return s
+}
+
+func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
 	if s.Tags == nil {
 		s.Tags = make([]common.Tag, 0)
 	}
 
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "none")
+	if len(tags)%2 != 0 {
+		tags = append(tags, "none")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithScheme(pscheme LoadBalancerScheme) ICreateLoadBalancerRequest {
-	s.Scheme = pscheme
+func (s *CreateLoadBalancerRequest) WithScheme(scheme LoadBalancerScheme) ICreateLoadBalancerRequest {
+	s.Scheme = scheme
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithAutoScalable(pautoScalable bool) ICreateLoadBalancerRequest {
-	s.AutoScalable = pautoScalable
+func (s *CreateLoadBalancerRequest) WithAutoScalable(autoScalable bool) ICreateLoadBalancerRequest {
+	s.AutoScalable = autoScalable
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithPackageId(ppackageId string) ICreateLoadBalancerRequest {
-	s.PackageID = ppackageId
+func (s *CreateLoadBalancerRequest) WithPackageId(packageId string) ICreateLoadBalancerRequest {
+	s.PackageID = packageId
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithSubnetId(psubnetId string) ICreateLoadBalancerRequest {
-	s.SubnetID = psubnetId
+func (s *CreateLoadBalancerRequest) WithSubnetId(subnetId string) ICreateLoadBalancerRequest {
+	s.SubnetID = subnetId
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithType(ptype LoadBalancerType) ICreateLoadBalancerRequest {
-	s.Type = ptype
+func (s *CreateLoadBalancerRequest) WithType(typeVal LoadBalancerType) ICreateLoadBalancerRequest {
+	s.Type = typeVal
 	return s
 }
 
@@ -291,8 +291,8 @@ func (s *CreateLoadBalancerRequest) WithPoc(isPoc bool) ICreateLoadBalancerReque
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneId = &pzoneId
+func (s *CreateLoadBalancerRequest) WithZoneId(zoneId common.Zone) ICreateLoadBalancerRequest {
+	s.ZoneId = &zoneId
 	return s
 }
 
@@ -300,23 +300,23 @@ func (s *ResizeLoadBalancerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *ResizeLoadBalancerRequest) AddUserAgent(pagent ...string) IResizeLoadBalancerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ResizeLoadBalancerRequest) AddUserAgent(agent ...string) IResizeLoadBalancerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *ResizeLoadBalancerRequest) WithPackageId(ppackageId string) IResizeLoadBalancerRequest {
-	s.PackageID = ppackageId
+func (s *ResizeLoadBalancerRequest) WithPackageId(packageId string) IResizeLoadBalancerRequest {
+	s.PackageID = packageId
 	return s
 }
 
-func (s *ListLoadBalancerPackagesRequest) AddUserAgent(pagent ...string) IListLoadBalancerPackagesRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListLoadBalancerPackagesRequest) AddUserAgent(agent ...string) IListLoadBalancerPackagesRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *ListLoadBalancerPackagesRequest) WithZoneId(pzoneId common.Zone) IListLoadBalancerPackagesRequest {
-	s.ZoneId = pzoneId
+func (s *ListLoadBalancerPackagesRequest) WithZoneId(zoneId common.Zone) IListLoadBalancerPackagesRequest {
+	s.ZoneId = zoneId
 	return s
 }
 
@@ -328,27 +328,27 @@ func (s *ListLoadBalancerPackagesRequest) ToMap() map[string]interface{} {
 	return map[string]interface{}{}
 }
 
-func (s *GetLoadBalancerByIdRequest) AddUserAgent(pagent ...string) IGetLoadBalancerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetLoadBalancerByIdRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *ListLoadBalancersRequest) WithName(pname string) IListLoadBalancersRequest {
-	s.Name = pname
+func (s *ListLoadBalancersRequest) WithName(name string) IListLoadBalancersRequest {
+	s.Name = name
 	return s
 }
 
-func (s *ListLoadBalancersRequest) WithTags(ptags ...string) IListLoadBalancersRequest {
+func (s *ListLoadBalancersRequest) WithTags(tags ...string) IListLoadBalancersRequest {
 	if s.Tags == nil {
 		s.Tags = make([]common.Tag, 0)
 	}
 
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "")
+	if len(tags)%2 != 0 {
+		tags = append(tags, "")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
 	return s

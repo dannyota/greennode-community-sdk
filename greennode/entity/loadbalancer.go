@@ -66,12 +66,12 @@ func (s *ListLoadBalancers) Add(item *LoadBalancer) {
 	s.Items = append(s.Items, item)
 }
 
-func (s *ListLoadBalancers) At(pidx int) *LoadBalancer {
-	if pidx < 0 || pidx >= s.Len() {
+func (s *ListLoadBalancers) At(idx int) *LoadBalancer {
+	if idx < 0 || idx >= s.Len() {
 		return nil
 	}
 
-	return s.Items[pidx]
+	return s.Items[idx]
 }
 
 type ListLoadBalancerPackages struct {

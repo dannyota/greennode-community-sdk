@@ -13,11 +13,11 @@ const (
 	ListenerProtocolHTTPS ListenerProtocol = "HTTPS"
 )
 
-func NewCreateListenerRequest(pname string, pprotocol ListenerProtocol, pport int) ICreateListenerRequest {
+func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) ICreateListenerRequest {
 	opts := new(CreateListenerRequest)
-	opts.ListenerName = pname
-	opts.ListenerProtocol = pprotocol
-	opts.ListenerProtocolPort = pport
+	opts.ListenerName = name
+	opts.ListenerProtocol = protocol
+	opts.ListenerProtocolPort = port
 	opts.AllowedCidrs = "0.0.0.0/0"
 	opts.TimeoutClient = 50
 	opts.TimeoutMember = 50
@@ -61,49 +61,49 @@ func (s *CreateListenerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateListenerRequest) WithAllowedCidrs(pcidrs ...string) ICreateListenerRequest {
-	if len(pcidrs) < 1 {
+func (s *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
+	if len(cidrs) < 1 {
 		return s
 	}
 
-	s.AllowedCidrs = strings.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(cidrs, ",")
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutClient(ptoc int) ICreateListenerRequest {
-	s.TimeoutClient = ptoc
+func (s *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
+	s.TimeoutClient = toc
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutConnection(ptoc int) ICreateListenerRequest {
-	s.TimeoutConnection = ptoc
+func (s *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
+	s.TimeoutConnection = toc
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutMember(ptom int) ICreateListenerRequest {
-	s.TimeoutMember = ptom
+func (s *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
+	s.TimeoutMember = tom
 	return s
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerId(plbid string) ICreateListenerRequest {
-	s.LoadBalancerId = plbid
+func (s *CreateListenerRequest) WithLoadBalancerId(lbid string) ICreateListenerRequest {
+	s.LoadBalancerId = lbid
 	return s
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolId(ppoolId string) ICreateListenerRequest {
-	s.DefaultPoolId = &ppoolId
+func (s *CreateListenerRequest) WithDefaultPoolId(poolId string) ICreateListenerRequest {
+	s.DefaultPoolId = &poolId
 	return s
 }
 
-func (s *CreateListenerRequest) AddCidrs(pcidrs ...string) ICreateListenerRequest {
-	if len(pcidrs) < 1 {
+func (s *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
+	if len(cidrs) < 1 {
 		return s
 	}
 
 	if s.AllowedCidrs == "" {
-		return s.WithAllowedCidrs(pcidrs...)
+		return s.WithAllowedCidrs(cidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(pcidrs, ",")
+		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(cidrs, ",")
 	}
 
 	return s

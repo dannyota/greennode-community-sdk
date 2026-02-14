@@ -5,31 +5,31 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewListTagsRequest(plbId string) IListTagsRequest {
+func NewListTagsRequest(lbId string) IListTagsRequest {
 	opt := new(ListTagsRequest)
-	opt.LoadBalancerId = plbId
+	opt.LoadBalancerId = lbId
 	return opt
 }
 
-func (s *ListTagsRequest) AddUserAgent(pagent ...string) IListTagsRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewCreateTagsRequest(plbId string) ICreateTagsRequest {
+func NewCreateTagsRequest(lbId string) ICreateTagsRequest {
 	opts := new(CreateTagsRequest)
-	opts.LoadBalancerId = plbId
-	opts.ResourceID = plbId
+	opts.LoadBalancerId = lbId
+	opts.ResourceID = lbId
 	opts.ResourceType = "LOAD-BALANCER"
 	opts.TagRequestList = make([]common.Tag, 0)
 
 	return opts
 }
 
-func NewUpdateTagsRequest(plbId string) IUpdateTagsRequest {
+func NewUpdateTagsRequest(lbId string) IUpdateTagsRequest {
 	opts := new(UpdateTagsRequest)
-	opts.LoadBalancerId = plbId
-	opts.ResourceID = plbId
+	opts.LoadBalancerId = lbId
+	opts.ResourceID = lbId
 	opts.ResourceType = "LOAD-BALANCER"
 	opts.TagRequestList = make([]common.Tag, 0)
 
@@ -42,22 +42,22 @@ type ListTagsRequest struct {
 }
 
 type CreateTagsRequest struct {
-	ResourceID     string         `json:"resourceId"`
-	ResourceType   string         `json:"resourceType"`
+	ResourceID     string       `json:"resourceId"`
+	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
 	common.UserAgent
 	common.LoadBalancerCommon
 }
 
-func (s *CreateTagsRequest) AddUserAgent(pagent ...string) ICreateTagsRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateTagsRequest) AddUserAgent(agent ...string) ICreateTagsRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
 type UpdateTagsRequest struct {
-	ResourceID     string         `json:"resourceId"`
-	ResourceType   string         `json:"resourceType"`
+	ResourceID     string       `json:"resourceId"`
+	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
 	common.UserAgent
@@ -68,25 +68,25 @@ func (s *CreateTagsRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *UpdateTagsRequest) AddUserAgent(pagent ...string) IUpdateTagsRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdateTagsRequest) AddUserAgent(agent ...string) IUpdateTagsRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *CreateTagsRequest) WithTags(ptags ...string) ICreateTagsRequest {
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "none")
+func (s *CreateTagsRequest) WithTags(tags ...string) ICreateTagsRequest {
+	if len(tags)%2 != 0 {
+		tags = append(tags, "none")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 	return s
 }
 
-func (s *UpdateTagsRequest) ToRequestBody(plstTags *entity.ListTags) interface{} {
+func (s *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) interface{} {
 	st := map[string]common.Tag{}
-	for _, tag := range plstTags.Items {
+	for _, tag := range lstTags.Items {
 		st[tag.Key] = common.Tag{
 			IsEdited: false,
 			Key:      tag.Key,
@@ -106,13 +106,13 @@ func (s *UpdateTagsRequest) ToRequestBody(plstTags *entity.ListTags) interface{}
 	return s
 }
 
-func (s *UpdateTagsRequest) WithTags(ptags ...string) IUpdateTagsRequest {
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "none")
+func (s *UpdateTagsRequest) WithTags(tags ...string) IUpdateTagsRequest {
+	if len(tags)%2 != 0 {
+		tags = append(tags, "none")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.TagRequestList = append(s.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
 	return s

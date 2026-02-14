@@ -8,7 +8,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *IdentityServiceV2) GetAccessToken(popts IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error) {
+func (s *IdentityServiceV2) GetAccessToken(opts IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error) {
 	url := getAccessTokenUrl(s.IamClient)
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IamErrorType)
@@ -17,16 +17,16 @@ func (s *IdentityServiceV2) GetAccessToken(popts IGetAccessTokenRequest) (*entit
 		WithJsonResponse(resp).
 		WithSkipAuth(true).
 		WithJsonError(errResp).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
-		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(popts.GetClientId()+":"+popts.GetClientSecret())))
+		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.GetClientId()+":"+opts.GetClientSecret())))
 
 	if _, sdkErr := s.IamClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorTooManyFailedLogin(errResp),
 			sdkerror.WithErrorAuthenticationFailed(errResp),
 			sdkerror.WithErrorUnknownAuthFailure(errResp)). // Always put this handler at the end
-			WithKVparameters("clientId", popts.GetClientId())
+			WithKVparameters("clientId", opts.GetClientId())
 	}
 
 	return resp.ToEntityAccessToken(), nil

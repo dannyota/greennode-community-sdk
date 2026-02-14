@@ -6,14 +6,14 @@ import (
 	volumev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v2"
 )
 
-func NewVolumeServiceV2(psvcClient client.ServiceClient) VolumeServiceV2 {
+func NewVolumeServiceV2(svcClient client.ServiceClient) VolumeServiceV2 {
 	return &volumev2.VolumeServiceV2{
-		VServerClient: psvcClient,
+		VServerClient: svcClient,
 	}
 }
 
-func NewVolumeServiceV1(psvcClient client.ServiceClient) VolumeServiceV1 {
+func NewVolumeServiceV1(svcClient client.ServiceClient) VolumeServiceV1 {
 	return &volumev1.VolumeServiceV1{
-		VServerClient: psvcClient,
+		VServerClient: svcClient,
 	}
 }

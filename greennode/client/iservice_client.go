@@ -7,30 +7,30 @@ import (
 )
 
 type ServiceClient interface {
-	WithEndpoint(pendpoint string) ServiceClient
-	WithName(pname string) ServiceClient
-	WithProjectId(pprojectId string) ServiceClient
-	WithZoneId(pzoneId string) ServiceClient
-	WithUserId(puserId string) ServiceClient
-	WithMoreHeaders(pmoreHeaders map[string]string) ServiceClient
-	WithKVheader(pkey string, pvalue string) ServiceClient
-	WithClient(pclient HttpClient) ServiceClient
-	ServiceURL(pparts ...string) string
+	WithEndpoint(endpoint string) ServiceClient
+	WithName(name string) ServiceClient
+	WithProjectId(projectId string) ServiceClient
+	WithZoneId(zoneId string) ServiceClient
+	WithUserId(userId string) ServiceClient
+	WithMoreHeaders(moreHeaders map[string]string) ServiceClient
+	WithKVheader(key string, value string) ServiceClient
+	WithClient(client HttpClient) ServiceClient
+	ServiceURL(parts ...string) string
 	GetProjectId() string
 	GetZoneId() string
 	GetUserId() string
 
-	Post(purl string, preq Request) (*req.Response, sdkerror.Error)
-	Get(purl string, preq Request) (*req.Response, sdkerror.Error)
-	Delete(purl string, preq Request) (*req.Response, sdkerror.Error)
-	Put(purl string, preq Request) (*req.Response, sdkerror.Error)
-	Patch(purl string, preq Request) (*req.Response, sdkerror.Error)
+	Post(url string, req Request) (*req.Response, sdkerror.Error)
+	Get(url string, req Request) (*req.Response, sdkerror.Error)
+	Delete(url string, req Request) (*req.Response, sdkerror.Error)
+	Put(url string, req Request) (*req.Response, sdkerror.Error)
+	Patch(url string, req Request) (*req.Response, sdkerror.Error)
 }
 
 type SdkAuthentication interface {
-	WithAccessToken(paccessToken string) SdkAuthentication
-	WithExpiresAt(pexpiresAt int64) SdkAuthentication
-	UpdateAuth(pauth SdkAuthentication)
+	WithAccessToken(accessToken string) SdkAuthentication
+	WithExpiresAt(expiresAt int64) SdkAuthentication
+	UpdateAuth(auth SdkAuthentication)
 	NeedReauth() bool
 	GetAccessToken() string
 	GetExpiresAt() int64

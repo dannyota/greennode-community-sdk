@@ -14,11 +14,11 @@ const (
 	ListenerProtocolHTTPS ListenerProtocol = "HTTPS"
 )
 
-func NewCreateListenerRequest(pname string, pprotocol ListenerProtocol, pport int) ICreateListenerRequest {
+func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) ICreateListenerRequest {
 	opts := new(CreateListenerRequest)
-	opts.ListenerName = pname
-	opts.ListenerProtocol = pprotocol
-	opts.ListenerProtocolPort = pport
+	opts.ListenerName = name
+	opts.ListenerProtocol = protocol
+	opts.ListenerProtocolPort = port
 	opts.AllowedCidrs = "0.0.0.0/0"
 	opts.TimeoutClient = 50
 	opts.TimeoutMember = 50
@@ -27,33 +27,33 @@ func NewCreateListenerRequest(pname string, pprotocol ListenerProtocol, pport in
 	return opts
 }
 
-func NewUpdateListenerRequest(plbId, plistenerId string) IUpdateListenerRequest {
+func NewUpdateListenerRequest(lbId, listenerId string) IUpdateListenerRequest {
 	opts := new(UpdateListenerRequest)
-	opts.LoadBalancerId = plbId
-	opts.ListenerId = plistenerId
+	opts.LoadBalancerId = lbId
+	opts.ListenerId = listenerId
 
 	return opts
 }
 
-func NewListListenersByLoadBalancerIdRequest(plbId string) IListListenersByLoadBalancerIdRequest {
+func NewListListenersByLoadBalancerIdRequest(lbId string) IListListenersByLoadBalancerIdRequest {
 	opts := new(ListListenersByLoadBalancerIdRequest)
-	opts.LoadBalancerId = plbId
+	opts.LoadBalancerId = lbId
 
 	return opts
 }
 
-func NewDeleteListenerByIdRequest(plbId, plistenerId string) IDeleteListenerByIdRequest {
+func NewDeleteListenerByIdRequest(lbId, listenerId string) IDeleteListenerByIdRequest {
 	opts := new(DeleteListenerByIdRequest)
-	opts.LoadBalancerId = plbId
-	opts.ListenerId = plistenerId
+	opts.LoadBalancerId = lbId
+	opts.ListenerId = listenerId
 
 	return opts
 }
 
-func NewGetListenerByIdRequest(plbId, plistenerId string) IGetListenerByIdRequest {
+func NewGetListenerByIdRequest(lbId, listenerId string) IGetListenerByIdRequest {
 	opts := new(GetListenerByIdRequest)
-	opts.LoadBalancerId = plbId
-	opts.ListenerId = plistenerId
+	opts.LoadBalancerId = lbId
+	opts.ListenerId = listenerId
 
 	return opts
 }
@@ -78,8 +78,8 @@ type CreateListenerRequest struct {
 	common.UserAgent
 }
 
-func (s *CreateListenerRequest) AddUserAgent(pagent ...string) ICreateListenerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateListenerRequest) AddUserAgent(agent ...string) ICreateListenerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -99,8 +99,8 @@ type UpdateListenerRequest struct {
 	common.UserAgent
 }
 
-func (s *UpdateListenerRequest) AddUserAgent(pagent ...string) IUpdateListenerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdateListenerRequest) AddUserAgent(agent ...string) IUpdateListenerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -109,8 +109,8 @@ type ListListenersByLoadBalancerIdRequest struct {
 	common.UserAgent
 }
 
-func (s *ListListenersByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IListListenersByLoadBalancerIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListListenersByLoadBalancerIdRequest) AddUserAgent(agent ...string) IListListenersByLoadBalancerIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -120,8 +120,8 @@ type DeleteListenerByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteListenerByIdRequest) AddUserAgent(pagent ...string) IDeleteListenerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteListenerByIdRequest) AddUserAgent(agent ...string) IDeleteListenerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -131,8 +131,8 @@ type GetListenerByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *GetListenerByIdRequest) AddUserAgent(pagent ...string) IGetListenerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetListenerByIdRequest) AddUserAgent(agent ...string) IGetListenerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -152,66 +152,66 @@ func (s *CreateListenerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateListenerRequest) WithAllowedCidrs(pcidrs ...string) ICreateListenerRequest {
-	if len(pcidrs) < 1 {
+func (s *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
+	if len(cidrs) < 1 {
 		return s
 	}
 
-	s.AllowedCidrs = strings.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(cidrs, ",")
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutClient(ptoc int) ICreateListenerRequest {
-	s.TimeoutClient = ptoc
+func (s *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
+	s.TimeoutClient = toc
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutConnection(ptoc int) ICreateListenerRequest {
-	s.TimeoutConnection = ptoc
+func (s *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
+	s.TimeoutConnection = toc
 	return s
 }
 
-func (s *CreateListenerRequest) WithTimeoutMember(ptom int) ICreateListenerRequest {
-	s.TimeoutMember = ptom
+func (s *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
+	s.TimeoutMember = tom
 	return s
 }
 
-func (s *CreateListenerRequest) AddCidrs(pcidrs ...string) ICreateListenerRequest {
-	if len(pcidrs) < 1 {
+func (s *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
+	if len(cidrs) < 1 {
 		return s
 	}
 
 	if s.AllowedCidrs == "" {
-		return s.WithAllowedCidrs(pcidrs...)
+		return s.WithAllowedCidrs(cidrs...)
 	} else {
-		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(pcidrs, ",")
+		s.AllowedCidrs = s.AllowedCidrs + "," + strings.Join(cidrs, ",")
 	}
 
 	return s
 }
 
-func (s *CreateListenerRequest) WithLoadBalancerId(plbid string) ICreateListenerRequest {
-	s.LoadBalancerId = plbid
+func (s *CreateListenerRequest) WithLoadBalancerId(lbid string) ICreateListenerRequest {
+	s.LoadBalancerId = lbid
 	return s
 }
 
-func (s *CreateListenerRequest) WithDefaultPoolId(ppoolId string) ICreateListenerRequest {
-	s.DefaultPoolId = &ppoolId
+func (s *CreateListenerRequest) WithDefaultPoolId(poolId string) ICreateListenerRequest {
+	s.DefaultPoolId = &poolId
 	return s
 }
 
-func (s *CreateListenerRequest) WithCertificateAuthorities(pca *[]string) ICreateListenerRequest {
-	s.CertificateAuthorities = pca
+func (s *CreateListenerRequest) WithCertificateAuthorities(ca *[]string) ICreateListenerRequest {
+	s.CertificateAuthorities = ca
 	return s
 }
 
-func (s *CreateListenerRequest) WithClientCertificate(pclientCert *string) ICreateListenerRequest {
-	s.ClientCertificate = pclientCert
+func (s *CreateListenerRequest) WithClientCertificate(clientCert *string) ICreateListenerRequest {
+	s.ClientCertificate = clientCert
 	return s
 }
 
-func (s *CreateListenerRequest) WithDefaultCertificateAuthority(pdefaultCA *string) ICreateListenerRequest {
-	s.DefaultCertificateAuthority = pdefaultCA
+func (s *CreateListenerRequest) WithDefaultCertificateAuthority(defaultCA *string) ICreateListenerRequest {
+	s.DefaultCertificateAuthority = defaultCA
 	return s
 }
 
@@ -256,32 +256,32 @@ func (s *UpdateListenerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *UpdateListenerRequest) WithCidrs(pcidrs ...string) IUpdateListenerRequest {
-	if len(pcidrs) < 1 {
+func (s *UpdateListenerRequest) WithCidrs(cidrs ...string) IUpdateListenerRequest {
+	if len(cidrs) < 1 {
 		return s
 	}
 
-	s.AllowedCidrs = strings.Join(pcidrs, ",")
+	s.AllowedCidrs = strings.Join(cidrs, ",")
 	return s
 }
 
-func (s *UpdateListenerRequest) WithTimeoutClient(ptoc int) IUpdateListenerRequest {
-	s.TimeoutClient = ptoc
+func (s *UpdateListenerRequest) WithTimeoutClient(toc int) IUpdateListenerRequest {
+	s.TimeoutClient = toc
 	return s
 }
 
-func (s *UpdateListenerRequest) WithTimeoutConnection(ptoc int) IUpdateListenerRequest {
-	s.TimeoutConnection = ptoc
+func (s *UpdateListenerRequest) WithTimeoutConnection(toc int) IUpdateListenerRequest {
+	s.TimeoutConnection = toc
 	return s
 }
 
-func (s *UpdateListenerRequest) WithTimeoutMember(ptom int) IUpdateListenerRequest {
-	s.TimeoutMember = ptom
+func (s *UpdateListenerRequest) WithTimeoutMember(tom int) IUpdateListenerRequest {
+	s.TimeoutMember = tom
 	return s
 }
 
-func (s *UpdateListenerRequest) WithDefaultPoolId(ppoolId string) IUpdateListenerRequest {
-	s.DefaultPoolId = ppoolId
+func (s *UpdateListenerRequest) WithDefaultPoolId(poolId string) IUpdateListenerRequest {
+	s.DefaultPoolId = poolId
 	return s
 }
 
@@ -305,17 +305,17 @@ func (s *UpdateListenerRequest) WithInsertHeaders(pheaders ...string) IUpdateLis
 	return s
 }
 
-func (s *UpdateListenerRequest) WithCertificateAuthorities(pca ...string) IUpdateListenerRequest {
-	s.CertificateAuthorities = &pca
+func (s *UpdateListenerRequest) WithCertificateAuthorities(ca ...string) IUpdateListenerRequest {
+	s.CertificateAuthorities = &ca
 	return s
 }
 
-func (s *UpdateListenerRequest) WithClientCertificate(pclientCert string) IUpdateListenerRequest {
-	s.ClientCertificate = &pclientCert
+func (s *UpdateListenerRequest) WithClientCertificate(clientCert string) IUpdateListenerRequest {
+	s.ClientCertificate = &clientCert
 	return s
 }
 
-func (s *UpdateListenerRequest) WithDefaultCertificateAuthority(pdefaultCA string) IUpdateListenerRequest {
-	s.DefaultCertificateAuthority = &pdefaultCA
+func (s *UpdateListenerRequest) WithDefaultCertificateAuthority(defaultCA string) IUpdateListenerRequest {
+	s.DefaultCertificateAuthority = &defaultCA
 	return s
 }

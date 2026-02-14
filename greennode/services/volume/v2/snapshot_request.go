@@ -8,27 +8,27 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewListSnapshotsByBlockVolumeIdRequest(ppage, psize int, pblockVolumeId string) IListSnapshotsByBlockVolumeIdRequest {
+func NewListSnapshotsByBlockVolumeIdRequest(page, size int, blockVolumeId string) IListSnapshotsByBlockVolumeIdRequest {
 	opt := new(ListSnapshotsByBlockVolumeIdRequest)
-	opt.BlockVolumeId = pblockVolumeId
-	opt.Page = ppage
-	opt.Size = psize
+	opt.BlockVolumeId = blockVolumeId
+	opt.Page = page
+	opt.Size = size
 
 	return opt
 }
 
-func NewCreateSnapshotByBlockVolumeIdRequest(pname, pblockVolumeId string) ICreateSnapshotByBlockVolumeIdRequest {
+func NewCreateSnapshotByBlockVolumeIdRequest(name, blockVolumeId string) ICreateSnapshotByBlockVolumeIdRequest {
 	opt := new(CreateSnapshotByBlockVolumeIdRequest)
-	opt.Name = pname
-	opt.BlockVolumeId = pblockVolumeId
+	opt.Name = name
+	opt.BlockVolumeId = blockVolumeId
 
 	return opt
 }
 
-func NewDeleteSnapshotByIdRequest(psnapshotId string) IDeleteSnapshotByIdRequest {
+func NewDeleteSnapshotByIdRequest(snapshotId string) IDeleteSnapshotByIdRequest {
 	opt := new(DeleteSnapshotByIdRequest)
 	opt.BlockVolumeId = "undefined"
-	opt.SnapshotId = psnapshotId
+	opt.SnapshotId = snapshotId
 
 	return opt
 }
@@ -73,17 +73,17 @@ func (s *CreateSnapshotByBlockVolumeIdRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithDescription(pdesc string) ICreateSnapshotByBlockVolumeIdRequest {
-	s.Description = pdesc
+func (s *CreateSnapshotByBlockVolumeIdRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIdRequest {
+	s.Description = desc
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithPermanently(pval bool) ICreateSnapshotByBlockVolumeIdRequest {
-	s.Permanently = pval
+func (s *CreateSnapshotByBlockVolumeIdRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIdRequest {
+	s.Permanently = val
 	return s
 }
 
-func (s *CreateSnapshotByBlockVolumeIdRequest) WithRetainedDay(pval uint64) ICreateSnapshotByBlockVolumeIdRequest {
-	s.RetainedDay = pval
+func (s *CreateSnapshotByBlockVolumeIdRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIdRequest {
+	s.RetainedDay = val
 	return s
 }

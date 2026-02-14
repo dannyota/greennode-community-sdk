@@ -10,8 +10,8 @@ type ListCertificatesRequest struct {
 	common.UserAgent
 }
 
-func (s *ListCertificatesRequest) AddUserAgent(pagent ...string) IListCertificatesRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListCertificatesRequest) AddUserAgent(agent ...string) IListCertificatesRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -32,14 +32,14 @@ func (r *GetCertificateByIdRequest) GetCertificateId() string {
 	return r.CertificateId
 }
 
-func (s *GetCertificateByIdRequest) AddUserAgent(pagent ...string) IGetCertificateByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetCertificateByIdRequest) AddUserAgent(agent ...string) IGetCertificateByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewGetCertificateByIdRequest(pcertificateId string) *GetCertificateByIdRequest {
+func NewGetCertificateByIdRequest(certificateId string) *GetCertificateByIdRequest {
 	return &GetCertificateByIdRequest{
-		CertificateId: pcertificateId,
+		CertificateId: certificateId,
 	}
 }
 
@@ -67,18 +67,18 @@ type CreateCertificateRequest struct {
 	PrivateKey       *string `json:"privateKey"`
 }
 
-func (r *CreateCertificateRequest) WithCertificateChain(pchain string) ICreateCertificateRequest {
-	r.CertificateChain = &pchain
+func (r *CreateCertificateRequest) WithCertificateChain(chain string) ICreateCertificateRequest {
+	r.CertificateChain = &chain
 	return r
 }
 
-func (r *CreateCertificateRequest) WithPassphrase(ppassphrase string) ICreateCertificateRequest {
-	r.Passphrase = &ppassphrase
+func (r *CreateCertificateRequest) WithPassphrase(passphrase string) ICreateCertificateRequest {
+	r.Passphrase = &passphrase
 	return r
 }
 
-func (r *CreateCertificateRequest) WithPrivateKey(pprivateKey string) ICreateCertificateRequest {
-	r.PrivateKey = &pprivateKey
+func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) ICreateCertificateRequest {
+	r.PrivateKey = &privateKey
 	return r
 }
 
@@ -100,10 +100,10 @@ func (r *CreateCertificateRequest) ToMap() map[string]interface{} {
 	return re
 }
 
-func NewCreateCertificateRequest(name, cert string, pType ImportOptsTypeOpt) ICreateCertificateRequest {
+func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) ICreateCertificateRequest {
 	return &CreateCertificateRequest{
 		Name:             name,
-		Type:             pType,
+		Type:             typeVal,
 		Certificate:      cert,
 		CertificateChain: nil,
 		Passphrase:       nil,
@@ -111,8 +111,8 @@ func NewCreateCertificateRequest(name, cert string, pType ImportOptsTypeOpt) ICr
 	}
 }
 
-func (s *CreateCertificateRequest) AddUserAgent(pagent ...string) ICreateCertificateRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertificateRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -129,13 +129,13 @@ func (r *DeleteCertificateByIdRequest) GetCertificateId() string {
 	return r.CertificateId
 }
 
-func (s *DeleteCertificateByIdRequest) AddUserAgent(pagent ...string) IDeleteCertificateByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteCertificateByIdRequest) AddUserAgent(agent ...string) IDeleteCertificateByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewDeleteCertificateByIdRequest(pcertificateId string) *DeleteCertificateByIdRequest {
+func NewDeleteCertificateByIdRequest(certificateId string) *DeleteCertificateByIdRequest {
 	return &DeleteCertificateByIdRequest{
-		CertificateId: pcertificateId,
+		CertificateId: certificateId,
 	}
 }

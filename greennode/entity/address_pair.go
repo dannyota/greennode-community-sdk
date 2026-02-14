@@ -21,10 +21,10 @@ func (s *ListAddressPairs) Len() int {
 	return len(s.Items)
 }
 
-func (s *ListAddressPairs) At(pidx int) *AddressPair {
-	if pidx < 0 || pidx >= len(s.Items) {
+func (s *ListAddressPairs) At(idx int) *AddressPair {
+	if idx < 0 || idx >= len(s.Items) {
 		return nil
 	}
 
-	return s.Items[pidx]
+	return s.Items[idx]
 }

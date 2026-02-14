@@ -2,65 +2,65 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getEndpointByIdUrl(psc client.ServiceClient, popts IGetEndpointByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetZoneId(),
-		psc.GetProjectId(),
+func getEndpointByIdUrl(sc client.ServiceClient, opts IGetEndpointByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetZoneId(),
+		sc.GetProjectId(),
 		"endpoints",
-		popts.GetEndpointId())
+		opts.GetEndpointId())
 }
 
-func createEndpointUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetZoneId(),
-		psc.GetProjectId(),
+func createEndpointUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetZoneId(),
+		sc.GetProjectId(),
 		"endpoints")
 }
 
-func deleteEndpointByIdUrl(psc client.ServiceClient, popts IDeleteEndpointByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetZoneId(),
-		psc.GetProjectId(),
+func deleteEndpointByIdUrl(sc client.ServiceClient, opts IDeleteEndpointByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetZoneId(),
+		sc.GetProjectId(),
 		"endpoints",
-		popts.GetEndpointId())
+		opts.GetEndpointId())
 }
 
-func listEndpointsUrl(psc client.ServiceClient, popts IListEndpointsRequest) string {
-	query, err := popts.ToListQuery()
+func listEndpointsUrl(sc client.ServiceClient, opts IListEndpointsRequest) string {
+	query, err := opts.ToListQuery()
 	if err != nil {
-		query = popts.GetDefaultQuery()
+		query = opts.GetDefaultQuery()
 	}
 
-	return psc.ServiceURL(psc.GetZoneId(), psc.GetProjectId(), "endpoints?") + query
+	return sc.ServiceURL(sc.GetZoneId(), sc.GetProjectId(), "endpoints?") + query
 }
 
-func listTagsByEndpointIdUrl(psc client.ServiceClient, popts IListTagsByEndpointIdRequest) string {
-	query, err := popts.ToListQuery()
+func listTagsByEndpointIdUrl(sc client.ServiceClient, opts IListTagsByEndpointIdRequest) string {
+	query, err := opts.ToListQuery()
 	if err != nil {
-		query = popts.GetDefaultQuery()
+		query = opts.GetDefaultQuery()
 	}
 
-	return psc.ServiceURL(
-		popts.GetProjectId(),
+	return sc.ServiceURL(
+		opts.GetProjectId(),
 		"tags") + query
 }
 
-func createTagsWithEndpointIdUrl(psc client.ServiceClient, popts ICreateTagsWithEndpointIdRequest) string {
-	return psc.ServiceURL(
-		popts.GetProjectId(),
+func createTagsWithEndpointIdUrl(sc client.ServiceClient, opts ICreateTagsWithEndpointIdRequest) string {
+	return sc.ServiceURL(
+		opts.GetProjectId(),
 		"tags")
 }
 
-func deleteTagOfEndpointUrl(psc client.ServiceClient, popts IDeleteTagOfEndpointRequest) string {
-	return psc.ServiceURL(
-		popts.GetProjectId(),
+func deleteTagOfEndpointUrl(sc client.ServiceClient, opts IDeleteTagOfEndpointRequest) string {
+	return sc.ServiceURL(
+		opts.GetProjectId(),
 		"tags",
-		popts.GetTagId())
+		opts.GetTagId())
 }
 
-func updateTagValueOfEndpointUrl(psc client.ServiceClient, popts IUpdateTagValueOfEndpointRequest) string {
-	return psc.ServiceURL(
-		popts.GetProjectId(),
+func updateTagValueOfEndpointUrl(sc client.ServiceClient, opts IUpdateTagValueOfEndpointRequest) string {
+	return sc.ServiceURL(
+		opts.GetProjectId(),
 		"tags",
-		popts.GetTagId())
+		opts.GetTagId())
 }

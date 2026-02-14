@@ -8,29 +8,29 @@ import (
 )
 
 type VDnsServiceV1 interface {
-	GetHostedZoneById(popts dnsv1.IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.Error)
-	ListHostedZones(popts dnsv1.IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.Error)
-	CreateHostedZone(popts dnsv1.ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.Error)
-	UpdateHostedZone(popts dnsv1.IUpdateHostedZoneRequest) sdkerror.Error
-	DeleteHostedZone(popts dnsv1.IDeleteHostedZoneRequest) sdkerror.Error
+	GetHostedZoneById(opts dnsv1.IGetHostedZoneByIdRequest) (*entity.HostedZone, sdkerror.Error)
+	ListHostedZones(opts dnsv1.IListHostedZonesRequest) (*entity.ListHostedZone, sdkerror.Error)
+	CreateHostedZone(opts dnsv1.ICreateHostedZoneRequest) (*entity.HostedZone, sdkerror.Error)
+	UpdateHostedZone(opts dnsv1.IUpdateHostedZoneRequest) sdkerror.Error
+	DeleteHostedZone(opts dnsv1.IDeleteHostedZoneRequest) sdkerror.Error
 
-	ListRecords(popts dnsv1.IListRecordsRequest) (*entity.ListDnsRecords, sdkerror.Error)
-	GetRecord(popts dnsv1.IGetRecordRequest) (*entity.DnsRecord, sdkerror.Error)
-	CreateDnsRecord(popts dnsv1.ICreateDnsRecordRequest) (*entity.DnsRecord, sdkerror.Error)
-	UpdateRecord(popts dnsv1.IUpdateRecordRequest) sdkerror.Error
-	DeleteRecord(popts dnsv1.IDeleteRecordRequest) sdkerror.Error
+	ListRecords(opts dnsv1.IListRecordsRequest) (*entity.ListDnsRecords, sdkerror.Error)
+	GetRecord(opts dnsv1.IGetRecordRequest) (*entity.DnsRecord, sdkerror.Error)
+	CreateDnsRecord(opts dnsv1.ICreateDnsRecordRequest) (*entity.DnsRecord, sdkerror.Error)
+	UpdateRecord(opts dnsv1.IUpdateRecordRequest) sdkerror.Error
+	DeleteRecord(opts dnsv1.IDeleteRecordRequest) sdkerror.Error
 }
 
 type VDnsServiceInternal interface {
-	GetHostedZoneById(popts dnsinternalv1.IGetHostedZoneByIdRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error)
-	ListHostedZones(popts dnsinternalv1.IListHostedZonesRequest, portalUserId string) (*entity.ListHostedZone, sdkerror.Error)
-	CreateHostedZone(popts dnsinternalv1.ICreateHostedZoneRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error)
-	UpdateHostedZone(popts dnsinternalv1.IUpdateHostedZoneRequest, portalUserId string) sdkerror.Error
-	DeleteHostedZone(popts dnsinternalv1.IDeleteHostedZoneRequest, portalUserId string) sdkerror.Error
+	GetHostedZoneById(opts dnsinternalv1.IGetHostedZoneByIdRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error)
+	ListHostedZones(opts dnsinternalv1.IListHostedZonesRequest, portalUserId string) (*entity.ListHostedZone, sdkerror.Error)
+	CreateHostedZone(opts dnsinternalv1.ICreateHostedZoneRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error)
+	UpdateHostedZone(opts dnsinternalv1.IUpdateHostedZoneRequest, portalUserId string) sdkerror.Error
+	DeleteHostedZone(opts dnsinternalv1.IDeleteHostedZoneRequest, portalUserId string) sdkerror.Error
 
-	ListRecords(popts dnsinternalv1.IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.Error)
-	GetRecord(popts dnsinternalv1.IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error)
-	CreateDnsRecord(popts dnsinternalv1.ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error)
-	UpdateRecord(popts dnsinternalv1.IUpdateRecordRequest, portalUserId string) sdkerror.Error
-	DeleteRecord(popts dnsinternalv1.IDeleteRecordRequest, portalUserId string) sdkerror.Error
+	ListRecords(opts dnsinternalv1.IListRecordsRequest, portalUserId string) (*entity.ListDnsRecords, sdkerror.Error)
+	GetRecord(opts dnsinternalv1.IGetRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error)
+	CreateDnsRecord(opts dnsinternalv1.ICreateDnsRecordRequest, portalUserId string) (*entity.DnsRecord, sdkerror.Error)
+	UpdateRecord(opts dnsinternalv1.IUpdateRecordRequest, portalUserId string) sdkerror.Error
+	DeleteRecord(opts dnsinternalv1.IDeleteRecordRequest, portalUserId string) sdkerror.Error
 }

@@ -15,8 +15,8 @@ func (s *Project) GetProjectId() string {
 	return s.Id
 }
 
-func (s *Project) SetProjectId(pid string) {
-	s.Id = pid
+func (s *Project) SetProjectId(id string) {
+	s.Id = id
 }
 
 type Paging struct {
@@ -42,13 +42,13 @@ func (s *Paging) GetSize() int {
 	return s.Size
 }
 
-func (s *Paging) SetPage(ppage int) *Paging {
-	s.Page = ppage
+func (s *Paging) SetPage(page int) *Paging {
+	s.Page = page
 	return s
 }
 
-func (s *Paging) SetSize(psize int) *Paging {
-	s.Size = psize
+func (s *Paging) SetSize(size int) *Paging {
+	s.Size = size
 	return s
 }
 
@@ -84,8 +84,8 @@ func (s *PortalUser) GetPortalUserId() string {
 	return s.Id
 }
 
-func (s *PortalUser) SetPortalUserId(pid string) {
-	s.Id = pid
+func (s *PortalUser) SetPortalUserId(id string) {
+	s.Id = id
 }
 
 func (s *PortalUser) GetMapHeaders() map[string]string {

@@ -38,10 +38,10 @@ type vnetworkGateway struct {
 	vnetworkGatewayInternalV1 VNetworkGatewayInternalV1
 }
 
-func NewIamGateway(pendpoint, projectId string, phc client.HttpClient) IamGateway {
+func NewIamGateway(endpoint, projectId string, hc client.HttpClient) IamGateway {
 	iamSvcV2 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "v2").
-		WithClient(phc).
+		WithEndpoint(endpoint + "v2").
+		WithClient(hc).
 		WithProjectId(projectId)
 
 	return &iamGateway{
@@ -49,77 +49,77 @@ func NewIamGateway(pendpoint, projectId string, phc client.HttpClient) IamGatewa
 	}
 }
 
-func NewVServerGateway(pendpoint, pprojectId string, phc client.HttpClient) VServerGateway {
+func NewVServerGateway(endpoint, projectId string, hc client.HttpClient) VServerGateway {
 	vserverSvcV1 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "v1").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(endpoint + "v1").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	vserverInternalSvcV1 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "internal").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(endpoint + "internal").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	vserverSvcV2 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "v2").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(endpoint + "v2").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	return &vserverGateway{
-		endpoint:                 pendpoint,
+		endpoint:                 endpoint,
 		vserverGatewayV1:         NewVServerGatewayV1(vserverSvcV1),
 		vserverGatewayV2:         NewVServerGatewayV2(vserverSvcV2),
 		vserverGatewayInternalV1: NewVServerGatewayInternalV1(vserverInternalSvcV1),
 	}
 }
 
-func NewVLBGateway(plbEndpoint, pserverEndpoint, pprojectId string, phc client.HttpClient) VLBGateway {
+func NewVLBGateway(lbEndpoint, serverEndpoint, projectId string, hc client.HttpClient) VLBGateway {
 	vlbSvcV2 := client.NewServiceClient().
-		WithEndpoint(plbEndpoint + "v2").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(lbEndpoint + "v2").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	vlbSvcIn := client.NewServiceClient().
-		WithEndpoint(plbEndpoint + "internal").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(lbEndpoint + "internal").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	vserverSvcV2 := client.NewServiceClient().
-		WithEndpoint(pserverEndpoint + "v2").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(serverEndpoint + "v2").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	return &vlbGateway{
-		endpoint:           plbEndpoint,
+		endpoint:           lbEndpoint,
 		vlbGatewayV2:       NewVLBGatewayV2(vlbSvcV2, vserverSvcV2),
 		vlbGatewayInternal: NewVLBGatewayInternal(vlbSvcIn),
 	}
 }
 
-func NewVNetworkGateway(pendpoint, pzoneId, projectId, puserId string, phc client.HttpClient) VNetworkGateway {
+func NewVNetworkGateway(endpoint, zoneId, projectId, userId string, hc client.HttpClient) VNetworkGateway {
 	vnetworkSvcV1 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "vnetwork/v1").
-		WithClient(phc).
-		WithZoneId(pzoneId).
+		WithEndpoint(endpoint + "vnetwork/v1").
+		WithClient(hc).
+		WithZoneId(zoneId).
 		WithProjectId(projectId).
-		WithUserId(puserId)
+		WithUserId(userId)
 
 	vnetworkSvcV2 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "vnetwork/az/v1").
-		WithClient(phc).
-		WithZoneId(pzoneId).
+		WithEndpoint(endpoint + "vnetwork/az/v1").
+		WithClient(hc).
+		WithZoneId(zoneId).
 		WithProjectId(projectId).
-		WithUserId(puserId)
+		WithUserId(userId)
 
 	vnetworkSvcInternalV1 := client.NewServiceClient().
-		WithEndpoint(pendpoint + "internal/v1").
-		WithClient(phc).
-		WithZoneId(pzoneId).
+		WithEndpoint(endpoint + "internal/v1").
+		WithClient(hc).
+		WithZoneId(zoneId).
 		WithProjectId(projectId).
-		WithUserId(puserId)
+		WithUserId(userId)
 
 	return &vnetworkGateway{
-		endpoint:                  pendpoint,
+		endpoint:                  endpoint,
 		vnetworkGatewayV1:         NewVNetworkGatewayV1(vnetworkSvcV1),
 		vnetworkGatewayV2:         NewVNetworkGatewayV1(vnetworkSvcV2),
 		vnetworkGatewayInternalV1: NewVNetworkGatewayInternalV1(vnetworkSvcInternalV1),
@@ -180,13 +180,13 @@ type glbGateway struct {
 	glbGatewayV1 GLBGatewayV1
 }
 
-func NewGLBGateway(pendpoint string, phc client.HttpClient) GLBGateway {
+func NewGLBGateway(endpoint string, hc client.HttpClient) GLBGateway {
 	svcClient := client.NewServiceClient().
-		WithEndpoint(pendpoint + "v1").
-		WithClient(phc)
+		WithEndpoint(endpoint + "v1").
+		WithClient(hc)
 
 	return &glbGateway{
-		endpoint:     pendpoint,
+		endpoint:     endpoint,
 		glbGatewayV1: NewGLBGatewayV1(svcClient),
 	}
 }
@@ -205,9 +205,9 @@ func (s *glbGatewayV1) GLBService() glb.GLBServiceV1 {
 	return s.glbService
 }
 
-func NewGLBGatewayV1(psvcClient client.ServiceClient) GLBGatewayV1 {
+func NewGLBGatewayV1(svcClient client.ServiceClient) GLBGatewayV1 {
 	return &glbGatewayV1{
-		glbService: glb.NewGLBServiceV1(psvcClient),
+		glbService: glb.NewGLBServiceV1(svcClient),
 	}
 }
 
@@ -219,19 +219,19 @@ type vdnsGateway struct {
 	dnsServiceInternal dns.VDnsServiceInternal
 }
 
-func NewVDnsGateway(pendpoint, pprojectId string, phc client.HttpClient) VDnsGateway {
+func NewVDnsGateway(endpoint, projectId string, hc client.HttpClient) VDnsGateway {
 	svcClient := client.NewServiceClient().
-		WithEndpoint(pendpoint + "v1").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(endpoint + "v1").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	internalClient := client.NewServiceClient().
-		WithEndpoint(pendpoint + "internal/v1").
-		WithClient(phc).
-		WithProjectId(pprojectId)
+		WithEndpoint(endpoint + "internal/v1").
+		WithClient(hc).
+		WithProjectId(projectId)
 
 	return &vdnsGateway{
-		endpoint:           pendpoint,
+		endpoint:           endpoint,
 		dnsService:         dns.NewVDnsServiceV1(svcClient),
 		dnsServiceInternal: dns.NewVDnsServiceInternal(internalClient),
 	}

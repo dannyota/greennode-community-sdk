@@ -7,32 +7,32 @@ const (
 	patternSnapshotNotFound     = "not found snapshot-volume-point"
 )
 
-func WithErrorSnapshotNameNotValid(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSnapshotNameNotValid(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNameNotValid) {
 			sdkError.WithErrorCode(EcVServerSnapshotNameNotValid).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorSnapshotNameNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSnapshotNameNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNotFound) {
 			sdkError.WithErrorCode(EcVServerSnapshotNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }

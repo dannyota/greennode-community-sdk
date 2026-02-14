@@ -2,9 +2,9 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-func NewGetNetworkByIdRequest(pnetworkId string) IGetNetworkByIdRequest {
+func NewGetNetworkByIdRequest(networkId string) IGetNetworkByIdRequest {
 	opt := new(GetNetworkByIdRequest)
-	opt.NetworkId = pnetworkId
+	opt.NetworkId = networkId
 	return opt
 }
 
@@ -13,7 +13,7 @@ type GetNetworkByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *GetNetworkByIdRequest) AddUserAgent(pagent ...string) IGetNetworkByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetNetworkByIdRequest) AddUserAgent(agent ...string) IGetNetworkByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

@@ -6,12 +6,12 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *LoadBalancerServiceV2) ListTags(popts IListTagsRequest) (*entity.ListTags, sdkerror.Error) {
-	url := listTagsUrl(s.VServerClient, popts)
+func (s *LoadBalancerServiceV2) ListTags(opts IListTagsRequest) (*entity.ListTags, sdkerror.Error) {
+	url := listTagsUrl(s.VServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -23,13 +23,13 @@ func (s *LoadBalancerServiceV2) ListTags(popts IListTagsRequest) (*entity.ListTa
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateTags(popts ICreateTagsRequest) sdkerror.Error {
-	url := createTagsUrl(s.VServerClient, popts)
+func (s *LoadBalancerServiceV2) CreateTags(opts ICreateTagsRequest) sdkerror.Error {
+	url := createTagsUrl(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
@@ -39,8 +39,8 @@ func (s *LoadBalancerServiceV2) CreateTags(popts ICreateTagsRequest) sdkerror.Er
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) UpdateTags(popts IUpdateTagsRequest) sdkerror.Error {
-	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(popts.GetLoadBalancerId()))
+func (s *LoadBalancerServiceV2) UpdateTags(opts IUpdateTagsRequest) sdkerror.Error {
+	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(opts.GetLoadBalancerId()))
 	if sdkErr != nil {
 		return sdkErr
 	}
@@ -53,17 +53,17 @@ func (s *LoadBalancerServiceV2) UpdateTags(popts IUpdateTagsRequest) sdkerror.Er
 		}
 	}
 
-	url := updateTagsUrl(s.VServerClient, popts)
+	url := updateTagsUrl(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(popts.ToRequestBody(tags)).
+		WithJsonBody(opts.ToRequestBody(tags)).
 		WithJsonError(errResp)
 
 	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorTagKeyInvalid(errResp)).WithParameters(popts.ToMap())
+			sdkerror.WithErrorTagKeyInvalid(errResp)).WithParameters(opts.ToMap())
 	}
 
 	return nil

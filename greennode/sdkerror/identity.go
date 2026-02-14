@@ -8,20 +8,20 @@ const (
 	loginFailedPrefixMsg = "There are some problems with your service account key pair, please re-generate a new one. Error message: %s"
 )
 
-func WithErrorAuthenticationFailed(perrResp ErrorResponse) func(Error) {
+func WithErrorAuthenticationFailed(errResp ErrorResponse) func(Error) {
 	return func(sdkErr Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if perrResp.GetError() == nil {
+		if errResp.GetError() == nil {
 			return
 		}
 
-		if perrResp.GetError().Error() == "AUTHENTICATION_FAILED" {
+		if errResp.GetError().Error() == "AUTHENTICATION_FAILED" {
 			sdkErr.WithErrorCode(EcAuthenticationFailed).
-				WithErrors(perrResp.GetError()).
-				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, perrResp.GetMessage())).
+				WithErrors(errResp.GetError()).
+				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
 				WithErrorCategories(ErrCatIam)
 		}
 	}
@@ -35,39 +35,39 @@ func WithErrorReauthFuncNotSet() func(Error) {
 	}
 }
 
-func WithErrorTooManyFailedLogin(perrResp ErrorResponse) func(Error) {
+func WithErrorTooManyFailedLogin(errResp ErrorResponse) func(Error) {
 	return func(sdkErr Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if perrResp.GetError() == nil {
+		if errResp.GetError() == nil {
 			return
 		}
 
-		if perrResp.GetError().Error() == "TOO_MANY_FAILED_LOGINS" {
+		if errResp.GetError().Error() == "TOO_MANY_FAILED_LOGINS" {
 			sdkErr.WithErrorCode(EcTooManyFailedLogins).
-				WithErrors(perrResp.GetError()).
-				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, perrResp.GetMessage())).
+				WithErrors(errResp.GetError()).
+				WithMessage(fmt.Sprintf(loginFailedPrefixMsg, errResp.GetMessage())).
 				WithErrorCategories(ErrCatIam)
 		}
 	}
 }
 
-func WithErrorUnknownAuthFailure(perrResp ErrorResponse) func(Error) {
+func WithErrorUnknownAuthFailure(errResp ErrorResponse) func(Error) {
 	return func(sdkErr Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if perrResp.GetError() == nil {
+		if errResp.GetError() == nil {
 			return
 		}
 
 		if sdkErr.GetErrorCode() == EcUnknownError {
 			sdkErr.WithErrorCode(EcUnknownAuthFailure).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }

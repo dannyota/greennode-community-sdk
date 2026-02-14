@@ -34,311 +34,311 @@ var (
 	regexErrorServerFlavorNotSupported = regexp.MustCompile(patternServerFlavorNotSupported)
 )
 
-func WithErrorServerFlavorNotSupported(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerFlavorNotSupported(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorServerFlavorNotSupported.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerFlavorNotSupported).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerNotFound) {
 			sdkError.WithErrorCode(EcVServerServerNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorImageNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorImageNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if strings.Contains(errMsg, patternImageNotFound) {
 			sdkError.WithErrorCode(EcVServerImageNotFound).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerFlavorSystemExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerFlavorSystemExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerFlavorSystemExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerFlavorSystemExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatInfra)
 		}
 	}
 }
 
-func WithErrorServerDeleteCreatingServer(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerDeleteCreatingServer(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCreating) {
 			sdkError.WithErrorCode(EcVServerServerDeleteCreatingServer).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerExpired(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerExpired(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExpired) {
 			sdkError.WithErrorCode(EcVServerServerExpired).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerUpdatingSecgroups(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerUpdatingSecgroups(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		stdErrMsg := strings.ToLower(strings.TrimSpace(errMsg))
 		if strings.Contains(stdErrMsg, patternServerUpdatingSecgroups) ||
 			strings.Contains(stdErrMsg, patternServerDeleteServerUpdatingSecgroups) {
 			sdkError.WithErrorCode(EcVServerServerUpdatingSecgroups).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerExceedCpuQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerExceedCpuQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedCpuQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedCpuQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorServerExceedFloatingIpQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerExceedFloatingIpQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedFloatingIpQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedFloatingIpQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorServerImageNotSupported(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerImageNotSupported(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		lowerErrMsg := strings.ToLower(strings.TrimSpace(errMsg))
 		if strings.Contains(lowerErrMsg, patternServerImageNotSupported) ||
 			strings.Contains(lowerErrMsg, patternImageNotSupport) {
 			sdkError.WithErrorCode(EcVServerServerImageNotSupported).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerExceedQuota) {
 			sdkError.WithErrorCode(EcVServerServerExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorServerDeleteDeletingServer(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerDeleteDeletingServer(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerDeleting) {
 			sdkError.WithErrorCode(EcVServerServerDeleteDeletingServer).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerDeleteBillingServer(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerDeleteBillingServer(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerBilling) {
 			sdkError.WithErrorCode(EcVServerServerDeleteBillingServer).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerCreateBillingPaymentMethodNotAllowed(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerCreateBillingPaymentMethodNotAllowed(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if strings.Contains(errMsg, patternBillingPaymentMethodNotAllowed) {
 			sdkError.WithErrorCode(EcVServerCreateBillingPaymentMethodNotAllowed).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerAttachVolumeQuotaExceeded(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerAttachVolumeQuotaExceeded(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachVolumeQuotaExceeded) {
 			sdkError.WithErrorCode(EcVServerServerVolumeAttachQuotaExceeded).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorServerAttachEncryptedVolume(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerAttachEncryptedVolume(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerAttachEncryptedVolume) {
 			sdkError.WithErrorCode(EcVServerServerAttachEncryptedVolume).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerCanNotAttachFloatingIp(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerCanNotAttachFloatingIp(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerCanNotAttachFloatingIp) {
 			sdkError.WithErrorCode(EcVServerServerCanNotAttachFloatingIp).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerGroupNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerGroupNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNotFound) {
 			sdkError.WithErrorCode(EcVServerServerGroupNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerGroupInUse(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerGroupInUse(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupInUse) {
 			sdkError.WithErrorCode(EcVServerServerGroupInUse).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorServerGroupNameMustBeUnique(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorServerGroupNameMustBeUnique(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternServerGroupNameMustBeUnique) {
 			sdkError.WithErrorCode(EcVServerServerGroupNameMustBeUnique).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }

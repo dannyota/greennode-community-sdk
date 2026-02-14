@@ -7,21 +7,21 @@ type GetAccessTokenRequest struct {
 	GrantType string `json:"grant_type"`
 }
 
-func NewGetAccessTokenRequest(pclientId, pclientSecret string) IGetAccessTokenRequest {
+func NewGetAccessTokenRequest(clientId, clientSecret string) IGetAccessTokenRequest {
 	return &GetAccessTokenRequest{
-		ClientId:     pclientId,
-		ClientSecret: pclientSecret,
+		ClientId:     clientId,
+		ClientSecret: clientSecret,
 		GrantType:    "client_credentials",
 	}
 }
 
-func (s *GetAccessTokenRequest) WithClientId(pclientId string) IGetAccessTokenRequest {
-	s.ClientId = pclientId
+func (s *GetAccessTokenRequest) WithClientId(clientId string) IGetAccessTokenRequest {
+	s.ClientId = clientId
 	return s
 }
 
-func (s *GetAccessTokenRequest) WithClientSecret(pclientSecret string) IGetAccessTokenRequest {
-	s.ClientSecret = pclientSecret
+func (s *GetAccessTokenRequest) WithClientSecret(clientSecret string) IGetAccessTokenRequest {
+	s.ClientSecret = clientSecret
 	return s
 }
 

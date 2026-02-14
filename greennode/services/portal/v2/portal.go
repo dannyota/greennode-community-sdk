@@ -23,15 +23,15 @@ func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(popts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error) {
+func (s *PortalServiceV2) GetQuotaByName(opts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error) {
 	listQuotas, sdkErr := s.ListAllQuotaUsed()
 	if sdkErr != nil {
 		return nil, sdkErr
 	}
 
-	quota := listQuotas.FindQuotaByName(string(popts.GetName()))
+	quota := listQuotas.FindQuotaByName(string(opts.GetName()))
 	if quota == nil {
-		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorQuotaNotFound(nil)).WithKVparameters("quotaName", popts.GetName())
+		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorQuotaNotFound(nil)).WithKVparameters("quotaName", opts.GetName())
 	}
 
 	return quota, nil

@@ -4,9 +4,9 @@ type GetQuotaByNameRequest struct {
 	Name QuotaName
 }
 
-func NewGetQuotaByNameRequest(pname QuotaName) IGetQuotaByNameRequest {
+func NewGetQuotaByNameRequest(name QuotaName) IGetQuotaByNameRequest {
 	return &GetQuotaByNameRequest{
-		Name: pname,
+		Name: name,
 	}
 }
 

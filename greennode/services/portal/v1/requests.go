@@ -1,8 +1,8 @@
 package v1
 
-func NewGetPortalInfoRequest(pbackendProjectId string) IGetPortalInfoRequest {
+func NewGetPortalInfoRequest(backendProjectId string) IGetPortalInfoRequest {
 	return &GetPortalInfoRequest{
-		BackEndProjectId: pbackendProjectId,
+		BackEndProjectId: backendProjectId,
 	}
 }
 

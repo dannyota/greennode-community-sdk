@@ -2,100 +2,100 @@ package sdkerror
 
 import "strings"
 
-func WithErrorEndpointStatusInvalid(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorEndpointStatusInvalid(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "ENDPOINT_STATUS_INVALID" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "ENDPOINT_STATUS_INVALID" {
 			sdkError.WithErrorCode(EcVNetworkEndpointStatusInvalid).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorEndpointOfVpcExists(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorEndpointOfVpcExists(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "ENDPOINT_OF_VPC_IS_EXISTS" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "ENDPOINT_OF_VPC_IS_EXISTS" {
 			sdkError.WithErrorCode(EcVNetworkEndpointOfVpcExists).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorEndpointPackageNotBelongToEndpointService(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorEndpointPackageNotBelongToEndpointService(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "ENDPOINT_PACKAGE_NOT_BELONG_TO_ENDPOINT_SERVICE" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "ENDPOINT_PACKAGE_NOT_BELONG_TO_ENDPOINT_SERVICE" {
 			sdkError.WithErrorCode(EcVNetworkEndpointPackageNotBelongToEndpointService).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorContainInvalidCharacter(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorContainInvalidCharacter(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "CONTAIN_INVALID_CHARACTER" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "CONTAIN_INVALID_CHARACTER" {
 			sdkError.WithErrorCode(EcVNetworkContainInvalidCharacter).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorLockOnProcess(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorLockOnProcess(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "LOCK_ON_PROCESS" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "LOCK_ON_PROCESS" {
 			sdkError.WithErrorCode(EcVNetworkLockOnProcess).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorEndpointTagNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorEndpointTagNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "TAG_RESOURCE_WAS_DELETED" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "TAG_RESOURCE_WAS_DELETED" {
 			sdkError.WithErrorCode(EcVNetworkEndpointTagNotFound).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorEndpointTagExisted(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorEndpointTagExisted(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		if strings.ToUpper(strings.TrimSpace(perrResp.GetError().Error())) == "TAG_EXISTED" {
+		if strings.ToUpper(strings.TrimSpace(errResp.GetError().Error())) == "TAG_EXISTED" {
 			sdkError.WithErrorCode(EcVNetworkEndpointTagExisted).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }

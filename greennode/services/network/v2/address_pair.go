@@ -6,12 +6,12 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.Error) {
-	url := getAllAddressPairByVirtualSubnetIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(opts IGetAllAddressPairByVirtualSubnetIdRequest) ([]*entity.AddressPair, sdkerror.Error) {
+	url := getAllAddressPairByVirtualSubnetIdUrl(s.VserverClient, opts)
 	resp := new(GetAllAddressPairByVirtualSubnetIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -28,14 +28,14 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetId(popts IGetAllAddre
 	return resp.ToListAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.Error) {
-	url := setAddressPairInVirtualSubnetUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts ISetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.Error) {
+	url := setAddressPairInVirtualSubnetUrl(s.VserverClient, opts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -45,30 +45,30 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(popts ISetAddressPairIn
 	return resp.ToAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) DeleteAddressPair(popts IDeleteAddressPairRequest) sdkerror.Error {
-	url := deleteAddressPairUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) DeleteAddressPair(opts IDeleteAddressPairRequest) sdkerror.Error {
+	url := deleteAddressPairUrl(s.VserverClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorAddressPairNotFound(errResp)).
-			WithKVparameters("addressPairId", popts.GetAddressPairID())
+			WithKVparameters("addressPairId", opts.GetAddressPairID())
 	}
 	return nil
 }
 
-func (s *NetworkServiceV2) CreateAddressPair(popts ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.Error) {
-	url := createAddressPairUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) CreateAddressPair(opts ICreateAddressPairRequest) (*entity.AddressPair, sdkerror.Error) {
+	url := createAddressPairUrl(s.VserverClient, opts)
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 

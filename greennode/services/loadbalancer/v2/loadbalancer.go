@@ -6,35 +6,35 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *LoadBalancerServiceV2) CreateLoadBalancer(popts ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
+func (s *LoadBalancerServiceV2) CreateLoadBalancer(opts ICreateLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
 	url := createLoadBalancerUrl(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerExceedQuota(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ResizeLoadBalancer(popts IResizeLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
-	url := resizeLoadBalancerUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ResizeLoadBalancer(opts IResizeLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
+	url := resizeLoadBalancerUrl(s.VLBClient, opts)
 	resp := new(ResizeLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -47,12 +47,12 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancer(popts IResizeLoadBalancerRequ
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(popts IListLoadBalancerPackagesRequest) (*entity.ListLoadBalancerPackages, sdkerror.Error) {
-	url := listLoadBalancerPackagesUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(opts IListLoadBalancerPackagesRequest) (*entity.ListLoadBalancerPackages, sdkerror.Error) {
+	url := listLoadBalancerPackagesUrl(s.VLBClient, opts)
 	resp := new(ListLoadBalancerPackagesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -64,12 +64,12 @@ func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(popts IListLoadBalancer
 	return resp.ToEntityListLoadBalancerPackages(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetLoadBalancerById(popts IGetLoadBalancerByIdRequest) (*entity.LoadBalancer, sdkerror.Error) {
-	url := getLoadBalancerByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetLoadBalancerById(opts IGetLoadBalancerByIdRequest) (*entity.LoadBalancer, sdkerror.Error) {
+	url := getLoadBalancerByIdUrl(s.VLBClient, opts)
 	resp := new(GetLoadBalancerByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -77,19 +77,19 @@ func (s *LoadBalancerServiceV2) GetLoadBalancerById(popts IGetLoadBalancerByIdRe
 	if _, sdkErr := s.VLBClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp)).
-			WithKVparameters("loadBalancerId", popts.GetLoadBalancerId()).
+			WithKVparameters("loadBalancerId", opts.GetLoadBalancerId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListLoadBalancers(popts IListLoadBalancersRequest) (*entity.ListLoadBalancers, sdkerror.Error) {
-	url := listLoadBalancersUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListLoadBalancers(opts IListLoadBalancersRequest) (*entity.ListLoadBalancers, sdkerror.Error) {
+	url := listLoadBalancersUrl(s.VLBClient, opts)
 	resp := new(ListLoadBalancersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -102,12 +102,12 @@ func (s *LoadBalancerServiceV2) ListLoadBalancers(popts IListLoadBalancersReques
 	return resp.ToEntityListLoadBalancers(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetPoolHealthMonitorById(popts IGetPoolHealthMonitorByIdRequest) (*entity.HealthMonitor, sdkerror.Error) {
-	url := getPoolHealthMonitorByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetPoolHealthMonitorById(opts IGetPoolHealthMonitorByIdRequest) (*entity.HealthMonitor, sdkerror.Error) {
+	url := getPoolHealthMonitorByIdUrl(s.VLBClient, opts)
 	resp := new(GetPoolHealthMonitorByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -121,14 +121,14 @@ func (s *LoadBalancerServiceV2) GetPoolHealthMonitorById(popts IGetPoolHealthMon
 	return resp.ToEntityHealthMonitor(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreatePool(popts ICreatePoolRequest) (*entity.Pool, sdkerror.Error) {
-	url := createPoolUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) CreatePool(opts ICreatePoolRequest) (*entity.Pool, sdkerror.Error) {
+	url := createPoolUrl(s.VLBClient, opts)
 	resp := new(CreatePoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -138,20 +138,20 @@ func (s *LoadBalancerServiceV2) CreatePool(popts ICreatePoolRequest) (*entity.Po
 			sdkerror.WithErrorLoadBalancerNotFound2(errResp),
 			sdkerror.WithErrorLoadBalancerNotReady(errResp),
 			sdkerror.WithErrorLoadBalancerDuplicatePoolName(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityPool(), nil
 }
 
-func (s *LoadBalancerServiceV2) UpdatePool(popts IUpdatePoolRequest) sdkerror.Error {
-	url := updatePoolUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) UpdatePool(opts IUpdatePoolRequest) sdkerror.Error {
+	url := updatePoolUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -164,14 +164,14 @@ func (s *LoadBalancerServiceV2) UpdatePool(popts IUpdatePoolRequest) sdkerror.Er
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) CreateListener(popts ICreateListenerRequest) (*entity.Listener, sdkerror.Error) {
-	url := createListenerUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) CreateListener(opts ICreateListenerRequest) (*entity.Listener, sdkerror.Error) {
+	url := createListenerUrl(s.VLBClient, opts)
 	resp := new(CreateListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -182,20 +182,20 @@ func (s *LoadBalancerServiceV2) CreateListener(popts ICreateListenerRequest) (*e
 			sdkerror.WithErrorListenerDuplicateName(errResp),
 			sdkerror.WithErrorPoolNotFound(errResp),
 			sdkerror.WithErrorListenerDuplicateProtocolOrPort(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityListener(), nil
 }
 
-func (s *LoadBalancerServiceV2) UpdateListener(popts IUpdateListenerRequest) sdkerror.Error {
-	url := updateListenerUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) UpdateListener(opts IUpdateListenerRequest) sdkerror.Error {
+	url := updateListenerUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -209,12 +209,12 @@ func (s *LoadBalancerServiceV2) UpdateListener(popts IUpdateListenerRequest) sdk
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerId(popts IListListenersByLoadBalancerIdRequest) (*entity.ListListeners, sdkerror.Error) {
-	url := listListenersByLoadBalancerIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerId(opts IListListenersByLoadBalancerIdRequest) (*entity.ListListeners, sdkerror.Error) {
+	url := listListenersByLoadBalancerIdUrl(s.VLBClient, opts)
 	resp := new(ListListenersByLoadBalancerIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -222,19 +222,19 @@ func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerId(popts IListListene
 	if _, sdkErr := s.VLBClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp)).
-			WithKVparameters("loadBalancerId", popts.GetLoadBalancerId()).
+			WithKVparameters("loadBalancerId", opts.GetLoadBalancerId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityListListeners(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerId(popts IListPoolsByLoadBalancerIdRequest) (*entity.ListPools, sdkerror.Error) {
-	url := listPoolsByLoadBalancerIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerId(opts IListPoolsByLoadBalancerIdRequest) (*entity.ListPools, sdkerror.Error) {
+	url := listPoolsByLoadBalancerIdUrl(s.VLBClient, opts)
 	resp := new(ListPoolsByLoadBalancerIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -242,20 +242,20 @@ func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerId(popts IListPoolsByLoad
 	if _, sdkErr := s.VLBClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp)).
-			WithKVparameters("loadBalancerId", popts.GetLoadBalancerId()).
+			WithKVparameters("loadBalancerId", opts.GetLoadBalancerId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityListPools(), nil
 }
 
-func (s *LoadBalancerServiceV2) UpdatePoolMembers(popts IUpdatePoolMembersRequest) sdkerror.Error {
-	url := updatePoolMembersUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) UpdatePoolMembers(opts IUpdatePoolMembersRequest) sdkerror.Error {
+	url := updatePoolMembersUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -270,12 +270,12 @@ func (s *LoadBalancerServiceV2) UpdatePoolMembers(popts IUpdatePoolMembersReques
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ListPoolMembers(popts IListPoolMembersRequest) (*entity.ListMembers, sdkerror.Error) {
-	url := listPoolMembersUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListPoolMembers(opts IListPoolMembersRequest) (*entity.ListMembers, sdkerror.Error) {
+	url := listPoolMembersUrl(s.VLBClient, opts)
 	resp := new(ListPoolMembersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -284,18 +284,18 @@ func (s *LoadBalancerServiceV2) ListPoolMembers(popts IListPoolMembersRequest) (
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorPoolNotFound(errResp)).
-			WithKVparameters("loadBalancerId", popts.GetLoadBalancerId(), "poolId", popts.GetPoolId()).
+			WithKVparameters("loadBalancerId", opts.GetLoadBalancerId(), "poolId", opts.GetPoolId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityListMembers(), nil
 }
 
-func (s *LoadBalancerServiceV2) DeletePoolById(popts IDeletePoolByIdRequest) sdkerror.Error {
-	url := deletePoolByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) DeletePoolById(opts IDeletePoolByIdRequest) sdkerror.Error {
+	url := deletePoolByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonError(errResp)
 
@@ -310,11 +310,11 @@ func (s *LoadBalancerServiceV2) DeletePoolById(popts IDeletePoolByIdRequest) sdk
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) DeleteListenerById(popts IDeleteListenerByIdRequest) sdkerror.Error {
-	url := deleteListenerByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) DeleteListenerById(opts IDeleteListenerByIdRequest) sdkerror.Error {
+	url := deleteListenerByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonError(errResp)
 
@@ -329,11 +329,11 @@ func (s *LoadBalancerServiceV2) DeleteListenerById(popts IDeleteListenerByIdRequ
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) DeleteLoadBalancerById(popts IDeleteLoadBalancerByIdRequest) sdkerror.Error {
-	url := deleteLoadBalancerByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) DeleteLoadBalancerById(opts IDeleteLoadBalancerByIdRequest) sdkerror.Error {
+	url := deleteLoadBalancerByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonError(errResp)
 
@@ -344,7 +344,7 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerById(popts IDeleteLoadBalancer
 			sdkerror.WithErrorLoadBalancerIsCreating(errResp),
 			sdkerror.WithErrorLoadBalancerIsDeleting(errResp)).
 			WithKVparameters(
-				"loadBalancerId", popts.GetLoadBalancerId(),
+				"loadBalancerId", opts.GetLoadBalancerId(),
 				"projectId", s.getProjectId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
@@ -352,12 +352,12 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerById(popts IDeleteLoadBalancer
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) GetPoolById(popts IGetPoolByIdRequest) (*entity.Pool, sdkerror.Error) {
-	url := getPoolByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetPoolById(opts IGetPoolByIdRequest) (*entity.Pool, sdkerror.Error) {
+	url := getPoolByIdUrl(s.VLBClient, opts)
 	resp := new(GetPoolByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -367,20 +367,20 @@ func (s *LoadBalancerServiceV2) GetPoolById(popts IGetPoolByIdRequest) (*entity.
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorPoolNotFound(errResp)).
 			WithKVparameters(
-				"loadBalancerId", popts.GetLoadBalancerId(),
-				"poolId", popts.GetPoolId()).
+				"loadBalancerId", opts.GetLoadBalancerId(),
+				"poolId", opts.GetPoolId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityPool(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetListenerById(popts IGetListenerByIdRequest) (*entity.Listener, sdkerror.Error) {
-	url := getListenerByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetListenerById(opts IGetListenerByIdRequest) (*entity.Listener, sdkerror.Error) {
+	url := getListenerByIdUrl(s.VLBClient, opts)
 	resp := new(GetListenerByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -390,21 +390,21 @@ func (s *LoadBalancerServiceV2) GetListenerById(popts IGetListenerByIdRequest) (
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorListenerNotFound(errResp)).
 			WithKVparameters(
-				"loadBalancerId", popts.GetLoadBalancerId(),
-				"listenerId", popts.GetListenerId()).
+				"loadBalancerId", opts.GetLoadBalancerId(),
+				"listenerId", opts.GetListenerId()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return resp.ToEntityListener(), nil
 }
 
-func (s *LoadBalancerServiceV2) ResizeLoadBalancerById(popts IResizeLoadBalancerByIdRequest) sdkerror.Error {
-	url := resizeLoadBalancerByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ResizeLoadBalancerById(opts IResizeLoadBalancerByIdRequest) sdkerror.Error {
+	url := resizeLoadBalancerByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -414,21 +414,21 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancerById(popts IResizeLoadBalancer
 			sdkerror.WithErrorLoadBalancerNotFound2(errResp),
 			sdkerror.WithErrorLoadBalancerNotReady(errResp),
 			sdkerror.WithErrorLoadBalancerResizeSamePackage(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ScaleLoadBalancer(popts IScaleLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
-	url := scaleLoadBalancerUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ScaleLoadBalancer(opts IScaleLoadBalancerRequest) (*entity.LoadBalancer, sdkerror.Error) {
+	url := scaleLoadBalancerUrl(s.VLBClient, opts)
 	resp := new(ScaleLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -437,7 +437,7 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(popts IScaleLoadBalancerReques
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorLoadBalancerNotFound2(errResp),
 			sdkerror.WithErrorLoadBalancerNotReady(errResp)).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -446,12 +446,12 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(popts IScaleLoadBalancerReques
 
 // policy
 
-func (s *LoadBalancerServiceV2) ListPolicies(popts IListPoliciesRequest) (*entity.ListPolicies, sdkerror.Error) {
-	url := listPoliciesUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ListPolicies(opts IListPoliciesRequest) (*entity.ListPolicies, sdkerror.Error) {
+	url := listPoliciesUrl(s.VLBClient, opts)
 	resp := new(ListPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -463,14 +463,14 @@ func (s *LoadBalancerServiceV2) ListPolicies(popts IListPoliciesRequest) (*entit
 	return resp.ToEntityListPolicies(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreatePolicy(popts ICreatePolicyRequest) (*entity.Policy, sdkerror.Error) {
-	url := createPolicyUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) CreatePolicy(opts ICreatePolicyRequest) (*entity.Policy, sdkerror.Error) {
+	url := createPolicyUrl(s.VLBClient, opts)
 	resp := new(CreatePolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -478,18 +478,18 @@ func (s *LoadBalancerServiceV2) CreatePolicy(popts ICreatePolicyRequest) (*entit
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorListenerNotFound(errResp),
-		).WithParameters(popts.ToMap())
+		).WithParameters(opts.ToMap())
 	}
 
 	return resp.ToEntityPolicy(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetPolicyById(popts IGetPolicyByIdRequest) (*entity.Policy, sdkerror.Error) {
-	url := getPolicyByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetPolicyById(opts IGetPolicyByIdRequest) (*entity.Policy, sdkerror.Error) {
+	url := getPolicyByIdUrl(s.VLBClient, opts)
 	resp := new(GetPolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -498,19 +498,19 @@ func (s *LoadBalancerServiceV2) GetPolicyById(popts IGetPolicyByIdRequest) (*ent
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorLoadBalancerNotFound(errResp),
 			sdkerror.WithErrorListenerNotFound(errResp),
-		).WithKVparameters("policyId", popts.GetPolicyId())
+		).WithKVparameters("policyId", opts.GetPolicyId())
 	}
 
 	return resp.ToEntityPolicy(), nil
 }
 
-func (s *LoadBalancerServiceV2) UpdatePolicy(popts IUpdatePolicyRequest) sdkerror.Error {
-	url := updatePolicyUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) UpdatePolicy(opts IUpdatePolicyRequest) sdkerror.Error {
+	url := updatePolicyUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -523,11 +523,11 @@ func (s *LoadBalancerServiceV2) UpdatePolicy(popts IUpdatePolicyRequest) sdkerro
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) DeletePolicyById(popts IDeletePolicyByIdRequest) sdkerror.Error {
-	url := deletePolicyByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) DeletePolicyById(opts IDeletePolicyByIdRequest) sdkerror.Error {
+	url := deletePolicyByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJsonError(errResp)
 
@@ -541,13 +541,13 @@ func (s *LoadBalancerServiceV2) DeletePolicyById(popts IDeletePolicyByIdRequest)
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ReorderPolicies(popts IReorderPoliciesRequest) sdkerror.Error {
-	url := reorderPoliciesUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) ReorderPolicies(opts IReorderPoliciesRequest) sdkerror.Error {
+	url := reorderPoliciesUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonError(errResp)
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -560,12 +560,12 @@ func (s *LoadBalancerServiceV2) ReorderPolicies(popts IReorderPoliciesRequest) s
 
 // --------------------------------------------------------
 
-func (s *LoadBalancerServiceV2) ListCertificates(popts IListCertificatesRequest) (*entity.ListCertificates, sdkerror.Error) {
+func (s *LoadBalancerServiceV2) ListCertificates(opts IListCertificatesRequest) (*entity.ListCertificates, sdkerror.Error) {
 	url := listCertificatesUrl(s.VLBClient)
 	resp := new(ListCertificatesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -577,12 +577,12 @@ func (s *LoadBalancerServiceV2) ListCertificates(popts IListCertificatesRequest)
 	return resp.ToEntityListCertificates(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetCertificateById(popts IGetCertificateByIdRequest) (*entity.Certificate, sdkerror.Error) {
-	url := getCertificateByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) GetCertificateById(opts IGetCertificateByIdRequest) (*entity.Certificate, sdkerror.Error) {
+	url := getCertificateByIdUrl(s.VLBClient, opts)
 	resp := new(GetCertificateByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -594,14 +594,14 @@ func (s *LoadBalancerServiceV2) GetCertificateById(popts IGetCertificateByIdRequ
 	return resp.ToEntityCertificate(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateCertificate(popts ICreateCertificateRequest) (*entity.Certificate, sdkerror.Error) {
+func (s *LoadBalancerServiceV2) CreateCertificate(opts ICreateCertificateRequest) (*entity.Certificate, sdkerror.Error) {
 	url := createCertificateUrl(s.VLBClient)
 	resp := new(CreateCertificateResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
@@ -612,11 +612,11 @@ func (s *LoadBalancerServiceV2) CreateCertificate(popts ICreateCertificateReques
 	return resp.ToEntityCertificate(), nil
 }
 
-func (s *LoadBalancerServiceV2) DeleteCertificateById(popts IDeleteCertificateByIdRequest) sdkerror.Error {
-	url := deleteCertificateByIdUrl(s.VLBClient, popts)
+func (s *LoadBalancerServiceV2) DeleteCertificateById(opts IDeleteCertificateByIdRequest) sdkerror.Error {
+	url := deleteCertificateByIdUrl(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 

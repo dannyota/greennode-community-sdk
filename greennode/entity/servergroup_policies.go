@@ -15,12 +15,12 @@ func (s *ListServerGroupPolicies) Add(item *ServerGroupPolicy) {
 	s.Items = append(s.Items, item)
 }
 
-func (s *ListServerGroupPolicies) At(pidx int) *ServerGroupPolicy {
-	if pidx < 0 || pidx >= s.Len() {
+func (s *ListServerGroupPolicies) At(idx int) *ServerGroupPolicy {
+	if idx < 0 || idx >= s.Len() {
 		return nil
 	}
 
-	return s.Items[pidx]
+	return s.Items[idx]
 }
 
 func (s *ListServerGroupPolicies) Len() int {

@@ -117,7 +117,7 @@ type IUpdateRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) IUpdateRecordRequest
 	WithEnableStickySession(enable bool) IUpdateRecordRequest
 	WithValue(value []RecordValueRequest) IUpdateRecordRequest
-	ToRequestBody(psc client.ServiceClient) map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -184,7 +184,7 @@ func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) IUpdateRecor
 	return r
 }
 
-func (r *UpdateRecordRequest) ToRequestBody(psc client.ServiceClient) map[string]interface{} {
+func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
 	body := map[string]interface{}{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
@@ -283,7 +283,7 @@ type ICreateDnsRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) ICreateDnsRecordRequest
 	WithEnableStickySession(enable bool) ICreateDnsRecordRequest
 	WithValue(value []RecordValueRequest) ICreateDnsRecordRequest
-	ToRequestBody(psc client.ServiceClient) map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -346,7 +346,7 @@ func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) ICreateDn
 	return r
 }
 
-func (r *CreateDnsRecordRequest) ToRequestBody(psc client.ServiceClient) map[string]interface{} {
+func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
 	body := map[string]interface{}{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,

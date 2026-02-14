@@ -6,14 +6,14 @@ import (
 	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
-func NewVDnsServiceV1(psvcClient client.ServiceClient) VDnsServiceV1 {
+func NewVDnsServiceV1(svcClient client.ServiceClient) VDnsServiceV1 {
 	return &dnsv1.VDnsServiceV1{
-		DnsClient: psvcClient,
+		DnsClient: svcClient,
 	}
 }
 
-func NewVDnsServiceInternal(psvcClient client.ServiceClient) VDnsServiceInternal {
+func NewVDnsServiceInternal(svcClient client.ServiceClient) VDnsServiceInternal {
 	return &dnsinternalv1.VDnsServiceInternal{
-		DnsClient: psvcClient,
+		DnsClient: svcClient,
 	}
 }

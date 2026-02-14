@@ -27,13 +27,13 @@ func (s *ListVolumes) Len() int {
 	return len(s.Items)
 }
 
-func (s *Volume) AttachedTheInstance(pinstanceId string) bool {
-	if s.VmId == pinstanceId {
+func (s *Volume) AttachedTheInstance(instanceId string) bool {
+	if s.VmId == instanceId {
 		return true
 	}
 
 	for _, machineId := range s.AttachedMachine {
-		if machineId == pinstanceId {
+		if machineId == instanceId {
 			return true
 		}
 	}

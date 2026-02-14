@@ -45,9 +45,9 @@ type (
 	AuthOpts string
 )
 
-func NewHttpClient(pctx context.Context) HttpClient {
+func NewHttpClient(ctx context.Context) HttpClient {
 	return &httpClient{
-		context:    pctx,
+		context:    ctx,
 		retryCount: 0,
 		client: req.NewClient().
 			SetCommonRetryCount(3).
@@ -58,52 +58,52 @@ func NewHttpClient(pctx context.Context) HttpClient {
 	}
 }
 
-func (s *httpClient) WithRetryCount(pretryCount int) HttpClient {
-	s.client.SetCommonRetryCount(pretryCount)
+func (s *httpClient) WithRetryCount(retryCount int) HttpClient {
+	s.client.SetCommonRetryCount(retryCount)
 	return s
 }
 
-func (s *httpClient) WithTimeout(ptimeout time.Duration) HttpClient {
-	s.client.SetTimeout(ptimeout)
+func (s *httpClient) WithTimeout(timeout time.Duration) HttpClient {
+	s.client.SetTimeout(timeout)
 	return s
 }
 
-func (s *httpClient) WithSleep(psleep time.Duration) HttpClient {
-	s.client.SetCommonRetryFixedInterval(psleep)
+func (s *httpClient) WithSleep(sleep time.Duration) HttpClient {
+	s.client.SetCommonRetryFixedInterval(sleep)
 	return s
 }
 
-func (s *httpClient) WithKvDefaultHeaders(pargs ...string) HttpClient {
+func (s *httpClient) WithKvDefaultHeaders(args ...string) HttpClient {
 	if s.defaultHeaders == nil {
 		s.defaultHeaders = make(map[string]string)
 	}
 
-	if len(pargs)%2 != 0 {
-		pargs = append(pargs, "")
+	if len(args)%2 != 0 {
+		args = append(args, "")
 	}
 
-	for i := 0; i < len(pargs); i += 2 {
-		s.defaultHeaders[pargs[i]] = pargs[i+1]
+	for i := 0; i < len(args); i += 2 {
+		s.defaultHeaders[args[i]] = args[i+1]
 	}
 
 	return s
 }
 
-func (s *httpClient) WithReauthFunc(pauthOpt AuthOpts, preauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient {
-	s.reauthFunc = preauthFunc
-	s.reauthOption = pauthOpt
+func (s *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HttpClient {
+	s.reauthFunc = reauthFunc
+	s.reauthOption = authOpt
 	return s
 }
 
-func (s *httpClient) DoRequest(purl string, preq Request) (*req.Response, sdkerror.Error) {
+func (s *httpClient) DoRequest(url string, preq Request) (*req.Response, sdkerror.Error) {
 	req := s.prepareRequest(preq)
 
-	resp, sdkErr := s.executeRequest(purl, req, preq)
+	resp, sdkErr := s.executeRequest(url, req, preq)
 	if sdkErr != nil {
 		return resp, sdkErr
 	}
 
-	return s.handleResponse(purl, resp, preq)
+	return s.handleResponse(url, resp, preq)
 }
 
 func (s *httpClient) prepareRequest(preq Request) *req.Request {
@@ -124,12 +124,12 @@ func (s *httpClient) prepareRequest(preq Request) *req.Request {
 	return req
 }
 
-func (s *httpClient) executeRequest(purl string, req *req.Request, preq Request) (*req.Response, sdkerror.Error) {
+func (s *httpClient) executeRequest(url string, req *req.Request, preq Request) (*req.Response, sdkerror.Error) {
 	if s.needReauth(preq) {
-		return s.handleReauthBeforeRequest(purl, preq)
+		return s.handleReauthBeforeRequest(url, preq)
 	}
 
-	resp, err := s.executeHttpMethod(purl, req, preq)
+	resp, err := s.executeHttpMethod(url, req, preq)
 
 	if err != nil && resp == nil {
 		return resp, sdkerror.ErrorHandler(err)
@@ -138,87 +138,87 @@ func (s *httpClient) executeRequest(purl string, req *req.Request, preq Request)
 	return resp, nil
 }
 
-func (s *httpClient) executeHttpMethod(purl string, req *req.Request, preq Request) (*req.Response, error) {
+func (s *httpClient) executeHttpMethod(url string, req *req.Request, preq Request) (*req.Response, error) {
 	switch strings.ToUpper(preq.GetRequestMethod()) {
 	case "POST":
-		return req.Post(purl)
+		return req.Post(url)
 	case "GET":
-		return req.Get(purl)
+		return req.Get(url)
 	case "DELETE":
-		return req.Delete(purl)
+		return req.Delete(url)
 	case "PUT":
-		return req.Put(purl)
+		return req.Put(url)
 	case "PATCH":
-		return req.Patch(purl)
+		return req.Patch(url)
 	default:
 		return nil, nil
 	}
 }
 
-func (s *httpClient) handleReauthBeforeRequest(purl string, preq Request) (*req.Response, sdkerror.Error) {
-	if !preq.SkipAuthentication() && s.reauthFunc != nil {
+func (s *httpClient) handleReauthBeforeRequest(url string, req Request) (*req.Response, sdkerror.Error) {
+	if !req.SkipAuthentication() && s.reauthFunc != nil {
 		if sdkErr := s.reauthenticate(); sdkErr != nil {
 			return nil, sdkErr
 		}
-		return s.DoRequest(purl, preq)
+		return s.DoRequest(url, req)
 	}
 	return nil, nil
 }
 
-func (s *httpClient) handleResponse(purl string, resp *req.Response, preq Request) (*req.Response, sdkerror.Error) {
+func (s *httpClient) handleResponse(url string, resp *req.Response, req Request) (*req.Response, sdkerror.Error) {
 	if resp == nil || resp.Response == nil {
 		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorUnexpected(resp))
 	}
 
-	if sdkErr := s.handleStatusCode(purl, resp, preq); sdkErr != nil {
+	if sdkErr := s.handleStatusCode(url, resp, req); sdkErr != nil {
 		return nil, sdkErr
 	}
 
-	if preq.ContainsOkCode(resp.StatusCode) {
+	if req.ContainsOkCode(resp.StatusCode) {
 		return resp, nil
 	}
 
 	return resp, sdkerror.ErrorHandler(resp.Err)
 }
 
-func (s *httpClient) handleStatusCode(purl string, resp *req.Response, preq Request) sdkerror.Error {
+func (s *httpClient) handleStatusCode(url string, resp *req.Response, req Request) sdkerror.Error {
 	switch resp.StatusCode {
 	case http.StatusUnauthorized:
-		return s.handleUnauthorized(purl, resp, preq)
+		return s.handleUnauthorized(url, resp, req)
 	case http.StatusTooManyRequests:
 		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
+			defaultErrorResponse(resp.Err, url, req, resp), nil,
 			sdkerror.WithErrorPermissionDenied())
 	case http.StatusInternalServerError:
 		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
+			defaultErrorResponse(resp.Err, url, req, resp), nil,
 			sdkerror.WithErrorInternalServerError())
 	case http.StatusServiceUnavailable:
 		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
+			defaultErrorResponse(resp.Err, url, req, resp), nil,
 			sdkerror.WithErrorServiceMaintenance())
 	case http.StatusForbidden:
 		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, purl, preq, resp), nil,
+			defaultErrorResponse(resp.Err, url, req, resp), nil,
 			sdkerror.WithErrorPermissionDenied())
 	}
 	return nil
 }
 
-func (s *httpClient) handleUnauthorized(purl string, resp *req.Response, preq Request) sdkerror.Error {
-	if !preq.SkipAuthentication() && s.reauthFunc != nil {
+func (s *httpClient) handleUnauthorized(url string, resp *req.Response, req Request) sdkerror.Error {
+	if !req.SkipAuthentication() && s.reauthFunc != nil {
 		if sdkErr := s.reauthenticate(); sdkErr != nil {
 			return sdkErr
 		}
 		// Note: This will cause recursion - returning to trigger DoRequest again
-		_, err := s.DoRequest(purl, preq)
+		_, err := s.DoRequest(url, req)
 		return err
 	}
-	return defaultErrorResponse(resp.Err, purl, preq, resp)
+	return defaultErrorResponse(resp.Err, url, req, resp)
 }
 
-func (s *httpClient) needReauth(preq Request) bool {
-	if preq.SkipAuthentication() {
+func (s *httpClient) needReauth(req Request) bool {
+	if req.SkipAuthentication() {
 		return false
 	}
 
@@ -256,11 +256,11 @@ func (s *httpClient) reauthenticate() sdkerror.Error {
 	return sdkerr
 }
 
-func (s *httpClient) setAccessToken(pnewToken SdkAuthentication) HttpClient {
+func (s *httpClient) setAccessToken(newToken SdkAuthentication) HttpClient {
 	s.mut.Lock()
 	defer s.mut.Unlock()
-	if pnewToken != nil {
-		s.accessToken = pnewToken
+	if newToken != nil {
+		s.accessToken = newToken
 		s.WithKvDefaultHeaders("Authorization", "Bearer "+s.accessToken.GetAccessToken())
 	}
 
@@ -294,18 +294,18 @@ func (s *reauthFuture) set(err sdkerror.Error) {
 	close(s.done)
 }
 
-func defaultErrorResponse(perr error, purl string, preq Request, resp *req.Response) sdkerror.Error {
-	headers := preq.GetMoreHeaders()
+func defaultErrorResponse(err error, url string, req Request, resp *req.Response) sdkerror.Error {
+	headers := req.GetMoreHeaders()
 
 	// Remove sensitive information
 	if headers != nil {
 		delete(headers, "Authorization")
 	}
 
-	return sdkerror.ErrorHandler(perr).WithKVparameters(
+	return sdkerror.ErrorHandler(err).WithKVparameters(
 		"statusCode", resp.StatusCode,
-		"url", purl,
-		"method", preq.GetRequestMethod(),
+		"url", url,
+		"method", req.GetRequestMethod(),
 		"requestHeaders", headers,
 		"responseHeaders", resp.Header,
 	)

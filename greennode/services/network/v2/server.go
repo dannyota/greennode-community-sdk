@@ -6,12 +6,12 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) ListAllServersBySecgroupId(popts IListAllServersBySecgroupIdRequest) (*entity.ListServers, sdkerror.Error) {
-	url := listAllServersBySecgroupIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) ListAllServersBySecgroupId(opts IListAllServersBySecgroupIdRequest) (*entity.ListServers, sdkerror.Error) {
+	url := listAllServersBySecgroupIdUrl(s.VserverClient, opts)
 	resp := new(ListAllServersBySecgroupIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -20,7 +20,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupId(popts IListAllServersBySec
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.WithErrorSecgroupNotFound(errResp)).
 			WithKVparameters(
-				"secgroupId", popts.GetSecgroupId(),
+				"secgroupId", opts.GetSecgroupId(),
 				"projectId", s.getProjectId())
 	}
 

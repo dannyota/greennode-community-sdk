@@ -3,41 +3,41 @@ package v2
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewCreateSecgroupRuleRequest(
-	pdirection SecgroupRuleDirection,
-	petherType SecgroupRuleEtherType,
-	pprotocol SecgroupRuleProtocol,
+	direction SecgroupRuleDirection,
+	etherType SecgroupRuleEtherType,
+	protocol SecgroupRuleProtocol,
 	portMinRange, portMaxRange int,
-	premoteIpPrefix, psecurityGroupId, pdescription string) ICreateSecgroupRuleRequest {
+	remoteIpPrefix, securityGroupId, description string) ICreateSecgroupRuleRequest {
 
 	opt := &CreateSecgroupRuleRequest{
-		Description:     pdescription,
-		Direction:       pdirection,
-		EtherType:       petherType,
+		Description:     description,
+		Direction:       direction,
+		EtherType:       etherType,
 		PortRangeMax:    portMaxRange,
 		PortRangeMin:    portMinRange,
-		Protocol:        pprotocol,
-		RemoteIPPrefix:  premoteIpPrefix,
-		SecurityGroupID: psecurityGroupId,
+		Protocol:        protocol,
+		RemoteIPPrefix:  remoteIpPrefix,
+		SecurityGroupID: securityGroupId,
 	}
-	opt.SecgroupId = psecurityGroupId
+	opt.SecgroupId = securityGroupId
 	return opt
 }
 
-func NewDeleteSecgroupRuleByIdRequest(psecgroupRuleId string) IDeleteSecgroupRuleByIdRequest {
+func NewDeleteSecgroupRuleByIdRequest(secgroupRuleId string) IDeleteSecgroupRuleByIdRequest {
 	opt := new(DeleteSecgroupRuleByIdRequest)
 	opt.SecgroupId = "undefined"
-	opt.SecgroupRuleId = psecgroupRuleId
+	opt.SecgroupRuleId = secgroupRuleId
 	return opt
 }
 
-func (s *DeleteSecgroupRuleByIdRequest) AddUserAgent(pagent ...string) IDeleteSecgroupRuleByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteSecgroupRuleByIdRequest) AddUserAgent(agent ...string) IDeleteSecgroupRuleByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewListSecgroupRulesBySecgroupIdRequest(psecurityGroupId string) IListSecgroupRulesBySecgroupIdRequest {
+func NewListSecgroupRulesBySecgroupIdRequest(securityGroupId string) IListSecgroupRulesBySecgroupIdRequest {
 	opt := new(ListSecgroupRulesBySecgroupIdRequest)
-	opt.SecgroupId = psecurityGroupId
+	opt.SecgroupId = securityGroupId
 	return opt
 }
 
@@ -96,8 +96,8 @@ func (s *CreateSecgroupRuleRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreateSecgroupRuleRequest) AddUserAgent(pagent ...string) ICreateSecgroupRuleRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) ICreateSecgroupRuleRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -117,7 +117,7 @@ type ListSecgroupRulesBySecgroupIdRequest struct { //___________________________
 	common.UserAgent
 }
 
-func (s *ListSecgroupRulesBySecgroupIdRequest) AddUserAgent(pagent ...string) IListSecgroupRulesBySecgroupIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListSecgroupRulesBySecgroupIdRequest) AddUserAgent(agent ...string) IListSecgroupRulesBySecgroupIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

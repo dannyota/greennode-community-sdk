@@ -2,91 +2,91 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createBlockVolumeUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func createBlockVolumeUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes")
 }
 
-func deleteBlockVolumeByIdUrl(psc client.ServiceClient, popts IDeleteBlockVolumeByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func deleteBlockVolumeByIdUrl(sc client.ServiceClient, opts IDeleteBlockVolumeByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId())
+		opts.GetBlockVolumeId())
 }
 
-func listBlockVolumesUrl(psc client.ServiceClient, popts IListBlockVolumesRequest) string {
-	query, err := popts.ToQuery()
+func listBlockVolumesUrl(sc client.ServiceClient, opts IListBlockVolumesRequest) string {
+	query, err := opts.ToQuery()
 	if err != nil {
-		query = popts.GetDefaultQuery()
+		query = opts.GetDefaultQuery()
 	}
 
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes") + query
 }
 
-func getBlockVolumeByIdUrl(psc client.ServiceClient, popts IGetBlockVolumeByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func getBlockVolumeByIdUrl(sc client.ServiceClient, opts IGetBlockVolumeByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId())
+		opts.GetBlockVolumeId())
 }
 
-func resizeBlockVolumeByIdUrl(psc client.ServiceClient, popts IResizeBlockVolumeByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func resizeBlockVolumeByIdUrl(sc client.ServiceClient, opts IResizeBlockVolumeByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"resize")
 }
 
-func listSnapshotsByBlockVolumeIdUrl(psc client.ServiceClient, popts IListSnapshotsByBlockVolumeIdRequest) string {
-	query, err := popts.ToQuery()
+func listSnapshotsByBlockVolumeIdUrl(sc client.ServiceClient, opts IListSnapshotsByBlockVolumeIdRequest) string {
+	query, err := opts.ToQuery()
 	if err != nil {
-		query = popts.GetDefaultQuery()
+		query = opts.GetDefaultQuery()
 	}
 
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"snapshots",
 	) + query
 }
 
-func createSnapshotByBlockVolumeIdUrl(psc client.ServiceClient, popts ICreateSnapshotByBlockVolumeIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func createSnapshotByBlockVolumeIdUrl(sc client.ServiceClient, opts ICreateSnapshotByBlockVolumeIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"snapshots")
 }
 
-func deleteSnapshotByIdUrl(psc client.ServiceClient, popts IDeleteSnapshotByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func deleteSnapshotByIdUrl(sc client.ServiceClient, opts IDeleteSnapshotByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"snapshots",
-		popts.GetSnapshotId(),
+		opts.GetSnapshotId(),
 	)
 }
 
-func getUnderBlockVolumeIdUrl(psc client.ServiceClient, popts IGetUnderBlockVolumeIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func getUnderBlockVolumeIdUrl(sc client.ServiceClient, opts IGetUnderBlockVolumeIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"mapping",
 	)
 }
 
-func migrateBlockVolumeByIdUrl(psc client.ServiceClient, popts IMigrateBlockVolumeByIdRequest) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func migrateBlockVolumeByIdUrl(sc client.ServiceClient, opts IMigrateBlockVolumeByIdRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"volumes",
-		popts.GetBlockVolumeId(),
+		opts.GetBlockVolumeId(),
 		"change-device-type",
 	)
 }

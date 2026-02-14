@@ -83,93 +83,93 @@ func (s *CreateServerRequest) WithZone(zoneId string) ICreateServerRequest {
 	return s
 }
 
-func (s *CreateServerRequest) WithServerNetworkInterface(pprojectId, pnetworkId, psubnetId string, pattachFloating bool) ICreateServerRequest {
+func (s *CreateServerRequest) WithServerNetworkInterface(projectId, networkId, subnetId string, attachFloating bool) ICreateServerRequest {
 	s.Networks = append(s.Networks, ServerNetworkInterface{
-		ProjectId:      pprojectId,
-		NetworkId:      pnetworkId,
-		SubnetId:       psubnetId,
-		AttachFloating: pattachFloating,
+		ProjectId:      projectId,
+		NetworkId:      networkId,
+		SubnetId:       subnetId,
+		AttachFloating: attachFloating,
 	})
 
 	return s.WithNetwork(s.Networks[0].NetworkId, s.Networks[0].SubnetId)
 }
 
-func (s *CreateServerRequest) WithRootDiskEncryptionType(pdataDisk DataDiskEncryptionType) ICreateServerRequest {
+func (s *CreateServerRequest) WithRootDiskEncryptionType(dataDisk DataDiskEncryptionType) ICreateServerRequest {
 	s.EncryptionVolume = true
-	s.RootDiskEncryptionType = pdataDisk
+	s.RootDiskEncryptionType = dataDisk
 	return s
 }
 
-func (s *CreateServerRequest) WithEncryptionVolume(penabled bool) ICreateServerRequest {
-	s.EncryptionVolume = penabled
+func (s *CreateServerRequest) WithEncryptionVolume(enabled bool) ICreateServerRequest {
+	s.EncryptionVolume = enabled
 	return s
 }
 
-func (s *CreateServerRequest) WithUserData(puserData string, pbase64Encode bool) ICreateServerRequest {
-	s.UserData = puserData
-	s.UserDataBase64Encoded = pbase64Encode
+func (s *CreateServerRequest) WithUserData(userData string, base64Encode bool) ICreateServerRequest {
+	s.UserData = userData
+	s.UserDataBase64Encoded = base64Encode
 	return s
 }
 
-func (s *CreateServerRequest) WithAutoRenew(pval bool) ICreateServerRequest {
-	s.AutoRenew = pval
+func (s *CreateServerRequest) WithAutoRenew(val bool) ICreateServerRequest {
+	s.AutoRenew = val
 	return s
 }
 
-func (s *CreateServerRequest) WithTags(ptags ...string) ICreateServerRequest {
+func (s *CreateServerRequest) WithTags(tags ...string) ICreateServerRequest {
 	if s.Tags == nil {
 		s.Tags = make([]ServerTag, 0)
 	}
 
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "none")
+	if len(tags)%2 != 0 {
+		tags = append(tags, "none")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, ServerTag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.Tags = append(s.Tags, ServerTag{Key: tags[i], Value: tags[i+1]})
 	}
 	return s
 }
 
-func (s *CreateServerRequest) WithAttachFloating(pattachFloating bool) ICreateServerRequest {
-	s.AttachFloating = pattachFloating
+func (s *CreateServerRequest) WithAttachFloating(attachFloating bool) ICreateServerRequest {
+	s.AttachFloating = attachFloating
 	return s
 }
 
-func (s *CreateServerRequest) WithSecgroups(psecgroups ...string) ICreateServerRequest {
-	s.SecurityGroup = append(s.SecurityGroup, psecgroups...)
+func (s *CreateServerRequest) WithSecgroups(secgroups ...string) ICreateServerRequest {
+	s.SecurityGroup = append(s.SecurityGroup, secgroups...)
 	return s
 }
 
-func (s *CreateServerRequest) WithServerGroupId(pserverGroupId string) ICreateServerRequest {
-	s.ServerGroupId = pserverGroupId
+func (s *CreateServerRequest) WithServerGroupId(serverGroupId string) ICreateServerRequest {
+	s.ServerGroupId = serverGroupId
 	return s
 }
 
-func (s *CreateServerRequest) WithPoc(pisPoc bool) ICreateServerRequest {
-	s.IsPoc = pisPoc
+func (s *CreateServerRequest) WithPoc(isPoc bool) ICreateServerRequest {
+	s.IsPoc = isPoc
 	return s
 }
 
-func (s *CreateServerRequest) WithType(ptype string) ICreateServerRequest {
-	s.Type = ptype
+func (s *CreateServerRequest) WithType(typeVal string) ICreateServerRequest {
+	s.Type = typeVal
 	return s
 }
 
-func (s *CreateServerRequest) WithProduct(pproduct string) ICreateServerRequest {
-	s.Product = pproduct
+func (s *CreateServerRequest) WithProduct(product string) ICreateServerRequest {
+	s.Product = product
 	return s
 }
 
-func (s *CreateServerRequest) WithNetwork(pnetworkId, psubnetId string) ICreateServerRequest {
-	s.NetworkId = pnetworkId
-	s.SubnetId = psubnetId
+func (s *CreateServerRequest) WithNetwork(networkId, subnetId string) ICreateServerRequest {
+	s.NetworkId = networkId
+	s.SubnetId = subnetId
 
 	return s
 }
 
-func (s *CreateServerRequest) AddUserAgent(pagent ...string) ICreateServerRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateServerRequest) AddUserAgent(agent ...string) ICreateServerRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -212,8 +212,8 @@ type GetServerByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *GetServerByIdRequest) AddUserAgent(pagent ...string) IGetServerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetServerByIdRequest) AddUserAgent(agent ...string) IGetServerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -229,13 +229,13 @@ type DeleteServerByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteServerByIdRequest) WithDeleteAllVolume(pok bool) IDeleteServerByIdRequest {
-	s.DeleteAllVolume = pok
+func (s *DeleteServerByIdRequest) WithDeleteAllVolume(ok bool) IDeleteServerByIdRequest {
+	s.DeleteAllVolume = ok
 	return s
 }
 
-func (s *DeleteServerByIdRequest) AddUserAgent(pagent ...string) IDeleteServerByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteServerByIdRequest) AddUserAgent(agent ...string) IDeleteServerByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -250,8 +250,8 @@ type UpdateServerSecgroupsByServerIdRequest struct {
 	common.UserAgent
 }
 
-func (s *UpdateServerSecgroupsByServerIdRequest) AddUserAgent(pagent ...string) IUpdateServerSecgroupsByServerIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdateServerSecgroupsByServerIdRequest) AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -275,8 +275,8 @@ func (s *AttachFloatingIpRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *AttachFloatingIpRequest) AddUserAgent(pagent ...string) IAttachFloatingIpRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *AttachFloatingIpRequest) AddUserAgent(agent ...string) IAttachFloatingIpRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -301,8 +301,8 @@ func (s *DetachFloatingIpRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *DetachFloatingIpRequest) AddUserAgent(pagent ...string) IDetachFloatingIpRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *DetachFloatingIpRequest) AddUserAgent(agent ...string) IDetachFloatingIpRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -319,8 +319,8 @@ type ListServerGroupPoliciesRequest struct {
 	common.UserAgent
 }
 
-func (s *ListServerGroupPoliciesRequest) AddUserAgent(pagent ...string) IListServerGroupPoliciesRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *ListServerGroupPoliciesRequest) AddUserAgent(agent ...string) IListServerGroupPoliciesRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -329,8 +329,8 @@ type DeleteServerGroupByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteServerGroupByIdRequest) AddUserAgent(pagent ...string) IDeleteServerGroupByIdRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *DeleteServerGroupByIdRequest) AddUserAgent(agent ...string) IDeleteServerGroupByIdRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -348,8 +348,8 @@ type ListServerGroupsRequest struct {
 	common.UserAgent
 }
 
-func (s *ListServerGroupsRequest) WithName(pname string) IListServerGroupsRequest {
-	s.Name = pname
+func (s *ListServerGroupsRequest) WithName(name string) IListServerGroupsRequest {
+	s.Name = name
 	return s
 }
 
@@ -377,8 +377,8 @@ func (s *ListServerGroupsRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *ListServerGroupsRequest) AddUserAgent(pagent ...string) IListServerGroupsRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListServerGroupsRequest) AddUserAgent(agent ...string) IListServerGroupsRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -402,7 +402,7 @@ func (s *CreateServerGroupRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreateServerGroupRequest) AddUserAgent(pagent ...string) ICreateServerGroupRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateServerGroupRequest) AddUserAgent(agent ...string) ICreateServerGroupRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

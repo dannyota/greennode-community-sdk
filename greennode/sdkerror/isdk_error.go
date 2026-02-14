@@ -1,17 +1,17 @@
 package sdkerror
 
 type Error interface {
-	IsError(perrCode ErrorCode) bool
-	IsErrorAny(perrCodes ...ErrorCode) bool
-	IsCategory(pcategory ErrorCategory) bool
-	IsCategories(pcategories ...ErrorCategory) bool
+	IsError(errCode ErrorCode) bool
+	IsErrorAny(errCodes ...ErrorCode) bool
+	IsCategory(category ErrorCategory) bool
+	IsCategories(categories ...ErrorCategory) bool
 
-	WithErrorCode(perrCode ErrorCode) Error
-	WithMessage(pmsg string) Error
-	WithErrors(perrs ...error) Error
-	WithErrorCategories(pcategories ...ErrorCategory) Error
-	WithParameters(pparams map[string]interface{}) Error
-	WithKVparameters(pparams ...interface{}) Error
+	WithErrorCode(errCode ErrorCode) Error
+	WithMessage(msg string) Error
+	WithErrors(errs ...error) Error
+	WithErrorCategories(categories ...ErrorCategory) Error
+	WithParameters(params map[string]interface{}) Error
+	WithKVparameters(params ...interface{}) Error
 
 	GetError() error
 	GetMessage() string
@@ -22,9 +22,9 @@ type Error interface {
 	GetErrorMessages() string
 	GetListParameters() []interface{}
 
-	RemoveCategories(pcategories ...ErrorCategory) Error
+	RemoveCategories(categories ...ErrorCategory) Error
 
-	AppendCategories(pcategories ...ErrorCategory) Error
+	AppendCategories(categories ...ErrorCategory) Error
 }
 
 type ErrorResponse interface {

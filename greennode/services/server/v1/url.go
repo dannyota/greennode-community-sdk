@@ -2,8 +2,8 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createSystemTagUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL(
-		psc.GetProjectId(),
+func createSystemTagUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.GetProjectId(),
 		"tags")
 }

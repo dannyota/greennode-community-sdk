@@ -9,11 +9,11 @@ import (
 
 type PortalServiceV1 interface {
 	ListZones() (*entity.ListZones, sdkerror.Error)
-	GetPortalInfo(popts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error)
-	ListProjects(popts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.Error)
+	GetPortalInfo(opts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error)
+	ListProjects(opts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.Error)
 }
 
 type PortalServiceV2 interface {
 	ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error)
-	GetQuotaByName(popts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error)
+	GetQuotaByName(opts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error)
 }

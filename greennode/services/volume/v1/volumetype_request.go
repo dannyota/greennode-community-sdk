@@ -7,9 +7,9 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func NewGetVolumeTypeByIdRequest(pvolumeTypeId string) IGetVolumeTypeByIdRequest {
+func NewGetVolumeTypeByIdRequest(volumeTypeId string) IGetVolumeTypeByIdRequest {
 	opt := new(GetVolumeTypeByIdRequest)
-	opt.VolumeTypeId = pvolumeTypeId
+	opt.VolumeTypeId = volumeTypeId
 	return opt
 }
 

@@ -6,12 +6,12 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
-	url := getSubnetByIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) GetSubnetById(opts IGetSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
+	url := getSubnetByIdUrl(s.VserverClient, opts)
 	resp := new(GetSubnetByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
@@ -21,21 +21,21 @@ func (s *NetworkServiceV2) GetSubnetById(popts IGetSubnetByIdRequest) (*entity.S
 			sdkerror.WithErrorSubnetNotBelongNetwork(sdkErr),
 			sdkerror.WithErrorSubnetNotFound(errResp)).
 			WithKVparameters(
-				"subnetId", popts.GetSubnetId(),
+				"subnetId", opts.GetSubnetId(),
 				"projectId", s.getProjectId())
 	}
 
 	return resp.ToEntitySubnet(), nil
 }
 
-func (s *NetworkServiceV2) UpdateSubnetById(popts IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
-	url := updateSubnetByIdUrl(s.VserverClient, popts)
+func (s *NetworkServiceV2) UpdateSubnetById(opts IUpdateSubnetByIdRequest) (*entity.Subnet, sdkerror.Error) {
+	url := updateSubnetByIdUrl(s.VserverClient, opts)
 	resp := new(UpdateSubnetByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 

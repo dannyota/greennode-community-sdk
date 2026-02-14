@@ -109,43 +109,43 @@ func (s *CreatePolicyRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreatePolicyRequest) WithName(pname string) ICreatePolicyRequest {
-	s.Name = pname
+func (s *CreatePolicyRequest) WithName(name string) ICreatePolicyRequest {
+	s.Name = name
 	return s
 }
 
-func (s *CreatePolicyRequest) WithAction(paction PolicyAction) ICreatePolicyRequest {
-	s.Action = paction
+func (s *CreatePolicyRequest) WithAction(action PolicyAction) ICreatePolicyRequest {
+	s.Action = action
 	return s
 }
 
-func (s *CreatePolicyRequest) WithRules(prules ...L7RuleRequest) ICreatePolicyRequest {
-	s.Rules = prules
+func (s *CreatePolicyRequest) WithRules(rules ...L7RuleRequest) ICreatePolicyRequest {
+	s.Rules = rules
 	return s
 }
 
-func (s *CreatePolicyRequest) WithRedirectPoolId(predirectPoolId string) ICreatePolicyRequest {
-	s.RedirectPoolID = predirectPoolId
+func (s *CreatePolicyRequest) WithRedirectPoolId(redirectPoolId string) ICreatePolicyRequest {
+	s.RedirectPoolID = redirectPoolId
 	return s
 }
 
-func (s *CreatePolicyRequest) WithRedirectURL(predirectURL string) ICreatePolicyRequest {
-	s.RedirectURL = predirectURL
+func (s *CreatePolicyRequest) WithRedirectURL(redirectURL string) ICreatePolicyRequest {
+	s.RedirectURL = redirectURL
 	return s
 }
 
-func (s *CreatePolicyRequest) WithRedirectHTTPCode(predirectHTTPCode int) ICreatePolicyRequest {
-	s.RedirectHTTPCode = predirectHTTPCode
+func (s *CreatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) ICreatePolicyRequest {
+	s.RedirectHTTPCode = redirectHTTPCode
 	return s
 }
 
-func (s *CreatePolicyRequest) WithKeepQueryString(pkeepQueryString bool) ICreatePolicyRequest {
-	s.KeepQueryString = pkeepQueryString
+func (s *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) ICreatePolicyRequest {
+	s.KeepQueryString = keepQueryString
 	return s
 }
 
-func (s *CreatePolicyRequest) AddUserAgent(pagent ...string) ICreatePolicyRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreatePolicyRequest) AddUserAgent(agent ...string) ICreatePolicyRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -212,38 +212,38 @@ func (s *UpdatePolicyRequest) ToRequestBody() interface{} {
 	return nil
 }
 
-func (s *UpdatePolicyRequest) WithAction(paction PolicyAction) IUpdatePolicyRequest {
-	s.Action = paction
+func (s *UpdatePolicyRequest) WithAction(action PolicyAction) IUpdatePolicyRequest {
+	s.Action = action
 	return s
 }
 
-func (s *UpdatePolicyRequest) WithRules(prules ...L7RuleRequest) IUpdatePolicyRequest {
-	s.Rules = prules
+func (s *UpdatePolicyRequest) WithRules(rules ...L7RuleRequest) IUpdatePolicyRequest {
+	s.Rules = rules
 	return s
 }
 
-func (s *UpdatePolicyRequest) WithRedirectPoolID(predirectPoolId string) IUpdatePolicyRequest {
-	s.RedirectPoolID = predirectPoolId
+func (s *UpdatePolicyRequest) WithRedirectPoolID(redirectPoolId string) IUpdatePolicyRequest {
+	s.RedirectPoolID = redirectPoolId
 	return s
 }
 
-func (s *UpdatePolicyRequest) WithRedirectURL(predirectURL string) IUpdatePolicyRequest {
-	s.RedirectURL = predirectURL
+func (s *UpdatePolicyRequest) WithRedirectURL(redirectURL string) IUpdatePolicyRequest {
+	s.RedirectURL = redirectURL
 	return s
 }
 
-func (s *UpdatePolicyRequest) WithRedirectHTTPCode(predirectHTTPCode int) IUpdatePolicyRequest {
-	s.RedirectHTTPCode = predirectHTTPCode
+func (s *UpdatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) IUpdatePolicyRequest {
+	s.RedirectHTTPCode = redirectHTTPCode
 	return s
 }
 
-func (s *UpdatePolicyRequest) WithKeepQueryString(pkeepQueryString bool) IUpdatePolicyRequest {
-	s.KeepQueryString = pkeepQueryString
+func (s *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) IUpdatePolicyRequest {
+	s.KeepQueryString = keepQueryString
 	return s
 }
 
-func (s *UpdatePolicyRequest) AddUserAgent(pagent ...string) IUpdatePolicyRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdatePolicyRequest) AddUserAgent(agent ...string) IUpdatePolicyRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -256,8 +256,8 @@ func NewGetPolicyByIdRequest(lbID, lisID, policyID string) IGetPolicyByIdRequest
 	}
 }
 
-func (s *GetPolicyByIdRequest) AddUserAgent(pagent ...string) IGetPolicyByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetPolicyByIdRequest) AddUserAgent(agent ...string) IGetPolicyByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -279,8 +279,8 @@ func NewDeletePolicyByIdRequest(lbID, lisID, policyID string) IDeletePolicyByIdR
 	}
 }
 
-func (s *DeletePolicyByIdRequest) AddUserAgent(pagent ...string) IDeletePolicyByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeletePolicyByIdRequest) AddUserAgent(agent ...string) IDeletePolicyByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -317,8 +317,8 @@ type ReorderPoliciesRequest struct {
 	policyPositions []policyPositionRequest
 }
 
-func (s *ReorderPoliciesRequest) AddUserAgent(pagent ...string) IReorderPoliciesRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ReorderPoliciesRequest) AddUserAgent(agent ...string) IReorderPoliciesRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -349,8 +349,8 @@ func NewListPoliciesRequest(lbID, lisID string) IListPoliciesRequest {
 	}
 }
 
-func (s *ListPoliciesRequest) AddUserAgent(pagent ...string) IListPoliciesRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListPoliciesRequest) AddUserAgent(agent ...string) IListPoliciesRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 

@@ -60,9 +60,9 @@ func getEnvDevOps() (string, string) {
 	return clientId, clientSecret
 }
 
-func getValueOfEnv(pkey string) string {
+func getValueOfEnv(key string) string {
 	envFile, _ := readEnvFile("./env.yaml")
-	value := envFile[pkey]
+	value := envFile[key]
 	return value
 }
 

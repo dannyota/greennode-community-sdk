@@ -26,39 +26,39 @@ func NewRequest() Request {
 	}
 }
 
-func (s *request) WithOkCodes(pokCodes ...int) Request {
-	for _, c := range pokCodes {
+func (s *request) WithOkCodes(okCodes ...int) Request {
+	for _, c := range okCodes {
 		s.okCodes[c] = struct{}{}
 	}
 	return s
 }
 
-func (s *request) WithUserId(puserId string) Request {
-	return s.WithHeader("portal-user-id", puserId)
+func (s *request) WithUserId(userId string) Request {
+	return s.WithHeader("portal-user-id", userId)
 }
 
-func (s *request) WithJsonBody(pjsonBody interface{}) Request {
-	s.JsonBody = pjsonBody
+func (s *request) WithJsonBody(jsonBody interface{}) Request {
+	s.JsonBody = jsonBody
 	return s
 }
 
-func (s *request) WithJsonResponse(pjsonResponse interface{}) Request {
-	s.JsonResponse = pjsonResponse
+func (s *request) WithJsonResponse(jsonResponse interface{}) Request {
+	s.JsonResponse = jsonResponse
 	return s
 }
 
-func (s *request) WithJsonError(pjsonError interface{}) Request {
-	s.JsonError = pjsonError
+func (s *request) WithJsonError(jsonError interface{}) Request {
+	s.JsonError = jsonError
 	return s
 }
 
-func (s *request) WithRequestMethod(pmethod requestMethod) Request {
-	s.Method = pmethod
+func (s *request) WithRequestMethod(method requestMethod) Request {
+	s.Method = method
 	return s
 }
 
-func (s *request) WithSkipAuth(pskipAuth bool) Request {
-	s.SkipAuth = pskipAuth
+func (s *request) WithSkipAuth(skipAuth bool) Request {
+	s.SkipAuth = skipAuth
 	return s
 }
 
@@ -82,16 +82,16 @@ func (s *request) GetJsonResponse() interface{} {
 	return s.JsonResponse
 }
 
-func (s *request) SetJsonResponse(pjsonResponse interface{}) {
-	s.JsonResponse = pjsonResponse
+func (s *request) SetJsonResponse(jsonResponse interface{}) {
+	s.JsonResponse = jsonResponse
 }
 
-func (s *request) SetJsonError(pjsonError interface{}) {
-	s.JsonError = pjsonError
+func (s *request) SetJsonError(jsonError interface{}) {
+	s.JsonError = jsonError
 }
 
-func (s *request) ContainsOkCode(pcode ...int) bool {
-	for _, c := range pcode {
+func (s *request) ContainsOkCode(code ...int) bool {
+	for _, c := range code {
 		if _, ok := s.okCodes[c]; ok {
 			return true
 		}
@@ -99,8 +99,8 @@ func (s *request) ContainsOkCode(pcode ...int) bool {
 	return false
 }
 
-func (s *request) WithHeader(pkey, pvalue string) Request {
-	if pkey == "" || pvalue == "" {
+func (s *request) WithHeader(key, value string) Request {
+	if key == "" || value == "" {
 		return s
 	}
 
@@ -108,16 +108,16 @@ func (s *request) WithHeader(pkey, pvalue string) Request {
 		s.MoreHeaders = make(map[string]string)
 	}
 
-	s.MoreHeaders[pkey] = pvalue
+	s.MoreHeaders[key] = value
 	return s
 }
 
-func (s *request) WithMapHeaders(pheaders map[string]string) Request {
+func (s *request) WithMapHeaders(headers map[string]string) Request {
 	if s.MoreHeaders == nil {
 		s.MoreHeaders = make(map[string]string)
 	}
 
-	for k, v := range pheaders {
+	for k, v := range headers {
 		s.MoreHeaders[k] = v
 	}
 

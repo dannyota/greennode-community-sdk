@@ -6,12 +6,12 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceInternal) GetHostedZoneById(popts IGetHostedZoneByIdRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error) {
-	url := getHostedZoneByIdUrl(s.DnsClient, popts)
+func (s *VDnsServiceInternal) GetHostedZoneById(opts IGetHostedZoneByIdRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error) {
+	url := getHostedZoneByIdUrl(s.DnsClient, opts)
 	resp := new(GetHostedZoneByIdResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
@@ -20,19 +20,19 @@ func (s *VDnsServiceInternal) GetHostedZoneById(popts IGetHostedZoneByIdRequest,
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"hostedZoneId", popts.GetHostedZoneId()).
+				"hostedZoneId", opts.GetHostedZoneId()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceInternal) ListHostedZones(popts IListHostedZonesRequest, portalUserId string) (*entity.ListHostedZone, sdkerror.Error) {
-	url := listHostedZonesUrl(s.DnsClient, popts)
+func (s *VDnsServiceInternal) ListHostedZones(opts IListHostedZonesRequest, portalUserId string) (*entity.ListHostedZone, sdkerror.Error) {
+	url := listHostedZonesUrl(s.DnsClient, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
@@ -40,65 +40,65 @@ func (s *VDnsServiceInternal) ListHostedZones(popts IListHostedZonesRequest, por
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListHostedZones(), nil
 }
 
-func (s *VDnsServiceInternal) CreateHostedZone(popts ICreateHostedZoneRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error) {
+func (s *VDnsServiceInternal) CreateHostedZone(opts ICreateHostedZoneRequest, portalUserId string) (*entity.HostedZone, sdkerror.Error) {
 	url := createHostedZoneUrl(s.DnsClient)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(200).
-		WithJsonBody(popts.ToRequestBody(s.DnsClient)).
+		WithJsonBody(opts.ToRequestBody(s.DnsClient)).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceInternal) DeleteHostedZone(popts IDeleteHostedZoneRequest, portalUserId string) sdkerror.Error {
-	url := deleteHostedZoneUrl(s.DnsClient, popts)
+func (s *VDnsServiceInternal) DeleteHostedZone(opts IDeleteHostedZoneRequest, portalUserId string) sdkerror.Error {
+	url := deleteHostedZoneUrl(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(204).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
 }
 
-func (s *VDnsServiceInternal) UpdateHostedZone(popts IUpdateHostedZoneRequest, portalUserId string) sdkerror.Error {
-	url := updateHostedZoneUrl(s.DnsClient, popts)
+func (s *VDnsServiceInternal) UpdateHostedZone(opts IUpdateHostedZoneRequest, portalUserId string) sdkerror.Error {
+	url := updateHostedZoneUrl(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserId(portalUserId).
 		WithOkCodes(204).
-		WithJsonBody(popts.ToRequestBody(s.DnsClient)).
+		WithJsonBody(opts.ToRequestBody(s.DnsClient)).
 		WithJsonError(errResp)
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(popts.ToMap()).
+			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 

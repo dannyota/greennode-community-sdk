@@ -2,53 +2,53 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getHostedZoneByIdUrl(psc client.ServiceClient, popts IGetHostedZoneByIdRequest) string {
-	return psc.ServiceURL(
+func getHostedZoneByIdUrl(sc client.ServiceClient, opts IGetHostedZoneByIdRequest) string {
+	return sc.ServiceURL(
 		"dns",
 		"hosted-zone",
-		popts.GetHostedZoneId())
+		opts.GetHostedZoneId())
 }
 
-func listHostedZonesUrl(psc client.ServiceClient, popts IListHostedZonesRequest) string {
-	url := psc.ServiceURL("dns", "hosted-zone")
-	if popts.GetName() != "" {
-		url += "?name=" + popts.GetName()
+func listHostedZonesUrl(sc client.ServiceClient, opts IListHostedZonesRequest) string {
+	url := sc.ServiceURL("dns", "hosted-zone")
+	if opts.GetName() != "" {
+		url += "?name=" + opts.GetName()
 	}
 	return url
 }
 
-func listRecordsUrl(psc client.ServiceClient, popts IListRecordsRequest) string {
-	url := psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record")
-	if popts.GetName() != "" {
-		url += "?name=" + popts.GetName()
+func listRecordsUrl(sc client.ServiceClient, opts IListRecordsRequest) string {
+	url := sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId(), "record")
+	if opts.GetName() != "" {
+		url += "?name=" + opts.GetName()
 	}
 	return url
 }
 
-func createHostedZoneUrl(psc client.ServiceClient) string {
-	return psc.ServiceURL("dns", "hosted-zone")
+func createHostedZoneUrl(sc client.ServiceClient) string {
+	return sc.ServiceURL("dns", "hosted-zone")
 }
 
-func deleteHostedZoneUrl(psc client.ServiceClient, popts IDeleteHostedZoneRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId())
+func deleteHostedZoneUrl(sc client.ServiceClient, opts IDeleteHostedZoneRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId())
 }
 
-func updateHostedZoneUrl(psc client.ServiceClient, popts IUpdateHostedZoneRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId())
+func updateHostedZoneUrl(sc client.ServiceClient, opts IUpdateHostedZoneRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId())
 }
 
-func getRecordUrl(psc client.ServiceClient, popts IGetRecordRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
+func getRecordUrl(sc client.ServiceClient, opts IGetRecordRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId(), "record", opts.GetRecordId())
 }
 
-func updateRecordUrl(psc client.ServiceClient, popts IUpdateRecordRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
+func updateRecordUrl(sc client.ServiceClient, opts IUpdateRecordRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId(), "record", opts.GetRecordId())
 }
 
-func deleteRecordUrl(psc client.ServiceClient, popts IDeleteRecordRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record", popts.GetRecordId())
+func deleteRecordUrl(sc client.ServiceClient, opts IDeleteRecordRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId(), "record", opts.GetRecordId())
 }
 
-func createDnsRecordUrl(psc client.ServiceClient, popts ICreateDnsRecordRequest) string {
-	return psc.ServiceURL("dns", "hosted-zone", popts.GetHostedZoneId(), "record")
+func createDnsRecordUrl(sc client.ServiceClient, opts ICreateDnsRecordRequest) string {
+	return sc.ServiceURL("dns", "hosted-zone", opts.GetHostedZoneId(), "record")
 }

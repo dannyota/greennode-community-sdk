@@ -13,15 +13,15 @@ type vlbGatewayInternal struct {
 	lbService loadbalancer.LoadBalancerServiceInternal
 }
 
-func NewVLBGatewayV2(plbSvcClient, pserverSvcClient client.ServiceClient) VLBGatewayV2 {
+func NewVLBGatewayV2(lbSvcClient, serverSvcClient client.ServiceClient) VLBGatewayV2 {
 	return &vlbGatewayV2{
-		lbService: loadbalancer.NewLoadBalancerServiceV2(plbSvcClient, pserverSvcClient),
+		lbService: loadbalancer.NewLoadBalancerServiceV2(lbSvcClient, serverSvcClient),
 	}
 }
 
-func NewVLBGatewayInternal(psvcClient client.ServiceClient) VLBGatewayInternal {
+func NewVLBGatewayInternal(svcClient client.ServiceClient) VLBGatewayInternal {
 	return &vlbGatewayInternal{
-		lbService: loadbalancer.NewLoadBalancerServiceInternal(psvcClient),
+		lbService: loadbalancer.NewLoadBalancerServiceInternal(svcClient),
 	}
 }
 

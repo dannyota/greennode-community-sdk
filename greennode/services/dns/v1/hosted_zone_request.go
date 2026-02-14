@@ -82,7 +82,7 @@ type ICreateHostedZoneRequest interface {
 	WithAssocVpcIds(assocVpcIds []string) ICreateHostedZoneRequest
 	WithType(zoneType HostedZoneType) ICreateHostedZoneRequest
 	WithDescription(description string) ICreateHostedZoneRequest
-	ToRequestBody(psc client.ServiceClient) map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -117,7 +117,7 @@ func (r *CreateHostedZoneRequest) WithDescription(description string) ICreateHos
 	return r
 }
 
-func (r *CreateHostedZoneRequest) ToRequestBody(psc client.ServiceClient) map[string]interface{} {
+func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
 	return map[string]interface{}{
 		"domainName":  r.DomainName,
 		"assocVpcIds": r.AssocVpcIds,
@@ -187,7 +187,7 @@ type IUpdateHostedZoneRequest interface {
 	WithHostedZoneId(hostedZoneId string) IUpdateHostedZoneRequest
 	WithAssocVpcIds(assocVpcIds []string) IUpdateHostedZoneRequest
 	WithDescription(description string) IUpdateHostedZoneRequest
-	ToRequestBody(psc client.ServiceClient) map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]interface{}
 	ToMap() map[string]interface{}
 
 	ParseUserAgent() string
@@ -220,7 +220,7 @@ func (r *UpdateHostedZoneRequest) WithDescription(description string) IUpdateHos
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) ToRequestBody(psc client.ServiceClient) map[string]interface{} {
+func (r *UpdateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
 	return map[string]interface{}{
 		"assocVpcIds": r.AssocVpcIds,
 		"description": r.Description,

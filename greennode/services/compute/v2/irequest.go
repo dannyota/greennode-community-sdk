@@ -2,37 +2,37 @@ package v2
 
 type ICreateServerRequest interface {
 	ToRequestBody() interface{}
-	WithRootDiskEncryptionType(pencryptionVolume DataDiskEncryptionType) ICreateServerRequest
-	WithEncryptionVolume(penabled bool) ICreateServerRequest
-	WithAutoRenew(pval bool) ICreateServerRequest
-	WithUserData(puserData string, pbase64Encode bool) ICreateServerRequest
-	WithTags(ptags ...string) ICreateServerRequest
-	WithAttachFloating(pattachFloating bool) ICreateServerRequest
-	WithSecgroups(psecgroups ...string) ICreateServerRequest
-	WithServerGroupId(pserverGroupId string) ICreateServerRequest
-	WithPoc(pisPoc bool) ICreateServerRequest
-	WithType(ptype string) ICreateServerRequest
-	WithNetwork(pnetworkId, psubnetId string) ICreateServerRequest
-	WithProduct(pproduct string) ICreateServerRequest
-	WithServerNetworkInterface(pprojectId, pnetworkId, psubnetId string, pattachFloating bool) ICreateServerRequest
-	WithZone(pzone string) ICreateServerRequest
-	AddUserAgent(pagent ...string) ICreateServerRequest
+	WithRootDiskEncryptionType(encryptionVolume DataDiskEncryptionType) ICreateServerRequest
+	WithEncryptionVolume(enabled bool) ICreateServerRequest
+	WithAutoRenew(val bool) ICreateServerRequest
+	WithUserData(userData string, base64Encode bool) ICreateServerRequest
+	WithTags(tags ...string) ICreateServerRequest
+	WithAttachFloating(attachFloating bool) ICreateServerRequest
+	WithSecgroups(secgroups ...string) ICreateServerRequest
+	WithServerGroupId(serverGroupId string) ICreateServerRequest
+	WithPoc(isPoc bool) ICreateServerRequest
+	WithType(typeVal string) ICreateServerRequest
+	WithNetwork(networkId, subnetId string) ICreateServerRequest
+	WithProduct(product string) ICreateServerRequest
+	WithServerNetworkInterface(projectId, networkId, subnetId string, attachFloating bool) ICreateServerRequest
+	WithZone(zone string) ICreateServerRequest
+	AddUserAgent(agent ...string) ICreateServerRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
 type IGetServerByIdRequest interface {
 	GetServerId() string
-	AddUserAgent(pagent ...string) IGetServerByIdRequest
+	AddUserAgent(agent ...string) IGetServerByIdRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
 type IDeleteServerByIdRequest interface {
 	GetServerId() string
-	WithDeleteAllVolume(pok bool) IDeleteServerByIdRequest
+	WithDeleteAllVolume(ok bool) IDeleteServerByIdRequest
 	ToRequestBody() interface{}
-	AddUserAgent(pagent ...string) IDeleteServerByIdRequest
+	AddUserAgent(agent ...string) IDeleteServerByIdRequest
 	ParseUserAgent() string
 }
 
@@ -40,7 +40,7 @@ type IUpdateServerSecgroupsByServerIdRequest interface {
 	GetServerId() string
 	ToRequestBody() interface{}
 	GetListSecgroupsIds() []string
-	AddUserAgent(pagent ...string) IUpdateServerSecgroupsByServerIdRequest
+	AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIdRequest
 	ParseUserAgent() string
 }
 
@@ -58,7 +58,7 @@ type IAttachFloatingIpRequest interface {
 	GetServerId() string
 	GetInternalNetworkInterfaceId() string
 	ToRequestBody() interface{}
-	AddUserAgent(pagent ...string) IAttachFloatingIpRequest
+	AddUserAgent(agent ...string) IAttachFloatingIpRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
@@ -68,26 +68,26 @@ type IDetachFloatingIpRequest interface {
 	GetWanId() string
 	GetServerId() string
 	ToRequestBody() interface{}
-	AddUserAgent(pagent ...string) IDetachFloatingIpRequest
+	AddUserAgent(agent ...string) IDetachFloatingIpRequest
 	ParseUserAgent() string
 	ToMap() map[string]interface{}
 }
 
 type IListServerGroupPoliciesRequest interface {
-	AddUserAgent(pagent ...string) IListServerGroupPoliciesRequest
+	AddUserAgent(agent ...string) IListServerGroupPoliciesRequest
 	ParseUserAgent() string
 }
 
 type IDeleteServerGroupByIdRequest interface {
-	AddUserAgent(pagent ...string) IDeleteServerGroupByIdRequest
+	AddUserAgent(agent ...string) IDeleteServerGroupByIdRequest
 	ParseUserAgent() string
 	GetServerGroupId() string
 	ToMap() map[string]interface{}
 }
 
 type IListServerGroupsRequest interface {
-	WithName(pname string) IListServerGroupsRequest
-	AddUserAgent(pagent ...string) IListServerGroupsRequest
+	WithName(name string) IListServerGroupsRequest
+	AddUserAgent(agent ...string) IListServerGroupsRequest
 	ToListQuery() (string, error)
 	ParseUserAgent() string
 	GetDefaultQuery() string
@@ -96,7 +96,7 @@ type IListServerGroupsRequest interface {
 
 type ICreateServerGroupRequest interface {
 	ParseUserAgent() string
-	AddUserAgent(pagent ...string) ICreateServerGroupRequest
+	AddUserAgent(agent ...string) ICreateServerGroupRequest
 	ToRequestBody() interface{}
 	ToMap() map[string]interface{}
 }

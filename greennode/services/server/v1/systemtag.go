@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error) {
+func (s *ServerServiceInternalV1) CreateSystemTags(opts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error) {
 
 	url := createSystemTagUrl(s.VServerClient)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -14,9 +14,9 @@ func (s *ServerServiceInternalV1) CreateSystemTags(popts ICreateSystemTagRequest
 	rawResp := new([]SystemTagResponse)
 
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJsonBody(popts.ToRequestBody()).
+		WithJsonBody(opts.ToRequestBody()).
 		WithJsonResponse(rawResp).
 		WithJsonError(errResp)
 

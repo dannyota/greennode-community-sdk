@@ -37,11 +37,11 @@ const (
 	defaultFakeDomainName = "nip.io"
 )
 
-func NewCreatePoolRequest(pname string, pprotocol PoolProtocol) ICreatePoolRequest {
+func NewCreatePoolRequest(name string, protocol PoolProtocol) ICreatePoolRequest {
 	opts := new(CreatePoolRequest)
-	opts.PoolName = pname
+	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
-	opts.PoolProtocol = pprotocol
+	opts.PoolProtocol = protocol
 	opts.Members = make([]IMemberRequest, 0)
 
 	return opts
@@ -63,46 +63,46 @@ func NewGetPoolHealthMonitorByIdRequest(lbID, poolID string) IGetPoolHealthMonit
 	return opts
 }
 
-func (s *GetPoolHealthMonitorByIdRequest) AddUserAgent(pagent ...string) IGetPoolHealthMonitorByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetPoolHealthMonitorByIdRequest) AddUserAgent(agent ...string) IGetPoolHealthMonitorByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func NewListPoolsByLoadBalancerIdRequest(plbId string) IListPoolsByLoadBalancerIdRequest {
+func NewListPoolsByLoadBalancerIdRequest(lbId string) IListPoolsByLoadBalancerIdRequest {
 	opts := new(ListPoolsByLoadBalancerIdRequest)
-	opts.LoadBalancerId = plbId
+	opts.LoadBalancerId = lbId
 
 	return opts
 }
 
-func NewUpdatePoolMembersRequest(plbId, ppoolId string) IUpdatePoolMembersRequest {
+func NewUpdatePoolMembersRequest(lbId, poolId string) IUpdatePoolMembersRequest {
 	opts := new(UpdatePoolMembersRequest)
-	opts.LoadBalancerId = plbId
-	opts.PoolId = ppoolId
+	opts.LoadBalancerId = lbId
+	opts.PoolId = poolId
 	opts.Members = make([]IMemberRequest, 0)
 
 	return opts
 }
 
-func NewListPoolMembersRequest(plbId, ppoolId string) IListPoolMembersRequest {
+func NewListPoolMembersRequest(lbId, poolId string) IListPoolMembersRequest {
 	opts := new(ListPoolMembersRequest)
-	opts.LoadBalancerId = plbId
-	opts.PoolId = ppoolId
+	opts.LoadBalancerId = lbId
+	opts.PoolId = poolId
 
 	return opts
 }
 
-func NewDeletePoolByIdRequest(plbId, ppoolId string) IDeletePoolByIdRequest {
+func NewDeletePoolByIdRequest(lbId, poolId string) IDeletePoolByIdRequest {
 	opts := new(DeletePoolByIdRequest)
-	opts.LoadBalancerId = plbId
-	opts.PoolId = ppoolId
+	opts.LoadBalancerId = lbId
+	opts.PoolId = poolId
 
 	return opts
 }
 
-func NewHealthMonitor(pcheckProtocol HealthCheckProtocol) IHealthMonitorRequest {
+func NewHealthMonitor(checkProtocol HealthCheckProtocol) IHealthMonitorRequest {
 	opts := new(HealthMonitor)
-	opts.HealthCheckProtocol = pcheckProtocol
+	opts.HealthCheckProtocol = checkProtocol
 	opts.HealthyThreshold = 3
 	opts.UnhealthyThreshold = 3
 	opts.Interval = 30
@@ -111,21 +111,21 @@ func NewHealthMonitor(pcheckProtocol HealthCheckProtocol) IHealthMonitorRequest 
 	return opts
 }
 
-func NewMember(pname, pipAddress string, pport int, pmonitorPort int) IMemberRequest {
+func NewMember(name, ipAddress string, port int, monitorPort int) IMemberRequest {
 	return &Member{
 		Backup:      false,
-		IpAddress:   pipAddress,
-		MonitorPort: pmonitorPort,
-		Name:        pname,
-		Port:        pport,
+		IpAddress:   ipAddress,
+		MonitorPort: monitorPort,
+		Name:        name,
+		Port:        port,
 		Weight:      1,
 	}
 }
 
-func NewGetPoolByIdRequest(plbId, ppoolId string) IGetPoolByIdRequest {
+func NewGetPoolByIdRequest(lbId, poolId string) IGetPoolByIdRequest {
 	opts := new(GetPoolByIdRequest)
-	opts.LoadBalancerId = plbId
-	opts.PoolId = ppoolId
+	opts.LoadBalancerId = lbId
+	opts.PoolId = poolId
 
 	return opts
 }
@@ -151,8 +151,8 @@ type CreatePoolRequest struct {
 	common.UserAgent
 }
 
-func (s *CreatePoolRequest) AddUserAgent(pagent ...string) ICreatePoolRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreatePoolRequest) AddUserAgent(agent ...string) ICreatePoolRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -179,8 +179,8 @@ type ListPoolMembersRequest struct {
 	common.PoolCommon
 }
 
-func (s *ListPoolMembersRequest) AddUserAgent(pagent ...string) IListPoolMembersRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListPoolMembersRequest) AddUserAgent(agent ...string) IListPoolMembersRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -190,8 +190,8 @@ type DeletePoolByIdRequest struct {
 	common.PoolCommon
 }
 
-func (s *DeletePoolByIdRequest) AddUserAgent(pagent ...string) IDeletePoolByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeletePoolByIdRequest) AddUserAgent(agent ...string) IDeletePoolByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -201,8 +201,8 @@ type GetPoolByIdRequest struct {
 	common.PoolCommon
 }
 
-func (s *GetPoolByIdRequest) AddUserAgent(pagent ...string) IGetPoolByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetPoolByIdRequest) AddUserAgent(agent ...string) IGetPoolByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -235,8 +235,8 @@ type ListPoolsByLoadBalancerIdRequest struct {
 	common.UserAgent
 }
 
-func (s *ListPoolsByLoadBalancerIdRequest) AddUserAgent(pagent ...string) IListPoolsByLoadBalancerIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListPoolsByLoadBalancerIdRequest) AddUserAgent(agent ...string) IListPoolsByLoadBalancerIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -248,8 +248,8 @@ type UpdatePoolMembersRequest struct {
 	common.PoolCommon
 }
 
-func (s *UpdatePoolMembersRequest) AddUserAgent(pagent ...string) IUpdatePoolMembersRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdatePoolMembersRequest) AddUserAgent(agent ...string) IUpdatePoolMembersRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -286,28 +286,28 @@ func (s *HealthMonitor) toRequestBody() IHealthMonitorRequest {
 	return s
 }
 
-func (s *HealthMonitor) AddUserAgent(pagent ...string) IHealthMonitorRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *HealthMonitor) AddUserAgent(agent ...string) IHealthMonitorRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *HealthMonitor) WithHealthCheckProtocol(pprotocol HealthCheckProtocol) IHealthMonitorRequest {
-	s.HealthCheckProtocol = pprotocol
+func (s *HealthMonitor) WithHealthCheckProtocol(protocol HealthCheckProtocol) IHealthMonitorRequest {
+	s.HealthCheckProtocol = protocol
 	return s
 }
 
-func (s *CreatePoolRequest) WithHealthMonitor(pmonitor IHealthMonitorRequest) ICreatePoolRequest {
-	s.HealthMonitor = pmonitor
+func (s *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
+	s.HealthMonitor = monitor
 	return s
 }
 
-func (s *CreatePoolRequest) WithMembers(pmembers ...IMemberRequest) ICreatePoolRequest {
-	s.Members = append(s.Members, pmembers...)
+func (s *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
+	s.Members = append(s.Members, members...)
 	return s
 }
 
-func (s *CreatePoolRequest) WithLoadBalancerId(plbId string) ICreatePoolRequest {
-	s.LoadBalancerId = plbId
+func (s *CreatePoolRequest) WithLoadBalancerId(lbId string) ICreatePoolRequest {
+	s.LoadBalancerId = lbId
 	return s
 }
 
@@ -329,8 +329,8 @@ func (s *CreatePoolRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *CreatePoolRequest) WithAlgorithm(palgorithm PoolAlgorithm) ICreatePoolRequest {
-	s.Algorithm = palgorithm
+func (s *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
+	s.Algorithm = algorithm
 	return s
 }
 
@@ -348,18 +348,18 @@ func (s *UpdatePoolRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *UpdatePoolRequest) WithAlgorithm(palgorithm PoolAlgorithm) IUpdatePoolRequest {
-	s.Algorithm = palgorithm
+func (s *UpdatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) IUpdatePoolRequest {
+	s.Algorithm = algorithm
 	return s
 }
 
-func (s *UpdatePoolRequest) WithHealthMonitor(pmonitor IHealthMonitorRequest) IUpdatePoolRequest {
-	s.HealthMonitor = pmonitor
+func (s *UpdatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) IUpdatePoolRequest {
+	s.HealthMonitor = monitor
 	return s
 }
 
-func (s *UpdatePoolRequest) WithLoadBalancerId(plbId string) IUpdatePoolRequest {
-	s.LoadBalancerId = plbId
+func (s *UpdatePoolRequest) WithLoadBalancerId(lbId string) IUpdatePoolRequest {
+	s.LoadBalancerId = lbId
 	return s
 }
 
@@ -373,8 +373,8 @@ func (s *UpdatePoolRequest) WithStickiness(v *bool) IUpdatePoolRequest {
 	return s
 }
 
-func (s *UpdatePoolRequest) AddUserAgent(pagent ...string) IUpdatePoolRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *UpdatePoolRequest) AddUserAgent(agent ...string) IUpdatePoolRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -382,64 +382,64 @@ func (s *HealthMonitor) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *HealthMonitor) WithHealthyThreshold(pht int) IHealthMonitorRequest {
-	if pht < 1 {
-		pht = 3
+func (s *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
+	if ht < 1 {
+		ht = 3
 	}
 
-	s.HealthyThreshold = pht
+	s.HealthyThreshold = ht
 	return s
 }
 
-func (s *HealthMonitor) WithUnhealthyThreshold(puht int) IHealthMonitorRequest {
-	if puht < 1 {
-		puht = 3
+func (s *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
+	if uht < 1 {
+		uht = 3
 	}
 
-	s.UnhealthyThreshold = puht
+	s.UnhealthyThreshold = uht
 	return s
 }
 
-func (s *HealthMonitor) WithInterval(pinterval int) IHealthMonitorRequest {
-	if pinterval < 1 {
-		pinterval = 30
+func (s *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
+	if interval < 1 {
+		interval = 30
 	}
 
-	s.Interval = pinterval
+	s.Interval = interval
 	return s
 }
 
-func (s *HealthMonitor) WithTimeout(pto int) IHealthMonitorRequest {
-	if pto < 1 {
-		pto = 5
+func (s *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
+	if to < 1 {
+		to = 5
 	}
 
-	s.Timeout = pto
+	s.Timeout = to
 	return s
 }
 
-func (s *HealthMonitor) WithHealthCheckMethod(pmethod *HealthCheckMethod) IHealthMonitorRequest {
-	s.HealthCheckMethod = pmethod
+func (s *HealthMonitor) WithHealthCheckMethod(method *HealthCheckMethod) IHealthMonitorRequest {
+	s.HealthCheckMethod = method
 	return s
 }
 
-func (s *HealthMonitor) WithHttpVersion(pversion *HealthCheckHttpVersion) IHealthMonitorRequest {
-	s.HttpVersion = pversion
+func (s *HealthMonitor) WithHttpVersion(version *HealthCheckHttpVersion) IHealthMonitorRequest {
+	s.HttpVersion = version
 	return s
 }
 
-func (s *HealthMonitor) WithHealthCheckPath(ppath *string) IHealthMonitorRequest {
-	s.HealthCheckPath = ppath
+func (s *HealthMonitor) WithHealthCheckPath(path *string) IHealthMonitorRequest {
+	s.HealthCheckPath = path
 	return s
 }
 
-func (s *HealthMonitor) WithDomainName(pdomain *string) IHealthMonitorRequest {
-	s.DomainName = pdomain
+func (s *HealthMonitor) WithDomainName(domain *string) IHealthMonitorRequest {
+	s.DomainName = domain
 	return s
 }
 
-func (s *HealthMonitor) WithSuccessCode(pcode *string) IHealthMonitorRequest {
-	s.SuccessCode = pcode
+func (s *HealthMonitor) WithSuccessCode(code *string) IHealthMonitorRequest {
+	s.SuccessCode = code
 	return s
 }
 
@@ -473,8 +473,8 @@ func (s *Member) ToMap() map[string]interface{} {
 	}
 }
 
-func (s *UpdatePoolMembersRequest) WithMembers(pmembers ...IMemberRequest) IUpdatePoolMembersRequest {
-	s.Members = append(s.Members, pmembers...)
+func (s *UpdatePoolMembersRequest) WithMembers(members ...IMemberRequest) IUpdatePoolMembersRequest {
+	s.Members = append(s.Members, members...)
 	return s
 }
 

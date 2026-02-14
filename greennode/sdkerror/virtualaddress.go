@@ -19,64 +19,64 @@ var (
 	regexErrorVirtualAddressInUse    = regexp.MustCompile(patternVirtualAddressInUse)
 )
 
-func WithErrorVirtualAddressNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVirtualAddressNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorVirtualAddressNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorAddressPairNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorAddressPairNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorAddressPairNotFound.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorVirtualAddressExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVirtualAddressExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVirtualAddressExceedQuota) {
 			sdkError.WithErrorCode(EcVServerVirtualAddressExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}
 }
 
-func WithErrorVirtualAddressInUse(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorVirtualAddressInUse(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if strings.Contains(errMsg, patternVirtualAddressInUse) ||
 			regexErrorVirtualAddressInUse.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcVServerVirtualAddressInUse).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError()).
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}

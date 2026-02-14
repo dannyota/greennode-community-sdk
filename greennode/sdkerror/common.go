@@ -20,14 +20,14 @@ var (
 	regexErrorProjectConflict = regexp.MustCompile(patternProjectConflict)
 )
 
-func ErrorHandler(perr error, popts ...func(psdkErr Error)) Error {
+func ErrorHandler(err error, opts ...func(psdkErr Error)) Error {
 	sdkErr := &SdkError{
-		error:     perr,
+		error:     err,
 		errorCode: EcUnknownError,
 		message:   "Unknown error",
 	}
 
-	if perr != nil && strings.Contains(strings.ToLower(strings.TrimSpace(perr.Error())), patternServiceMaintenance) {
+	if err != nil && strings.Contains(strings.ToLower(strings.TrimSpace(err.Error())), patternServiceMaintenance) {
 		sdkErr.errorCode = EcServiceMaintenance
 		sdkErr.message = "Service Maintenance"
 		sdkErr.error = fmt.Errorf("service is under maintenance")
@@ -35,41 +35,41 @@ func ErrorHandler(perr error, popts ...func(psdkErr Error)) Error {
 		return sdkErr
 	}
 
-	for _, opt := range popts {
+	for _, opt := range opts {
 		opt(sdkErr)
 		if sdkErr.errorCode != EcUnknownError {
 			return sdkErr
 		}
 	}
 
-	sdkErr.error = perr
+	sdkErr.error = err
 	sdkErr.message = ""
 
 	return sdkErr
 }
 
-func SdkErrorHandler(psdkErr Error, perrResp ErrorResponse, popts ...func(psdkErr Error)) Error {
-	if psdkErr == nil && perrResp == nil {
+func SdkErrorHandler(sdkErr Error, errResp ErrorResponse, opts ...func(psdkErr Error)) Error {
+	if sdkErr == nil && errResp == nil {
 		return nil
 	}
 
-	if psdkErr != nil && psdkErr.GetErrorCode() != EcUnknownError {
-		return psdkErr
+	if sdkErr != nil && sdkErr.GetErrorCode() != EcUnknownError {
+		return sdkErr
 	}
 
 	// Fill the default error
-	if perrResp != nil {
-		psdkErr.WithErrorCode(EcUnknownError).WithMessage(perrResp.GetMessage()).WithErrors(perrResp.GetError())
+	if errResp != nil {
+		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.GetError())
 	}
 
-	for _, opt := range popts {
-		opt(psdkErr)
-		if psdkErr.GetErrorCode() != EcUnknownError {
-			return psdkErr
+	for _, opt := range opts {
+		opt(sdkErr)
+		if sdkErr.GetErrorCode() != EcUnknownError {
+			return sdkErr
 		}
 	}
 
-	return psdkErr
+	return sdkErr
 }
 
 func WithErrorInternalServerError() func(Error) {
@@ -96,67 +96,67 @@ func WithErrorPermissionDenied() func(Error) {
 	}
 }
 
-func WithErrorPurchaseIssue(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorPurchaseIssue(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPurchaseIssue) {
 			sdkError.WithErrorCode(EcPurchaseIssue).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatPurchase)
 		}
 	}
 }
 
-func WithErrorTagKeyInvalid(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorTagKeyInvalid(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternTagKeyInvalid) {
 			sdkError.WithErrorCode(EcTagKeyInvalid).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorPagingInvalid(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorPagingInvalid(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPagingInvalid) {
 			sdkError.WithErrorCode(EcPagingInvalid).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorUnexpected(presponse *req.Response) func(Error) {
+func WithErrorUnexpected(response *req.Response) func(Error) {
 	statusCode := 0
 	url := ""
 	err := fmt.Errorf("unexpected error from making request to external service")
-	if presponse != nil {
-		if presponse.Response != nil && presponse.StatusCode != 0 {
-			statusCode = presponse.StatusCode
+	if response != nil {
+		if response.Response != nil && response.StatusCode != 0 {
+			statusCode = response.StatusCode
 		}
 
-		if presponse.Request != nil && presponse.Request.URL != nil {
-			url = presponse.Request.URL.String()
+		if response.Request != nil && response.Request.URL != nil {
+			url = response.Request.URL.String()
 		}
 
-		if presponse.Err != nil {
-			err = presponse.Err
+		if response.Err != nil {
+			err = response.Err
 		}
 	}
 
@@ -171,47 +171,47 @@ func WithErrorUnexpected(presponse *req.Response) func(Error) {
 	}
 }
 
-func WithErrorPaymentMethodNotAllow(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorPaymentMethodNotAllow(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if strings.Contains(errMsg, "ext_pm_payment_method_not_allow") {
 			sdkError.WithErrorCode(EcPaymentMethodNotAllow).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorCreditNotEnough(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorCreditNotEnough(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if strings.Contains(errMsg, "ext_pm_credit_not_enough") {
 			sdkError.WithErrorCode(EcCreditNotEnough).
-				WithMessage(perrResp.GetMessage()).
-				WithErrors(perrResp.GetError())
+				WithMessage(errResp.GetMessage()).
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorProjectConflict(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorProjectConflict(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := strings.ToLower(strings.TrimSpace(perrResp.GetMessage()))
+		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
 		if regexErrorProjectConflict.FindString(errMsg) != "" {
 			sdkError.WithErrorCode(EcProjectConflict).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }

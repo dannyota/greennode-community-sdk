@@ -53,10 +53,10 @@ func (s *ListEndpoints) Len() int {
 	return len(s.Items)
 }
 
-func (s *ListEndpoints) At(pidx int) *Endpoint {
-	if pidx < 0 || pidx >= s.Len() {
+func (s *ListEndpoints) At(idx int) *Endpoint {
+	if idx < 0 || idx >= s.Len() {
 		return nil
 	}
 
-	return s.Items[pidx]
+	return s.Items[idx]
 }

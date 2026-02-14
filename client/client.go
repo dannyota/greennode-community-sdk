@@ -34,9 +34,9 @@ type (
 	}
 )
 
-func NewClient(pctx context.Context) Client {
+func NewClient(ctx context.Context) Client {
 	c := new(client)
-	c.context = pctx
+	c.context = ctx
 
 	return c
 }
@@ -45,64 +45,64 @@ func NewSdkConfigure() SdkConfigure {
 	return &sdkConfigure{}
 }
 
-func (s *client) WithHttpClient(pclient svcclient.HttpClient) Client {
-	s.httpClient = pclient
+func (s *client) WithHttpClient(client svcclient.HttpClient) Client {
+	s.httpClient = client
 	return s
 }
 
-func (s *client) WithContext(pctx context.Context) Client {
-	s.context = pctx
+func (s *client) WithContext(ctx context.Context) Client {
+	s.context = ctx
 	return s
 }
 
-func (s *client) WithAuthOption(pauthOpts svcclient.AuthOpts, pauthConfig SdkConfigure) Client {
+func (s *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfigure) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
-	s.authOpt = pauthOpts // Assign the auth option to the client
+	s.authOpt = authOpts // Assign the auth option to the client
 
-	switch pauthOpts {
+	switch authOpts {
 	case svcclient.IamOauth2:
-		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
+		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	default:
-		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(pauthConfig)).
+		s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(authConfig)).
 			WithKvDefaultHeaders("Content-Type", "application/json")
 	}
 
 	return s
 }
 
-func (s *client) WithRetryCount(pretry int) Client {
+func (s *client) WithRetryCount(retry int) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
-	s.httpClient.WithRetryCount(pretry)
+	s.httpClient.WithRetryCount(retry)
 	return s
 }
 
-func (s *client) WithKvDefaultHeaders(pargs ...string) Client {
+func (s *client) WithKvDefaultHeaders(args ...string) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
-	s.httpClient.WithKvDefaultHeaders(pargs...)
+	s.httpClient.WithKvDefaultHeaders(args...)
 	return s
 }
 
-func (s *client) WithSleep(psleep time.Duration) Client {
+func (s *client) WithSleep(sleep time.Duration) Client {
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
-	s.httpClient.WithSleep(psleep)
+	s.httpClient.WithSleep(sleep)
 	return s
 }
 
-func (s *client) WithProjectId(pprojectId string) Client {
-	s.projectId = pprojectId
+func (s *client) WithProjectId(projectId string) Client {
+	s.projectId = projectId
 	if s.httpClient == nil {
 		return s
 	}
@@ -138,8 +138,8 @@ func (s *client) WithProjectId(pprojectId string) Client {
 	return s
 }
 
-func (s *client) WithUserId(puserId string) Client {
-	s.userId = puserId
+func (s *client) WithUserId(userId string) Client {
+	s.userId = userId
 	if s.vnetworkGateway != nil {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
 			s.vnetworkGateway.GetEndpoint(),
@@ -153,54 +153,54 @@ func (s *client) WithUserId(puserId string) Client {
 	return s
 }
 
-func (s *client) Configure(psdkCfg SdkConfigure) Client {
-	s.projectId = psdkCfg.GetProjectId()
-	s.userId = psdkCfg.GetUserId()
+func (s *client) Configure(sdkCfg SdkConfigure) Client {
+	s.projectId = sdkCfg.GetProjectId()
+	s.userId = sdkCfg.GetUserId()
 	if s.httpClient == nil {
 		s.httpClient = svcclient.NewHttpClient(s.context)
 	}
 
-	if s.iamGateway == nil && psdkCfg.GetIamEndpoint() != "" {
-		s.iamGateway = gateway.NewIamGateway(psdkCfg.GetIamEndpoint(), s.projectId, s.httpClient)
+	if s.iamGateway == nil && sdkCfg.GetIamEndpoint() != "" {
+		s.iamGateway = gateway.NewIamGateway(sdkCfg.GetIamEndpoint(), s.projectId, s.httpClient)
 	}
 
-	if s.vserverGateway == nil && psdkCfg.GetVServerEndpoint() != "" {
+	if s.vserverGateway == nil && sdkCfg.GetVServerEndpoint() != "" {
 		s.vserverGateway = gateway.NewVServerGateway(
-			psdkCfg.GetVServerEndpoint(),
+			sdkCfg.GetVServerEndpoint(),
 			s.projectId,
 			s.httpClient,
 		)
 	}
 
-	if s.vlbGateway == nil && psdkCfg.GetVLBEndpoint() != "" && psdkCfg.GetVServerEndpoint() != "" {
+	if s.vlbGateway == nil && sdkCfg.GetVLBEndpoint() != "" && sdkCfg.GetVServerEndpoint() != "" {
 		s.vlbGateway = gateway.NewVLBGateway(
-			psdkCfg.GetVLBEndpoint(),
-			psdkCfg.GetVServerEndpoint(),
+			sdkCfg.GetVLBEndpoint(),
+			sdkCfg.GetVServerEndpoint(),
 			s.projectId,
 			s.httpClient,
 		)
 	}
 
-	if s.vnetworkGateway == nil && psdkCfg.GetVNetworkEndpoint() != "" {
+	if s.vnetworkGateway == nil && sdkCfg.GetVNetworkEndpoint() != "" {
 		s.vnetworkGateway = gateway.NewVNetworkGateway(
-			psdkCfg.GetVNetworkEndpoint(),
-			psdkCfg.GetZoneId(),
+			sdkCfg.GetVNetworkEndpoint(),
+			sdkCfg.GetZoneId(),
 			s.projectId,
 			s.userId,
 			s.httpClient,
 		)
 	}
 
-	if s.glbGateway == nil && psdkCfg.GetGLBEndpoint() != "" {
-		s.glbGateway = gateway.NewGLBGateway(psdkCfg.GetGLBEndpoint(), s.httpClient)
+	if s.glbGateway == nil && sdkCfg.GetGLBEndpoint() != "" {
+		s.glbGateway = gateway.NewGLBGateway(sdkCfg.GetGLBEndpoint(), s.httpClient)
 	}
 
-	if s.vdnsGateway == nil && psdkCfg.GetVDnsEndpoint() != "" {
-		s.vdnsGateway = gateway.NewVDnsGateway(psdkCfg.GetVDnsEndpoint(), s.projectId, s.httpClient)
+	if s.vdnsGateway == nil && sdkCfg.GetVDnsEndpoint() != "" {
+		s.vdnsGateway = gateway.NewVDnsGateway(sdkCfg.GetVDnsEndpoint(), s.projectId, s.httpClient)
 	}
 
-	s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(psdkCfg))
-	s.userAgent = psdkCfg.GetUserAgent()
+	s.httpClient.WithReauthFunc(svcclient.IamOauth2, s.usingIamOauth2AsAuthOption(sdkCfg))
+	s.userAgent = sdkCfg.GetUserAgent()
 
 	return s
 }
@@ -233,10 +233,10 @@ func (s *client) VDnsGateway() gateway.VDnsGateway {
 	return s.vdnsGateway
 }
 
-func (s *client) usingIamOauth2AsAuthOption(pauthConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
+func (s *client) usingIamOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
 	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
 		token, err := s.iamGateway.V2().IdentityService().GetAccessToken(
-			identityv2.NewGetAccessTokenRequest(pauthConfig.GetClientId(), pauthConfig.GetClientSecret()))
+			identityv2.NewGetAccessTokenRequest(authConfig.GetClientId(), authConfig.GetClientSecret()))
 		if err != nil {
 			return nil, err
 		}

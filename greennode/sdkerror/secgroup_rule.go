@@ -8,47 +8,47 @@ const (
 	patternSecgroupRuleExceedQuota = "exceeded secgroup_rule quota"
 )
 
-func WithErrorSecgroupRuleNotFound(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupRuleNotFound(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupRuleNotFound) {
 			sdkError.WithErrorCode(EcVServerSecgroupRuleNotFound).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorSecgroupRuleAlreadyExists(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupRuleAlreadyExists(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupRuleExists) {
 			sdkError.WithErrorCode(EcVServerSecgroupRuleAlreadyExists).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError())
+				WithErrors(errResp.GetError())
 		}
 	}
 }
 
-func WithErrorSecgroupRuleExceedQuota(perrResp ErrorResponse) func(sdkError Error) {
+func WithErrorSecgroupRuleExceedQuota(errResp ErrorResponse) func(sdkError Error) {
 	return func(sdkError Error) {
-		if perrResp == nil {
+		if errResp == nil {
 			return
 		}
 
-		errMsg := perrResp.GetMessage()
+		errMsg := errResp.GetMessage()
 		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSecgroupRuleExceedQuota) {
 			sdkError.WithErrorCode(EcVServerSecgroupRuleExceedQuota).
 				WithMessage(errMsg).
-				WithErrors(perrResp.GetError()).
+				WithErrors(errResp.GetError()).
 				WithErrorCategories(ErrCatQuota)
 		}
 	}

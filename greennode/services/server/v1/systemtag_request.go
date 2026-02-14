@@ -23,8 +23,8 @@ func (s *CreateSystemTagRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateSystemTagRequest) AddUserAgent(pagent ...string) ICreateSystemTagRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateSystemTagRequest) AddUserAgent(agent ...string) ICreateSystemTagRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -36,13 +36,13 @@ func (s *CreateSystemTagRequest) GetResourceType() ResourceType {
 	return s.ResourceType
 }
 
-func (s *CreateSystemTagRequest) AddTag(pkey, pvalue string) ICreateSystemTagRequest {
+func (s *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagRequest {
 	s.Tags = append(s.Tags, struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`
 	}{
-		Key:   pkey,
-		Value: pvalue,
+		Key:   key,
+		Value: value,
 	})
 
 	return s

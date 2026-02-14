@@ -6,8 +6,8 @@ type ListSecgroupRequest struct {
 	common.UserAgent
 }
 
-func (s *ListSecgroupRequest) AddUserAgent(pagent ...string) IListSecgroupRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListSecgroupRequest) AddUserAgent(agent ...string) IListSecgroupRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -16,8 +16,8 @@ type DeleteSecgroupByIdRequest struct { //______________________________________
 	common.SecgroupCommon
 }
 
-func (s *DeleteSecgroupByIdRequest) AddUserAgent(pagent ...string) IDeleteSecgroupByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteSecgroupByIdRequest) AddUserAgent(agent ...string) IDeleteSecgroupByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -32,8 +32,8 @@ func (s *CreateSecgroupRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateSecgroupRequest) AddUserAgent(pagent ...string) ICreateSecgroupRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateSecgroupRequest) AddUserAgent(agent ...string) ICreateSecgroupRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -46,7 +46,7 @@ type GetSecgroupByIdRequest struct { //_________________________________________
 	common.UserAgent
 }
 
-func (s *GetSecgroupByIdRequest) AddUserAgent(pagent ...string) IGetSecgroupByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetSecgroupByIdRequest) AddUserAgent(agent ...string) IGetSecgroupByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

@@ -46,13 +46,13 @@ func (s *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]interface{}
 	}
 }
 
-func (s *CreateVirtualAddressCrossProjectRequest) AddUserAgent(pagent ...string) ICreateVirtualAddressCrossProjectRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *CreateVirtualAddressCrossProjectRequest) AddUserAgent(agent ...string) ICreateVirtualAddressCrossProjectRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
-func (s *CreateVirtualAddressCrossProjectRequest) WithDescription(pdescription string) ICreateVirtualAddressCrossProjectRequest {
-	s.Description = pdescription
+func (s *CreateVirtualAddressCrossProjectRequest) WithDescription(description string) ICreateVirtualAddressCrossProjectRequest {
+	s.Description = description
 	return s
 }
 
@@ -62,8 +62,8 @@ type DeleteVirtualAddressByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *DeleteVirtualAddressByIdRequest) AddUserAgent(pagent ...string) IDeleteVirtualAddressByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *DeleteVirtualAddressByIdRequest) AddUserAgent(agent ...string) IDeleteVirtualAddressByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -80,8 +80,8 @@ type GetVirtualAddressByIdRequest struct {
 	common.UserAgent
 }
 
-func (s *GetVirtualAddressByIdRequest) AddUserAgent(pagent ...string) IGetVirtualAddressByIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *GetVirtualAddressByIdRequest) AddUserAgent(agent ...string) IGetVirtualAddressByIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 
@@ -98,8 +98,8 @@ type ListAddressPairsByVirtualAddressIdRequest struct {
 	common.UserAgent
 }
 
-func (s *ListAddressPairsByVirtualAddressIdRequest) AddUserAgent(pagent ...string) IListAddressPairsByVirtualAddressIdRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListAddressPairsByVirtualAddressIdRequest) AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIdRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }
 

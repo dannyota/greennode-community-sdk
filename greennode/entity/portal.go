@@ -37,10 +37,10 @@ func NewListPortals() *ListPortals {
 	}
 }
 
-func (s *ListPortals) At(pindex int) *Portal {
-	if pindex < 0 || pindex >= len(s.Items) {
+func (s *ListPortals) At(index int) *Portal {
+	if index < 0 || index >= len(s.Items) {
 		return nil
 	}
 
-	return s.Items[pindex]
+	return s.Items[index]
 }

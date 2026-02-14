@@ -1,13 +1,13 @@
 package inter
 
-func NewCreateLoadBalancerRequest(puserId, pname, ppackageId, pbeSubnetId, psubnetId string) ICreateLoadBalancerRequest {
+func NewCreateLoadBalancerRequest(userId, name, packageId, beSubnetId, subnetId string) ICreateLoadBalancerRequest {
 	opt := new(CreateLoadBalancerRequest)
-	opt.SetPortalUserId(puserId)
-	opt.Name = pname
-	opt.PackageID = ppackageId
+	opt.SetPortalUserId(userId)
+	opt.Name = name
+	opt.PackageID = packageId
 	opt.Scheme = InterVpcLoadBalancerScheme
-	opt.BackEndSubnetId = pbeSubnetId
-	opt.SubnetID = psubnetId
+	opt.BackEndSubnetId = beSubnetId
+	opt.SubnetID = subnetId
 	opt.Type = CreateOptsTypeOptLayer4
 	return opt
 }

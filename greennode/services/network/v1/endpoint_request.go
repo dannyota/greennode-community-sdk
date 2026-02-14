@@ -27,8 +27,8 @@ type GetEndpointByIdRequest struct {
 	common.EndpointCommon
 }
 
-func (s *GetEndpointByIdRequest) AddUserAgent(pagent ...string) IGetEndpointByIdRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *GetEndpointByIdRequest) AddUserAgent(agent ...string) IGetEndpointByIdRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -93,43 +93,43 @@ func (s *CreateEndpointRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *CreateEndpointRequest) AddUserAgent(pagent ...string) ICreateEndpointRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *CreateEndpointRequest) AddUserAgent(agent ...string) ICreateEndpointRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
-func (s *CreateEndpointRequest) ToRequestBody(psvc client.ServiceClient) interface{} {
+func (s *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) interface{} {
 	s.ResourceType = "endpoint"
 	s.Action = "create"
 	s.ResourceInfo.EnableAZ = true
-	s.ResourceInfo.RegionUuid = psvc.GetZoneId()
-	s.ResourceInfo.ProjectUuid = psvc.GetProjectId()
+	s.ResourceInfo.RegionUuid = svc.GetZoneId()
+	s.ResourceInfo.ProjectUuid = svc.GetProjectId()
 
 	return s
 }
 
-func (s *CreateEndpointRequest) WithEndpointName(pendpointName string) ICreateEndpointRequest {
-	s.ResourceInfo.EndpointName = pendpointName
+func (s *CreateEndpointRequest) WithEndpointName(endpointName string) ICreateEndpointRequest {
+	s.ResourceInfo.EndpointName = endpointName
 	return s
 }
 
-func (s *CreateEndpointRequest) WithCategoryUuid(pcategoryUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.CategoryUuid = pcategoryUuid
+func (s *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) ICreateEndpointRequest {
+	s.ResourceInfo.CategoryUuid = categoryUuid
 	return s
 }
 
-func (s *CreateEndpointRequest) WithServiceUuid(pserviceUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.ServiceUuid = pserviceUuid
+func (s *CreateEndpointRequest) WithServiceUuid(serviceUuid string) ICreateEndpointRequest {
+	s.ResourceInfo.ServiceUuid = serviceUuid
 	return s
 }
 
-func (s *CreateEndpointRequest) WithPackageUuid(ppackageUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.PackageUuid = ppackageUuid
+func (s *CreateEndpointRequest) WithPackageUuid(packageUuid string) ICreateEndpointRequest {
+	s.ResourceInfo.PackageUuid = packageUuid
 	return s
 }
 
-func (s *CreateEndpointRequest) WithVpcUuid(pvpcUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.VpcUuid = pvpcUuid
+func (s *CreateEndpointRequest) WithVpcUuid(vpcUuid string) ICreateEndpointRequest {
+	s.ResourceInfo.VpcUuid = vpcUuid
 	return s
 }
 
@@ -142,33 +142,33 @@ func (s *CreateEndpointRequest) GetPortalUserId() string {
 	return s.ResourceInfo.PortalUserId
 }
 
-func (s *CreateEndpointRequest) WithSubnetUuid(psubnetUuid string) ICreateEndpointRequest {
-	s.ResourceInfo.SubnetUuid = psubnetUuid
+func (s *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) ICreateEndpointRequest {
+	s.ResourceInfo.SubnetUuid = subnetUuid
 	return s
 }
 
-func (s *CreateEndpointRequest) WithDescription(pdesp string) ICreateEndpointRequest {
-	s.ResourceInfo.Description = pdesp
+func (s *CreateEndpointRequest) WithDescription(desp string) ICreateEndpointRequest {
+	s.ResourceInfo.Description = desp
 	return s
 }
 
-func (s *CreateEndpointRequest) WithPoc(pyes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsPoc = pyes
+func (s *CreateEndpointRequest) WithPoc(yes bool) ICreateEndpointRequest {
+	s.ResourceInfo.IsPoc = yes
 	return s
 }
 
-func (s *CreateEndpointRequest) WithEnableDnsName(pyes bool) ICreateEndpointRequest {
-	s.ResourceInfo.EnableDnsName = pyes
+func (s *CreateEndpointRequest) WithEnableDnsName(yes bool) ICreateEndpointRequest {
+	s.ResourceInfo.EnableDnsName = yes
 	return s
 }
 
-func (s *CreateEndpointRequest) WithBuyMorePoc(pyes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsBuyMorePoc = pyes
+func (s *CreateEndpointRequest) WithBuyMorePoc(yes bool) ICreateEndpointRequest {
+	s.ResourceInfo.IsBuyMorePoc = yes
 	return s
 }
 
-func (s *CreateEndpointRequest) WithEnableAutoRenew(pyes bool) ICreateEndpointRequest {
-	s.ResourceInfo.IsEnableAutoRenew = pyes
+func (s *CreateEndpointRequest) WithEnableAutoRenew(yes bool) ICreateEndpointRequest {
+	s.ResourceInfo.IsEnableAutoRenew = yes
 	return s
 }
 
@@ -205,14 +205,14 @@ type DeleteEndpointByIdRequest struct {
 	common.EndpointCommon
 }
 
-func (s *DeleteEndpointByIdRequest) AddUserAgent(pagent ...string) IDeleteEndpointByIdRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *DeleteEndpointByIdRequest) AddUserAgent(agent ...string) IDeleteEndpointByIdRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
-func (s *DeleteEndpointByIdRequest) ToRequestBody(psvc client.ServiceClient) interface{} {
-	s.ProjectUuid = psvc.GetProjectId()
-	s.RegionUuid = psvc.GetZoneId()
+func (s *DeleteEndpointByIdRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+	s.ProjectUuid = svc.GetProjectId()
+	s.RegionUuid = svc.GetZoneId()
 
 	return s
 }
@@ -256,23 +256,23 @@ func (s *ListEndpointsRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *ListEndpointsRequest) WithPage(ppage int) IListEndpointsRequest {
-	s.Page = ppage
+func (s *ListEndpointsRequest) WithPage(page int) IListEndpointsRequest {
+	s.Page = page
 	return s
 }
 
-func (s *ListEndpointsRequest) WithSize(psize int) IListEndpointsRequest {
-	s.Size = psize
+func (s *ListEndpointsRequest) WithSize(size int) IListEndpointsRequest {
+	s.Size = size
 	return s
 }
 
-func (s *ListEndpointsRequest) WithVpcId(pvpcId string) IListEndpointsRequest {
-	s.VpcId = pvpcId
+func (s *ListEndpointsRequest) WithVpcId(vpcId string) IListEndpointsRequest {
+	s.VpcId = vpcId
 	return s
 }
 
-func (s *ListEndpointsRequest) WithUuid(puuid string) IListEndpointsRequest {
-	s.Uuid = puuid
+func (s *ListEndpointsRequest) WithUuid(uuid string) IListEndpointsRequest {
+	s.Uuid = uuid
 	return s
 }
 
@@ -299,8 +299,8 @@ func (s *ListEndpointsRequest) GetDefaultQuery() string {
 	return query
 }
 
-func (s *ListEndpointsRequest) AddUserAgent(pagent ...string) IListEndpointsRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *ListEndpointsRequest) AddUserAgent(agent ...string) IListEndpointsRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -349,8 +349,8 @@ func (s *ListTagsByEndpointIdRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *ListTagsByEndpointIdRequest) AddUserAgent(pagent ...string) IListTagsByEndpointIdRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *ListTagsByEndpointIdRequest) AddUserAgent(agent ...string) IListTagsByEndpointIdRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -385,8 +385,8 @@ func (s *CreateTagsWithEndpointIdRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *CreateTagsWithEndpointIdRequest) AddUserAgent(pagent ...string) ICreateTagsWithEndpointIdRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *CreateTagsWithEndpointIdRequest) AddUserAgent(agent ...string) ICreateTagsWithEndpointIdRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -394,13 +394,13 @@ func (s *CreateTagsWithEndpointIdRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *CreateTagsWithEndpointIdRequest) AddTag(pkey, pvalue string) ICreateTagsWithEndpointIdRequest {
+func (s *CreateTagsWithEndpointIdRequest) AddTag(key, value string) ICreateTagsWithEndpointIdRequest {
 	s.Tags = append(s.Tags, struct {
 		TagKey   string `json:"tagKey"`
 		TagValue string `json:"tagValue"`
 	}{
-		TagKey:   pkey,
-		TagValue: pvalue,
+		TagKey:   key,
+		TagValue: value,
 	})
 
 	return s
@@ -436,8 +436,8 @@ func (s *DeleteTagOfEndpointRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *DeleteTagOfEndpointRequest) AddUserAgent(pagent ...string) IDeleteTagOfEndpointRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -477,8 +477,8 @@ func (s *UpdateTagValueOfEndpointRequest) ToMap() map[string]interface{} {
 	return res
 }
 
-func (s *UpdateTagValueOfEndpointRequest) AddUserAgent(pagent ...string) IUpdateTagValueOfEndpointRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 

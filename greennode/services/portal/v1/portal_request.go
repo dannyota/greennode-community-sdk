@@ -14,7 +14,7 @@ type ListProjectsRequest struct {
 	common.UserAgent
 }
 
-func (s *ListProjectsRequest) AddUserAgent(pagent ...string) IListProjectsRequest {
-	s.UserAgent.AddUserAgent(pagent...)
+func (s *ListProjectsRequest) AddUserAgent(agent ...string) IListProjectsRequest {
+	s.UserAgent.AddUserAgent(agent...)
 	return s
 }

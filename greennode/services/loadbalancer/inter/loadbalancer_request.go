@@ -28,8 +28,8 @@ type CreateLoadBalancerRequest struct {
 	Type            LoadBalancerType       `json:"type"`
 	Listener        ICreateListenerRequest `json:"listener,omitempty"`
 	Pool            ICreatePoolRequest     `json:"pool,omitempty"`
-	Tags            []common.Tag         `json:"tags,omitempty"`
-	ZoneId          *common.Zone         `json:"zoneId,omitempty"`
+	Tags            []common.Tag           `json:"tags,omitempty"`
+	ZoneId          *common.Zone           `json:"zoneId,omitempty"`
 
 	common.PortalUser
 	common.UserAgent
@@ -61,13 +61,13 @@ func (s *CreateLoadBalancerRequest) ToRequestBody() interface{} {
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithProjectId(pprojectId string) ICreateLoadBalancerRequest {
-	s.ProjectId = pprojectId
+func (s *CreateLoadBalancerRequest) WithProjectId(projectId string) ICreateLoadBalancerRequest {
+	s.ProjectId = projectId
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) AddUserAgent(pagent ...string) ICreateLoadBalancerRequest {
-	s.Agent = append(s.Agent, pagent...)
+func (s *CreateLoadBalancerRequest) AddUserAgent(agent ...string) ICreateLoadBalancerRequest {
+	s.Agent = append(s.Agent, agent...)
 	return s
 }
 
@@ -75,33 +75,33 @@ func (s *CreateLoadBalancerRequest) GetMapHeaders() map[string]string {
 	return s.PortalUser.GetMapHeaders()
 }
 
-func (s *CreateLoadBalancerRequest) WithListener(plistener ICreateListenerRequest) ICreateLoadBalancerRequest {
-	s.Listener = plistener
+func (s *CreateLoadBalancerRequest) WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest {
+	s.Listener = listener
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithPool(ppool ICreatePoolRequest) ICreateLoadBalancerRequest {
-	s.Pool = ppool
+func (s *CreateLoadBalancerRequest) WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest {
+	s.Pool = pool
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithTags(ptags ...string) ICreateLoadBalancerRequest {
+func (s *CreateLoadBalancerRequest) WithTags(tags ...string) ICreateLoadBalancerRequest {
 	if s.Tags == nil {
 		s.Tags = make([]common.Tag, 0)
 	}
 
-	if len(ptags)%2 != 0 {
-		ptags = append(ptags, "none")
+	if len(tags)%2 != 0 {
+		tags = append(tags, "none")
 	}
 
-	for i := 0; i < len(ptags); i += 2 {
-		s.Tags = append(s.Tags, common.Tag{Key: ptags[i], Value: ptags[i+1]})
+	for i := 0; i < len(tags); i += 2 {
+		s.Tags = append(s.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
 	}
 
 	return s
 }
 
-func (s *CreateLoadBalancerRequest) WithZoneId(pzoneId common.Zone) ICreateLoadBalancerRequest {
-	s.ZoneId = &pzoneId
+func (s *CreateLoadBalancerRequest) WithZoneId(zoneId common.Zone) ICreateLoadBalancerRequest {
+	s.ZoneId = &zoneId
 	return s
 }

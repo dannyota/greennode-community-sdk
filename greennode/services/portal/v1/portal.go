@@ -6,8 +6,8 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error) {
-	url := getPortalInfoUrl(s.PortalClient, popts)
+func (s *PortalServiceV1) GetPortalInfo(opts IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error) {
+	url := getPortalInfoUrl(s.PortalClient, opts)
 	resp := new(GetPortalInfoResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -17,18 +17,18 @@ func (s *PortalServiceV1) GetPortalInfo(popts IGetPortalInfoRequest) (*entity.Po
 
 	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("backendProjectId", popts.GetBackEndProjectId())
+			WithKVparameters("backendProjectId", opts.GetBackEndProjectId())
 	}
 
 	return resp.ToEntityPortal(), nil
 }
 
-func (s *PortalServiceV1) ListProjects(popts IListProjectsRequest) (*entity.ListPortals, sdkerror.Error) {
+func (s *PortalServiceV1) ListProjects(opts IListProjectsRequest) (*entity.ListPortals, sdkerror.Error) {
 	url := listProjectsUrl(s.PortalClient)
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", popts.ParseUserAgent()).
+		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJsonResponse(resp).
 		WithJsonError(errResp)

@@ -5,6 +5,6 @@ type IGetPortalInfoRequest interface {
 }
 
 type IListProjectsRequest interface {
-	AddUserAgent(pagent ...string) IListProjectsRequest
+	AddUserAgent(agent ...string) IListProjectsRequest
 	ParseUserAgent() string
 }
