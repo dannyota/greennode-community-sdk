@@ -2,32 +2,6 @@ package inter
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type ICreatePoolRequest interface {
-	ToRequestBody() any
-	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
-	WithMembers(members ...IMemberRequest) ICreatePoolRequest
-	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
-}
-
-type IHealthMonitorRequest interface {
-	ToRequestBody() any
-	ToMap() map[string]any
-	WithHealthyThreshold(ht int) IHealthMonitorRequest
-	WithUnhealthyThreshold(uht int) IHealthMonitorRequest
-	WithInterval(interval int) IHealthMonitorRequest
-	WithTimeout(to int) IHealthMonitorRequest
-	WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest
-	WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest
-	WithHealthCheckPath(path string) IHealthMonitorRequest
-	WithSuccessCode(code string) IHealthMonitorRequest
-	WithDomainName(domain string) IHealthMonitorRequest
-}
-
-type IMemberRequest interface {
-	ToRequestBody() any
-	ToMap() map[string]any
-}
-
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
 	PoolAlgorithmLeastConn  PoolAlgorithm = "LEAST_CONNECTIONS"
@@ -68,7 +42,7 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest
 	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
 	opts.PoolProtocol = protocol
-	opts.Members = make([]IMemberRequest, 0)
+	opts.Members = make([]*Member, 0)
 
 	return opts
 }
@@ -109,8 +83,8 @@ type CreatePoolRequest struct {
 	PoolProtocol  PoolProtocol          `json:"poolProtocol"`
 	Stickiness    *bool                 `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
 	TLSEncryption *bool                 `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
-	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
-	Members       []IMemberRequest      `json:"members"`
+	HealthMonitor *HealthMonitor `json:"healthMonitor"`
+	Members       []*Member     `json:"members"`
 
 	common.LoadBalancerCommon
 	common.UserAgent
@@ -139,11 +113,11 @@ type Member struct {
 }
 
 func (r *CreatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
+	r.HealthMonitor = r.HealthMonitor.toRequestBody()
 	return r
 }
 
-func (h *HealthMonitor) toRequestBody() IHealthMonitorRequest {
+func (h *HealthMonitor) toRequestBody() *HealthMonitor {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -171,17 +145,17 @@ func (h *HealthMonitor) toRequestBody() IHealthMonitorRequest {
 	return h
 }
 
-func (r *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithHealthMonitor(monitor *HealthMonitor) *CreatePoolRequest {
 	r.HealthMonitor = monitor
 	return r
 }
 
-func (r *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithMembers(members ...*Member) *CreatePoolRequest {
 	r.Members = append(r.Members, members...)
 	return r
 }
 
-func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) *CreatePoolRequest {
 	r.LoadBalancerID = lbID
 	return r
 }
@@ -204,7 +178,7 @@ func (r *CreatePoolRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRequest {
 	r.Algorithm = algorithm
 	return r
 }
@@ -213,7 +187,7 @@ func (h *HealthMonitor) ToRequestBody() any {
 	return h
 }
 
-func (h *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthyThreshold(ht int) *HealthMonitor {
 	if ht < 1 {
 		ht = 3
 	}
@@ -222,7 +196,7 @@ func (h *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithUnhealthyThreshold(uht int) *HealthMonitor {
 	if uht < 1 {
 		uht = 3
 	}
@@ -231,7 +205,7 @@ func (h *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithInterval(interval int) *HealthMonitor {
 	if interval < 1 {
 		interval = 30
 	}
@@ -240,7 +214,7 @@ func (h *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithTimeout(to int) *HealthMonitor {
 	if to < 1 {
 		to = 5
 	}
@@ -249,27 +223,27 @@ func (h *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) *HealthMonitor {
 	h.HealthCheckMethod = &method
 	return h
 }
 
-func (h *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) *HealthMonitor {
 	h.HTTPVersion = &version
 	return h
 }
 
-func (h *HealthMonitor) WithHealthCheckPath(path string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthCheckPath(path string) *HealthMonitor {
 	h.HealthCheckPath = &path
 	return h
 }
 
-func (h *HealthMonitor) WithDomainName(domain string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithDomainName(domain string) *HealthMonitor {
 	h.DomainName = &domain
 	return h
 }
 
-func (h *HealthMonitor) WithSuccessCode(code string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithSuccessCode(code string) *HealthMonitor {
 	h.SuccessCode = &code
 	return h
 }

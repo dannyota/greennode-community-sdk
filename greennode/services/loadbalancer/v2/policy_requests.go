@@ -2,78 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IListPoliciesRequest interface {
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	AddUserAgent(agent ...string) IListPoliciesRequest
-}
-
-type ICreatePolicyRequest interface {
-	ToRequestBody() any
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) ICreatePolicyRequest
-
-	WithName(name string) ICreatePolicyRequest
-	WithRules(rules ...L7RuleRequest) ICreatePolicyRequest
-	WithAction(action PolicyAction) ICreatePolicyRequest
-
-	// only for action redirect to pool
-	WithRedirectPoolID(redirectPoolID string) ICreatePolicyRequest
-
-	// only for action redirect to url
-	WithRedirectURL(redirectURL string) ICreatePolicyRequest
-	// only for action redirect to url
-	WithRedirectHTTPCode(redirectHTTPCode int) ICreatePolicyRequest
-	// only for action redirect to url
-	WithKeepQueryString(keepQueryString bool) ICreatePolicyRequest
-}
-
-type IGetPolicyByIDRequest interface {
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	GetPolicyID() string
-	AddUserAgent(agent ...string) IGetPolicyByIDRequest
-}
-
-type IUpdatePolicyRequest interface {
-	ToRequestBody() any
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	GetPolicyID() string
-	AddUserAgent(agent ...string) IUpdatePolicyRequest
-
-	WithAction(action PolicyAction) IUpdatePolicyRequest
-	WithRules(rules ...L7RuleRequest) IUpdatePolicyRequest
-	WithRedirectPoolID(redirectPoolID string) IUpdatePolicyRequest
-	WithRedirectURL(redirectURL string) IUpdatePolicyRequest
-	WithRedirectHTTPCode(redirectHTTPCode int) IUpdatePolicyRequest
-	WithKeepQueryString(keepQueryString bool) IUpdatePolicyRequest
-}
-
-type IDeletePolicyByIDRequest interface {
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	GetPolicyID() string
-	AddUserAgent(agent ...string) IDeletePolicyByIDRequest
-}
-
-type IReorderPoliciesRequest interface {
-	ToRequestBody() any
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	GetListenerID() string
-	AddUserAgent(agent ...string) IReorderPoliciesRequest
-
-	WithPoliciesOrder(lstPolicies []string) IReorderPoliciesRequest
-}
-
 type (
 	PolicyAction      string
 	PolicyCompareType string
@@ -102,8 +30,6 @@ func NewCreatePolicyRequest(lbID, lisID string) *CreatePolicyRequest {
 		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
 	}
 }
-
-var _ ICreatePolicyRequest = &CreatePolicyRequest{}
 
 type CreatePolicyRequest struct {
 	common.UserAgent
@@ -181,42 +107,42 @@ func (r *CreatePolicyRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreatePolicyRequest) WithName(name string) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithName(name string) *CreatePolicyRequest {
 	r.Name = name
 	return r
 }
 
-func (r *CreatePolicyRequest) WithAction(action PolicyAction) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithAction(action PolicyAction) *CreatePolicyRequest {
 	r.Action = action
 	return r
 }
 
-func (r *CreatePolicyRequest) WithRules(rules ...L7RuleRequest) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithRules(rules ...L7RuleRequest) *CreatePolicyRequest {
 	r.Rules = rules
 	return r
 }
 
-func (r *CreatePolicyRequest) WithRedirectPoolID(redirectPoolID string) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithRedirectPoolID(redirectPoolID string) *CreatePolicyRequest {
 	r.RedirectPoolID = redirectPoolID
 	return r
 }
 
-func (r *CreatePolicyRequest) WithRedirectURL(redirectURL string) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithRedirectURL(redirectURL string) *CreatePolicyRequest {
 	r.RedirectURL = redirectURL
 	return r
 }
 
-func (r *CreatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) *CreatePolicyRequest {
 	r.RedirectHTTPCode = redirectHTTPCode
 	return r
 }
 
-func (r *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) *CreatePolicyRequest {
 	r.KeepQueryString = keepQueryString
 	return r
 }
 
-func (r *CreatePolicyRequest) AddUserAgent(agent ...string) ICreatePolicyRequest {
+func (r *CreatePolicyRequest) AddUserAgent(agent ...string) *CreatePolicyRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -229,8 +155,6 @@ func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 		PolicyCommon:       common.PolicyCommon{PolicyID: policyID},
 	}
 }
-
-var _ IUpdatePolicyRequest = &UpdatePolicyRequest{}
 
 type UpdatePolicyRequest struct {
 	common.UserAgent
@@ -284,37 +208,37 @@ func (r *UpdatePolicyRequest) ToRequestBody() any {
 	return nil
 }
 
-func (r *UpdatePolicyRequest) WithAction(action PolicyAction) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithAction(action PolicyAction) *UpdatePolicyRequest {
 	r.Action = action
 	return r
 }
 
-func (r *UpdatePolicyRequest) WithRules(rules ...L7RuleRequest) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithRules(rules ...L7RuleRequest) *UpdatePolicyRequest {
 	r.Rules = rules
 	return r
 }
 
-func (r *UpdatePolicyRequest) WithRedirectPoolID(redirectPoolID string) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithRedirectPoolID(redirectPoolID string) *UpdatePolicyRequest {
 	r.RedirectPoolID = redirectPoolID
 	return r
 }
 
-func (r *UpdatePolicyRequest) WithRedirectURL(redirectURL string) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithRedirectURL(redirectURL string) *UpdatePolicyRequest {
 	r.RedirectURL = redirectURL
 	return r
 }
 
-func (r *UpdatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) *UpdatePolicyRequest {
 	r.RedirectHTTPCode = redirectHTTPCode
 	return r
 }
 
-func (r *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) *UpdatePolicyRequest {
 	r.KeepQueryString = keepQueryString
 	return r
 }
 
-func (r *UpdatePolicyRequest) AddUserAgent(agent ...string) IUpdatePolicyRequest {
+func (r *UpdatePolicyRequest) AddUserAgent(agent ...string) *UpdatePolicyRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -328,12 +252,10 @@ func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest
 	}
 }
 
-func (r *GetPolicyByIDRequest) AddUserAgent(agent ...string) IGetPolicyByIDRequest {
+func (r *GetPolicyByIDRequest) AddUserAgent(agent ...string) *GetPolicyByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
-
-var _ IGetPolicyByIDRequest = &GetPolicyByIDRequest{}
 
 type GetPolicyByIDRequest struct {
 	common.UserAgent
@@ -351,12 +273,10 @@ func NewDeletePolicyByIDRequest(lbID, lisID, policyID string) *DeletePolicyByIDR
 	}
 }
 
-func (r *DeletePolicyByIDRequest) AddUserAgent(agent ...string) IDeletePolicyByIDRequest {
+func (r *DeletePolicyByIDRequest) AddUserAgent(agent ...string) *DeletePolicyByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
-
-var _ IDeletePolicyByIDRequest = &DeletePolicyByIDRequest{}
 
 type DeletePolicyByIDRequest struct {
 	common.UserAgent
@@ -379,8 +299,6 @@ func NewReorderPoliciesRequest(lbID, lisID string) *ReorderPoliciesRequest {
 	}
 }
 
-var _ IReorderPoliciesRequest = &ReorderPoliciesRequest{}
-
 type ReorderPoliciesRequest struct {
 	common.UserAgent
 	common.LoadBalancerCommon
@@ -389,12 +307,12 @@ type ReorderPoliciesRequest struct {
 	policyPositions []policyPositionRequest
 }
 
-func (r *ReorderPoliciesRequest) AddUserAgent(agent ...string) IReorderPoliciesRequest {
+func (r *ReorderPoliciesRequest) AddUserAgent(agent ...string) *ReorderPoliciesRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
-func (r *ReorderPoliciesRequest) WithPoliciesOrder(policies []string) IReorderPoliciesRequest {
+func (r *ReorderPoliciesRequest) WithPoliciesOrder(policies []string) *ReorderPoliciesRequest {
 	r.policyPositions = make([]policyPositionRequest, len(policies))
 	for i, policy := range policies {
 		r.policyPositions[i] = policyPositionRequest{
@@ -420,12 +338,10 @@ func NewListPoliciesRequest(lbID, lisID string) *ListPoliciesRequest {
 	}
 }
 
-func (r *ListPoliciesRequest) AddUserAgent(agent ...string) IListPoliciesRequest {
+func (r *ListPoliciesRequest) AddUserAgent(agent ...string) *ListPoliciesRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
-
-var _ IListPoliciesRequest = &ListPoliciesRequest{}
 
 type ListPoliciesRequest struct {
 	common.UserAgent

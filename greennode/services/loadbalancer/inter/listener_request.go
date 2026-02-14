@@ -6,20 +6,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type ICreateListenerRequest interface {
-	ToRequestBody() any
-	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
-	WithLoadBalancerID(lbid string) ICreateListenerRequest
-	WithDefaultPoolID(poolID string) ICreateListenerRequest
-	WithTimeoutClient(toc int) ICreateListenerRequest
-	WithTimeoutConnection(toc int) ICreateListenerRequest
-	WithTimeoutMember(tom int) ICreateListenerRequest
-	AddCidrs(cidrs ...string) ICreateListenerRequest
-	ParseUserAgent() string
-	GetLoadBalancerID() string
-	ToMap() map[string]any
-}
-
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
 	ListenerProtocolUDP   ListenerProtocol = "UDP"
@@ -75,7 +61,7 @@ func (r *CreateListenerRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateListenerRequest {
 	if len(cidrs) < 1 {
 		return r
 	}
@@ -84,32 +70,32 @@ func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) ICreateListene
 	return r
 }
 
-func (r *CreateListenerRequest) WithTimeoutClient(toc int) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithTimeoutClient(toc int) *CreateListenerRequest {
 	r.TimeoutClient = toc
 	return r
 }
 
-func (r *CreateListenerRequest) WithTimeoutConnection(toc int) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithTimeoutConnection(toc int) *CreateListenerRequest {
 	r.TimeoutConnection = toc
 	return r
 }
 
-func (r *CreateListenerRequest) WithTimeoutMember(tom int) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithTimeoutMember(tom int) *CreateListenerRequest {
 	r.TimeoutMember = tom
 	return r
 }
 
-func (r *CreateListenerRequest) WithLoadBalancerID(lbid string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithLoadBalancerID(lbid string) *CreateListenerRequest {
 	r.LoadBalancerID = lbid
 	return r
 }
 
-func (r *CreateListenerRequest) WithDefaultPoolID(poolID string) ICreateListenerRequest {
+func (r *CreateListenerRequest) WithDefaultPoolID(poolID string) *CreateListenerRequest {
 	r.DefaultPoolID = &poolID
 	return r
 }
 
-func (r *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest {
+func (r *CreateListenerRequest) AddCidrs(cidrs ...string) *CreateListenerRequest {
 	if len(cidrs) < 1 {
 		return r
 	}

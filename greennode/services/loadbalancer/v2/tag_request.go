@@ -5,27 +5,13 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IListTagsRequest interface {
-	GetLoadBalancerID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListTagsRequest
-}
-
-type ICreateTagsRequest interface {
-	GetLoadBalancerID() string
-	ToRequestBody() any
-	ParseUserAgent() string
-	WithTags(tags ...string) ICreateTagsRequest
-	AddUserAgent(agent ...string) ICreateTagsRequest
-}
-
 func NewListTagsRequest(lbID string) *ListTagsRequest {
 	opt := new(ListTagsRequest)
 	opt.LoadBalancerID = lbID
 	return opt
 }
 
-func (r *ListTagsRequest) AddUserAgent(agent ...string) IListTagsRequest {
+func (r *ListTagsRequest) AddUserAgent(agent ...string) *ListTagsRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -64,7 +50,7 @@ type CreateTagsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (r *CreateTagsRequest) AddUserAgent(agent ...string) ICreateTagsRequest {
+func (r *CreateTagsRequest) AddUserAgent(agent ...string) *CreateTagsRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -82,12 +68,12 @@ func (r *CreateTagsRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *UpdateTagsRequest) AddUserAgent(agent ...string) IUpdateTagsRequest {
+func (r *UpdateTagsRequest) AddUserAgent(agent ...string) *UpdateTagsRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
-func (r *CreateTagsRequest) WithTags(tags ...string) ICreateTagsRequest {
+func (r *CreateTagsRequest) WithTags(tags ...string) *CreateTagsRequest {
 	if len(tags)%2 != 0 {
 		tags = append(tags, "none")
 	}
@@ -120,7 +106,7 @@ func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) any {
 	return r
 }
 
-func (r *UpdateTagsRequest) WithTags(tags ...string) IUpdateTagsRequest {
+func (r *UpdateTagsRequest) WithTags(tags ...string) *UpdateTagsRequest {
 	if len(tags)%2 != 0 {
 		tags = append(tags, "none")
 	}

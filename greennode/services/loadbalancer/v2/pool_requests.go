@@ -2,96 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type ICreatePoolRequest interface {
-	ToRequestBody() any
-	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
-	WithMembers(members ...IMemberRequest) ICreatePoolRequest
-	WithLoadBalancerID(lbID string) ICreatePoolRequest
-	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
-	ToMap() map[string]any
-	GetLoadBalancerID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) ICreatePoolRequest
-}
-
-type IUpdatePoolRequest interface {
-	GetPoolID() string
-	ToRequestBody() any
-	WithHealthMonitor(monitor IHealthMonitorRequest) IUpdatePoolRequest
-	WithLoadBalancerID(lbID string) IUpdatePoolRequest
-	WithAlgorithm(algorithm PoolAlgorithm) IUpdatePoolRequest
-	WithStickiness(v *bool) IUpdatePoolRequest
-	WithTLSEncryption(v *bool) IUpdatePoolRequest
-	ToMap() map[string]any
-	GetLoadBalancerID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IUpdatePoolRequest
-}
-
-type IGetPoolHealthMonitorByIDRequest interface {
-	GetLoadBalancerID() string
-	GetPoolID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetPoolHealthMonitorByIDRequest
-}
-
-type IListPoolMembersRequest interface {
-	GetLoadBalancerID() string
-	GetPoolID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListPoolMembersRequest
-}
-
-type IDeletePoolByIDRequest interface {
-	GetLoadBalancerID() string
-	GetPoolID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeletePoolByIDRequest
-}
-
-type IGetPoolByIDRequest interface {
-	GetLoadBalancerID() string
-	GetPoolID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetPoolByIDRequest
-}
-
-type IListPoolsByLoadBalancerIDRequest interface {
-	GetLoadBalancerID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListPoolsByLoadBalancerIDRequest
-}
-
-type IUpdatePoolMembersRequest interface {
-	WithMembers(members ...IMemberRequest) IUpdatePoolMembersRequest
-	ToRequestBody() any
-	GetLoadBalancerID() string
-	GetPoolID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IUpdatePoolMembersRequest
-}
-
-type IHealthMonitorRequest interface {
-	ToRequestBody() any
-	ToMap() map[string]any
-	WithHealthCheckProtocol(protocol HealthCheckProtocol) IHealthMonitorRequest
-	WithHealthyThreshold(ht int) IHealthMonitorRequest
-	WithUnhealthyThreshold(uht int) IHealthMonitorRequest
-	WithInterval(interval int) IHealthMonitorRequest
-	WithTimeout(to int) IHealthMonitorRequest
-	WithHealthCheckMethod(method *HealthCheckMethod) IHealthMonitorRequest
-	WithHTTPVersion(version *HealthCheckHTTPVersion) IHealthMonitorRequest
-	WithHealthCheckPath(path *string) IHealthMonitorRequest
-	WithSuccessCode(code *string) IHealthMonitorRequest
-	WithDomainName(domain *string) IHealthMonitorRequest
-	AddUserAgent(agent ...string) IHealthMonitorRequest
-}
-
-type IMemberRequest interface {
-	ToRequestBody() any
-	ToMap() map[string]any
-}
-
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
 	PoolAlgorithmLeastConn  PoolAlgorithm = "LEAST_CONNECTIONS"
@@ -132,7 +42,7 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest
 	opts.PoolName = name
 	opts.Algorithm = PoolAlgorithmRoundRobin
 	opts.PoolProtocol = protocol
-	opts.Members = make([]IMemberRequest, 0)
+	opts.Members = make([]*Member, 0)
 
 	return opts
 }
@@ -153,7 +63,7 @@ func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) *GetPoolHealthMonit
 	return opts
 }
 
-func (r *GetPoolHealthMonitorByIDRequest) AddUserAgent(agent ...string) IGetPoolHealthMonitorByIDRequest {
+func (r *GetPoolHealthMonitorByIDRequest) AddUserAgent(agent ...string) *GetPoolHealthMonitorByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -169,7 +79,7 @@ func NewUpdatePoolMembersRequest(lbID, poolID string) *UpdatePoolMembersRequest 
 	opts := new(UpdatePoolMembersRequest)
 	opts.LoadBalancerID = lbID
 	opts.PoolID = poolID
-	opts.Members = make([]IMemberRequest, 0)
+	opts.Members = make([]*Member, 0)
 
 	return opts
 }
@@ -229,28 +139,28 @@ type (
 )
 
 type CreatePoolRequest struct {
-	Algorithm     PoolAlgorithm         `json:"algorithm"`
-	PoolName      string                `json:"poolName"`
-	PoolProtocol  PoolProtocol          `json:"poolProtocol"`
-	Stickiness    *bool                 `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
-	TLSEncryption *bool                 `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
-	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
-	Members       []IMemberRequest      `json:"members"`
+	Algorithm     PoolAlgorithm  `json:"algorithm"`
+	PoolName      string         `json:"poolName"`
+	PoolProtocol  PoolProtocol   `json:"poolProtocol"`
+	Stickiness    *bool          `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
+	TLSEncryption *bool          `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
+	HealthMonitor *HealthMonitor `json:"healthMonitor"`
+	Members       []*Member      `json:"members"`
 
 	common.LoadBalancerCommon
 	common.UserAgent
 }
 
-func (r *CreatePoolRequest) AddUserAgent(agent ...string) ICreatePoolRequest {
+func (r *CreatePoolRequest) AddUserAgent(agent ...string) *CreatePoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
 type UpdatePoolRequest struct {
-	Algorithm     PoolAlgorithm         `json:"algorithm"`
-	Stickiness    *bool                 `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
-	TLSEncryption *bool                 `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
-	HealthMonitor IHealthMonitorRequest `json:"healthMonitor"`
+	Algorithm     PoolAlgorithm  `json:"algorithm"`
+	Stickiness    *bool          `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
+	TLSEncryption *bool          `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
+	HealthMonitor *HealthMonitor `json:"healthMonitor"`
 
 	common.LoadBalancerCommon
 	common.PoolCommon
@@ -269,7 +179,7 @@ type ListPoolMembersRequest struct {
 	common.PoolCommon
 }
 
-func (r *ListPoolMembersRequest) AddUserAgent(agent ...string) IListPoolMembersRequest {
+func (r *ListPoolMembersRequest) AddUserAgent(agent ...string) *ListPoolMembersRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -280,7 +190,7 @@ type DeletePoolByIDRequest struct {
 	common.PoolCommon
 }
 
-func (r *DeletePoolByIDRequest) AddUserAgent(agent ...string) IDeletePoolByIDRequest {
+func (r *DeletePoolByIDRequest) AddUserAgent(agent ...string) *DeletePoolByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -291,7 +201,7 @@ type GetPoolByIDRequest struct {
 	common.PoolCommon
 }
 
-func (r *GetPoolByIDRequest) AddUserAgent(agent ...string) IGetPoolByIDRequest {
+func (r *GetPoolByIDRequest) AddUserAgent(agent ...string) *GetPoolByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -325,30 +235,30 @@ type ListPoolsByLoadBalancerIDRequest struct {
 	common.UserAgent
 }
 
-func (r *ListPoolsByLoadBalancerIDRequest) AddUserAgent(agent ...string) IListPoolsByLoadBalancerIDRequest {
+func (r *ListPoolsByLoadBalancerIDRequest) AddUserAgent(agent ...string) *ListPoolsByLoadBalancerIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
 type UpdatePoolMembersRequest struct {
-	Members []IMemberRequest `json:"members"`
+	Members []*Member `json:"members"`
 
 	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
 }
 
-func (r *UpdatePoolMembersRequest) AddUserAgent(agent ...string) IUpdatePoolMembersRequest {
+func (r *UpdatePoolMembersRequest) AddUserAgent(agent ...string) *UpdatePoolMembersRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
 func (r *CreatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
+	r.HealthMonitor = r.HealthMonitor.toRequestBody()
 	return r
 }
 
-func (h *HealthMonitor) toRequestBody() IHealthMonitorRequest {
+func (h *HealthMonitor) toRequestBody() *HealthMonitor {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -376,27 +286,27 @@ func (h *HealthMonitor) toRequestBody() IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) AddUserAgent(agent ...string) IHealthMonitorRequest {
+func (h *HealthMonitor) AddUserAgent(agent ...string) *HealthMonitor {
 	h.UserAgent.AddUserAgent(agent...)
 	return h
 }
 
-func (h *HealthMonitor) WithHealthCheckProtocol(protocol HealthCheckProtocol) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthCheckProtocol(protocol HealthCheckProtocol) *HealthMonitor {
 	h.HealthCheckProtocol = protocol
 	return h
 }
 
-func (r *CreatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithHealthMonitor(monitor *HealthMonitor) *CreatePoolRequest {
 	r.HealthMonitor = monitor
 	return r
 }
 
-func (r *CreatePoolRequest) WithMembers(members ...IMemberRequest) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithMembers(members ...*Member) *CreatePoolRequest {
 	r.Members = append(r.Members, members...)
 	return r
 }
 
-func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) *CreatePoolRequest {
 	r.LoadBalancerID = lbID
 	return r
 }
@@ -419,7 +329,7 @@ func (r *CreatePoolRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest {
+func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRequest {
 	r.Algorithm = algorithm
 	return r
 }
@@ -434,36 +344,36 @@ func (r *UpdatePoolRequest) ToMap() map[string]any {
 }
 
 func (r *UpdatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
+	r.HealthMonitor = r.HealthMonitor.toRequestBody()
 	return r
 }
 
-func (r *UpdatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *UpdatePoolRequest {
 	r.Algorithm = algorithm
 	return r
 }
 
-func (r *UpdatePoolRequest) WithHealthMonitor(monitor IHealthMonitorRequest) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) WithHealthMonitor(monitor *HealthMonitor) *UpdatePoolRequest {
 	r.HealthMonitor = monitor
 	return r
 }
 
-func (r *UpdatePoolRequest) WithLoadBalancerID(lbID string) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) WithLoadBalancerID(lbID string) *UpdatePoolRequest {
 	r.LoadBalancerID = lbID
 	return r
 }
 
-func (r *UpdatePoolRequest) WithTLSEncryption(v *bool) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) WithTLSEncryption(v *bool) *UpdatePoolRequest {
 	r.TLSEncryption = v
 	return r
 }
 
-func (r *UpdatePoolRequest) WithStickiness(v *bool) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) WithStickiness(v *bool) *UpdatePoolRequest {
 	r.Stickiness = v
 	return r
 }
 
-func (r *UpdatePoolRequest) AddUserAgent(agent ...string) IUpdatePoolRequest {
+func (r *UpdatePoolRequest) AddUserAgent(agent ...string) *UpdatePoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -472,7 +382,7 @@ func (h *HealthMonitor) ToRequestBody() any {
 	return h
 }
 
-func (h *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthyThreshold(ht int) *HealthMonitor {
 	if ht < 1 {
 		ht = 3
 	}
@@ -481,7 +391,7 @@ func (h *HealthMonitor) WithHealthyThreshold(ht int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithUnhealthyThreshold(uht int) *HealthMonitor {
 	if uht < 1 {
 		uht = 3
 	}
@@ -490,7 +400,7 @@ func (h *HealthMonitor) WithUnhealthyThreshold(uht int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithInterval(interval int) *HealthMonitor {
 	if interval < 1 {
 		interval = 30
 	}
@@ -499,7 +409,7 @@ func (h *HealthMonitor) WithInterval(interval int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
+func (h *HealthMonitor) WithTimeout(to int) *HealthMonitor {
 	if to < 1 {
 		to = 5
 	}
@@ -508,27 +418,27 @@ func (h *HealthMonitor) WithTimeout(to int) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) WithHealthCheckMethod(method *HealthCheckMethod) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthCheckMethod(method *HealthCheckMethod) *HealthMonitor {
 	h.HealthCheckMethod = method
 	return h
 }
 
-func (h *HealthMonitor) WithHTTPVersion(version *HealthCheckHTTPVersion) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHTTPVersion(version *HealthCheckHTTPVersion) *HealthMonitor {
 	h.HTTPVersion = version
 	return h
 }
 
-func (h *HealthMonitor) WithHealthCheckPath(path *string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithHealthCheckPath(path *string) *HealthMonitor {
 	h.HealthCheckPath = path
 	return h
 }
 
-func (h *HealthMonitor) WithDomainName(domain *string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithDomainName(domain *string) *HealthMonitor {
 	h.DomainName = domain
 	return h
 }
 
-func (h *HealthMonitor) WithSuccessCode(code *string) IHealthMonitorRequest {
+func (h *HealthMonitor) WithSuccessCode(code *string) *HealthMonitor {
 	h.SuccessCode = code
 	return h
 }
@@ -563,7 +473,7 @@ func (m *Member) ToMap() map[string]any {
 	}
 }
 
-func (r *UpdatePoolMembersRequest) WithMembers(members ...IMemberRequest) IUpdatePoolMembersRequest {
+func (r *UpdatePoolMembersRequest) WithMembers(members ...*Member) *UpdatePoolMembersRequest {
 	r.Members = append(r.Members, members...)
 	return r
 }

@@ -8,7 +8,7 @@ func createLoadBalancerURL(sc client.ServiceClient) string {
 		"loadBalancers")
 }
 
-func resizeLoadBalancerURL(sc client.ServiceClient, opts IResizeLoadBalancerRequest) string {
+func resizeLoadBalancerURL(sc client.ServiceClient, opts *ResizeLoadBalancerRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -16,20 +16,20 @@ func resizeLoadBalancerURL(sc client.ServiceClient, opts IResizeLoadBalancerRequ
 		"resize")
 }
 
-func listLoadBalancerPackagesURL(sc client.ServiceClient, opts IListLoadBalancerPackagesRequest) string {
+func listLoadBalancerPackagesURL(sc client.ServiceClient, opts *ListLoadBalancerPackagesRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers", "packages") + "?zoneId=" + opts.GetZoneID()
 }
 
-func getLoadBalancerByIDURL(sc client.ServiceClient, opts IGetLoadBalancerByIDRequest) string {
+func getLoadBalancerByIDURL(sc client.ServiceClient, opts *GetLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
 		opts.GetLoadBalancerID())
 }
 
-func listLoadBalancersURL(sc client.ServiceClient, opts IListLoadBalancersRequest) string {
+func listLoadBalancersURL(sc client.ServiceClient, opts *ListLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -38,7 +38,7 @@ func listLoadBalancersURL(sc client.ServiceClient, opts IListLoadBalancersReques
 	return sc.ServiceURL(sc.GetProjectID(), "loadBalancers") + query
 }
 
-func getPoolHealthMonitorByIDURL(sc client.ServiceClient, opts IGetPoolHealthMonitorByIDRequest) string {
+func getPoolHealthMonitorByIDURL(sc client.ServiceClient, opts *GetPoolHealthMonitorByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -48,7 +48,7 @@ func getPoolHealthMonitorByIDURL(sc client.ServiceClient, opts IGetPoolHealthMon
 		"healthMonitor")
 }
 
-func createPoolURL(sc client.ServiceClient, opts ICreatePoolRequest) string {
+func createPoolURL(sc client.ServiceClient, opts *CreatePoolRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -56,7 +56,7 @@ func createPoolURL(sc client.ServiceClient, opts ICreatePoolRequest) string {
 		"pools")
 }
 
-func updatePoolURL(sc client.ServiceClient, opts IUpdatePoolRequest) string {
+func updatePoolURL(sc client.ServiceClient, opts *UpdatePoolRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -65,7 +65,7 @@ func updatePoolURL(sc client.ServiceClient, opts IUpdatePoolRequest) string {
 		opts.GetPoolID())
 }
 
-func createListenerURL(sc client.ServiceClient, opts ICreateListenerRequest) string {
+func createListenerURL(sc client.ServiceClient, opts *CreateListenerRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -73,7 +73,7 @@ func createListenerURL(sc client.ServiceClient, opts ICreateListenerRequest) str
 		"listeners")
 }
 
-func updateListenerURL(sc client.ServiceClient, opts IUpdateListenerRequest) string {
+func updateListenerURL(sc client.ServiceClient, opts *UpdateListenerRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -82,7 +82,7 @@ func updateListenerURL(sc client.ServiceClient, opts IUpdateListenerRequest) str
 		opts.GetListenerID())
 }
 
-func listListenersByLoadBalancerIDURL(sc client.ServiceClient, opts IListListenersByLoadBalancerIDRequest) string {
+func listListenersByLoadBalancerIDURL(sc client.ServiceClient, opts *ListListenersByLoadBalancerIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -90,7 +90,7 @@ func listListenersByLoadBalancerIDURL(sc client.ServiceClient, opts IListListene
 		"listeners")
 }
 
-func listPoolsByLoadBalancerIDURL(sc client.ServiceClient, opts IListPoolsByLoadBalancerIDRequest) string {
+func listPoolsByLoadBalancerIDURL(sc client.ServiceClient, opts *ListPoolsByLoadBalancerIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -98,7 +98,7 @@ func listPoolsByLoadBalancerIDURL(sc client.ServiceClient, opts IListPoolsByLoad
 		"pools")
 }
 
-func updatePoolMembersURL(sc client.ServiceClient, opts IUpdatePoolMembersRequest) string {
+func updatePoolMembersURL(sc client.ServiceClient, opts *UpdatePoolMembersRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -108,7 +108,7 @@ func updatePoolMembersURL(sc client.ServiceClient, opts IUpdatePoolMembersReques
 		"members")
 }
 
-func listPoolMembersURL(sc client.ServiceClient, opts IListPoolMembersRequest) string {
+func listPoolMembersURL(sc client.ServiceClient, opts *ListPoolMembersRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -118,7 +118,7 @@ func listPoolMembersURL(sc client.ServiceClient, opts IListPoolMembersRequest) s
 		"members")
 }
 
-func deletePoolByIDURL(sc client.ServiceClient, opts IDeletePoolByIDRequest) string {
+func deletePoolByIDURL(sc client.ServiceClient, opts *DeletePoolByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -127,7 +127,7 @@ func deletePoolByIDURL(sc client.ServiceClient, opts IDeletePoolByIDRequest) str
 		opts.GetPoolID())
 }
 
-func deleteListenerByIDURL(sc client.ServiceClient, opts IDeleteListenerByIDRequest) string {
+func deleteListenerByIDURL(sc client.ServiceClient, opts *DeleteListenerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -136,14 +136,14 @@ func deleteListenerByIDURL(sc client.ServiceClient, opts IDeleteListenerByIDRequ
 		opts.GetListenerID())
 }
 
-func deleteLoadBalancerByIDURL(sc client.ServiceClient, opts IDeleteLoadBalancerByIDRequest) string {
+func deleteLoadBalancerByIDURL(sc client.ServiceClient, opts *DeleteLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
 		opts.GetLoadBalancerID())
 }
 
-func listTagsURL(sc client.ServiceClient, opts IListTagsRequest) string {
+func listTagsURL(sc client.ServiceClient, opts *ListTagsRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"tag",
@@ -151,7 +151,7 @@ func listTagsURL(sc client.ServiceClient, opts IListTagsRequest) string {
 		opts.GetLoadBalancerID())
 }
 
-func createTagsURL(sc client.ServiceClient, opts ICreateTagsRequest) string {
+func createTagsURL(sc client.ServiceClient, opts *CreateTagsRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"tag",
@@ -159,7 +159,7 @@ func createTagsURL(sc client.ServiceClient, opts ICreateTagsRequest) string {
 		opts.GetLoadBalancerID())
 }
 
-func updateTagsURL(sc client.ServiceClient, opts IUpdateTagsRequest) string {
+func updateTagsURL(sc client.ServiceClient, opts *UpdateTagsRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"tag",
@@ -169,7 +169,7 @@ func updateTagsURL(sc client.ServiceClient, opts IUpdateTagsRequest) string {
 
 // Policy
 
-func listPoliciesURL(sc client.ServiceClient, opts IListPoliciesRequest) string {
+func listPoliciesURL(sc client.ServiceClient, opts *ListPoliciesRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -180,7 +180,7 @@ func listPoliciesURL(sc client.ServiceClient, opts IListPoliciesRequest) string 
 	)
 }
 
-func createPolicyURL(sc client.ServiceClient, opts ICreatePolicyRequest) string {
+func createPolicyURL(sc client.ServiceClient, opts *CreatePolicyRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -191,19 +191,7 @@ func createPolicyURL(sc client.ServiceClient, opts ICreatePolicyRequest) string 
 	)
 }
 
-func getPolicyByIDURL(sc client.ServiceClient, opts IGetPolicyByIDRequest) string {
-	return sc.ServiceURL(
-		sc.GetProjectID(),
-		"loadBalancers",
-		opts.GetLoadBalancerID(),
-		"listeners",
-		opts.GetListenerID(),
-		"l7policies",
-		opts.GetPolicyID(),
-	)
-}
-
-func updatePolicyURL(sc client.ServiceClient, opts IUpdatePolicyRequest) string {
+func getPolicyByIDURL(sc client.ServiceClient, opts *GetPolicyByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -215,7 +203,7 @@ func updatePolicyURL(sc client.ServiceClient, opts IUpdatePolicyRequest) string 
 	)
 }
 
-func deletePolicyByIDURL(sc client.ServiceClient, opts IDeletePolicyByIDRequest) string {
+func updatePolicyURL(sc client.ServiceClient, opts *UpdatePolicyRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -227,7 +215,19 @@ func deletePolicyByIDURL(sc client.ServiceClient, opts IDeletePolicyByIDRequest)
 	)
 }
 
-func reorderPoliciesURL(sc client.ServiceClient, opts IReorderPoliciesRequest) string {
+func deletePolicyByIDURL(sc client.ServiceClient, opts *DeletePolicyByIDRequest) string {
+	return sc.ServiceURL(
+		sc.GetProjectID(),
+		"loadBalancers",
+		opts.GetLoadBalancerID(),
+		"listeners",
+		opts.GetListenerID(),
+		"l7policies",
+		opts.GetPolicyID(),
+	)
+}
+
+func reorderPoliciesURL(sc client.ServiceClient, opts *ReorderPoliciesRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -237,7 +237,7 @@ func reorderPoliciesURL(sc client.ServiceClient, opts IReorderPoliciesRequest) s
 		"reorderL7Policies")
 }
 
-func getPoolByIDURL(sc client.ServiceClient, opts IGetPoolByIDRequest) string {
+func getPoolByIDURL(sc client.ServiceClient, opts *GetPoolByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -246,7 +246,7 @@ func getPoolByIDURL(sc client.ServiceClient, opts IGetPoolByIDRequest) string {
 		opts.GetPoolID())
 }
 
-func getListenerByIDURL(sc client.ServiceClient, opts IGetListenerByIDRequest) string {
+func getListenerByIDURL(sc client.ServiceClient, opts *GetListenerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -255,7 +255,7 @@ func getListenerByIDURL(sc client.ServiceClient, opts IGetListenerByIDRequest) s
 		opts.GetListenerID())
 }
 
-func resizeLoadBalancerByIDURL(sc client.ServiceClient, opts IResizeLoadBalancerByIDRequest) string {
+func resizeLoadBalancerByIDURL(sc client.ServiceClient, opts *ResizeLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -263,7 +263,7 @@ func resizeLoadBalancerByIDURL(sc client.ServiceClient, opts IResizeLoadBalancer
 		"resize")
 }
 
-func scaleLoadBalancerURL(sc client.ServiceClient, opts IScaleLoadBalancerRequest) string {
+func scaleLoadBalancerURL(sc client.ServiceClient, opts *ScaleLoadBalancerRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
@@ -284,14 +284,14 @@ func createCertificateURL(sc client.ServiceClient) string {
 		"cas")
 }
 
-func getCertificateByIDURL(sc client.ServiceClient, opts IGetCertificateByIDRequest) string {
+func getCertificateByIDURL(sc client.ServiceClient, opts *GetCertificateByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"cas",
 		opts.GetCertificateID())
 }
 
-func deleteCertificateByIDURL(sc client.ServiceClient, opts IDeleteCertificateByIDRequest) string {
+func deleteCertificateByIDURL(sc client.ServiceClient, opts *DeleteCertificateByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"cas",

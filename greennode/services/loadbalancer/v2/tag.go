@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *LoadBalancerServiceV2) ListTags(opts IListTagsRequest) (*entity.ListTags, sdkerror.Error) {
+func (s *LoadBalancerServiceV2) ListTags(opts *ListTagsRequest) (*entity.ListTags, sdkerror.Error) {
 	url := listTagsURL(s.VServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -23,7 +23,7 @@ func (s *LoadBalancerServiceV2) ListTags(opts IListTagsRequest) (*entity.ListTag
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateTags(opts ICreateTagsRequest) sdkerror.Error {
+func (s *LoadBalancerServiceV2) CreateTags(opts *CreateTagsRequest) sdkerror.Error {
 	url := createTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -39,7 +39,7 @@ func (s *LoadBalancerServiceV2) CreateTags(opts ICreateTagsRequest) sdkerror.Err
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) UpdateTags(opts IUpdateTagsRequest) sdkerror.Error {
+func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) sdkerror.Error {
 	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(opts.GetLoadBalancerID()))
 	if sdkErr != nil {
 		return sdkErr

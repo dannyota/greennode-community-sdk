@@ -4,41 +4,11 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IListCertificatesRequest interface {
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IListCertificatesRequest
-}
-
-type IGetCertificateByIDRequest interface {
-	GetCertificateID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IGetCertificateByIDRequest
-}
-
-type ICreateCertificateRequest interface {
-	ToRequestBody() any
-	ParseUserAgent() string
-	ToMap() map[string]any
-	AddUserAgent(agent ...string) ICreateCertificateRequest
-
-	WithCertificateChain(chain string) ICreateCertificateRequest
-	WithPassphrase(passphrase string) ICreateCertificateRequest
-	WithPrivateKey(privateKey string) ICreateCertificateRequest
-}
-
-type IDeleteCertificateByIDRequest interface {
-	GetCertificateID() string
-	ParseUserAgent() string
-	AddUserAgent(agent ...string) IDeleteCertificateByIDRequest
-}
-
-var _ IListCertificatesRequest = &ListCertificatesRequest{}
-
 type ListCertificatesRequest struct {
 	common.UserAgent
 }
 
-func (r *ListCertificatesRequest) AddUserAgent(agent ...string) IListCertificatesRequest {
+func (r *ListCertificatesRequest) AddUserAgent(agent ...string) *ListCertificatesRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -47,8 +17,6 @@ func NewListCertificatesRequest() *ListCertificatesRequest {
 	return &ListCertificatesRequest{}
 }
 
-
-var _ IGetCertificateByIDRequest = &GetCertificateByIDRequest{}
 
 type GetCertificateByIDRequest struct {
 	common.UserAgent
@@ -59,7 +27,7 @@ func (r *GetCertificateByIDRequest) GetCertificateID() string {
 	return r.CertificateID
 }
 
-func (r *GetCertificateByIDRequest) AddUserAgent(agent ...string) IGetCertificateByIDRequest {
+func (r *GetCertificateByIDRequest) AddUserAgent(agent ...string) *GetCertificateByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -80,8 +48,6 @@ const (
 	ImportOptsTypeOptCA  ImportOptsTypeOpt = "CA"
 )
 
-var _ ICreateCertificateRequest = &CreateCertificateRequest{}
-
 type CreateCertificateRequest struct {
 	common.UserAgent
 	Name        string            `json:"name"`
@@ -93,17 +59,17 @@ type CreateCertificateRequest struct {
 	PrivateKey       *string `json:"privateKey"`
 }
 
-func (r *CreateCertificateRequest) WithCertificateChain(chain string) ICreateCertificateRequest {
+func (r *CreateCertificateRequest) WithCertificateChain(chain string) *CreateCertificateRequest {
 	r.CertificateChain = &chain
 	return r
 }
 
-func (r *CreateCertificateRequest) WithPassphrase(passphrase string) ICreateCertificateRequest {
+func (r *CreateCertificateRequest) WithPassphrase(passphrase string) *CreateCertificateRequest {
 	r.Passphrase = &passphrase
 	return r
 }
 
-func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) ICreateCertificateRequest {
+func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) *CreateCertificateRequest {
 	r.PrivateKey = &privateKey
 	return r
 }
@@ -137,13 +103,11 @@ func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) *
 	}
 }
 
-func (r *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertificateRequest {
+func (r *CreateCertificateRequest) AddUserAgent(agent ...string) *CreateCertificateRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
-
-var _ IDeleteCertificateByIDRequest = &DeleteCertificateByIDRequest{}
 
 type DeleteCertificateByIDRequest struct {
 	common.UserAgent
@@ -154,7 +118,7 @@ func (r *DeleteCertificateByIDRequest) GetCertificateID() string {
 	return r.CertificateID
 }
 
-func (r *DeleteCertificateByIDRequest) AddUserAgent(agent ...string) IDeleteCertificateByIDRequest {
+func (r *DeleteCertificateByIDRequest) AddUserAgent(agent ...string) *DeleteCertificateByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
