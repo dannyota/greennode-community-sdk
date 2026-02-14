@@ -50,7 +50,7 @@ type HealthMonitor struct {
 	DisplayStatus       string  `json:"displayStatus"`
 }
 
-func (h *HealthMonitor) String() string {
+func (h HealthMonitor) String() string {
 	// parse to string and return
 	out, err := json.Marshal(h)
 	if err != nil {
@@ -67,7 +67,7 @@ type ListMembers struct {
 	Items []*Member
 }
 
-func (p *Pool) GetID() string {
+func (p Pool) GetID() string {
 	return p.UUID
 }
 

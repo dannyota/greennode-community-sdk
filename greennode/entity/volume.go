@@ -23,11 +23,11 @@ type ListVolumes struct {
 	Items []*Volume
 }
 
-func (l *ListVolumes) Len() int {
+func (l ListVolumes) Len() int {
 	return len(l.Items)
 }
 
-func (v *Volume) AttachedTheInstance(instanceID string) bool {
+func (v Volume) AttachedTheInstance(instanceID string) bool {
 	if v.VmID == instanceID {
 		return true
 	}
@@ -41,19 +41,19 @@ func (v *Volume) AttachedTheInstance(instanceID string) bool {
 	return false
 }
 
-func (v *Volume) IsAvailable() bool {
+func (v Volume) IsAvailable() bool {
 	return v.Status == "AVAILABLE"
 }
 
-func (v *Volume) IsError() bool {
+func (v Volume) IsError() bool {
 	return v.Status == ServerStatusError
 }
 
-func (v *Volume) IsInUse() bool {
+func (v Volume) IsInUse() bool {
 	return v.Status == "IN-USE"
 }
 
-func (v *Volume) CanDelete() bool {
+func (v Volume) CanDelete() bool {
 	if len(v.AttachedMachine) < 1 && v.VmID == "" && v.Status == "AVAILABLE" {
 		return true
 	}

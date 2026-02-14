@@ -44,11 +44,11 @@ func (ll *ListListeners) Empty() bool {
 	return ll.Len() < 1
 }
 
-func (l *Listener) GetID() string {
+func (l Listener) GetID() string {
 	return l.UUID
 }
 
-func (l *Listener) GetDefaultPoolID() string {
+func (l Listener) GetDefaultPoolID() string {
 	return l.DefaultPoolID
 }
 

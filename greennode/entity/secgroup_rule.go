@@ -16,11 +16,11 @@ type ListSecgroupRules struct {
 	Items []*SecgroupRule
 }
 
-func (l *ListSecgroupRules) Len() int {
+func (l ListSecgroupRules) Len() int {
 	return len(l.Items)
 }
 
-func (l *ListSecgroupRules) Get(i int) *SecgroupRule {
+func (l ListSecgroupRules) Get(i int) *SecgroupRule {
 	if i < 0 || i >= len(l.Items) {
 		return nil
 	}

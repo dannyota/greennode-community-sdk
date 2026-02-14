@@ -9,7 +9,7 @@ type AccessToken struct {
 	ExpiresAt int64
 }
 
-func (t *AccessToken) ToSdkAuthentication() client.SdkAuthentication {
+func (t AccessToken) ToSdkAuthentication() client.SdkAuthentication {
 	return client.NewSdkAuthentication().
 		WithAccessToken(t.Token).
 		WithExpiresAt(t.ExpiresAt)
