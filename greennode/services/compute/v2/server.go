@@ -117,7 +117,7 @@ func (s *ComputeServiceV2) AttachBlockVolume(opts IAttachBlockVolumeRequest) sdk
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJSONBody(map[string]interface{}{}).
+		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
@@ -143,7 +143,7 @@ func (s *ComputeServiceV2) DetachBlockVolume(opts IDetachBlockVolumeRequest) sdk
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJSONBody(map[string]interface{}{}).
+		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {

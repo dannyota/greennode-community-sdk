@@ -1,9 +1,9 @@
 package v2
 
 type ICreateBlockVolumeRequest interface {
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
-	ListParameters() []interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
+	ListParameters() []any
 	GetSize() int64
 	GetVolumeType() string
 	GetVolumeName() string
@@ -29,7 +29,7 @@ type IListBlockVolumesRequest interface {
 	WithName(name string) IListBlockVolumesRequest
 	ToQuery() (string, error)
 	GetDefaultQuery() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IGetBlockVolumeByIDRequest interface {
@@ -37,7 +37,7 @@ type IGetBlockVolumeByIDRequest interface {
 }
 
 type IResizeBlockVolumeByIDRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	GetBlockVolumeID() string
 	GetSize() int
 	GetVolumeTypeID() string
@@ -51,7 +51,7 @@ type IListSnapshotsByBlockVolumeIDRequest interface {
 
 type ICreateSnapshotByBlockVolumeIDRequest interface {
 	GetBlockVolumeID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest
 	WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest
 	WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest
@@ -68,7 +68,7 @@ type IGetUnderBlockVolumeIDRequest interface {
 
 type IMigrateBlockVolumeByIDRequest interface {
 	GetBlockVolumeID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	WithTags(tags ...string) IMigrateBlockVolumeByIDRequest
 	WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest
 	WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest

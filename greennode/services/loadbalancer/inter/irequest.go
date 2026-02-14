@@ -3,7 +3,7 @@ package inter
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type ICreateLoadBalancerRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) ICreateLoadBalancerRequest
 	WithListener(listener ICreateListenerRequest) ICreateLoadBalancerRequest
 	WithPool(pool ICreatePoolRequest) ICreateLoadBalancerRequest
@@ -12,11 +12,11 @@ type ICreateLoadBalancerRequest interface {
 	WithZoneID(zoneID common.Zone) ICreateLoadBalancerRequest
 	GetMapHeaders() map[string]string
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type ICreateListenerRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	WithAllowedCidrs(cidrs ...string) ICreateListenerRequest
 	WithLoadBalancerID(lbid string) ICreateListenerRequest
 	WithDefaultPoolID(poolID string) ICreateListenerRequest
@@ -26,19 +26,19 @@ type ICreateListenerRequest interface {
 	AddCidrs(cidrs ...string) ICreateListenerRequest
 	ParseUserAgent() string
 	GetLoadBalancerID() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type ICreatePoolRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	WithHealthMonitor(monitor IHealthMonitorRequest) ICreatePoolRequest
 	WithMembers(members ...IMemberRequest) ICreatePoolRequest
 	WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRequest
 }
 
 type IHealthMonitorRequest interface {
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 	WithHealthyThreshold(ht int) IHealthMonitorRequest
 	WithUnhealthyThreshold(uht int) IHealthMonitorRequest
 	WithInterval(interval int) IHealthMonitorRequest
@@ -51,6 +51,6 @@ type IHealthMonitorRequest interface {
 }
 
 type IMemberRequest interface {
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }

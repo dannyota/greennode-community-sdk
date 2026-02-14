@@ -20,23 +20,23 @@ type HTTPClient interface {
 
 type Request interface {
 	WithOkCodes(okCodes ...int) Request
-	WithJSONBody(jsonBody interface{}) Request
-	WithJSONResponse(jsonResponse interface{}) Request
-	WithJSONError(jsonError interface{}) Request
+	WithJSONBody(jsonBody any) Request
+	WithJSONResponse(jsonResponse any) Request
+	WithJSONError(jsonError any) Request
 	WithRequestMethod(method requestMethod) Request
 	WithSkipAuth(skipAuth bool) Request
 	WithHeader(key, value string) Request
 	WithMapHeaders(headers map[string]string) Request
 	WithUserID(userID string) Request
 
-	RequestBody() interface{}
+	RequestBody() any
 	RequestMethod() string
 	MoreHeaders() map[string]string
-	JSONResponse() interface{}
-	JSONError() interface{}
+	JSONResponse() any
+	JSONError() any
 
-	SetJSONResponse(jsonResponse interface{})
-	SetJSONError(jsonError interface{})
+	SetJSONResponse(jsonResponse any)
+	SetJSONError(jsonError any)
 
 	ContainsOkCode(code ...int) bool
 	SkipAuthentication() bool

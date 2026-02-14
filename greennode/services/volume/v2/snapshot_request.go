@@ -69,7 +69,7 @@ func (r *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() interface{} {
+func (r *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() any {
 	return r
 }
 

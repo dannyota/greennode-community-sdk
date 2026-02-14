@@ -253,7 +253,7 @@ func (r *UpdatePoolMembersRequest) AddUserAgent(agent ...string) IUpdatePoolMemb
 	return r
 }
 
-func (r *CreatePoolRequest) ToRequestBody() interface{} {
+func (r *CreatePoolRequest) ToRequestBody() any {
 	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
 	return r
 }
@@ -311,16 +311,16 @@ func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) ICreatePoolRequest {
 	return r
 }
 
-func (r *CreatePoolRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreatePoolRequest) ToMap() map[string]any {
+	return map[string]any{
 		"algorithm":     r.Algorithm,
 		"poolName":      r.PoolName,
 		"poolProtocol":  r.PoolProtocol,
 		"stickiness":    r.Stickiness,
 		"tlsEncryption": r.TLSEncryption,
 		"healthMonitor": r.HealthMonitor.ToMap(),
-		"members": func() []map[string]interface{} {
-			members := make([]map[string]interface{}, 0, len(r.Members))
+		"members": func() []map[string]any {
+			members := make([]map[string]any, 0, len(r.Members))
 			for _, member := range r.Members {
 				members = append(members, member.ToMap())
 			}
@@ -334,8 +334,8 @@ func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) ICreatePoolRe
 	return r
 }
 
-func (r *UpdatePoolRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *UpdatePoolRequest) ToMap() map[string]any {
+	return map[string]any{
 		"algorithm":     r.Algorithm,
 		"stickiness":    r.Stickiness,
 		"tlsEncryption": r.TLSEncryption,
@@ -343,7 +343,7 @@ func (r *UpdatePoolRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (r *UpdatePoolRequest) ToRequestBody() interface{} {
+func (r *UpdatePoolRequest) ToRequestBody() any {
 	r.HealthMonitor = r.HealthMonitor.(*HealthMonitor).toRequestBody()
 	return r
 }
@@ -378,7 +378,7 @@ func (r *UpdatePoolRequest) AddUserAgent(agent ...string) IUpdatePoolRequest {
 	return r
 }
 
-func (h *HealthMonitor) ToRequestBody() interface{} {
+func (h *HealthMonitor) ToRequestBody() any {
 	return h
 }
 
@@ -443,8 +443,8 @@ func (h *HealthMonitor) WithSuccessCode(code *string) IHealthMonitorRequest {
 	return h
 }
 
-func (h *HealthMonitor) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (h *HealthMonitor) ToMap() map[string]any {
+	return map[string]any{
 		"healthCheckProtocol": h.HealthCheckProtocol,
 		"healthyThreshold":    h.HealthyThreshold,
 		"unhealthyThreshold":  h.UnhealthyThreshold,
@@ -458,12 +458,12 @@ func (h *HealthMonitor) ToMap() map[string]interface{} {
 	}
 }
 
-func (m *Member) ToRequestBody() interface{} {
+func (m *Member) ToRequestBody() any {
 	return m
 }
 
-func (m *Member) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (m *Member) ToMap() map[string]any {
+	return map[string]any{
 		"backup":      m.Backup,
 		"ipAddress":   m.IpAddress,
 		"monitorPort": m.MonitorPort,
@@ -478,6 +478,6 @@ func (r *UpdatePoolMembersRequest) WithMembers(members ...IMemberRequest) IUpdat
 	return r
 }
 
-func (r *UpdatePoolMembersRequest) ToRequestBody() interface{} {
+func (r *UpdatePoolMembersRequest) ToRequestBody() any {
 	return r
 }

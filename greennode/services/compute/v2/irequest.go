@@ -1,7 +1,7 @@
 package v2
 
 type ICreateServerRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	WithRootDiskEncryptionType(encryptionVolume DataDiskEncryptionType) ICreateServerRequest
 	WithEncryptionVolume(enabled bool) ICreateServerRequest
 	WithAutoRenew(val bool) ICreateServerRequest
@@ -18,27 +18,27 @@ type ICreateServerRequest interface {
 	WithZone(zone string) ICreateServerRequest
 	AddUserAgent(agent ...string) ICreateServerRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IGetServerByIDRequest interface {
 	GetServerID() string
 	AddUserAgent(agent ...string) IGetServerByIDRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IDeleteServerByIDRequest interface {
 	GetServerID() string
 	WithDeleteAllVolume(ok bool) IDeleteServerByIDRequest
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) IDeleteServerByIDRequest
 	ParseUserAgent() string
 }
 
 type IUpdateServerSecgroupsByServerIDRequest interface {
 	GetServerID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	GetListSecgroupsIDs() []string
 	AddUserAgent(agent ...string) IUpdateServerSecgroupsByServerIDRequest
 	ParseUserAgent() string
@@ -57,20 +57,20 @@ type IDetachBlockVolumeRequest interface {
 type IAttachFloatingIpRequest interface {
 	GetServerID() string
 	GetInternalNetworkInterfaceID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) IAttachFloatingIpRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IDetachFloatingIpRequest interface {
 	GetInternalNetworkInterfaceID() string
 	GetWanID() string
 	GetServerID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) IDetachFloatingIpRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IListServerGroupPoliciesRequest interface {
@@ -82,7 +82,7 @@ type IDeleteServerGroupByIDRequest interface {
 	AddUserAgent(agent ...string) IDeleteServerGroupByIDRequest
 	ParseUserAgent() string
 	GetServerGroupID() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IListServerGroupsRequest interface {
@@ -91,12 +91,12 @@ type IListServerGroupsRequest interface {
 	ToListQuery() (string, error)
 	ParseUserAgent() string
 	GetDefaultQuery() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type ICreateServerGroupRequest interface {
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) ICreateServerGroupRequest
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }

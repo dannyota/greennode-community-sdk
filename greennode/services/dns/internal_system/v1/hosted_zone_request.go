@@ -8,7 +8,7 @@ import (
 type IGetHostedZoneByIDRequest interface {
 	GetHostedZoneID() string
 	WithHostedZoneID(hostedZoneID string) IGetHostedZoneByIDRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -28,8 +28,8 @@ func (r *GetHostedZoneByIDRequest) WithHostedZoneID(hostedZoneID string) IGetHos
 	return r
 }
 
-func (r *GetHostedZoneByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *GetHostedZoneByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 	}
 }
@@ -45,7 +45,7 @@ func NewGetHostedZoneByIDRequest(hostedZoneID string) IGetHostedZoneByIDRequest 
 type IListHostedZonesRequest interface {
 	GetName() string
 	WithName(name string) IListHostedZonesRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -65,8 +65,8 @@ func (r *ListHostedZonesRequest) WithName(name string) IListHostedZonesRequest {
 	return r
 }
 
-func (r *ListHostedZonesRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ListHostedZonesRequest) ToMap() map[string]any {
+	return map[string]any{
 		"name": r.Name,
 	}
 }
@@ -82,8 +82,8 @@ type ICreateHostedZoneRequest interface {
 	WithAssocVpcIDs(assocVpcIDs []string) ICreateHostedZoneRequest
 	WithType(zoneType HostedZoneType) ICreateHostedZoneRequest
 	WithDescription(description string) ICreateHostedZoneRequest
-	ToRequestBody(sc client.ServiceClient) map[string]interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]any
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -117,8 +117,8 @@ func (r *CreateHostedZoneRequest) WithDescription(description string) ICreateHos
 	return r
 }
 
-func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+	return map[string]any{
 		"domainName":  r.DomainName,
 		"assocVpcIds": r.AssocVpcIDs,
 		"type":        r.Type,
@@ -126,8 +126,8 @@ func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[str
 	}
 }
 
-func (r *CreateHostedZoneRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateHostedZoneRequest) ToMap() map[string]any {
+	return map[string]any{
 		"domainName":  r.DomainName,
 		"assocVpcIds": r.AssocVpcIDs,
 		"type":        r.Type,
@@ -148,7 +148,7 @@ func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneTyp
 type IDeleteHostedZoneRequest interface {
 	GetHostedZoneID() string
 	WithHostedZoneID(hostedZoneID string) IDeleteHostedZoneRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -168,8 +168,8 @@ func (r *DeleteHostedZoneRequest) WithHostedZoneID(hostedZoneID string) IDeleteH
 	return r
 }
 
-func (r *DeleteHostedZoneRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *DeleteHostedZoneRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 	}
 }
@@ -187,8 +187,8 @@ type IUpdateHostedZoneRequest interface {
 	WithHostedZoneID(hostedZoneID string) IUpdateHostedZoneRequest
 	WithAssocVpcIDs(assocVpcIDs []string) IUpdateHostedZoneRequest
 	WithDescription(description string) IUpdateHostedZoneRequest
-	ToRequestBody(sc client.ServiceClient) map[string]interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]any
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -220,15 +220,15 @@ func (r *UpdateHostedZoneRequest) WithDescription(description string) IUpdateHos
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
-	return map[string]interface{}{
+func (r *UpdateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+	return map[string]any{
 		"assocVpcIds": r.AssocVpcIDs,
 		"description": r.Description,
 	}
 }
 
-func (r *UpdateHostedZoneRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *UpdateHostedZoneRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 		"assocVpcIds":  r.AssocVpcIDs,
 		"description":  r.Description,

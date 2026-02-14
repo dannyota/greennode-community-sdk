@@ -19,7 +19,7 @@ type CreateSystemTagRequest struct { // ________________________________________
 	common.UserAgent
 }
 
-func (r *CreateSystemTagRequest) ToRequestBody() interface{} {
+func (r *CreateSystemTagRequest) ToRequestBody() any {
 	return r
 }
 
@@ -48,8 +48,8 @@ func (r *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagReque
 	return r
 }
 
-func (r *CreateSystemTagRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *CreateSystemTagRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"resourceId":   r.ResourceID,
 		"resourceType": r.ResourceType,
 	}

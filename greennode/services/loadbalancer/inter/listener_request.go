@@ -45,7 +45,7 @@ type CreateListenerRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateListenerRequest) ToRequestBody() interface{} {
+func (r *CreateListenerRequest) ToRequestBody() any {
 	if r == nil {
 		return nil
 	}
@@ -109,8 +109,8 @@ func (r *CreateListenerRequest) AddCidrs(cidrs ...string) ICreateListenerRequest
 	return r
 }
 
-func (r *CreateListenerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateListenerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"listenerName":         r.ListenerName,
 		"listenerProtocol":     r.ListenerProtocol,
 		"listenerProtocolPort": r.ListenerProtocolPort,

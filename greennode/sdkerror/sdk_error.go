@@ -98,7 +98,7 @@ func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) Error {
 	return e
 }
 
-func (e *SdkError) WithParameters(params map[string]interface{}) Error {
+func (e *SdkError) WithParameters(params map[string]any) Error {
 	if e.parameters == nil {
 		e.parameters = new(sync.Map)
 		return e
@@ -111,7 +111,7 @@ func (e *SdkError) WithParameters(params map[string]interface{}) Error {
 	return e
 }
 
-func (e *SdkError) WithKVparameters(params ...interface{}) Error {
+func (e *SdkError) WithKVparameters(params ...any) Error {
 	if e.parameters == nil {
 		e.parameters = new(sync.Map)
 	}
@@ -149,10 +149,10 @@ func (e *SdkError) StringErrorCode() string {
 	return string(e.errorCode)
 }
 
-func (e *SdkError) Parameters() map[string]interface{} {
-	res := make(map[string]interface{})
+func (e *SdkError) Parameters() map[string]any {
+	res := make(map[string]any)
 	if e.parameters != nil {
-		e.parameters.Range(func(key, val interface{}) bool {
+		e.parameters.Range(func(key, val any) bool {
 			res[key.(string)] = val
 			return true
 		})
@@ -177,13 +177,13 @@ func (e *SdkError) ErrorMessages() string {
 	return fmt.Sprintf("%s: %s", e.message, e.error.Error())
 }
 
-func (e *SdkError) ListParameters() []interface{} {
-	var result []interface{}
+func (e *SdkError) ListParameters() []any {
+	var result []any
 	if e.parameters == nil {
 		return result
 	}
 
-	e.parameters.Range(func(key, val interface{}) bool {
+	e.parameters.Range(func(key, val any) bool {
 		result = append(result, key, val)
 		return true
 	})

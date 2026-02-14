@@ -8,7 +8,7 @@ type IGetEndpointByIDRequest interface {
 }
 
 type ICreateEndpointRequest interface {
-	ToRequestBody(svc client.ServiceClient) interface{}
+	ToRequestBody(svc client.ServiceClient) any
 	WithDescription(desp string) ICreateEndpointRequest
 	WithSubnetUuid(subnetUuid string) ICreateEndpointRequest
 	WithVpcUuid(vpcUuid string) ICreateEndpointRequest
@@ -25,15 +25,15 @@ type ICreateEndpointRequest interface {
 	AddNetworking(zone string, subnetUuid string) ICreateEndpointRequest
 	WithScaling(minSize int, maxSize int) ICreateEndpointRequest
 	AddUserAgent(agent ...string) ICreateEndpointRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IDeleteEndpointByIDRequest interface {
 	GetEndpointID() string
 	AddUserAgent(agent ...string) IDeleteEndpointByIDRequest
 	ParseUserAgent() string
-	ToRequestBody(svc client.ServiceClient) interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody(svc client.ServiceClient) any
+	ToMap() map[string]any
 }
 
 type IListEndpointsRequest interface {
@@ -45,13 +45,13 @@ type IListEndpointsRequest interface {
 	GetDefaultQuery() string
 	AddUserAgent(agent ...string) IListEndpointsRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IListTagsByEndpointIDRequest interface {
 	ToListQuery() (string, error)
 	GetDefaultQuery() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	GetMapHeaders() map[string]string
 	ParseUserAgent() string
 	GetProjectID() string
@@ -59,17 +59,17 @@ type IListTagsByEndpointIDRequest interface {
 }
 
 type ICreateTagsWithEndpointIDRequest interface {
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddUserAgent(agent ...string) ICreateTagsWithEndpointIDRequest
 	GetMapHeaders() map[string]string
 	AddTag(key, value string) ICreateTagsWithEndpointIDRequest
 	ParseUserAgent() string
 	GetProjectID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 }
 
 type IDeleteTagOfEndpointRequest interface {
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddUserAgent(agent ...string) IDeleteTagOfEndpointRequest
 	GetMapHeaders() map[string]string
 	ParseUserAgent() string
@@ -78,11 +78,11 @@ type IDeleteTagOfEndpointRequest interface {
 }
 
 type IUpdateTagValueOfEndpointRequest interface {
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddUserAgent(agent ...string) IUpdateTagValueOfEndpointRequest
 	GetMapHeaders() map[string]string
 	ParseUserAgent() string
 	GetTagID() string
 	GetProjectID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 }

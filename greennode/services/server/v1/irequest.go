@@ -1,9 +1,9 @@
 package v1
 
 type ICreateSystemTagRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) ICreateSystemTagRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddTag(key, value string) ICreateSystemTagRequest
 	ParseUserAgent() string
 	GetResourceID() string

@@ -28,7 +28,7 @@ type CreateSecgroupRequest struct { //__________________________________________
 	common.UserAgent
 }
 
-func (r *CreateSecgroupRequest) ToRequestBody() interface{} {
+func (r *CreateSecgroupRequest) ToRequestBody() any {
 	return r
 }
 

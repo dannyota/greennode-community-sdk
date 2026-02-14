@@ -35,8 +35,8 @@ type CreateLoadBalancerRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"name":            r.Name,
 		"packageId":       r.PackageID,
 		"scheme":          r.Scheme,
@@ -49,7 +49,7 @@ func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (r *CreateLoadBalancerRequest) ToRequestBody() interface{} {
+func (r *CreateLoadBalancerRequest) ToRequestBody() any {
 	if r.Pool != nil {
 		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
 	}

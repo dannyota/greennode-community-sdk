@@ -6,10 +6,10 @@ import (
 
 type ListRecordsResponse struct {
 	ListData  []*entity.DnsRecord `json:"listData"`
-	Page      int                   `json:"page"`
-	PageSize  int                   `json:"pageSize"`
-	TotalPage int                   `json:"totalPage"`
-	TotalItem int                   `json:"totalItem"`
+	Page      int                 `json:"page"`
+	PageSize  int                 `json:"pageSize"`
+	TotalPage int                 `json:"totalPage"`
+	TotalItem int                 `json:"totalItem"`
 }
 
 func (r *ListRecordsResponse) ToEntityListRecords() *entity.ListDnsRecords {

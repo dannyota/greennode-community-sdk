@@ -23,8 +23,8 @@ type ICreateGlobalPoolRequest interface {
 
 	AddUserAgent(agent ...string) ICreateGlobalPoolRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 type IGlobalHealthMonitorRequest interface {
@@ -43,8 +43,8 @@ type IGlobalHealthMonitorRequest interface {
 
 	AddUserAgent(agent ...string) IGlobalHealthMonitorRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 type ICreateGlobalPoolMemberRequest interface {
 	WithName(name string) ICreateGlobalPoolMemberRequest
@@ -62,8 +62,8 @@ type ICreateGlobalPoolMemberRequest interface {
 
 	AddUserAgent(agent ...string) ICreateGlobalPoolMemberRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 type IGlobalMemberRequest interface {
@@ -78,8 +78,8 @@ type IGlobalMemberRequest interface {
 
 	AddUserAgent(agent ...string) IGlobalMemberRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------
@@ -95,8 +95,8 @@ type IUpdateGlobalPoolRequest interface {
 
 	AddUserAgent(agent ...string) IUpdateGlobalPoolRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------
@@ -163,13 +163,13 @@ type IPatchGlobalPoolMembersRequest interface {
 
 	AddUserAgent(agent ...string) IPatchGlobalPoolMembersRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 type IBulkActionRequest interface {
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------
@@ -214,8 +214,8 @@ type ICreateGlobalListenerRequest interface {
 
 	AddUserAgent(agent ...string) ICreateGlobalListenerRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------
@@ -235,8 +235,8 @@ type IUpdateGlobalListenerRequest interface {
 
 	AddUserAgent(agent ...string) IUpdateGlobalListenerRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------
@@ -312,8 +312,8 @@ type ICreateGlobalLoadBalancerRequest interface {
 
 	AddUserAgent(agent ...string) ICreateGlobalLoadBalancerRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 // --------------------------------------------------------

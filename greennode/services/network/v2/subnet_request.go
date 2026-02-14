@@ -46,7 +46,7 @@ type UpdateSubnetByIDRequest struct {
 	common.NetworkCommon
 }
 
-func (r *UpdateSubnetByIDRequest) ToRequestBody() interface{} {
+func (r *UpdateSubnetByIDRequest) ToRequestBody() any {
 	return r.UpdateSubnetBody
 }
 

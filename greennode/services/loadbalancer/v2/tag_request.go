@@ -64,7 +64,7 @@ type UpdateTagsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (r *CreateTagsRequest) ToRequestBody() interface{} {
+func (r *CreateTagsRequest) ToRequestBody() any {
 	return r
 }
 
@@ -84,7 +84,7 @@ func (r *CreateTagsRequest) WithTags(tags ...string) ICreateTagsRequest {
 	return r
 }
 
-func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) interface{} {
+func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) any {
 	st := map[string]common.Tag{}
 	for _, tag := range lstTags.Items {
 		st[tag.Key] = common.Tag{
@@ -118,8 +118,8 @@ func (r *UpdateTagsRequest) WithTags(tags ...string) IUpdateTagsRequest {
 	return r
 }
 
-func (r *UpdateTagsRequest) ToMap() map[string]interface{} {
-	res := make(map[string]interface{})
+func (r *UpdateTagsRequest) ToMap() map[string]any {
+	res := make(map[string]any)
 	for _, tag := range r.TagRequestList {
 		res[tag.Key] = tag.Value
 	}

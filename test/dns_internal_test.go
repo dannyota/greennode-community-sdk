@@ -99,11 +99,11 @@ func TestDnsServiceInternal_ListHostedZonesByVpc(t *testing.T) {
 	t.Logf("Total hosted zones found: %d", len(resp.ListData))
 
 	// Filter hosted zones that contain the target VPC ID
-	var matchingZones []map[string]interface{}
+	var matchingZones []map[string]any
 	for _, zone := range resp.ListData {
 		for _, vpcID := range zone.AssocVpcIDs {
 			if vpcID == targetVpcID {
-				matchingZones = append(matchingZones, map[string]interface{}{
+				matchingZones = append(matchingZones, map[string]any{
 					"hostedZoneId": zone.HostedZoneID,
 					"domainName":   zone.DomainName,
 					"type":         zone.Type,

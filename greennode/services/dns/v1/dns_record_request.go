@@ -10,7 +10,7 @@ type IListRecordsRequest interface {
 	GetName() string
 	WithHostedZoneID(hostedZoneID string) IListRecordsRequest
 	WithName(name string) IListRecordsRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -40,8 +40,8 @@ func (r *ListRecordsRequest) WithName(name string) IListRecordsRequest {
 	return r
 }
 
-func (r *ListRecordsRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ListRecordsRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 		"name":         r.Name,
 	}
@@ -60,7 +60,7 @@ type IGetRecordRequest interface {
 	GetRecordID() string
 	WithHostedZoneID(hostedZoneID string) IGetRecordRequest
 	WithRecordID(recordID string) IGetRecordRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -90,8 +90,8 @@ func (r *GetRecordRequest) WithRecordID(recordID string) IGetRecordRequest {
 	return r
 }
 
-func (r *GetRecordRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *GetRecordRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 		"recordId":     r.RecordID,
 	}
@@ -117,8 +117,8 @@ type IUpdateRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) IUpdateRecordRequest
 	WithEnableStickySession(enable bool) IUpdateRecordRequest
 	WithValue(value []RecordValueRequest) IUpdateRecordRequest
-	ToRequestBody(sc client.ServiceClient) map[string]interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]any
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -184,8 +184,8 @@ func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) IUpdateRecor
 	return r
 }
 
-func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
-	body := map[string]interface{}{
+func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+	body := map[string]any{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
 		"type":          r.Type,
@@ -198,8 +198,8 @@ func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]
 	return body
 }
 
-func (r *UpdateRecordRequest) ToMap() map[string]interface{} {
-	m := map[string]interface{}{
+func (r *UpdateRecordRequest) ToMap() map[string]any {
+	m := map[string]any{
 		"hostedZoneId":  r.HostedZoneID,
 		"recordId":      r.RecordID,
 		"subDomain":     r.SubDomain,
@@ -228,7 +228,7 @@ type IDeleteRecordRequest interface {
 	GetRecordID() string
 	WithHostedZoneID(hostedZoneID string) IDeleteRecordRequest
 	WithRecordID(recordID string) IDeleteRecordRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -258,8 +258,8 @@ func (r *DeleteRecordRequest) WithRecordID(recordID string) IDeleteRecordRequest
 	return r
 }
 
-func (r *DeleteRecordRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *DeleteRecordRequest) ToMap() map[string]any {
+	return map[string]any{
 		"hostedZoneId": r.HostedZoneID,
 		"recordId":     r.RecordID,
 	}
@@ -283,8 +283,8 @@ type ICreateDnsRecordRequest interface {
 	WithRoutingPolicy(routingPolicy RoutingPolicy) ICreateDnsRecordRequest
 	WithEnableStickySession(enable bool) ICreateDnsRecordRequest
 	WithValue(value []RecordValueRequest) ICreateDnsRecordRequest
-	ToRequestBody(sc client.ServiceClient) map[string]interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody(sc client.ServiceClient) map[string]any
+	ToMap() map[string]any
 
 	ParseUserAgent() string
 }
@@ -346,8 +346,8 @@ func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) ICreateDn
 	return r
 }
 
-func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]interface{} {
-	body := map[string]interface{}{
+func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+	body := map[string]any{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
 		"type":          r.Type,
@@ -360,8 +360,8 @@ func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[stri
 	return body
 }
 
-func (r *CreateDnsRecordRequest) ToMap() map[string]interface{} {
-	m := map[string]interface{}{
+func (r *CreateDnsRecordRequest) ToMap() map[string]any {
+	m := map[string]any{
 		"hostedZoneId":  r.HostedZoneID,
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,

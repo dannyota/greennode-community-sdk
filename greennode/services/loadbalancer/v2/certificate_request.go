@@ -82,12 +82,12 @@ func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) ICreateCert
 	return r
 }
 
-func (r *CreateCertificateRequest) ToRequestBody() interface{} {
+func (r *CreateCertificateRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateCertificateRequest) ToMap() map[string]interface{} {
-	re := map[string]interface{}{
+func (r *CreateCertificateRequest) ToMap() map[string]any {
+	re := map[string]any{
 		"name":        r.Name,
 		"type":        r.Type,
 		"certificate": r.Certificate,

@@ -134,7 +134,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(opts IGetUnderBlockVolumeIDReque
 func (s *VolumeServiceV2) MigrateBlockVolumeByID(opts IMigrateBlockVolumeByIDRequest) sdkerror.Error {
 	url := migrateBlockVolumeByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	resp := map[string]interface{}{}
+	resp := map[string]any{}
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONBody(opts.ToRequestBody()).

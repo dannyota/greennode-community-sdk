@@ -5,5 +5,5 @@ type IGetAccessTokenRequest interface {
 	WithClientSecret(clientSecret string) IGetAccessTokenRequest
 	GetClientID() string
 	GetClientSecret() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 }

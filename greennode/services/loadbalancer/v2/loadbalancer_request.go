@@ -3,8 +3,8 @@ package v2
 import (
 	"fmt"
 	"net/url"
-	"strings"
 	"strconv"
+	"strings"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -177,28 +177,28 @@ func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) 
 	return r
 }
 
-func (r *ScaleLoadBalancerRequest) ToRequestBody() interface{} {
+func (r *ScaleLoadBalancerRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *ScaleLoadBalancerRequest) ToMap() map[string]interface{} {
-	result := map[string]interface{}{}
+func (r *ScaleLoadBalancerRequest) ToMap() map[string]any {
+	result := map[string]any{}
 	if r.Scaling != nil {
-		result["scaling"] = map[string]interface{}{
+		result["scaling"] = map[string]any{
 			"minSize": r.Scaling.MinNodes,
 			"maxSize": r.Scaling.MaxNodes,
 		}
 	}
 	if r.Networking != nil {
-		result["networking"] = map[string]interface{}{
+		result["networking"] = map[string]any{
 			"subnets": r.Networking.Subnets,
 		}
 	}
 	return result
 }
 
-func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"name":         r.Name,
 		"packageId":    r.PackageID,
 		"scheme":       r.Scheme,
@@ -219,7 +219,7 @@ func (r *CreateLoadBalancerRequest) ToMap() map[string]interface{} {
 	return err
 }
 
-func (r *CreateLoadBalancerRequest) ToRequestBody() interface{} {
+func (r *CreateLoadBalancerRequest) ToRequestBody() any {
 	if r.Pool != nil {
 		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
 	}
@@ -296,7 +296,7 @@ func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) ICreateLoadBa
 	return r
 }
 
-func (r *ResizeLoadBalancerRequest) ToRequestBody() interface{} {
+func (r *ResizeLoadBalancerRequest) ToRequestBody() any {
 	return r
 }
 
@@ -324,8 +324,8 @@ func (r *ListLoadBalancerPackagesRequest) GetZoneID() string {
 	return string(r.ZoneID)
 }
 
-func (r *ListLoadBalancerPackagesRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{}
+func (r *ListLoadBalancerPackagesRequest) ToMap() map[string]any {
+	return map[string]any{}
 }
 
 func (r *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) IGetLoadBalancerByIDRequest {
@@ -384,13 +384,13 @@ func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 
-func (r *ResizeLoadBalancerByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ResizeLoadBalancerByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"packageId":      r.PackageID,
 		"loadBalancerId": r.LoadBalancerID,
 	}
 }
 
-func (r *ResizeLoadBalancerByIDRequest) ToRequestBody() interface{} {
+func (r *ResizeLoadBalancerByIDRequest) ToRequestBody() any {
 	return r
 }

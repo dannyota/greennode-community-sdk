@@ -9,7 +9,7 @@ type IGetSecgroupByIDRequest interface {
 }
 
 type ICreateSecgroupRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	GetSecgroupName() string
 	AddUserAgent(agent ...string) ICreateSecgroupRequest
 	ParseUserAgent() string
@@ -29,10 +29,10 @@ type IListSecgroupRequest interface {
 // Secgroup Rule
 type ICreateSecgroupRuleRequest interface {
 	GetSecgroupID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	AddUserAgent(agent ...string) ICreateSecgroupRuleRequest
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 type IDeleteSecgroupRuleByIDRequest interface {
@@ -70,7 +70,7 @@ type IUpdateSubnetByIDRequest interface {
 	ParseUserAgent() string
 	GetNetworkID() string
 	GetSubnetID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 }
 
 /**
@@ -85,7 +85,7 @@ type IGetAllAddressPairByVirtualSubnetIDRequest interface {
 type ISetAddressPairInVirtualSubnetRequest interface {
 	GetVirtualSubnetID() string
 	ParseUserAgent() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 }
 
 type IDeleteAddressPairRequest interface {
@@ -102,9 +102,9 @@ type IListAllServersBySecgroupIDRequest interface {
 
 type ICreateAddressPairRequest interface {
 	GetVirtualAddressID() string
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddUserAgent(agent ...string) ICreateAddressPairRequest
 	WithMode(mode AddressPairMode) ICreateAddressPairRequest
 }
@@ -115,9 +115,9 @@ type ICreateAddressPairRequest interface {
 
 // Request interface for creating virtual address cross project
 type ICreateVirtualAddressCrossProjectRequest interface {
-	ToRequestBody() interface{}
+	ToRequestBody() any
 	ParseUserAgent() string
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 	AddUserAgent(agent ...string) ICreateVirtualAddressCrossProjectRequest
 	WithDescription(description string) ICreateVirtualAddressCrossProjectRequest
 }
@@ -127,7 +127,7 @@ type IDeleteVirtualAddressByIDRequest interface {
 	GetVirtualAddressID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IDeleteVirtualAddressByIDRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 // Request interface for getting virtual address by ID
@@ -135,7 +135,7 @@ type IGetVirtualAddressByIDRequest interface {
 	GetVirtualAddressID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IGetVirtualAddressByIDRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }
 
 // Request interface for listing address pairs of virtual address by ID
@@ -144,5 +144,5 @@ type IListAddressPairsByVirtualAddressIDRequest interface {
 	GetVirtualAddressID() string
 	ParseUserAgent() string
 	AddUserAgent(agent ...string) IListAddressPairsByVirtualAddressIDRequest
-	ToMap() map[string]interface{}
+	ToMap() map[string]any
 }

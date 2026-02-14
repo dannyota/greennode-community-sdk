@@ -123,8 +123,8 @@ func (r *CreateGlobalPoolRequest) WithLoadBalancerID(lbID string) ICreateGlobalP
 	return r
 }
 
-func (r *CreateGlobalPoolRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *CreateGlobalPoolRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"algorithm":         r.Algorithm,
 		"description":       r.Description,
 		"name":              r.Name,
@@ -132,17 +132,17 @@ func (r *CreateGlobalPoolRequest) ToMap() map[string]interface{} {
 		"stickiness":        r.Stickiness,
 		"tlsEncryption":     r.TLSEncryption,
 		"health":            r.HealthMonitor.ToMap(),
-		"globalPoolMembers": make([]map[string]interface{}, 0),
+		"globalPoolMembers": make([]map[string]any, 0),
 	}
 
 	for _, member := range r.GlobalPoolMembers {
-		err["globalPoolMembers"] = append(err["globalPoolMembers"].([]map[string]interface{}), member.ToMap())
+		err["globalPoolMembers"] = append(err["globalPoolMembers"].([]map[string]any), member.ToMap())
 	}
 
 	return err
 }
 
-func (r *CreateGlobalPoolRequest) ToRequestBody() interface{} {
+func (r *CreateGlobalPoolRequest) ToRequestBody() any {
 	return r
 }
 
@@ -240,8 +240,8 @@ func (r *GlobalHealthMonitorRequest) AddUserAgent(agent ...string) IGlobalHealth
 	return r
 }
 
-func (r *GlobalHealthMonitorRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *GlobalHealthMonitorRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"protocol":           r.HealthCheckProtocol,
 		"healthyThreshold":   r.HealthyThreshold,
 		"unhealthyThreshold": r.UnhealthyThreshold,
@@ -257,7 +257,7 @@ func (r *GlobalHealthMonitorRequest) ToMap() map[string]interface{} {
 	return err
 }
 
-func (r *GlobalHealthMonitorRequest) ToRequestBody() interface{} {
+func (r *GlobalHealthMonitorRequest) ToRequestBody() any {
 	return r
 }
 
@@ -352,24 +352,24 @@ func (r *GlobalPoolMemberRequest) AddUserAgent(agent ...string) ICreateGlobalPoo
 	return r
 }
 
-func (r *GlobalPoolMemberRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *GlobalPoolMemberRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"name":        r.Name,
 		"description": r.Description,
 		"region":      r.Region,
 		"trafficDial": r.TrafficDial,
 		"vpcId":       r.VPCID,
-		"members":     make([]map[string]interface{}, 0),
+		"members":     make([]map[string]any, 0),
 	}
 
 	for _, member := range r.Members {
-		err["members"] = append(err["members"].([]map[string]interface{}), member.ToMap())
+		err["members"] = append(err["members"].([]map[string]any), member.ToMap())
 	}
 
 	return err
 }
 
-func (r *GlobalPoolMemberRequest) ToRequestBody() interface{} {
+func (r *GlobalPoolMemberRequest) ToRequestBody() any {
 	return r
 }
 
@@ -448,8 +448,8 @@ func (r *GlobalMemberRequest) AddUserAgent(agent ...string) IGlobalMemberRequest
 	return r
 }
 
-func (r *GlobalMemberRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *GlobalMemberRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"address":     r.Address,
 		"backupRole":  r.BackupRole,
 		"description": r.Description,
@@ -462,7 +462,7 @@ func (r *GlobalMemberRequest) ToMap() map[string]interface{} {
 	return err
 }
 
-func (r *GlobalMemberRequest) ToRequestBody() interface{} {
+func (r *GlobalMemberRequest) ToRequestBody() any {
 	return r
 }
 
@@ -517,15 +517,15 @@ func (r *UpdateGlobalPoolRequest) AddUserAgent(agent ...string) IUpdateGlobalPoo
 	return r
 }
 
-func (r *UpdateGlobalPoolRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *UpdateGlobalPoolRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"algorithm": r.Algorithm,
 		"health":    r.HealthMonitor.ToMap(),
 	}
 	return err
 }
 
-func (r *UpdateGlobalPoolRequest) ToRequestBody() interface{} {
+func (r *UpdateGlobalPoolRequest) ToRequestBody() any {
 	return r
 }
 
@@ -648,19 +648,19 @@ func (r *PatchGlobalPoolMembersRequest) AddUserAgent(agent ...string) IPatchGlob
 	return r
 }
 
-func (r *PatchGlobalPoolMembersRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
-		"bulkActions": make([]map[string]interface{}, 0),
+func (r *PatchGlobalPoolMembersRequest) ToMap() map[string]any {
+	err := map[string]any{
+		"bulkActions": make([]map[string]any, 0),
 	}
 
 	for _, action := range r.BulkActions {
-		err["bulkActions"] = append(err["bulkActions"].([]map[string]interface{}), action.ToMap())
+		err["bulkActions"] = append(err["bulkActions"].([]map[string]any), action.ToMap())
 	}
 
 	return err
 }
 
-func (r *PatchGlobalPoolMembersRequest) ToRequestBody() interface{} {
+func (r *PatchGlobalPoolMembersRequest) ToRequestBody() any {
 	return r
 }
 
@@ -684,15 +684,15 @@ type PatchGlobalPoolCreateBulkActionRequest struct {
 	CreatePoolMember ICreateGlobalPoolMemberRequest `json:"createPoolMember"`
 }
 
-func (r *PatchGlobalPoolCreateBulkActionRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *PatchGlobalPoolCreateBulkActionRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"action":           r.Action,
 		"createPoolMember": r.CreatePoolMember.ToMap(),
 	}
 	return err
 }
 
-func (r *PatchGlobalPoolCreateBulkActionRequest) ToRequestBody() interface{} {
+func (r *PatchGlobalPoolCreateBulkActionRequest) ToRequestBody() any {
 	return r
 }
 
@@ -711,15 +711,15 @@ type PatchGlobalPoolDeleteBulkActionRequest struct {
 	ID     string `json:"id"`
 }
 
-func (r *PatchGlobalPoolDeleteBulkActionRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *PatchGlobalPoolDeleteBulkActionRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"action": r.Action,
 		"id":     r.ID,
 	}
 	return err
 }
 
-func (r *PatchGlobalPoolDeleteBulkActionRequest) ToRequestBody() interface{} {
+func (r *PatchGlobalPoolDeleteBulkActionRequest) ToRequestBody() any {
 	return r
 }
 
@@ -739,8 +739,8 @@ type PatchGlobalPoolUpdateBulkActionRequest struct {
 	UpdatePoolMember IUpdateGlobalPoolMemberRequest `json:"updatePoolMember"`
 }
 
-func (r *PatchGlobalPoolUpdateBulkActionRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *PatchGlobalPoolUpdateBulkActionRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"action":           r.Action,
 		"id":               r.ID,
 		"updatePoolMember": r.UpdatePoolMember.ToMap(),
@@ -748,7 +748,7 @@ func (r *PatchGlobalPoolUpdateBulkActionRequest) ToMap() map[string]interface{} 
 	return err
 }
 
-func (r *PatchGlobalPoolUpdateBulkActionRequest) ToRequestBody() interface{} {
+func (r *PatchGlobalPoolUpdateBulkActionRequest) ToRequestBody() any {
 	return r
 }
 
@@ -773,8 +773,8 @@ type IUpdateGlobalPoolMemberRequest interface {
 
 	AddUserAgent(agent ...string) IUpdateGlobalPoolMemberRequest
 	ParseUserAgent() string
-	ToRequestBody() interface{}
-	ToMap() map[string]interface{}
+	ToRequestBody() any
+	ToMap() map[string]any
 }
 
 var _ IUpdateGlobalPoolMemberRequest = &UpdateGlobalPoolMemberRequest{}
@@ -799,14 +799,14 @@ func (r *UpdateGlobalPoolMemberRequest) WithMembers(members ...IGlobalMemberRequ
 	return r
 }
 
-func (r *UpdateGlobalPoolMemberRequest) ToMap() map[string]interface{} {
-	err := map[string]interface{}{
+func (r *UpdateGlobalPoolMemberRequest) ToMap() map[string]any {
+	err := map[string]any{
 		"trafficDial": r.TrafficDial,
-		"members":     make([]map[string]interface{}, 0),
+		"members":     make([]map[string]any, 0),
 	}
 
 	for _, member := range r.Members {
-		err["members"] = append(err["members"].([]map[string]interface{}), member.ToMap())
+		err["members"] = append(err["members"].([]map[string]any), member.ToMap())
 	}
 
 	return err
@@ -832,7 +832,7 @@ func (r *UpdateGlobalPoolMemberRequest) AddUserAgent(agent ...string) IUpdateGlo
 	return r
 }
 
-func (r *UpdateGlobalPoolMemberRequest) ToRequestBody() interface{} {
+func (r *UpdateGlobalPoolMemberRequest) ToRequestBody() any {
 	return r
 }
 

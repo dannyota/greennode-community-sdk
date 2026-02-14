@@ -30,15 +30,15 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) ToRequestBody() interface{} {
+func (r *CreateVirtualAddressCrossProjectRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]any {
+	return map[string]any{
 		"name":        r.Name,
 		"description": r.Description,
-		"crossProjectRequest": map[string]interface{}{
+		"crossProjectRequest": map[string]any{
 			"projectId": r.CrossProjectRequest.ProjectID,
 			"subnetId":  r.CrossProjectRequest.SubnetID,
 			"ipAddress": r.CrossProjectRequest.IpAddress,
@@ -67,8 +67,8 @@ func (r *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) IDeleteV
 	return r
 }
 
-func (r *DeleteVirtualAddressByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *DeleteVirtualAddressByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"virtualAddressId": r.VirtualAddressID,
 	}
 }
@@ -85,8 +85,8 @@ func (r *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) IGetVirtual
 	return r
 }
 
-func (r *GetVirtualAddressByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *GetVirtualAddressByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"virtualAddressId": r.VirtualAddressID,
 	}
 }
@@ -103,8 +103,8 @@ func (r *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string
 	return r
 }
 
-func (r *ListAddressPairsByVirtualAddressIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ListAddressPairsByVirtualAddressIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"virtualAddressId": r.VirtualAddressID,
 	}
 }

@@ -79,12 +79,12 @@ type ( //_______________________________________________________________________
 	SecgroupRuleProtocol  string
 )
 
-func (r *CreateSecgroupRuleRequest) ToRequestBody() interface{} {
+func (r *CreateSecgroupRuleRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateSecgroupRuleRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateSecgroupRuleRequest) ToMap() map[string]any {
+	return map[string]any{
 		"description":     r.Description,
 		"direction":       r.Direction,
 		"etherType":       r.EtherType,

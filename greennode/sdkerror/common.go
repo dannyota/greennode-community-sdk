@@ -20,7 +20,7 @@ var (
 	regexErrorProjectConflict = regexp.MustCompile(patternProjectConflict)
 )
 
-func ErrorHandler(err error, opts ...func(psdkErr Error)) Error {
+func ErrorHandler(err error, opts ...func(sdkErr Error)) Error {
 	sdkErr := &SdkError{
 		error:     err,
 		errorCode: EcUnknownError,
@@ -48,7 +48,7 @@ func ErrorHandler(err error, opts ...func(psdkErr Error)) Error {
 	return sdkErr
 }
 
-func SdkErrorHandler(sdkErr Error, errResp ErrorResponse, opts ...func(psdkErr Error)) Error {
+func SdkErrorHandler(sdkErr Error, errResp ErrorResponse, opts ...func(sdkErr Error)) Error {
 	if sdkErr == nil && errResp == nil {
 		return nil
 	}
@@ -164,7 +164,7 @@ func WithErrorUnexpected(response *req.Response) func(Error) {
 		sdkErr.WithErrorCode(EcUnexpectedError).
 			WithMessage("Unexpected Error").
 			WithErrors(err).
-			WithParameters(map[string]interface{}{
+			WithParameters(map[string]any{
 				"statusCode": statusCode,
 				"url":        url,
 			})

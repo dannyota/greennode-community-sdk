@@ -64,8 +64,8 @@ type CreateEndpointRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateEndpointRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *CreateEndpointRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"resourceType":      r.ResourceType,
 		"action":            r.Action,
 		"isBuyMorePoc":      r.ResourceInfo.IsBuyMorePoc,
@@ -98,7 +98,7 @@ func (r *CreateEndpointRequest) AddUserAgent(agent ...string) ICreateEndpointReq
 	return r
 }
 
-func (r *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+func (r *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) any {
 	r.ResourceType = "endpoint"
 	r.Action = "create"
 	r.ResourceInfo.EnableAZ = true
@@ -210,15 +210,15 @@ func (r *DeleteEndpointByIDRequest) AddUserAgent(agent ...string) IDeleteEndpoin
 	return r
 }
 
-func (r *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) interface{} {
+func (r *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) any {
 	r.ProjectUuid = svc.GetProjectID()
 	r.RegionUuid = svc.GetZoneID()
 
 	return r
 }
 
-func (r *DeleteEndpointByIDRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *DeleteEndpointByIDRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"serviceId":  r.EndpointServiceUuid,
 		"endpointId": r.EndpointID,
 		"projectId":  r.ProjectUuid,
@@ -241,8 +241,8 @@ type ListEndpointsRequest struct {
 	common.UserAgent
 }
 
-func (r *ListEndpointsRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *ListEndpointsRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"page":  r.Page,
 		"size":  r.Size,
 		"vpcId": r.VpcID,
@@ -333,8 +333,8 @@ func (r *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
 	return query
 }
 
-func (r *ListTagsByEndpointIDRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *ListTagsByEndpointIDRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"resourceUuid": r.ID,
 	}
 
@@ -371,8 +371,8 @@ type CreateTagsWithEndpointIDRequest struct {
 	SystemTag bool `json:"systemTag"`
 }
 
-func (r *CreateTagsWithEndpointIDRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *CreateTagsWithEndpointIDRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"resourceUuid": r.ID,
 	}
 
@@ -406,7 +406,7 @@ func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) ICreateTagsW
 	return r
 }
 
-func (r *CreateTagsWithEndpointIDRequest) ToRequestBody() interface{} {
+func (r *CreateTagsWithEndpointIDRequest) ToRequestBody() any {
 	return r
 }
 
@@ -424,8 +424,8 @@ type DeleteTagOfEndpointRequest struct {
 	TagID     string
 }
 
-func (r *DeleteTagOfEndpointRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *DeleteTagOfEndpointRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"tagId": r.TagID,
 	}
 
@@ -464,8 +464,8 @@ type UpdateTagValueOfEndpointRequest struct {
 	TagValue  string `json:"tagValue"`
 }
 
-func (r *UpdateTagValueOfEndpointRequest) ToMap() map[string]interface{} {
-	res := map[string]interface{}{
+func (r *UpdateTagValueOfEndpointRequest) ToMap() map[string]any {
+	res := map[string]any{
 		"tagId":    r.TagID,
 		"tagValue": r.TagValue,
 	}
@@ -490,7 +490,7 @@ func (r *UpdateTagValueOfEndpointRequest) GetTagID() string {
 	return r.TagID
 }
 
-func (r *UpdateTagValueOfEndpointRequest) ToRequestBody() interface{} {
+func (r *UpdateTagValueOfEndpointRequest) ToRequestBody() any {
 	return r
 }
 

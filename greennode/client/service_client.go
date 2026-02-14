@@ -4,8 +4,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/imroc/req/v3"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/imroc/req/v3"
 )
 
 type serviceClient struct {

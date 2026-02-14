@@ -150,7 +150,7 @@ type GlobalPackageResponse struct {
 	Name                        string                     `json:"name"`
 	Description                 string                     `json:"description"`
 	DescriptionEn               string                     `json:"descriptionEn"`
-	Detail                      interface{}                `json:"detail"`
+	Detail                      any                        `json:"detail"`
 	Enabled                     bool                       `json:"enabled"`
 	BaseSku                     string                     `json:"baseSku"`
 	BaseConnectionRate          int                        `json:"baseConnectionRate"`

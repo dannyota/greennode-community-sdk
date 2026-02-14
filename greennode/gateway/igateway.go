@@ -77,7 +77,7 @@ type VLBGateway interface {
 	GetEndpoint() string
 }
 
-type VBackUpGateway interface{}
+type VBackUpGateway any
 
 type GLBGateway interface {
 	V1() GLBGatewayV1

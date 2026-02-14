@@ -3,8 +3,8 @@ package v1
 import (
 	"fmt"
 	"net/url"
-	"strings"
 	"strconv"
+	"strings"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -147,7 +147,7 @@ func (r *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool ICreateGlobalPoolR
 	return r
 }
 
-func (r *CreateGlobalLoadBalancerRequest) ToRequestBody() interface{} {
+func (r *CreateGlobalLoadBalancerRequest) ToRequestBody() any {
 	return r
 }
 
@@ -156,8 +156,8 @@ func (r *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) ICreateG
 	return r
 }
 
-func (r *CreateGlobalLoadBalancerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateGlobalLoadBalancerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"description":    r.Description,
 		"name":           r.Name,
 		"type":           r.Type,

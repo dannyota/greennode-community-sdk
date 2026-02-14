@@ -74,7 +74,7 @@ type ServerTag struct {
 	Value string `json:"value"`
 }
 
-func (r *CreateServerRequest) ToRequestBody() interface{} {
+func (r *CreateServerRequest) ToRequestBody() any {
 	return r
 }
 
@@ -173,8 +173,8 @@ func (r *CreateServerRequest) AddUserAgent(agent ...string) ICreateServerRequest
 	return r
 }
 
-func (r *CreateServerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateServerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"attachFloating":         r.AttachFloating,
 		"backupInstancePointId":  r.BackupInstancePointID,
 		"dataDiskEncryptionType": r.DataDiskEncryptionType,
@@ -217,8 +217,8 @@ func (r *GetServerByIDRequest) AddUserAgent(agent ...string) IGetServerByIDReque
 	return r
 }
 
-func (r *GetServerByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *GetServerByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"serverId": r.ServerID,
 	}
 }
@@ -239,7 +239,7 @@ func (r *DeleteServerByIDRequest) AddUserAgent(agent ...string) IDeleteServerByI
 	return r
 }
 
-func (r *DeleteServerByIDRequest) ToRequestBody() interface{} {
+func (r *DeleteServerByIDRequest) ToRequestBody() any {
 	return r
 }
 
@@ -255,7 +255,7 @@ func (r *UpdateServerSecgroupsByServerIDRequest) AddUserAgent(agent ...string) I
 	return r
 }
 
-func (r *UpdateServerSecgroupsByServerIDRequest) ToRequestBody() interface{} {
+func (r *UpdateServerSecgroupsByServerIDRequest) ToRequestBody() any {
 	return r
 }
 
@@ -271,7 +271,7 @@ type AttachFloatingIpRequest struct {
 	common.UserAgent
 }
 
-func (r *AttachFloatingIpRequest) ToRequestBody() interface{} {
+func (r *AttachFloatingIpRequest) ToRequestBody() any {
 	return r
 }
 
@@ -280,8 +280,8 @@ func (r *AttachFloatingIpRequest) AddUserAgent(agent ...string) IAttachFloatingI
 	return r
 }
 
-func (r *AttachFloatingIpRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *AttachFloatingIpRequest) ToMap() map[string]any {
+	return map[string]any{
 		"serverId":                   r.ServerID,
 		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
 		"networkId":                  r.NetworkInterfaceID,
@@ -297,7 +297,7 @@ type DetachFloatingIpRequest struct {
 	common.UserAgent
 }
 
-func (r *DetachFloatingIpRequest) ToRequestBody() interface{} {
+func (r *DetachFloatingIpRequest) ToRequestBody() any {
 	return r
 }
 
@@ -306,8 +306,8 @@ func (r *DetachFloatingIpRequest) AddUserAgent(agent ...string) IDetachFloatingI
 	return r
 }
 
-func (r *DetachFloatingIpRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *DetachFloatingIpRequest) ToMap() map[string]any {
+	return map[string]any{
 		"serverId":                   r.ServerID,
 		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
 		"networkId":                  r.NetworkInterfaceID,
@@ -334,8 +334,8 @@ func (r *DeleteServerGroupByIDRequest) AddUserAgent(agent ...string) IDeleteServ
 	return r
 }
 
-func (r *DeleteServerGroupByIDRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *DeleteServerGroupByIDRequest) ToMap() map[string]any {
+	return map[string]any{
 		"serverGroupId": r.ServerGroupID,
 	}
 }
@@ -369,8 +369,8 @@ func (r *ListServerGroupsRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
 }
 
-func (r *ListServerGroupsRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ListServerGroupsRequest) ToMap() map[string]any {
+	return map[string]any{
 		"page": r.Page,
 		"size": r.Size,
 		"name": r.Name,
@@ -390,12 +390,12 @@ type CreateServerGroupRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateServerGroupRequest) ToRequestBody() interface{} {
+func (r *CreateServerGroupRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateServerGroupRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateServerGroupRequest) ToMap() map[string]any {
+	return map[string]any{
 		"name":        r.Name,
 		"description": r.Description,
 		"policyId":    r.PolicyID,

@@ -136,7 +136,7 @@ func (r *GetListenerByIDRequest) AddUserAgent(agent ...string) IGetListenerByIDR
 	return r
 }
 
-func (r *CreateListenerRequest) ToRequestBody() interface{} {
+func (r *CreateListenerRequest) ToRequestBody() any {
 	if r == nil {
 		return nil
 	}
@@ -235,8 +235,8 @@ func (r *CreateListenerRequest) WithInsertHeaders(pheaders ...string) ICreateLis
 	return r
 }
 
-func (r *CreateListenerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateListenerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"listenerName":                r.ListenerName,
 		"listenerProtocol":            r.ListenerProtocol,
 		"listenerProtocolPort":        r.ListenerProtocolPort,
@@ -252,7 +252,7 @@ func (r *CreateListenerRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (r *UpdateListenerRequest) ToRequestBody() interface{} {
+func (r *UpdateListenerRequest) ToRequestBody() any {
 	return r
 }
 

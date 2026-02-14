@@ -1,9 +1,9 @@
 package client
 
 type request struct {
-	jsonBody     interface{}
-	jsonResponse interface{}
-	jsonError    interface{}
+	jsonBody     any
+	jsonResponse any
+	jsonError    any
 	moreHeaders  map[string]string
 	okCodes      map[int]struct{}
 	method       requestMethod
@@ -37,17 +37,17 @@ func (r *request) WithUserID(userID string) Request {
 	return r.WithHeader("portal-user-id", userID)
 }
 
-func (r *request) WithJSONBody(jsonBody interface{}) Request {
+func (r *request) WithJSONBody(jsonBody any) Request {
 	r.jsonBody = jsonBody
 	return r
 }
 
-func (r *request) WithJSONResponse(jsonResponse interface{}) Request {
+func (r *request) WithJSONResponse(jsonResponse any) Request {
 	r.jsonResponse = jsonResponse
 	return r
 }
 
-func (r *request) WithJSONError(jsonError interface{}) Request {
+func (r *request) WithJSONError(jsonError any) Request {
 	r.jsonError = jsonError
 	return r
 }
@@ -62,11 +62,11 @@ func (r *request) WithSkipAuth(skipAuth bool) Request {
 	return r
 }
 
-func (r *request) RequestBody() interface{} {
+func (r *request) RequestBody() any {
 	return r.jsonBody
 }
 
-func (r *request) JSONError() interface{} {
+func (r *request) JSONError() any {
 	return r.jsonError
 }
 
@@ -78,15 +78,15 @@ func (r *request) MoreHeaders() map[string]string {
 	return r.moreHeaders
 }
 
-func (r *request) JSONResponse() interface{} {
+func (r *request) JSONResponse() any {
 	return r.jsonResponse
 }
 
-func (r *request) SetJSONResponse(jsonResponse interface{}) {
+func (r *request) SetJSONResponse(jsonResponse any) {
 	r.jsonResponse = jsonResponse
 }
 
-func (r *request) SetJSONError(jsonError interface{}) {
+func (r *request) SetJSONError(jsonError any) {
 	r.jsonError = jsonError
 }
 

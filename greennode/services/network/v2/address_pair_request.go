@@ -39,7 +39,7 @@ func (r *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
 	return r.VirtualSubnetID
 }
 
-func (r *SetAddressPairInVirtualSubnetRequest) ToRequestBody() interface{} {
+func (r *SetAddressPairInVirtualSubnetRequest) ToRequestBody() any {
 	return r.AddressPairRequest
 }
 
@@ -92,17 +92,17 @@ type CreateAddressPairRequest struct {
 	common.VirtualAddressCommon
 }
 
-func (r *CreateAddressPairRequest) ToRequestBody() interface{} {
+func (r *CreateAddressPairRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateAddressPairRequest) ToMap() map[string]interface{} {
+func (r *CreateAddressPairRequest) ToMap() map[string]any {
 	mode := "active-standby"
 	if r.Mode != nil {
 		mode = string(*r.Mode)
 	}
 
-	return map[string]interface{}{
+	return map[string]any{
 		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
 		"mode":                       mode,
 	}

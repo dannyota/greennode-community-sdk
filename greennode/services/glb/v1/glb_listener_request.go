@@ -121,12 +121,12 @@ func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) ICreateGlo
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) ToRequestBody() interface{} {
+func (r *CreateGlobalListenerRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateGlobalListenerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"allowedCidrs":      r.AllowedCidrs,
 		"description":       r.Description,
 		"headers":           r.Headers,
@@ -222,12 +222,12 @@ func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) IUpdateGlobalLi
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) ToRequestBody() interface{} {
+func (r *UpdateGlobalListenerRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *UpdateGlobalListenerRequest) ToMap() map[string]any {
+	return map[string]any{
 		"allowedCidrs":      r.AllowedCidrs,
 		"timeoutClient":     r.TimeoutClient,
 		"timeoutMember":     r.TimeoutMember,

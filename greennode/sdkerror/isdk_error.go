@@ -10,17 +10,17 @@ type Error interface {
 	WithMessage(msg string) Error
 	WithErrors(errs ...error) Error
 	WithErrorCategories(categories ...ErrorCategory) Error
-	WithParameters(params map[string]interface{}) Error
-	WithKVparameters(params ...interface{}) Error
+	WithParameters(params map[string]any) Error
+	WithKVparameters(params ...any) Error
 
 	Err() error
 	GetMessage() string
 	ErrorCode() ErrorCode
 	StringErrorCode() string
-	Parameters() map[string]interface{}
+	Parameters() map[string]any
 	ErrorCategories() []ErrorCategory
 	ErrorMessages() string
-	ListParameters() []interface{}
+	ListParameters() []any
 
 	RemoveCategories(categories ...ErrorCategory) Error
 

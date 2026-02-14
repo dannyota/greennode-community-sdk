@@ -142,7 +142,7 @@ type (
 	}
 )
 
-func (r *CreateBlockVolumeRequest) ToRequestBody() interface{} {
+func (r *CreateBlockVolumeRequest) ToRequestBody() any {
 	return r
 }
 
@@ -156,8 +156,8 @@ func (r *CreateBlockVolumeRequest) WithPoolName(poolName string) ICreateBlockVol
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *CreateBlockVolumeRequest) ToMap() map[string]any {
+	return map[string]any{
 		"backupVolumePointId": r.BackupVolumePointID,
 		"createdFrom":         r.CreatedFrom,
 		"encryptionType":      r.EncryptionType,
@@ -172,8 +172,8 @@ func (r *CreateBlockVolumeRequest) ToMap() map[string]interface{} {
 	}
 }
 
-func (r *CreateBlockVolumeRequest) ListParameters() []interface{} {
-	return []interface{}{
+func (r *CreateBlockVolumeRequest) ListParameters() []any {
+	return []any{
 		"backupVolumePointId", r.BackupVolumePointID,
 		"createdFrom", r.CreatedFrom,
 		"encryptionType", r.EncryptionType,
@@ -280,8 +280,8 @@ func (r *ListBlockVolumesRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
 }
 
-func (r *ListBlockVolumesRequest) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (r *ListBlockVolumesRequest) ToMap() map[string]any {
+	return map[string]any{
 		"name": r.Name,
 		"page": r.Page,
 		"size": r.Size,
@@ -293,7 +293,7 @@ func (r *ListBlockVolumesRequest) WithName(name string) IListBlockVolumesRequest
 	return r
 }
 
-func (r *ResizeBlockVolumeByIDRequest) ToRequestBody() interface{} {
+func (r *ResizeBlockVolumeByIDRequest) ToRequestBody() any {
 	return r
 }
 
@@ -305,7 +305,7 @@ func (r *ResizeBlockVolumeByIDRequest) GetVolumeTypeID() string {
 	return r.VolumeTypeID
 }
 
-func (r *MigrateBlockVolumeByIDRequest) ToRequestBody() interface{} {
+func (r *MigrateBlockVolumeByIDRequest) ToRequestBody() any {
 	return r
 }
 
