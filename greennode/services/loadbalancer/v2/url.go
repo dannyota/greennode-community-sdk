@@ -271,7 +271,6 @@ func scaleLoadBalancerURL(sc client.ServiceClient, opts IScaleLoadBalancerReques
 		"rebalancing")
 }
 
-// --------------------------------------------------------
 
 func listCertificatesURL(sc client.ServiceClient) string {
 	return sc.ServiceURL(

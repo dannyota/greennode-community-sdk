@@ -53,7 +53,6 @@ func NewListRecordsRequest(hostedZoneID string) IListRecordsRequest {
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IGetRecordRequest interface {
 	GetHostedZoneID() string
@@ -104,7 +103,6 @@ func NewGetRecordRequest(hostedZoneID, recordID string) IGetRecordRequest {
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IUpdateRecordRequest interface {
 	GetHostedZoneID() string
@@ -221,7 +219,6 @@ func NewUpdateRecordRequest(hostedZoneID, recordID string) IUpdateRecordRequest 
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IDeleteRecordRequest interface {
 	GetHostedZoneID() string
@@ -272,7 +269,6 @@ func NewDeleteRecordRequest(hostedZoneID, recordID string) IDeleteRecordRequest 
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type ICreateDnsRecordRequest interface {
 	GetHostedZoneID() string

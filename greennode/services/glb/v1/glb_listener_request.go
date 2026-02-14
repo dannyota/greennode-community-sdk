@@ -36,7 +36,6 @@ func NewListGlobalListenersRequest(lbID string) IListGlobalListenersRequest {
 	return opts
 }
 
-// --------------------------------------------------
 
 var _ ICreateGlobalListenerRequest = &CreateGlobalListenerRequest{}
 
@@ -164,7 +163,6 @@ func NewCreateGlobalListenerRequest(lbID, name string) ICreateGlobalListenerRequ
 	return opts
 }
 
-// --------------------------------------------------
 
 var _ IUpdateGlobalListenerRequest = &UpdateGlobalListenerRequest{}
 
@@ -260,7 +258,6 @@ func NewUpdateGlobalListenerRequest(lbID, lID string) IUpdateGlobalListenerReque
 	return opts
 }
 
-// --------------------------------------------------
 
 var _ IDeleteGlobalListenerRequest = &DeleteGlobalListenerRequest{}
 
@@ -297,7 +294,6 @@ func NewDeleteGlobalListenerRequest(lbID, lID string) IDeleteGlobalListenerReque
 	return opts
 }
 
-// --------------------------------------------------
 
 var _ IGetGlobalListenerRequest = &GetGlobalListenerRequest{}
 

@@ -216,7 +216,6 @@ type IUpdateTagsRequest interface {
 	AddUserAgent(agent ...string) IUpdateTagsRequest
 }
 
-// --------------------------------------------------------
 
 type IListPoliciesRequest interface {
 	ParseUserAgent() string
@@ -322,7 +321,6 @@ type IScaleLoadBalancerRequest interface {
 	WithNetworking(networking *NetworkingConfig) IScaleLoadBalancerRequest
 }
 
-// --------------------------------------------------------
 
 type IListCertificatesRequest interface {
 	ParseUserAgent() string

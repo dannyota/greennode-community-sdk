@@ -157,7 +157,6 @@ func (r *GlobalMemberResponse) ToEntityGlobalMember() *entity.GlobalPoolMemberDe
 	}
 }
 
-// ----------------------------------------------------------
 
 type ListGlobalPoolsResponse []*GlobalPoolResponse
 
@@ -177,7 +176,6 @@ func (r *ListGlobalPoolsResponse) ToEntityListGlobalPools() *entity.ListGlobalPo
 	return result
 }
 
-// ----------------------------------------------------------
 
 type CreateGlobalPoolResponse struct {
 	ID                   string                      `json:"id"`
@@ -205,7 +203,6 @@ func (r *CreateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 	}
 }
 
-// ----------------------------------------------------------
 
 type UpdateGlobalPoolResponse struct {
 	ID string `json:"id"`
@@ -217,7 +214,6 @@ func (r *UpdateGlobalPoolResponse) ToEntityPool() *entity.GlobalPool {
 	}
 }
 
-// ----------------------------------------------------------
 
 type ListGlobalPoolMembersResponse []*GlobalPoolMemberResponse
 
@@ -237,7 +233,6 @@ func (r *ListGlobalPoolMembersResponse) ToEntityListGlobalPoolMembers() *entity.
 	return result
 }
 
-// ----------------------------------------------------------
 
 type GetGlobalPoolMemberResponse GlobalPoolMemberResponse
 
@@ -264,7 +259,6 @@ func (r *GetGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.GlobalP
 	}
 }
 
-// ----------------------------------------------------------
 
 type UpdateGlobalPoolMemberResponse struct {
 	ID                   string `json:"id"`
@@ -282,4 +276,3 @@ func (r *UpdateGlobalPoolMemberResponse) ToEntityGlobalPoolMember() *entity.Glob
 	}
 }
 
-// ----------------------------------------------------------

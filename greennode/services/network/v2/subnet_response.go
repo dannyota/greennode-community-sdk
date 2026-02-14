@@ -46,7 +46,6 @@ func (r *GetSubnetByIDResponse) ToEntitySubnet() *entity.Subnet {
 	}
 }
 
-// --------------------------------------------------------
 type UpdateSubnetByIDResponse struct {
 	Data GetSubnetByIDResponse `json:"data"`
 }

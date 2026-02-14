@@ -90,7 +90,6 @@ func (r *GlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.Global
 	}
 }
 
-// --------------------------------------------------
 type ListGlobalLoadBalancersResponse struct {
 	Items  []GlobalLoadBalancerResponse `json:"items"`
 	Limit  int                          `json:"limit"`
@@ -121,7 +120,6 @@ func (r *ListGlobalLoadBalancersResponse) ToEntityListGlobalLoadBalancers() *ent
 	return result
 }
 
-// --------------------------------------------------
 
 type CreateGlobalLoadBalancerResponse struct {
 	GlobalLoadBalancer GlobalLoadBalancerResponse `json:"globalLoadBalancer"`
@@ -133,7 +131,6 @@ func (r *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.
 	return r.GlobalLoadBalancer.ToEntityGlobalLoadBalancer()
 }
 
-// --------------------------------------------------
 
 type GetGlobalLoadBalancerByIDResponse GlobalLoadBalancerResponse
 
@@ -141,7 +138,6 @@ func (r *GetGlobalLoadBalancerByIDResponse) ToEntityGlobalLoadBalancer() *entity
 	return (*GlobalLoadBalancerResponse)(r).ToEntityGlobalLoadBalancer()
 }
 
-// --------------------------------------------------
 
 type ListGlobalPackagesResponse []GlobalPackageResponse
 
@@ -214,7 +210,6 @@ func (r *GlobalPackageResponse) ToEntityGlobalPackage() *entity.GlobalPackage {
 	}
 }
 
-// --------------------------------------------------
 
 type ListGlobalRegionsResponse []GlobalRegionResponse
 
@@ -246,7 +241,6 @@ func (r *GlobalRegionResponse) ToEntityGlobalRegion() *entity.GlobalRegion {
 	}
 }
 
-// --------------------------------------------------
 
 type GetGlobalLoadBalancerUsageHistoriesResponse struct {
 	Type  string                                   `json:"type"`

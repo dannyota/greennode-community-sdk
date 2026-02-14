@@ -128,7 +128,6 @@ type ListGlobalPoolMembers struct {
 	Items []*GlobalPoolMember
 }
 
-// --------------------------------------------------------
 
 type GlobalListener struct {
 	CreatedAt            string  `json:"createdAt"`
@@ -153,7 +152,6 @@ type ListGlobalListeners struct {
 	Items []*GlobalListener
 }
 
-// --------------------------------------------------------
 
 type GlobalPackage struct {
 	ID                          string       `json:"id"`
@@ -186,7 +184,6 @@ type ListGlobalPackages struct {
 	Items []GlobalPackage `json:"items"`
 }
 
-// --------------------------------------------------------
 
 type GlobalRegion struct {
 	ID               string `json:"id"`
@@ -200,7 +197,6 @@ type ListGlobalRegions struct {
 	Items []GlobalRegion `json:"items"`
 }
 
-// --------------------------------------------------------
 
 type GlobalLoadBalancerUsageHistory struct {
 	Timestamp string  `json:"timestamp"`

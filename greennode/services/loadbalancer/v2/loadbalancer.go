@@ -558,7 +558,6 @@ func (s *LoadBalancerServiceV2) ReorderPolicies(opts IReorderPoliciesRequest) sd
 	return nil
 }
 
-// --------------------------------------------------------
 
 func (s *LoadBalancerServiceV2) ListCertificates(opts IListCertificatesRequest) (*entity.ListCertificates, sdkerror.Error) {
 	url := listCertificatesURL(s.VLBClient)

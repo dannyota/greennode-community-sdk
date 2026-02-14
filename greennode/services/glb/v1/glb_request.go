@@ -19,7 +19,6 @@ const (
 	GlobalLoadBalancerPaymentFlowAutomated GlobalLoadBalancerPaymentFlow = "automated"
 )
 
-// --------------------------------------------------------------------------
 
 func NewListGlobalLoadBalancersRequest(offset, limit int) IListGlobalLoadBalancersRequest {
 	opts := &ListGlobalLoadBalancersRequest{
@@ -96,7 +95,6 @@ func (r *ListGlobalLoadBalancersRequest) AddUserAgent(agent ...string) IListGlob
 	return r
 }
 
-// --------------------------------------------------------------------------
 
 var _ ICreateGlobalLoadBalancerRequest = &CreateGlobalLoadBalancerRequest{}
 
@@ -179,7 +177,6 @@ func NewCreateGlobalLoadBalancerRequest(name string) ICreateGlobalLoadBalancerRe
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IDeleteGlobalLoadBalancerRequest = &DeleteGlobalLoadBalancerRequest{}
 
@@ -207,7 +204,6 @@ func NewDeleteGlobalLoadBalancerRequest(lbID string) IDeleteGlobalLoadBalancerRe
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IListGlobalPackagesRequest = &ListGlobalPackagesRequest{}
 
@@ -225,7 +221,6 @@ func NewListGlobalPackagesRequest() IListGlobalPackagesRequest {
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IListGlobalRegionsRequest = &ListGlobalRegionsRequest{}
 
@@ -243,7 +238,6 @@ func NewListGlobalRegionsRequest() IListGlobalRegionsRequest {
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IGetGlobalLoadBalancerUsageHistoriesRequest = &GetGlobalLoadBalancerUsageHistoriesRequest{}
 
@@ -311,7 +305,6 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType str
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IGetGlobalLoadBalancerByIDRequest = &GetGlobalLoadBalancerByIDRequest{}
 

@@ -28,7 +28,6 @@ func (s *GLBServiceV1) ListGlobalPools(opts IListGlobalPoolsRequest) (*entity.Li
 	return resp.ToEntityListGlobalPools(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) CreateGlobalPool(opts ICreateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
 	url := createGlobalPoolURL(s.VLBClient, opts)
@@ -52,7 +51,6 @@ func (s *GLBServiceV1) CreateGlobalPool(opts ICreateGlobalPoolRequest) (*entity.
 	return resp.ToEntityPool(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) UpdateGlobalPool(opts IUpdateGlobalPoolRequest) (*entity.GlobalPool, sdkerror.Error) {
 	url := updateGlobalPoolURL(s.VLBClient, opts)
@@ -75,7 +73,6 @@ func (s *GLBServiceV1) UpdateGlobalPool(opts IUpdateGlobalPoolRequest) (*entity.
 	return resp.ToEntityPool(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) DeleteGlobalPool(opts IDeleteGlobalPoolRequest) sdkerror.Error {
 	url := deleteGlobalPoolURL(s.VLBClient, opts)
@@ -94,7 +91,6 @@ func (s *GLBServiceV1) DeleteGlobalPool(opts IDeleteGlobalPoolRequest) sdkerror.
 	return nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) ListGlobalPoolMembers(opts IListGlobalPoolMembersRequest) (*entity.ListGlobalPoolMembers, sdkerror.Error) {
 	url := listGlobalPoolMembersURL(s.VLBClient, opts)
@@ -115,7 +111,6 @@ func (s *GLBServiceV1) ListGlobalPoolMembers(opts IListGlobalPoolMembersRequest)
 	return resp.ToEntityListGlobalPoolMembers(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) GetGlobalPoolMember(opts IGetGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
 	url := getGlobalPoolMemberURL(s.VLBClient, opts)
@@ -139,7 +134,6 @@ func (s *GLBServiceV1) GetGlobalPoolMember(opts IGetGlobalPoolMemberRequest) (*e
 	return resp.ToEntityGlobalPoolMember(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) DeleteGlobalPoolMember(opts IDeleteGlobalPoolMemberRequest) sdkerror.Error {
 	url := deleteGlobalPoolMemberURL(s.VLBClient, opts)
@@ -161,7 +155,6 @@ func (s *GLBServiceV1) DeleteGlobalPoolMember(opts IDeleteGlobalPoolMemberReques
 	return nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) UpdateGlobalPoolMember(opts IUpdateGlobalPoolMemberRequest) (*entity.GlobalPoolMember, sdkerror.Error) {
 	url := updateGlobalPoolMemberURL(s.VLBClient, opts)
@@ -184,7 +177,6 @@ func (s *GLBServiceV1) UpdateGlobalPoolMember(opts IUpdateGlobalPoolMemberReques
 	return resp.ToEntityGlobalPoolMember(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) PatchGlobalPoolMembers(opts IPatchGlobalPoolMembersRequest) sdkerror.Error {
 	url := patchGlobalPoolMembersURL(s.VLBClient, opts)
@@ -205,7 +197,6 @@ func (s *GLBServiceV1) PatchGlobalPoolMembers(opts IPatchGlobalPoolMembersReques
 	return nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) ListGlobalListeners(opts IListGlobalListenersRequest) (*entity.ListGlobalListeners, sdkerror.Error) {
 	url := listGlobalListenersURL(s.VLBClient, opts)
@@ -226,7 +217,6 @@ func (s *GLBServiceV1) ListGlobalListeners(opts IListGlobalListenersRequest) (*e
 	return resp.ToEntityListGlobalListeners(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) CreateGlobalListener(opts ICreateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := createGlobalListenerURL(s.VLBClient, opts)
@@ -249,7 +239,6 @@ func (s *GLBServiceV1) CreateGlobalListener(opts ICreateGlobalListenerRequest) (
 	return resp.ToEntityGlobalListener(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) UpdateGlobalListener(opts IUpdateGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := updateGlobalListenerURL(s.VLBClient, opts)
@@ -273,7 +262,6 @@ func (s *GLBServiceV1) UpdateGlobalListener(opts IUpdateGlobalListenerRequest) (
 	return resp.ToEntityGlobalListener(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) GetGlobalListener(opts IGetGlobalListenerRequest) (*entity.GlobalListener, sdkerror.Error) {
 	url := getGlobalListenerURL(s.VLBClient, opts)
@@ -296,7 +284,6 @@ func (s *GLBServiceV1) GetGlobalListener(opts IGetGlobalListenerRequest) (*entit
 	return resp.ToEntityGlobalListener(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) DeleteGlobalListener(opts IDeleteGlobalListenerRequest) sdkerror.Error {
 	url := deleteGlobalListenerURL(s.VLBClient, opts)
@@ -315,7 +302,6 @@ func (s *GLBServiceV1) DeleteGlobalListener(opts IDeleteGlobalListenerRequest) s
 	return nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) ListGlobalLoadBalancers(opts IListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, sdkerror.Error) {
 	url := listGlobalLoadBalancersURL(s.VLBClient, opts)
@@ -335,7 +321,6 @@ func (s *GLBServiceV1) ListGlobalLoadBalancers(opts IListGlobalLoadBalancersRequ
 	return resp.ToEntityListGlobalLoadBalancers(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 	opts ICreateGlobalLoadBalancerRequest,
@@ -359,7 +344,6 @@ func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 	return resp.ToEntityGlobalLoadBalancer(), nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) DeleteGlobalLoadBalancer(opts IDeleteGlobalLoadBalancerRequest) sdkerror.Error {
 	url := deleteGlobalLoadBalancerURL(s.VLBClient, opts)
@@ -378,7 +362,6 @@ func (s *GLBServiceV1) DeleteGlobalLoadBalancer(opts IDeleteGlobalLoadBalancerRe
 	return nil
 }
 
-// --------------------------------------------------
 
 func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
 	opts IGetGlobalLoadBalancerByIDRequest,

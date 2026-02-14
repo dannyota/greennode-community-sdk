@@ -2,7 +2,6 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-// ------------------------------------------------------------
 
 func createGlobalPoolURL(sc client.ServiceClient, opts ICreateGlobalPoolRequest) string {
 	return sc.ServiceURL(
@@ -134,7 +133,6 @@ func getGlobalListenerURL(sc client.ServiceClient, opts IGetGlobalListenerReques
 	)
 }
 
-// --------------------------------------------------------
 
 func listGlobalLoadBalancersURL(sc client.ServiceClient, opts IListGlobalLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()

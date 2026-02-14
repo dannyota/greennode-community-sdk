@@ -256,7 +256,6 @@ func TestDeleteGlobalListenerSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-// --------------------------------------------------
 
 func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()

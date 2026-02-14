@@ -19,7 +19,6 @@ func NewListCertificatesRequest() *ListCertificatesRequest {
 	return &ListCertificatesRequest{}
 }
 
-// --------------------------------------------------------
 
 var _ IGetCertificateByIDRequest = &GetCertificateByIDRequest{}
 
@@ -43,7 +42,6 @@ func NewGetCertificateByIDRequest(certificateID string) *GetCertificateByIDReque
 	}
 }
 
-// --------------------------------------------------------
 
 type (
 	ImportOptsTypeOpt string
@@ -116,7 +114,6 @@ func (r *CreateCertificateRequest) AddUserAgent(agent ...string) ICreateCertific
 	return r
 }
 
-// --------------------------------------------------------
 
 var _ IDeleteCertificateByIDRequest = &DeleteCertificateByIDRequest{}
 

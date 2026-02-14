@@ -39,7 +39,6 @@ func (r *certResponseData) ToEntityCertificate() *entity.Certificate {
 	}
 }
 
-// --------------------------------------------------------
 
 type ListCertificatesResponse struct {
 	ListData  []certResponseData `json:"listData"`
@@ -60,13 +59,11 @@ func (r *ListCertificatesResponse) ToEntityListCertificates() *entity.ListCertif
 	}
 }
 
-// --------------------------------------------------------
 
 type GetCertificateByIDResponse struct {
 	certResponseData
 }
 
-// --------------------------------------------------------
 
 type CreateCertificateResponse struct {
 	Data certResponseData `json:"data"`

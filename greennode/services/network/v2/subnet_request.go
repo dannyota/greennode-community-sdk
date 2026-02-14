@@ -20,7 +20,6 @@ func (r *GetSubnetByIDRequest) AddUserAgent(agent ...string) IGetSubnetByIDReque
 	return r
 }
 
-// --------------------------------------------------------
 type SecondarySubnetUpdateBody struct {
 	Name string `json:"name"`
 	CIDR string `json:"cidr"`

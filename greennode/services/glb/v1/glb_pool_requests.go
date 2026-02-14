@@ -45,7 +45,6 @@ const (
 	GlobalPoolMemberTypePrivate GlobalPoolMemberType = "PRIVATE"
 )
 
-// --------------------------------------------------------------------------
 
 var _ IListGlobalPoolsRequest = &ListGlobalPoolsRequest{}
 
@@ -70,7 +69,6 @@ func NewListGlobalPoolsRequest(lbID string) IListGlobalPoolsRequest {
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ ICreateGlobalPoolRequest = &CreateGlobalPoolRequest{}
 
@@ -166,7 +164,6 @@ func NewCreateGlobalPoolRequest(name string, protocol GlobalPoolProtocol) ICreat
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IGlobalHealthMonitorRequest = &GlobalHealthMonitorRequest{}
 
@@ -284,7 +281,6 @@ func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) IGlobal
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ ICreateGlobalPoolMemberRequest = &GlobalPoolMemberRequest{}
 
@@ -386,7 +382,6 @@ func NewGlobalPoolMemberRequest(name, region, vpcID string, dial int, typeVal Gl
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IGlobalMemberRequest = &GlobalMemberRequest{}
 
@@ -480,7 +475,6 @@ func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, w
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IUpdateGlobalPoolRequest = &UpdateGlobalPoolRequest{}
 
@@ -543,7 +537,6 @@ func NewUpdateGlobalPoolRequest(lbID, poolID string) IUpdateGlobalPoolRequest {
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IDeleteGlobalPoolRequest = &DeleteGlobalPoolRequest{}
 
@@ -580,7 +573,6 @@ func NewDeleteGlobalPoolRequest(lbID, poolID string) IDeleteGlobalPoolRequest {
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IListGlobalPoolMembersRequest = &ListGlobalPoolMembersRequest{}
 
@@ -617,7 +609,6 @@ func NewListGlobalPoolMembersRequest(lbID, poolID string) IListGlobalPoolMembers
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IPatchGlobalPoolMembersRequest = &PatchGlobalPoolMembersRequest{}
 
@@ -853,7 +844,6 @@ func NewUpdateGlobalPoolMemberRequest(lbID, poolID, poolMemberID string, dial in
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IDeleteGlobalPoolMemberRequest = &DeleteGlobalPoolMemberRequest{}
 
@@ -899,7 +889,6 @@ func NewDeleteGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) IDelete
 	return opts
 }
 
-// --------------------------------------------------------------------------
 
 var _ IGetGlobalPoolMemberRequest = &GetGlobalPoolMemberRequest{}
 

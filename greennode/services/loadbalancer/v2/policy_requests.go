@@ -339,7 +339,6 @@ func (r *ReorderPoliciesRequest) ToRequestBody() any {
 	}
 }
 
-// --------------------------------------------------------
 
 // list policies request
 func NewListPoliciesRequest(lbID, lisID string) IListPoliciesRequest {

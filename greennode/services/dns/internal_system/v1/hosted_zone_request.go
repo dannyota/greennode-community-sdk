@@ -40,7 +40,6 @@ func NewGetHostedZoneByIDRequest(hostedZoneID string) IGetHostedZoneByIDRequest 
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IListHostedZonesRequest interface {
 	GetName() string
@@ -75,7 +74,6 @@ func NewListHostedZonesRequest() IListHostedZonesRequest {
 	return &ListHostedZonesRequest{}
 }
 
-// ----------------------------------------------------------------------
 
 type ICreateHostedZoneRequest interface {
 	WithDomainName(domainName string) ICreateHostedZoneRequest
@@ -143,7 +141,6 @@ func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneTyp
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IDeleteHostedZoneRequest interface {
 	GetHostedZoneID() string
@@ -180,7 +177,6 @@ func NewDeleteHostedZoneRequest(hostedZoneID string) IDeleteHostedZoneRequest {
 	}
 }
 
-// ----------------------------------------------------------------------
 
 type IUpdateHostedZoneRequest interface {
 	GetHostedZoneID() string

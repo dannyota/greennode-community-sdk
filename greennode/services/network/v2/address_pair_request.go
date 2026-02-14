@@ -17,7 +17,6 @@ func (r *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string 
 	return r.VirtualSubnetID
 }
 
-// --------------------------------------------------------
 
 func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) ISetAddressPairInVirtualSubnetRequest {
 	opt := new(SetAddressPairInVirtualSubnetRequest)
@@ -48,7 +47,6 @@ type AddressPairRequest struct {
 	InternalNetworkInterfaceID string `json:"internalNetworkInterfaceId"`
 }
 
-// --------------------------------------------------------
 
 func NewDeleteAddressPairRequest(addressPairID string) IDeleteAddressPairRequest {
 	opt := new(DeleteAddressPairRequest)
@@ -70,7 +68,6 @@ func (r *DeleteAddressPairRequest) AddUserAgent(agent ...string) IDeleteAddressP
 	return r
 }
 
-// --------------------------------------------------------
 
 // Api create address pair
 

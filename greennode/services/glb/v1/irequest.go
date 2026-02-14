@@ -8,7 +8,6 @@ type IListGlobalPoolsRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type ICreateGlobalPoolRequest interface {
 	WithAlgorithm(algorithm GlobalPoolAlgorithm) ICreateGlobalPoolRequest
@@ -82,7 +81,6 @@ type IGlobalMemberRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IUpdateGlobalPoolRequest interface {
 	WithAlgorithm(algorithm GlobalPoolAlgorithm) IUpdateGlobalPoolRequest
@@ -99,7 +97,6 @@ type IUpdateGlobalPoolRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IDeleteGlobalPoolRequest interface {
 	WithLoadBalancerID(lbID string) IDeleteGlobalPoolRequest
@@ -111,7 +108,6 @@ type IDeleteGlobalPoolRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IListGlobalPoolMembersRequest interface {
 	WithLoadBalancerID(lbID string) IListGlobalPoolMembersRequest
@@ -123,7 +119,6 @@ type IListGlobalPoolMembersRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IGetGlobalPoolMemberRequest interface {
 	WithLoadBalancerID(lbID string) IGetGlobalPoolMemberRequest
@@ -137,7 +132,6 @@ type IGetGlobalPoolMemberRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IDeleteGlobalPoolMemberRequest interface {
 	WithLoadBalancerID(lbID string) IDeleteGlobalPoolMemberRequest
@@ -151,7 +145,6 @@ type IDeleteGlobalPoolMemberRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IPatchGlobalPoolMembersRequest interface {
 	WithBulkAction(action ...IBulkActionRequest) IPatchGlobalPoolMembersRequest
@@ -172,7 +165,6 @@ type IBulkActionRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IListGlobalListenersRequest interface {
 	WithLoadBalancerID(lbID string) IListGlobalListenersRequest
@@ -182,7 +174,6 @@ type IListGlobalListenersRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IGetGlobalListenerRequest interface {
 	WithLoadBalancerID(lbID string) IGetGlobalListenerRequest
@@ -194,7 +185,6 @@ type IGetGlobalListenerRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type ICreateGlobalListenerRequest interface {
 	WithAllowedCidrs(cidrs ...string) ICreateGlobalListenerRequest
@@ -218,7 +208,6 @@ type ICreateGlobalListenerRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IUpdateGlobalListenerRequest interface {
 	WithAllowedCidrs(cidrs ...string) IUpdateGlobalListenerRequest
@@ -239,7 +228,6 @@ type IUpdateGlobalListenerRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IDeleteGlobalListenerRequest interface {
 	WithLoadBalancerID(lbID string) IDeleteGlobalListenerRequest
@@ -251,21 +239,18 @@ type IDeleteGlobalListenerRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IListGlobalPackagesRequest interface {
 	AddUserAgent(agent ...string) IListGlobalPackagesRequest
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IListGlobalRegionsRequest interface {
 	AddUserAgent(agent ...string) IListGlobalRegionsRequest
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IGetGlobalLoadBalancerUsageHistoriesRequest interface {
 	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerUsageHistoriesRequest
@@ -280,7 +265,6 @@ type IGetGlobalLoadBalancerUsageHistoriesRequest interface {
 	GetDefaultQuery() string
 }
 
-// --------------------------------------------------------
 
 type IListGlobalLoadBalancersRequest interface {
 	WithName(name string) IListGlobalLoadBalancersRequest
@@ -292,7 +276,6 @@ type IListGlobalLoadBalancersRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type ICreateGlobalLoadBalancerRequest interface {
 	WithDescription(desc string) ICreateGlobalLoadBalancerRequest
@@ -316,7 +299,6 @@ type ICreateGlobalLoadBalancerRequest interface {
 	ToMap() map[string]any
 }
 
-// --------------------------------------------------------
 
 type IDeleteGlobalLoadBalancerRequest interface {
 	WithLoadBalancerID(lbID string) IDeleteGlobalLoadBalancerRequest
@@ -326,7 +308,6 @@ type IDeleteGlobalLoadBalancerRequest interface {
 	ParseUserAgent() string
 }
 
-// --------------------------------------------------------
 
 type IGetGlobalLoadBalancerByIDRequest interface {
 	WithLoadBalancerID(lbID string) IGetGlobalLoadBalancerByIDRequest

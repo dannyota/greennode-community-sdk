@@ -52,7 +52,6 @@ func (r ListGlobalListenersResponse) ToEntityListGlobalListeners() *entity.ListG
 	return listeners
 }
 
-// --------------------------------------------------
 
 type CreateGlobalListenerResponse GlobalListenerResponse
 
@@ -77,7 +76,6 @@ func (r *CreateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalLi
 	}
 }
 
-// --------------------------------------------------
 
 type UpdateGlobalListenerResponse GlobalListenerResponse
 
@@ -102,7 +100,6 @@ func (r *UpdateGlobalListenerResponse) ToEntityGlobalListener() *entity.GlobalLi
 	}
 }
 
-// --------------------------------------------------
 
 type GetGlobalListenerResponse GlobalListenerResponse
 
