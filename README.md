@@ -1,10 +1,10 @@
-# VngCloud Go SDK
+# GreenNode Community SDK
 
-[![Release VngCloud GoSDK project](https://github.com/vngcloud/vngcloud-go-sdk/actions/workflows/release_build.yml/badge.svg)](https://github.com/vngcloud/vngcloud-go-sdk/actions/workflows/release_build.yml)
+A community Go SDK for GreenNode cloud services, supporting the [hotpot](https://github.com/dannyota/hotpot) project.
 
 <hr>
 
-###### 🌈 Table of contents
+###### Table of contents
 
 - [Introduction](#introduction)
 - [Usage](#usage)
@@ -14,15 +14,15 @@
 
 # Introduction
 
-- `vngcloud-go-sdk` is a Go SDK for VNG Cloud services. It helps you to interact with VNG Cloud services easily.
+- `greennode-community-sdk` is a Go SDK for GreenNode cloud services. It helps you interact with cloud services easily.
 
 # Usage
 - You can install the SDK by running the following command:
   ```bash
-  go get github.com/vngcloud/vngcloud-go-sdk
+  go get github.com/dannyota/greennode-community-sdk/v2
   ```
 
-- Now for example, imagine you want to list all available VngCloud load-balancer packages. You can implement this code in your Go Application:
+- Now for example, imagine you want to list all available load-balancer packages. You can implement this code in your Go Application:
   ```go
   package main
 
@@ -30,14 +30,14 @@
     "fmt"
     lctx "context"
 
-    lsclient "github.com/vngcloud/vngcloud-go-sdk/v2/client"
-    lslbv2 "github.com/vngcloud/vngcloud-go-sdk/v2/vngcloud/services/loadbalancer/v2"
+    lsclient "github.com/dannyota/greennode-community-sdk/v2/client"
+    lslbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
   )
 
   func main() {
-    vngcloud := validSdkConfig()
+    client := validSdkConfig()
     opt := lslbv2.NewListLoadBalancerPackagesRequest()
-    packages, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(opt)
+    packages, sdkerr := client.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(opt)
     if sdkerr != nil {
       fmt.Printf("Expect nil but got %+v", sdkerr)
     }
@@ -56,7 +56,7 @@
     sdkConfig := lsclient.NewSdkConfigure().
       WithClientId(clientId).
       WithClientSecret(clientSecret).
-      WithProjectId("__PUT_YOUR_VNGCLOUD_PROJECT_ID__").
+      WithProjectId("__PUT_YOUR_PROJECT_ID__").
       WithZoneId("65e12ffcb6d82cd39f8cf023").
       WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
       WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
@@ -69,14 +69,14 @@
 
 # Contributing
 
-- To release a new version of the SDK, you need to create a new tag with the format `vX.Y.Z` and push it to the repository. The GitHub Actions will automatically build and release the new version to the GitHub Packages. For instance, to release version `v2.11.1`, you can run the following commands:
+- To release a new version of the SDK, create a new tag with the format `vX.Y.Z` and push it to the repository:
 
   ```bash
-  git tag -am "[release] release new version" v2.11.0
+  git tag -am "release vX.Y.Z" vX.Y.Z
   git push --tags
   ```
 
-- To get the latest version of the SDK, you can run the following command:
+- To get the latest version of the SDK:
   ```bash
   git tag -l --sort=-creatordate | head -n 1
   ```
