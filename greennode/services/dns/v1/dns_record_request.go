@@ -5,16 +5,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IListRecordsRequest interface {
-	GetHostedZoneID() string
-	GetName() string
-	WithHostedZoneID(hostedZoneID string) IListRecordsRequest
-	WithName(name string) IListRecordsRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type ListRecordsRequest struct {
 	HostedZoneID string
 	Name         string
@@ -30,12 +20,12 @@ func (r *ListRecordsRequest) GetName() string {
 	return r.Name
 }
 
-func (r *ListRecordsRequest) WithHostedZoneID(hostedZoneID string) IListRecordsRequest {
+func (r *ListRecordsRequest) WithHostedZoneID(hostedZoneID string) *ListRecordsRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *ListRecordsRequest) WithName(name string) IListRecordsRequest {
+func (r *ListRecordsRequest) WithName(name string) *ListRecordsRequest {
 	r.Name = name
 	return r
 }
@@ -54,16 +44,6 @@ func NewListRecordsRequest(hostedZoneID string) *ListRecordsRequest {
 }
 
 
-type IGetRecordRequest interface {
-	GetHostedZoneID() string
-	GetRecordID() string
-	WithHostedZoneID(hostedZoneID string) IGetRecordRequest
-	WithRecordID(recordID string) IGetRecordRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type GetRecordRequest struct {
 	HostedZoneID string
 	RecordID     string
@@ -79,12 +59,12 @@ func (r *GetRecordRequest) GetRecordID() string {
 	return r.RecordID
 }
 
-func (r *GetRecordRequest) WithHostedZoneID(hostedZoneID string) IGetRecordRequest {
+func (r *GetRecordRequest) WithHostedZoneID(hostedZoneID string) *GetRecordRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *GetRecordRequest) WithRecordID(recordID string) IGetRecordRequest {
+func (r *GetRecordRequest) WithRecordID(recordID string) *GetRecordRequest {
 	r.RecordID = recordID
 	return r
 }
@@ -103,23 +83,6 @@ func NewGetRecordRequest(hostedZoneID, recordID string) *GetRecordRequest {
 	}
 }
 
-
-type IUpdateRecordRequest interface {
-	GetHostedZoneID() string
-	GetRecordID() string
-	WithHostedZoneID(hostedZoneID string) IUpdateRecordRequest
-	WithRecordID(recordID string) IUpdateRecordRequest
-	WithSubDomain(subDomain string) IUpdateRecordRequest
-	WithTTL(ttl int) IUpdateRecordRequest
-	WithType(recordType DnsRecordType) IUpdateRecordRequest
-	WithRoutingPolicy(routingPolicy RoutingPolicy) IUpdateRecordRequest
-	WithEnableStickySession(enable bool) IUpdateRecordRequest
-	WithValue(value []RecordValueRequest) IUpdateRecordRequest
-	ToRequestBody(sc client.ServiceClient) map[string]any
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
 
 type UpdateRecordRequest struct {
 	HostedZoneID        string               `json:"-"`
@@ -142,42 +105,42 @@ func (r *UpdateRecordRequest) GetRecordID() string {
 	return r.RecordID
 }
 
-func (r *UpdateRecordRequest) WithHostedZoneID(hostedZoneID string) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithHostedZoneID(hostedZoneID string) *UpdateRecordRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *UpdateRecordRequest) WithRecordID(recordID string) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithRecordID(recordID string) *UpdateRecordRequest {
 	r.RecordID = recordID
 	return r
 }
 
-func (r *UpdateRecordRequest) WithSubDomain(subDomain string) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithSubDomain(subDomain string) *UpdateRecordRequest {
 	r.SubDomain = subDomain
 	return r
 }
 
-func (r *UpdateRecordRequest) WithTTL(ttl int) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithTTL(ttl int) *UpdateRecordRequest {
 	r.TTL = ttl
 	return r
 }
 
-func (r *UpdateRecordRequest) WithType(recordType DnsRecordType) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithType(recordType DnsRecordType) *UpdateRecordRequest {
 	r.Type = recordType
 	return r
 }
 
-func (r *UpdateRecordRequest) WithRoutingPolicy(routingPolicy RoutingPolicy) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithRoutingPolicy(routingPolicy RoutingPolicy) *UpdateRecordRequest {
 	r.RoutingPolicy = routingPolicy
 	return r
 }
 
-func (r *UpdateRecordRequest) WithEnableStickySession(enable bool) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithEnableStickySession(enable bool) *UpdateRecordRequest {
 	r.EnableStickySession = &enable
 	return r
 }
 
-func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) IUpdateRecordRequest {
+func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) *UpdateRecordRequest {
 	r.Value = value
 	return r
 }
@@ -220,16 +183,6 @@ func NewUpdateRecordRequest(hostedZoneID, recordID string) *UpdateRecordRequest 
 }
 
 
-type IDeleteRecordRequest interface {
-	GetHostedZoneID() string
-	GetRecordID() string
-	WithHostedZoneID(hostedZoneID string) IDeleteRecordRequest
-	WithRecordID(recordID string) IDeleteRecordRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type DeleteRecordRequest struct {
 	HostedZoneID string
 	RecordID     string
@@ -245,12 +198,12 @@ func (r *DeleteRecordRequest) GetRecordID() string {
 	return r.RecordID
 }
 
-func (r *DeleteRecordRequest) WithHostedZoneID(hostedZoneID string) IDeleteRecordRequest {
+func (r *DeleteRecordRequest) WithHostedZoneID(hostedZoneID string) *DeleteRecordRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *DeleteRecordRequest) WithRecordID(recordID string) IDeleteRecordRequest {
+func (r *DeleteRecordRequest) WithRecordID(recordID string) *DeleteRecordRequest {
 	r.RecordID = recordID
 	return r
 }
@@ -269,21 +222,6 @@ func NewDeleteRecordRequest(hostedZoneID, recordID string) *DeleteRecordRequest 
 	}
 }
 
-
-type ICreateDnsRecordRequest interface {
-	GetHostedZoneID() string
-	WithHostedZoneID(hostedZoneID string) ICreateDnsRecordRequest
-	WithSubDomain(subDomain string) ICreateDnsRecordRequest
-	WithTTL(ttl int) ICreateDnsRecordRequest
-	WithType(recordType DnsRecordType) ICreateDnsRecordRequest
-	WithRoutingPolicy(routingPolicy RoutingPolicy) ICreateDnsRecordRequest
-	WithEnableStickySession(enable bool) ICreateDnsRecordRequest
-	WithValue(value []RecordValueRequest) ICreateDnsRecordRequest
-	ToRequestBody(sc client.ServiceClient) map[string]any
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
 
 type RecordValueRequest struct {
 	Value    string  `json:"value"`
@@ -307,37 +245,37 @@ func (r *CreateDnsRecordRequest) GetHostedZoneID() string {
 	return r.HostedZoneID
 }
 
-func (r *CreateDnsRecordRequest) WithHostedZoneID(hostedZoneID string) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithHostedZoneID(hostedZoneID string) *CreateDnsRecordRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithSubDomain(subDomain string) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithSubDomain(subDomain string) *CreateDnsRecordRequest {
 	r.SubDomain = subDomain
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithTTL(ttl int) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithTTL(ttl int) *CreateDnsRecordRequest {
 	r.TTL = ttl
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithType(recordType DnsRecordType) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithType(recordType DnsRecordType) *CreateDnsRecordRequest {
 	r.Type = recordType
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithRoutingPolicy(routingPolicy RoutingPolicy) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithRoutingPolicy(routingPolicy RoutingPolicy) *CreateDnsRecordRequest {
 	r.RoutingPolicy = routingPolicy
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithEnableStickySession(enable bool) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithEnableStickySession(enable bool) *CreateDnsRecordRequest {
 	r.EnableStickySession = &enable
 	return r
 }
 
-func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) ICreateDnsRecordRequest {
+func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) *CreateDnsRecordRequest {
 	r.Value = value
 	return r
 }

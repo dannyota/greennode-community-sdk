@@ -2,7 +2,7 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func getVolumeTypeByIDURL(sc client.ServiceClient, opts IGetVolumeTypeByIDRequest) string {
+func getVolumeTypeByIDURL(sc client.ServiceClient, opts *GetVolumeTypeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volume_types",
@@ -15,7 +15,7 @@ func getDefaultVolumeTypeURL(sc client.ServiceClient) string {
 		"volume_default_id")
 }
 
-func getVolumeTypeZonesURL(sc client.ServiceClient, opts IGetVolumeTypeZonesRequest) string {
+func getVolumeTypeZonesURL(sc client.ServiceClient, opts *GetVolumeTypeZonesRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -26,7 +26,7 @@ func getVolumeTypeZonesURL(sc client.ServiceClient, opts IGetVolumeTypeZonesRequ
 	) + query
 }
 
-func getVolumeTypesURL(sc client.ServiceClient, opts IGetListVolumeTypeRequest) string {
+func getVolumeTypesURL(sc client.ServiceClient, opts *GetListVolumeTypeRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		opts.GetVolumeTypeZoneID(),

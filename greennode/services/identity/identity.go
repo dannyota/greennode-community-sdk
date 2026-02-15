@@ -8,7 +8,7 @@ import (
 )
 
 type IdentityServiceV2 interface {
-	GetAccessToken(opts identityv2.IGetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error)
+	GetAccessToken(opts *identityv2.GetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error)
 }
 
 func NewIdentityService(svcClient client.ServiceClient) IdentityServiceV2 {

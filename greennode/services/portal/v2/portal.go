@@ -23,7 +23,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(opts IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error) {
+func (s *PortalServiceV2) GetQuotaByName(opts *GetQuotaByNameRequest) (*entity.Quota, sdkerror.Error) {
 	listQuotas, sdkErr := s.ListAllQuotaUsed()
 	if sdkErr != nil {
 		return nil, sdkErr

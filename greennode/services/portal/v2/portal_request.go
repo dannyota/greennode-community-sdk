@@ -1,9 +1,5 @@
 package v2
 
-type IGetQuotaByNameRequest interface {
-	GetName() QuotaName
-}
-
 type GetQuotaByNameRequest struct {
 	Name QuotaName
 }

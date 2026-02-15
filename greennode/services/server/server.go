@@ -8,7 +8,7 @@ import (
 )
 
 type ServerServiceInternalV1 interface {
-	CreateSystemTags(opts serverv1.ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error)
+	CreateSystemTags(opts *serverv1.CreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error)
 }
 
 func NewServerServiceInternalV1(svcClient client.ServiceClient) ServerServiceInternalV1 {

@@ -10,13 +10,13 @@ import (
 
 type PortalServiceV1 interface {
 	ListZones() (*entity.ListZones, sdkerror.Error)
-	GetPortalInfo(opts portalv1.IGetPortalInfoRequest) (*entity.Portal, sdkerror.Error)
-	ListProjects(opts portalv1.IListProjectsRequest) (*entity.ListPortals, sdkerror.Error)
+	GetPortalInfo(opts *portalv1.GetPortalInfoRequest) (*entity.Portal, sdkerror.Error)
+	ListProjects(opts *portalv1.ListProjectsRequest) (*entity.ListPortals, sdkerror.Error)
 }
 
 type PortalServiceV2 interface {
 	ListAllQuotaUsed() (*entity.ListQuotas, sdkerror.Error)
-	GetQuotaByName(opts portalv2.IGetQuotaByNameRequest) (*entity.Quota, sdkerror.Error)
+	GetQuotaByName(opts *portalv2.GetQuotaByNameRequest) (*entity.Quota, sdkerror.Error)
 }
 
 func NewPortalServiceV1(svcClient client.ServiceClient) PortalServiceV1 {

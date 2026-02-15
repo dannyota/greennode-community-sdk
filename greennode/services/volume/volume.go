@@ -9,25 +9,25 @@ import (
 )
 
 type VolumeServiceV2 interface {
-	CreateBlockVolume(opts volumev2.ICreateBlockVolumeRequest) (*entity.Volume, sdkerror.Error)
-	DeleteBlockVolumeByID(opts volumev2.IDeleteBlockVolumeByIDRequest) sdkerror.Error
-	ListBlockVolumes(opts volumev2.IListBlockVolumesRequest) (*entity.ListVolumes, sdkerror.Error)
-	GetBlockVolumeByID(opts volumev2.IGetBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error)
-	ResizeBlockVolumeByID(opts volumev2.IResizeBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error)
-	GetUnderBlockVolumeID(opts volumev2.IGetUnderBlockVolumeIDRequest) (*entity.Volume, sdkerror.Error)
-	MigrateBlockVolumeByID(opts volumev2.IMigrateBlockVolumeByIDRequest) sdkerror.Error
+	CreateBlockVolume(opts *volumev2.CreateBlockVolumeRequest) (*entity.Volume, sdkerror.Error)
+	DeleteBlockVolumeByID(opts *volumev2.DeleteBlockVolumeByIDRequest) sdkerror.Error
+	ListBlockVolumes(opts *volumev2.ListBlockVolumesRequest) (*entity.ListVolumes, sdkerror.Error)
+	GetBlockVolumeByID(opts *volumev2.GetBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error)
+	ResizeBlockVolumeByID(opts *volumev2.ResizeBlockVolumeByIDRequest) (*entity.Volume, sdkerror.Error)
+	GetUnderBlockVolumeID(opts *volumev2.GetUnderBlockVolumeIDRequest) (*entity.Volume, sdkerror.Error)
+	MigrateBlockVolumeByID(opts *volumev2.MigrateBlockVolumeByIDRequest) sdkerror.Error
 
 	// Snapshot
-	ListSnapshotsByBlockVolumeID(opts volumev2.IListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, sdkerror.Error)
-	CreateSnapshotByBlockVolumeID(opts volumev2.ICreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, sdkerror.Error)
-	DeleteSnapshotByID(opts volumev2.IDeleteSnapshotByIDRequest) sdkerror.Error
+	ListSnapshotsByBlockVolumeID(opts *volumev2.ListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, sdkerror.Error)
+	CreateSnapshotByBlockVolumeID(opts *volumev2.CreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, sdkerror.Error)
+	DeleteSnapshotByID(opts *volumev2.DeleteSnapshotByIDRequest) sdkerror.Error
 }
 
 type VolumeServiceV1 interface {
 	// Volume Type Api group
-	GetVolumeTypeByID(opts volumev1.IGetVolumeTypeByIDRequest) (*entity.VolumeType, sdkerror.Error)
-	GetListVolumeTypes(opts volumev1.IGetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error)
-	GetVolumeTypeZones(opts volumev1.IGetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error)
+	GetVolumeTypeByID(opts *volumev1.GetVolumeTypeByIDRequest) (*entity.VolumeType, sdkerror.Error)
+	GetListVolumeTypes(opts *volumev1.GetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error)
+	GetVolumeTypeZones(opts *volumev1.GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error)
 	GetDefaultVolumeType() (*entity.VolumeType, sdkerror.Error)
 }
 

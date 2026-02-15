@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(opts IListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, sdkerror.Error) {
+func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(opts *ListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, sdkerror.Error) {
 	url := listSnapshotsByBlockVolumeIDURL(s.VServerClient, opts)
 	resp := new(ListSnapshotsByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -25,7 +25,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(opts IListSnapshotsByBloc
 	return resp.ToEntityListSnapshots(), nil
 }
 
-func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(opts ICreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, sdkerror.Error) {
+func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(opts *CreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, sdkerror.Error) {
 	url := createSnapshotByBlockVolumeIDURL(s.VServerClient, opts)
 	resp := new(CreateSnapshotByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -47,7 +47,7 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(opts ICreateSnapshotByBl
 	return resp.ToEntitySnapshot(), nil
 }
 
-func (s *VolumeServiceV2) DeleteSnapshotByID(opts IDeleteSnapshotByIDRequest) sdkerror.Error {
+func (s *VolumeServiceV2) DeleteSnapshotByID(opts *DeleteSnapshotByIDRequest) sdkerror.Error {
 	url := deleteSnapshotByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().

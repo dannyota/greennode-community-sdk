@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *ServerServiceInternalV1) CreateSystemTags(opts ICreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error) {
+func (s *ServerServiceInternalV1) CreateSystemTags(opts *CreateSystemTagRequest) (*[]entity.SystemTag, sdkerror.Error) {
 
 	url := createSystemTagURL(s.VServerClient)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

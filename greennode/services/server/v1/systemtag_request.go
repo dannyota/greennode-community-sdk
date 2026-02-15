@@ -2,16 +2,6 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type ICreateSystemTagRequest interface {
-	ToRequestBody() any
-	AddUserAgent(agent ...string) ICreateSystemTagRequest
-	ToMap() map[string]any
-	AddTag(key, value string) ICreateSystemTagRequest
-	ParseUserAgent() string
-	GetResourceID() string
-	GetResourceType() ResourceType
-}
-
 const (
 	Volume       ResourceType = "VOLUME"
 	Server       ResourceType = "SERVER"
@@ -33,7 +23,7 @@ func (r *CreateSystemTagRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateSystemTagRequest) AddUserAgent(agent ...string) ICreateSystemTagRequest {
+func (r *CreateSystemTagRequest) AddUserAgent(agent ...string) *CreateSystemTagRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
@@ -46,7 +36,7 @@ func (r *CreateSystemTagRequest) GetResourceType() ResourceType {
 	return r.ResourceType
 }
 
-func (r *CreateSystemTagRequest) AddTag(key, value string) ICreateSystemTagRequest {
+func (r *CreateSystemTagRequest) AddTag(key, value string) *CreateSystemTagRequest {
 	r.Tags = append(r.Tags, struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`

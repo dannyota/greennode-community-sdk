@@ -8,25 +8,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IListSnapshotsByBlockVolumeIDRequest interface {
-	GetBlockVolumeID() string
-	ToQuery() (string, error)
-	GetDefaultQuery() string
-}
-
-type ICreateSnapshotByBlockVolumeIDRequest interface {
-	GetBlockVolumeID() string
-	ToRequestBody() any
-	WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest
-	WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest
-	WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest
-}
-
-type IDeleteSnapshotByIDRequest interface {
-	GetSnapshotID() string
-	GetBlockVolumeID() string
-}
-
 func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) *ListSnapshotsByBlockVolumeIDRequest {
 	opt := new(ListSnapshotsByBlockVolumeIDRequest)
 	opt.BlockVolumeID = blockVolumeID
@@ -92,17 +73,17 @@ func (r *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) ICreateSnapshotByBlockVolumeIDRequest {
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) *CreateSnapshotByBlockVolumeIDRequest {
 	r.Description = desc
 	return r
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) ICreateSnapshotByBlockVolumeIDRequest {
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) *CreateSnapshotByBlockVolumeIDRequest {
 	r.Permanently = val
 	return r
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) ICreateSnapshotByBlockVolumeIDRequest {
+func (r *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) *CreateSnapshotByBlockVolumeIDRequest {
 	r.RetainedDay = val
 	return r
 }

@@ -9,62 +9,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type ICreateBlockVolumeRequest interface {
-	ToRequestBody() any
-	ToMap() map[string]any
-	ListParameters() []any
-	GetSize() int64
-	GetVolumeType() string
-	GetVolumeName() string
-	GetZone() string
-	GetPoolName() string
-	WithPoc(isPoc bool) ICreateBlockVolumeRequest
-	WithAutoRenew(val bool) ICreateBlockVolumeRequest
-	WithMultiAttach(multiAttach bool) ICreateBlockVolumeRequest
-	WithSize(size int64) ICreateBlockVolumeRequest
-	WithEncryptionType(et EncryptType) ICreateBlockVolumeRequest
-	WithVolumeType(volumeTypeID string) ICreateBlockVolumeRequest
-	WithZone(zone string) ICreateBlockVolumeRequest
-	WithPoolName(poolName string) ICreateBlockVolumeRequest
-	WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) ICreateBlockVolumeRequest
-	WithTags(tags ...string) ICreateBlockVolumeRequest
-}
-
-type IDeleteBlockVolumeByIDRequest interface {
-	GetBlockVolumeID() string
-}
-
-type IListBlockVolumesRequest interface {
-	WithName(name string) IListBlockVolumesRequest
-	ToQuery() (string, error)
-	GetDefaultQuery() string
-	ToMap() map[string]any
-}
-
-type IGetBlockVolumeByIDRequest interface {
-	GetBlockVolumeID() string
-}
-
-type IResizeBlockVolumeByIDRequest interface {
-	ToRequestBody() any
-	GetBlockVolumeID() string
-	GetSize() int
-	GetVolumeTypeID() string
-}
-
-type IGetUnderBlockVolumeIDRequest interface {
-	GetBlockVolumeID() string
-}
-
-type IMigrateBlockVolumeByIDRequest interface {
-	GetBlockVolumeID() string
-	ToRequestBody() any
-	WithTags(tags ...string) IMigrateBlockVolumeByIDRequest
-	WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest
-	WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest
-	IsConfirm() bool
-}
-
 func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) *CreateBlockVolumeRequest {
 	opt := new(CreateBlockVolumeRequest)
 	opt.VolumeTypeID = volumeType
@@ -203,12 +147,12 @@ func (r *CreateBlockVolumeRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithZone(zone string) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithZone(zone string) *CreateBlockVolumeRequest {
 	r.Zone = zone
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithPoolName(poolName string) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithPoolName(poolName string) *CreateBlockVolumeRequest {
 	r.PoolName = poolName
 	return r
 }
@@ -265,37 +209,37 @@ func (r *CreateBlockVolumeRequest) GetSize() int64 {
 	return r.Size
 }
 
-func (r *CreateBlockVolumeRequest) WithPoc(isPoc bool) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithPoc(isPoc bool) *CreateBlockVolumeRequest {
 	r.IsPoc = isPoc
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithAutoRenew(val bool) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithAutoRenew(val bool) *CreateBlockVolumeRequest {
 	r.IsEnableAutoRenew = val
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithMultiAttach(multiAttach bool) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithMultiAttach(multiAttach bool) *CreateBlockVolumeRequest {
 	r.MultiAttach = multiAttach
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithSize(size int64) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithSize(size int64) *CreateBlockVolumeRequest {
 	r.Size = size
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithEncryptionType(et EncryptType) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithEncryptionType(et EncryptType) *CreateBlockVolumeRequest {
 	r.EncryptionType = et
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithVolumeType(volumeTypeID string) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithVolumeType(volumeTypeID string) *CreateBlockVolumeRequest {
 	r.VolumeTypeID = volumeTypeID
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithVolumeRestoreFromSnapshot(snapshotID, volumeTypeID string) *CreateBlockVolumeRequest {
 	r.CreatedFrom = CreateFromSnapshot
 	r.ConfigureVolumeRestore = &ConfigureVolumeRestore{
 		SnapshotVolumePointID: snapshotID,
@@ -305,7 +249,7 @@ func (r *CreateBlockVolumeRequest) WithVolumeRestoreFromSnapshot(snapshotID, vol
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) WithTags(tags ...string) ICreateBlockVolumeRequest {
+func (r *CreateBlockVolumeRequest) WithTags(tags ...string) *CreateBlockVolumeRequest {
 	if r.Tags == nil {
 		r.Tags = make([]VolumeTag, 0)
 	}
@@ -345,7 +289,7 @@ func (r *ListBlockVolumesRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *ListBlockVolumesRequest) WithName(name string) IListBlockVolumesRequest {
+func (r *ListBlockVolumesRequest) WithName(name string) *ListBlockVolumesRequest {
 	r.Name = name
 	return r
 }
@@ -366,7 +310,7 @@ func (r *MigrateBlockVolumeByIDRequest) ToRequestBody() any {
 	return r
 }
 
-func (r *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) IMigrateBlockVolumeByIDRequest {
+func (r *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) *MigrateBlockVolumeByIDRequest {
 	if r.Tags == nil {
 		r.Tags = make([]common.Tag, 0)
 	}
@@ -382,7 +326,7 @@ func (r *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) IMigrateBlockVo
 	return r
 }
 
-func (r *MigrateBlockVolumeByIDRequest) WithAction(action MigrateAction) IMigrateBlockVolumeByIDRequest {
+func (r *MigrateBlockVolumeByIDRequest) WithAction(action MigrateAction) *MigrateBlockVolumeByIDRequest {
 	switch action {
 	case InitMigrateAction, ProcessMigrateAction, ConfirmMigrateAction:
 		r.Action = action
@@ -393,7 +337,7 @@ func (r *MigrateBlockVolumeByIDRequest) WithAction(action MigrateAction) IMigrat
 	return r
 }
 
-func (r *MigrateBlockVolumeByIDRequest) WithConfirm(confirm bool) IMigrateBlockVolumeByIDRequest {
+func (r *MigrateBlockVolumeByIDRequest) WithConfirm(confirm bool) *MigrateBlockVolumeByIDRequest {
 	r.ConfirmMigrate = confirm
 	return r
 }

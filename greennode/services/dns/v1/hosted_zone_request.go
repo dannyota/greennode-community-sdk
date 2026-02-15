@@ -5,14 +5,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-type IGetHostedZoneByIDRequest interface {
-	GetHostedZoneID() string
-	WithHostedZoneID(hostedZoneID string) IGetHostedZoneByIDRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type GetHostedZoneByIDRequest struct {
 	HostedZoneID string
 
@@ -23,7 +15,7 @@ func (r *GetHostedZoneByIDRequest) GetHostedZoneID() string {
 	return r.HostedZoneID
 }
 
-func (r *GetHostedZoneByIDRequest) WithHostedZoneID(hostedZoneID string) IGetHostedZoneByIDRequest {
+func (r *GetHostedZoneByIDRequest) WithHostedZoneID(hostedZoneID string) *GetHostedZoneByIDRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
@@ -41,14 +33,6 @@ func NewGetHostedZoneByIDRequest(hostedZoneID string) *GetHostedZoneByIDRequest 
 }
 
 
-type IListHostedZonesRequest interface {
-	GetName() string
-	WithName(name string) IListHostedZonesRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type ListHostedZonesRequest struct {
 	Name string
 
@@ -59,7 +43,7 @@ func (r *ListHostedZonesRequest) GetName() string {
 	return r.Name
 }
 
-func (r *ListHostedZonesRequest) WithName(name string) IListHostedZonesRequest {
+func (r *ListHostedZonesRequest) WithName(name string) *ListHostedZonesRequest {
 	r.Name = name
 	return r
 }
@@ -75,17 +59,6 @@ func NewListHostedZonesRequest() *ListHostedZonesRequest {
 }
 
 
-type ICreateHostedZoneRequest interface {
-	WithDomainName(domainName string) ICreateHostedZoneRequest
-	WithAssocVpcIDs(assocVpcIDs []string) ICreateHostedZoneRequest
-	WithType(zoneType HostedZoneType) ICreateHostedZoneRequest
-	WithDescription(description string) ICreateHostedZoneRequest
-	ToRequestBody(sc client.ServiceClient) map[string]any
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type CreateHostedZoneRequest struct {
 	DomainName  string         `json:"domainName"`
 	AssocVpcIDs []string       `json:"assocVpcIds"`
@@ -95,22 +68,22 @@ type CreateHostedZoneRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateHostedZoneRequest) WithDomainName(domainName string) ICreateHostedZoneRequest {
+func (r *CreateHostedZoneRequest) WithDomainName(domainName string) *CreateHostedZoneRequest {
 	r.DomainName = domainName
 	return r
 }
 
-func (r *CreateHostedZoneRequest) WithAssocVpcIDs(assocVpcIDs []string) ICreateHostedZoneRequest {
+func (r *CreateHostedZoneRequest) WithAssocVpcIDs(assocVpcIDs []string) *CreateHostedZoneRequest {
 	r.AssocVpcIDs = assocVpcIDs
 	return r
 }
 
-func (r *CreateHostedZoneRequest) WithType(zoneType HostedZoneType) ICreateHostedZoneRequest {
+func (r *CreateHostedZoneRequest) WithType(zoneType HostedZoneType) *CreateHostedZoneRequest {
 	r.Type = zoneType
 	return r
 }
 
-func (r *CreateHostedZoneRequest) WithDescription(description string) ICreateHostedZoneRequest {
+func (r *CreateHostedZoneRequest) WithDescription(description string) *CreateHostedZoneRequest {
 	r.Description = description
 	return r
 }
@@ -142,14 +115,6 @@ func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneTyp
 }
 
 
-type IDeleteHostedZoneRequest interface {
-	GetHostedZoneID() string
-	WithHostedZoneID(hostedZoneID string) IDeleteHostedZoneRequest
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type DeleteHostedZoneRequest struct {
 	HostedZoneID string
 
@@ -160,7 +125,7 @@ func (r *DeleteHostedZoneRequest) GetHostedZoneID() string {
 	return r.HostedZoneID
 }
 
-func (r *DeleteHostedZoneRequest) WithHostedZoneID(hostedZoneID string) IDeleteHostedZoneRequest {
+func (r *DeleteHostedZoneRequest) WithHostedZoneID(hostedZoneID string) *DeleteHostedZoneRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
@@ -178,17 +143,6 @@ func NewDeleteHostedZoneRequest(hostedZoneID string) *DeleteHostedZoneRequest {
 }
 
 
-type IUpdateHostedZoneRequest interface {
-	GetHostedZoneID() string
-	WithHostedZoneID(hostedZoneID string) IUpdateHostedZoneRequest
-	WithAssocVpcIDs(assocVpcIDs []string) IUpdateHostedZoneRequest
-	WithDescription(description string) IUpdateHostedZoneRequest
-	ToRequestBody(sc client.ServiceClient) map[string]any
-	ToMap() map[string]any
-
-	ParseUserAgent() string
-}
-
 type UpdateHostedZoneRequest struct {
 	HostedZoneID string   `json:"-"`
 	AssocVpcIDs  []string `json:"assocVpcIds"`
@@ -201,17 +155,17 @@ func (r *UpdateHostedZoneRequest) GetHostedZoneID() string {
 	return r.HostedZoneID
 }
 
-func (r *UpdateHostedZoneRequest) WithHostedZoneID(hostedZoneID string) IUpdateHostedZoneRequest {
+func (r *UpdateHostedZoneRequest) WithHostedZoneID(hostedZoneID string) *UpdateHostedZoneRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) WithAssocVpcIDs(assocVpcIDs []string) IUpdateHostedZoneRequest {
+func (r *UpdateHostedZoneRequest) WithAssocVpcIDs(assocVpcIDs []string) *UpdateHostedZoneRequest {
 	r.AssocVpcIDs = assocVpcIDs
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) WithDescription(description string) IUpdateHostedZoneRequest {
+func (r *UpdateHostedZoneRequest) WithDescription(description string) *UpdateHostedZoneRequest {
 	r.Description = description
 	return r
 }

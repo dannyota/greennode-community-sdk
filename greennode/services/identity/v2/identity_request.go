@@ -1,13 +1,5 @@
 package v2
 
-type IGetAccessTokenRequest interface {
-	WithClientID(clientID string) IGetAccessTokenRequest
-	WithClientSecret(clientSecret string) IGetAccessTokenRequest
-	GetClientID() string
-	GetClientSecret() string
-	ToRequestBody() any
-}
-
 type GetAccessTokenRequest struct {
 	ClientID     string
 	ClientSecret string
@@ -23,12 +15,12 @@ func NewGetAccessTokenRequest(clientID, clientSecret string) *GetAccessTokenRequ
 	}
 }
 
-func (r *GetAccessTokenRequest) WithClientID(clientID string) IGetAccessTokenRequest {
+func (r *GetAccessTokenRequest) WithClientID(clientID string) *GetAccessTokenRequest {
 	r.ClientID = clientID
 	return r
 }
 
-func (r *GetAccessTokenRequest) WithClientSecret(clientSecret string) IGetAccessTokenRequest {
+func (r *GetAccessTokenRequest) WithClientSecret(clientSecret string) *GetAccessTokenRequest {
 	r.ClientSecret = clientSecret
 	return r
 }
