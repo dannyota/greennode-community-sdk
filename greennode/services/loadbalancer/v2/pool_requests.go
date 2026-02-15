@@ -253,12 +253,11 @@ func (r *UpdatePoolMembersRequest) AddUserAgent(agent ...string) *UpdatePoolMemb
 	return r
 }
 
-func (r *CreatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.toRequestBody()
-	return r
+func (r *CreatePoolRequest) prepare() {
+	r.HealthMonitor.prepare()
 }
 
-func (h *HealthMonitor) toRequestBody() *HealthMonitor {
+func (h *HealthMonitor) prepare() {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -282,8 +281,6 @@ func (h *HealthMonitor) toRequestBody() *HealthMonitor {
 			}
 		}
 	}
-
-	return h
 }
 
 func (h *HealthMonitor) AddUserAgent(agent ...string) *HealthMonitor {
@@ -343,9 +340,8 @@ func (r *UpdatePoolRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *UpdatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.toRequestBody()
-	return r
+func (r *UpdatePoolRequest) prepare() {
+	r.HealthMonitor.prepare()
 }
 
 func (r *UpdatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *UpdatePoolRequest {
@@ -376,10 +372,6 @@ func (r *UpdatePoolRequest) WithStickiness(v *bool) *UpdatePoolRequest {
 func (r *UpdatePoolRequest) AddUserAgent(agent ...string) *UpdatePoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
-}
-
-func (h *HealthMonitor) ToRequestBody() any {
-	return h
 }
 
 func (h *HealthMonitor) WithHealthyThreshold(ht int) *HealthMonitor {
@@ -458,10 +450,6 @@ func (h *HealthMonitor) ToMap() map[string]any {
 	}
 }
 
-func (m *Member) ToRequestBody() any {
-	return m
-}
-
 func (m *Member) ToMap() map[string]any {
 	return map[string]any{
 		"backup":      m.Backup,
@@ -478,6 +466,3 @@ func (r *UpdatePoolMembersRequest) WithMembers(members ...*Member) *UpdatePoolMe
 	return r
 }
 
-func (r *UpdatePoolMembersRequest) ToRequestBody() any {
-	return r
-}

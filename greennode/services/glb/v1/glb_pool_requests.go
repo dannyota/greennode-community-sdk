@@ -3,7 +3,6 @@ package v1
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 type IBulkActionRequest interface {
-	ToRequestBody() any
 	ToMap() map[string]any
 }
 
@@ -139,10 +138,6 @@ func (r *CreateGlobalPoolRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *CreateGlobalPoolRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateGlobalPoolRequest) AddUserAgent(agent ...string) *CreateGlobalPoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -250,10 +245,6 @@ func (r *GlobalHealthMonitorRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *GlobalHealthMonitorRequest) ToRequestBody() any {
-	return r
-}
-
 func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) *GlobalHealthMonitorRequest {
 	opts := &GlobalHealthMonitorRequest{
 		HealthCheckProtocol: checkProtocol,
@@ -358,10 +349,6 @@ func (r *GlobalPoolMemberRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *GlobalPoolMemberRequest) ToRequestBody() any {
-	return r
-}
-
 func NewGlobalPoolMemberRequest(name, region, vpcID string, dial int, typeVal GlobalPoolMemberType) *GlobalPoolMemberRequest {
 	opts := &GlobalPoolMemberRequest{
 		Name:        name,
@@ -447,10 +434,6 @@ func (r *GlobalMemberRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *GlobalMemberRequest) ToRequestBody() any {
-	return r
-}
-
 func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, weight int, backupRole bool) *GlobalMemberRequest {
 	opts := &GlobalMemberRequest{
 		Name:        name,
@@ -504,10 +487,6 @@ func (r *UpdateGlobalPoolRequest) ToMap() map[string]any {
 		"health":    r.HealthMonitor.ToMap(),
 	}
 	return err
-}
-
-func (r *UpdateGlobalPoolRequest) ToRequestBody() any {
-	return r
 }
 
 func NewUpdateGlobalPoolRequest(lbID, poolID string) *UpdateGlobalPoolRequest {
@@ -629,10 +608,6 @@ func (r *PatchGlobalPoolMembersRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *PatchGlobalPoolMembersRequest) ToRequestBody() any {
-	return r
-}
-
 func NewPatchGlobalPoolMembersRequest(lbID, poolID string) *PatchGlobalPoolMembersRequest {
 	opts := &PatchGlobalPoolMembersRequest{
 		BulkActions: make([]IBulkActionRequest, 0),
@@ -661,10 +636,6 @@ func (r *PatchGlobalPoolCreateBulkActionRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *PatchGlobalPoolCreateBulkActionRequest) ToRequestBody() any {
-	return r
-}
-
 func NewPatchGlobalPoolCreateBulkActionRequest(member *GlobalPoolMemberRequest) *PatchGlobalPoolCreateBulkActionRequest {
 	opts := &PatchGlobalPoolCreateBulkActionRequest{
 		Action:           "create",
@@ -686,10 +657,6 @@ func (r *PatchGlobalPoolDeleteBulkActionRequest) ToMap() map[string]any {
 		"id":     r.ID,
 	}
 	return err
-}
-
-func (r *PatchGlobalPoolDeleteBulkActionRequest) ToRequestBody() any {
-	return r
 }
 
 func NewPatchGlobalPoolDeleteBulkActionRequest(id string) *PatchGlobalPoolDeleteBulkActionRequest {
@@ -715,10 +682,6 @@ func (r *PatchGlobalPoolUpdateBulkActionRequest) ToMap() map[string]any {
 		"updatePoolMember": r.UpdatePoolMember.ToMap(),
 	}
 	return err
-}
-
-func (r *PatchGlobalPoolUpdateBulkActionRequest) ToRequestBody() any {
-	return r
 }
 
 func NewPatchGlobalPoolUpdateBulkActionRequest(id string, member *UpdateGlobalPoolMemberRequest) *PatchGlobalPoolUpdateBulkActionRequest {
@@ -780,10 +743,6 @@ func (r *UpdateGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *U
 
 func (r *UpdateGlobalPoolMemberRequest) AddUserAgent(agent ...string) *UpdateGlobalPoolMemberRequest {
 	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
-func (r *UpdateGlobalPoolMemberRequest) ToRequestBody() any {
 	return r
 }
 

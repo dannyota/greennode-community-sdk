@@ -29,7 +29,7 @@ func (s *LoadBalancerServiceV2) CreateTags(opts *CreateTagsRequest) error {
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
@@ -55,10 +55,11 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
 
 	url := updateTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.prepare(tags)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody(tags)).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {

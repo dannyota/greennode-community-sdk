@@ -10,10 +10,11 @@ func (s *LoadBalancerServiceV2) CreateLoadBalancer(opts *CreateLoadBalancerReque
 	url := createLoadBalancerURL(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.prepare()
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -34,7 +35,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancer(opts *ResizeLoadBalancerReque
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -125,10 +126,11 @@ func (s *LoadBalancerServiceV2) CreatePool(opts *CreatePoolRequest) (*entity.Poo
 	url := createPoolURL(s.VLBClient, opts)
 	resp := new(CreatePoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.prepare()
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -147,10 +149,11 @@ func (s *LoadBalancerServiceV2) CreatePool(opts *CreatePoolRequest) (*entity.Poo
 func (s *LoadBalancerServiceV2) UpdatePool(opts *UpdatePoolRequest) error {
 	url := updatePoolURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.prepare()
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -167,10 +170,11 @@ func (s *LoadBalancerServiceV2) CreateListener(opts *CreateListenerRequest) (*en
 	url := createListenerURL(s.VLBClient, opts)
 	resp := new(CreateListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.prepare()
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -194,7 +198,7 @@ func (s *LoadBalancerServiceV2) UpdateListener(opts *UpdateListenerRequest) erro
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -254,7 +258,7 @@ func (s *LoadBalancerServiceV2) UpdatePoolMembers(opts *UpdatePoolMembersRequest
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -403,7 +407,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancerByID(opts *ResizeLoadBalancerB
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -426,7 +430,7 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(opts *ScaleLoadBalancerRequest
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -467,7 +471,7 @@ func (s *LoadBalancerServiceV2) CreatePolicy(opts *CreatePolicyRequest) (*entity
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts.toRequestBody()).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -507,7 +511,7 @@ func (s *LoadBalancerServiceV2) UpdatePolicy(opts *UpdatePolicyRequest) error {
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts.toRequestBody()).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
@@ -544,7 +548,7 @@ func (s *LoadBalancerServiceV2) ReorderPolicies(opts *ReorderPoliciesRequest) er
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts.toRequestBody()).
 		WithJSONError(errResp)
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
@@ -597,7 +601,7 @@ func (s *LoadBalancerServiceV2) CreateCertificate(opts *CreateCertificateRequest
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

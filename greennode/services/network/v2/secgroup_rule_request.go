@@ -79,10 +79,6 @@ type ( //_______________________________________________________________________
 	SecgroupRuleProtocol  string
 )
 
-func (r *CreateSecgroupRuleRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateSecgroupRuleRequest) ToMap() map[string]any {
 	return map[string]any{
 		"description":     r.Description,

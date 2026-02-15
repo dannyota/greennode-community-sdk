@@ -10,11 +10,13 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(opts *CreateLoadBalance
 	url := createLoadBalancerURL(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	opts.WithProjectID(s.VLBClient.GetProjectID())
+	opts.prepare()
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.WithProjectID(s.VLBClient.GetProjectID()).ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

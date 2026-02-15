@@ -141,10 +141,6 @@ func (r *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool *CreateGlobalPoolR
 	return r
 }
 
-func (r *CreateGlobalLoadBalancerRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) *CreateGlobalLoadBalancerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

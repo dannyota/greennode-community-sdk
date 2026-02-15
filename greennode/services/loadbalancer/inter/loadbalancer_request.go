@@ -49,16 +49,14 @@ func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *CreateLoadBalancerRequest) ToRequestBody() any {
+func (r *CreateLoadBalancerRequest) prepare() {
 	if r.Pool != nil {
-		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
+		r.Pool.prepare()
 	}
 
 	if r.Listener != nil {
-		r.Listener = r.Listener.ToRequestBody().(*CreateListenerRequest)
+		r.Listener.prepare()
 	}
-
-	return r
 }
 
 func (r *CreateLoadBalancerRequest) WithProjectID(projectID string) *CreateLoadBalancerRequest {

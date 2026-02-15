@@ -13,7 +13,7 @@ func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Serv
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -69,7 +69,7 @@ func (s *ComputeServiceV2) DeleteServerByID(opts *DeleteServerByIDRequest) error
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
@@ -94,7 +94,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(opts *UpdateServerSec
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -167,7 +167,7 @@ func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) error
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
@@ -188,7 +188,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) error
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
@@ -271,7 +271,7 @@ func (s *ComputeServiceV2) CreateServerGroup(opts *CreateServerGroupRequest) (*e
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

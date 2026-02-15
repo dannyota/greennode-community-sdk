@@ -60,7 +60,27 @@ All acronyms in exported identifiers now use correct ALL CAPS casing:
 
 **Note:** `SetBodyJsonMarshal` is an external method from `imroc/req/v3` — not renamed.
 
-### 1.5 Java-style getters — **PARTIALLY RESOLVED**
+### 1.5 Abbreviation casing (secondary pass) — **RESOLVED**
+
+Remaining abbreviation casing issues in constant names, struct fields, and a
+struct field name inconsistency:
+
+| Pattern | Status |
+|---------|--------|
+| `Http1`/`Http1Minor1` → `HTTP1`/`HTTP1Minor1` | Done. `HealthCheckHTTPVersionHTTP1`, `GlobalPoolHealthCheckHTTPVersionHTTP1Minor1`, etc. (loadbalancer/v2, inter, glb/v1) |
+| `HealthCheckProtocolHTTPs` → `HTTPS` | Done. Trailing lowercase `s` fixed in all 3 packages + tests. |
+| `IpAddress` → `IPAddress` | Done. Struct field in `Member` (loadbalancer/v2, inter) and `CreateVirtualAddressCrossProjectRequest` (network/v2). JSON tags unchanged. |
+| `VirtualIpAddressID` → `VirtualIPAddressID` | Done. Entity field + response structs (entity/address_pair, network/v2). |
+| `NetworkInterfaceIp` → `NetworkInterfaceIP` | Done. Entity field + response structs. |
+| `VserverClient` → `VServerClient` | Done. Struct field in `NetworkServiceV2` + all usages (9 files in network/v2, 2 gateway files). |
+
+Also removed: commented-out struct fields (`address_pair_response.go`),
+commented-out error handling code (`address_pair.go`), and a lone `/** */`
+block comment (`virtualaddress_request.go`).
+
+### 1.6 Java-style getters — **PARTIALLY RESOLVED**
+
+(Renumbered from §1.5)
 
 Most `Get*()` accessors have been simplified:
 
@@ -77,7 +97,7 @@ JSON serialization on request types):
 - `GetProjectID()`, `GetZoneID()`, `GetUserID()`, `GetClientID()`, `GetClientSecret()`
 - `GetMessage()` (collides with `Message` field on error response structs)
 
-### 1.6 Package names with underscores — **RESOLVED**
+### 1.7 Package names with underscores — **RESOLVED**
 
 The `sdk_error` package has been renamed to `sdkerror` (`greennode/sdkerror/`,
 18 files). All 42 importing files updated.
@@ -270,6 +290,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** |
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
+| Abbreviation casing (secondary: `Ip`, `Http1`, `Vserver`) | 19 files | loadbalancer, glb, network, entity | **Done** |
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Done** |

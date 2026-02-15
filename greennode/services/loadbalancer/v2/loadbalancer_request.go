@@ -177,10 +177,6 @@ func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) 
 	return r
 }
 
-func (r *ScaleLoadBalancerRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *ScaleLoadBalancerRequest) ToMap() map[string]any {
 	result := map[string]any{}
 	if r.Scaling != nil {
@@ -219,16 +215,14 @@ func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
 	return err
 }
 
-func (r *CreateLoadBalancerRequest) ToRequestBody() any {
+func (r *CreateLoadBalancerRequest) prepare() {
 	if r.Pool != nil {
-		r.Pool = r.Pool.ToRequestBody().(*CreatePoolRequest)
+		r.Pool.prepare()
 	}
 
 	if r.Listener != nil {
-		r.Listener = r.Listener.ToRequestBody().(*CreateListenerRequest)
+		r.Listener.prepare()
 	}
-
-	return r
 }
 
 func (r *CreateLoadBalancerRequest) AddUserAgent(agent ...string) *CreateLoadBalancerRequest {
@@ -293,10 +287,6 @@ func (r *CreateLoadBalancerRequest) WithPoc(isPoc bool) *CreateLoadBalancerReque
 
 func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBalancerRequest {
 	r.ZoneID = &zoneID
-	return r
-}
-
-func (r *ResizeLoadBalancerRequest) ToRequestBody() any {
 	return r
 }
 
@@ -391,6 +381,3 @@ func (r *ResizeLoadBalancerByIDRequest) ToMap() map[string]any {
 	}
 }
 
-func (r *ResizeLoadBalancerByIDRequest) ToRequestBody() any {
-	return r
-}

@@ -29,7 +29,7 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInV
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts.AddressPairRequest).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -62,7 +62,7 @@ func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*e
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

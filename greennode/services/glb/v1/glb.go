@@ -35,7 +35,7 @@ func (s *GLBServiceV1) CreateGlobalPool(opts *CreateGlobalPoolRequest) (*entity.
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -57,7 +57,7 @@ func (s *GLBServiceV1) UpdateGlobalPool(opts *UpdateGlobalPoolRequest) (*entity.
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -156,7 +156,7 @@ func (s *GLBServiceV1) UpdateGlobalPoolMember(opts *UpdateGlobalPoolMemberReques
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -176,7 +176,7 @@ func (s *GLBServiceV1) PatchGlobalPoolMembers(opts *PatchGlobalPoolMembersReques
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Patch(url, req); sdkErr != nil {
@@ -215,7 +215,7 @@ func (s *GLBServiceV1) CreateGlobalListener(opts *CreateGlobalListenerRequest) (
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -236,7 +236,7 @@ func (s *GLBServiceV1) UpdateGlobalListener(opts *UpdateGlobalListenerRequest) (
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -316,7 +316,7 @@ func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

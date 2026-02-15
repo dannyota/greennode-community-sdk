@@ -28,10 +28,6 @@ type CreateSecgroupRequest struct { //__________________________________________
 	common.UserAgent
 }
 
-func (r *CreateSecgroupRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateSecgroupRequest) AddUserAgent(agent ...string) *CreateSecgroupRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

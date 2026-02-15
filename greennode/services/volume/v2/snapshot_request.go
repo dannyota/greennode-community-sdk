@@ -69,10 +69,6 @@ func (r *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) *CreateSnapshotByBlockVolumeIDRequest {
 	r.Description = desc
 	return r

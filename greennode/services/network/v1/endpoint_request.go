@@ -406,10 +406,6 @@ func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) *CreateTagsW
 	return r
 }
 
-func (r *CreateTagsWithEndpointIDRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateTagsWithEndpointIDRequest) GetProjectID() string {
 	return r.ProjectID
 }
@@ -488,10 +484,6 @@ func (r *UpdateTagValueOfEndpointRequest) GetMapHeaders() map[string]string {
 
 func (r *UpdateTagValueOfEndpointRequest) GetTagID() string {
 	return r.TagID
-}
-
-func (r *UpdateTagValueOfEndpointRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *UpdateTagValueOfEndpointRequest) GetProjectID() string {

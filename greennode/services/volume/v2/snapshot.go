@@ -33,7 +33,7 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(opts *CreateSnapshotByBl
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp).
-		WithJSONBody(opts.ToRequestBody())
+		WithJSONBody(opts)
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,

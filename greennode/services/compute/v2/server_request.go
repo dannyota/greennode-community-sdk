@@ -74,10 +74,6 @@ type ServerTag struct {
 	Value string `json:"value"`
 }
 
-func (r *CreateServerRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateServerRequest) WithZone(zoneID string) *CreateServerRequest {
 	r.Zone = zoneID
 	return r
@@ -239,10 +235,6 @@ func (r *DeleteServerByIDRequest) AddUserAgent(agent ...string) *DeleteServerByI
 	return r
 }
 
-func (r *DeleteServerByIDRequest) ToRequestBody() any {
-	return r
-}
-
 type UpdateServerSecgroupsByServerIDRequest struct {
 	Secgroups []string `json:"securityGroup"`
 
@@ -252,10 +244,6 @@ type UpdateServerSecgroupsByServerIDRequest struct {
 
 func (r *UpdateServerSecgroupsByServerIDRequest) AddUserAgent(agent ...string) *UpdateServerSecgroupsByServerIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
-func (r *UpdateServerSecgroupsByServerIDRequest) ToRequestBody() any {
 	return r
 }
 
@@ -269,10 +257,6 @@ type AttachFloatingIpRequest struct {
 	common.InternalNetworkInterfaceCommon
 	common.ServerCommon
 	common.UserAgent
-}
-
-func (r *AttachFloatingIpRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *AttachFloatingIpRequest) AddUserAgent(agent ...string) *AttachFloatingIpRequest {
@@ -295,10 +279,6 @@ type DetachFloatingIpRequest struct {
 	common.WanCommon
 	common.InternalNetworkInterfaceCommon
 	common.UserAgent
-}
-
-func (r *DetachFloatingIpRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *DetachFloatingIpRequest) AddUserAgent(agent ...string) *DetachFloatingIpRequest {
@@ -388,10 +368,6 @@ type CreateServerGroupRequest struct {
 	PolicyID    string `json:"policyId,omitempty"`
 
 	common.UserAgent
-}
-
-func (r *CreateServerGroupRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *CreateServerGroupRequest) ToMap() map[string]any {

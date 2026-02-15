@@ -64,10 +64,6 @@ type UpdateTagsRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (r *CreateTagsRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *UpdateTagsRequest) AddUserAgent(agent ...string) *UpdateTagsRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -84,7 +80,7 @@ func (r *CreateTagsRequest) WithTags(tags ...string) *CreateTagsRequest {
 	return r
 }
 
-func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) any {
+func (r *UpdateTagsRequest) prepare(lstTags *entity.ListTags) {
 	st := map[string]common.Tag{}
 	for _, tag := range lstTags.Items {
 		st[tag.Key] = common.Tag{
@@ -102,8 +98,6 @@ func (r *UpdateTagsRequest) ToRequestBody(lstTags *entity.ListTags) any {
 	for _, tag := range st {
 		r.TagRequestList = append(r.TagRequestList, tag)
 	}
-
-	return r
 }
 
 func (r *UpdateTagsRequest) WithTags(tags ...string) *UpdateTagsRequest {

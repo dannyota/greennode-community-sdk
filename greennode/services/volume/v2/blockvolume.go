@@ -12,7 +12,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(opts *CreateBlockVolumeRequest) (*en
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -92,7 +92,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(opts *ResizeBlockVolumeByIDReque
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -137,7 +137,7 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(opts *MigrateBlockVolumeByIDReq
 	resp := map[string]any{}
 	req := client.NewRequest().
 		WithOkCodes(204).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp).
 		WithJSONResponse(&resp)
 

@@ -9,7 +9,7 @@ services exposed by VNG Cloud's REST APIs.
 
 - **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
 - **Go version:** 1.24
-- **Source files:** 209 `.go` files, ~24 k LOC
+- **Source files:** 210 `.go` files, ~22.5 k LOC
 
 ## 2. Package Map
 
@@ -245,3 +245,52 @@ first match.
 | **VNetwork** | v1, v2, internal | Network |
 | **GLB** | v1 | GLB |
 | **VDns** | v1, internal | DNS |
+
+## 9. Simplification Opportunities
+
+Patterns inherited from the upstream codebase that add complexity without
+proportional benefit. Ordered by impact.
+
+### 9.1 Missing `context.Context` on public methods
+
+Service methods store a single context at client creation and reuse it for all
+requests. Users cannot cancel individual calls, set per-call timeouts, or
+propagate tracing values. Every idiomatic Go HTTP client requires
+`ctx context.Context` as the first parameter on I/O methods.
+
+**Scope:** ~130 service methods, 3 client infrastructure files.
+
+### 9.2 Single-implementation interfaces
+
+`ServiceClient`, `HTTPClient`, `Request`, and `SdkAuthentication` are interfaces
+with exactly one concrete implementation each. They add indirection (callers see
+interface types, IDE can't jump to implementation) without enabling polymorphism.
+
+**Fix:** Export concrete structs, delete interfaces.
+
+### 9.3 `ToRequestBody()` boilerplate
+
+27 request types implement `ToRequestBody() any` as an identity return
+(`return r`). Two exceptions in loadbalancer pool requests do cleanup logic.
+Since structs already carry JSON tags, pass them directly to `WithJSONBody()`.
+
+### 9.4 `ToMap()` boilerplate
+
+23 request types implement `ToMap() map[string]any` by manually listing every
+field. Used only for error parameter enrichment
+(`sdkerror.SdkErrorHandler(...).WithParameters(opts.ToMap())`). Fragile — fields
+are easily forgotten. Could be replaced by reflection or by passing the struct
+directly.
+
+### 9.5 `UserAgent` embedded in every request struct
+
+Every request struct embeds `common.UserAgent` and every service method
+manually adds `WithHeader("User-Agent", opts.ParseUserAgent())`. User-Agent is
+an infrastructure concern that should be set once at the HTTP client level, not
+per-request.
+
+### 9.6 `common.*Common` embedded ID types
+
+Single-field structs like `ServerCommon{ServerID string}` are embedded in
+requests to provide getter methods (`GetServerID()`). Plain fields with methods
+on the request type itself would be simpler.

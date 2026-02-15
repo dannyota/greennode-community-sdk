@@ -35,7 +35,7 @@ func (s *NetworkServiceV2) UpdateSubnetByID(opts *UpdateSubnetByIDRequest) (*ent
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts.UpdateSubnetBody).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

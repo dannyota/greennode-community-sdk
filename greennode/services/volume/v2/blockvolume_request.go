@@ -143,10 +143,6 @@ type (
 	}
 )
 
-func (r *CreateBlockVolumeRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateBlockVolumeRequest) WithZone(zone string) *CreateBlockVolumeRequest {
 	r.Zone = zone
 	return r
@@ -294,20 +290,12 @@ func (r *ListBlockVolumesRequest) WithName(name string) *ListBlockVolumesRequest
 	return r
 }
 
-func (r *ResizeBlockVolumeByIDRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *ResizeBlockVolumeByIDRequest) GetSize() int {
 	return r.NewSize
 }
 
 func (r *ResizeBlockVolumeByIDRequest) GetVolumeTypeID() string {
 	return r.VolumeTypeID
-}
-
-func (r *MigrateBlockVolumeByIDRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *MigrateBlockVolumeByIDRequest) WithTags(tags ...string) *MigrateBlockVolumeByIDRequest {

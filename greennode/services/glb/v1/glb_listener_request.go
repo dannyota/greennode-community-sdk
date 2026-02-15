@@ -104,10 +104,6 @@ func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) *CreateGlo
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateGlobalListenerRequest) ToMap() map[string]any {
 	return map[string]any{
 		"allowedCidrs":      r.AllowedCidrs,
@@ -198,10 +194,6 @@ func (r *UpdateGlobalListenerRequest) WithLoadBalancerID(lbid string) *UpdateGlo
 
 func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) *UpdateGlobalListenerRequest {
 	r.ListenerID = lid
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) ToRequestBody() any {
 	return r
 }
 

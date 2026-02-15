@@ -112,12 +112,11 @@ type Member struct {
 	Weight      int    `json:"weight"`
 }
 
-func (r *CreatePoolRequest) ToRequestBody() any {
-	r.HealthMonitor = r.HealthMonitor.toRequestBody()
-	return r
+func (r *CreatePoolRequest) prepare() {
+	r.HealthMonitor.prepare()
 }
 
-func (h *HealthMonitor) toRequestBody() *HealthMonitor {
+func (h *HealthMonitor) prepare() {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -141,8 +140,6 @@ func (h *HealthMonitor) toRequestBody() *HealthMonitor {
 			}
 		}
 	}
-
-	return h
 }
 
 func (r *CreatePoolRequest) WithHealthMonitor(monitor *HealthMonitor) *CreatePoolRequest {
@@ -181,10 +178,6 @@ func (r *CreatePoolRequest) ToMap() map[string]any {
 func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRequest {
 	r.Algorithm = algorithm
 	return r
-}
-
-func (h *HealthMonitor) ToRequestBody() any {
-	return h
 }
 
 func (h *HealthMonitor) WithHealthyThreshold(ht int) *HealthMonitor {
@@ -261,10 +254,6 @@ func (h *HealthMonitor) ToMap() map[string]any {
 		"domainName":          h.DomainName,
 		"successCode":         h.SuccessCode,
 	}
-}
-
-func (m *Member) ToRequestBody() any {
-	return m
 }
 
 func (m *Member) ToMap() map[string]any {

@@ -129,7 +129,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(opts *CreateTagsWith
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
@@ -171,7 +171,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts *UpdateTagValue
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VNetworkClient.Put(url, req); sdkErr != nil {

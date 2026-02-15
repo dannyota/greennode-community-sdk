@@ -38,10 +38,6 @@ func (r *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
 	return r.VirtualSubnetID
 }
 
-func (r *SetAddressPairInVirtualSubnetRequest) ToRequestBody() any {
-	return r.AddressPairRequest
-}
-
 type AddressPairRequest struct {
 	CIDR                       string `json:"cidr"`
 	InternalNetworkInterfaceID string `json:"internalNetworkInterfaceId"`
@@ -87,10 +83,6 @@ type CreateAddressPairRequest struct {
 	common.InternalNetworkInterfaceCommon
 	common.UserAgent
 	common.VirtualAddressCommon
-}
-
-func (r *CreateAddressPairRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *CreateAddressPairRequest) ToMap() map[string]any {

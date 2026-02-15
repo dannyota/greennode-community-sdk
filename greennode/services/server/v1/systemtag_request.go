@@ -19,10 +19,6 @@ type CreateSystemTagRequest struct { // ________________________________________
 	common.UserAgent
 }
 
-func (r *CreateSystemTagRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateSystemTagRequest) AddUserAgent(agent ...string) *CreateSystemTagRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

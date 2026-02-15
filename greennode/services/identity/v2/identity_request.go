@@ -33,6 +33,3 @@ func (r *GetAccessTokenRequest) GetClientSecret() string {
 	return r.ClientSecret
 }
 
-func (r *GetAccessTokenRequest) ToRequestBody() any {
-	return r
-}

@@ -26,10 +26,6 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]any {
 	return map[string]any{
 		"name":        r.Name,

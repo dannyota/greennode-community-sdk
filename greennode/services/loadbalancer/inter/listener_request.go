@@ -45,20 +45,18 @@ type CreateListenerRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateListenerRequest) ToRequestBody() any {
+func (r *CreateListenerRequest) prepare() {
 	if r == nil {
-		return nil
+		return
 	}
 
 	if r.ListenerProtocol == ListenerProtocolHTTPS {
-		return r
+		return
 	}
 
 	r.CertificateAuthorities = nil
 	r.ClientCertificate = nil
 	r.DefaultCertificateAuthority = nil
-
-	return r
 }
 
 func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateListenerRequest {

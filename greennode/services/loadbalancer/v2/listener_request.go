@@ -136,20 +136,18 @@ func (r *GetListenerByIDRequest) AddUserAgent(agent ...string) *GetListenerByIDR
 	return r
 }
 
-func (r *CreateListenerRequest) ToRequestBody() any {
+func (r *CreateListenerRequest) prepare() {
 	if r == nil {
-		return nil
+		return
 	}
 
 	if r.ListenerProtocol == ListenerProtocolHTTPS {
-		return r
+		return
 	}
 
 	r.CertificateAuthorities = nil
 	r.ClientCertificate = nil
 	r.DefaultCertificateAuthority = nil
-
-	return r
 }
 
 func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateListenerRequest {
@@ -250,10 +248,6 @@ func (r *CreateListenerRequest) ToMap() map[string]any {
 		"defaultCertificateAuthority": r.DefaultCertificateAuthority,
 		"insertHeaders":               r.InsertHeaders,
 	}
-}
-
-func (r *UpdateListenerRequest) ToRequestBody() any {
-	return r
 }
 
 func (r *UpdateListenerRequest) WithCidrs(cidrs ...string) *UpdateListenerRequest {

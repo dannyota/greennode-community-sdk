@@ -17,7 +17,7 @@ func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity
 		WithJSONResponse(resp).
 		WithSkipAuth(true).
 		WithJSONError(errResp).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
 		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.GetClientID()+":"+opts.GetClientSecret())))
 

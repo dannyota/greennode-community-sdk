@@ -74,10 +74,6 @@ func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) *CreateCert
 	return r
 }
 
-func (r *CreateCertificateRequest) ToRequestBody() any {
-	return r
-}
-
 func (r *CreateCertificateRequest) ToMap() map[string]any {
 	re := map[string]any{
 		"name":        r.Name,

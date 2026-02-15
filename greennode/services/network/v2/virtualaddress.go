@@ -13,7 +13,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
-		WithJSONBody(opts.ToRequestBody()).
+		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

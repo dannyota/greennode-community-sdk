@@ -45,10 +45,6 @@ type UpdateSubnetByIDRequest struct {
 	common.NetworkCommon
 }
 
-func (r *UpdateSubnetByIDRequest) ToRequestBody() any {
-	return r.UpdateSubnetBody
-}
-
 func (r *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) *UpdateSubnetByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

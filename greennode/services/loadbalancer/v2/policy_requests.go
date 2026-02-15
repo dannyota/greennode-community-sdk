@@ -51,7 +51,7 @@ type L7RuleRequest struct {
 	RuleValue   string            `json:"ruleValue"`
 }
 
-func (r *CreatePolicyRequest) ToRequestBody() any {
+func (r *CreatePolicyRequest) toRequestBody() any {
 	switch r.Action {
 	case PolicyActionREJECT:
 		return struct {
@@ -170,7 +170,7 @@ type UpdatePolicyRequest struct {
 	KeepQueryString  bool            `json:"keepQueryString"`
 }
 
-func (r *UpdatePolicyRequest) ToRequestBody() any {
+func (r *UpdatePolicyRequest) toRequestBody() any {
 	switch r.Action {
 	case PolicyActionREJECT:
 		return struct {
@@ -323,7 +323,7 @@ func (r *ReorderPoliciesRequest) WithPoliciesOrder(policies []string) *ReorderPo
 	return r
 }
 
-func (r *ReorderPoliciesRequest) ToRequestBody() any {
+func (r *ReorderPoliciesRequest) toRequestBody() any {
 	return map[string]any{
 		"policies": r.policyPositions,
 	}
