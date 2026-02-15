@@ -6,80 +6,48 @@ import (
 
 	svcclient "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/gateway"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
-type Client interface {
-	// List of builder methods
-	WithHTTPClient(httpClient svcclient.HTTPClient) Client
-	WithContext(ctx context.Context) Client
-	WithAuthOption(authOption svcclient.AuthOpts, authConfig SdkConfigure) Client
-	WithKvDefaultHeaders(args ...string) Client
-	WithRetryCount(retry int) Client
-	WithSleep(sleep time.Duration) Client
-	WithProjectID(projectID string) Client
+type Client struct {
+	context    context.Context
+	projectID  string
+	zoneID     string
+	userID     string
+	httpClient svcclient.HTTPClient
+	userAgent  string
+	authOpt    svcclient.AuthOpts
 
-	// List of functional methods
-	Configure(sdkCfg SdkConfigure) Client
-	UserAgent() string
-
-	// List of gateways
-	IAMGateway() gateway.IAMGateway
-	VServerGateway() gateway.VServerGateway
-	VLBGateway() gateway.VLBGateway
-	VBackUpGateway() gateway.VBackUpGateway
-	VNetworkGateway() gateway.VNetworkGateway
-	GLBGateway() gateway.GLBGateway
-	VDnsGateway() gateway.VDnsGateway
+	iamGateway      *gateway.IAMGateway
+	vserverGateway  *gateway.VServerGateway
+	vlbGateway      *gateway.VLBGateway
+	vnetworkGateway *gateway.VNetworkGateway
+	glbGateway      *gateway.GLBGateway
+	vdnsGateway     *gateway.VDnsGateway
 }
 
-var (
-	_ Client = new(client)
-)
-
-type (
-	client struct {
-		context    context.Context
-		projectID  string
-		zoneID     string
-		userID     string
-		httpClient svcclient.HTTPClient
-		userAgent  string
-		authOpt    svcclient.AuthOpts
-
-		iamGateway      gateway.IAMGateway
-		vserverGateway  gateway.VServerGateway
-		vlbGateway      gateway.VLBGateway
-		vbackupGateway  gateway.VBackUpGateway
-		vnetworkGateway gateway.VNetworkGateway
-		glbGateway      gateway.GLBGateway
-		vdnsGateway     gateway.VDnsGateway
-	}
-)
-
-func NewClient(ctx context.Context) Client {
-	c := new(client)
+func NewClient(ctx context.Context) *Client {
+	c := new(Client)
 	c.context = ctx
 
 	return c
 }
 
-func NewSdkConfigure() SdkConfigure {
-	return &sdkConfigure{}
+func NewSdkConfigure() *SdkConfigure {
+	return &SdkConfigure{}
 }
 
-func (c *client) WithHTTPClient(client svcclient.HTTPClient) Client {
+func (c *Client) WithHTTPClient(client svcclient.HTTPClient) *Client {
 	c.httpClient = client
 	return c
 }
 
-func (c *client) WithContext(ctx context.Context) Client {
+func (c *Client) WithContext(ctx context.Context) *Client {
 	c.context = ctx
 	return c
 }
 
-func (c *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfigure) Client {
+func (c *Client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig *SdkConfigure) *Client {
 	if c.httpClient == nil {
 		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
@@ -98,7 +66,7 @@ func (c *client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig SdkConfi
 	return c
 }
 
-func (c *client) WithRetryCount(retry int) Client {
+func (c *Client) WithRetryCount(retry int) *Client {
 	if c.httpClient == nil {
 		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
@@ -107,7 +75,7 @@ func (c *client) WithRetryCount(retry int) Client {
 	return c
 }
 
-func (c *client) WithKvDefaultHeaders(args ...string) Client {
+func (c *Client) WithKvDefaultHeaders(args ...string) *Client {
 	if c.httpClient == nil {
 		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
@@ -116,7 +84,7 @@ func (c *client) WithKvDefaultHeaders(args ...string) Client {
 	return c
 }
 
-func (c *client) WithSleep(sleep time.Duration) Client {
+func (c *Client) WithSleep(sleep time.Duration) *Client {
 	if c.httpClient == nil {
 		c.httpClient = svcclient.NewHTTPClient(c.context)
 	}
@@ -125,7 +93,7 @@ func (c *client) WithSleep(sleep time.Duration) Client {
 	return c
 }
 
-func (c *client) WithProjectID(projectID string) Client {
+func (c *Client) WithProjectID(projectID string) *Client {
 	c.projectID = projectID
 	if c.httpClient == nil {
 		return c
@@ -162,7 +130,7 @@ func (c *client) WithProjectID(projectID string) Client {
 	return c
 }
 
-func (c *client) WithUserID(userID string) Client {
+func (c *Client) WithUserID(userID string) *Client {
 	c.userID = userID
 	if c.vnetworkGateway != nil {
 		c.vnetworkGateway = gateway.NewVNetworkGateway(
@@ -177,7 +145,7 @@ func (c *client) WithUserID(userID string) Client {
 	return c
 }
 
-func (c *client) Configure(sdkCfg SdkConfigure) Client {
+func (c *Client) Configure(sdkCfg *SdkConfigure) *Client {
 	c.projectID = sdkCfg.GetProjectID()
 	c.userID = sdkCfg.GetUserID()
 	if c.httpClient == nil {
@@ -229,36 +197,32 @@ func (c *client) Configure(sdkCfg SdkConfigure) Client {
 	return c
 }
 
-func (c *client) IAMGateway() gateway.IAMGateway {
+func (c *Client) IAMGateway() *gateway.IAMGateway {
 	return c.iamGateway
 }
 
-func (c *client) VServerGateway() gateway.VServerGateway {
+func (c *Client) VServerGateway() *gateway.VServerGateway {
 	return c.vserverGateway
 }
 
-func (c *client) VLBGateway() gateway.VLBGateway {
+func (c *Client) VLBGateway() *gateway.VLBGateway {
 	return c.vlbGateway
 }
 
-func (c *client) VBackUpGateway() gateway.VBackUpGateway {
-	return c.vbackupGateway
-}
-
-func (c *client) VNetworkGateway() gateway.VNetworkGateway {
+func (c *Client) VNetworkGateway() *gateway.VNetworkGateway {
 	return c.vnetworkGateway
 }
 
-func (c *client) GLBGateway() gateway.GLBGateway {
+func (c *Client) GLBGateway() *gateway.GLBGateway {
 	return c.glbGateway
 }
 
-func (c *client) VDnsGateway() gateway.VDnsGateway {
+func (c *Client) VDnsGateway() *gateway.VDnsGateway {
 	return c.vdnsGateway
 }
 
-func (c *client) usingIAMOauth2AsAuthOption(authConfig SdkConfigure) func() (svcclient.SdkAuthentication, sdkerror.Error) {
-	authFunc := func() (svcclient.SdkAuthentication, sdkerror.Error) {
+func (c *Client) usingIAMOauth2AsAuthOption(authConfig *SdkConfigure) func() (svcclient.SdkAuthentication, error) {
+	authFunc := func() (svcclient.SdkAuthentication, error) {
 		token, err := c.iamGateway.V2().IdentityService().GetAccessToken(
 			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))
 		if err != nil {
@@ -271,6 +235,6 @@ func (c *client) usingIAMOauth2AsAuthOption(authConfig SdkConfigure) func() (svc
 	return authFunc
 }
 
-func (c *client) UserAgent() string {
+func (c *Client) UserAgent() string {
 	return c.userAgent
 }

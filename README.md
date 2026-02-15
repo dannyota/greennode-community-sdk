@@ -53,14 +53,14 @@ A community Go SDK for GreenNode cloud services.
     }
   }
 
-  func validSdkConfig() client.Client {
+  func validSdkConfig() *client.Client {
     clientID, clientSecret := "__PUT_YOUR_CLIENT_ID__", "__PUT_YOUR_CLIENT_SECRET__"
     sdkConfig := client.NewSdkConfigure().
       WithClientID(clientID).
       WithClientSecret(clientSecret).
       WithProjectID("__PUT_YOUR_PROJECT_ID__").
       WithZoneID("65e12ffcb6d82cd39f8cf023").
-      WithIamEndpoint("https://iamapis.vngcloud.vn/accounts-api").
+      WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
       WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
       WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
       WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork")

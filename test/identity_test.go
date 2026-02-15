@@ -3,13 +3,14 @@ package test
 import (
 	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/dannyota/greennode-community-sdk/v2/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
@@ -66,7 +67,7 @@ func getValueOfEnv(key string) string {
 	return value
 }
 
-func validSdkConfig() client.Client {
+func validSdkConfig() *client.Client {
 	clientID, clientSecret := getEnv()
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -85,7 +86,7 @@ func validSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validUserSdkConfig() client.Client {
+func validUserSdkConfig() *client.Client {
 	clientID, clientSecret := getValueOfEnv("USER_CLIENT_ID"), getValueOfEnv("USER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -102,7 +103,7 @@ func validUserSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validUserSdkConfigForCuongDm4() client.Client {
+func validUserSdkConfigForCuongDm4() *client.Client {
 	clientID, clientSecret := getEnvCuongDm4()
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -117,7 +118,7 @@ func validUserSdkConfigForCuongDm4() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSdkConfigHanRegion() client.Client {
+func validSdkConfigHanRegion() *client.Client {
 	clientID, clientSecret := getEnv()
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -135,7 +136,7 @@ func validSdkConfigHanRegion() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validHcm3bSdkConfig() client.Client {
+func validHcm3bSdkConfig() *client.Client {
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(getValueOfEnv("HCM3B_CLIENT_ID")).
 		WithClientSecret(getValueOfEnv("HCM3B_CLIENT_SECRET")).
@@ -150,7 +151,7 @@ func validHcm3bSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validHcm3bSuperSdkConfig() client.Client {
+func validHcm3bSuperSdkConfig() *client.Client {
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(getValueOfEnv("HCM3B_SUPER_CLIENT_ID")).
 		WithClientSecret(getValueOfEnv("HCM3B_SUPER_CLIENT_SECRET")).
@@ -165,7 +166,7 @@ func validHcm3bSuperSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validVinhNt8SdkConfig() client.Client {
+func validVinhNt8SdkConfig() *client.Client {
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(getValueOfEnv("VINHCLIENT_ID")).
 		WithClientSecret(getValueOfEnv("VINHCLIENT_SECRET")).
@@ -180,7 +181,7 @@ func validVinhNt8SdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func customerSdkConfig() client.Client {
+func customerSdkConfig() *client.Client {
 	sdkConfig := client.NewSdkConfigure().
 		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
@@ -189,7 +190,7 @@ func customerSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSdkHannibalConfig() client.Client {
+func validSdkHannibalConfig() *client.Client {
 	clientID, clientSecret := getValueOfEnv("HANNIBAL_CLIENT_ID"), getValueOfEnv("HANNIBAL_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -202,7 +203,7 @@ func validSdkHannibalConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSuperSdkConfig() client.Client {
+func validSuperSdkConfig() *client.Client {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -217,7 +218,7 @@ func validSuperSdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSuperSdkHcm03bConfig() client.Client {
+func validSuperSdkHcm03bConfig() *client.Client {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_ID"), getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -232,7 +233,7 @@ func validSuperSdkHcm03bConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validUser11412SdkConfig() client.Client {
+func validUser11412SdkConfig() *client.Client {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -245,7 +246,7 @@ func validUser11412SdkConfig() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validUser11412() client.Client {
+func validUser11412() *client.Client {
 	clientID, clientSecret := getValueOfEnv("USER_11412_CLIENT_ID"), getValueOfEnv("USER_11412_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -259,7 +260,7 @@ func validUser11412() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSuperSdkConfig2() client.Client {
+func validSuperSdkConfig2() *client.Client {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -272,7 +273,7 @@ func validSuperSdkConfig2() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func validSdkConfigDevops() client.Client {
+func validSdkConfigDevops() *client.Client {
 	clientID, clientSecret := getEnvDevOps()
 	sdkConfig := client.NewSdkConfigure().
 		WithClientID(clientID).
@@ -284,7 +285,7 @@ func validSdkConfigDevops() client.Client {
 	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
-func invalidSdkConfig() client.Client {
+func invalidSdkConfig() *client.Client {
 	clientID := "invalid-id"
 	clientSecret := "invalid-secret"
 	sdkConfig := client.NewSdkConfigure().
@@ -318,8 +319,13 @@ func TestAuthenFailed(t *testing.T) {
 		t.Error("Token MUST be nil")
 	}
 
-	if !err.IsError(sdkerror.EcAuthenticationFailed) {
-		t.Error("Error MUST be VngCloudIamAuthenticationFailed")
+	var sdkErr *sdkerror.SdkError
+	if errors.As(err, &sdkErr) {
+		if !sdkErr.IsError(sdkerror.EcAuthenticationFailed) {
+			t.Error("Error MUST be VngCloudIamAuthenticationFailed")
+		}
+	} else {
+		t.Error("Expected SdkError")
 	}
 
 	t.Log("RESULT:", err)

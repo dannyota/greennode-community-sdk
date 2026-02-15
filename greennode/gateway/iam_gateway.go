@@ -5,16 +5,16 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity"
 )
 
-type iamGatewayV2 struct {
+type IAMGatewayV2 struct {
 	identityService identity.IdentityServiceV2
 }
 
-func NewIAMGatewayV2(svcClient client.ServiceClient) IAMGatewayV2 {
-	return &iamGatewayV2{
+func NewIAMGatewayV2(svcClient client.ServiceClient) *IAMGatewayV2 {
+	return &IAMGatewayV2{
 		identityService: identity.NewIdentityService(svcClient),
 	}
 }
 
-func (g *iamGatewayV2) IdentityService() identity.IdentityServiceV2 {
+func (g *IAMGatewayV2) IdentityService() identity.IdentityServiceV2 {
 	return g.identityService
 }

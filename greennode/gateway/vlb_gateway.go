@@ -5,30 +5,30 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer"
 )
 
-type vlbGatewayV2 struct {
+type VLBGatewayV2 struct {
 	lbService loadbalancer.LoadBalancerServiceV2
 }
 
-type vlbGatewayInternal struct {
+type VLBGatewayInternal struct {
 	lbService loadbalancer.LoadBalancerServiceInternal
 }
 
-func NewVLBGatewayV2(lbSvcClient, serverSvcClient client.ServiceClient) VLBGatewayV2 {
-	return &vlbGatewayV2{
+func NewVLBGatewayV2(lbSvcClient, serverSvcClient client.ServiceClient) *VLBGatewayV2 {
+	return &VLBGatewayV2{
 		lbService: loadbalancer.NewLoadBalancerServiceV2(lbSvcClient, serverSvcClient),
 	}
 }
 
-func NewVLBGatewayInternal(svcClient client.ServiceClient) VLBGatewayInternal {
-	return &vlbGatewayInternal{
+func NewVLBGatewayInternal(svcClient client.ServiceClient) *VLBGatewayInternal {
+	return &VLBGatewayInternal{
 		lbService: loadbalancer.NewLoadBalancerServiceInternal(svcClient),
 	}
 }
 
-func (g *vlbGatewayInternal) LoadBalancerService() loadbalancer.LoadBalancerServiceInternal {
+func (g *VLBGatewayInternal) LoadBalancerService() loadbalancer.LoadBalancerServiceInternal {
 	return g.lbService
 }
 
-func (g *vlbGatewayV2) LoadBalancerService() loadbalancer.LoadBalancerServiceV2 {
+func (g *VLBGatewayV2) LoadBalancerService() loadbalancer.LoadBalancerServiceV2 {
 	return g.lbService
 }

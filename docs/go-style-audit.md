@@ -88,11 +88,11 @@ The `sdk_error` package has been renamed to `sdkerror` (`greennode/sdkerror/`,
 
 ### 2.1 Producer-side interfaces — **PARTIALLY RESOLVED**
 
-Interfaces are defined next to their implementations (the "producer" side).
-The Java-style file separation (`iclient.go`, `igateway.go`, `irequest.go`)
-has been eliminated — interfaces now live in the same files as their
-implementations. Producer-side placement is kept, which is appropriate for a
-public SDK library whose interfaces form the API contract.
+Gateway and client interfaces have been deleted; constructors now return
+exported concrete structs (e.g., `*gateway.IAMGateway`, `*client.Client`).
+Service-level interfaces (e.g., `identity.IdentityServiceV2`,
+`loadbalancer.LoadBalancerServiceV2`) are kept as documentation since
+gateway accessor methods still return them.
 
 **Go convention:** Define interfaces at the call site (the "consumer" side).
 The producer exports concrete types; consumers define the small interfaces they
@@ -112,20 +112,19 @@ three implementations (`PatchGlobalPoolCreateBulkActionRequest`,
 `PatchGlobalPoolDeleteBulkActionRequest`,
 `PatchGlobalPoolUpdateBulkActionRequest`) — genuine polymorphism.
 
-### 2.3 God interfaces (>10 methods)
+### 2.3 God interfaces (>10 methods) — **RESOLVED**
 
-| Interface | Methods | File |
-|-----------|---------|------|
-| `LoadBalancerServiceV2` | 35 | `greennode/services/loadbalancer/loadbalancer.go` |
-| `NetworkServiceV2` | 28 | `greennode/services/network/network.go` |
-| `GLBServiceV1` | 21 | `greennode/services/glb/loadbalancer.go` |
-| `VDnsServiceInternal` | 11 | `greennode/services/dns/dns.go` |
-| `VDnsServiceV1` | 11 | `greennode/services/dns/dns.go` |
+All five god interfaces have been decomposed into focused sub-interfaces using
+interface embedding. The composed type names are unchanged, so all callers,
+gateways, and factory functions are unaffected.
 
-**Go convention:** Keep interfaces small and composable. A 35-method interface
-is impossible to mock, hard to implement, and signals that the type is doing too
-much. Break into focused interfaces (e.g., `PoolCreator`, `ListenerManager`)
-or — better — let consumers define the subset they need (see §2.1).
+| Composed Interface | Sub-Interfaces | File |
+|--------------------|----------------|------|
+| `LoadBalancerServiceV2` (34) | `LoadBalancerOps` (8), `PoolOps` (8), `ListenerOps` (5), `PolicyOps` (6), `CertificateOps` (4), `TagOps` (3) | `greennode/services/loadbalancer/loadbalancer.go` |
+| `NetworkServiceV2` (19) | `NetworkOps` (3), `SecgroupOps` (8), `AddressPairOps` (4), `VirtualAddressOps` (4) | `greennode/services/network/network.go` |
+| `GLBServiceV1` (21) | `GlobalPoolOps` (9), `GlobalListenerOps` (5), `GlobalLoadBalancerOps` (7) | `greennode/services/glb/loadbalancer.go` |
+| `VDnsServiceV1` (10) | `HostedZoneOps` (5), `RecordOps` (5) | `greennode/services/dns/dns.go` |
+| `VDnsServiceInternal` (10) | `InternalHostedZoneOps` (5), `InternalRecordOps` (5) | `greennode/services/dns/dns.go` |
 
 ### 2.4 Double-I naming — **RESOLVED**
 
@@ -138,15 +137,10 @@ All `Iam` identifiers have been renamed to `IAM` (e.g., `IamEndpoint` → `IAMEn
 `IamErrorResponse` → `IAMErrorResponse`, `ErrCatIam` → `ErrCatIAM`). String values
 in error codes (e.g., `"VngCloudIamAuthenticationFailed"`) are unchanged.
 
-### 2.5 Empty interface declaration
+### 2.5 Empty interface declaration — **RESOLVED**
 
-```go
-// greennode/gateway/gateway.go
-type VBackUpGateway any
-```
-
-This is an unused stub. It should be deleted or, if backup support is planned,
-replaced with a concrete TODO tracked in an issue.
+`VBackUpGateway any` stub deleted from `gateway.go`, along with the corresponding
+`Client` interface method, struct field, and getter in `client/client.go`.
 
 ---
 
@@ -168,7 +162,7 @@ All ~113 decorative `// ---...` separator lines have been removed across 24 file
 
 ## 4. Error Handling
 
-### 4.1 Custom error framework
+### 4.1 Custom error framework — **PARTIALLY RESOLVED (phases 1 & 2)**
 
 The `sdkerror` package implements a bespoke error system:
 
@@ -177,8 +171,25 @@ The `sdkerror` package implements a bespoke error system:
 - Named error codes (`EcVServerWanIDNotFound`, `EcInternalServerError`, ...)
 - Error categories for classification
 
-None of this integrates with the standard library's `errors.Is()`, `errors.As()`,
-or `fmt.Errorf("...: %w", err)` wrapping.
+**Phase 1 done:** `SdkError` now bridges to the stdlib `error` interface:
+
+- `Error() string` added to the `Error` interface and `*SdkError` (delegates to `ErrorMessages()`)
+- `Unwrap() error` added to `*SdkError` (returns wrapped error for `errors.Is()`/`errors.As()` traversal)
+- `Is(error) bool` added to `*SdkError` (matches by `ErrorCode` when comparing two `SdkError` values)
+
+**Phase 2 done:** All public API surfaces now return `error` instead of `sdkerror.Error`:
+
+- `SdkErrorHandler` widened to accept `error` (backward-compatible)
+- 137 service method signatures across 9 interface files migrated
+- 134 implementations across 25 files updated
+- HTTP client layer (`ServiceClient`, `HTTPClient`, `DoRequest`, `WithReauthFunc`) returns `error`
+- Tests updated to use `errors.As(err, &sdkErr)` for rich error inspection
+
+Callers can now use standard Go error handling: `errors.Is()`/`errors.As()`,
+`fmt.Errorf("...: %w", err)`, and type-switch on `*sdkerror.SdkError`.
+
+**Remaining:** The functional-option error handler pattern (§4.2) is deferred to a
+future phase.
 
 **Go convention:** Implement the `error` interface. Use sentinel errors or typed
 errors with `errors.Is()` / `errors.As()`. Wrap context with `%w`. This lets
@@ -200,31 +211,16 @@ or use `errors.Is()`.
 
 ## 5. Structural Patterns
 
-### 5.1 Builder pattern returning interfaces — **PARTIALLY RESOLVED**
+### 5.1 Builder pattern returning interfaces — **RESOLVED**
 
-~141 request-type constructors now return `*ConcreteType` instead of
-`I*Interface`. Since `*T` satisfies the corresponding interface, all callers
-passing results to service methods continue to work unchanged.
+All request-type constructors (~141), service-factory constructors (14),
+gateway constructors (7 + 9 sub-gateways), and client constructors
+(`NewClient`, `NewSdkConfigure`) now return `*ConcreteType`. Gateway and
+client interfaces have been deleted; their concrete structs are exported.
 
-**Remaining:** Gateway, service-factory, and client constructors (~33) still
-return interfaces because their concrete structs are unexported:
-
-```go
-// greennode/gateway/gateway.go
-func NewIamGateway(...) IamGateway          { return &iamGateway{...} }
-func NewVServerGateway(...) VServerGateway  { return &vserverGateway{...} }
-func NewVLBGateway(...) VLBGateway          { return &vlbGateway{...} }
-func NewVNetworkGateway(...) VNetworkGateway { return &vnetworkGateway{...} }
-
-// client/client.go
-func NewClient(...) Client                  { return &client{...} }
-func NewSdkConfigure() SdkConfigure         { return &sdkConfigure{...} }
-
-// greennode/client/request.go
-func NewRequest() Request                   { return &request{...} }
-```
-
-These require exporting the concrete structs first — deferred to a future pass.
+**Deferred:** `ServiceClient`, `HTTPClient`, `Request` (internal types used
+as parameters/fields in every service and gateway file — changing them
+requires touching 50+ files for minimal user-facing benefit).
 
 ### 5.2 100% pointer receivers — **PARTIALLY RESOLVED**
 
@@ -246,12 +242,12 @@ mutations) correctly keep pointer receivers.
 All ~411 `interface{}` occurrences across ~47 files have been replaced with `any`
 using `gofmt -r 'interface{} -> any'`.
 
-### 5.4 Overuse of `var _` compile-time assertions — **PARTIALLY RESOLVED**
+### 5.4 Overuse of `var _` compile-time assertions — **RESOLVED**
 
 ~33 request-type assertions were removed along with their one-to-one interfaces
-(§2.2). Remaining ~12 assertions are for gateway types (9 in `gateway.go`) and
-`IBulkActionRequest` implementations (3 in `glb_pool_requests.go`), which are
-all legitimate multi-implementation cases.
+(§2.2). 9 gateway assertions were removed when gateway interfaces were deleted
+(§5.1). Only 3 `IBulkActionRequest` assertions remain in
+`glb_pool_requests.go` — these are legitimate multi-implementation cases.
 
 ### 5.5 Missing godoc
 
@@ -288,13 +284,13 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Partial** (file separation removed) |
 | Interface-per-type | all request types | codebase-wide | **Done** (1 exception: `IBulkActionRequest`) |
-| God interfaces (>10 methods) | 5 interfaces | 3 packages | Open |
+| God interfaces (>10 methods) | 5 interfaces | 3 packages | **Done** (17 sub-interfaces via embedding) |
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
-| Custom error framework | 1 package | `sdkerror` | Open |
-| Constructors returning interfaces | ~33 functions | gateways, clients | **Partial** (~141 request constructors fixed) |
+| Custom error framework | 1 package | `sdkerror` | **Partial** (phases 1–2: `error` bridge + return types) |
+| Constructors returning interfaces | ~33 functions | gateways, clients | **Done** (3 deferred: `ServiceClient`, `HTTPClient`, `Request`) |
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
-| `var _` assertions | ~45 | codebase-wide | **Partial** (~12 remain, all legitimate) |
+| `var _` assertions | ~45 | codebase-wide | **Done** (3 remain: `IBulkActionRequest`) |
 | Missing godoc | ~97% of exports | codebase-wide | Open |
 | V2/V1 mismatch bug | 1 | `gateway/gateway.go` | **Done** |
