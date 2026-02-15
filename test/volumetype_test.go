@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"testing"
 
 	volumev1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v1"
@@ -9,7 +10,7 @@ import (
 func TestGetVolumeTypeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeByIDRequest("fake-id")
-	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(opt)
+	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(context.Background(), opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -25,7 +26,7 @@ func TestGetVolumeTypeFailure(t *testing.T) {
 func TestGetVolumeTypeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeByIDRequest("vtype-2fc64a6c-38e3-4f08-93a5-18018cb3ab23")
-	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(opt)
+	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -41,7 +42,7 @@ func TestGetVolumeTypeSuccess(t *testing.T) {
 
 func TestGetDefaultVolumeType(t *testing.T) {
 	vngcloud := validSdkConfig()
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetDefaultVolumeType()
+	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetDefaultVolumeType(context.Background())
 
 	t.Log("Result: ", volType)
 	t.Log("Error: ", sdkerr)
@@ -52,7 +53,7 @@ func TestGetVolumeTypeZones(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeZonesRequest("HCM03-1A")
 
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeZones(opt)
+	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeZones(context.Background(), opt)
 
 	t.Log("Result: ", volType)
 	t.Log("Error: ", sdkerr)
@@ -63,7 +64,7 @@ func TestGetVolumeTypes(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewListVolumeTypeRequest("0745BE12-9433-4DD4-90A1-384631504EBE")
 
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetListVolumeTypes(opt)
+	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetListVolumeTypes(context.Background(), opt)
 
 	t.Log("Result: ", volType)
 	t.Log("Error: ", sdkerr)

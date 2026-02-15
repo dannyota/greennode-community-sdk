@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -13,7 +14,7 @@ func TestGetPortalInfoFailed(t *testing.T) {
 	backendProjectID := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := invalidSdkConfig()
 	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
-	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
+	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(context.Background(), opt)
 
 	if err == nil {
 		t.Errorf("Expect error but got nil")
@@ -40,7 +41,7 @@ func TestGetPortalInfoSuccess(t *testing.T) {
 	backendProjectID := getValueOfEnv("BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
 	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
-	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
+	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -58,7 +59,7 @@ func TestGetPortalInfoSuccess2(t *testing.T) {
 	backendProjectID := getValueOfEnv("USER_11412_OS_PROJECT_ID")
 	vngcloud := validUser11412SdkConfig()
 	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
-	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
+	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -76,7 +77,7 @@ func TestGetPortalInfoFailure(t *testing.T) {
 	backendProjectID := getValueOfEnv("FAKE_BACKEND_PROJECT_ID")
 	vngcloud := validSdkConfig()
 	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
-	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(opt)
+	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(context.Background(), opt)
 
 	if err == nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -92,7 +93,7 @@ func TestGetPortalInfoFailure(t *testing.T) {
 
 func TestListAllQuotaSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	quotas, err := vngcloud.VServerGateway().V2().PortalService().ListAllQuotaUsed()
+	quotas, err := vngcloud.VServerGateway().V2().PortalService().ListAllQuotaUsed(context.Background())
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -109,7 +110,7 @@ func TestListAllQuotaSuccess(t *testing.T) {
 func TestGetQuotaByNameFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := portalv2.NewGetQuotaByNameRequest("fake-quota-name")
-	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(opt)
+	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(context.Background(), opt)
 
 	if err == nil {
 		t.Errorf("Expect error but got nil")
@@ -126,7 +127,7 @@ func TestGetQuotaByNameFailure(t *testing.T) {
 func TestGetQuotaByNamePass(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := portalv2.NewGetQuotaByNameRequest(portalv2.QtVolumeAttachLimit)
-	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(opt)
+	quota, err := vngcloud.VServerGateway().V2().PortalService().GetQuotaByName(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -142,7 +143,7 @@ func TestGetQuotaByNamePass(t *testing.T) {
 
 func TestListProjects(t *testing.T) {
 	vngcloud := validSdkConfig()
-	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(portalv1.NewListProjectsRequest())
+	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(context.Background(), portalv1.NewListProjectsRequest())
 	if err != nil {
 		t.Log("Error: ", err)
 	}
@@ -152,7 +153,7 @@ func TestListProjects(t *testing.T) {
 
 func TestListPortalUser11412(t *testing.T) {
 	vngcloud := validUser11412()
-	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(portalv1.NewListProjectsRequest())
+	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(context.Background(), portalv1.NewListProjectsRequest())
 	if err != nil {
 		t.Log("Error: ", err)
 	}
@@ -162,7 +163,7 @@ func TestListPortalUser11412(t *testing.T) {
 
 func TestListZones(t *testing.T) {
 	vngcloud := validSdkConfig()
-	zones, err := vngcloud.VServerGateway().V1().PortalService().ListZones()
+	zones, err := vngcloud.VServerGateway().V1().PortalService().ListZones(context.Background())
 	if err != nil {
 		t.Log("Error: ", err)
 	}

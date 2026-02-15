@@ -1,13 +1,15 @@
 package v2
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *LoadBalancerServiceV2) ListTags(opts *ListTagsRequest) (*entity.ListTags, error) {
+func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequest) (*entity.ListTags, error) {
 	url := listTagsURL(s.VServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -16,14 +18,14 @@ func (s *LoadBalancerServiceV2) ListTags(opts *ListTagsRequest) (*entity.ListTag
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
 	return resp.ToEntityListTags(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateTags(opts *CreateTagsRequest) error {
+func (s *LoadBalancerServiceV2) CreateTags(ctx context.Context, opts *CreateTagsRequest) error {
 	url := createTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -31,15 +33,15 @@ func (s *LoadBalancerServiceV2) CreateTags(opts *CreateTagsRequest) error {
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
-	tmpTags, sdkErr := s.ListTags(NewListTagsRequest(opts.GetLoadBalancerID()))
+func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTagsRequest) error {
+	tmpTags, sdkErr := s.ListTags(ctx, NewListTagsRequest(opts.GetLoadBalancerID()))
 	if sdkErr != nil {
 		return sdkErr
 	}
@@ -60,7 +62,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {
+	if _, sdkErr = s.VServerClient.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcTagKeyInvalid).WithParameters(common.StructToMap(opts))
 	}

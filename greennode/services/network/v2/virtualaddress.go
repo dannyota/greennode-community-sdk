@@ -1,13 +1,15 @@
 package v2
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, error) {
+func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(ctx context.Context, opts *CreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, error) {
 	url := createVirtualAddressCrossProjectURL(s.VServerClient)
 	resp := new(CreateVirtualAddressCrossProjectResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -17,7 +19,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSubnetNotFound,
 			sdkerror.EcVServerVirtualAddressExceedQuota).
@@ -28,14 +30,14 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) DeleteVirtualAddressByID(opts *DeleteVirtualAddressByIDRequest) error {
+func (s *NetworkServiceV2) DeleteVirtualAddressByID(ctx context.Context, opts *DeleteVirtualAddressByIDRequest) error {
 	url := deleteVirtualAddressByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound,
 			sdkerror.EcVServerVirtualAddressInUse).
@@ -46,7 +48,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(opts *DeleteVirtualAddressBy
 	return nil
 }
 
-func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequest) (*entity.VirtualAddress, error) {
+func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetVirtualAddressByIDRequest) (*entity.VirtualAddress, error) {
 	url := getVirtualAddressByIDURL(s.VServerClient, opts)
 	resp := new(GetVirtualAddressByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -55,7 +57,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequ
 		WithOkCodes(200).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(common.StructToMap(opts)).
@@ -65,7 +67,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequ
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(opts *ListAddressPairsByVirtualAddressIDRequest) (*entity.ListAddressPairs, error) {
+func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(ctx context.Context, opts *ListAddressPairsByVirtualAddressIDRequest) (*entity.ListAddressPairs, error) {
 	url := listAddressPairsByVirtualAddressIDURL(s.VServerClient, opts)
 	resp := new(ListAddressPairsByVirtualAddressIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -74,7 +76,7 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(opts *ListAddressP
 		WithOkCodes(200).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(common.StructToMap(opts)).

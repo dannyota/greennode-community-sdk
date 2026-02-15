@@ -1,13 +1,15 @@
 package v2
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (*entity.SecgroupRule, error) {
+func (s *NetworkServiceV2) CreateSecgroupRule(ctx context.Context, opts *CreateSecgroupRuleRequest) (*entity.SecgroupRule, error) {
 	url := createSecgroupRuleURL(s.VServerClient, opts)
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -17,7 +19,7 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound,
 			sdkerror.EcVServerSecgroupRuleExceedQuota,
@@ -29,14 +31,14 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (
 	return resp.ToEntitySecgroupRule(), nil
 }
 
-func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts *DeleteSecgroupRuleByIDRequest) error {
+func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *DeleteSecgroupRuleByIDRequest) error {
 	url := deleteSecgroupRuleByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupRuleNotFound,
 			sdkerror.EcVServerSecgroupNotFound).
@@ -49,7 +51,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts *DeleteSecgroupRuleByIDRe
 	return nil
 }
 
-func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts *ListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, error) {
+func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, opts *ListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, error) {
 	url := listSecgroupRulesBySecgroupIDURL(s.VServerClient, opts)
 	resp := new(ListSecgroupRulesBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -58,7 +60,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts *ListSecgroupRules
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters("projectId", s.getProjectID(), "secgroupId", opts.GetSecgroupID())

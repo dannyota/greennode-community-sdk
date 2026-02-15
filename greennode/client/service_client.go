@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"strings"
 	"time"
 
@@ -21,11 +22,11 @@ type ServiceClient interface {
 	GetZoneID() string
 	GetUserID() string
 
-	Post(url string, req Request) (*req.Response, error)
-	Get(url string, req Request) (*req.Response, error)
-	Delete(url string, req Request) (*req.Response, error)
-	Put(url string, req Request) (*req.Response, error)
-	Patch(url string, req Request) (*req.Response, error)
+	Post(ctx context.Context, url string, req Request) (*req.Response, error)
+	Get(ctx context.Context, url string, req Request) (*req.Response, error)
+	Delete(ctx context.Context, url string, req Request) (*req.Response, error)
+	Put(ctx context.Context, url string, req Request) (*req.Response, error)
+	Patch(ctx context.Context, url string, req Request) (*req.Response, error)
 }
 
 type SdkAuthentication interface {
@@ -95,24 +96,24 @@ func (sc *serviceClient) ServiceURL(parts ...string) string {
 	return sc.endpoint + strings.Join(parts, "/")
 }
 
-func (sc *serviceClient) Post(url string, req Request) (*req.Response, error) {
-	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPost))
+func (sc *serviceClient) Post(ctx context.Context, url string, req Request) (*req.Response, error) {
+	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPost))
 }
 
-func (sc *serviceClient) Get(url string, req Request) (*req.Response, error) {
-	return sc.client.DoRequest(url, req.WithRequestMethod(MethodGet))
+func (sc *serviceClient) Get(ctx context.Context, url string, req Request) (*req.Response, error) {
+	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodGet))
 }
 
-func (sc *serviceClient) Delete(url string, req Request) (*req.Response, error) {
-	return sc.client.DoRequest(url, req.WithRequestMethod(MethodDelete))
+func (sc *serviceClient) Delete(ctx context.Context, url string, req Request) (*req.Response, error) {
+	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodDelete))
 }
 
-func (sc *serviceClient) Put(url string, req Request) (*req.Response, error) {
-	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPut))
+func (sc *serviceClient) Put(ctx context.Context, url string, req Request) (*req.Response, error) {
+	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPut))
 }
 
-func (sc *serviceClient) Patch(url string, req Request) (*req.Response, error) {
-	return sc.client.DoRequest(url, req.WithRequestMethod(MethodPatch))
+func (sc *serviceClient) Patch(ctx context.Context, url string, req Request) (*req.Response, error) {
+	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPatch))
 }
 
 func (sc *serviceClient) GetProjectID() string {

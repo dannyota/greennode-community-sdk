@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"testing"
 
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
@@ -15,7 +16,7 @@ func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
 		virtualAddressName, projectID, subnetID).
 		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.")
-	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(opt)
+	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -34,7 +35,7 @@ func TestDeleteVirtualAddressByID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewDeleteVirtualAddressByIDRequest(virtualAddressID)
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressByID(opt)
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressByID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -48,7 +49,7 @@ func TestGetVirtualAddessByID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewGetVirtualAddressByIDRequest(virtualAddressID)
-	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressByID(opt)
+	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressByID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -67,7 +68,7 @@ func TestListAddressPairsByVirtualAddressID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID)
-	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressID(opt)
+	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)

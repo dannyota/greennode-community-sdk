@@ -1,12 +1,14 @@
 package v1
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *ServerServiceInternalV1) CreateSystemTags(opts *CreateSystemTagRequest) (*[]entity.SystemTag, error) {
+func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *CreateSystemTagRequest) (*[]entity.SystemTag, error) {
 
 	url := createSystemTagURL(s.VServerClient)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -19,7 +21,7 @@ func (s *ServerServiceInternalV1) CreateSystemTags(opts *CreateSystemTagRequest)
 		WithJSONResponse(rawResp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 

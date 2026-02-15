@@ -1,12 +1,14 @@
 package v1
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV1) ListZones() (*entity.ListZones, error) {
+func (s *PortalServiceV1) ListZones(ctx context.Context) (*entity.ListZones, error) {
 	url := listZonesURL(s.PortalClient)
 	resp := new(ListZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -15,7 +17,7 @@ func (s *PortalServiceV1) ListZones() (*entity.ListZones, error) {
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.PortalClient.GetProjectID())
 	}

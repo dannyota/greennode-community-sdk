@@ -10,7 +10,6 @@ import (
 )
 
 type Client struct {
-	context    context.Context
 	projectID  string
 	zoneID     string
 	userID     string
@@ -26,11 +25,8 @@ type Client struct {
 	vdnsGateway     *gateway.VDnsGateway
 }
 
-func NewClient(ctx context.Context) *Client {
-	c := new(Client)
-	c.context = ctx
-
-	return c
+func NewClient() *Client {
+	return new(Client)
 }
 
 func NewSdkConfigure() *SdkConfigure {
@@ -42,14 +38,9 @@ func (c *Client) WithHTTPClient(client svcclient.HTTPClient) *Client {
 	return c
 }
 
-func (c *Client) WithContext(ctx context.Context) *Client {
-	c.context = ctx
-	return c
-}
-
 func (c *Client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig *SdkConfigure) *Client {
 	if c.httpClient == nil {
-		c.httpClient = svcclient.NewHTTPClient(c.context)
+		c.httpClient = svcclient.NewHTTPClient()
 	}
 
 	c.authOpt = authOpts // Assign the auth option to the client
@@ -68,7 +59,7 @@ func (c *Client) WithAuthOption(authOpts svcclient.AuthOpts, authConfig *SdkConf
 
 func (c *Client) WithRetryCount(retry int) *Client {
 	if c.httpClient == nil {
-		c.httpClient = svcclient.NewHTTPClient(c.context)
+		c.httpClient = svcclient.NewHTTPClient()
 	}
 
 	c.httpClient.WithRetryCount(retry)
@@ -77,7 +68,7 @@ func (c *Client) WithRetryCount(retry int) *Client {
 
 func (c *Client) WithKvDefaultHeaders(args ...string) *Client {
 	if c.httpClient == nil {
-		c.httpClient = svcclient.NewHTTPClient(c.context)
+		c.httpClient = svcclient.NewHTTPClient()
 	}
 
 	c.httpClient.WithKvDefaultHeaders(args...)
@@ -86,7 +77,7 @@ func (c *Client) WithKvDefaultHeaders(args ...string) *Client {
 
 func (c *Client) WithSleep(sleep time.Duration) *Client {
 	if c.httpClient == nil {
-		c.httpClient = svcclient.NewHTTPClient(c.context)
+		c.httpClient = svcclient.NewHTTPClient()
 	}
 
 	c.httpClient.WithSleep(sleep)
@@ -149,7 +140,7 @@ func (c *Client) Configure(sdkCfg *SdkConfigure) *Client {
 	c.projectID = sdkCfg.GetProjectID()
 	c.userID = sdkCfg.GetUserID()
 	if c.httpClient == nil {
-		c.httpClient = svcclient.NewHTTPClient(c.context)
+		c.httpClient = svcclient.NewHTTPClient()
 	}
 
 	if c.iamGateway == nil && sdkCfg.IAMEndpoint() != "" {
@@ -224,9 +215,10 @@ func (c *Client) VDnsGateway() *gateway.VDnsGateway {
 	return c.vdnsGateway
 }
 
-func (c *Client) usingIAMOauth2AsAuthOption(authConfig *SdkConfigure) func() (svcclient.SdkAuthentication, error) {
-	authFunc := func() (svcclient.SdkAuthentication, error) {
+func (c *Client) usingIAMOauth2AsAuthOption(authConfig *SdkConfigure) func(ctx context.Context) (svcclient.SdkAuthentication, error) {
+	authFunc := func(ctx context.Context) (svcclient.SdkAuthentication, error) {
 		token, err := c.iamGateway.V2().IdentityService().GetAccessToken(
+			ctx,
 			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))
 		if err != nil {
 			return nil, err

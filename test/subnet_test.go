@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"testing"
 
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
@@ -9,7 +10,7 @@ import (
 func TestGetSubnetByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewGetSubnetByIDRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"))
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetSubnetByID(opt)
+	network, err := vngcloud.VServerGateway().V2().NetworkService().GetSubnetByID(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -35,7 +36,7 @@ func TestUpdateSubnetByID(t *testing.T) {
 	}
 
 	opt := networkv2.NewUpdateSubnetByIDRequest(getValueOfEnv("NETWORK_ID"), getValueOfEnv("SUBNET_ID"), &updateBody)
-	network, err := vngcloud.VServerGateway().V2().NetworkService().UpdateSubnetByID(opt)
+	network, err := vngcloud.VServerGateway().V2().NetworkService().UpdateSubnetByID(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)

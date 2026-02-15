@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"context"
 	"encoding/base64"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
@@ -8,7 +9,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
+func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
 	url := getAccessTokenURL(s.IAMClient)
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)
@@ -21,7 +22,7 @@ func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
 		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.GetClientID()+":"+opts.GetClientSecret())))
 
-	if _, sdkErr := s.IAMClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.IAMClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcTooManyFailedLogins,
 			sdkerror.EcAuthenticationFailed,

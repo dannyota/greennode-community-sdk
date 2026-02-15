@@ -1,12 +1,14 @@
 package v2
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetSubnetByID(opts *GetSubnetByIDRequest) (*entity.Subnet, error) {
+func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByIDRequest) (*entity.Subnet, error) {
 	url := getSubnetByIDURL(s.VServerClient, opts)
 	resp := new(GetSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -15,7 +17,7 @@ func (s *NetworkServiceV2) GetSubnetByID(opts *GetSubnetByIDRequest) (*entity.Su
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSubnetNotBelongNetwork,
 			sdkerror.EcVServerSubnetNotFound).
@@ -27,7 +29,7 @@ func (s *NetworkServiceV2) GetSubnetByID(opts *GetSubnetByIDRequest) (*entity.Su
 	return resp.ToEntitySubnet(), nil
 }
 
-func (s *NetworkServiceV2) UpdateSubnetByID(opts *UpdateSubnetByIDRequest) (*entity.Subnet, error) {
+func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSubnetByIDRequest) (*entity.Subnet, error) {
 	url := updateSubnetByIDURL(s.VServerClient, opts)
 	resp := new(UpdateSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -37,7 +39,7 @@ func (s *NetworkServiceV2) UpdateSubnetByID(opts *UpdateSubnetByIDRequest) (*ent
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	_, sdkErr := s.VServerClient.Patch(url, req)
+	_, sdkErr := s.VServerClient.Patch(ctx, url, req)
 	if sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}

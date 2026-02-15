@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"testing"
 
 	v2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
@@ -9,7 +10,7 @@ import (
 func TestListCertificates(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListCertificatesRequest()
-	certs, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListCertificates(opt)
+	certs, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListCertificates(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -28,7 +29,7 @@ func TestListCertificates(t *testing.T) {
 func TestGetCertificateByID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewGetCertificateByIDRequest("secret-84cb7a5e-b949-4f1b-a2e8-d2752e6e1181")
-	cert, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetCertificateByID(opt)
+	cert, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetCertificateByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -50,7 +51,7 @@ func TestCreateCertificate(t *testing.T) {
 		v2.ImportOptsTypeOptTLS,
 	).WithPrivateKey(FakePrivateKey)
 
-	cert, err := vngcloud.VLBGateway().V2().LoadBalancerService().CreateCertificate(opt)
+	cert, err := vngcloud.VLBGateway().V2().LoadBalancerService().CreateCertificate(context.Background(), opt)
 	if err != nil {
 		t.Fatalf("Expect nil but got %+v", err)
 	}
@@ -66,7 +67,7 @@ func TestCreateCertificate(t *testing.T) {
 func TestDeleteCertificateByID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewDeleteCertificateByIDRequest(FakeSecretID)
-	err := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteCertificateByID(opt)
+	err := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteCertificateByID(context.Background(), opt)
 	if err != nil {
 		t.Fatalf("Expect nil but got %+v", err)
 	}

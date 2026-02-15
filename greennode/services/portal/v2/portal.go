@@ -1,12 +1,14 @@
 package v2
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, error) {
+func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuotas, error) {
 	url := listAllQuotaUsedURL(s.PortalClient)
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -15,7 +17,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, error) {
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.PortalClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -23,8 +25,8 @@ func (s *PortalServiceV2) ListAllQuotaUsed() (*entity.ListQuotas, error) {
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(opts *GetQuotaByNameRequest) (*entity.Quota, error) {
-	listQuotas, sdkErr := s.ListAllQuotaUsed()
+func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNameRequest) (*entity.Quota, error) {
+	listQuotas, sdkErr := s.ListAllQuotaUsed(ctx)
 	if sdkErr != nil {
 		return nil, sdkErr
 	}

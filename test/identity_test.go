@@ -83,7 +83,7 @@ func validSdkConfig() *client.Client {
 		WithGLBEndpoint("https://glb.console.vngcloud.vn/glb-controller/").
 		WithVDnsEndpoint("https://vdns.api.vngcloud.vn/")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validUserSdkConfig() *client.Client {
@@ -100,7 +100,7 @@ func validUserSdkConfig() *client.Client {
 		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validUserSdkConfigForCuongDm4() *client.Client {
@@ -115,7 +115,7 @@ func validUserSdkConfigForCuongDm4() *client.Client {
 		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSdkConfigHanRegion() *client.Client {
@@ -133,7 +133,7 @@ func validSdkConfigHanRegion() *client.Client {
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork").
 		WithUserAgent("vngcloud-go-sdk")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validHcm3bSdkConfig() *client.Client {
@@ -148,7 +148,7 @@ func validHcm3bSdkConfig() *client.Client {
 		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validHcm3bSuperSdkConfig() *client.Client {
@@ -163,7 +163,7 @@ func validHcm3bSuperSdkConfig() *client.Client {
 		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validVinhNt8SdkConfig() *client.Client {
@@ -178,7 +178,7 @@ func validVinhNt8SdkConfig() *client.Client {
 		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
 		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func customerSdkConfig() *client.Client {
@@ -187,7 +187,7 @@ func customerSdkConfig() *client.Client {
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSdkHannibalConfig() *client.Client {
@@ -200,7 +200,7 @@ func validSdkHannibalConfig() *client.Client {
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSuperSdkConfig() *client.Client {
@@ -215,7 +215,7 @@ func validSuperSdkConfig() *client.Client {
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
 		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSuperSdkHcm03bConfig() *client.Client {
@@ -230,7 +230,7 @@ func validSuperSdkHcm03bConfig() *client.Client {
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
 		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validUser11412SdkConfig() *client.Client {
@@ -243,7 +243,7 @@ func validUser11412SdkConfig() *client.Client {
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validUser11412() *client.Client {
@@ -257,7 +257,7 @@ func validUser11412() *client.Client {
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
 		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSuperSdkConfig2() *client.Client {
@@ -270,7 +270,7 @@ func validSuperSdkConfig2() *client.Client {
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
 		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func validSdkConfigDevops() *client.Client {
@@ -282,7 +282,7 @@ func validSdkConfigDevops() *client.Client {
 		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func invalidSdkConfig() *client.Client {
@@ -294,7 +294,7 @@ func invalidSdkConfig() *client.Client {
 		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
 
-	return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 }
 
 func TestAuthenFailed(t *testing.T) {
@@ -307,9 +307,9 @@ func TestAuthenFailed(t *testing.T) {
 		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
 		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
 
-	vngcloud := client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	vngcloud := client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(opt)
+	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
 
 	if err == nil {
 		t.Error("Error MUST not be nil")
@@ -336,7 +336,7 @@ func TestAuthenPass(t *testing.T) {
 	clientID, clientSecret := getEnv()
 	vngcloud := validSdkConfig()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(opt)
+	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
 
 	if err != nil || token == nil {
 		t.Error("This testcase MUST pass")
@@ -351,7 +351,7 @@ func TestASuperuthenPass(t *testing.T) {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	vngcloud := validSdkConfig()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(opt)
+	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
 
 	if err != nil || token == nil {
 		t.Error("This testcase MUST pass")
@@ -366,7 +366,7 @@ func TestVinhAuthenPass(t *testing.T) {
 	clientID, clientSecret := getValueOfEnv("VINHCLIENT_ID"), getValueOfEnv("VINHCLIENT_SECRET")
 	vngcloud := validSuperSdkConfig2()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(opt)
+	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
 
 	if err != nil || token == nil {
 		t.Error("This testcase MUST pass")

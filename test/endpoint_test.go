@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"net/url"
 	"testing"
 
@@ -11,7 +12,7 @@ func TestGetEndpointSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv1.NewGetEndpointByIDRequest("enp-7575cb25-0033-4c26-9145-53cd90d7778c")
 
-	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().GetEndpointByID(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().GetEndpointByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Errorf("Expect nil but got %+v", sdkerr)
 	}
@@ -36,7 +37,7 @@ func TestCreateEndpoint(t *testing.T) {
 			"Please refrain from DELETING it manually.",
 	)
 
-	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().CreateEndpoint(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().CreateEndpoint(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -64,7 +65,7 @@ func TestCreateEndpointInternal(t *testing.T) {
 		WithScaling(1, 3).
 		WithEnableDnsName(true).WithBuyMorePoc(false).WithPoc(false).WithEnableAutoRenew(true)
 
-	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().CreateEndpoint(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().CreateEndpoint(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -85,7 +86,7 @@ func TestDeleteEndpoint(t *testing.T) {
 		"b9ba2b16-389e-48b7-9e75-4c991239da27",
 	)
 
-	sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().DeleteEndpointByID(opt)
+	sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().DeleteEndpointByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -97,7 +98,7 @@ func TestListEndpoints(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv1.NewListEndpointsRequest(1, 100).WithUuid("enp-9349271b-af44-4e39-8829-615d945fa6c2")
 
-	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().ListEndpoints(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().V1().NetworkService().ListEndpoints(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -125,7 +126,7 @@ func TestListEndpointTags(t *testing.T) {
 		"enp-3fe5d1e9-679e-4eb8-ad35-d9ce53243259",
 	)
 
-	lb, sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().ListTagsByEndpointID(opt)
+	lb, sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().ListTagsByEndpointID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Logf("Expect nil but got %+v", sdkerr)
 	}
@@ -146,7 +147,7 @@ func TestCreateEndpointTags(t *testing.T) {
 		"enp-7e8e4476-feeb-414c-ac03-3501aae607d0",
 	).AddTag("cuongdm3", "test")
 
-	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().CreateTagsWithEndpointID(opt)
+	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().CreateTagsWithEndpointID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Logf("Expect nil but got %+v", sdkerr)
 	}
@@ -163,7 +164,7 @@ func TestDeleteTagByEndpointID(t *testing.T) {
 		"tag-6ceb41e1-47e9-43f0-94dd-521a1af870ee",
 	)
 
-	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().DeleteTagOfEndpoint(opt)
+	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().DeleteTagOfEndpoint(context.Background(), opt)
 	if sdkerr != nil {
 		t.Logf("Expect nil but got %+v", sdkerr)
 	}
@@ -181,7 +182,7 @@ func TestUpdateEndpointTag(t *testing.T) {
 		"cuonghahahah",
 	)
 
-	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().UpdateTagValueOfEndpoint(opt)
+	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().UpdateTagValueOfEndpoint(context.Background(), opt)
 	if sdkerr != nil {
 		t.Logf("Expect nil but got %+v", sdkerr)
 	}

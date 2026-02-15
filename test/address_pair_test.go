@@ -1,6 +1,7 @@
 package test
 
 import (
+	"context"
 	"testing"
 
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
@@ -9,7 +10,7 @@ import (
 func TestGetAllAddressPairByVirtualSubnetID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewGetAllAddressPairByVirtualSubnetIDRequest(getValueOfEnv("VIRTUAL_SUBNET_ID"))
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetAllAddressPairByVirtualSubnetID(opt)
+	network, err := vngcloud.VServerGateway().V2().NetworkService().GetAllAddressPairByVirtualSubnetID(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -33,7 +34,7 @@ func TestSetAddressPairInVirtualSubnet(t *testing.T) {
 		getValueOfEnv("NETWORK_INTERFACE_ID"),
 		"10.30.1.28/30",
 	)
-	network, err := vngcloud.VServerGateway().V2().NetworkService().SetAddressPairInVirtualSubnet(opt)
+	network, err := vngcloud.VServerGateway().V2().NetworkService().SetAddressPairInVirtualSubnet(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -49,7 +50,7 @@ func TestSetAddressPairInVirtualSubnet(t *testing.T) {
 func TestDeleteAddressPair(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewDeleteAddressPairRequest(getValueOfEnv("ADDRESS_PAIR_ID"))
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteAddressPair(opt)
+	err := vngcloud.VServerGateway().V2().NetworkService().DeleteAddressPair(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
@@ -67,7 +68,7 @@ func TestCreateAddressPair(t *testing.T) {
 	opt := networkv2.NewCreateAddressPairRequest(virtualAddressID, internalNicID).
 		WithMode(networkv2.AddressPairModeActiveActive)
 
-	ap, err := vngcloud.VServerGateway().V2().NetworkService().CreateAddressPair(opt)
+	ap, err := vngcloud.VServerGateway().V2().NetworkService().CreateAddressPair(context.Background(), opt)
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)
 	}

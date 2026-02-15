@@ -1,12 +1,14 @@
 package v1
 
 import (
+	"context"
+
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*entity.VolumeType, error) {
+func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolumeTypeByIDRequest) (*entity.VolumeType, error) {
 	url := getVolumeTypeByIDURL(s.VServerClient, opts)
 	resp := new(GetVolumeTypeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -15,7 +17,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*en
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters(
@@ -26,7 +28,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*en
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, error) {
+func (s *VolumeServiceV1) GetDefaultVolumeType(ctx context.Context) (*entity.VolumeType, error) {
 	url := getDefaultVolumeTypeURL(s.VServerClient)
 	resp := new(GetDefaultVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -35,7 +37,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, error) {
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectID())
@@ -44,7 +46,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, error) {
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, error) {
+func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, error) {
 	url := getVolumeTypeZonesURL(s.VServerClient, opts)
 	resp := new(ListVolumeTypeZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -53,17 +55,16 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
 	return resp.ToEntityListVolumeTypeZones(), nil
-
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*entity.ListVolumeType, error) {
+func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListVolumeTypeRequest) (*entity.ListVolumeType, error) {
 	url := getVolumeTypesURL(s.VServerClient, opts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -72,7 +73,7 @@ func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*e
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
@@ -80,5 +81,4 @@ func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*e
 	}
 
 	return resp.ToEntityListVolumeType(), nil
-
 }
