@@ -42,7 +42,6 @@ type CreateListenerRequest struct {
 	DefaultCertificateAuthority *string          `json:"defaultCertificateAuthority"`
 
 	common.LoadBalancerCommon
-	common.UserAgent
 }
 
 func (r *CreateListenerRequest) prepare() {

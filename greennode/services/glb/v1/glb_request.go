@@ -35,7 +35,6 @@ type ListGlobalLoadBalancersRequest struct {
 	Limit  int
 
 	Tags []common.Tag
-	common.UserAgent
 }
 
 func (r *ListGlobalLoadBalancersRequest) WithName(name string) *ListGlobalLoadBalancersRequest {
@@ -89,11 +88,6 @@ func (r *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d", defaultOffsetListGlobalLoadBalancer, defaultLimitListGlobalLoadBalancer)
 }
 
-func (r *ListGlobalLoadBalancersRequest) AddUserAgent(agent ...string) *ListGlobalLoadBalancersRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type CreateGlobalLoadBalancerRequest struct {
 	Description    string                        `json:"description"`
 	Name           string                        `json:"name"`
@@ -102,8 +96,6 @@ type CreateGlobalLoadBalancerRequest struct {
 	PaymentFlow    GlobalLoadBalancerPaymentFlow `json:"paymentFlow"`
 	GlobalListener *CreateGlobalListenerRequest  `json:"globalListener"`
 	GlobalPool     *CreateGlobalPoolRequest      `json:"globalPool"`
-
-	common.UserAgent
 }
 
 func (r *CreateGlobalLoadBalancerRequest) WithDescription(desc string) *CreateGlobalLoadBalancerRequest {
@@ -141,11 +133,6 @@ func (r *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool *CreateGlobalPoolR
 	return r
 }
 
-func (r *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) *CreateGlobalLoadBalancerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRequest {
 	opts := &CreateGlobalLoadBalancerRequest{
 		Description:    "",
@@ -160,17 +147,11 @@ func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRe
 }
 
 type DeleteGlobalLoadBalancerRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
 func (r *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) *DeleteGlobalLoadBalancerRequest {
 	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *DeleteGlobalLoadBalancerRequest) AddUserAgent(agent ...string) *DeleteGlobalLoadBalancerRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -183,28 +164,14 @@ func NewDeleteGlobalLoadBalancerRequest(lbID string) *DeleteGlobalLoadBalancerRe
 	return opts
 }
 
-type ListGlobalPackagesRequest struct {
-	common.UserAgent
-}
-
-func (r *ListGlobalPackagesRequest) AddUserAgent(agent ...string) *ListGlobalPackagesRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
+type ListGlobalPackagesRequest struct{}
 
 func NewListGlobalPackagesRequest() *ListGlobalPackagesRequest {
 	opts := &ListGlobalPackagesRequest{}
 	return opts
 }
 
-type ListGlobalRegionsRequest struct {
-	common.UserAgent
-}
-
-func (r *ListGlobalRegionsRequest) AddUserAgent(agent ...string) *ListGlobalRegionsRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
+type ListGlobalRegionsRequest struct{}
 
 func NewListGlobalRegionsRequest() *ListGlobalRegionsRequest {
 	opts := &ListGlobalRegionsRequest{}
@@ -216,7 +183,6 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	To   string
 	Type string
 
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
@@ -258,11 +224,6 @@ func (r *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {
 	return ""
 }
 
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) AddUserAgent(agent ...string) *GetGlobalLoadBalancerUsageHistoriesRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) *GetGlobalLoadBalancerUsageHistoriesRequest {
 	opts := &GetGlobalLoadBalancerUsageHistoriesRequest{
 		From: from,
@@ -276,17 +237,11 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType str
 }
 
 type GetGlobalLoadBalancerByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
 func (r *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) *GetGlobalLoadBalancerByIDRequest {
 	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *GetGlobalLoadBalancerByIDRequest) AddUserAgent(agent ...string) *GetGlobalLoadBalancerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 

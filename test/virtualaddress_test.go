@@ -14,8 +14,7 @@ func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
 		virtualAddressName, projectID, subnetID).
-		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.").
-		AddUserAgent(vngcloud.UserAgent())
+		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.")
 	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(opt)
 
 	if err != nil {
@@ -34,8 +33,7 @@ func TestDeleteVirtualAddressByID(t *testing.T) {
 	virtualAddressID := "vip-1a17ffb3-28e5-4a7a-a4e0-17af09de28aa"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewDeleteVirtualAddressByIDRequest(virtualAddressID).
-		AddUserAgent(vngcloud.UserAgent())
+	opt := networkv2.NewDeleteVirtualAddressByIDRequest(virtualAddressID)
 	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressByID(opt)
 
 	if err != nil {
@@ -49,8 +47,7 @@ func TestGetVirtualAddessByID(t *testing.T) {
 	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e0"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewGetVirtualAddressByIDRequest(virtualAddressID).
-		AddUserAgent(vngcloud.UserAgent())
+	opt := networkv2.NewGetVirtualAddressByIDRequest(virtualAddressID)
 	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressByID(opt)
 
 	if err != nil {
@@ -69,8 +66,7 @@ func TestListAddressPairsByVirtualAddressID(t *testing.T) {
 	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
 
 	vngcloud := validSdkConfigHanRegion()
-	opt := networkv2.NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID).
-		AddUserAgent(vngcloud.UserAgent())
+	opt := networkv2.NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID)
 	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressID(opt)
 
 	if err != nil {

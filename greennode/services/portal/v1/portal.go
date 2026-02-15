@@ -28,7 +28,6 @@ func (s *PortalServiceV1) ListProjects(opts *ListProjectsRequest) (*entity.ListP
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

@@ -11,11 +11,6 @@ func NewListTagsRequest(lbID string) *ListTagsRequest {
 	return opt
 }
 
-func (r *ListTagsRequest) AddUserAgent(agent ...string) *ListTagsRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewCreateTagsRequest(lbID string) *CreateTagsRequest {
 	opts := new(CreateTagsRequest)
 	opts.LoadBalancerID = lbID
@@ -37,7 +32,6 @@ func NewUpdateTagsRequest(lbID string) *UpdateTagsRequest {
 }
 
 type ListTagsRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
@@ -46,13 +40,7 @@ type CreateTagsRequest struct {
 	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
-}
-
-func (r *CreateTagsRequest) AddUserAgent(agent ...string) *CreateTagsRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type UpdateTagsRequest struct {
@@ -60,13 +48,7 @@ type UpdateTagsRequest struct {
 	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
-}
-
-func (r *UpdateTagsRequest) AddUserAgent(agent ...string) *UpdateTagsRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreateTagsRequest) WithTags(tags ...string) *CreateTagsRequest {

@@ -12,7 +12,6 @@ func (s *VDnsServiceV1) GetHostedZoneByID(opts *GetHostedZoneByIDRequest) (*enti
 	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -32,7 +31,6 @@ func (s *VDnsServiceV1) ListHostedZones(opts *ListHostedZonesRequest) (*entity.L
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -51,7 +49,6 @@ func (s *VDnsServiceV1) CreateHostedZone(opts *CreateHostedZoneRequest) (*entity
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
 		WithJSONResponse(resp).
@@ -70,7 +67,6 @@ func (s *VDnsServiceV1) DeleteHostedZone(opts *DeleteHostedZoneRequest) error {
 	url := deleteHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
@@ -87,7 +83,6 @@ func (s *VDnsServiceV1) UpdateHostedZone(opts *UpdateHostedZoneRequest) error {
 	url := updateHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
 		WithJSONError(errResp)

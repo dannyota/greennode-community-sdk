@@ -2,8 +2,6 @@ package common
 
 import (
 	"encoding/json"
-	"slices"
-	"strings"
 )
 
 // StructToMap converts a struct to map[string]any using its JSON tags.
@@ -65,24 +63,6 @@ type Tag struct {
 	Key      string `json:"key"`
 	Value    string `json:"value"`
 	IsEdited bool   `json:"isEdited,omitempty"`
-}
-
-type UserAgent struct {
-	Agent []string
-}
-
-func (ua *UserAgent) ParseUserAgent() string {
-	// Parse the array into string
-	return strings.Join(ua.Agent, "; ")
-}
-
-func (ua *UserAgent) AddUserAgent(pagent ...string) *UserAgent {
-	for _, agent := range pagent {
-		if !slices.Contains(ua.Agent, agent) {
-			ua.Agent = append(ua.Agent, agent)
-		}
-	}
-	return ua
 }
 
 type PortalUser struct {

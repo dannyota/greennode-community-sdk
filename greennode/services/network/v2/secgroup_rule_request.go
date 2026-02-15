@@ -30,11 +30,6 @@ func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) *DeleteSecgroupRule
 	return opt
 }
 
-func (r *DeleteSecgroupRuleByIDRequest) AddUserAgent(agent ...string) *DeleteSecgroupRuleByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) *ListSecgroupRulesBySecgroupIDRequest {
 	opt := new(ListSecgroupRulesBySecgroupIDRequest)
 	opt.SecgroupID = securityGroupID
@@ -71,7 +66,6 @@ type ( //_______________________________________________________________________
 		SecurityGroupID string                `json:"securityGroupId"`
 
 		common.SecgroupCommon
-		common.UserAgent
 	}
 
 	SecgroupRuleDirection string
@@ -79,15 +73,9 @@ type ( //_______________________________________________________________________
 	SecgroupRuleProtocol  string
 )
 
-func (r *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) *CreateSecgroupRuleRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type DeleteSecgroupRuleByIDRequest struct { //__________________________________________________________________________
 	SecgroupRuleID string
 
-	common.UserAgent
 	common.SecgroupCommon
 }
 
@@ -97,10 +85,4 @@ func (r *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
 
 type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________________________________________________
 	common.SecgroupCommon
-	common.UserAgent
-}
-
-func (r *ListSecgroupRulesBySecgroupIDRequest) AddUserAgent(agent ...string) *ListSecgroupRulesBySecgroupIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }

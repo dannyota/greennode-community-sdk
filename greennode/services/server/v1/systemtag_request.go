@@ -1,7 +1,5 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 const (
 	Volume       ResourceType = "VOLUME"
 	Server       ResourceType = "SERVER"
@@ -16,12 +14,6 @@ type CreateSystemTagRequest struct { // ________________________________________
 		Key   string `json:"key"`
 		Value string `json:"value"`
 	} `json:"tagRequestList"`
-	common.UserAgent
-}
-
-func (r *CreateSystemTagRequest) AddUserAgent(agent ...string) *CreateSystemTagRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreateSystemTagRequest) GetResourceID() string {

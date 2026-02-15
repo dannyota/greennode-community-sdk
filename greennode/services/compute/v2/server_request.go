@@ -47,7 +47,6 @@ type CreateServerRequest struct {
 	AutoRenew              bool                     `json:"isEnableAutoRenew,omitempty"`
 	Networks               []ServerNetworkInterface `json:"networks,omitempty"`
 	Zone                   string                   `json:"zoneId,omitempty"`
-	common.UserAgent
 }
 
 type ServerNetworkInterface struct {
@@ -164,25 +163,13 @@ func (r *CreateServerRequest) WithNetwork(networkID, subnetID string) *CreateSer
 	return r
 }
 
-func (r *CreateServerRequest) AddUserAgent(agent ...string) *CreateServerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type GetServerByIDRequest struct {
 	common.ServerCommon
-	common.UserAgent
-}
-
-func (r *GetServerByIDRequest) AddUserAgent(agent ...string) *GetServerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type DeleteServerByIDRequest struct {
 	DeleteAllVolume bool `json:"deleteAllVolume"`
 	common.ServerCommon
-	common.UserAgent
 }
 
 func (r *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) *DeleteServerByIDRequest {
@@ -190,21 +177,10 @@ func (r *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) *DeleteServerByID
 	return r
 }
 
-func (r *DeleteServerByIDRequest) AddUserAgent(agent ...string) *DeleteServerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type UpdateServerSecgroupsByServerIDRequest struct {
 	Secgroups []string `json:"securityGroup"`
 
 	common.ServerCommon
-	common.UserAgent
-}
-
-func (r *UpdateServerSecgroupsByServerIDRequest) AddUserAgent(agent ...string) *UpdateServerSecgroupsByServerIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *UpdateServerSecgroupsByServerIDRequest) GetListSecgroupsIDs() []string {
@@ -216,12 +192,6 @@ type AttachFloatingIpRequest struct {
 
 	common.InternalNetworkInterfaceCommon
 	common.ServerCommon
-	common.UserAgent
-}
-
-func (r *AttachFloatingIpRequest) AddUserAgent(agent ...string) *AttachFloatingIpRequest {
-	r.Agent = append(r.Agent, agent...)
-	return r
 }
 
 type DetachFloatingIpRequest struct {
@@ -230,39 +200,18 @@ type DetachFloatingIpRequest struct {
 	common.ServerCommon
 	common.WanCommon
 	common.InternalNetworkInterfaceCommon
-	common.UserAgent
 }
 
-func (r *DetachFloatingIpRequest) AddUserAgent(agent ...string) *DetachFloatingIpRequest {
-	r.Agent = append(r.Agent, agent...)
-	return r
-}
-
-type ListServerGroupPoliciesRequest struct {
-	common.UserAgent
-}
-
-func (r *ListServerGroupPoliciesRequest) AddUserAgent(agent ...string) *ListServerGroupPoliciesRequest {
-	r.Agent = append(r.Agent, agent...)
-	return r
-}
+type ListServerGroupPoliciesRequest struct{}
 
 type DeleteServerGroupByIDRequest struct {
 	common.ServerGroupCommon
-	common.UserAgent
-}
-
-func (r *DeleteServerGroupByIDRequest) AddUserAgent(agent ...string) *DeleteServerGroupByIDRequest {
-	r.Agent = append(r.Agent, agent...)
-	return r
 }
 
 type ListServerGroupsRequest struct {
 	Name string
 	Page int
 	Size int
-
-	common.UserAgent
 }
 
 func (r *ListServerGroupsRequest) WithName(name string) *ListServerGroupsRequest {
@@ -286,20 +235,8 @@ func (r *ListServerGroupsRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
 }
 
-func (r *ListServerGroupsRequest) AddUserAgent(agent ...string) *ListServerGroupsRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type CreateServerGroupRequest struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
 	PolicyID    string `json:"policyId,omitempty"`
-
-	common.UserAgent
-}
-
-func (r *CreateServerGroupRequest) AddUserAgent(agent ...string) *CreateServerGroupRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }

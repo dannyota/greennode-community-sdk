@@ -46,17 +46,11 @@ const (
 )
 
 type ListGlobalPoolsRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
 func (r *ListGlobalPoolsRequest) WithLoadBalancerID(lbID string) *ListGlobalPoolsRequest {
 	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *ListGlobalPoolsRequest) AddUserAgent(agent ...string) *ListGlobalPoolsRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -77,7 +71,6 @@ type CreateGlobalPoolRequest struct {
 	GlobalPoolMembers []*GlobalPoolMemberRequest  `json:"globalPoolMembers"`
 
 	common.LoadBalancerCommon
-	common.UserAgent
 }
 
 func (r *CreateGlobalPoolRequest) WithAlgorithm(algorithm GlobalPoolAlgorithm) *CreateGlobalPoolRequest {
@@ -115,11 +108,6 @@ func (r *CreateGlobalPoolRequest) WithLoadBalancerID(lbID string) *CreateGlobalP
 	return r
 }
 
-func (r *CreateGlobalPoolRequest) AddUserAgent(agent ...string) *CreateGlobalPoolRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewCreateGlobalPoolRequest(name string, protocol GlobalPoolProtocol) *CreateGlobalPoolRequest {
 	opts := &CreateGlobalPoolRequest{
 		Name:              name,
@@ -146,8 +134,6 @@ type GlobalHealthMonitorRequest struct {
 	Path                *string                           `json:"path,omitempty"`
 	DomainName          *string                           `json:"domainName,omitempty"`
 	SuccessCode         *string                           `json:"successCode,omitempty"`
-
-	common.UserAgent
 }
 
 func (r *GlobalHealthMonitorRequest) WithHealthyThreshold(threshold int) *GlobalHealthMonitorRequest {
@@ -200,11 +186,6 @@ func (r *GlobalHealthMonitorRequest) WithPath(path *string) *GlobalHealthMonitor
 	return r
 }
 
-func (r *GlobalHealthMonitorRequest) AddUserAgent(agent ...string) *GlobalHealthMonitorRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) *GlobalHealthMonitorRequest {
 	opts := &GlobalHealthMonitorRequest{
 		HealthCheckProtocol: checkProtocol,
@@ -239,7 +220,6 @@ type GlobalPoolMemberRequest struct {
 
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 func (r *GlobalPoolMemberRequest) WithName(name string) *GlobalPoolMemberRequest {
@@ -287,11 +267,6 @@ func (r *GlobalPoolMemberRequest) WithPoolID(poolID string) *GlobalPoolMemberReq
 	return r
 }
 
-func (r *GlobalPoolMemberRequest) AddUserAgent(agent ...string) *GlobalPoolMemberRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewGlobalPoolMemberRequest(name, region, vpcID string, dial int, typeVal GlobalPoolMemberType) *GlobalPoolMemberRequest {
 	opts := &GlobalPoolMemberRequest{
 		Name:        name,
@@ -314,8 +289,6 @@ type GlobalMemberRequest struct {
 	Port        int    `json:"port"`
 	SubnetID    string `json:"subnetId"`
 	Weight      int    `json:"weight"`
-
-	common.UserAgent
 }
 
 func (r *GlobalMemberRequest) WithAddress(address string) *GlobalMemberRequest {
@@ -358,11 +331,6 @@ func (r *GlobalMemberRequest) WithWeight(weight int) *GlobalMemberRequest {
 	return r
 }
 
-func (r *GlobalMemberRequest) AddUserAgent(agent ...string) *GlobalMemberRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, weight int, backupRole bool) *GlobalMemberRequest {
 	opts := &GlobalMemberRequest{
 		Name:        name,
@@ -382,7 +350,6 @@ type UpdateGlobalPoolRequest struct {
 	HealthMonitor *GlobalHealthMonitorRequest `json:"health"`
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 func (r *UpdateGlobalPoolRequest) WithAlgorithm(algorithm GlobalPoolAlgorithm) *UpdateGlobalPoolRequest {
@@ -405,11 +372,6 @@ func (r *UpdateGlobalPoolRequest) WithPoolID(poolID string) *UpdateGlobalPoolReq
 	return r
 }
 
-func (r *UpdateGlobalPoolRequest) AddUserAgent(agent ...string) *UpdateGlobalPoolRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewUpdateGlobalPoolRequest(lbID, poolID string) *UpdateGlobalPoolRequest {
 	opts := &UpdateGlobalPoolRequest{
 		Algorithm:     GlobalPoolAlgorithmRoundRobin,
@@ -427,7 +389,6 @@ func NewUpdateGlobalPoolRequest(lbID, poolID string) *UpdateGlobalPoolRequest {
 type DeleteGlobalPoolRequest struct {
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 func (r *DeleteGlobalPoolRequest) WithLoadBalancerID(lbID string) *DeleteGlobalPoolRequest {
@@ -437,11 +398,6 @@ func (r *DeleteGlobalPoolRequest) WithLoadBalancerID(lbID string) *DeleteGlobalP
 
 func (r *DeleteGlobalPoolRequest) WithPoolID(poolID string) *DeleteGlobalPoolRequest {
 	r.PoolID = poolID
-	return r
-}
-
-func (r *DeleteGlobalPoolRequest) AddUserAgent(agent ...string) *DeleteGlobalPoolRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -460,7 +416,6 @@ func NewDeleteGlobalPoolRequest(lbID, poolID string) *DeleteGlobalPoolRequest {
 type ListGlobalPoolMembersRequest struct {
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 func (r *ListGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) *ListGlobalPoolMembersRequest {
@@ -470,11 +425,6 @@ func (r *ListGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) *ListGlob
 
 func (r *ListGlobalPoolMembersRequest) WithPoolID(poolID string) *ListGlobalPoolMembersRequest {
 	r.PoolID = poolID
-	return r
-}
-
-func (r *ListGlobalPoolMembersRequest) AddUserAgent(agent ...string) *ListGlobalPoolMembersRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -494,7 +444,6 @@ type PatchGlobalPoolMembersRequest struct {
 	BulkActions []any `json:"bulkActions"`
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 func (r *PatchGlobalPoolMembersRequest) WithBulkAction(action ...any) *PatchGlobalPoolMembersRequest {
@@ -509,11 +458,6 @@ func (r *PatchGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) *PatchGl
 
 func (r *PatchGlobalPoolMembersRequest) WithPoolID(poolID string) *PatchGlobalPoolMembersRequest {
 	r.PoolID = poolID
-	return r
-}
-
-func (r *PatchGlobalPoolMembersRequest) AddUserAgent(agent ...string) *PatchGlobalPoolMembersRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -575,7 +519,6 @@ type UpdateGlobalPoolMemberRequest struct {
 	TrafficDial int                    `json:"trafficDial"`
 	Members     []*GlobalMemberRequest `json:"members"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
 	common.PoolMemberCommon
@@ -606,11 +549,6 @@ func (r *UpdateGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *U
 	return r
 }
 
-func (r *UpdateGlobalPoolMemberRequest) AddUserAgent(agent ...string) *UpdateGlobalPoolMemberRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewUpdateGlobalPoolMemberRequest(lbID, poolID, poolMemberID string, dial int) *UpdateGlobalPoolMemberRequest {
 	opts := &UpdateGlobalPoolMemberRequest{
 		TrafficDial: dial,
@@ -629,7 +567,6 @@ func NewUpdateGlobalPoolMemberRequest(lbID, poolID, poolMemberID string, dial in
 }
 
 type DeleteGlobalPoolMemberRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
 	common.PoolMemberCommon
@@ -650,11 +587,6 @@ func (r *DeleteGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *D
 	return r
 }
 
-func (r *DeleteGlobalPoolMemberRequest) AddUserAgent(agent ...string) *DeleteGlobalPoolMemberRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewDeleteGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) *DeleteGlobalPoolMemberRequest {
 	opts := &DeleteGlobalPoolMemberRequest{
 		LoadBalancerCommon: common.LoadBalancerCommon{
@@ -671,7 +603,6 @@ func NewDeleteGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) *Delete
 }
 
 type GetGlobalPoolMemberRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
 	common.PoolMemberCommon
@@ -689,11 +620,6 @@ func (r *GetGlobalPoolMemberRequest) WithPoolID(poolID string) *GetGlobalPoolMem
 
 func (r *GetGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *GetGlobalPoolMemberRequest {
 	r.PoolMemberID = poolMemberID
-	return r
-}
-
-func (r *GetGlobalPoolMemberRequest) AddUserAgent(agent ...string) *GetGlobalPoolMemberRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 

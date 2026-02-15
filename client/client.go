@@ -193,6 +193,9 @@ func (c *Client) Configure(sdkCfg *SdkConfigure) *Client {
 
 	c.httpClient.WithReauthFunc(svcclient.IAMOauth2, c.usingIAMOauth2AsAuthOption(sdkCfg))
 	c.userAgent = sdkCfg.UserAgent()
+	if c.userAgent != "" {
+		c.httpClient.WithKvDefaultHeaders("User-Agent", c.userAgent)
+	}
 
 	return c
 }

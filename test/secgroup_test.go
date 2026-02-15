@@ -127,7 +127,7 @@ func TestListAllServerBySecgroupIDSuccess(t *testing.T) {
 func TestListSecgroupSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewListSecgroupRequest()
-	secgroups, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroup(opt.AddUserAgent("test"))
+	secgroups, err := vngcloud.VServerGateway().V2().NetworkService().ListSecgroup(opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)

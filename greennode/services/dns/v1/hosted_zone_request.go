@@ -2,13 +2,11 @@ package v1
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type GetHostedZoneByIDRequest struct {
 	HostedZoneID string
 
-	common.UserAgent
 }
 
 func (r *GetHostedZoneByIDRequest) GetHostedZoneID() string {
@@ -30,7 +28,6 @@ func NewGetHostedZoneByIDRequest(hostedZoneID string) *GetHostedZoneByIDRequest 
 type ListHostedZonesRequest struct {
 	Name string
 
-	common.UserAgent
 }
 
 func (r *ListHostedZonesRequest) GetName() string {
@@ -53,7 +50,6 @@ type CreateHostedZoneRequest struct {
 	Type        HostedZoneType `json:"type"`
 	Description string         `json:"description"`
 
-	common.UserAgent
 }
 
 func (r *CreateHostedZoneRequest) WithDomainName(domainName string) *CreateHostedZoneRequest {
@@ -97,7 +93,6 @@ func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneTyp
 type DeleteHostedZoneRequest struct {
 	HostedZoneID string
 
-	common.UserAgent
 }
 
 func (r *DeleteHostedZoneRequest) GetHostedZoneID() string {
@@ -121,7 +116,6 @@ type UpdateHostedZoneRequest struct {
 	AssocVpcIDs  []string `json:"assocVpcIds"`
 	Description  string   `json:"description"`
 
-	common.UserAgent
 }
 
 func (r *UpdateHostedZoneRequest) GetHostedZoneID() string {

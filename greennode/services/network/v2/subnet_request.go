@@ -10,14 +10,8 @@ func NewGetSubnetByIDRequest(networkID, subnetID string) *GetSubnetByIDRequest {
 }
 
 type GetSubnetByIDRequest struct {
-	common.UserAgent
 	common.SubnetCommon
 	common.NetworkCommon
-}
-
-func (r *GetSubnetByIDRequest) AddUserAgent(agent ...string) *GetSubnetByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type SecondarySubnetUpdateBody struct {
@@ -40,12 +34,6 @@ func NewUpdateSubnetByIDRequest(networkID, subnetID string, updateBody *UpdateSu
 
 type UpdateSubnetByIDRequest struct {
 	UpdateSubnetBody *UpdateSubnetBody `json:"subnet"`
-	common.UserAgent
 	common.SubnetCommon
 	common.NetworkCommon
-}
-
-func (r *UpdateSubnetByIDRequest) AddUserAgent(agent ...string) *UpdateSubnetByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }

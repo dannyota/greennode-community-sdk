@@ -63,11 +63,6 @@ func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) *GetPoolHealthMonit
 	return opts
 }
 
-func (r *GetPoolHealthMonitorByIDRequest) AddUserAgent(agent ...string) *GetPoolHealthMonitorByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewListPoolsByLoadBalancerIDRequest(lbID string) *ListPoolsByLoadBalancerIDRequest {
 	opts := new(ListPoolsByLoadBalancerIDRequest)
 	opts.LoadBalancerID = lbID
@@ -148,12 +143,6 @@ type CreatePoolRequest struct {
 	Members       []*Member      `json:"members"`
 
 	common.LoadBalancerCommon
-	common.UserAgent
-}
-
-func (r *CreatePoolRequest) AddUserAgent(agent ...string) *CreatePoolRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type UpdatePoolRequest struct {
@@ -164,46 +153,26 @@ type UpdatePoolRequest struct {
 
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 type GetPoolHealthMonitorByIDRequest struct {
 	common.LoadBalancerCommon
 	common.PoolCommon
-	common.UserAgent
 }
 
 type ListPoolMembersRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
-}
-
-func (r *ListPoolMembersRequest) AddUserAgent(agent ...string) *ListPoolMembersRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type DeletePoolByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
-}
-
-func (r *DeletePoolByIDRequest) AddUserAgent(agent ...string) *DeletePoolByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type GetPoolByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
-}
-
-func (r *GetPoolByIDRequest) AddUserAgent(agent ...string) *GetPoolByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type HealthMonitor struct {
@@ -217,8 +186,6 @@ type HealthMonitor struct {
 	HealthCheckPath     *string                 `json:"healthCheckPath,omitempty"`
 	DomainName          *string                 `json:"domainName,omitempty"`
 	SuccessCode         *string                 `json:"successCode,omitempty"`
-
-	common.UserAgent
 }
 
 type Member struct {
@@ -232,25 +199,13 @@ type Member struct {
 
 type ListPoolsByLoadBalancerIDRequest struct {
 	common.LoadBalancerCommon
-	common.UserAgent
-}
-
-func (r *ListPoolsByLoadBalancerIDRequest) AddUserAgent(agent ...string) *ListPoolsByLoadBalancerIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type UpdatePoolMembersRequest struct {
 	Members []*Member `json:"members"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.PoolCommon
-}
-
-func (r *UpdatePoolMembersRequest) AddUserAgent(agent ...string) *UpdatePoolMembersRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreatePoolRequest) prepare() {
@@ -281,11 +236,6 @@ func (h *HealthMonitor) prepare() {
 			}
 		}
 	}
-}
-
-func (h *HealthMonitor) AddUserAgent(agent ...string) *HealthMonitor {
-	h.UserAgent.AddUserAgent(agent...)
-	return h
 }
 
 func (h *HealthMonitor) WithHealthCheckProtocol(protocol HealthCheckProtocol) *HealthMonitor {
@@ -339,11 +289,6 @@ func (r *UpdatePoolRequest) WithTLSEncryption(v *bool) *UpdatePoolRequest {
 
 func (r *UpdatePoolRequest) WithStickiness(v *bool) *UpdatePoolRequest {
 	r.Stickiness = v
-	return r
-}
-
-func (r *UpdatePoolRequest) AddUserAgent(agent ...string) *UpdatePoolRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 

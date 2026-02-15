@@ -2,14 +2,12 @@ package v1
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type ListRecordsRequest struct {
 	HostedZoneID string
 	Name         string
 
-	common.UserAgent
 }
 
 func (r *ListRecordsRequest) GetHostedZoneID() string {
@@ -41,7 +39,6 @@ type GetRecordRequest struct {
 	HostedZoneID string
 	RecordID     string
 
-	common.UserAgent
 }
 
 func (r *GetRecordRequest) GetHostedZoneID() string {
@@ -80,7 +77,6 @@ type UpdateRecordRequest struct {
 	EnableStickySession *bool                `json:"enableStickySession,omitempty"`
 	Value               []RecordValueRequest `json:"value"`
 
-	common.UserAgent
 }
 
 func (r *UpdateRecordRequest) GetHostedZoneID() string {
@@ -157,7 +153,6 @@ type DeleteRecordRequest struct {
 	HostedZoneID string
 	RecordID     string
 
-	common.UserAgent
 }
 
 func (r *DeleteRecordRequest) GetHostedZoneID() string {
@@ -201,7 +196,6 @@ type CreateDnsRecordRequest struct {
 	EnableStickySession *bool                `json:"enableStickySession,omitempty"`
 	Value               []RecordValueRequest `json:"value"`
 
-	common.UserAgent
 }
 
 func (r *CreateDnsRecordRequest) GetHostedZoneID() string {

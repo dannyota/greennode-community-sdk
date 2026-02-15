@@ -14,7 +14,6 @@ func (s *ServerServiceInternalV1) CreateSystemTags(opts *CreateSystemTagRequest)
 	rawResp := new([]SystemTagResponse)
 
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONResponse(rawResp).

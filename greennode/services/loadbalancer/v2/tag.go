@@ -12,7 +12,6 @@ func (s *LoadBalancerServiceV2) ListTags(opts *ListTagsRequest) (*entity.ListTag
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -28,7 +27,6 @@ func (s *LoadBalancerServiceV2) CreateTags(opts *CreateTagsRequest) error {
 	url := createTagsURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
@@ -58,7 +56,6 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.prepare(tags)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)

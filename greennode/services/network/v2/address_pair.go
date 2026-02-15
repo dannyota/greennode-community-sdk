@@ -11,7 +11,6 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddres
 	resp := new(GetAllAddressPairByVirtualSubnetIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -27,7 +26,6 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInV
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJSONBody(opts.AddressPairRequest).
 		WithJSONResponse(resp).
@@ -43,7 +41,6 @@ func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) err
 	url := deleteAddressPairURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJSONError(errResp)
 
@@ -60,7 +57,6 @@ func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*e
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).

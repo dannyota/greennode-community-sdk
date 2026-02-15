@@ -12,7 +12,6 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 	resp := new(CreateVirtualAddressCrossProjectResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
@@ -33,7 +32,6 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(opts *DeleteVirtualAddressBy
 	url := deleteVirtualAddressByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
@@ -53,7 +51,6 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequ
 	resp := new(GetVirtualAddressByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithJSONResponse(resp).
 		WithOkCodes(200).
 		WithJSONError(errResp)
@@ -73,7 +70,6 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(opts *ListAddressP
 	resp := new(ListAddressPairsByVirtualAddressIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithJSONResponse(resp).
 		WithOkCodes(200).
 		WithJSONError(errResp)

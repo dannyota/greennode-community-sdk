@@ -21,14 +21,6 @@ type CreateVirtualAddressCrossProjectRequest struct {
 		// The IP address of the virtual address.
 		IPAddress string `json:"ipAddress"`
 	} `json:"crossProjectRequest"` // required
-
-	// others...
-	common.UserAgent
-}
-
-func (r *CreateVirtualAddressCrossProjectRequest) AddUserAgent(agent ...string) *CreateVirtualAddressCrossProjectRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description string) *CreateVirtualAddressCrossProjectRequest {
@@ -39,35 +31,17 @@ func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description st
 // API Delete virtual address by ID
 type DeleteVirtualAddressByIDRequest struct {
 	common.VirtualAddressCommon
-	common.UserAgent
-}
-
-func (r *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) *DeleteVirtualAddressByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 // Api Get virtual address by ID
 
 type GetVirtualAddressByIDRequest struct {
 	common.VirtualAddressCommon
-	common.UserAgent
-}
-
-func (r *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) *GetVirtualAddressByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 // Api list address pairs by virtual address ID
 
 type ListAddressPairsByVirtualAddressIDRequest struct {
 	common.VirtualAddressCommon
-	common.UserAgent
-}
-
-func (r *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string) *ListAddressPairsByVirtualAddressIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 

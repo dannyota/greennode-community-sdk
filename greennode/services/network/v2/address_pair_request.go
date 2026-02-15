@@ -9,7 +9,6 @@ func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) *GetAllAddres
 }
 
 type GetAllAddressPairByVirtualSubnetIDRequest struct {
-	common.UserAgent
 	VirtualSubnetID string
 }
 
@@ -29,7 +28,6 @@ func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR 
 }
 
 type SetAddressPairInVirtualSubnetRequest struct {
-	common.UserAgent
 	VirtualSubnetID    string
 	AddressPairRequest AddressPairRequest
 }
@@ -51,17 +49,11 @@ func NewDeleteAddressPairRequest(addressPairID string) *DeleteAddressPairRequest
 }
 
 type DeleteAddressPairRequest struct {
-	common.UserAgent
 	AddressPairID string
 }
 
 func (r *DeleteAddressPairRequest) GetAddressPairID() string {
 	return r.AddressPairID
-}
-
-func (r *DeleteAddressPairRequest) AddUserAgent(agent ...string) *DeleteAddressPairRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 
@@ -81,13 +73,7 @@ type CreateAddressPairRequest struct {
 	Mode *AddressPairMode `json:"mode,omitempty"`
 
 	common.InternalNetworkInterfaceCommon
-	common.UserAgent
 	common.VirtualAddressCommon
-}
-
-func (r *CreateAddressPairRequest) AddUserAgent(agent ...string) *CreateAddressPairRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddressPairRequest {

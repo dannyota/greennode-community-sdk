@@ -12,7 +12,6 @@ func (s *VDnsServiceInternal) ListRecords(opts *ListRecordsRequest, portalUserID
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserID(portalUserID).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
@@ -32,7 +31,6 @@ func (s *VDnsServiceInternal) GetRecord(opts *GetRecordRequest, portalUserID str
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserID(portalUserID).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
@@ -51,7 +49,6 @@ func (s *VDnsServiceInternal) UpdateRecord(opts *UpdateRecordRequest, portalUser
 	url := updateRecordURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserID(portalUserID).
 		WithOkCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
@@ -70,7 +67,6 @@ func (s *VDnsServiceInternal) DeleteRecord(opts *DeleteRecordRequest, portalUser
 	url := deleteRecordURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserID(portalUserID).
 		WithOkCodes(204).
 		WithJSONError(errResp)
@@ -89,7 +85,6 @@ func (s *VDnsServiceInternal) CreateDnsRecord(opts *CreateDnsRecordRequest, port
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithUserID(portalUserID).
 		WithOkCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.DnsClient)).

@@ -13,17 +13,11 @@ const (
 )
 
 type ListGlobalListenersRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
 func (r *ListGlobalListenersRequest) WithLoadBalancerID(lbID string) *ListGlobalListenersRequest {
 	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *ListGlobalListenersRequest) AddUserAgent(agent ...string) *ListGlobalListenersRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -45,7 +39,6 @@ type CreateGlobalListenerRequest struct {
 	TimeoutMember     int                    `json:"timeoutMember"`
 	GlobalPoolID      string                 `json:"globalPoolId"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
@@ -104,11 +97,6 @@ func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) *CreateGlo
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) AddUserAgent(agent ...string) *CreateGlobalListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewCreateGlobalListenerRequest(lbID, name string) *CreateGlobalListenerRequest {
 	opts := &CreateGlobalListenerRequest{
 		AllowedCidrs:      "0.0.0.0/0",
@@ -136,7 +124,6 @@ type UpdateGlobalListenerRequest struct {
 	Headers           *string `json:"headers"`
 	GlobalPoolID      string  `json:"globalPoolId"`
 
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }
@@ -182,11 +169,6 @@ func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) *UpdateGlobalLi
 	return r
 }
 
-func (r *UpdateGlobalListenerRequest) AddUserAgent(agent ...string) *UpdateGlobalListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerRequest {
 	opts := &UpdateGlobalListenerRequest{
 		AllowedCidrs:      "0.0.0.0/0",
@@ -206,7 +188,6 @@ func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerReque
 }
 
 type DeleteGlobalListenerRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }
@@ -218,11 +199,6 @@ func (r *DeleteGlobalListenerRequest) WithLoadBalancerID(lbid string) *DeleteGlo
 
 func (r *DeleteGlobalListenerRequest) WithListenerID(lid string) *DeleteGlobalListenerRequest {
 	r.ListenerID = lid
-	return r
-}
-
-func (r *DeleteGlobalListenerRequest) AddUserAgent(agent ...string) *DeleteGlobalListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -239,7 +215,6 @@ func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerReque
 }
 
 type GetGlobalListenerRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }
@@ -251,11 +226,6 @@ func (r *GetGlobalListenerRequest) WithLoadBalancerID(lbid string) *GetGlobalLis
 
 func (r *GetGlobalListenerRequest) WithListenerID(lid string) *GetGlobalListenerRequest {
 	r.ListenerID = lid
-	return r
-}
-
-func (r *GetGlobalListenerRequest) AddUserAgent(agent ...string) *GetGlobalListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 

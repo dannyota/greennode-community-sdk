@@ -87,7 +87,6 @@ type CreatePoolRequest struct {
 	Members       []*Member     `json:"members"`
 
 	common.LoadBalancerCommon
-	common.UserAgent
 }
 
 type HealthMonitor struct {

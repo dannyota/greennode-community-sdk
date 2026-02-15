@@ -12,7 +12,6 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
@@ -34,7 +33,6 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts *DeleteSecgroupRuleByIDRe
 	url := deleteSecgroupRuleByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
@@ -56,7 +54,6 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts *ListSecgroupRules
 	resp := new(ListSecgroupRulesBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

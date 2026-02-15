@@ -15,7 +15,6 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(opts *CreateLoadBalance
 	opts.prepare()
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).

@@ -75,12 +75,6 @@ type CreateListenerRequest struct {
 	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
 
 	common.LoadBalancerCommon
-	common.UserAgent
-}
-
-func (r *CreateListenerRequest) AddUserAgent(agent ...string) *CreateListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type UpdateListenerRequest struct {
@@ -96,44 +90,20 @@ type UpdateListenerRequest struct {
 
 	common.LoadBalancerCommon
 	common.ListenerCommon
-	common.UserAgent
-}
-
-func (r *UpdateListenerRequest) AddUserAgent(agent ...string) *UpdateListenerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type ListListenersByLoadBalancerIDRequest struct {
 	common.LoadBalancerCommon
-	common.UserAgent
-}
-
-func (r *ListListenersByLoadBalancerIDRequest) AddUserAgent(agent ...string) *ListListenersByLoadBalancerIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type DeleteListenerByIDRequest struct {
 	common.LoadBalancerCommon
 	common.ListenerCommon
-	common.UserAgent
-}
-
-func (r *DeleteListenerByIDRequest) AddUserAgent(agent ...string) *DeleteListenerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 type GetListenerByIDRequest struct {
 	common.LoadBalancerCommon
 	common.ListenerCommon
-	common.UserAgent
-}
-
-func (r *GetListenerByIDRequest) AddUserAgent(agent ...string) *GetListenerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *CreateListenerRequest) prepare() {

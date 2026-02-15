@@ -10,10 +10,4 @@ func NewListAllServersBySecgroupIDRequest(secgroupID string) *ListAllServersBySe
 
 type ListAllServersBySecgroupIDRequest struct {
 	common.SecgroupCommon
-	common.UserAgent
-}
-
-func (r *ListAllServersBySecgroupIDRequest) AddUserAgent(agent ...string) *ListAllServersBySecgroupIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }

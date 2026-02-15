@@ -11,7 +11,6 @@ func (s *NetworkServiceV2) GetSecgroupByID(opts *GetSecgroupByIDRequest) (*entit
 	resp := new(GetSecgroupByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -32,7 +31,6 @@ func (s *NetworkServiceV2) CreateSecgroup(opts *CreateSecgroupRequest) (*entity.
 	resp := new(CreateSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
@@ -56,7 +54,6 @@ func (s *NetworkServiceV2) ListSecgroup(opts *ListSecgroupRequest) (*entity.List
 	resp := new(ListSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -72,7 +69,6 @@ func (s *NetworkServiceV2) DeleteSecgroupByID(opts *DeleteSecgroupByIDRequest) e
 	url := deleteSecgroupByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 

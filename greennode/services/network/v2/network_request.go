@@ -10,10 +10,4 @@ func NewGetNetworkByIDRequest(networkID string) *GetNetworkByIDRequest {
 
 type GetNetworkByIDRequest struct {
 	common.NetworkCommon
-	common.UserAgent
-}
-
-func (r *GetNetworkByIDRequest) AddUserAgent(agent ...string) *GetNetworkByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }

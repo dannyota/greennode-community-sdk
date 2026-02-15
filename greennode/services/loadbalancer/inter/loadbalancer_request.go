@@ -32,7 +32,6 @@ type CreateLoadBalancerRequest struct {
 	ZoneID          *common.Zone           `json:"zoneId,omitempty"`
 
 	common.PortalUser
-	common.UserAgent
 }
 
 func (r *CreateLoadBalancerRequest) prepare() {
@@ -47,11 +46,6 @@ func (r *CreateLoadBalancerRequest) prepare() {
 
 func (r *CreateLoadBalancerRequest) WithProjectID(projectID string) *CreateLoadBalancerRequest {
 	r.ProjectID = projectID
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) AddUserAgent(agent ...string) *CreateLoadBalancerRequest {
-	r.Agent = append(r.Agent, agent...)
 	return r
 }
 

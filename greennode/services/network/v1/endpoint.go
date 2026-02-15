@@ -61,7 +61,6 @@ func (s *NetworkServiceV1) DeleteEndpointByID(opts *DeleteEndpointByIDRequest) e
 	url := deleteEndpointByIDURL(s.VNetworkClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.VNetworkClient)).
 		// WithUserId(s.getUserId()).
@@ -84,7 +83,6 @@ func (s *NetworkServiceV1) ListEndpoints(opts *ListEndpointsRequest) (*entity.Li
 	resp := new(ListEndpointsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		// WithUserId(s.getUserId()).
 		WithJSONResponse(resp).
@@ -108,7 +106,6 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(opts *ListTagsByEndpoint
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -128,7 +125,6 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(opts *CreateTagsWith
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
@@ -150,7 +146,6 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(opts *DeleteTagOfEndpoint
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONError(errResp)
 
@@ -170,7 +165,6 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts *UpdateTagValue
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)

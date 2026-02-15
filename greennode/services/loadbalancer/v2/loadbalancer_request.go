@@ -72,11 +72,6 @@ func NewListLoadBalancersRequest(page, size int) *ListLoadBalancersRequest {
 	return opts
 }
 
-func (r *ListLoadBalancersRequest) AddUserAgent(agent ...string) *ListLoadBalancersRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func NewDeleteLoadBalancerByIDRequest(lbID string) *DeleteLoadBalancerByIDRequest {
 	opts := new(DeleteLoadBalancerByIDRequest)
 	opts.LoadBalancerID = lbID
@@ -103,23 +98,18 @@ type CreateLoadBalancerRequest struct {
 	Tags         []common.Tag           `json:"tags,omitempty"`
 	IsPoc        bool                   `json:"isPoc"`
 	ZoneID       *common.Zone           `json:"zoneId"`
-
-	common.UserAgent
 }
 
 type ResizeLoadBalancerRequest struct {
 	PackageID string `json:"packageId"`
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
 type ListLoadBalancerPackagesRequest struct {
-	common.UserAgent
 	ZoneID common.Zone `q:"zoneId,beempty"`
 }
 
 type GetLoadBalancerByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
@@ -129,42 +119,23 @@ type ListLoadBalancersRequest struct {
 	Size int
 
 	Tags []common.Tag
-	common.UserAgent
 }
 
 type DeleteLoadBalancerByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 }
 
-func (r *DeleteLoadBalancerByIDRequest) AddUserAgent(agent ...string) *DeleteLoadBalancerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type ResizeLoadBalancerByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 
 	PackageID string `json:"packageId"`
 }
 
-func (r *ResizeLoadBalancerByIDRequest) AddUserAgent(agent ...string) *ResizeLoadBalancerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type ScaleLoadBalancerRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 
 	Scaling    *ScalingConfig    `json:"scaling"`
 	Networking *NetworkingConfig `json:"networking"`
-}
-
-func (r *ScaleLoadBalancerRequest) AddUserAgent(agent ...string) *ScaleLoadBalancerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *ScaleLoadBalancerRequest) WithScaling(scaling *ScalingConfig) *ScaleLoadBalancerRequest {
@@ -187,10 +158,6 @@ func (r *CreateLoadBalancerRequest) prepare() {
 	}
 }
 
-func (r *CreateLoadBalancerRequest) AddUserAgent(agent ...string) *CreateLoadBalancerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
 func (r *CreateLoadBalancerRequest) WithListener(listener *CreateListenerRequest) *CreateLoadBalancerRequest {
 	r.Listener = listener
 	return r
@@ -252,18 +219,8 @@ func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBa
 	return r
 }
 
-func (r *ResizeLoadBalancerRequest) AddUserAgent(agent ...string) *ResizeLoadBalancerRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 func (r *ResizeLoadBalancerRequest) WithPackageID(packageID string) *ResizeLoadBalancerRequest {
 	r.PackageID = packageID
-	return r
-}
-
-func (r *ListLoadBalancerPackagesRequest) AddUserAgent(agent ...string) *ListLoadBalancerPackagesRequest {
-	r.UserAgent.AddUserAgent(agent...)
 	return r
 }
 
@@ -274,11 +231,6 @@ func (r *ListLoadBalancerPackagesRequest) WithZoneID(zoneID common.Zone) *ListLo
 
 func (r *ListLoadBalancerPackagesRequest) GetZoneID() string {
 	return string(r.ZoneID)
-}
-
-func (r *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) *GetLoadBalancerByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *ListLoadBalancersRequest) WithName(name string) *ListLoadBalancersRequest {

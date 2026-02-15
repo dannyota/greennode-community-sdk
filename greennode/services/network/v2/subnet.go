@@ -11,7 +11,6 @@ func (s *NetworkServiceV2) GetSubnetByID(opts *GetSubnetByIDRequest) (*entity.Su
 	resp := new(GetSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -33,7 +32,6 @@ func (s *NetworkServiceV2) UpdateSubnetByID(opts *UpdateSubnetByIDRequest) (*ent
 	resp := new(UpdateSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJSONBody(opts.UpdateSubnetBody).
 		WithJSONResponse(resp).

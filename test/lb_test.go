@@ -270,8 +270,7 @@ func TestListLoadBalancerPackagesSuccess(t *testing.T) {
 
 func TestGetLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-8f54cbd4-b8ee-4b86-aa9b-d365c468a902").
-		AddUserAgent("vks-cluster-id/user-1234:cluster-1")
+	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-8f54cbd4-b8ee-4b86-aa9b-d365c468a902")
 	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetLoadBalancerByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -287,8 +286,7 @@ func TestGetLoadBalancerSuccess(t *testing.T) {
 
 func TestGetLoadBalancerFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cc6f").
-		AddUserAgent("vks-cluster-id/user-1234:cluster-1")
+	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cc6f")
 	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetLoadBalancerByID(opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)

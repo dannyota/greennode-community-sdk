@@ -32,7 +32,6 @@ func NewCreatePolicyRequest(lbID, lisID string) *CreatePolicyRequest {
 }
 
 type CreatePolicyRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 
@@ -130,11 +129,6 @@ func (r *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) *CreateP
 	return r
 }
 
-func (r *CreatePolicyRequest) AddUserAgent(agent ...string) *CreatePolicyRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 // update policy request
 func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 	return &UpdatePolicyRequest{
@@ -145,7 +139,6 @@ func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 }
 
 type UpdatePolicyRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 	common.PolicyCommon
@@ -226,11 +219,6 @@ func (r *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) *UpdateP
 	return r
 }
 
-func (r *UpdatePolicyRequest) AddUserAgent(agent ...string) *UpdatePolicyRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 // get policy by id request
 func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest {
 	return &GetPolicyByIDRequest{
@@ -240,13 +228,7 @@ func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest
 	}
 }
 
-func (r *GetPolicyByIDRequest) AddUserAgent(agent ...string) *GetPolicyByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type GetPolicyByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 	common.PolicyCommon
@@ -261,13 +243,7 @@ func NewDeletePolicyByIDRequest(lbID, lisID, policyID string) *DeletePolicyByIDR
 	}
 }
 
-func (r *DeletePolicyByIDRequest) AddUserAgent(agent ...string) *DeletePolicyByIDRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type DeletePolicyByIDRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 	common.PolicyCommon
@@ -288,16 +264,10 @@ func NewReorderPoliciesRequest(lbID, lisID string) *ReorderPoliciesRequest {
 }
 
 type ReorderPoliciesRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 
 	policyPositions []policyPositionRequest
-}
-
-func (r *ReorderPoliciesRequest) AddUserAgent(agent ...string) *ReorderPoliciesRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
 }
 
 func (r *ReorderPoliciesRequest) WithPoliciesOrder(policies []string) *ReorderPoliciesRequest {
@@ -326,13 +296,7 @@ func NewListPoliciesRequest(lbID, lisID string) *ListPoliciesRequest {
 	}
 }
 
-func (r *ListPoliciesRequest) AddUserAgent(agent ...string) *ListPoliciesRequest {
-	r.UserAgent.AddUserAgent(agent...)
-	return r
-}
-
 type ListPoliciesRequest struct {
-	common.UserAgent
 	common.LoadBalancerCommon
 	common.ListenerCommon
 }

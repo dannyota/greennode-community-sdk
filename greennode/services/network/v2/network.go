@@ -11,7 +11,6 @@ func (s *NetworkServiceV2) GetNetworkByID(opts *GetNetworkByIDRequest) (*entity.
 	resp := new(GetNetworkByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
