@@ -20,7 +20,18 @@ var (
 	regexErrorProjectConflict = regexp.MustCompile(patternProjectConflict)
 )
 
-func ErrorHandler(err error, opts ...func(sdkErr Error)) Error {
+func init() {
+	register(EcPurchaseIssue, &classifier{
+		match: containsAny(patternPurchaseIssue), category: ErrCatPurchase,
+	})
+	register(EcTagKeyInvalid, &classifier{match: containsAny(patternTagKeyInvalid)})
+	register(EcPagingInvalid, &classifier{match: containsAny(patternPagingInvalid)})
+	register(EcPaymentMethodNotAllow, &classifier{match: containsAny("ext_pm_payment_method_not_allow")})
+	register(EcCreditNotEnough, &classifier{match: containsAny("ext_pm_credit_not_enough")})
+	register(EcProjectConflict, &classifier{match: matchRegexps(regexErrorProjectConflict)})
+}
+
+func ErrorHandler(err error) *SdkError {
 	sdkErr := &SdkError{
 		error:     err,
 		errorCode: EcUnknownError,
@@ -31,31 +42,19 @@ func ErrorHandler(err error, opts ...func(sdkErr Error)) Error {
 		sdkErr.errorCode = EcServiceMaintenance
 		sdkErr.message = "Service Maintenance"
 		sdkErr.error = fmt.Errorf("service is under maintenance")
-
-		return sdkErr
 	}
-
-	for _, opt := range opts {
-		opt(sdkErr)
-		if sdkErr.errorCode != EcUnknownError {
-			return sdkErr
-		}
-	}
-
-	sdkErr.error = err
-	sdkErr.message = ""
 
 	return sdkErr
 }
 
-func SdkErrorHandler(err error, errResp ErrorResponse, opts ...func(sdkErr Error)) Error {
+func SdkErrorHandler(err error, errResp ErrorResponse, codes ...ErrorCode) *SdkError {
 	if err == nil && errResp == nil {
 		return nil
 	}
 
-	var sdkErr Error
+	var sdkErr *SdkError
 	if err != nil {
-		if e, ok := err.(Error); ok {
+		if e, ok := err.(*SdkError); ok {
 			sdkErr = e
 		} else {
 			sdkErr = ErrorHandler(err)
@@ -64,7 +63,7 @@ func SdkErrorHandler(err error, errResp ErrorResponse, opts ...func(sdkErr Error
 		sdkErr = ErrorHandler(nil)
 	}
 
-	if sdkErr.ErrorCode() != EcUnknownError {
+	if sdkErr.errorCode != EcUnknownError {
 		return sdkErr
 	}
 
@@ -72,9 +71,38 @@ func SdkErrorHandler(err error, errResp ErrorResponse, opts ...func(sdkErr Error
 		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
 	}
 
-	for _, opt := range opts {
-		opt(sdkErr)
-		if sdkErr.ErrorCode() != EcUnknownError {
+	if errResp == nil {
+		return sdkErr
+	}
+
+	lowerMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
+
+	for _, code := range codes {
+		c, ok := classifierRegistry[code]
+		if !ok {
+			continue
+		}
+
+		if c.catchAll {
+			if sdkErr.errorCode != EcUnknownError {
+				continue
+			}
+			sdkErr.WithErrorCode(code).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
+			if c.category != "" {
+				sdkErr.WithErrorCategories(c.category)
+			}
+			return sdkErr
+		}
+
+		if c.match(lowerMsg, errResp) {
+			msg := errResp.GetMessage()
+			if c.msgFmt != "" {
+				msg = fmt.Sprintf(c.msgFmt, errResp.GetMessage())
+			}
+			sdkErr.WithErrorCode(code).WithMessage(msg).WithErrors(errResp.Err())
+			if c.category != "" {
+				sdkErr.WithErrorCategories(c.category)
+			}
 			return sdkErr
 		}
 	}
@@ -82,77 +110,39 @@ func SdkErrorHandler(err error, errResp ErrorResponse, opts ...func(sdkErr Error
 	return sdkErr
 }
 
-func WithErrorInternalServerError() func(Error) {
-	return func(sdkErr Error) {
-		sdkErr.WithErrorCode(EcInternalServerError).
-			WithMessage("Internal Server Error").
-			WithErrors(fmt.Errorf("internal server error from making request to external service"))
+func NewInternalServerError() *SdkError {
+	return &SdkError{
+		errorCode: EcInternalServerError,
+		message:   "Internal Server Error",
+		error:     fmt.Errorf("internal server error from making request to external service"),
 	}
 }
 
-func WithErrorServiceMaintenance() func(Error) {
-	return func(sdkErr Error) {
-		sdkErr.WithErrorCode(EcServiceMaintenance).
-			WithMessage("Service Maintenance").
-			WithErrors(fmt.Errorf("service is under maintenance"))
+func NewServiceMaintenance() *SdkError {
+	return &SdkError{
+		errorCode: EcServiceMaintenance,
+		message:   "Service Maintenance",
+		error:     fmt.Errorf("service is under maintenance"),
 	}
 }
 
-func WithErrorPermissionDenied() func(Error) {
-	return func(sdkErr Error) {
-		sdkErr.WithErrorCode(EcPermissionDenied).
-			WithMessage("Permission Denied").
-			WithErrors(fmt.Errorf("permission denied when making request to external service"))
+func NewPermissionDenied() *SdkError {
+	return &SdkError{
+		errorCode: EcPermissionDenied,
+		message:   "Permission Denied",
+		error:     fmt.Errorf("permission denied when making request to external service"),
 	}
 }
 
-func WithErrorPurchaseIssue(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPurchaseIssue) {
-			sdkError.WithErrorCode(EcPurchaseIssue).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err()).
-				WithErrorCategories(ErrCatPurchase)
-		}
+func NewReauthFuncNotSet() *SdkError {
+	return &SdkError{
+		errorCode: EcReauthFuncNotSet,
+		message:   "Reauthentication function is not configured",
+		error:     fmt.Errorf("reauthentication function is not configured"),
 	}
 }
 
-func WithErrorTagKeyInvalid(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternTagKeyInvalid) {
-			sdkError.WithErrorCode(EcTagKeyInvalid).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorPagingInvalid(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternPagingInvalid) {
-			sdkError.WithErrorCode(EcPagingInvalid).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorUnexpected(response *req.Response) func(Error) {
+func NewUnexpectedError(response *req.Response) *SdkError {
 	statusCode := 0
 	url := ""
 	err := fmt.Errorf("unexpected error from making request to external service")
@@ -170,58 +160,22 @@ func WithErrorUnexpected(response *req.Response) func(Error) {
 		}
 	}
 
-	return func(sdkErr Error) {
-		sdkErr.WithErrorCode(EcUnexpectedError).
-			WithMessage("Unexpected Error").
-			WithErrors(err).
-			WithParameters(map[string]any{
-				"statusCode": statusCode,
-				"url":        url,
-			})
+	sdkErr := &SdkError{
+		errorCode: EcUnexpectedError,
+		message:   "Unexpected Error",
+		error:     err,
 	}
+	sdkErr.WithParameters(map[string]any{
+		"statusCode": statusCode,
+		"url":        url,
+	})
+	return sdkErr
 }
 
-func WithErrorPaymentMethodNotAllow(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if strings.Contains(errMsg, "ext_pm_payment_method_not_allow") {
-			sdkError.WithErrorCode(EcPaymentMethodNotAllow).
-				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorCreditNotEnough(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if strings.Contains(errMsg, "ext_pm_credit_not_enough") {
-			sdkError.WithErrorCode(EcCreditNotEnough).
-				WithMessage(errResp.GetMessage()).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorProjectConflict(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorProjectConflict.FindString(errMsg) != "" {
-			sdkError.WithErrorCode(EcProjectConflict).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
+func NewQuotaNotFound() *SdkError {
+	return &SdkError{
+		errorCode: EcVServerQuotaNotFound,
+		message:   "Quota not found",
+		error:     fmt.Errorf("quota not found"),
 	}
 }

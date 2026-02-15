@@ -139,37 +139,42 @@ Step  Layer        Code path
 
 ## 6. Error Handling
 
-### Interface
+### SdkError
 
-`Error` (`greennode/sdkerror/sdk_error.go`) provides:
+`*SdkError` (`greennode/sdkerror/sdk_error.go`) provides:
 - Error code queries: `IsError(code)`, `IsCategory(cat)`
 - Builder methods: `WithErrorCode()`, `WithMessage()`, `WithParameters()`
 - Getters: `ErrorCode()`, `GetMessage()`, `Parameters()`
+- Standard `error` interface: `Error()`, `Unwrap()`, `Is()`
 
-### Handler Chain
+### Classifier Registry
 
-`SdkErrorHandler` (`greennode/sdkerror/common.go`) applies a chain of
-pattern-matching handler functions to classify errors:
+Error classification uses a table-driven registry (`greennode/sdkerror/classifier.go`).
+Each `ErrorCode` registers a `classifier` struct with a match function (string
+contains, regex, error-code comparison) and optional category/message format.
+
+`SdkErrorHandler` (`greennode/sdkerror/common.go`) takes error codes as variadic
+arguments and iterates them against the registry:
 
 ```go
 sdkerror.SdkErrorHandler(sdkErr, errResp,
-    sdkerror.WithErrorSubnetNotFound(errResp),
-    sdkerror.WithErrorImageNotFound(errResp),
-    sdkerror.WithErrorServerExceedQuota(errResp),
-    // ...more handlers
+    sdkerror.EcVServerSubnetNotFound,
+    sdkerror.EcVServerImageNotFound,
+    sdkerror.EcVServerServerExceedQuota,
+    // ...more error codes
 )
 ```
 
-Each handler inspects the error response message (string matching) and, if it
-matches, calls `WithErrorCode()` on the `Error`. The chain stops at the first
-match (error code changes from `EcUnknownError`).
+The first matching classifier sets the error code, message, and optional category.
 
 ### Error Enrichment
 
 At the service layer, errors are enriched with context:
 
 ```go
-return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
+return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
+    sdkerror.EcVServerServerNotFound,
+    sdkerror.EcVServerVolumeInProcess).
     WithParameters(opts.ToMap()).
     WithKVparameters("projectId", s.getProjectID()).
     WithErrorCategories(sdkerror.ErrCatVServer)
@@ -179,12 +184,9 @@ return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
 
 - **100 error codes** defined in `greennode/sdkerror/error_codes.go`
 - **10 error categories** in `greennode/sdkerror/categories.go`
-  (`ErrCatQuota`, `ErrCatIAM`, `ErrCatInfra`, `ErrCatPurchase`, `ErrCatAll`,
-  `ErrCatProductVlb`, `ErrCatProductVNetwork`, `ErrCatProductVdns`,
-  `ErrCatVServer`, `ErrCatVirtualAddress`)
-- Handler files: `server.go`, `volume.go`, `loadbalancer.go`, `network.go`,
-  `secgroup.go`, `secgroup_rule.go`, `snapshot.go`, `quota.go`, `endpoint.go`,
-  `identity.go`, `virtualaddress.go`
+- Classifier registration files: `server.go`, `volume.go`, `loadbalancer.go`,
+  `network.go`, `secgroup.go`, `secgroup_rule.go`, `snapshot.go`, `endpoint.go`,
+  `identity.go`, `virtualaddress.go`, `volumetype.go`, `common.go`
 
 ## 7. Key Design Patterns
 
@@ -213,10 +215,11 @@ from a `ServiceClient` (e.g., `createServerURL(s.VServerClient)` →
 `greennode/services/common/` provides embedded types (`UserAgent`, `Paging`) that
 services compose into their request structs for consistent field handling.
 
-### Functional-Option Error Handlers
-Error handlers are functions with signature `func(Error)` passed as variadic
-arguments to `SdkErrorHandler`. This makes the handler chain composable and lets
-each service choose which error patterns to match.
+### Table-Driven Error Classification
+Error codes are registered in `init()` functions with match functions (string
+contains, regex, error-code comparison). `SdkErrorHandler` iterates the
+caller-provided error codes against the classifier registry, stopping at the
+first match.
 
 ## 8. Service Catalog
 

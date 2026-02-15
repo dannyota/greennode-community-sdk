@@ -19,22 +19,22 @@ func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Serv
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorPurchaseIssue(errResp),
-			sdkerror.WithErrorSubnetNotFound(errResp),
-			sdkerror.WithErrorImageNotFound(errResp),
-			sdkerror.WithErrorServerExceedQuota(errResp),
-			sdkerror.WithErrorServerExceedCpuQuota(errResp),
-			sdkerror.WithErrorServerFlavorSystemExceedQuota(errResp),
-			sdkerror.WithErrorVolumeTypeNotFound(errResp),
-			sdkerror.WithErrorNetworkNotFound(errResp),
-			sdkerror.WithErrorVolumeExceedQuota(errResp),
-			sdkerror.WithErrorVolumeSizeExceedGlobalQuota(errResp),
-			sdkerror.WithErrorSecgroupNotFound(errResp),
-			sdkerror.WithErrorServerExceedFloatingIpQuota(errResp),
-			sdkerror.WithErrorServerImageNotSupported(errResp),
-			sdkerror.WithErrorServerFlavorNotSupported(errResp),
-			sdkerror.WithErrorProjectConflict(errResp),
-			sdkerror.WithErrorServerCreateBillingPaymentMethodNotAllowed(errResp)).
+			sdkerror.EcPurchaseIssue,
+			sdkerror.EcVServerSubnetNotFound,
+			sdkerror.EcVServerImageNotFound,
+			sdkerror.EcVServerServerExceedQuota,
+			sdkerror.EcVServerServerExceedCpuQuota,
+			sdkerror.EcVServerServerFlavorSystemExceedQuota,
+			sdkerror.EcVServerVolumeTypeNotFound,
+			sdkerror.EcVServerNetworkNotFound,
+			sdkerror.EcVServerVolumeExceedQuota,
+			sdkerror.EcVServerVolumeSizeExceedGlobalQuota,
+			sdkerror.EcVServerSecgroupNotFound,
+			sdkerror.EcVServerServerExceedFloatingIpQuota,
+			sdkerror.EcVServerServerImageNotSupported,
+			sdkerror.EcVServerFlavorNotSupported,
+			sdkerror.EcProjectConflict,
+			sdkerror.EcVServerCreateBillingPaymentMethodNotAllowed).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithErrorCategories(sdkerror.ErrCatVServer)
@@ -55,7 +55,7 @@ func (s *ComputeServiceV2) GetServerByID(opts *GetServerByIDRequest) (*entity.Se
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerNotFound(errResp)).
+			sdkerror.EcVServerServerNotFound).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -74,12 +74,12 @@ func (s *ComputeServiceV2) DeleteServerByID(opts *DeleteServerByIDRequest) error
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorServerDeleteDeletingServer(errResp),
-			sdkerror.WithErrorServerUpdatingSecgroups(errResp),
-			sdkerror.WithErrorServerDeleteBillingServer(errResp),
-			sdkerror.WithErrorServerDeleteCreatingServer(errResp),
-			sdkerror.WithErrorVolumeInProcess(errResp)).
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerServerDeleteDeletingServer,
+			sdkerror.EcVServerServerUpdatingSecgroups,
+			sdkerror.EcVServerServerDeleteBillingServer,
+			sdkerror.EcVServerServerDeleteCreatingServer,
+			sdkerror.EcVServerVolumeInProcess).
 			WithKVparameters("projectId", s.getProjectID(),
 				"serverId", opts.GetServerID())
 	}
@@ -100,10 +100,10 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(opts *UpdateServerSec
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorServerExpired(errResp),
-			sdkerror.WithErrorServerUpdatingSecgroups(errResp),
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerServerExpired,
+			sdkerror.EcVServerServerUpdatingSecgroups,
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
 				"serverId", opts.GetServerID(),
 				"secgroupIds", opts.GetListSecgroupsIDs())
@@ -122,14 +122,14 @@ func (s *ComputeServiceV2) AttachBlockVolume(opts *AttachBlockVolumeRequest) err
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp),
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorVolumeAvailable(errResp),
-			sdkerror.WithErrorVolumeInProcess(errResp),
-			sdkerror.WithErrorVolumeAlreadyAttached(errResp),
-			sdkerror.WithErrorServerAttachEncryptedVolume(errResp),
-			sdkerror.WithErrorVolumeAlreadyAttachedThisServer(errResp),
-			sdkerror.WithErrorServerAttachVolumeQuotaExceeded(errResp)).
+			sdkerror.EcVServerVolumeNotFound,
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerVolumeAvailable,
+			sdkerror.EcVServerVolumeInProcess,
+			sdkerror.EcVServerVolumeAlreadyAttached,
+			sdkerror.EcVServerServerAttachEncryptedVolume,
+			sdkerror.EcVServerVolumeAlreadyAttachedThisServer,
+			sdkerror.EcVServerServerVolumeAttachQuotaExceeded).
 			WithKVparameters("projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID(),
 				"serverId", opts.GetServerID())
@@ -148,11 +148,11 @@ func (s *ComputeServiceV2) DetachBlockVolume(opts *DetachBlockVolumeRequest) err
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp),
-			sdkerror.WithErrorVolumeInProcess(errResp),
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorVolumeIsMigrating(errResp),
-			sdkerror.WithErrorVolumeAvailable(errResp)).
+			sdkerror.EcVServerVolumeNotFound,
+			sdkerror.EcVServerVolumeInProcess,
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerVolumeIsMigrating,
+			sdkerror.EcVServerVolumeAvailable).
 			WithKVparameters("projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID(),
 				"serverId", opts.GetServerID())
@@ -172,9 +172,9 @@ func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) error
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorServerCanNotAttachFloatingIp(errResp),
-			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp)).
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerServerCanNotAttachFloatingIp,
+			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -193,10 +193,10 @@ func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) error
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorWanIpAvailable(errResp),
-			sdkerror.WithErrorServerNotFound(errResp),
-			sdkerror.WithErrorWanIDNotFound(errResp),
-			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp)).
+			sdkerror.EcVServerWanIpAvailable,
+			sdkerror.EcVServerServerNotFound,
+			sdkerror.EcVServerWanIDNotFound,
+			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -235,8 +235,8 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(opts *DeleteServerGroupByIDRequ
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerGroupNotFound(errResp),
-			sdkerror.WithErrorServerGroupInUse(errResp)).
+			sdkerror.EcVServerServerGroupNotFound,
+			sdkerror.EcVServerServerGroupInUse).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID(),
 				"serverGroupId", opts.GetServerGroupID())
@@ -277,7 +277,7 @@ func (s *ComputeServiceV2) CreateServerGroup(opts *CreateServerGroupRequest) (*e
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorServerGroupNameMustBeUnique(errResp)).
+			sdkerror.EcVServerServerGroupNameMustBeUnique).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID())
 	}

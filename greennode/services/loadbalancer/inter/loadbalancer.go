@@ -20,7 +20,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(opts *CreateLoadBalance
 
 	if _, sdkErr := s.VLBClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorLoadBalancerExceedQuota(errResp)).
+			sdkerror.EcVLBLoadBalancerExceedQuota).
 			WithParameters(opts.ToMap()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}

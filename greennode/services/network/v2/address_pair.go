@@ -19,7 +19,7 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddres
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 		// sdkerror.WithErrorSubnetNotBelongNetwork(sdkErr),
-		// sdkerror.WithErrorSubnetNotFound(errResp)).
+		// sdkerror.EcVServerSubnetNotFound).
 		// WithKVparameters(
 		// 	"virtualSubnetId", popts.GetVirtualSubnetId(),
 		// 	"projectId", s.getProjectId(),
@@ -55,7 +55,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) err
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorAddressPairNotFound(errResp)).
+			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters("addressPairId", opts.GetAddressPairID())
 	}
 	return nil
@@ -74,8 +74,8 @@ func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*e
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorInternalNetworkInterfaceNotFound(errResp),
-			sdkerror.WithErrorAddressPairExisted(errResp)).
+			sdkerror.EcVServerInternalNetworkInterfaceNotFound,
+			sdkerror.EcVServerAddressPairExisted).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 

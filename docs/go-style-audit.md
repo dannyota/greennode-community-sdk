@@ -155,22 +155,18 @@ All ~113 decorative `// ---...` separator lines have been removed across 24 file
 
 ## 4. Error Handling
 
-### 4.1 Custom error framework — **PARTIALLY RESOLVED (phases 1 & 2)**
+### 4.1 Custom error framework — **RESOLVED (phases 1–3)**
 
-The `sdkerror` package implements a bespoke error system:
+The `sdkerror` package implements a bespoke error system with named error codes
+(`EcVServerWanIDNotFound`, `EcInternalServerError`, ...) and error categories.
 
-- `Error` interface with `ErrorCode()`, `GetMessage()`, `Err()`, etc.
-- `SdkErrorHandler` with functional-option error handlers
-- Named error codes (`EcVServerWanIDNotFound`, `EcInternalServerError`, ...)
-- Error categories for classification
+**Phase 1:** `SdkError` bridges to the stdlib `error` interface:
 
-**Phase 1 done:** `SdkError` now bridges to the stdlib `error` interface:
+- `Error() string` on `*SdkError` (delegates to `ErrorMessages()`)
+- `Unwrap() error` on `*SdkError` (returns wrapped error for `errors.Is()`/`errors.As()` traversal)
+- `Is(error) bool` on `*SdkError` (matches by `ErrorCode` when comparing two `SdkError` values)
 
-- `Error() string` added to the `Error` interface and `*SdkError` (delegates to `ErrorMessages()`)
-- `Unwrap() error` added to `*SdkError` (returns wrapped error for `errors.Is()`/`errors.As()` traversal)
-- `Is(error) bool` added to `*SdkError` (matches by `ErrorCode` when comparing two `SdkError` values)
-
-**Phase 2 done:** All public API surfaces now return `error` instead of `sdkerror.Error`:
+**Phase 2:** All public API surfaces return `error` instead of `sdkerror.Error`:
 
 - `SdkErrorHandler` widened to accept `error` (backward-compatible)
 - 137 service method signatures across 9 interface files migrated
@@ -178,27 +174,28 @@ The `sdkerror` package implements a bespoke error system:
 - HTTP client layer (`ServiceClient`, `HTTPClient`, `DoRequest`, `WithReauthFunc`) returns `error`
 - Tests updated to use `errors.As(err, &sdkErr)` for rich error inspection
 
-Callers can now use standard Go error handling: `errors.Is()`/`errors.As()`,
+**Phase 3:** Functional-option error handlers replaced with table-driven classifier:
+
+- Deleted the `Error` interface (23 methods, single implementation) — `*SdkError`
+  is returned directly from all chaining methods and `SdkErrorHandler`
+- Deleted ~96 `WithError*` closure-factory functions
+- Replaced with a classifier registry: each `ErrorCode` registers a `classifier`
+  struct with a match function, optional category, and optional message format
+- `SdkErrorHandler` now takes `...ErrorCode` instead of `...func(Error)` —
+  call sites pass error code constants directly
+- 5 `New*` constructors added for non-errResp error cases (`NewUnexpectedError`,
+  `NewReauthFuncNotSet`, `NewInternalServerError`, `NewServiceMaintenance`,
+  `NewPermissionDenied`, `NewQuotaNotFound`)
+
+Callers use standard Go error handling: `errors.Is()`/`errors.As()`,
 `fmt.Errorf("...: %w", err)`, and type-switch on `*sdkerror.SdkError`.
 
-**Remaining:** The functional-option error handler pattern (§4.2) is deferred to a
-future phase.
-
 **Go convention:** Implement the `error` interface. Use sentinel errors or typed
-errors with `errors.Is()` / `errors.As()`. Wrap context with `%w`. This lets
-callers use the standard toolchain to inspect errors.
+errors with `errors.Is()` / `errors.As()`. Wrap context with `%w`.
 
-### 4.2 Functional-option error handlers
+### 4.2 Functional-option error handlers — **RESOLVED**
 
-```go
-WithErrorServerNotFound(errResp ErrorResponse) func(sdkError Error) // and many similar
-```
-
-Error matching is done by registering handler functions, adding indirection that
-makes control flow hard to follow.
-
-**Go convention:** Return errors directly. Let the caller switch on error type
-or use `errors.Is()`.
+Replaced by table-driven classifier registry (see §4.1 phase 3).
 
 ---
 
@@ -280,7 +277,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | God interfaces (>10 methods) | 5 interfaces | 3 packages | **Done** (deleted with §2.1) |
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
-| Custom error framework | 1 package | `sdkerror` | **Partial** (phases 1–2: `error` bridge + return types) |
+| Custom error framework | 1 package | `sdkerror` | **Done** (phases 1–3: `error` bridge, return types, classifier) |
 | Constructors returning interfaces | ~33 functions | gateways, clients | **Done** (4 deferred: `ServiceClient`, `HTTPClient`, `Request`, `SdkAuthentication`) |
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |

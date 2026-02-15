@@ -37,8 +37,8 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(opts *CreateSnapshotByBl
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp),
-			sdkerror.WithErrorSnapshotNameNotValid(errResp)).
+			sdkerror.EcVServerVolumeNotFound,
+			sdkerror.EcVServerSnapshotNameNotValid).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID())
@@ -56,7 +56,7 @@ func (s *VolumeServiceV2) DeleteSnapshotByID(opts *DeleteSnapshotByIDRequest) er
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSnapshotNameNotFound(errResp)).
+			sdkerror.EcVServerSnapshotNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"snapshotId", opts.GetSnapshotID())

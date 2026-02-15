@@ -18,7 +18,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(opts *GetSecgroupByIDRequest) (*entit
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.GetSecgroupID(),
 				"projectId", s.getProjectID())
@@ -40,9 +40,9 @@ func (s *NetworkServiceV2) CreateSecgroup(opts *CreateSecgroupRequest) (*entity.
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupNameAlreadyExists(errResp),
-			sdkerror.WithErrorSecgroupRuleExceedQuota(errResp),
-			sdkerror.WithErrorSecgroupExceedQuota(errResp)).
+			sdkerror.EcVServerSecgroupNameAlreadyExists,
+			sdkerror.EcVServerSecgroupRuleExceedQuota,
+			sdkerror.EcVServerSecgroupExceedQuota).
 			WithKVparameters(
 				"secgroupName", opts.GetSecgroupName(),
 				"projectId", s.getProjectID())
@@ -78,8 +78,8 @@ func (s *NetworkServiceV2) DeleteSecgroupByID(opts *DeleteSecgroupByIDRequest) e
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupInUse(errResp),
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerSecgroupInUse,
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.GetSecgroupID(),
 				"projectId", s.getProjectID())

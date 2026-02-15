@@ -40,15 +40,15 @@ func (s *NetworkServiceV1) CreateEndpoint(opts *CreateEndpointRequest) (*entity.
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointOfVpcExists(errResp),
-			sdkerror.WithErrorLockOnProcess(errResp),
-			sdkerror.WithErrorNetworkNotFound(errResp),
-			sdkerror.WithErrorPurchaseIssue(errResp),
-			sdkerror.WithErrorPaymentMethodNotAllow(errResp),
-			sdkerror.WithErrorCreditNotEnough(errResp),
-			sdkerror.WithErrorSubnetNotFound(errResp),
-			sdkerror.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
-			sdkerror.WithErrorContainInvalidCharacter(errResp)).
+			sdkerror.EcVNetworkEndpointOfVpcExists,
+			sdkerror.EcVNetworkLockOnProcess,
+			sdkerror.EcVServerNetworkNotFound,
+			sdkerror.EcPurchaseIssue,
+			sdkerror.EcPaymentMethodNotAllow,
+			sdkerror.EcCreditNotEnough,
+			sdkerror.EcVServerSubnetNotFound,
+			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
+			sdkerror.EcVNetworkContainInvalidCharacter).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -68,9 +68,9 @@ func (s *NetworkServiceV1) DeleteEndpointByID(opts *DeleteEndpointByIDRequest) e
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointStatusInvalid(errResp),
-			sdkerror.WithErrorNetworkNotFound(errResp),
-			sdkerror.WithErrorSubnetNotFound(errResp)).
+			sdkerror.EcVNetworkEndpointStatusInvalid,
+			sdkerror.EcVServerNetworkNotFound,
+			sdkerror.EcVServerSubnetNotFound).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -134,8 +134,8 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(opts *CreateTagsWith
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointTagExisted(errResp),
-			sdkerror.WithErrorEndpointTagNotFound(errResp)).
+			sdkerror.EcVNetworkEndpointTagExisted,
+			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
@@ -155,7 +155,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(opts *DeleteTagOfEndpoint
 
 	if _, sdkErr := s.VNetworkClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointTagNotFound(errResp)).
+			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
@@ -176,7 +176,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts *UpdateTagValue
 
 	if _, sdkErr := s.VNetworkClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointTagNotFound(errResp)).
+			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
@@ -198,15 +198,15 @@ func (s *NetworkServiceInternalV1) CreateEndpoint(opts *CreateEndpointRequest) (
 
 	if _, sdkErr := s.VNetworkClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorEndpointOfVpcExists(errResp),
-			sdkerror.WithErrorLockOnProcess(errResp),
-			sdkerror.WithErrorNetworkNotFound(errResp),
-			sdkerror.WithErrorPurchaseIssue(errResp),
-			sdkerror.WithErrorPaymentMethodNotAllow(errResp),
-			sdkerror.WithErrorCreditNotEnough(errResp),
-			sdkerror.WithErrorSubnetNotFound(errResp),
-			sdkerror.WithErrorEndpointPackageNotBelongToEndpointService(errResp),
-			sdkerror.WithErrorContainInvalidCharacter(errResp)).
+			sdkerror.EcVNetworkEndpointOfVpcExists,
+			sdkerror.EcVNetworkLockOnProcess,
+			sdkerror.EcVServerNetworkNotFound,
+			sdkerror.EcPurchaseIssue,
+			sdkerror.EcPaymentMethodNotAllow,
+			sdkerror.EcCreditNotEnough,
+			sdkerror.EcVServerSubnetNotFound,
+			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
+			sdkerror.EcVNetworkContainInvalidCharacter).
 			WithParameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}

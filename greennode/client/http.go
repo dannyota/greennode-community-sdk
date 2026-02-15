@@ -177,7 +177,7 @@ func (hc *httpClient) handleReauthBeforeRequest(url string, req Request) (*req.R
 
 func (hc *httpClient) handleResponse(url string, resp *req.Response, req Request) (*req.Response, error) {
 	if resp == nil || resp.Response == nil {
-		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorUnexpected(resp))
+		return nil, sdkerror.NewUnexpectedError(resp)
 	}
 
 	if sdkErr := hc.handleStatusCode(url, resp, req); sdkErr != nil {
@@ -191,26 +191,26 @@ func (hc *httpClient) handleResponse(url string, resp *req.Response, req Request
 	return resp, sdkerror.ErrorHandler(resp.Err)
 }
 
-func (hc *httpClient) handleStatusCode(url string, resp *req.Response, req Request) error {
+func (hc *httpClient) handleStatusCode(url string, resp *req.Response, preq Request) error {
 	switch resp.StatusCode {
 	case http.StatusUnauthorized:
-		return hc.handleUnauthorized(url, resp, req)
+		return hc.handleUnauthorized(url, resp, preq)
 	case http.StatusTooManyRequests:
-		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, url, req, resp), nil,
-			sdkerror.WithErrorPermissionDenied())
+		return defaultErrorResponse(resp.Err, url, preq, resp).
+			WithErrorCode(sdkerror.EcPermissionDenied).
+			WithMessage("Permission Denied")
 	case http.StatusInternalServerError:
-		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, url, req, resp), nil,
-			sdkerror.WithErrorInternalServerError())
+		return defaultErrorResponse(resp.Err, url, preq, resp).
+			WithErrorCode(sdkerror.EcInternalServerError).
+			WithMessage("Internal Server Error")
 	case http.StatusServiceUnavailable:
-		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, url, req, resp), nil,
-			sdkerror.WithErrorServiceMaintenance())
+		return defaultErrorResponse(resp.Err, url, preq, resp).
+			WithErrorCode(sdkerror.EcServiceMaintenance).
+			WithMessage("Service Maintenance")
 	case http.StatusForbidden:
-		return sdkerror.SdkErrorHandler(
-			defaultErrorResponse(resp.Err, url, req, resp), nil,
-			sdkerror.WithErrorPermissionDenied())
+		return defaultErrorResponse(resp.Err, url, preq, resp).
+			WithErrorCode(sdkerror.EcPermissionDenied).
+			WithMessage("Permission Denied")
 	}
 	return nil
 }
@@ -241,7 +241,7 @@ func (hc *httpClient) needReauth(req Request) bool {
 
 func (hc *httpClient) reauthenticate() error {
 	if hc.reauthFunc == nil {
-		return sdkerror.ErrorHandler(nil, sdkerror.WithErrorReauthFuncNotSet())
+		return sdkerror.NewReauthFuncNotSet()
 	}
 
 	hc.reauthmut.Lock()
@@ -304,7 +304,7 @@ func (f *reauthFuture) set(err error) {
 	close(f.done)
 }
 
-func defaultErrorResponse(err error, url string, req Request, resp *req.Response) error {
+func defaultErrorResponse(err error, url string, req Request, resp *req.Response) *sdkerror.SdkError {
 	headers := req.MoreHeaders()
 
 	// Remove sensitive information

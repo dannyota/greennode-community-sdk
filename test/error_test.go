@@ -13,6 +13,6 @@ func TestDeleteListener(t *testing.T) {
 		Message: errorMsg,
 	}
 
-	serr := sdkerror.ErrorHandler(fmt.Errorf("haha"), sdkerror.WithErrorListenerNotFound(errResp))
+	serr := sdkerror.SdkErrorHandler(fmt.Errorf("haha"), errResp, sdkerror.EcVLBListenerNotFound)
 	t.Log(serr)
 }

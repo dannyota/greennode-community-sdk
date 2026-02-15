@@ -17,7 +17,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*en
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
+			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeTypeId", opts.GetVolumeTypeID())
@@ -55,7 +55,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
+			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
@@ -74,7 +74,7 @@ func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*e
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeTypeNotFound(errResp)).
+			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
 				"volumeTypeZoneId", opts.GetVolumeTypeZoneID())
 	}

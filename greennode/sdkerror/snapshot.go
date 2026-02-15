@@ -1,38 +1,11 @@
 package sdkerror
 
-import "strings"
-
 const (
-	patternSnapshotNameNotValid = "only letters (a-z, a-z, 0-9, '.', '@', '_', '-', space) are allowed. your input data length must be between 5 and 50" // "Volume name is not valid"
+	patternSnapshotNameNotValid = "only letters (a-z, a-z, 0-9, '.', '@', '_', '-', space) are allowed. your input data length must be between 5 and 50"
 	patternSnapshotNotFound     = "not found snapshot-volume-point"
 )
 
-func WithErrorSnapshotNameNotValid(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNameNotValid) {
-			sdkError.WithErrorCode(EcVServerSnapshotNameNotValid).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorSnapshotNameNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternSnapshotNotFound) {
-			sdkError.WithErrorCode(EcVServerSnapshotNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
+func init() {
+	register(EcVServerSnapshotNameNotValid, &classifier{match: containsAny(patternSnapshotNameNotValid)})
+	register(EcVServerSnapshotNotFound, &classifier{match: containsAny(patternSnapshotNotFound)})
 }

@@ -18,8 +18,8 @@ func (s *NetworkServiceV2) GetSubnetByID(opts *GetSubnetByIDRequest) (*entity.Su
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSubnetNotBelongNetwork(errResp),
-			sdkerror.WithErrorSubnetNotFound(errResp)).
+			sdkerror.EcVServerSubnetNotBelongNetwork,
+			sdkerror.EcVServerSubnetNotFound).
 			WithKVparameters(
 				"subnetId", opts.GetSubnetID(),
 				"projectId", s.getProjectID())

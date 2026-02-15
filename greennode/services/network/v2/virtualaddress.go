@@ -19,8 +19,8 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSubnetNotFound(errResp),
-			sdkerror.WithErrorVirtualAddressExceedQuota(errResp)).
+			sdkerror.EcVServerSubnetNotFound,
+			sdkerror.EcVServerVirtualAddressExceedQuota).
 			WithKVparameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
@@ -38,8 +38,8 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(opts *DeleteVirtualAddressBy
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVirtualAddressNotFound(errResp),
-			sdkerror.WithErrorVirtualAddressInUse(errResp)).
+			sdkerror.EcVServerVirtualAddressNotFound,
+			sdkerror.EcVServerVirtualAddressInUse).
 			WithKVparameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
@@ -59,7 +59,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequ
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVirtualAddressNotFound(errResp)).
+			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
@@ -79,7 +79,7 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(opts *ListAddressP
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVirtualAddressNotFound(errResp)).
+			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(opts.ToMap()).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}

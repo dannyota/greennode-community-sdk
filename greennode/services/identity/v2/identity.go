@@ -23,9 +23,9 @@ func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity
 
 	if _, sdkErr := s.IAMClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorTooManyFailedLogin(errResp),
-			sdkerror.WithErrorAuthenticationFailed(errResp),
-			sdkerror.WithErrorUnknownAuthFailure(errResp)). // Always put this handler at the end
+			sdkerror.EcTooManyFailedLogins,
+			sdkerror.EcAuthenticationFailed,
+			sdkerror.EcUnknownAuthFailure). // Always put this handler at the end
 			WithKVparameters("clientId", opts.GetClientID())
 	}
 

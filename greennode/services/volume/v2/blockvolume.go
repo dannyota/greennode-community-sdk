@@ -18,10 +18,10 @@ func (s *VolumeServiceV2) CreateBlockVolume(opts *CreateBlockVolumeRequest) (*en
 
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeTypeNotFound(errResp),
-			sdkerror.WithErrorVolumeSizeOutOfRange(errResp),
-			sdkerror.WithErrorVolumeSizeExceedGlobalQuota(errResp),
-			sdkerror.WithErrorVolumeNameNotValid(errResp)).
+			sdkerror.EcVServerVolumeTypeNotFound,
+			sdkerror.EcVServerVolumeSizeOutOfRange,
+			sdkerror.EcVServerVolumeSizeExceedGlobalQuota,
+			sdkerror.EcVServerVolumeNameNotValid).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap())
 	}
@@ -38,7 +38,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(opts *DeleteBlockVolumeByIDReque
 
 	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp)).
+			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID())
@@ -58,7 +58,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(opts *ListBlockVolumesRequest) (*enti
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorPagingInvalid(errResp)).
+			sdkerror.EcPagingInvalid).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(opts.ToMap())
 	}
@@ -77,7 +77,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(opts *GetBlockVolumeByIDRequest) (*
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp)).
+			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID())
@@ -98,10 +98,10 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(opts *ResizeBlockVolumeByIDReque
 
 	if _, sdkErr := s.VServerClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp),
-			sdkerror.WithErrorVolumeSizeOutOfRange(errResp),
-			sdkerror.WithErrorVolumeMustSameZone(errResp),
-			sdkerror.WithErrorVolumeUnchanged(errResp)).
+			sdkerror.EcVServerVolumeNotFound,
+			sdkerror.EcVServerVolumeSizeOutOfRange,
+			sdkerror.EcVServerVolumeMustSameZone,
+			sdkerror.EcVServerVolumeUnchanged).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID(),
@@ -122,7 +122,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(opts *GetUnderBlockVolumeIDReque
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorVolumeNotFound(errResp)).
+			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID())
@@ -143,15 +143,15 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(opts *MigrateBlockVolumeByIDReq
 
 	if _, err := s.VServerClient.Put(url, req); err != nil {
 		enriched := sdkerror.SdkErrorHandler(err, errResp,
-			sdkerror.WithErrorVolumeMigrateInSameZone(errResp),
-			sdkerror.WithErrorVolumeMigrateMissingInit(errResp),
-			sdkerror.WithErrorVolumeMigrateNeedProcess(errResp),
-			sdkerror.WithErrorVolumeMigrateNeedConfirm(errResp),
-			sdkerror.WithErrorVolumeMigrateBeingProcess(errResp),
-			sdkerror.WithErrorVolumeMigrateProcessingConfirm(errResp),
-			sdkerror.WithErrorVolumeMigrateBeingMigrating(errResp), // should under WithErrorVolumeMigrateBeingProcess
-			sdkerror.WithErrorVolumeMigrateBeingFinish(errResp),
-			sdkerror.WithErrorVolumeNotFound(errResp)).
+			sdkerror.EcVServerVolumeMigrateInSameZone,
+			sdkerror.EcVServerVolumeMigrateMissingInit,
+			sdkerror.EcVServerVolumeMigrateNeedProcess,
+			sdkerror.EcVServerVolumeMigrateNeedConfirm,
+			sdkerror.EcVServerVolumeMigrateBeingProcess,
+			sdkerror.EcVServerVolumeMigrateProcessingConfirm,
+			sdkerror.EcVServerVolumeMigrateBeingMigrating, // should under WithErrorVolumeMigrateBeingProcess
+			sdkerror.EcVServerVolumeMigrateBeingFinish,
+			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
 				"volumeId", opts.GetBlockVolumeID())

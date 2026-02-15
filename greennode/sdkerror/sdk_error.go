@@ -6,42 +6,10 @@ import (
 	"sync"
 )
 
-type Error interface {
-	IsError(errCode ErrorCode) bool
-	IsErrorAny(errCodes ...ErrorCode) bool
-	IsCategory(category ErrorCategory) bool
-	IsCategories(categories ...ErrorCategory) bool
-
-	WithErrorCode(errCode ErrorCode) Error
-	WithMessage(msg string) Error
-	WithErrors(errs ...error) Error
-	WithErrorCategories(categories ...ErrorCategory) Error
-	WithParameters(params map[string]any) Error
-	WithKVparameters(params ...any) Error
-
-	Err() error
-	GetMessage() string
-	ErrorCode() ErrorCode
-	StringErrorCode() string
-	Parameters() map[string]any
-	ErrorCategories() []ErrorCategory
-	ErrorMessages() string
-	Error() string
-	ListParameters() []any
-
-	RemoveCategories(categories ...ErrorCategory) Error
-
-	AppendCategories(categories ...ErrorCategory) Error
-}
-
 type ErrorResponse interface {
 	GetMessage() string
 	Err() error
 }
-
-var (
-	_ Error = new(SdkError)
-)
 
 type (
 	SdkError struct {
@@ -93,17 +61,17 @@ func (e *SdkError) IsCategories(categories ...ErrorCategory) bool {
 	return false
 }
 
-func (e *SdkError) WithErrorCode(errCode ErrorCode) Error {
+func (e *SdkError) WithErrorCode(errCode ErrorCode) *SdkError {
 	e.errorCode = errCode
 	return e
 }
 
-func (e *SdkError) WithMessage(msg string) Error {
+func (e *SdkError) WithMessage(msg string) *SdkError {
 	e.message = msg
 	return e
 }
 
-func (e *SdkError) WithErrors(errs ...error) Error {
+func (e *SdkError) WithErrors(errs ...error) *SdkError {
 	if len(errs) == 0 {
 		return e
 	}
@@ -120,7 +88,7 @@ func (e *SdkError) WithErrors(errs ...error) Error {
 	return e
 }
 
-func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) Error {
+func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) *SdkError {
 	if e.categories == nil {
 		e.categories = make(map[ErrorCategory]struct{})
 	}
@@ -131,7 +99,7 @@ func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) Error {
 	return e
 }
 
-func (e *SdkError) WithParameters(params map[string]any) Error {
+func (e *SdkError) WithParameters(params map[string]any) *SdkError {
 	if e.parameters == nil {
 		e.parameters = new(sync.Map)
 		return e
@@ -144,7 +112,7 @@ func (e *SdkError) WithParameters(params map[string]any) Error {
 	return e
 }
 
-func (e *SdkError) WithKVparameters(params ...any) Error {
+func (e *SdkError) WithKVparameters(params ...any) *SdkError {
 	if e.parameters == nil {
 		e.parameters = new(sync.Map)
 	}
@@ -239,7 +207,7 @@ func (e *SdkError) ListParameters() []any {
 	return result
 }
 
-func (e *SdkError) RemoveCategories(categories ...ErrorCategory) Error {
+func (e *SdkError) RemoveCategories(categories ...ErrorCategory) *SdkError {
 	if e.categories == nil {
 		return e
 	}
@@ -250,7 +218,7 @@ func (e *SdkError) RemoveCategories(categories ...ErrorCategory) Error {
 	return e
 }
 
-func (e *SdkError) AppendCategories(categories ...ErrorCategory) Error {
+func (e *SdkError) AppendCategories(categories ...ErrorCategory) *SdkError {
 	if e.categories == nil {
 		e.categories = make(map[ErrorCategory]struct{})
 	}

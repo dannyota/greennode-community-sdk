@@ -1,12 +1,9 @@
 package sdkerror
 
-import (
-	"regexp"
-	"strings"
-)
+import "regexp"
 
-const ( // "Cannot get volume type with id vtype-6790f903-38d2-454d-919e-5b49184b5927"
-	patternVolumeNameNotValid              = "only letters (a-z, a-z, 0-9, '.', '@', '_', '-', space) are allowed. your input data length must be between 5 and 50" // "Volume name is not valid"
+const (
+	patternVolumeNameNotValid              = "only letters (a-z, a-z, 0-9, '.', '@', '_', '-', space) are allowed. your input data length must be between 5 and 50"
 	patternVolumeSizeOutOfRange            = "field volume_size must from"
 	patternVolumeNewSizeOutOfRange         = "field new_volume_size must from"
 	patternVolumeNotFound                  = `volume with id [^.]+ is not found`
@@ -34,311 +31,33 @@ var (
 	regexErrorVolumeNotFound = regexp.MustCompile(patternVolumeNotFound)
 )
 
-func WithErrorVolumeNameNotValid(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNameNotValid) {
-			sdkError.WithErrorCode(EcVServerVolumeNameNotValid).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
+func init() {
+	register(EcVServerVolumeNameNotValid, &classifier{match: containsAny(patternVolumeNameNotValid)})
+	register(EcVServerVolumeSizeOutOfRange, &classifier{
+		match: containsAny(patternVolumeSizeOutOfRange, patternVolumeNewSizeOutOfRange),
+	})
+	register(EcVServerVolumeSizeExceedGlobalQuota, &classifier{
+		match: containsAny(patternVolumeSizeExceedGlobalQuota), category: ErrCatQuota,
+	})
+	register(EcVServerVolumeExceedQuota, &classifier{
+		match: containsAny(patternVolumeExceedQuota), category: ErrCatQuota,
+	})
+	register(EcVServerVolumeNotFound, &classifier{
+		match: matchAnyOf(matchRegexps(regexErrorVolumeNotFound), containsAny(patternVolumeNotFound2)),
+	})
+	register(EcVServerVolumeAvailable, &classifier{match: containsAny(patternVolumeAvailable)})
+	register(EcVServerVolumeAlreadyAttached, &classifier{match: containsAny(patternVolumeAlreadyAttached)})
+	register(EcVServerVolumeAlreadyAttachedThisServer, &classifier{match: containsAny(patternVolumeAlreadyAttachedThisServer)})
+	register(EcVServerVolumeInProcess, &classifier{match: containsAny(patternVolumeInProcess)})
+	register(EcVServerVolumeUnchanged, &classifier{match: containsAny(patternVolumeUnchaged)})
+	register(EcVServerVolumeMustSameZone, &classifier{match: containsAny(patternVolumeMustSameZone)})
+	register(EcVServerVolumeMigrateMissingInit, &classifier{match: containsAny(patternVolumeMigrateMissingInit)})
+	register(EcVServerVolumeMigrateNeedProcess, &classifier{match: containsAny(patternVolumeMigrateNeedProcess)})
+	register(EcVServerVolumeMigrateNeedConfirm, &classifier{match: containsAny(patternVolumeMigrateNeedConfirm)})
+	register(EcVServerVolumeMigrateBeingProcess, &classifier{match: containsAny(patternVolumeMigrateBeingProcess)})
+	register(EcVServerVolumeMigrateBeingFinish, &classifier{match: containsAny(patternVolumeMigrateBeingFinish)})
+	register(EcVServerVolumeMigrateProcessingConfirm, &classifier{match: containsAny(patternVolumeMigrateProcessingConfirm)})
+	register(EcVServerVolumeMigrateBeingMigrating, &classifier{match: containsAny(patternVolumeMigrateBeingMigrating)})
+	register(EcVServerVolumeMigrateInSameZone, &classifier{match: containsAny(patternVolumeMigrateInSameZone)})
+	register(EcVServerVolumeIsMigrating, &classifier{match: containsAny(patternVolumeIsMigrating)})
 }
-
-func WithErrorVolumeSizeOutOfRange(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeSizeOutOfRange) ||
-			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNewSizeOutOfRange) {
-			sdkError.WithErrorCode(EcVServerVolumeSizeOutOfRange).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeSizeExceedGlobalQuota(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeSizeExceedGlobalQuota) {
-			sdkError.WithErrorCode(EcVServerVolumeSizeExceedGlobalQuota).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err()).
-				WithErrorCategories(ErrCatQuota)
-		}
-	}
-}
-
-func WithErrorVolumeExceedQuota(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeExceedQuota) {
-			sdkError.WithErrorCode(EcVServerVolumeExceedQuota).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err()).
-				WithErrorCategories(ErrCatQuota)
-		}
-	}
-}
-
-func WithErrorVolumeNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorVolumeNotFound.FindString(errMsg) != "" ||
-			strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeNotFound2) {
-			sdkError.WithErrorCode(EcVServerVolumeNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-// WithErrorVolumeAvailable indicates that the volume is AVAILABLE state but try to make detach this volume out of server
-func WithErrorVolumeAvailable(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAvailable) {
-			sdkError.WithErrorCode(EcVServerVolumeAvailable).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeAlreadyAttached(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttached) {
-			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttached).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeAlreadyAttachedThisServer(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeAlreadyAttachedThisServer) {
-			sdkError.WithErrorCode(EcVServerVolumeAlreadyAttachedThisServer).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeInProcess(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeInProcess) {
-			sdkError.WithErrorCode(EcVServerVolumeInProcess).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeUnchanged(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeUnchaged) {
-			sdkError.WithErrorCode(EcVServerVolumeUnchanged).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMustSameZone(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMustSameZone) {
-			sdkError.WithErrorCode(EcVServerVolumeMustSameZone).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateMissingInit(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateMissingInit) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateMissingInit).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateNeedProcess(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedProcess) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedProcess).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateNeedConfirm(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateNeedConfirm) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateNeedConfirm).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateBeingProcess(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingProcess) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingProcess).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateBeingFinish(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingFinish) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingFinish).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateProcessingConfirm(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateProcessingConfirm) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateProcessingConfirm).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-//
-
-func WithErrorVolumeMigrateBeingMigrating(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateBeingMigrating) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateBeingMigrating).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeMigrateInSameZone(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeMigrateInSameZone) {
-			sdkError.WithErrorCode(EcVServerVolumeMigrateInSameZone).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorVolumeIsMigrating(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternVolumeIsMigrating) {
-			sdkError.WithErrorCode(EcVServerVolumeIsMigrating).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-// patternVolumeIsMigrating

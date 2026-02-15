@@ -63,7 +63,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
 
 	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorTagKeyInvalid(errResp)).WithParameters(opts.ToMap())
+			sdkerror.EcTagKeyInvalid).WithParameters(opts.ToMap())
 	}
 
 	return nil

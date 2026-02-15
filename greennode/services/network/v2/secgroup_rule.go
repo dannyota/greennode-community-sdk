@@ -19,9 +19,9 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (
 
 	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupNotFound(errResp),
-			sdkerror.WithErrorSecgroupRuleExceedQuota(errResp),
-			sdkerror.WithErrorSecgroupRuleAlreadyExists(errResp)).
+			sdkerror.EcVServerSecgroupNotFound,
+			sdkerror.EcVServerSecgroupRuleExceedQuota,
+			sdkerror.EcVServerSecgroupRuleAlreadyExists).
 			WithParameters(opts.ToMap()).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -39,8 +39,8 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(opts *DeleteSecgroupRuleByIDRe
 
 	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupRuleNotFound(errResp),
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerSecgroupRuleNotFound,
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.GetSecgroupID(),
 				"secgroupRuleId", opts.GetSecgroupRuleID(),
@@ -62,7 +62,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(opts *ListSecgroupRules
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters("projectId", s.getProjectID(), "secgroupId", opts.GetSecgroupID())
 	}
 

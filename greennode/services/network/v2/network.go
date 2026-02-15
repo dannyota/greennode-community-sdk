@@ -18,7 +18,7 @@ func (s *NetworkServiceV2) GetNetworkByID(opts *GetNetworkByIDRequest) (*entity.
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorNetworkNotFound(errResp)).
+			sdkerror.EcVServerNetworkNotFound).
 			WithKVparameters(
 				"networkId", opts.GetNetworkID(),
 				"projectId", s.getProjectID())

@@ -1,9 +1,6 @@
 package sdkerror
 
-import (
-	"regexp"
-	"strings"
-)
+import "regexp"
 
 const (
 	patternNetworkNotFound                  = "is not found"
@@ -24,110 +21,16 @@ var (
 	regexErrorAddressPairExisted               = regexp.MustCompile(patternAddressPairExisted)
 )
 
-func WithErrorNetworkNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternNetworkNotFound) ||
-			strings.ToUpper(strings.TrimSpace(errResp.Err().Error())) == "VPC_IS_NOT_FOUND" {
-			sdkError.WithErrorCode(EcVServerNetworkNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorSubnetNotBelongNetwork(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorSubnetNotBelongNetwork.FindString(errMsg) != "" {
-			sdkError.WithErrorCode(EcVServerSubnetNotBelongNetwork).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorSubnetNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorSubnetNotFound.FindString(errMsg) != "" ||
-			regexErrorSubnetNotFound2.FindString(errMsg) != "" ||
-			strings.ToUpper(strings.TrimSpace(errResp.Err().Error())) == "SUBNET_IS_NOT_FOUND" {
-			sdkError.WithErrorCode(EcVServerSubnetNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorInternalNetworkInterfaceNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorInternalNetworkInterfaceNotFound.FindString(errMsg) != "" {
-			sdkError.WithErrorCode(EcVServerInternalNetworkInterfaceNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorAddressPairExisted(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))
-		if regexErrorAddressPairExisted.FindString(errMsg) != "" {
-			sdkError.WithErrorCode(EcVServerAddressPairExisted).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorWanIpAvailable(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), patternWanIpAvailable) {
-			sdkError.WithErrorCode(EcVServerWanIpAvailable).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
-}
-
-func WithErrorWanIDNotFound(errResp ErrorResponse) func(sdkError Error) {
-	return func(sdkError Error) {
-		if errResp == nil {
-			return
-		}
-
-		errMsg := errResp.GetMessage()
-		if strings.Contains(strings.ToLower(strings.TrimSpace(errMsg)), pattermWapIDNotFound) {
-			sdkError.WithErrorCode(EcVServerWanIDNotFound).
-				WithMessage(errMsg).
-				WithErrors(errResp.Err())
-		}
-	}
+func init() {
+	register(EcVServerNetworkNotFound, &classifier{
+		match: matchAnyOf(containsAny(patternNetworkNotFound), matchErrCode("VPC_IS_NOT_FOUND")),
+	})
+	register(EcVServerSubnetNotBelongNetwork, &classifier{match: matchRegexps(regexErrorSubnetNotBelongNetwork)})
+	register(EcVServerSubnetNotFound, &classifier{
+		match: matchAnyOf(matchRegexps(regexErrorSubnetNotFound, regexErrorSubnetNotFound2), matchErrCode("SUBNET_IS_NOT_FOUND")),
+	})
+	register(EcVServerInternalNetworkInterfaceNotFound, &classifier{match: matchRegexps(regexErrorInternalNetworkInterfaceNotFound)})
+	register(EcVServerAddressPairExisted, &classifier{match: matchRegexps(regexErrorAddressPairExisted)})
+	register(EcVServerWanIpAvailable, &classifier{match: containsAny(patternWanIpAvailable)})
+	register(EcVServerWanIDNotFound, &classifier{match: containsAny(pattermWapIDNotFound)})
 }

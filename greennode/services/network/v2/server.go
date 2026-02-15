@@ -18,7 +18,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts *ListAllServersBySecg
 
 	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.WithErrorSecgroupNotFound(errResp)).
+			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.GetSecgroupID(),
 				"projectId", s.getProjectID())
