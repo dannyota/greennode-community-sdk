@@ -26,18 +26,6 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name":        r.Name,
-		"description": r.Description,
-		"crossProjectRequest": map[string]any{
-			"projectId": r.CrossProjectRequest.ProjectID,
-			"subnetId":  r.CrossProjectRequest.SubnetID,
-			"ipAddress": r.CrossProjectRequest.IPAddress,
-		},
-	}
-}
-
 func (r *CreateVirtualAddressCrossProjectRequest) AddUserAgent(agent ...string) *CreateVirtualAddressCrossProjectRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -59,12 +47,6 @@ func (r *DeleteVirtualAddressByIDRequest) AddUserAgent(agent ...string) *DeleteV
 	return r
 }
 
-func (r *DeleteVirtualAddressByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"virtualAddressId": r.VirtualAddressID,
-	}
-}
-
 // Api Get virtual address by ID
 
 type GetVirtualAddressByIDRequest struct {
@@ -75,12 +57,6 @@ type GetVirtualAddressByIDRequest struct {
 func (r *GetVirtualAddressByIDRequest) AddUserAgent(agent ...string) *GetVirtualAddressByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
-}
-
-func (r *GetVirtualAddressByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"virtualAddressId": r.VirtualAddressID,
-	}
 }
 
 // Api list address pairs by virtual address ID
@@ -95,8 +71,3 @@ func (r *ListAddressPairsByVirtualAddressIDRequest) AddUserAgent(agent ...string
 	return r
 }
 
-func (r *ListAddressPairsByVirtualAddressIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"virtualAddressId": r.VirtualAddressID,
-	}
-}

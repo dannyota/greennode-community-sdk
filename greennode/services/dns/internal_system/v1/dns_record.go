@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *VDnsServiceInternal) ListRecords(opts *ListRecordsRequest, portalUserID string) (*entity.ListDnsRecords, error) {
@@ -19,7 +20,7 @@ func (s *VDnsServiceInternal) ListRecords(opts *ListRecordsRequest, portalUserID
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -39,7 +40,7 @@ func (s *VDnsServiceInternal) GetRecord(opts *GetRecordRequest, portalUserID str
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -58,7 +59,7 @@ func (s *VDnsServiceInternal) UpdateRecord(opts *UpdateRecordRequest, portalUser
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -76,7 +77,7 @@ func (s *VDnsServiceInternal) DeleteRecord(opts *DeleteRecordRequest, portalUser
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -97,7 +98,7 @@ func (s *VDnsServiceInternal) CreateDnsRecord(opts *CreateDnsRecordRequest, port
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 

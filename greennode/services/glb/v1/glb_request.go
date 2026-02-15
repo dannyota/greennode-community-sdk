@@ -146,16 +146,6 @@ func (r *CreateGlobalLoadBalancerRequest) AddUserAgent(agent ...string) *CreateG
 	return r
 }
 
-func (r *CreateGlobalLoadBalancerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"description":    r.Description,
-		"name":           r.Name,
-		"type":           r.Type,
-		"globalListener": r.GlobalListener,
-		"globalPool":     r.GlobalPool,
-	}
-}
-
 func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRequest {
 	opts := &CreateGlobalLoadBalancerRequest{
 		Description:    "",

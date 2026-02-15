@@ -6,6 +6,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *GLBServiceV1) ListGlobalPools(opts *ListGlobalPoolsRequest) (*entity.ListGlobalPools, error) {
@@ -43,7 +44,7 @@ func (s *GLBServiceV1) CreateGlobalPool(opts *CreateGlobalPoolRequest) (*entity.
 		fmt.Println("sdkErr: ", sdkErr)
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -64,7 +65,7 @@ func (s *GLBServiceV1) UpdateGlobalPool(opts *UpdateGlobalPoolRequest) (*entity.
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -163,7 +164,7 @@ func (s *GLBServiceV1) UpdateGlobalPoolMember(opts *UpdateGlobalPoolMemberReques
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -182,7 +183,7 @@ func (s *GLBServiceV1) PatchGlobalPoolMembers(opts *PatchGlobalPoolMembersReques
 	if _, sdkErr := s.VLBClient.Patch(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -222,7 +223,7 @@ func (s *GLBServiceV1) CreateGlobalListener(opts *CreateGlobalListenerRequest) (
 	if _, sdkErr := s.VLBClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -243,7 +244,7 @@ func (s *GLBServiceV1) UpdateGlobalListener(opts *UpdateGlobalListenerRequest) (
 	if _, sdkErr := s.VLBClient.Put(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 
 	}
@@ -322,7 +323,7 @@ func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 
 	if _, sdkErr := s.VLBClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 

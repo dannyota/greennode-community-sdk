@@ -1,9 +1,18 @@
 package common
 
 import (
+	"encoding/json"
 	"slices"
 	"strings"
 )
+
+// StructToMap converts a struct to map[string]any using its JSON tags.
+func StructToMap(v any) map[string]any {
+	b, _ := json.Marshal(v)
+	var m map[string]any
+	_ = json.Unmarshal(b, &m)
+	return m
+}
 
 func Ptr[T any](v T) *T { return &v }
 

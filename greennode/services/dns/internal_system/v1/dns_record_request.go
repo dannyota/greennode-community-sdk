@@ -30,13 +30,6 @@ func (r *ListRecordsRequest) WithName(name string) *ListRecordsRequest {
 	return r
 }
 
-func (r *ListRecordsRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-		"name":         r.Name,
-	}
-}
-
 func NewListRecordsRequest(hostedZoneID string) *ListRecordsRequest {
 	return &ListRecordsRequest{
 		HostedZoneID: hostedZoneID,
@@ -67,13 +60,6 @@ func (r *GetRecordRequest) WithHostedZoneID(hostedZoneID string) *GetRecordReque
 func (r *GetRecordRequest) WithRecordID(recordID string) *GetRecordRequest {
 	r.RecordID = recordID
 	return r
-}
-
-func (r *GetRecordRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-		"recordId":     r.RecordID,
-	}
 }
 
 func NewGetRecordRequest(hostedZoneID, recordID string) *GetRecordRequest {
@@ -159,22 +145,6 @@ func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]
 	return body
 }
 
-func (r *UpdateRecordRequest) ToMap() map[string]any {
-	m := map[string]any{
-		"hostedZoneId":  r.HostedZoneID,
-		"recordId":      r.RecordID,
-		"subDomain":     r.SubDomain,
-		"ttl":           r.TTL,
-		"type":          r.Type,
-		"routingPolicy": r.RoutingPolicy,
-		"value":         r.Value,
-	}
-	if r.EnableStickySession != nil {
-		m["enableStickySession"] = *r.EnableStickySession
-	}
-	return m
-}
-
 func NewUpdateRecordRequest(hostedZoneID, recordID string) *UpdateRecordRequest {
 	return &UpdateRecordRequest{
 		HostedZoneID: hostedZoneID,
@@ -206,13 +176,6 @@ func (r *DeleteRecordRequest) WithHostedZoneID(hostedZoneID string) *DeleteRecor
 func (r *DeleteRecordRequest) WithRecordID(recordID string) *DeleteRecordRequest {
 	r.RecordID = recordID
 	return r
-}
-
-func (r *DeleteRecordRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-		"recordId":     r.RecordID,
-	}
 }
 
 func NewDeleteRecordRequest(hostedZoneID, recordID string) *DeleteRecordRequest {
@@ -292,21 +255,6 @@ func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[stri
 		body["enableStickySession"] = *r.EnableStickySession
 	}
 	return body
-}
-
-func (r *CreateDnsRecordRequest) ToMap() map[string]any {
-	m := map[string]any{
-		"hostedZoneId":  r.HostedZoneID,
-		"subDomain":     r.SubDomain,
-		"ttl":           r.TTL,
-		"type":          r.Type,
-		"routingPolicy": r.RoutingPolicy,
-		"value":         r.Value,
-	}
-	if r.EnableStickySession != nil {
-		m["enableStickySession"] = *r.EnableStickySession
-	}
-	return m
 }
 
 func NewCreateDnsRecordRequest(hostedZoneID, subDomain string, ttl int, recordType DnsRecordType, routingPolicy RoutingPolicy, value []RecordValueRequest) *CreateDnsRecordRequest {

@@ -64,35 +64,6 @@ type CreateEndpointRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateEndpointRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"resourceType":      r.ResourceType,
-		"action":            r.Action,
-		"isBuyMorePoc":      r.ResourceInfo.IsBuyMorePoc,
-		"isPoc":             r.ResourceInfo.IsPoc,
-		"isEnableAutoRenew": r.ResourceInfo.IsEnableAutoRenew,
-		"endpointName":      r.ResourceInfo.EndpointName,
-		"categoryID":        r.ResourceInfo.CategoryUuid,
-		"serviceId":         r.ResourceInfo.ServiceUuid,
-		"packageId":         r.ResourceInfo.PackageUuid,
-		"vpcId":             r.ResourceInfo.VpcUuid,
-		"subnetId":          r.ResourceInfo.SubnetUuid,
-		"regionId":          r.ResourceInfo.RegionUuid,
-		"projectId":         r.ResourceInfo.ProjectUuid,
-		"description":       r.ResourceInfo.Description,
-		"enableAZ":          r.ResourceInfo.EnableAZ,
-		"enableDnsName":     r.ResourceInfo.EnableDnsName,
-		"networking":        r.ResourceInfo.Networking,
-		"scaling":           r.ResourceInfo.Scaling,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
-}
-
 func (r *CreateEndpointRequest) AddUserAgent(agent ...string) *CreateEndpointRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
@@ -217,43 +188,12 @@ func (r *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) any 
 	return r
 }
 
-func (r *DeleteEndpointByIDRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"serviceId":  r.EndpointServiceUuid,
-		"endpointId": r.EndpointID,
-		"projectId":  r.ProjectUuid,
-		"regionId":   r.RegionUuid,
-		"vpcId":      r.VpcUuid,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
-}
-
 type ListEndpointsRequest struct {
 	Page  int
 	Size  int
 	VpcID string
 	Uuid  string
 	common.UserAgent
-}
-
-func (r *ListEndpointsRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"page":  r.Page,
-		"size":  r.Size,
-		"vpcId": r.VpcID,
-		"uuid":  r.Uuid,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
 }
 
 func (r *ListEndpointsRequest) WithPage(page int) *ListEndpointsRequest {
@@ -333,18 +273,6 @@ func (r *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
 	return query
 }
 
-func (r *ListTagsByEndpointIDRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"resourceUuid": r.ID,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
-}
-
 func (r *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
 	return r.PortalUser.GetMapHeaders()
 }
@@ -369,20 +297,6 @@ type CreateTagsWithEndpointIDRequest struct {
 	} `json:"tags"`
 
 	SystemTag bool `json:"systemTag"`
-}
-
-func (r *CreateTagsWithEndpointIDRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"resourceUuid": r.ID,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	res["tags"] = r.Tags
-
-	return res
 }
 
 func (r *CreateTagsWithEndpointIDRequest) AddUserAgent(agent ...string) *CreateTagsWithEndpointIDRequest {
@@ -420,18 +334,6 @@ type DeleteTagOfEndpointRequest struct {
 	TagID     string
 }
 
-func (r *DeleteTagOfEndpointRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"tagId": r.TagID,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
-}
-
 func (r *DeleteTagOfEndpointRequest) AddUserAgent(agent ...string) *DeleteTagOfEndpointRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
@@ -458,19 +360,6 @@ type UpdateTagValueOfEndpointRequest struct {
 	TagID     string
 	ProjectID string
 	TagValue  string `json:"tagValue"`
-}
-
-func (r *UpdateTagValueOfEndpointRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"tagId":    r.TagID,
-		"tagValue": r.TagValue,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	return res
 }
 
 func (r *UpdateTagValueOfEndpointRequest) AddUserAgent(agent ...string) *UpdateTagValueOfEndpointRequest {

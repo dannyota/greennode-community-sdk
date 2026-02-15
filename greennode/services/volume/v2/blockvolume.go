@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *VolumeServiceV2) CreateBlockVolume(opts *CreateBlockVolumeRequest) (*entity.Volume, error) {
@@ -23,7 +24,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(opts *CreateBlockVolumeRequest) (*en
 			sdkerror.EcVServerVolumeSizeExceedGlobalQuota,
 			sdkerror.EcVServerVolumeNameNotValid).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap())
+			WithParameters(common.StructToMap(opts))
 	}
 
 	return resp.ToEntityVolume(), nil
@@ -60,7 +61,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(opts *ListBlockVolumesRequest) (*enti
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcPagingInvalid).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap())
+			WithParameters(common.StructToMap(opts))
 	}
 
 	return resp.ToEntityListVolumes(), nil

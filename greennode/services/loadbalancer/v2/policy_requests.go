@@ -95,18 +95,6 @@ func (r *CreatePolicyRequest) toRequestBody() any {
 	return nil
 }
 
-func (r *CreatePolicyRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name":             r.Name,
-		"action":           string(r.Action),
-		"rules":            r.Rules,
-		"redirectPoolId":   r.RedirectPoolID,
-		"redirectUrl":      r.RedirectURL,
-		"redirectHttpCode": r.RedirectHTTPCode,
-		"keepQueryString":  r.KeepQueryString,
-	}
-}
-
 func (r *CreatePolicyRequest) WithName(name string) *CreatePolicyRequest {
 	r.Name = name
 	return r

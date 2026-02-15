@@ -20,12 +20,6 @@ func (r *GetHostedZoneByIDRequest) WithHostedZoneID(hostedZoneID string) *GetHos
 	return r
 }
 
-func (r *GetHostedZoneByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-	}
-}
-
 func NewGetHostedZoneByIDRequest(hostedZoneID string) *GetHostedZoneByIDRequest {
 	return &GetHostedZoneByIDRequest{
 		HostedZoneID: hostedZoneID,
@@ -46,12 +40,6 @@ func (r *ListHostedZonesRequest) GetName() string {
 func (r *ListHostedZonesRequest) WithName(name string) *ListHostedZonesRequest {
 	r.Name = name
 	return r
-}
-
-func (r *ListHostedZonesRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name": r.Name,
-	}
 }
 
 func NewListHostedZonesRequest() *ListHostedZonesRequest {
@@ -97,15 +85,6 @@ func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[str
 	}
 }
 
-func (r *CreateHostedZoneRequest) ToMap() map[string]any {
-	return map[string]any{
-		"domainName":  r.DomainName,
-		"assocVpcIds": r.AssocVpcIDs,
-		"type":        r.Type,
-		"description": r.Description,
-	}
-}
-
 func NewCreateHostedZoneRequest(domainName string, assocVpcIDs []string, zoneType HostedZoneType) *CreateHostedZoneRequest {
 	return &CreateHostedZoneRequest{
 		DomainName:  domainName,
@@ -128,12 +107,6 @@ func (r *DeleteHostedZoneRequest) GetHostedZoneID() string {
 func (r *DeleteHostedZoneRequest) WithHostedZoneID(hostedZoneID string) *DeleteHostedZoneRequest {
 	r.HostedZoneID = hostedZoneID
 	return r
-}
-
-func (r *DeleteHostedZoneRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-	}
 }
 
 func NewDeleteHostedZoneRequest(hostedZoneID string) *DeleteHostedZoneRequest {
@@ -174,14 +147,6 @@ func (r *UpdateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[str
 	return map[string]any{
 		"assocVpcIds": r.AssocVpcIDs,
 		"description": r.Description,
-	}
-}
-
-func (r *UpdateHostedZoneRequest) ToMap() map[string]any {
-	return map[string]any{
-		"hostedZoneId": r.HostedZoneID,
-		"assocVpcIds":  r.AssocVpcIDs,
-		"description":  r.Description,
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (*entity.SecgroupRule, error) {
@@ -22,7 +23,7 @@ func (s *NetworkServiceV2) CreateSecgroupRule(opts *CreateSecgroupRuleRequest) (
 			sdkerror.EcVServerSecgroupNotFound,
 			sdkerror.EcVServerSecgroupRuleExceedQuota,
 			sdkerror.EcVServerSecgroupRuleAlreadyExists).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 

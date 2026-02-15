@@ -35,20 +35,6 @@ type CreateLoadBalancerRequest struct {
 	common.UserAgent
 }
 
-func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name":            r.Name,
-		"packageId":       r.PackageID,
-		"scheme":          r.Scheme,
-		"subnetId":        r.SubnetID,
-		"backendSubnetId": r.BackEndSubnetID,
-		"projectId":       r.ProjectID,
-		"type":            r.Type,
-		"tags":            r.Tags,
-		"zoneId":          r.ZoneID,
-	}
-}
-
 func (r *CreateLoadBalancerRequest) prepare() {
 	if r.Pool != nil {
 		r.Pool.prepare()

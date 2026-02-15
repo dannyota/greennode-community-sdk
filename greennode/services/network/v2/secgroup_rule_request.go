@@ -79,19 +79,6 @@ type ( //_______________________________________________________________________
 	SecgroupRuleProtocol  string
 )
 
-func (r *CreateSecgroupRuleRequest) ToMap() map[string]any {
-	return map[string]any{
-		"description":     r.Description,
-		"direction":       r.Direction,
-		"etherType":       r.EtherType,
-		"portRangeMax":    r.PortRangeMax,
-		"portRangeMin":    r.PortRangeMin,
-		"protocol":        r.Protocol,
-		"remoteIpPrefix":  r.RemoteIPPrefix,
-		"securityGroupId": r.SecurityGroupID,
-	}
-}
-
 func (r *CreateSecgroupRuleRequest) AddUserAgent(agent ...string) *CreateSecgroupRuleRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

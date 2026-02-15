@@ -107,15 +107,3 @@ func (r *CreateListenerRequest) AddCidrs(cidrs ...string) *CreateListenerRequest
 	return r
 }
 
-func (r *CreateListenerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"listenerName":         r.ListenerName,
-		"listenerProtocol":     r.ListenerProtocol,
-		"listenerProtocolPort": r.ListenerProtocolPort,
-		"timeoutClient":        r.TimeoutClient,
-		"timeoutConnection":    r.TimeoutConnection,
-		"timeoutMember":        r.TimeoutMember,
-		"allowedCidrs":         r.AllowedCidrs,
-		"defaultPoolId":        r.DefaultPoolID,
-	}
-}

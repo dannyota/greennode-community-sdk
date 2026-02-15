@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, error) {
@@ -21,7 +22,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(opts *CreateVirtualA
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSubnetNotFound,
 			sdkerror.EcVServerVirtualAddressExceedQuota).
-			WithKVparameters(opts.ToMap()).
+			WithKVparameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
@@ -40,7 +41,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(opts *DeleteVirtualAddressBy
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound,
 			sdkerror.EcVServerVirtualAddressInUse).
-			WithKVparameters(opts.ToMap()).
+			WithKVparameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
@@ -60,7 +61,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(opts *GetVirtualAddressByIDRequ
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
-			WithKVparameters(opts.ToMap()).
+			WithKVparameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
@@ -80,7 +81,7 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(opts *ListAddressP
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
-			WithKVparameters(opts.ToMap()).
+			WithKVparameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 

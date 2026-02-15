@@ -308,36 +308,9 @@ func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) *CreatePoolRequest {
 	return r
 }
 
-func (r *CreatePoolRequest) ToMap() map[string]any {
-	return map[string]any{
-		"algorithm":     r.Algorithm,
-		"poolName":      r.PoolName,
-		"poolProtocol":  r.PoolProtocol,
-		"stickiness":    r.Stickiness,
-		"tlsEncryption": r.TLSEncryption,
-		"healthMonitor": r.HealthMonitor.ToMap(),
-		"members": func() []map[string]any {
-			members := make([]map[string]any, 0, len(r.Members))
-			for _, member := range r.Members {
-				members = append(members, member.ToMap())
-			}
-			return members
-		}(),
-	}
-}
-
 func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRequest {
 	r.Algorithm = algorithm
 	return r
-}
-
-func (r *UpdatePoolRequest) ToMap() map[string]any {
-	return map[string]any{
-		"algorithm":     r.Algorithm,
-		"stickiness":    r.Stickiness,
-		"tlsEncryption": r.TLSEncryption,
-		"healthMonitor": r.HealthMonitor.ToMap(),
-	}
 }
 
 func (r *UpdatePoolRequest) prepare() {
@@ -433,32 +406,6 @@ func (h *HealthMonitor) WithDomainName(domain *string) *HealthMonitor {
 func (h *HealthMonitor) WithSuccessCode(code *string) *HealthMonitor {
 	h.SuccessCode = code
 	return h
-}
-
-func (h *HealthMonitor) ToMap() map[string]any {
-	return map[string]any{
-		"healthCheckProtocol": h.HealthCheckProtocol,
-		"healthyThreshold":    h.HealthyThreshold,
-		"unhealthyThreshold":  h.UnhealthyThreshold,
-		"interval":            h.Interval,
-		"timeout":             h.Timeout,
-		"healthCheckMethod":   h.HealthCheckMethod,
-		"httpVersion":         h.HTTPVersion,
-		"healthCheckPath":     h.HealthCheckPath,
-		"domainName":          h.DomainName,
-		"successCode":         h.SuccessCode,
-	}
-}
-
-func (m *Member) ToMap() map[string]any {
-	return map[string]any{
-		"backup":      m.Backup,
-		"ipAddress":   m.IPAddress,
-		"monitorPort": m.MonitorPort,
-		"name":        m.Name,
-		"port":        m.Port,
-		"weight":      m.Weight,
-	}
 }
 
 func (r *UpdatePoolMembersRequest) WithMembers(members ...*Member) *UpdatePoolMembersRequest {

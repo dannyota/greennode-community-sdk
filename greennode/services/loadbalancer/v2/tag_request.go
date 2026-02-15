@@ -112,10 +112,3 @@ func (r *UpdateTagsRequest) WithTags(tags ...string) *UpdateTagsRequest {
 	return r
 }
 
-func (r *UpdateTagsRequest) ToMap() map[string]any {
-	res := make(map[string]any)
-	for _, tag := range r.TagRequestList {
-		res[tag.Key] = tag.Value
-	}
-	return res
-}

@@ -153,38 +153,6 @@ func (r *CreateBlockVolumeRequest) WithPoolName(poolName string) *CreateBlockVol
 	return r
 }
 
-func (r *CreateBlockVolumeRequest) ToMap() map[string]any {
-	return map[string]any{
-		"backupVolumePointId": r.BackupVolumePointID,
-		"createdFrom":         r.CreatedFrom,
-		"encryptionType":      r.EncryptionType,
-		"multiAttach":         r.MultiAttach,
-		"name":                r.Name,
-		"size":                r.Size,
-		"volumeTypeId":        r.VolumeTypeID,
-		"tags":                r.Tags,
-		"isPoc":               r.IsPoc,
-		"isEnableAutoRenew":   r.IsEnableAutoRenew,
-		"configVolumeRestore": r.ConfigureVolumeRestore,
-	}
-}
-
-func (r *CreateBlockVolumeRequest) ListParameters() []any {
-	return []any{
-		"backupVolumePointId", r.BackupVolumePointID,
-		"createdFrom", r.CreatedFrom,
-		"encryptionType", r.EncryptionType,
-		"multiAttach", r.MultiAttach,
-		"name", r.Name,
-		"size", r.Size,
-		"volumeTypeId", r.VolumeTypeID,
-		"tags", r.Tags,
-		"isPoc", r.IsPoc,
-		"isEnableAutoRenew", r.IsEnableAutoRenew,
-		"configVolumeRestore", r.ConfigureVolumeRestore,
-	}
-}
-
 func (r *CreateBlockVolumeRequest) GetVolumeName() string {
 	return r.Name
 }
@@ -275,14 +243,6 @@ func (r *ListBlockVolumesRequest) ToQuery() (string, error) {
 
 func (r *ListBlockVolumesRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
-}
-
-func (r *ListBlockVolumesRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name": r.Name,
-		"page": r.Page,
-		"size": r.Size,
-	}
 }
 
 func (r *ListBlockVolumesRequest) WithName(name string) *ListBlockVolumesRequest {

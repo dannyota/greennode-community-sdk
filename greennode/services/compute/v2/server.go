@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Server, error) {
@@ -35,7 +36,7 @@ func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Serv
 			sdkerror.EcVServerFlavorNotSupported,
 			sdkerror.EcProjectConflict,
 			sdkerror.EcVServerCreateBillingPaymentMethodNotAllowed).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithErrorCategories(sdkerror.ErrCatVServer)
 	}
@@ -56,7 +57,7 @@ func (s *ComputeServiceV2) GetServerByID(opts *GetServerByIDRequest) (*entity.Se
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
@@ -175,7 +176,7 @@ func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) error
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerServerCanNotAttachFloatingIp,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
@@ -197,7 +198,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) error
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerWanIDNotFound,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
@@ -237,7 +238,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(opts *DeleteServerGroupByIDRequ
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerGroupNotFound,
 			sdkerror.EcVServerServerGroupInUse).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID(),
 				"serverGroupId", opts.GetServerGroupID())
 	}
@@ -257,7 +258,7 @@ func (s *ComputeServiceV2) ListServerGroups(opts *ListServerGroupsRequest) (*ent
 
 	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 
@@ -278,7 +279,7 @@ func (s *ComputeServiceV2) CreateServerGroup(opts *CreateServerGroupRequest) (*e
 	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerGroupNameMustBeUnique).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
 	}
 

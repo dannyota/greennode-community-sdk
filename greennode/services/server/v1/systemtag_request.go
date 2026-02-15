@@ -44,17 +44,3 @@ func (r *CreateSystemTagRequest) AddTag(key, value string) *CreateSystemTagReque
 	return r
 }
 
-func (r *CreateSystemTagRequest) ToMap() map[string]any {
-	res := map[string]any{
-		"resourceId":   r.ResourceID,
-		"resourceType": r.ResourceType,
-	}
-
-	if len(r.Agent) > 0 {
-		res["userAgent"] = r.Agent
-	}
-
-	res["tags"] = r.Tags
-
-	return res
-}

@@ -104,21 +104,6 @@ func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) *CreateGlo
 	return r
 }
 
-func (r *CreateGlobalListenerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"allowedCidrs":      r.AllowedCidrs,
-		"description":       r.Description,
-		"headers":           r.Headers,
-		"name":              r.Name,
-		"port":              r.Port,
-		"protocol":          r.Protocol,
-		"timeoutClient":     r.TimeoutClient,
-		"timeoutConnection": r.TimeoutConnection,
-		"timeoutMember":     r.TimeoutMember,
-		"globalPoolId":      r.GlobalPoolID,
-	}
-}
-
 func (r *CreateGlobalListenerRequest) AddUserAgent(agent ...string) *CreateGlobalListenerRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -195,17 +180,6 @@ func (r *UpdateGlobalListenerRequest) WithLoadBalancerID(lbid string) *UpdateGlo
 func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) *UpdateGlobalListenerRequest {
 	r.ListenerID = lid
 	return r
-}
-
-func (r *UpdateGlobalListenerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"allowedCidrs":      r.AllowedCidrs,
-		"timeoutClient":     r.TimeoutClient,
-		"timeoutMember":     r.TimeoutMember,
-		"timeoutConnection": r.TimeoutConnection,
-		"headers":           r.Headers,
-		"globalPoolId":      r.GlobalPoolID,
-	}
 }
 
 func (r *UpdateGlobalListenerRequest) AddUserAgent(agent ...string) *UpdateGlobalListenerRequest {

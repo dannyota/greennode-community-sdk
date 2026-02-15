@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *LoadBalancerServiceV2) ListTags(opts *ListTagsRequest) (*entity.ListTags, error) {
@@ -64,7 +65,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(opts *UpdateTagsRequest) error {
 
 	if _, sdkErr = s.VServerClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
-			sdkerror.EcTagKeyInvalid).WithParameters(opts.ToMap())
+			sdkerror.EcTagKeyInvalid).WithParameters(common.StructToMap(opts))
 	}
 
 	return nil

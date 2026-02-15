@@ -74,20 +74,6 @@ func (r *CreateCertificateRequest) WithPrivateKey(privateKey string) *CreateCert
 	return r
 }
 
-func (r *CreateCertificateRequest) ToMap() map[string]any {
-	re := map[string]any{
-		"name":        r.Name,
-		"type":        r.Type,
-		"certificate": r.Certificate,
-	}
-	if r.Type == ImportOptsTypeOptTLS {
-		re["certificateChain"] = r.CertificateChain
-		re["passphrase"] = r.Passphrase
-		re["privateKey"] = r.PrivateKey
-	}
-	return re
-}
-
 func NewCreateCertificateRequest(name, cert string, typeVal ImportOptsTypeOpt) *CreateCertificateRequest {
 	return &CreateCertificateRequest{
 		Name:             name,

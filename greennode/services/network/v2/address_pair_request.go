@@ -85,18 +85,6 @@ type CreateAddressPairRequest struct {
 	common.VirtualAddressCommon
 }
 
-func (r *CreateAddressPairRequest) ToMap() map[string]any {
-	mode := "active-standby"
-	if r.Mode != nil {
-		mode = string(*r.Mode)
-	}
-
-	return map[string]any{
-		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
-		"mode":                       mode,
-	}
-}
-
 func (r *CreateAddressPairRequest) AddUserAgent(agent ...string) *CreateAddressPairRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r

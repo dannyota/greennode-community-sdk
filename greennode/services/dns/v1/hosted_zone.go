@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *VDnsServiceV1) GetHostedZoneByID(opts *GetHostedZoneByIDRequest) (*entity.HostedZone, error) {
@@ -38,7 +39,7 @@ func (s *VDnsServiceV1) ListHostedZones(opts *ListHostedZonesRequest) (*entity.L
 
 	if _, sdkErr := s.DnsClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -58,7 +59,7 @@ func (s *VDnsServiceV1) CreateHostedZone(opts *CreateHostedZoneRequest) (*entity
 
 	if _, sdkErr := s.DnsClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -75,7 +76,7 @@ func (s *VDnsServiceV1) DeleteHostedZone(opts *DeleteHostedZoneRequest) error {
 
 	if _, sdkErr := s.DnsClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
@@ -93,7 +94,7 @@ func (s *VDnsServiceV1) UpdateHostedZone(opts *UpdateHostedZoneRequest) error {
 
 	if _, sdkErr := s.DnsClient.Put(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 

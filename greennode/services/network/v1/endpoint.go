@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *NetworkServiceV1) GetEndpointByID(opts *GetEndpointByIDRequest) (*entity.Endpoint, error) {
@@ -49,7 +50,7 @@ func (s *NetworkServiceV1) CreateEndpoint(opts *CreateEndpointRequest) (*entity.
 			sdkerror.EcVServerSubnetNotFound,
 			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
 			sdkerror.EcVNetworkContainInvalidCharacter).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -71,7 +72,7 @@ func (s *NetworkServiceV1) DeleteEndpointByID(opts *DeleteEndpointByIDRequest) e
 			sdkerror.EcVNetworkEndpointStatusInvalid,
 			sdkerror.EcVServerNetworkNotFound,
 			sdkerror.EcVServerSubnetNotFound).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -92,7 +93,7 @@ func (s *NetworkServiceV1) ListEndpoints(opts *ListEndpointsRequest) (*entity.Li
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -115,7 +116,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(opts *ListTagsByEndpoint
 	if _, sdkErr := s.VNetworkClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -137,7 +138,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(opts *CreateTagsWith
 			sdkerror.EcVNetworkEndpointTagExisted,
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -157,7 +158,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(opts *DeleteTagOfEndpoint
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -178,7 +179,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(opts *UpdateTagValue
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -207,7 +208,7 @@ func (s *NetworkServiceInternalV1) CreateEndpoint(opts *CreateEndpointRequest) (
 			sdkerror.EcVServerSubnetNotFound,
 			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
 			sdkerror.EcVNetworkContainInvalidCharacter).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}
 

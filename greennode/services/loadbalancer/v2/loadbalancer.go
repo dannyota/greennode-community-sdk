@@ -4,6 +4,7 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func (s *LoadBalancerServiceV2) CreateLoadBalancer(opts *CreateLoadBalancerRequest) (*entity.LoadBalancer, error) {
@@ -21,7 +22,7 @@ func (s *LoadBalancerServiceV2) CreateLoadBalancer(opts *CreateLoadBalancerReque
 	if _, sdkErr := s.VLBClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerExceedQuota).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -139,7 +140,7 @@ func (s *LoadBalancerServiceV2) CreatePool(opts *CreatePoolRequest) (*entity.Poo
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBLoadBalancerNotReady,
 			sdkerror.EcVLBLoadBalancerDuplicatePoolName).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -185,7 +186,7 @@ func (s *LoadBalancerServiceV2) CreateListener(opts *CreateListenerRequest) (*en
 			sdkerror.EcVLBListenerDuplicateName,
 			sdkerror.EcVLBPoolNotFound,
 			sdkerror.EcVLBListenerDuplicateProtocolOrPort).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -416,7 +417,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancerByID(opts *ResizeLoadBalancerB
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBLoadBalancerNotReady,
 			sdkerror.EcVLBLoadBalancerResizeSamePackage).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -438,7 +439,7 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(opts *ScaleLoadBalancerRequest
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBLoadBalancerNotReady).
-			WithParameters(opts.ToMap()).
+			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -479,7 +480,7 @@ func (s *LoadBalancerServiceV2) CreatePolicy(opts *CreatePolicyRequest) (*entity
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBListenerNotFound,
-		).WithParameters(opts.ToMap())
+		).WithParameters(common.StructToMap(opts))
 	}
 
 	return resp.ToEntityPolicy(), nil

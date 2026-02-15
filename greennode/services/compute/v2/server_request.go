@@ -169,40 +169,6 @@ func (r *CreateServerRequest) AddUserAgent(agent ...string) *CreateServerRequest
 	return r
 }
 
-func (r *CreateServerRequest) ToMap() map[string]any {
-	return map[string]any{
-		"attachFloating":         r.AttachFloating,
-		"backupInstancePointId":  r.BackupInstancePointID,
-		"dataDiskEncryptionType": r.DataDiskEncryptionType,
-		"dataDiskName":           r.DataDiskName,
-		"dataDiskSize":           r.DataDiskSize,
-		"dataDiskTypeId":         r.DataDiskTypeID,
-		"enableBackup":           r.EnableBackup,
-		"encryptionVolume":       r.EncryptionVolume,
-		"expirePassword":         r.ExpirePassword,
-		"flavorId":               r.FlavorID,
-		"imageId":                r.ImageID,
-		"name":                   r.Name,
-		"networkId":              r.NetworkID,
-		"subnetId":               r.SubnetID,
-		"osLicence":              r.OsLicence,
-		"restoreBackup":          r.RestoreBackup,
-		"rootDiskEncryptionType": r.RootDiskEncryptionType,
-		"rootDiskSize":           r.RootDiskSize,
-		"rootDiskTypeId":         r.RootDiskTypeID,
-		"securityGroup":          r.SecurityGroup,
-		"serverGroupId":          r.ServerGroupID,
-		"sshKeyId":               r.SshKeyID,
-		"userName":               r.UserName,
-		"isPoc":                  r.IsPoc,
-		"product":                r.Product,
-		"type":                   r.Type,
-		"tags":                   r.Tags,
-		"autoRenew":              r.AutoRenew,
-		"networks":               r.Networks,
-	}
-}
-
 type GetServerByIDRequest struct {
 	common.ServerCommon
 	common.UserAgent
@@ -211,12 +177,6 @@ type GetServerByIDRequest struct {
 func (r *GetServerByIDRequest) AddUserAgent(agent ...string) *GetServerByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
-}
-
-func (r *GetServerByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"serverId": r.ServerID,
-	}
 }
 
 type DeleteServerByIDRequest struct {
@@ -264,14 +224,6 @@ func (r *AttachFloatingIpRequest) AddUserAgent(agent ...string) *AttachFloatingI
 	return r
 }
 
-func (r *AttachFloatingIpRequest) ToMap() map[string]any {
-	return map[string]any{
-		"serverId":                   r.ServerID,
-		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
-		"networkId":                  r.NetworkInterfaceID,
-	}
-}
-
 type DetachFloatingIpRequest struct {
 	NetworkInterfaceID string `json:"networkInterfaceId"`
 
@@ -284,15 +236,6 @@ type DetachFloatingIpRequest struct {
 func (r *DetachFloatingIpRequest) AddUserAgent(agent ...string) *DetachFloatingIpRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
-}
-
-func (r *DetachFloatingIpRequest) ToMap() map[string]any {
-	return map[string]any{
-		"serverId":                   r.ServerID,
-		"internalNetworkInterfaceId": r.InternalNetworkInterfaceID,
-		"networkId":                  r.NetworkInterfaceID,
-		"wanId":                      r.WanID,
-	}
 }
 
 type ListServerGroupPoliciesRequest struct {
@@ -312,12 +255,6 @@ type DeleteServerGroupByIDRequest struct {
 func (r *DeleteServerGroupByIDRequest) AddUserAgent(agent ...string) *DeleteServerGroupByIDRequest {
 	r.Agent = append(r.Agent, agent...)
 	return r
-}
-
-func (r *DeleteServerGroupByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"serverGroupId": r.ServerGroupID,
-	}
 }
 
 type ListServerGroupsRequest struct {
@@ -349,14 +286,6 @@ func (r *ListServerGroupsRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
 }
 
-func (r *ListServerGroupsRequest) ToMap() map[string]any {
-	return map[string]any{
-		"page": r.Page,
-		"size": r.Size,
-		"name": r.Name,
-	}
-}
-
 func (r *ListServerGroupsRequest) AddUserAgent(agent ...string) *ListServerGroupsRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -368,14 +297,6 @@ type CreateServerGroupRequest struct {
 	PolicyID    string `json:"policyId,omitempty"`
 
 	common.UserAgent
-}
-
-func (r *CreateServerGroupRequest) ToMap() map[string]any {
-	return map[string]any{
-		"name":        r.Name,
-		"description": r.Description,
-		"policyId":    r.PolicyID,
-	}
 }
 
 func (r *CreateServerGroupRequest) AddUserAgent(agent ...string) *CreateServerGroupRequest {

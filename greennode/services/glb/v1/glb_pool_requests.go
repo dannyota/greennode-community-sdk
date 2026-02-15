@@ -2,10 +2,6 @@ package v1
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-type IBulkActionRequest interface {
-	ToMap() map[string]any
-}
-
 type (
 	GlobalPoolAlgorithm              string
 	GlobalPoolProtocol               string
@@ -119,25 +115,6 @@ func (r *CreateGlobalPoolRequest) WithLoadBalancerID(lbID string) *CreateGlobalP
 	return r
 }
 
-func (r *CreateGlobalPoolRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"algorithm":         r.Algorithm,
-		"description":       r.Description,
-		"name":              r.Name,
-		"protocol":          r.Protocol,
-		"stickiness":        r.Stickiness,
-		"tlsEncryption":     r.TLSEncryption,
-		"health":            r.HealthMonitor.ToMap(),
-		"globalPoolMembers": make([]map[string]any, 0),
-	}
-
-	for _, member := range r.GlobalPoolMembers {
-		err["globalPoolMembers"] = append(err["globalPoolMembers"].([]map[string]any), member.ToMap())
-	}
-
-	return err
-}
-
 func (r *CreateGlobalPoolRequest) AddUserAgent(agent ...string) *CreateGlobalPoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -228,23 +205,6 @@ func (r *GlobalHealthMonitorRequest) AddUserAgent(agent ...string) *GlobalHealth
 	return r
 }
 
-func (r *GlobalHealthMonitorRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"protocol":           r.HealthCheckProtocol,
-		"healthyThreshold":   r.HealthyThreshold,
-		"unhealthyThreshold": r.UnhealthyThreshold,
-		"interval":           r.Interval,
-		"timeout":            r.Timeout,
-		"httpMethod":         r.HTTPMethod,
-		"httpVersion":        r.HTTPVersion,
-		"path":               r.Path,
-		"domainName":         r.DomainName,
-		"successCode":        r.SuccessCode,
-	}
-
-	return err
-}
-
 func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) *GlobalHealthMonitorRequest {
 	opts := &GlobalHealthMonitorRequest{
 		HealthCheckProtocol: checkProtocol,
@@ -332,23 +292,6 @@ func (r *GlobalPoolMemberRequest) AddUserAgent(agent ...string) *GlobalPoolMembe
 	return r
 }
 
-func (r *GlobalPoolMemberRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"name":        r.Name,
-		"description": r.Description,
-		"region":      r.Region,
-		"trafficDial": r.TrafficDial,
-		"vpcId":       r.VPCID,
-		"members":     make([]map[string]any, 0),
-	}
-
-	for _, member := range r.Members {
-		err["members"] = append(err["members"].([]map[string]any), member.ToMap())
-	}
-
-	return err
-}
-
 func NewGlobalPoolMemberRequest(name, region, vpcID string, dial int, typeVal GlobalPoolMemberType) *GlobalPoolMemberRequest {
 	opts := &GlobalPoolMemberRequest{
 		Name:        name,
@@ -420,20 +363,6 @@ func (r *GlobalMemberRequest) AddUserAgent(agent ...string) *GlobalMemberRequest
 	return r
 }
 
-func (r *GlobalMemberRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"address":     r.Address,
-		"backupRole":  r.BackupRole,
-		"description": r.Description,
-		"monitorPort": r.MonitorPort,
-		"name":        r.Name,
-		"port":        r.Port,
-		"subnetId":    r.SubnetID,
-		"weight":      r.Weight,
-	}
-	return err
-}
-
 func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, weight int, backupRole bool) *GlobalMemberRequest {
 	opts := &GlobalMemberRequest{
 		Name:        name,
@@ -479,14 +408,6 @@ func (r *UpdateGlobalPoolRequest) WithPoolID(poolID string) *UpdateGlobalPoolReq
 func (r *UpdateGlobalPoolRequest) AddUserAgent(agent ...string) *UpdateGlobalPoolRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
-}
-
-func (r *UpdateGlobalPoolRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"algorithm": r.Algorithm,
-		"health":    r.HealthMonitor.ToMap(),
-	}
-	return err
 }
 
 func NewUpdateGlobalPoolRequest(lbID, poolID string) *UpdateGlobalPoolRequest {
@@ -570,13 +491,13 @@ func NewListGlobalPoolMembersRequest(lbID, poolID string) *ListGlobalPoolMembers
 }
 
 type PatchGlobalPoolMembersRequest struct {
-	BulkActions []IBulkActionRequest `json:"bulkActions"`
+	BulkActions []any `json:"bulkActions"`
 	common.LoadBalancerCommon
 	common.PoolCommon
 	common.UserAgent
 }
 
-func (r *PatchGlobalPoolMembersRequest) WithBulkAction(action ...IBulkActionRequest) *PatchGlobalPoolMembersRequest {
+func (r *PatchGlobalPoolMembersRequest) WithBulkAction(action ...any) *PatchGlobalPoolMembersRequest {
 	r.BulkActions = action
 	return r
 }
@@ -596,21 +517,9 @@ func (r *PatchGlobalPoolMembersRequest) AddUserAgent(agent ...string) *PatchGlob
 	return r
 }
 
-func (r *PatchGlobalPoolMembersRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"bulkActions": make([]map[string]any, 0),
-	}
-
-	for _, action := range r.BulkActions {
-		err["bulkActions"] = append(err["bulkActions"].([]map[string]any), action.ToMap())
-	}
-
-	return err
-}
-
 func NewPatchGlobalPoolMembersRequest(lbID, poolID string) *PatchGlobalPoolMembersRequest {
 	opts := &PatchGlobalPoolMembersRequest{
-		BulkActions: make([]IBulkActionRequest, 0),
+		BulkActions: make([]any, 0),
 		LoadBalancerCommon: common.LoadBalancerCommon{
 			LoadBalancerID: lbID,
 		},
@@ -621,19 +530,9 @@ func NewPatchGlobalPoolMembersRequest(lbID, poolID string) *PatchGlobalPoolMembe
 	return opts
 }
 
-var _ IBulkActionRequest = &PatchGlobalPoolCreateBulkActionRequest{}
-
 type PatchGlobalPoolCreateBulkActionRequest struct {
 	Action           string                   `json:"action"`
 	CreatePoolMember *GlobalPoolMemberRequest `json:"createPoolMember"`
-}
-
-func (r *PatchGlobalPoolCreateBulkActionRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"action":           r.Action,
-		"createPoolMember": r.CreatePoolMember.ToMap(),
-	}
-	return err
 }
 
 func NewPatchGlobalPoolCreateBulkActionRequest(member *GlobalPoolMemberRequest) *PatchGlobalPoolCreateBulkActionRequest {
@@ -644,19 +543,9 @@ func NewPatchGlobalPoolCreateBulkActionRequest(member *GlobalPoolMemberRequest) 
 	return opts
 }
 
-var _ IBulkActionRequest = &PatchGlobalPoolDeleteBulkActionRequest{}
-
 type PatchGlobalPoolDeleteBulkActionRequest struct {
 	Action string `json:"action"`
 	ID     string `json:"id"`
-}
-
-func (r *PatchGlobalPoolDeleteBulkActionRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"action": r.Action,
-		"id":     r.ID,
-	}
-	return err
 }
 
 func NewPatchGlobalPoolDeleteBulkActionRequest(id string) *PatchGlobalPoolDeleteBulkActionRequest {
@@ -667,21 +556,10 @@ func NewPatchGlobalPoolDeleteBulkActionRequest(id string) *PatchGlobalPoolDelete
 	return opts
 }
 
-var _ IBulkActionRequest = &PatchGlobalPoolUpdateBulkActionRequest{}
-
 type PatchGlobalPoolUpdateBulkActionRequest struct {
 	Action           string                         `json:"action"`
 	ID               string                         `json:"id"`
 	UpdatePoolMember *UpdateGlobalPoolMemberRequest `json:"updatePoolMember"`
-}
-
-func (r *PatchGlobalPoolUpdateBulkActionRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"action":           r.Action,
-		"id":               r.ID,
-		"updatePoolMember": r.UpdatePoolMember.ToMap(),
-	}
-	return err
 }
 
 func NewPatchGlobalPoolUpdateBulkActionRequest(id string, member *UpdateGlobalPoolMemberRequest) *PatchGlobalPoolUpdateBulkActionRequest {
@@ -711,19 +589,6 @@ func (r *UpdateGlobalPoolMemberRequest) WithTrafficDial(dial int) *UpdateGlobalP
 func (r *UpdateGlobalPoolMemberRequest) WithMembers(members ...*GlobalMemberRequest) *UpdateGlobalPoolMemberRequest {
 	r.Members = append(r.Members, members...)
 	return r
-}
-
-func (r *UpdateGlobalPoolMemberRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"trafficDial": r.TrafficDial,
-		"members":     make([]map[string]any, 0),
-	}
-
-	for _, member := range r.Members {
-		err["members"] = append(err["members"].([]map[string]any), member.ToMap())
-	}
-
-	return err
 }
 
 func (r *UpdateGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) *UpdateGlobalPoolMemberRequest {

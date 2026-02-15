@@ -177,44 +177,6 @@ func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) 
 	return r
 }
 
-func (r *ScaleLoadBalancerRequest) ToMap() map[string]any {
-	result := map[string]any{}
-	if r.Scaling != nil {
-		result["scaling"] = map[string]any{
-			"minSize": r.Scaling.MinNodes,
-			"maxSize": r.Scaling.MaxNodes,
-		}
-	}
-	if r.Networking != nil {
-		result["networking"] = map[string]any{
-			"subnets": r.Networking.Subnets,
-		}
-	}
-	return result
-}
-
-func (r *CreateLoadBalancerRequest) ToMap() map[string]any {
-	err := map[string]any{
-		"name":         r.Name,
-		"packageId":    r.PackageID,
-		"scheme":       r.Scheme,
-		"autoScalable": r.AutoScalable,
-		"subnetId":     r.SubnetID,
-		"type":         r.Type,
-		"tags":         r.Tags,
-	}
-
-	if r.Listener != nil {
-		err["listener"] = r.Listener.ToMap()
-	}
-
-	if r.Pool != nil {
-		err["pool"] = r.Pool.ToMap()
-	}
-
-	return err
-}
-
 func (r *CreateLoadBalancerRequest) prepare() {
 	if r.Pool != nil {
 		r.Pool.prepare()
@@ -314,10 +276,6 @@ func (r *ListLoadBalancerPackagesRequest) GetZoneID() string {
 	return string(r.ZoneID)
 }
 
-func (r *ListLoadBalancerPackagesRequest) ToMap() map[string]any {
-	return map[string]any{}
-}
-
 func (r *GetLoadBalancerByIDRequest) AddUserAgent(agent ...string) *GetLoadBalancerByIDRequest {
 	r.UserAgent.AddUserAgent(agent...)
 	return r
@@ -374,10 +332,4 @@ func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
 	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 
-func (r *ResizeLoadBalancerByIDRequest) ToMap() map[string]any {
-	return map[string]any{
-		"packageId":      r.PackageID,
-		"loadBalancerId": r.LoadBalancerID,
-	}
-}
 
