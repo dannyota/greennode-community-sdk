@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*entity.AddressPair, sdkerror.Error) {
+func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*entity.AddressPair, error) {
 	url := getAllAddressPairByVirtualSubnetIDURL(s.VserverClient, opts)
 	resp := new(GetAllAddressPairByVirtualSubnetIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -28,7 +28,7 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddres
 	return resp.ToListAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, sdkerror.Error) {
+func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, error) {
 	url := setAddressPairInVirtualSubnetURL(s.VserverClient, opts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -45,7 +45,7 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInV
 	return resp.ToAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) sdkerror.Error {
+func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) error {
 	url := deleteAddressPairURL(s.VserverClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -61,7 +61,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) sdk
 	return nil
 }
 
-func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*entity.AddressPair, sdkerror.Error) {
+func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*entity.AddressPair, error) {
 	url := createAddressPairURL(s.VserverClient, opts)
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

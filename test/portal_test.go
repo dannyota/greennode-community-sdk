@@ -1,9 +1,10 @@
 package test
 
 import (
+	"errors"
 	"testing"
 
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
 	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
 )
@@ -22,8 +23,13 @@ func TestGetPortalInfoFailed(t *testing.T) {
 		t.Errorf("Expect portal to be nil but got %+v", portal)
 	}
 
-	if !err.IsError(sdkerror.EcAuthenticationFailed) {
-		t.Errorf("Expect error code to be %s but got %s", sdkerror.EcAuthenticationFailed, err.ErrorCode())
+	var sdkErr *sdkerror.SdkError
+	if errors.As(err, &sdkErr) {
+		if !sdkErr.IsError(sdkerror.EcAuthenticationFailed) {
+			t.Errorf("Expect error code to be %s but got %s", sdkerror.EcAuthenticationFailed, sdkErr.ErrorCode())
+		}
+	} else {
+		t.Errorf("Expected SdkError")
 	}
 
 	t.Log("RESULT:", err)

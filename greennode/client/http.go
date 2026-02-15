@@ -21,9 +21,9 @@ type HTTPClient interface {
 	WithTimeout(timeout time.Duration) HTTPClient
 	WithSleep(sleep time.Duration) HTTPClient
 	WithKvDefaultHeaders(args ...string) HTTPClient
-	WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HTTPClient
+	WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, error)) HTTPClient
 
-	DoRequest(url string, req Request) (*req.Response, sdkerror.Error)
+	DoRequest(url string, req Request) (*req.Response, error)
 }
 
 type (
@@ -32,7 +32,7 @@ type (
 		retryCount int
 		client     *req.Client
 
-		reauthFunc   func() (SdkAuthentication, sdkerror.Error)
+		reauthFunc   func() (SdkAuthentication, error)
 		reauthOption AuthOpts
 
 		accessToken    SdkAuthentication
@@ -49,7 +49,7 @@ type (
 
 	reauthFuture struct {
 		done chan struct{}
-		err  sdkerror.Error
+		err  error
 	}
 
 	AuthOpts string
@@ -99,13 +99,13 @@ func (hc *httpClient) WithKvDefaultHeaders(args ...string) HTTPClient {
 	return hc
 }
 
-func (hc *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, sdkerror.Error)) HTTPClient {
+func (hc *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func() (SdkAuthentication, error)) HTTPClient {
 	hc.reauthFunc = reauthFunc
 	hc.reauthOption = authOpt
 	return hc
 }
 
-func (hc *httpClient) DoRequest(url string, preq Request) (*req.Response, sdkerror.Error) {
+func (hc *httpClient) DoRequest(url string, preq Request) (*req.Response, error) {
 	req := hc.prepareRequest(preq)
 
 	resp, sdkErr := hc.executeRequest(url, req, preq)
@@ -134,7 +134,7 @@ func (hc *httpClient) prepareRequest(preq Request) *req.Request {
 	return req
 }
 
-func (hc *httpClient) executeRequest(url string, req *req.Request, preq Request) (*req.Response, sdkerror.Error) {
+func (hc *httpClient) executeRequest(url string, req *req.Request, preq Request) (*req.Response, error) {
 	if hc.needReauth(preq) {
 		return hc.handleReauthBeforeRequest(url, preq)
 	}
@@ -165,7 +165,7 @@ func (hc *httpClient) executeHTTPMethod(url string, req *req.Request, preq Reque
 	}
 }
 
-func (hc *httpClient) handleReauthBeforeRequest(url string, req Request) (*req.Response, sdkerror.Error) {
+func (hc *httpClient) handleReauthBeforeRequest(url string, req Request) (*req.Response, error) {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(); sdkErr != nil {
 			return nil, sdkErr
@@ -175,7 +175,7 @@ func (hc *httpClient) handleReauthBeforeRequest(url string, req Request) (*req.R
 	return nil, nil
 }
 
-func (hc *httpClient) handleResponse(url string, resp *req.Response, req Request) (*req.Response, sdkerror.Error) {
+func (hc *httpClient) handleResponse(url string, resp *req.Response, req Request) (*req.Response, error) {
 	if resp == nil || resp.Response == nil {
 		return nil, sdkerror.ErrorHandler(nil, sdkerror.WithErrorUnexpected(resp))
 	}
@@ -191,7 +191,7 @@ func (hc *httpClient) handleResponse(url string, resp *req.Response, req Request
 	return resp, sdkerror.ErrorHandler(resp.Err)
 }
 
-func (hc *httpClient) handleStatusCode(url string, resp *req.Response, req Request) sdkerror.Error {
+func (hc *httpClient) handleStatusCode(url string, resp *req.Response, req Request) error {
 	switch resp.StatusCode {
 	case http.StatusUnauthorized:
 		return hc.handleUnauthorized(url, resp, req)
@@ -215,7 +215,7 @@ func (hc *httpClient) handleStatusCode(url string, resp *req.Response, req Reque
 	return nil
 }
 
-func (hc *httpClient) handleUnauthorized(url string, resp *req.Response, req Request) sdkerror.Error {
+func (hc *httpClient) handleUnauthorized(url string, resp *req.Response, req Request) error {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(); sdkErr != nil {
 			return sdkErr
@@ -239,7 +239,7 @@ func (hc *httpClient) needReauth(req Request) bool {
 	return hc.accessToken.NeedReauth()
 }
 
-func (hc *httpClient) reauthenticate() sdkerror.Error {
+func (hc *httpClient) reauthenticate() error {
 	if hc.reauthFunc == nil {
 		return sdkerror.ErrorHandler(nil, sdkerror.WithErrorReauthFuncNotSet())
 	}
@@ -294,17 +294,17 @@ func newReauthFuture() *reauthFuture {
 	}
 }
 
-func (f *reauthFuture) get() sdkerror.Error {
+func (f *reauthFuture) get() error {
 	<-f.done
 	return f.err
 }
 
-func (f *reauthFuture) set(err sdkerror.Error) {
+func (f *reauthFuture) set(err error) {
 	f.err = err
 	close(f.done)
 }
 
-func defaultErrorResponse(err error, url string, req Request, resp *req.Response) sdkerror.Error {
+func defaultErrorResponse(err error, url string, req Request, resp *req.Response) error {
 	headers := req.MoreHeaders()
 
 	// Remove sensitive information

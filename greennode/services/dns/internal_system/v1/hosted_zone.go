@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceInternal) GetHostedZoneByID(opts *GetHostedZoneByIDRequest, portalUserID string) (*entity.HostedZone, sdkerror.Error) {
+func (s *VDnsServiceInternal) GetHostedZoneByID(opts *GetHostedZoneByIDRequest, portalUserID string) (*entity.HostedZone, error) {
 	url := getHostedZoneByIDURL(s.DnsClient, opts)
 	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -27,7 +27,7 @@ func (s *VDnsServiceInternal) GetHostedZoneByID(opts *GetHostedZoneByIDRequest, 
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceInternal) ListHostedZones(opts *ListHostedZonesRequest, portalUserID string) (*entity.ListHostedZone, sdkerror.Error) {
+func (s *VDnsServiceInternal) ListHostedZones(opts *ListHostedZonesRequest, portalUserID string) (*entity.ListHostedZone, error) {
 	url := listHostedZonesURL(s.DnsClient, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -47,7 +47,7 @@ func (s *VDnsServiceInternal) ListHostedZones(opts *ListHostedZonesRequest, port
 	return resp.ToEntityListHostedZones(), nil
 }
 
-func (s *VDnsServiceInternal) CreateHostedZone(opts *CreateHostedZoneRequest, portalUserID string) (*entity.HostedZone, sdkerror.Error) {
+func (s *VDnsServiceInternal) CreateHostedZone(opts *CreateHostedZoneRequest, portalUserID string) (*entity.HostedZone, error) {
 	url := createHostedZoneURL(s.DnsClient)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -68,7 +68,7 @@ func (s *VDnsServiceInternal) CreateHostedZone(opts *CreateHostedZoneRequest, po
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceInternal) DeleteHostedZone(opts *DeleteHostedZoneRequest, portalUserID string) sdkerror.Error {
+func (s *VDnsServiceInternal) DeleteHostedZone(opts *DeleteHostedZoneRequest, portalUserID string) error {
 	url := deleteHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -86,7 +86,7 @@ func (s *VDnsServiceInternal) DeleteHostedZone(opts *DeleteHostedZoneRequest, po
 	return nil
 }
 
-func (s *VDnsServiceInternal) UpdateHostedZone(opts *UpdateHostedZoneRequest, portalUserID string) sdkerror.Error {
+func (s *VDnsServiceInternal) UpdateHostedZone(opts *UpdateHostedZoneRequest, portalUserID string) error {
 	url := updateHostedZoneURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().

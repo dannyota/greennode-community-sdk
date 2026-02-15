@@ -8,7 +8,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity.AccessToken, sdkerror.Error) {
+func (s *IdentityServiceV2) GetAccessToken(opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
 	url := getAccessTokenURL(s.IAMClient)
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)

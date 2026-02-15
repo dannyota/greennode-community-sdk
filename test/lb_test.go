@@ -575,7 +575,7 @@ func TestCreateTagsSuccess(t *testing.T) {
 		WithTags("vks-owned-cluster2", "none")
 	sdkErr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateTags(opt)
 	if sdkErr != nil {
-		t.Fatalf("Expect nil but got %+v", sdkErr.GetMessage())
+		t.Fatalf("Expect nil but got %+v", sdkErr)
 	}
 
 	t.Log("Result: ", sdkErr)
@@ -588,7 +588,7 @@ func TestUpdateTagsSuccess(t *testing.T) {
 		WithTags("vks-user", "cuongdm4")
 	sdkErr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdateTags(opt)
 	if sdkErr != nil {
-		t.Fatalf("Expect nil but got %+v", sdkErr.GetMessage())
+		t.Fatalf("Expect nil but got %+v", sdkErr)
 	}
 
 	t.Log("Result: ", sdkErr)

@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VDnsServiceV1) ListRecords(opts *ListRecordsRequest) (*entity.ListDnsRecords, sdkerror.Error) {
+func (s *VDnsServiceV1) ListRecords(opts *ListRecordsRequest) (*entity.ListDnsRecords, error) {
 	url := listRecordsURL(s.DnsClient, opts)
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -25,7 +25,7 @@ func (s *VDnsServiceV1) ListRecords(opts *ListRecordsRequest) (*entity.ListDnsRe
 	return resp.ToEntityListRecords(), nil
 }
 
-func (s *VDnsServiceV1) GetRecord(opts *GetRecordRequest) (*entity.DnsRecord, sdkerror.Error) {
+func (s *VDnsServiceV1) GetRecord(opts *GetRecordRequest) (*entity.DnsRecord, error) {
 	url := getRecordURL(s.DnsClient, opts)
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -44,7 +44,7 @@ func (s *VDnsServiceV1) GetRecord(opts *GetRecordRequest) (*entity.DnsRecord, sd
 	return resp.ToEntityDnsRecord(), nil
 }
 
-func (s *VDnsServiceV1) UpdateRecord(opts *UpdateRecordRequest) sdkerror.Error {
+func (s *VDnsServiceV1) UpdateRecord(opts *UpdateRecordRequest) error {
 	url := updateRecordURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -62,7 +62,7 @@ func (s *VDnsServiceV1) UpdateRecord(opts *UpdateRecordRequest) sdkerror.Error {
 	return nil
 }
 
-func (s *VDnsServiceV1) DeleteRecord(opts *DeleteRecordRequest) sdkerror.Error {
+func (s *VDnsServiceV1) DeleteRecord(opts *DeleteRecordRequest) error {
 	url := deleteRecordURL(s.DnsClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -79,7 +79,7 @@ func (s *VDnsServiceV1) DeleteRecord(opts *DeleteRecordRequest) sdkerror.Error {
 	return nil
 }
 
-func (s *VDnsServiceV1) CreateDnsRecord(opts *CreateDnsRecordRequest) (*entity.DnsRecord, sdkerror.Error) {
+func (s *VDnsServiceV1) CreateDnsRecord(opts *CreateDnsRecordRequest) (*entity.DnsRecord, error) {
 	url := createDnsRecordURL(s.DnsClient, opts)
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

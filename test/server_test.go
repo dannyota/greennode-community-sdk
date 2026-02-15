@@ -1,8 +1,10 @@
 package test
 
 import (
+	"errors"
 	"testing"
 
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	serverv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server/v1"
 
 	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
@@ -354,7 +356,11 @@ func TestListServerGroupPolicies(t *testing.T) {
 	opt := computev2.NewListServerGroupPoliciesRequest()
 	policies, sdkerr := vngcloud.VServerGateway().V2().ComputeService().ListServerGroupPolicies(opt)
 	if sdkerr != nil {
-		t.Fatalf("Expect nil but got %v", sdkerr.ErrorCode())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Fatalf("Expect nil but got %v", sdkErr.ErrorCode())
+		}
+		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
 
 	t.Logf("Result: %v", policies.At(0))
@@ -403,7 +409,10 @@ func TestCreateSystemTags(t *testing.T) {
 
 	response, sdkerr := vngcloud.VServerGateway().InternalV1().ServerService().CreateSystemTags(opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %+v", sdkerr.ErrorCode())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Logf("Expect nil but got %+v", sdkErr.ErrorCode())
+		}
 	}
 
 	t.Log("Result: ", sdkerr)

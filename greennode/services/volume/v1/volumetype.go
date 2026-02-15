@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*entity.VolumeType, sdkerror.Error) {
+func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*entity.VolumeType, error) {
 	url := getVolumeTypeByIDURL(s.VServerClient, opts)
 	resp := new(GetVolumeTypeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -26,7 +26,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(opts *GetVolumeTypeByIDRequest) (*en
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.Error) {
+func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, error) {
 	url := getDefaultVolumeTypeURL(s.VServerClient)
 	resp := new(GetDefaultVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -44,7 +44,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType() (*entity.VolumeType, sdkerror.E
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, sdkerror.Error) {
+func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, error) {
 	url := getVolumeTypeZonesURL(s.VServerClient, opts)
 	resp := new(ListVolumeTypeZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -63,7 +63,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(opts *GetVolumeTypeZonesRequest) (*
 
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*entity.ListVolumeType, sdkerror.Error) {
+func (s *VolumeServiceV1) GetListVolumeTypes(opts *GetListVolumeTypeRequest) (*entity.ListVolumeType, error) {
 	url := getVolumeTypesURL(s.VServerClient, opts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

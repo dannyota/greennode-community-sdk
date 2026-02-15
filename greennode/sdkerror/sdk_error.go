@@ -26,6 +26,7 @@ type Error interface {
 	Parameters() map[string]any
 	ErrorCategories() []ErrorCategory
 	ErrorMessages() string
+	Error() string
 	ListParameters() []any
 
 	RemoveCategories(categories ...ErrorCategory) Error
@@ -207,6 +208,21 @@ func (e *SdkError) ErrorMessages() string {
 	}
 
 	return fmt.Sprintf("%s: %s", e.message, e.error.Error())
+}
+
+func (e *SdkError) Error() string {
+	return e.ErrorMessages()
+}
+
+func (e *SdkError) Unwrap() error {
+	return e.error
+}
+
+func (e *SdkError) Is(target error) bool {
+	if t, ok := target.(*SdkError); ok {
+		return e.errorCode == t.errorCode
+	}
+	return false
 }
 
 func (e *SdkError) ListParameters() []any {

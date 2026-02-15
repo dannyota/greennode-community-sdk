@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV1) ListZones() (*entity.ListZones, sdkerror.Error) {
+func (s *PortalServiceV1) ListZones() (*entity.ListZones, error) {
 	url := listZonesURL(s.PortalClient)
 	resp := new(ListZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

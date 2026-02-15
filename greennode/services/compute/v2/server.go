@@ -6,7 +6,7 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Server, sdkerror.Error) {
+func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Server, error) {
 	url := createServerURL(s.VServerClient)
 	resp := new(CreateServerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -43,7 +43,7 @@ func (s *ComputeServiceV2) CreateServer(opts *CreateServerRequest) (*entity.Serv
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) GetServerByID(opts *GetServerByIDRequest) (*entity.Server, sdkerror.Error) {
+func (s *ComputeServiceV2) GetServerByID(opts *GetServerByIDRequest) (*entity.Server, error) {
 	url := getServerByIDURL(s.VServerClient, opts)
 	resp := new(GetServerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -63,7 +63,7 @@ func (s *ComputeServiceV2) GetServerByID(opts *GetServerByIDRequest) (*entity.Se
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) DeleteServerByID(opts *DeleteServerByIDRequest) sdkerror.Error {
+func (s *ComputeServiceV2) DeleteServerByID(opts *DeleteServerByIDRequest) error {
 	url := deleteServerByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -87,7 +87,7 @@ func (s *ComputeServiceV2) DeleteServerByID(opts *DeleteServerByIDRequest) sdker
 	return nil
 }
 
-func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(opts *UpdateServerSecgroupsByServerIDRequest) (*entity.Server, sdkerror.Error) {
+func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(opts *UpdateServerSecgroupsByServerIDRequest) (*entity.Server, error) {
 	url := updateServerSecgroupsByServerIDURL(s.VServerClient, opts)
 	resp := new(UpdateServerSecgroupsByServerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -112,7 +112,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(opts *UpdateServerSec
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) AttachBlockVolume(opts *AttachBlockVolumeRequest) sdkerror.Error {
+func (s *ComputeServiceV2) AttachBlockVolume(opts *AttachBlockVolumeRequest) error {
 	url := attachBlockVolumeURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -138,7 +138,7 @@ func (s *ComputeServiceV2) AttachBlockVolume(opts *AttachBlockVolumeRequest) sdk
 	return nil
 }
 
-func (s *ComputeServiceV2) DetachBlockVolume(opts *DetachBlockVolumeRequest) sdkerror.Error {
+func (s *ComputeServiceV2) DetachBlockVolume(opts *DetachBlockVolumeRequest) error {
 	url := detachBlockVolumeURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -161,7 +161,7 @@ func (s *ComputeServiceV2) DetachBlockVolume(opts *DetachBlockVolumeRequest) sdk
 	return nil
 }
 
-func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) sdkerror.Error {
+func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) error {
 	url := attachFloatingIpURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -182,7 +182,7 @@ func (s *ComputeServiceV2) AttachFloatingIp(opts *AttachFloatingIpRequest) sdker
 	return nil
 }
 
-func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) sdkerror.Error {
+func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) error {
 	url := detachFloatingIpURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -204,7 +204,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(opts *DetachFloatingIpRequest) sdker
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroupPolicies(opts *ListServerGroupPoliciesRequest) (*entity.ListServerGroupPolicies, sdkerror.Error) {
+func (s *ComputeServiceV2) ListServerGroupPolicies(opts *ListServerGroupPoliciesRequest) (*entity.ListServerGroupPolicies, error) {
 	url := listServerGroupPoliciesURL(s.VServerClient)
 	resp := new(ListServerGroupPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -225,7 +225,7 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(opts *ListServerGroupPolicies
 	return resp.ToEntityListServerGroupPolicies(), nil
 }
 
-func (s *ComputeServiceV2) DeleteServerGroupByID(opts *DeleteServerGroupByIDRequest) sdkerror.Error {
+func (s *ComputeServiceV2) DeleteServerGroupByID(opts *DeleteServerGroupByIDRequest) error {
 	url := deleteServerGroupByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -245,7 +245,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(opts *DeleteServerGroupByIDRequ
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroups(opts *ListServerGroupsRequest) (*entity.ListServerGroups, sdkerror.Error) {
+func (s *ComputeServiceV2) ListServerGroups(opts *ListServerGroupsRequest) (*entity.ListServerGroups, error) {
 	url := listServerGroupsURL(s.VServerClient, opts)
 	resp := new(ListServerGroupsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -264,7 +264,7 @@ func (s *ComputeServiceV2) ListServerGroups(opts *ListServerGroupsRequest) (*ent
 	return resp.ToEntityListServerGroups(), nil
 }
 
-func (s *ComputeServiceV2) CreateServerGroup(opts *CreateServerGroupRequest) (*entity.ServerGroup, sdkerror.Error) {
+func (s *ComputeServiceV2) CreateServerGroup(opts *CreateServerGroupRequest) (*entity.ServerGroup, error) {
 	url := createServerGroupURL(s.VServerClient, opts)
 	resp := new(CreateServerGroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

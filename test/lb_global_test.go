@@ -1,8 +1,10 @@
 package test
 
 import (
+	"errors"
 	"testing"
 
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
@@ -39,10 +41,13 @@ func TestCreateGlobalPoolSuccess(t *testing.T) {
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.Err())
-		t.Log(sdkerr.ErrorCode())
-		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.ErrorCategories())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Log(sdkErr.Err())
+			t.Log(sdkErr.ErrorCode())
+			t.Log(sdkErr.GetMessage())
+			t.Log(sdkErr.ErrorCategories())
+		}
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -73,10 +78,13 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.Err())
-		t.Log(sdkerr.ErrorCode())
-		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.ErrorCategories())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Log(sdkErr.Err())
+			t.Log(sdkErr.ErrorCode())
+			t.Log(sdkErr.GetMessage())
+			t.Log(sdkErr.ErrorCategories())
+		}
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -101,10 +109,13 @@ func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().UpdateGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.Err())
-		t.Log(sdkerr.ErrorCode())
-		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.ErrorCategories())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Log(sdkErr.Err())
+			t.Log(sdkErr.ErrorCode())
+			t.Log(sdkErr.GetMessage())
+			t.Log(sdkErr.ErrorCategories())
+		}
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
@@ -122,10 +133,13 @@ func TestDeleteGlobalPoolSuccess(t *testing.T) {
 	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalPool(opt)
 
 	if sdkerr != nil {
-		t.Log(sdkerr.Err())
-		t.Log(sdkerr.ErrorCode())
-		t.Log(sdkerr.GetMessage())
-		t.Log(sdkerr.ErrorCategories())
+		var sdkErr *sdkerror.SdkError
+		if errors.As(sdkerr, &sdkErr) {
+			t.Log(sdkErr.Err())
+			t.Log(sdkErr.ErrorCode())
+			t.Log(sdkErr.GetMessage())
+			t.Log(sdkErr.ErrorCategories())
+		}
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 

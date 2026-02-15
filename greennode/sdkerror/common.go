@@ -48,16 +48,26 @@ func ErrorHandler(err error, opts ...func(sdkErr Error)) Error {
 	return sdkErr
 }
 
-func SdkErrorHandler(sdkErr Error, errResp ErrorResponse, opts ...func(sdkErr Error)) Error {
-	if sdkErr == nil && errResp == nil {
+func SdkErrorHandler(err error, errResp ErrorResponse, opts ...func(sdkErr Error)) Error {
+	if err == nil && errResp == nil {
 		return nil
 	}
 
-	if sdkErr != nil && sdkErr.ErrorCode() != EcUnknownError {
+	var sdkErr Error
+	if err != nil {
+		if e, ok := err.(Error); ok {
+			sdkErr = e
+		} else {
+			sdkErr = ErrorHandler(err)
+		}
+	} else {
+		sdkErr = ErrorHandler(nil)
+	}
+
+	if sdkErr.ErrorCode() != EcUnknownError {
 		return sdkErr
 	}
 
-	// Fill the default error
 	if errResp != nil {
 		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
 	}
