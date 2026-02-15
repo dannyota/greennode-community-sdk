@@ -127,7 +127,7 @@ func (r *UpdateRecordRequest) WithValue(value []RecordValueRequest) *UpdateRecor
 	return r
 }
 
-func (r *UpdateRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+func (r *UpdateRecordRequest) ToRequestBody(sc *client.ServiceClient) map[string]any {
 	body := map[string]any{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,
@@ -237,7 +237,7 @@ func (r *CreateDnsRecordRequest) WithValue(value []RecordValueRequest) *CreateDn
 	return r
 }
 
-func (r *CreateDnsRecordRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+func (r *CreateDnsRecordRequest) ToRequestBody(sc *client.ServiceClient) map[string]any {
 	body := map[string]any{
 		"subDomain":     r.SubDomain,
 		"ttl":           r.TTL,

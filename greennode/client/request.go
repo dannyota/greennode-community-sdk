@@ -1,30 +1,6 @@
 package client
 
-type Request interface {
-	WithOkCodes(okCodes ...int) Request
-	WithJSONBody(jsonBody any) Request
-	WithJSONResponse(jsonResponse any) Request
-	WithJSONError(jsonError any) Request
-	WithRequestMethod(method requestMethod) Request
-	WithSkipAuth(skipAuth bool) Request
-	WithHeader(key, value string) Request
-	WithMapHeaders(headers map[string]string) Request
-	WithUserID(userID string) Request
-
-	RequestBody() any
-	RequestMethod() string
-	MoreHeaders() map[string]string
-	JSONResponse() any
-	JSONError() any
-
-	SetJSONResponse(jsonResponse any)
-	SetJSONError(jsonError any)
-
-	ContainsOkCode(code ...int) bool
-	SkipAuthentication() bool
-}
-
-type request struct {
+type Request struct {
 	jsonBody     any
 	jsonResponse any
 	jsonError    any
@@ -44,77 +20,77 @@ const (
 	MethodDelete = requestMethod("DELETE")
 )
 
-func NewRequest() Request {
-	return &request{
+func NewRequest() *Request {
+	return &Request{
 		okCodes: make(map[int]struct{}),
 	}
 }
 
-func (r *request) WithOkCodes(okCodes ...int) Request {
+func (r *Request) WithOkCodes(okCodes ...int) *Request {
 	for _, c := range okCodes {
 		r.okCodes[c] = struct{}{}
 	}
 	return r
 }
 
-func (r *request) WithUserID(userID string) Request {
+func (r *Request) WithUserID(userID string) *Request {
 	return r.WithHeader("portal-user-id", userID)
 }
 
-func (r *request) WithJSONBody(jsonBody any) Request {
+func (r *Request) WithJSONBody(jsonBody any) *Request {
 	r.jsonBody = jsonBody
 	return r
 }
 
-func (r *request) WithJSONResponse(jsonResponse any) Request {
+func (r *Request) WithJSONResponse(jsonResponse any) *Request {
 	r.jsonResponse = jsonResponse
 	return r
 }
 
-func (r *request) WithJSONError(jsonError any) Request {
+func (r *Request) WithJSONError(jsonError any) *Request {
 	r.jsonError = jsonError
 	return r
 }
 
-func (r *request) WithRequestMethod(method requestMethod) Request {
+func (r *Request) WithRequestMethod(method requestMethod) *Request {
 	r.method = method
 	return r
 }
 
-func (r *request) WithSkipAuth(skipAuth bool) Request {
+func (r *Request) WithSkipAuth(skipAuth bool) *Request {
 	r.skipAuth = skipAuth
 	return r
 }
 
-func (r *request) RequestBody() any {
+func (r *Request) RequestBody() any {
 	return r.jsonBody
 }
 
-func (r *request) JSONError() any {
+func (r *Request) JSONError() any {
 	return r.jsonError
 }
 
-func (r *request) RequestMethod() string {
+func (r *Request) RequestMethod() string {
 	return string(r.method)
 }
 
-func (r *request) MoreHeaders() map[string]string {
+func (r *Request) MoreHeaders() map[string]string {
 	return r.moreHeaders
 }
 
-func (r *request) JSONResponse() any {
+func (r *Request) JSONResponse() any {
 	return r.jsonResponse
 }
 
-func (r *request) SetJSONResponse(jsonResponse any) {
+func (r *Request) SetJSONResponse(jsonResponse any) {
 	r.jsonResponse = jsonResponse
 }
 
-func (r *request) SetJSONError(jsonError any) {
+func (r *Request) SetJSONError(jsonError any) {
 	r.jsonError = jsonError
 }
 
-func (r *request) ContainsOkCode(code ...int) bool {
+func (r *Request) ContainsOkCode(code ...int) bool {
 	for _, c := range code {
 		if _, ok := r.okCodes[c]; ok {
 			return true
@@ -123,7 +99,7 @@ func (r *request) ContainsOkCode(code ...int) bool {
 	return false
 }
 
-func (r *request) WithHeader(key, value string) Request {
+func (r *Request) WithHeader(key, value string) *Request {
 	if key == "" || value == "" {
 		return r
 	}
@@ -136,7 +112,7 @@ func (r *request) WithHeader(key, value string) Request {
 	return r
 }
 
-func (r *request) WithMapHeaders(headers map[string]string) Request {
+func (r *Request) WithMapHeaders(headers map[string]string) *Request {
 	if r.moreHeaders == nil {
 		r.moreHeaders = make(map[string]string)
 	}
@@ -148,6 +124,6 @@ func (r *request) WithMapHeaders(headers map[string]string) Request {
 	return r
 }
 
-func (r *request) SkipAuthentication() bool {
+func (r *Request) SkipAuthentication() bool {
 	return r.skipAuth
 }

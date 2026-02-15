@@ -16,25 +16,15 @@ const (
 	IAMOauth2 AuthOpts = "IamOauth2"
 )
 
-type HTTPClient interface {
-	WithRetryCount(retryCount int) HTTPClient
-	WithTimeout(timeout time.Duration) HTTPClient
-	WithSleep(sleep time.Duration) HTTPClient
-	WithKvDefaultHeaders(args ...string) HTTPClient
-	WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (SdkAuthentication, error)) HTTPClient
-
-	DoRequest(ctx context.Context, url string, req Request) (*req.Response, error)
-}
-
 type (
-	httpClient struct {
+	HTTPClient struct {
 		retryCount int
 		client     *req.Client
 
-		reauthFunc   func(ctx context.Context) (SdkAuthentication, error)
+		reauthFunc   func(ctx context.Context) (*SdkAuthentication, error)
 		reauthOption AuthOpts
 
-		accessToken    SdkAuthentication
+		accessToken    *SdkAuthentication
 		defaultHeaders map[string]string
 
 		mut       *sync.RWMutex
@@ -54,8 +44,8 @@ type (
 	AuthOpts string
 )
 
-func NewHTTPClient() HTTPClient {
-	return &httpClient{
+func NewHTTPClient() *HTTPClient {
+	return &HTTPClient{
 		retryCount: 0,
 		client: req.NewClient().
 			SetCommonRetryCount(3).
@@ -66,22 +56,22 @@ func NewHTTPClient() HTTPClient {
 	}
 }
 
-func (hc *httpClient) WithRetryCount(retryCount int) HTTPClient {
+func (hc *HTTPClient) WithRetryCount(retryCount int) *HTTPClient {
 	hc.client.SetCommonRetryCount(retryCount)
 	return hc
 }
 
-func (hc *httpClient) WithTimeout(timeout time.Duration) HTTPClient {
+func (hc *HTTPClient) WithTimeout(timeout time.Duration) *HTTPClient {
 	hc.client.SetTimeout(timeout)
 	return hc
 }
 
-func (hc *httpClient) WithSleep(sleep time.Duration) HTTPClient {
+func (hc *HTTPClient) WithSleep(sleep time.Duration) *HTTPClient {
 	hc.client.SetCommonRetryFixedInterval(sleep)
 	return hc
 }
 
-func (hc *httpClient) WithKvDefaultHeaders(args ...string) HTTPClient {
+func (hc *HTTPClient) WithKvDefaultHeaders(args ...string) *HTTPClient {
 	if hc.defaultHeaders == nil {
 		hc.defaultHeaders = make(map[string]string)
 	}
@@ -97,13 +87,13 @@ func (hc *httpClient) WithKvDefaultHeaders(args ...string) HTTPClient {
 	return hc
 }
 
-func (hc *httpClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (SdkAuthentication, error)) HTTPClient {
+func (hc *HTTPClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (*SdkAuthentication, error)) *HTTPClient {
 	hc.reauthFunc = reauthFunc
 	hc.reauthOption = authOpt
 	return hc
 }
 
-func (hc *httpClient) DoRequest(ctx context.Context, url string, preq Request) (*req.Response, error) {
+func (hc *HTTPClient) DoRequest(ctx context.Context, url string, preq *Request) (*req.Response, error) {
 	req := hc.prepareRequest(ctx, preq)
 
 	resp, sdkErr := hc.executeRequest(ctx, url, req, preq)
@@ -114,7 +104,7 @@ func (hc *httpClient) DoRequest(ctx context.Context, url string, preq Request) (
 	return hc.handleResponse(ctx, url, resp, preq)
 }
 
-func (hc *httpClient) prepareRequest(ctx context.Context, preq Request) *req.Request {
+func (hc *HTTPClient) prepareRequest(ctx context.Context, preq *Request) *req.Request {
 	req := hc.client.R().SetContext(ctx).SetHeaders(hc.getDefaultHeaders()).SetHeaders(preq.MoreHeaders())
 
 	if opt := preq.RequestBody(); opt != nil {
@@ -132,7 +122,7 @@ func (hc *httpClient) prepareRequest(ctx context.Context, preq Request) *req.Req
 	return req
 }
 
-func (hc *httpClient) executeRequest(ctx context.Context, url string, req *req.Request, preq Request) (*req.Response, error) {
+func (hc *HTTPClient) executeRequest(ctx context.Context, url string, req *req.Request, preq *Request) (*req.Response, error) {
 	if hc.needReauth(preq) {
 		return hc.handleReauthBeforeRequest(ctx, url, preq)
 	}
@@ -146,7 +136,7 @@ func (hc *httpClient) executeRequest(ctx context.Context, url string, req *req.R
 	return resp, nil
 }
 
-func (hc *httpClient) executeHTTPMethod(url string, req *req.Request, preq Request) (*req.Response, error) {
+func (hc *HTTPClient) executeHTTPMethod(url string, req *req.Request, preq *Request) (*req.Response, error) {
 	switch strings.ToUpper(preq.RequestMethod()) {
 	case "POST":
 		return req.Post(url)
@@ -163,7 +153,7 @@ func (hc *httpClient) executeHTTPMethod(url string, req *req.Request, preq Reque
 	}
 }
 
-func (hc *httpClient) handleReauthBeforeRequest(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return nil, sdkErr
@@ -173,7 +163,7 @@ func (hc *httpClient) handleReauthBeforeRequest(ctx context.Context, url string,
 	return nil, nil
 }
 
-func (hc *httpClient) handleResponse(ctx context.Context, url string, resp *req.Response, req Request) (*req.Response, error) {
+func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *req.Response, req *Request) (*req.Response, error) {
 	if resp == nil || resp.Response == nil {
 		return nil, sdkerror.NewUnexpectedError(resp)
 	}
@@ -189,7 +179,7 @@ func (hc *httpClient) handleResponse(ctx context.Context, url string, resp *req.
 	return resp, sdkerror.ErrorHandler(resp.Err)
 }
 
-func (hc *httpClient) handleStatusCode(ctx context.Context, url string, resp *req.Response, preq Request) error {
+func (hc *HTTPClient) handleStatusCode(ctx context.Context, url string, resp *req.Response, preq *Request) error {
 	switch resp.StatusCode {
 	case http.StatusUnauthorized:
 		return hc.handleUnauthorized(ctx, url, resp, preq)
@@ -213,7 +203,7 @@ func (hc *httpClient) handleStatusCode(ctx context.Context, url string, resp *re
 	return nil
 }
 
-func (hc *httpClient) handleUnauthorized(ctx context.Context, url string, resp *req.Response, req Request) error {
+func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *req.Response, req *Request) error {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return sdkErr
@@ -225,7 +215,7 @@ func (hc *httpClient) handleUnauthorized(ctx context.Context, url string, resp *
 	return defaultErrorResponse(resp.Err, url, req, resp)
 }
 
-func (hc *httpClient) needReauth(req Request) bool {
+func (hc *HTTPClient) needReauth(req *Request) bool {
 	if req.SkipAuthentication() {
 		return false
 	}
@@ -237,7 +227,7 @@ func (hc *httpClient) needReauth(req Request) bool {
 	return hc.accessToken.NeedReauth()
 }
 
-func (hc *httpClient) reauthenticate(ctx context.Context) error {
+func (hc *HTTPClient) reauthenticate(ctx context.Context) error {
 	if hc.reauthFunc == nil {
 		return sdkerror.NewReauthFuncNotSet()
 	}
@@ -264,7 +254,7 @@ func (hc *httpClient) reauthenticate(ctx context.Context) error {
 	return sdkerr
 }
 
-func (hc *httpClient) setAccessToken(newToken SdkAuthentication) HTTPClient {
+func (hc *HTTPClient) setAccessToken(newToken *SdkAuthentication) *HTTPClient {
 	hc.mut.Lock()
 	defer hc.mut.Unlock()
 	if newToken != nil {
@@ -275,7 +265,7 @@ func (hc *httpClient) setAccessToken(newToken SdkAuthentication) HTTPClient {
 	return hc
 }
 
-func (hc *httpClient) getDefaultHeaders() map[string]string {
+func (hc *HTTPClient) getDefaultHeaders() map[string]string {
 	hc.mut.RLock()
 	defer hc.mut.RUnlock()
 	if hc.defaultHeaders == nil {
@@ -302,7 +292,7 @@ func (f *reauthFuture) set(err error) {
 	close(f.done)
 }
 
-func defaultErrorResponse(err error, url string, req Request, resp *req.Response) *sdkerror.SdkError {
+func defaultErrorResponse(err error, url string, req *Request, resp *req.Response) *sdkerror.SdkError {
 	headers := req.MoreHeaders()
 
 	// Remove sensitive information

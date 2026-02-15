@@ -72,7 +72,7 @@ func (r *CreateHostedZoneRequest) WithDescription(description string) *CreateHos
 	return r
 }
 
-func (r *CreateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+func (r *CreateHostedZoneRequest) ToRequestBody(sc *client.ServiceClient) map[string]any {
 	return map[string]any{
 		"domainName":  r.DomainName,
 		"assocVpcIds": r.AssocVpcIDs,
@@ -137,7 +137,7 @@ func (r *UpdateHostedZoneRequest) WithDescription(description string) *UpdateHos
 	return r
 }
 
-func (r *UpdateHostedZoneRequest) ToRequestBody(sc client.ServiceClient) map[string]any {
+func (r *UpdateHostedZoneRequest) ToRequestBody(sc *client.ServiceClient) map[string]any {
 	return map[string]any{
 		"assocVpcIds": r.AssocVpcIDs,
 		"description": r.Description,

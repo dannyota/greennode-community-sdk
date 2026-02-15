@@ -8,146 +8,116 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-type ServiceClient interface {
-	WithEndpoint(endpoint string) ServiceClient
-	WithName(name string) ServiceClient
-	WithProjectID(projectID string) ServiceClient
-	WithZoneID(zoneID string) ServiceClient
-	WithUserID(userID string) ServiceClient
-	WithMoreHeaders(moreHeaders map[string]string) ServiceClient
-	WithKVheader(key string, value string) ServiceClient
-	WithClient(client HTTPClient) ServiceClient
-	ServiceURL(parts ...string) string
-	GetProjectID() string
-	GetZoneID() string
-	GetUserID() string
-
-	Post(ctx context.Context, url string, req Request) (*req.Response, error)
-	Get(ctx context.Context, url string, req Request) (*req.Response, error)
-	Delete(ctx context.Context, url string, req Request) (*req.Response, error)
-	Put(ctx context.Context, url string, req Request) (*req.Response, error)
-	Patch(ctx context.Context, url string, req Request) (*req.Response, error)
-}
-
-type SdkAuthentication interface {
-	WithAccessToken(accessToken string) SdkAuthentication
-	WithExpiresAt(expiresAt int64) SdkAuthentication
-	UpdateAuth(auth SdkAuthentication)
-	NeedReauth() bool
-	AccessToken() string
-	ExpiresAt() int64
-}
-
-type serviceClient struct {
+type ServiceClient struct {
 	name        string
 	endpoint    string
 	projectID   string
 	zoneID      string
 	userID      string
 	moreHeaders map[string]string
-	client      HTTPClient
+	client      *HTTPClient
 }
 
-func NewServiceClient() ServiceClient {
-	return &serviceClient{}
+func NewServiceClient() *ServiceClient {
+	return &ServiceClient{}
 }
 
-func (sc *serviceClient) WithEndpoint(endpoint string) ServiceClient {
+func (sc *ServiceClient) WithEndpoint(endpoint string) *ServiceClient {
 	sc.endpoint = normalizeURL(endpoint)
 	return sc
 }
 
-func (sc *serviceClient) WithName(name string) ServiceClient {
+func (sc *ServiceClient) WithName(name string) *ServiceClient {
 	sc.name = name
 	return sc
 }
 
-func (sc *serviceClient) WithZoneID(zoneID string) ServiceClient {
+func (sc *ServiceClient) WithZoneID(zoneID string) *ServiceClient {
 	sc.zoneID = zoneID
 	return sc
 }
 
-func (sc *serviceClient) WithUserID(userID string) ServiceClient {
+func (sc *ServiceClient) WithUserID(userID string) *ServiceClient {
 	sc.userID = userID
 	return sc
 }
 
-func (sc *serviceClient) WithProjectID(projectID string) ServiceClient {
+func (sc *ServiceClient) WithProjectID(projectID string) *ServiceClient {
 	sc.projectID = projectID
 	return sc
 }
 
-func (sc *serviceClient) WithMoreHeaders(moreHeaders map[string]string) ServiceClient {
+func (sc *ServiceClient) WithMoreHeaders(moreHeaders map[string]string) *ServiceClient {
 	sc.moreHeaders = moreHeaders
 	return sc
 }
 
-func (sc *serviceClient) WithKVheader(key string, value string) ServiceClient {
+func (sc *ServiceClient) WithKVheader(key string, value string) *ServiceClient {
 	sc.moreHeaders[key] = value
 	return sc
 }
 
-func (sc *serviceClient) WithClient(client HTTPClient) ServiceClient {
+func (sc *ServiceClient) WithClient(client *HTTPClient) *ServiceClient {
 	sc.client = client
 	return sc
 }
 
-func (sc *serviceClient) ServiceURL(parts ...string) string {
+func (sc *ServiceClient) ServiceURL(parts ...string) string {
 	return sc.endpoint + strings.Join(parts, "/")
 }
 
-func (sc *serviceClient) Post(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (sc *ServiceClient) Post(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPost))
 }
 
-func (sc *serviceClient) Get(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (sc *ServiceClient) Get(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodGet))
 }
 
-func (sc *serviceClient) Delete(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (sc *ServiceClient) Delete(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodDelete))
 }
 
-func (sc *serviceClient) Put(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (sc *ServiceClient) Put(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPut))
 }
 
-func (sc *serviceClient) Patch(ctx context.Context, url string, req Request) (*req.Response, error) {
+func (sc *ServiceClient) Patch(ctx context.Context, url string, req *Request) (*req.Response, error) {
 	return sc.client.DoRequest(ctx, url, req.WithRequestMethod(MethodPatch))
 }
 
-func (sc *serviceClient) GetProjectID() string {
+func (sc *ServiceClient) GetProjectID() string {
 	return sc.projectID
 }
 
-func (sc *serviceClient) GetZoneID() string {
+func (sc *ServiceClient) GetZoneID() string {
 	return sc.zoneID
 }
 
-func (sc *serviceClient) GetUserID() string {
+func (sc *ServiceClient) GetUserID() string {
 	return sc.userID
 }
 
-type sdkAuthentication struct {
+type SdkAuthentication struct {
 	accessToken string
 	expiresAt   int64
 }
 
-func NewSdkAuthentication() SdkAuthentication {
-	return &sdkAuthentication{}
+func NewSdkAuthentication() *SdkAuthentication {
+	return &SdkAuthentication{}
 }
 
-func (a *sdkAuthentication) WithAccessToken(accessToken string) SdkAuthentication {
+func (a *SdkAuthentication) WithAccessToken(accessToken string) *SdkAuthentication {
 	a.accessToken = accessToken
 	return a
 }
 
-func (a *sdkAuthentication) WithExpiresAt(expiresAt int64) SdkAuthentication {
+func (a *SdkAuthentication) WithExpiresAt(expiresAt int64) *SdkAuthentication {
 	a.expiresAt = expiresAt
 	return a
 }
 
-func (a *sdkAuthentication) NeedReauth() bool {
+func (a *SdkAuthentication) NeedReauth() bool {
 	if a.accessToken == "" {
 		return true
 	}
@@ -156,16 +126,16 @@ func (a *sdkAuthentication) NeedReauth() bool {
 	return time.Until(ea) < 5*time.Minute
 }
 
-func (a *sdkAuthentication) UpdateAuth(auth SdkAuthentication) {
+func (a *SdkAuthentication) UpdateAuth(auth *SdkAuthentication) {
 	a.accessToken = auth.AccessToken()
 	a.expiresAt = auth.ExpiresAt()
 }
 
-func (a *sdkAuthentication) AccessToken() string {
+func (a *SdkAuthentication) AccessToken() string {
 	return a.accessToken
 }
 
-func (a *sdkAuthentication) ExpiresAt() int64 {
+func (a *SdkAuthentication) ExpiresAt() int64 {
 	return a.expiresAt
 }
 

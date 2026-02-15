@@ -30,19 +30,19 @@ func (g *VNetworkGatewayInternalV1) NetworkService() *networkv1.NetworkServiceIn
 	return g.networkService
 }
 
-func NewVNetworkGatewayV1(svcClient client.ServiceClient) *VNetworkGatewayV1 {
+func NewVNetworkGatewayV1(svcClient *client.ServiceClient) *VNetworkGatewayV1 {
 	return &VNetworkGatewayV1{
 		networkService: &networkv1.NetworkServiceV1{VNetworkClient: svcClient},
 	}
 }
 
-func NewVNetworkGatewayV2(svcClient client.ServiceClient) *VNetworkGatewayV2 {
+func NewVNetworkGatewayV2(svcClient *client.ServiceClient) *VNetworkGatewayV2 {
 	return &VNetworkGatewayV2{
 		networkService: &networkv2.NetworkServiceV2{VServerClient: svcClient},
 	}
 }
 
-func NewVNetworkGatewayInternalV1(svcClient client.ServiceClient) *VNetworkGatewayInternalV1 {
+func NewVNetworkGatewayInternalV1(svcClient *client.ServiceClient) *VNetworkGatewayInternalV1 {
 	return &VNetworkGatewayInternalV1{
 		networkService: &networkv1.NetworkServiceInternalV1{VNetworkClient: svcClient},
 	}

@@ -27,14 +27,14 @@ type VServerGatewayV2 struct {
 	volumeService  *volumev2.VolumeServiceV2
 }
 
-func NewVServerGatewayV1(svcClient client.ServiceClient) *VServerGatewayV1 {
+func NewVServerGatewayV1(svcClient *client.ServiceClient) *VServerGatewayV1 {
 	return &VServerGatewayV1{
 		portalService: &portalv1.PortalServiceV1{PortalClient: svcClient},
 		volumeService: &volumev1.VolumeServiceV1{VServerClient: svcClient},
 	}
 }
 
-func NewVServerGatewayV2(svcClient client.ServiceClient) *VServerGatewayV2 {
+func NewVServerGatewayV2(svcClient *client.ServiceClient) *VServerGatewayV2 {
 	return &VServerGatewayV2{
 		networkService: &networkv2.NetworkServiceV2{VServerClient: svcClient},
 		computeService: &computev2.ComputeServiceV2{VServerClient: svcClient},
@@ -43,7 +43,7 @@ func NewVServerGatewayV2(svcClient client.ServiceClient) *VServerGatewayV2 {
 	}
 }
 
-func NewVServerGatewayInternalV1(svcClient client.ServiceClient) *VServerGatewayInternalV1 {
+func NewVServerGatewayInternalV1(svcClient *client.ServiceClient) *VServerGatewayInternalV1 {
 	return &VServerGatewayInternalV1{
 		serverService: &serverv1.ServerServiceInternalV1{VServerClient: svcClient},
 	}

@@ -56,7 +56,7 @@ type CreateEndpointRequest struct {
 	} `json:"resourceInfo"`
 }
 
-func (r *CreateEndpointRequest) ToRequestBody(svc client.ServiceClient) any {
+func (r *CreateEndpointRequest) ToRequestBody(svc *client.ServiceClient) any {
 	r.ResourceType = "endpoint"
 	r.Action = "create"
 	r.ResourceInfo.EnableAZ = true
@@ -162,7 +162,7 @@ type DeleteEndpointByIDRequest struct {
 	common.EndpointCommon
 }
 
-func (r *DeleteEndpointByIDRequest) ToRequestBody(svc client.ServiceClient) any {
+func (r *DeleteEndpointByIDRequest) ToRequestBody(svc *client.ServiceClient) any {
 	r.ProjectUuid = svc.GetProjectID()
 	r.RegionUuid = svc.GetZoneID()
 

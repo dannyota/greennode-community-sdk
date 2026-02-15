@@ -2,27 +2,27 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createServerURL(sc client.ServiceClient) string {
+func createServerURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers")
 }
 
-func getServerByIDURL(sc client.ServiceClient, opts *GetServerByIDRequest) string {
+func getServerByIDURL(sc *client.ServiceClient, opts *GetServerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
 		opts.GetServerID())
 }
 
-func deleteServerByIDURL(sc client.ServiceClient, opts *DeleteServerByIDRequest) string {
+func deleteServerByIDURL(sc *client.ServiceClient, opts *DeleteServerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
 		opts.GetServerID())
 }
 
-func updateServerSecgroupsByServerIDURL(sc client.ServiceClient, opts *UpdateServerSecgroupsByServerIDRequest) string {
+func updateServerSecgroupsByServerIDURL(sc *client.ServiceClient, opts *UpdateServerSecgroupsByServerIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
@@ -30,7 +30,7 @@ func updateServerSecgroupsByServerIDURL(sc client.ServiceClient, opts *UpdateSer
 		"update-sec-group")
 }
 
-func attachBlockVolumeURL(sc client.ServiceClient, opts *AttachBlockVolumeRequest) string {
+func attachBlockVolumeURL(sc *client.ServiceClient, opts *AttachBlockVolumeRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -40,7 +40,7 @@ func attachBlockVolumeURL(sc client.ServiceClient, opts *AttachBlockVolumeReques
 		"attach")
 }
 
-func detachBlockVolumeURL(sc client.ServiceClient, opts *DetachBlockVolumeRequest) string {
+func detachBlockVolumeURL(sc *client.ServiceClient, opts *DetachBlockVolumeRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -51,7 +51,7 @@ func detachBlockVolumeURL(sc client.ServiceClient, opts *DetachBlockVolumeReques
 	)
 }
 
-func attachFloatingIpURL(sc client.ServiceClient, opts *AttachFloatingIpRequest) string {
+func attachFloatingIpURL(sc *client.ServiceClient, opts *AttachFloatingIpRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
@@ -62,7 +62,7 @@ func attachFloatingIpURL(sc client.ServiceClient, opts *AttachFloatingIpRequest)
 
 }
 
-func detachFloatingIpURL(sc client.ServiceClient, opts *DetachFloatingIpRequest) string {
+func detachFloatingIpURL(sc *client.ServiceClient, opts *DetachFloatingIpRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
@@ -72,7 +72,7 @@ func detachFloatingIpURL(sc client.ServiceClient, opts *DetachFloatingIpRequest)
 		"detach")
 }
 
-func listServerGroupPoliciesURL(sc client.ServiceClient) string {
+func listServerGroupPoliciesURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"serverGroups",
@@ -80,7 +80,7 @@ func listServerGroupPoliciesURL(sc client.ServiceClient) string {
 	)
 }
 
-func deleteServerGroupByIDURL(sc client.ServiceClient, opts *DeleteServerGroupByIDRequest) string {
+func deleteServerGroupByIDURL(sc *client.ServiceClient, opts *DeleteServerGroupByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"serverGroups",
@@ -88,7 +88,7 @@ func deleteServerGroupByIDURL(sc client.ServiceClient, opts *DeleteServerGroupBy
 	)
 }
 
-func listServerGroupsURL(sc client.ServiceClient, opts *ListServerGroupsRequest) string {
+func listServerGroupsURL(sc *client.ServiceClient, opts *ListServerGroupsRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -97,7 +97,7 @@ func listServerGroupsURL(sc client.ServiceClient, opts *ListServerGroupsRequest)
 	return sc.ServiceURL(sc.GetProjectID(), "serverGroups") + query
 }
 
-func createServerGroupURL(sc client.ServiceClient, _ *CreateServerGroupRequest) string {
+func createServerGroupURL(sc *client.ServiceClient, _ *CreateServerGroupRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"serverGroups",

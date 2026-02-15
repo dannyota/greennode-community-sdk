@@ -13,7 +13,7 @@ type Client struct {
 	projectID  string
 	zoneID     string
 	userID     string
-	httpClient svcclient.HTTPClient
+	httpClient *svcclient.HTTPClient
 	userAgent  string
 	authOpt    svcclient.AuthOpts
 
@@ -33,7 +33,7 @@ func NewSdkConfigure() *SdkConfigure {
 	return &SdkConfigure{}
 }
 
-func (c *Client) WithHTTPClient(client svcclient.HTTPClient) *Client {
+func (c *Client) WithHTTPClient(client *svcclient.HTTPClient) *Client {
 	c.httpClient = client
 	return c
 }
@@ -215,8 +215,8 @@ func (c *Client) VDnsGateway() *gateway.VDnsGateway {
 	return c.vdnsGateway
 }
 
-func (c *Client) usingIAMOauth2AsAuthOption(authConfig *SdkConfigure) func(ctx context.Context) (svcclient.SdkAuthentication, error) {
-	authFunc := func(ctx context.Context) (svcclient.SdkAuthentication, error) {
+func (c *Client) usingIAMOauth2AsAuthOption(authConfig *SdkConfigure) func(ctx context.Context) (*svcclient.SdkAuthentication, error) {
+	authFunc := func(ctx context.Context) (*svcclient.SdkAuthentication, error) {
 		token, err := c.iamGateway.V2().IdentityService().GetAccessToken(
 			ctx,
 			identityv2.NewGetAccessTokenRequest(authConfig.GetClientID(), authConfig.GetClientSecret()))

@@ -2,20 +2,20 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
-func createBlockVolumeURL(sc client.ServiceClient) string {
+func createBlockVolumeURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes")
 }
 
-func deleteBlockVolumeByIDURL(sc client.ServiceClient, opts *DeleteBlockVolumeByIDRequest) string {
+func deleteBlockVolumeByIDURL(sc *client.ServiceClient, opts *DeleteBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
 		opts.GetBlockVolumeID())
 }
 
-func listBlockVolumesURL(sc client.ServiceClient, opts *ListBlockVolumesRequest) string {
+func listBlockVolumesURL(sc *client.ServiceClient, opts *ListBlockVolumesRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -26,14 +26,14 @@ func listBlockVolumesURL(sc client.ServiceClient, opts *ListBlockVolumesRequest)
 		"volumes") + query
 }
 
-func getBlockVolumeByIDURL(sc client.ServiceClient, opts *GetBlockVolumeByIDRequest) string {
+func getBlockVolumeByIDURL(sc *client.ServiceClient, opts *GetBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
 		opts.GetBlockVolumeID())
 }
 
-func resizeBlockVolumeByIDURL(sc client.ServiceClient, opts *ResizeBlockVolumeByIDRequest) string {
+func resizeBlockVolumeByIDURL(sc *client.ServiceClient, opts *ResizeBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -41,7 +41,7 @@ func resizeBlockVolumeByIDURL(sc client.ServiceClient, opts *ResizeBlockVolumeBy
 		"resize")
 }
 
-func listSnapshotsByBlockVolumeIDURL(sc client.ServiceClient, opts *ListSnapshotsByBlockVolumeIDRequest) string {
+func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapshotsByBlockVolumeIDRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
 		query = opts.GetDefaultQuery()
@@ -55,7 +55,7 @@ func listSnapshotsByBlockVolumeIDURL(sc client.ServiceClient, opts *ListSnapshot
 	) + query
 }
 
-func createSnapshotByBlockVolumeIDURL(sc client.ServiceClient, opts *CreateSnapshotByBlockVolumeIDRequest) string {
+func createSnapshotByBlockVolumeIDURL(sc *client.ServiceClient, opts *CreateSnapshotByBlockVolumeIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -63,7 +63,7 @@ func createSnapshotByBlockVolumeIDURL(sc client.ServiceClient, opts *CreateSnaps
 		"snapshots")
 }
 
-func deleteSnapshotByIDURL(sc client.ServiceClient, opts *DeleteSnapshotByIDRequest) string {
+func deleteSnapshotByIDURL(sc *client.ServiceClient, opts *DeleteSnapshotByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -73,7 +73,7 @@ func deleteSnapshotByIDURL(sc client.ServiceClient, opts *DeleteSnapshotByIDRequ
 	)
 }
 
-func getUnderBlockVolumeIDURL(sc client.ServiceClient, opts *GetUnderBlockVolumeIDRequest) string {
+func getUnderBlockVolumeIDURL(sc *client.ServiceClient, opts *GetUnderBlockVolumeIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
@@ -82,7 +82,7 @@ func getUnderBlockVolumeIDURL(sc client.ServiceClient, opts *GetUnderBlockVolume
 	)
 }
 
-func migrateBlockVolumeByIDURL(sc client.ServiceClient, opts *MigrateBlockVolumeByIDRequest) string {
+func migrateBlockVolumeByIDURL(sc *client.ServiceClient, opts *MigrateBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",

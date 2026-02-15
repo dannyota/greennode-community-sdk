@@ -31,7 +31,7 @@ type VNetworkGateway struct {
 	vnetworkGatewayInternalV1 *VNetworkGatewayInternalV1
 }
 
-func NewIAMGateway(endpoint, projectID string, hc client.HTTPClient) *IAMGateway {
+func NewIAMGateway(endpoint, projectID string, hc *client.HTTPClient) *IAMGateway {
 	iamSvcV2 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v2").
 		WithClient(hc).
@@ -42,7 +42,7 @@ func NewIAMGateway(endpoint, projectID string, hc client.HTTPClient) *IAMGateway
 	}
 }
 
-func NewVServerGateway(endpoint, projectID string, hc client.HTTPClient) *VServerGateway {
+func NewVServerGateway(endpoint, projectID string, hc *client.HTTPClient) *VServerGateway {
 	vserverSvcV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc).
@@ -66,7 +66,7 @@ func NewVServerGateway(endpoint, projectID string, hc client.HTTPClient) *VServe
 	}
 }
 
-func NewVLBGateway(lbEndpoint, serverEndpoint, projectID string, hc client.HTTPClient) *VLBGateway {
+func NewVLBGateway(lbEndpoint, serverEndpoint, projectID string, hc *client.HTTPClient) *VLBGateway {
 	vlbSvcV2 := client.NewServiceClient().
 		WithEndpoint(lbEndpoint + "v2").
 		WithClient(hc).
@@ -89,7 +89,7 @@ func NewVLBGateway(lbEndpoint, serverEndpoint, projectID string, hc client.HTTPC
 	}
 }
 
-func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc client.HTTPClient) *VNetworkGateway {
+func NewVNetworkGateway(endpoint, zoneID, projectID, userID string, hc *client.HTTPClient) *VNetworkGateway {
 	vnetworkSvcV1 := client.NewServiceClient().
 		WithEndpoint(endpoint + "vnetwork/v1").
 		WithClient(hc).
@@ -172,7 +172,7 @@ type GLBGateway struct {
 	glbGatewayV1 *GLBGatewayV1
 }
 
-func NewGLBGateway(endpoint string, hc client.HTTPClient) *GLBGateway {
+func NewGLBGateway(endpoint string, hc *client.HTTPClient) *GLBGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc)
@@ -195,7 +195,7 @@ func (g *GLBGatewayV1) GLBService() *glbv1.GLBServiceV1 {
 	return g.glbService
 }
 
-func NewGLBGatewayV1(svcClient client.ServiceClient) *GLBGatewayV1 {
+func NewGLBGatewayV1(svcClient *client.ServiceClient) *GLBGatewayV1 {
 	return &GLBGatewayV1{
 		glbService: &glbv1.GLBServiceV1{VLBClient: svcClient},
 	}
@@ -207,7 +207,7 @@ type VDnsGateway struct {
 	dnsServiceInternal *dnsinternalv1.VDnsServiceInternal
 }
 
-func NewVDnsGateway(endpoint, projectID string, hc client.HTTPClient) *VDnsGateway {
+func NewVDnsGateway(endpoint, projectID string, hc *client.HTTPClient) *VDnsGateway {
 	svcClient := client.NewServiceClient().
 		WithEndpoint(endpoint + "v1").
 		WithClient(hc).
