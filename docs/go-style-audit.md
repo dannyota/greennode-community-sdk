@@ -16,9 +16,9 @@ them as order-of-magnitude guides, not exact totals.
 Non-request interfaces (~73) have been renamed: `IClient` → `Client`,
 `IHttpClient` → `HTTPClient`, `IError` → `Error`, `IIamGateway` → `IamGateway`, etc.
 
-**Remaining:** ~106 `I*Request` interfaces (e.g., `ICreateLoadBalancerRequest`)
-are kept — they have name collisions with their concrete structs. These should be
-removed entirely per §2.2 in a future pass.
+The ~106 `I*Request` interfaces (e.g., `ICreateLoadBalancerRequest`) that had
+name collisions with their concrete structs have been removed entirely per §2.2.
+One exception: `IBulkActionRequest` (3 implementations, genuine polymorphism).
 
 ### 1.2 `p` prefix on parameters — **RESOLVED**
 
@@ -100,20 +100,17 @@ actually need. This yields naturally small interfaces and decouples packages.
 
 **Reference:** [Go wiki: Accept interfaces, return structs](https://go.dev/wiki/CodeReviewComments#interfaces).
 
-### 2.2 Interface-per-type (one-to-one interface/struct pairs)
+### 2.2 Interface-per-type (one-to-one interface/struct pairs) — **RESOLVED**
 
-Every request struct has a parallel `I*Request` interface, even when there is
-exactly one implementation. Examples:
+All one-to-one `I*Request` interface/struct pairs (~142) have been removed.
+Method return types (`With*()`, `AddUserAgent()`) now return `*ConcreteType`
+instead of `I*Interface`. URL builders, service implementations, and parent
+service interfaces all accept concrete pointer types directly.
 
-- `ICreateLoadBalancerRequest` ↔ `CreateLoadBalancerRequest`
-- `IGetPoolByIDRequest` ↔ `GetPoolByIDRequest`
-- `IDeleteLoadBalancerByIDRequest` ↔ `DeleteLoadBalancerByIDRequest`
-
-Each pair also has a `var _` compile-time assertion (~45 total).
-
-**Go convention:** Interfaces with a single implementation add indirection
-without value. Export the concrete struct directly and let consumers define
-interfaces if they need to mock it.
+**Exception kept:** `IBulkActionRequest` in `glb/v1/glb_pool_requests.go` has
+three implementations (`PatchGlobalPoolCreateBulkActionRequest`,
+`PatchGlobalPoolDeleteBulkActionRequest`,
+`PatchGlobalPoolUpdateBulkActionRequest`) — genuine polymorphism.
 
 ### 2.3 God interfaces (>10 methods)
 
@@ -249,17 +246,12 @@ mutations) correctly keep pointer receivers.
 All ~411 `interface{}` occurrences across ~47 files have been replaced with `any`
 using `gofmt -r 'interface{} -> any'`.
 
-### 5.4 Overuse of `var _` compile-time assertions
+### 5.4 Overuse of `var _` compile-time assertions — **PARTIALLY RESOLVED**
 
-~45 assertions like:
-
-```go
-var _ IListCertificatesRequest = &ListCertificatesRequest{}
-```
-
-These are valid when you need to guarantee interface satisfaction at compile time,
-but most of these guard one-to-one interface/struct pairs (§2.2). When the
-unnecessary interfaces are removed, the assertions go with them.
+~33 request-type assertions were removed along with their one-to-one interfaces
+(§2.2). Remaining ~12 assertions are for gateway types (9 in `gateway.go`) and
+`IBulkActionRequest` implementations (3 in `glb_pool_requests.go`), which are
+all legitimate multi-implementation cases.
 
 ### 5.5 Missing godoc
 
@@ -288,14 +280,14 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 
 | Category | Items | Scope | Status |
 |----------|-------|-------|--------|
-| `I`-prefix interfaces | 184 interfaces | 34 files | **Done** (non-request); ~106 `I*Request` remain |
+| `I`-prefix interfaces | 184 interfaces | 34 files | **Done** (1 exception: `IBulkActionRequest`) |
 | `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** |
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Partial** (file separation removed) |
-| Interface-per-type | all request types | codebase-wide | Open |
+| Interface-per-type | all request types | codebase-wide | **Done** (1 exception: `IBulkActionRequest`) |
 | God interfaces (>10 methods) | 5 interfaces | 3 packages | Open |
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
@@ -303,6 +295,6 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Constructors returning interfaces | ~33 functions | gateways, clients | **Partial** (~141 request constructors fixed) |
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
-| `var _` assertions | ~45 | codebase-wide | Open |
+| `var _` assertions | ~45 | codebase-wide | **Partial** (~12 remain, all legitimate) |
 | Missing godoc | ~97% of exports | codebase-wide | Open |
 | V2/V1 mismatch bug | 1 | `gateway/gateway.go` | **Done** |
