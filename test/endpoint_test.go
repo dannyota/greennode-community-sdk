@@ -28,7 +28,7 @@ func TestGetEndpointSuccess(t *testing.T) {
 func TestCreateEndpoint(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv1.NewCreateEndpointRequest(
-		"cuongdm3-test",
+		"test-endpoint",
 		"f3d11a4c-f071-4009-88a6-4a21346c8708",
 		"net-5ac170fc-834a-4621-b512-481e09b82fc8",
 		"sub-0c508dd6-5af6-4f0e-a860-35346b530cf1",
@@ -53,7 +53,7 @@ func TestCreateEndpoint(t *testing.T) {
 func TestCreateEndpointInternal(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
 	opt := networkv1.NewCreateEndpointRequest(
-		"tytv2-test",
+		"test-endpoint-internal",
 		"c36bb265-f569-4748-a03a-fca52c7588ea",
 		"net-dc14bb60-d500-40b5-945f-218540990187",
 		"sub-3f7a1d9b-1d68-44d0-a14f-4cc6bf18a7c4",
@@ -128,11 +128,11 @@ func TestListEndpointTags(t *testing.T) {
 
 	lb, sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().ListTagsByEndpointID(context.Background(), opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %+v", sdkerr)
+		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
 	if lb == nil {
-		t.Logf("Expect not nil but got nil")
+		t.Fatalf("Expect not nil but got nil")
 	}
 
 	t.Log("Result: ", lb)
@@ -145,11 +145,11 @@ func TestCreateEndpointTags(t *testing.T) {
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"enp-7e8e4476-feeb-414c-ac03-3501aae607d0",
-	).AddTag("cuongdm3", "test")
+	).AddTag("test-key", "test-value")
 
 	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().CreateTagsWithEndpointID(context.Background(), opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %+v", sdkerr)
+		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
 	t.Log("Result: ", sdkerr)
@@ -166,7 +166,7 @@ func TestDeleteTagByEndpointID(t *testing.T) {
 
 	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().DeleteTagOfEndpoint(context.Background(), opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %+v", sdkerr)
+		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
 	t.Log("Result: ", sdkerr)
@@ -179,12 +179,12 @@ func TestUpdateEndpointTag(t *testing.T) {
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"tag-c6d6e343-ed13-4bf1-bf2e-e63a1a5e0eab",
-		"cuonghahahah",
+		"test-updated-value",
 	)
 
 	sdkerr := vngcloud.VNetworkGateway().InternalV1().NetworkService().UpdateTagValueOfEndpoint(context.Background(), opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %+v", sdkerr)
+		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
 
 	t.Log("Result: ", sdkerr)

@@ -56,8 +56,8 @@ func TestGetPortalInfoSuccess(t *testing.T) {
 }
 
 func TestGetPortalInfoSuccess2(t *testing.T) {
-	backendProjectID := getValueOfEnv("USER_11412_OS_PROJECT_ID")
-	vngcloud := validUser11412SdkConfig()
+	backendProjectID := getValueOfEnv("TARGET_USER_OS_PROJECT_ID")
+	vngcloud := validSuperWithTargetProjectSdkConfig()
 	opt := portalv1.NewGetPortalInfoRequest(backendProjectID)
 	portal, err := vngcloud.VServerGateway().V1().PortalService().GetPortalInfo(context.Background(), opt)
 
@@ -151,8 +151,8 @@ func TestListProjects(t *testing.T) {
 	t.Log("Result: ", projects.At(0))
 }
 
-func TestListPortalUser11412(t *testing.T) {
-	vngcloud := validUser11412()
+func TestListPortalTargetUser(t *testing.T) {
+	vngcloud := validTargetUserSdkConfig()
 	projects, err := vngcloud.VServerGateway().V1().PortalService().ListProjects(context.Background(), portalv1.NewListProjectsRequest())
 	if err != nil {
 		t.Log("Error: ", err)

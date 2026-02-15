@@ -35,7 +35,7 @@ func TestCreateGlobalPoolSuccess(t *testing.T) {
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePublic)
 	poolMember.WithMembers(member)
-	opt := v1.NewCreateGlobalPoolRequest("annd2-test-pool-4", v1.GlobalPoolProtocolTCP).
+	opt := v1.NewCreateGlobalPoolRequest("test-pool-4", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolTCP)).
 		WithMembers(poolMember)
@@ -65,7 +65,7 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePrivate)
 	poolMember.WithMembers(member)
-	opt := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
+	opt := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
@@ -220,7 +220,7 @@ func TestListGlobalListenersSuccess(t *testing.T) {
 
 func TestCreateGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "annd2-test").
+	opt := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener").
 		WithDescription("hihi").
 		WithPort(85).
 		WithTimeoutClient(50).
@@ -271,7 +271,6 @@ func TestDeleteGlobalListenerSuccess(t *testing.T) {
 	t.Log("PASS")
 }
 
-
 func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalLoadBalancersRequest(0, 10)
@@ -298,7 +297,7 @@ func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 }
 
 func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
-	pool := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
+	pool := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
 			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
@@ -319,7 +318,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 					v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false),
 				),
 		)
-	listener := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "annd2-test").
+	listener := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener").
 		WithDescription("hihi").
 		WithPort(85).
 		WithTimeoutClient(50).
@@ -327,7 +326,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 		WithTimeoutMember(50).
 		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
 	vngcloud := validSdkConfig()
-	opt := v1.NewCreateGlobalLoadBalancerRequest("annd2-testtt").
+	opt := v1.NewCreateGlobalLoadBalancerRequest("test-glb").
 		WithDescription("hihi").
 		WithGlobalListener(listener).
 		WithGlobalPool(pool).WithPackage("pkg-b02e62ab-a282-4faf-8732-a172ef497a7b")

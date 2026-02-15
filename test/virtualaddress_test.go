@@ -8,14 +8,14 @@ import (
 )
 
 func TestCreateVirtualAddressCrossProject(t *testing.T) {
-	virtualAddressName := "cuongdm3-test-virtual-address"
+	virtualAddressName := "test-virtual-address"
 	projectID := "pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491"
 	subnetID := "sub-33ec4719-915f-4818-85b0-f17bdf7f899b"
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
 		virtualAddressName, projectID, subnetID).
-		WithDescription("Private DNS endpoint address for VPC cuongdm3 created by vDNS. Please DO NOT delete this address.")
+		WithDescription("Private DNS endpoint address for VPC created by vDNS. Please DO NOT delete this address.")
 	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(context.Background(), opt)
 
 	if err != nil {

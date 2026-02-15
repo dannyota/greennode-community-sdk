@@ -44,7 +44,7 @@ func TestGetSecgroupByIDFailure(t *testing.T) {
 }
 
 func TestCreateSecgroupSameNameFailure(t *testing.T) {
-	secgroupName := "cuongdm3-temporal"
+	secgroupName := "test-secgroup-temporal"
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewCreateSecgroupRequest(secgroupName, "this is a test")
 	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().CreateSecgroup(context.Background(), opt)
@@ -62,7 +62,7 @@ func TestCreateSecgroupSameNameFailure(t *testing.T) {
 }
 
 func TestCreateSecgroupSuccess(t *testing.T) {
-	secgroupName := "cuongdm3-temporal-1"
+	secgroupName := "test-secgroup-temporal-1"
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewCreateSecgroupRequest(secgroupName, "this is a test")
 	secgroup, err := vngcloud.VServerGateway().V2().NetworkService().CreateSecgroup(context.Background(), opt)

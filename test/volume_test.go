@@ -30,10 +30,10 @@ func TestCreateVolumeFailure(t *testing.T) {
 func TestCreateVolumeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewCreateBlockVolumeRequest(
-		"cuongdm3-test-tags",
+		"test-volume-tags",
 		"vtype-7a7a8610-34f5-11ee-be56-0242ac120002",
 		20,
-	).WithTags("cuongdm3", "deptrai", "wife", "unknown")
+	).WithTags("test-key", "test-value", "owner", "sdk-test")
 	volume, sdkerr := vngcloud.VServerGateway().V2().VolumeService().CreateBlockVolume(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)

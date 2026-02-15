@@ -47,7 +47,7 @@ func TestDnsServiceV1_ListHostedZonesDefault(t *testing.T) {
 
 func TestDnsServiceV1_ListHostedZonesWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewListHostedZonesRequest().WithName("annd2")
+	opt := v1.NewListHostedZonesRequest().WithName("test-zone")
 	listHostedZones, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListHostedZones(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)

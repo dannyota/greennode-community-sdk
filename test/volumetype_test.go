@@ -43,10 +43,14 @@ func TestGetVolumeTypeSuccess(t *testing.T) {
 func TestGetDefaultVolumeType(t *testing.T) {
 	vngcloud := validSdkConfig()
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetDefaultVolumeType(context.Background())
+	if sdkerr != nil {
+		t.Fatalf("Expect nil but got %v", sdkerr)
+	}
+	if volType == nil {
+		t.Fatalf("Expect not nil but got nil")
+	}
 
 	t.Log("Result: ", volType)
-	t.Log("Error: ", sdkerr)
-	t.Log("PASS")
 }
 
 func TestGetVolumeTypeZones(t *testing.T) {
@@ -54,10 +58,14 @@ func TestGetVolumeTypeZones(t *testing.T) {
 	opt := volumev1.NewGetVolumeTypeZonesRequest("HCM03-1A")
 
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeZones(context.Background(), opt)
+	if sdkerr != nil {
+		t.Fatalf("Expect nil but got %v", sdkerr)
+	}
+	if volType == nil {
+		t.Fatalf("Expect not nil but got nil")
+	}
 
 	t.Log("Result: ", volType)
-	t.Log("Error: ", sdkerr)
-	t.Log("PASS")
 }
 
 func TestGetVolumeTypes(t *testing.T) {
@@ -65,8 +73,12 @@ func TestGetVolumeTypes(t *testing.T) {
 	opt := volumev1.NewListVolumeTypeRequest("0745BE12-9433-4DD4-90A1-384631504EBE")
 
 	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetListVolumeTypes(context.Background(), opt)
+	if sdkerr != nil {
+		t.Fatalf("Expect nil but got %v", sdkerr)
+	}
+	if volType == nil {
+		t.Fatalf("Expect not nil but got nil")
+	}
 
 	t.Log("Result: ", volType)
-	t.Log("Error: ", sdkerr)
-	t.Log("PASS")
 }

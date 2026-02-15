@@ -46,7 +46,7 @@ func TestCreateCertificate(t *testing.T) {
 	vngcloud := validSdkConfig()
 
 	opt := v2.NewCreateCertificateRequest(
-		"annd2-haha",
+		"test-certificate",
 		FakeCertificate,
 		v2.ImportOptsTypeOptTLS,
 	).WithPrivateKey(FakePrivateKey)

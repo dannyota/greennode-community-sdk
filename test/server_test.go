@@ -14,7 +14,7 @@ import (
 func TestCreateServerFailed(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewCreateServerRequest(
-		"cuongdm3-test",
+		"test-server",
 		"img-b5bf635e-0456-4765-b493-31d5fcfc05aa",
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
@@ -37,12 +37,12 @@ func TestCreateServerFailed(t *testing.T) {
 func TestCreateServerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewCreateServerRequest(
-		"cuongdm3-test-tags",
+		"test-server-tags",
 		"img-b5bf635e-0456-4765-b493-31d5fcfc05aa",
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
 		30,
-	).WithTags("cuongdm3", "deptrai", "wife", "unknown").
+	).WithTags("test-key", "test-value", "owner", "sdk-test").
 		WithNetwork("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3",
 			"sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63")
 	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
@@ -182,16 +182,16 @@ func TestUpdateServerSecgroupsByServerIDSuccess(t *testing.T) {
 }
 
 func TestCreateServerWithAutoRenew(t *testing.T) {
-	vngcloud := validSdkConfigDevops()
+	vngcloud := validServiceAccountSdkConfig()
 	opt := computev2.NewCreateServerRequest(
-		"cuongdm3-dep-trai-vo-dich-sieu-cap-vu-tru-4",
+		"test-server-auto-renew-4",
 		"img-108b3a77-ab58-4000-9b3e-190d0b4b07fc",
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
 		30).
 		WithNetwork("net-dae83c7a-f837-4227-bcfa-ec0755549724",
 			"sub-f7770744-6aa4-4292-9ff9-b43b44716ede").
-		WithTags("cuongdm3", "deptrai", "wife", "unknown").
+		WithTags("test-key", "test-value", "owner", "sdk-test").
 		WithAutoRenew(false).
 		WithType("VKS").WithProduct("VKS").
 		WithPoc(false)
@@ -300,7 +300,7 @@ func TestDetachFloatingIp(t *testing.T) {
 func TestCreateDnsServer(t *testing.T) {
 	vngcloud := validSdkConfigHanRegion()
 	opt := computev2.NewCreateServerRequest(
-		"cuongdm3-test",
+		"test-server",
 		"img-b5bf635e-0456-4765-b493-31d5fcfc05aa",
 		"flav-8066e9ff-5d80-4e8f-aeae-9e8a934bfc44",
 		"vtype-7a7a8610-34f5-11ee-be56-0242ac120002",
@@ -345,7 +345,7 @@ func TestCreateServerVks(t *testing.T) {
 
 	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
 	if sdkerr != nil {
-		t.Logf("Expect nil but got %v", sdkerr)
+		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
 
 	t.Logf("Result: %v", server)
@@ -353,7 +353,7 @@ func TestCreateServerVks(t *testing.T) {
 }
 
 func TestListServerGroupPolicies(t *testing.T) {
-	vngcloud := validUserSdkConfigForCuongDm4()
+	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewListServerGroupPoliciesRequest()
 	policies, sdkerr := vngcloud.VServerGateway().V2().ComputeService().ListServerGroupPolicies(context.Background(), opt)
 	if sdkerr != nil {
@@ -368,7 +368,7 @@ func TestListServerGroupPolicies(t *testing.T) {
 }
 
 func TestDeleteServerGroupByID(t *testing.T) {
-	vngcloud := validUserSdkConfigForCuongDm4()
+	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewDeleteServerGroupByIDRequest("server-group-ac0dc0ca-3ac3-4f52-a942-3269573ec1de")
 	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DeleteServerGroupByID(context.Background(), opt)
 	if sdkerr != nil {
@@ -379,7 +379,7 @@ func TestDeleteServerGroupByID(t *testing.T) {
 }
 
 func TestListServerGroups(t *testing.T) {
-	vngcloud := validUserSdkConfigForCuongDm4()
+	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewListServerGroupsRequest(1, 10)
 	groups, sdkerr := vngcloud.VServerGateway().V2().ComputeService().ListServerGroups(context.Background(), opt)
 	if sdkerr != nil {
@@ -390,10 +390,10 @@ func TestListServerGroups(t *testing.T) {
 }
 
 func TestCreateServerGroup(t *testing.T) {
-	vngcloud := validUserSdkConfigForCuongDm4()
+	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewCreateServerGroupRequest(
-		"do-not-want-to-talk-more",
-		"you are a idiot guy",
+		"test-server-group",
+		"test server group description",
 		"a2162216-cff2-11eb-b8bc-0242ac130003")
 	groups, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServerGroup(context.Background(), opt)
 	if sdkerr != nil {
@@ -412,7 +412,7 @@ func TestCreateSystemTags(t *testing.T) {
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
 		if errors.As(sdkerr, &sdkErr) {
-			t.Logf("Expect nil but got %+v", sdkErr.ErrorCode())
+			t.Fatalf("Expect nil but got %+v", sdkErr.ErrorCode())
 		}
 	}
 
