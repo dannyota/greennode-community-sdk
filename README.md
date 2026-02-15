@@ -2,83 +2,68 @@
 
 A community Go SDK for GreenNode cloud services.
 
-<hr>
+## Installation
 
-###### Table of contents
+```bash
+go get github.com/dannyota/greennode-community-sdk/v2
+```
 
-- [GreenNode Community SDK](#greennode-community-sdk)
-          - [Table of contents](#table-of-contents)
-- [Introduction](#introduction)
-- [Usage](#usage)
-- [Contributing](#contributing)
+## Quick Start
 
-<hr>
+```go
+package main
 
-# Introduction
+import (
+  "context"
+  "fmt"
 
-- `greennode-community-sdk` is a Go SDK for GreenNode cloud services. It helps you interact with cloud services easily.
+  "github.com/dannyota/greennode-community-sdk/v2/client"
+  lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+)
 
-# Usage
-- You can install the SDK by running the following command:
-  ```bash
-  go get github.com/dannyota/greennode-community-sdk/v2
-  ```
+func main() {
+  sdkConfig := client.NewSdkConfigure().
+    WithClientID("__YOUR_CLIENT_ID__").
+    WithClientSecret("__YOUR_CLIENT_SECRET__").
+    WithProjectID("__YOUR_PROJECT_ID__").
+    WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
+    WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
 
-- Now for example, imagine you want to list all available load-balancer packages. You can implement this code in your Go Application:
-  ```go
-  package main
+  c := client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
 
-  import (
-    "context"
-    "fmt"
-
-    "github.com/dannyota/greennode-community-sdk/v2/client"
-    lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
-  )
-
-  func main() {
-    c := validSdkConfig()
-    opt := lbv2.NewListLoadBalancerPackagesRequest()
-    packages, sdkerr := c.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(opt)
-    if sdkerr != nil {
-      fmt.Printf("Expect nil but got %+v", sdkerr)
-    }
-
-    if packages == nil {
-      fmt.Printf("Expect not nil but got nil")
-    }
-
-    for _, pkg := range packages.Items {
-      fmt.Printf("Package: %+v", pkg)
-    }
+  packages, err := c.VLBGateway().V2().LoadBalancerService().
+    ListLoadBalancerPackages(context.Background(), lbv2.NewListLoadBalancerPackagesRequest())
+  if err != nil {
+    panic(err)
   }
 
-  func validSdkConfig() *client.Client {
-    clientID, clientSecret := "__PUT_YOUR_CLIENT_ID__", "__PUT_YOUR_CLIENT_SECRET__"
-    sdkConfig := client.NewSdkConfigure().
-      WithClientID(clientID).
-      WithClientSecret(clientSecret).
-      WithProjectID("__PUT_YOUR_PROJECT_ID__").
-      WithZoneID("65e12ffcb6d82cd39f8cf023").
-      WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-      WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-      WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-      WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork")
-
-    return client.NewClient(context.TODO()).WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+  for _, pkg := range packages.Items {
+    fmt.Printf("Package: %+v\n", pkg)
   }
-  ```
+}
+```
 
-# Contributing
+## Services
 
-- To release a new version of the SDK, create a new tag with the format `vX.Y.Z` and push it to the repository:
+| Service       | Description                                    |
+| ------------- | ---------------------------------------------- |
+| Compute       | Server lifecycle, floating IPs, server groups  |
+| Volume        | Block volumes, snapshots, volume types         |
+| Network       | VPCs, subnets, security groups, endpoints      |
+| Load Balancer | Load balancers, listeners, pools, certificates |
+| GLB           | Global load balancer pools, listeners          |
+| DNS           | Hosted zones, DNS records                      |
+| Identity      | OAuth2 token acquisition                       |
+| Portal        | Portal info, project listing                   |
 
-  ```bash
-  git tag -am "release vX.Y.Z" vX.Y.Z
-  git push --tags
-  ```
+See [docs/architecture.md](docs/architecture.md) for the full architecture overview.
 
-- To get the latest version of the SDK:
-  ```bash
-  git tag -l --sort=-creatordate | head -n 1
-  ```
+## Documentation
+
+- [Architecture](docs/architecture.md) — layered design, request lifecycle, error handling
+- [Go Style Audit](docs/go-style-audit.md) — refactoring roadmap and status
+- [Test Coverage](docs/test-coverage.md) — coverage map and improvement plan
+
+## Contributing
+
+Contributions are welcome. Please open an issue or submit a pull request.
