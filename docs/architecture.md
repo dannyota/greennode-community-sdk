@@ -9,7 +9,7 @@ services exposed by VNG Cloud's REST APIs.
 
 - **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
 - **Go version:** 1.24
-- **Source files:** 244 `.go` files, ~26 k LOC
+- **Source files:** 209 `.go` files, ~24 k LOC
 
 ## 2. Package Map
 
@@ -141,7 +141,7 @@ Step  Layer        Code path
 
 ### Interface
 
-`Error` (`greennode/sdkerror/isdk_error.go`) provides:
+`Error` (`greennode/sdkerror/sdk_error.go`) provides:
 - Error code queries: `IsError(code)`, `IsCategory(cat)`
 - Builder methods: `WithErrorCode()`, `WithMessage()`, `WithParameters()`
 - Getters: `ErrorCode()`, `GetMessage()`, `Parameters()`
@@ -179,7 +179,7 @@ return nil, sdkerror.SdkErrorHandler(sdkErr, errResp, ...handlers...).
 
 - **100 error codes** defined in `greennode/sdkerror/error_codes.go`
 - **10 error categories** in `greennode/sdkerror/categories.go`
-  (`ErrCatQuota`, `ErrCatIam`, `ErrCatInfra`, `ErrCatPurchase`, `ErrCatAll`,
+  (`ErrCatQuota`, `ErrCatIAM`, `ErrCatInfra`, `ErrCatPurchase`, `ErrCatAll`,
   `ErrCatProductVlb`, `ErrCatProductVNetwork`, `ErrCatProductVdns`,
   `ErrCatVServer`, `ErrCatVirtualAddress`)
 - Handler files: `server.go`, `volume.go`, `loadbalancer.go`, `network.go`,
@@ -195,7 +195,7 @@ SDK configuration follows the same style (`NewClient().WithAuthOption().Configur
 ### Version Multiplexing
 Each gateway creates per-version `ServiceClient` instances with versioned endpoint
 suffixes (`endpoint + "v1"`, `endpoint + "v2"`, `endpoint + "internal"`). User code
-selects a version via `gateway.V2()`, which returns a typed interface exposing only
+selects a version via `gateway.V2()`, which returns a concrete struct exposing only
 that version's services.
 
 ### Entity Conversion

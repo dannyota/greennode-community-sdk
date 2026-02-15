@@ -86,13 +86,14 @@ The `sdk_error` package has been renamed to `sdkerror` (`greennode/sdkerror/`,
 
 ## 2. Interface Design
 
-### 2.1 Producer-side interfaces — **PARTIALLY RESOLVED**
+### 2.1 Producer-side interfaces — **RESOLVED**
 
-Gateway and client interfaces have been deleted; constructors now return
-exported concrete structs (e.g., `*gateway.IAMGateway`, `*client.Client`).
-Service-level interfaces (e.g., `identity.IdentityServiceV2`,
-`loadbalancer.LoadBalancerServiceV2`) are kept as documentation since
-gateway accessor methods still return them.
+All producer-side interfaces have been deleted. Gateway and client interfaces
+were removed earlier; service-level interfaces (38 total: 7 composition +
+31 sub-interfaces across 9 parent-package files) have now been deleted as well.
+Gateway accessor methods return concrete pointers (e.g.,
+`*identityv2.IdentityServiceV2`, `*lbv2.LoadBalancerServiceV2`), and gateway
+files import sub-packages directly instead of going through parent packages.
 
 **Go convention:** Define interfaces at the call site (the "consumer" side).
 The producer exports concrete types; consumers define the small interfaces they
@@ -114,17 +115,9 @@ three implementations (`PatchGlobalPoolCreateBulkActionRequest`,
 
 ### 2.3 God interfaces (>10 methods) — **RESOLVED**
 
-All five god interfaces have been decomposed into focused sub-interfaces using
-interface embedding. The composed type names are unchanged, so all callers,
-gateways, and factory functions are unaffected.
-
-| Composed Interface | Sub-Interfaces | File |
-|--------------------|----------------|------|
-| `LoadBalancerServiceV2` (34) | `LoadBalancerOps` (8), `PoolOps` (8), `ListenerOps` (5), `PolicyOps` (6), `CertificateOps` (4), `TagOps` (3) | `greennode/services/loadbalancer/loadbalancer.go` |
-| `NetworkServiceV2` (19) | `NetworkOps` (3), `SecgroupOps` (8), `AddressPairOps` (4), `VirtualAddressOps` (4) | `greennode/services/network/network.go` |
-| `GLBServiceV1` (21) | `GlobalPoolOps` (9), `GlobalListenerOps` (5), `GlobalLoadBalancerOps` (7) | `greennode/services/glb/loadbalancer.go` |
-| `VDnsServiceV1` (10) | `HostedZoneOps` (5), `RecordOps` (5) | `greennode/services/dns/dns.go` |
-| `VDnsServiceInternal` (10) | `InternalHostedZoneOps` (5), `InternalRecordOps` (5) | `greennode/services/dns/dns.go` |
+All five god interfaces were decomposed into focused sub-interfaces using
+interface embedding. These interfaces (along with their sub-interfaces) have
+since been deleted entirely as part of §2.1 (producer-side interface removal).
 
 ### 2.4 Double-I naming — **RESOLVED**
 
@@ -218,9 +211,9 @@ gateway constructors (7 + 9 sub-gateways), and client constructors
 (`NewClient`, `NewSdkConfigure`) now return `*ConcreteType`. Gateway and
 client interfaces have been deleted; their concrete structs are exported.
 
-**Deferred:** `ServiceClient`, `HTTPClient`, `Request` (internal types used
-as parameters/fields in every service and gateway file — changing them
-requires touching 50+ files for minimal user-facing benefit).
+**Deferred:** `ServiceClient`, `HTTPClient`, `Request`, `SdkAuthentication`
+(internal types used as parameters/fields in every service and gateway file —
+changing them requires touching 50+ files for minimal user-facing benefit).
 
 ### 5.2 100% pointer receivers — **PARTIALLY RESOLVED**
 
@@ -282,13 +275,13 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
-| Producer-side interfaces | all interfaces | codebase-wide | **Partial** (file separation removed) |
+| Producer-side interfaces | all interfaces | codebase-wide | **Done** |
 | Interface-per-type | all request types | codebase-wide | **Done** (1 exception: `IBulkActionRequest`) |
-| God interfaces (>10 methods) | 5 interfaces | 3 packages | **Done** (17 sub-interfaces via embedding) |
+| God interfaces (>10 methods) | 5 interfaces | 3 packages | **Done** (deleted with §2.1) |
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
 | Custom error framework | 1 package | `sdkerror` | **Partial** (phases 1–2: `error` bridge + return types) |
-| Constructors returning interfaces | ~33 functions | gateways, clients | **Done** (3 deferred: `ServiceClient`, `HTTPClient`, `Request`) |
+| Constructors returning interfaces | ~33 functions | gateways, clients | **Done** (4 deferred: `ServiceClient`, `HTTPClient`, `Request`, `SdkAuthentication`) |
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
 | `var _` assertions | ~45 | codebase-wide | **Done** (3 remain: `IBulkActionRequest`) |

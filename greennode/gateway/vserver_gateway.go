@@ -2,75 +2,77 @@ package gateway
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/network"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/server"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume"
+	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
+	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
+	serverv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/server/v1"
+	volumev1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v1"
+	volumev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v2"
 )
 
 type VServerGatewayV1 struct {
-	portalService portal.PortalServiceV1
-	volumeService volume.VolumeServiceV1
+	portalService *portalv1.PortalServiceV1
+	volumeService *volumev1.VolumeServiceV1
 }
 
 type VServerGatewayInternalV1 struct {
-	serverService server.ServerServiceInternalV1
+	serverService *serverv1.ServerServiceInternalV1
 }
 
 type VServerGatewayV2 struct {
-	networkService network.NetworkServiceV2
-	computeService compute.ComputeServiceV2
-	portalService  portal.PortalServiceV2
-	volumeService  volume.VolumeServiceV2
+	networkService *networkv2.NetworkServiceV2
+	computeService *computev2.ComputeServiceV2
+	portalService  *portalv2.PortalServiceV2
+	volumeService  *volumev2.VolumeServiceV2
 }
 
 func NewVServerGatewayV1(svcClient client.ServiceClient) *VServerGatewayV1 {
 	return &VServerGatewayV1{
-		portalService: portal.NewPortalServiceV1(svcClient),
-		volumeService: volume.NewVolumeServiceV1(svcClient),
+		portalService: &portalv1.PortalServiceV1{PortalClient: svcClient},
+		volumeService: &volumev1.VolumeServiceV1{VServerClient: svcClient},
 	}
 }
 
 func NewVServerGatewayV2(svcClient client.ServiceClient) *VServerGatewayV2 {
 	return &VServerGatewayV2{
-		networkService: network.NewNetworkServiceV2(svcClient),
-		computeService: compute.NewComputeServiceV2(svcClient),
-		portalService:  portal.NewPortalServiceV2(svcClient),
-		volumeService:  volume.NewVolumeServiceV2(svcClient),
+		networkService: &networkv2.NetworkServiceV2{VserverClient: svcClient},
+		computeService: &computev2.ComputeServiceV2{VServerClient: svcClient},
+		portalService:  &portalv2.PortalServiceV2{PortalClient: svcClient},
+		volumeService:  &volumev2.VolumeServiceV2{VServerClient: svcClient},
 	}
 }
 
 func NewVServerGatewayInternalV1(svcClient client.ServiceClient) *VServerGatewayInternalV1 {
 	return &VServerGatewayInternalV1{
-		serverService: server.NewServerServiceInternalV1(svcClient),
+		serverService: &serverv1.ServerServiceInternalV1{VServerClient: svcClient},
 	}
 }
 
-func (g *VServerGatewayV1) PortalService() portal.PortalServiceV1 {
+func (g *VServerGatewayV1) PortalService() *portalv1.PortalServiceV1 {
 	return g.portalService
 }
 
-func (g *VServerGatewayV1) VolumeService() volume.VolumeServiceV1 {
+func (g *VServerGatewayV1) VolumeService() *volumev1.VolumeServiceV1 {
 	return g.volumeService
 }
 
-func (g *VServerGatewayV2) NetworkService() network.NetworkServiceV2 {
+func (g *VServerGatewayV2) NetworkService() *networkv2.NetworkServiceV2 {
 	return g.networkService
 }
 
-func (g *VServerGatewayV2) ComputeService() compute.ComputeServiceV2 {
+func (g *VServerGatewayV2) ComputeService() *computev2.ComputeServiceV2 {
 	return g.computeService
 }
 
-func (g *VServerGatewayV2) PortalService() portal.PortalServiceV2 {
+func (g *VServerGatewayV2) PortalService() *portalv2.PortalServiceV2 {
 	return g.portalService
 }
 
-func (g *VServerGatewayV2) VolumeService() volume.VolumeServiceV2 {
+func (g *VServerGatewayV2) VolumeService() *volumev2.VolumeServiceV2 {
 	return g.volumeService
 }
 
-func (g *VServerGatewayInternalV1) ServerService() server.ServerServiceInternalV1 {
+func (g *VServerGatewayInternalV1) ServerService() *serverv1.ServerServiceInternalV1 {
 	return g.serverService
 }

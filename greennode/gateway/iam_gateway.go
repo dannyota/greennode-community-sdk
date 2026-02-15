@@ -2,19 +2,19 @@ package gateway
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity"
+	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
 
 type IAMGatewayV2 struct {
-	identityService identity.IdentityServiceV2
+	identityService *identityv2.IdentityServiceV2
 }
 
 func NewIAMGatewayV2(svcClient client.ServiceClient) *IAMGatewayV2 {
 	return &IAMGatewayV2{
-		identityService: identity.NewIdentityService(svcClient),
+		identityService: &identityv2.IdentityServiceV2{IAMClient: svcClient},
 	}
 }
 
-func (g *IAMGatewayV2) IdentityService() identity.IdentityServiceV2 {
+func (g *IAMGatewayV2) IdentityService() *identityv2.IdentityServiceV2 {
 	return g.identityService
 }

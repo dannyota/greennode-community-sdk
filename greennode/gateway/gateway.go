@@ -2,8 +2,9 @@ package gateway
 
 import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb"
+	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
+	glbv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 )
 
 type IAMGateway struct {
@@ -187,23 +188,23 @@ func (g *GLBGateway) V1() *GLBGatewayV1 {
 }
 
 type GLBGatewayV1 struct {
-	glbService glb.GLBServiceV1
+	glbService *glbv1.GLBServiceV1
 }
 
-func (g *GLBGatewayV1) GLBService() glb.GLBServiceV1 {
+func (g *GLBGatewayV1) GLBService() *glbv1.GLBServiceV1 {
 	return g.glbService
 }
 
 func NewGLBGatewayV1(svcClient client.ServiceClient) *GLBGatewayV1 {
 	return &GLBGatewayV1{
-		glbService: glb.NewGLBServiceV1(svcClient),
+		glbService: &glbv1.GLBServiceV1{VLBClient: svcClient},
 	}
 }
 
 type VDnsGateway struct {
 	endpoint           string
-	dnsService         dns.VDnsServiceV1
-	dnsServiceInternal dns.VDnsServiceInternal
+	dnsService         *dnsv1.VDnsServiceV1
+	dnsServiceInternal *dnsinternalv1.VDnsServiceInternal
 }
 
 func NewVDnsGateway(endpoint, projectID string, hc client.HTTPClient) *VDnsGateway {
@@ -219,8 +220,8 @@ func NewVDnsGateway(endpoint, projectID string, hc client.HTTPClient) *VDnsGatew
 
 	return &VDnsGateway{
 		endpoint:           endpoint,
-		dnsService:         dns.NewVDnsServiceV1(svcClient),
-		dnsServiceInternal: dns.NewVDnsServiceInternal(internalClient),
+		dnsService:         &dnsv1.VDnsServiceV1{DnsClient: svcClient},
+		dnsServiceInternal: &dnsinternalv1.VDnsServiceInternal{DnsClient: internalClient},
 	}
 }
 
@@ -241,17 +242,17 @@ func (g *VDnsGateway) GetEndpoint() string {
 }
 
 type VDnsGatewayV1 struct {
-	dnsService dns.VDnsServiceV1
+	dnsService *dnsv1.VDnsServiceV1
 }
 
-func (g *VDnsGatewayV1) DnsService() dns.VDnsServiceV1 {
+func (g *VDnsGatewayV1) DnsService() *dnsv1.VDnsServiceV1 {
 	return g.dnsService
 }
 
 type VDnsGatewayInternal struct {
-	dnsService dns.VDnsServiceInternal
+	dnsService *dnsinternalv1.VDnsServiceInternal
 }
 
-func (g *VDnsGatewayInternal) DnsService() dns.VDnsServiceInternal {
+func (g *VDnsGatewayInternal) DnsService() *dnsinternalv1.VDnsServiceInternal {
 	return g.dnsService
 }
