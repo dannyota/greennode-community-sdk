@@ -7,7 +7,7 @@ import (
 )
 
 func (s *NetworkServiceV2) GetSecgroupByID(opts *GetSecgroupByIDRequest) (*entity.Secgroup, error) {
-	url := getSecgroupByIDURL(s.VserverClient, opts)
+	url := getSecgroupByIDURL(s.VServerClient, opts)
 	resp := new(GetSecgroupByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -16,7 +16,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(opts *GetSecgroupByIDRequest) (*entit
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
@@ -28,7 +28,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(opts *GetSecgroupByIDRequest) (*entit
 }
 
 func (s *NetworkServiceV2) CreateSecgroup(opts *CreateSecgroupRequest) (*entity.Secgroup, error) {
-	url := createSecgroupURL(s.VserverClient)
+	url := createSecgroupURL(s.VServerClient)
 	resp := new(CreateSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -38,7 +38,7 @@ func (s *NetworkServiceV2) CreateSecgroup(opts *CreateSecgroupRequest) (*entity.
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNameAlreadyExists,
 			sdkerror.EcVServerSecgroupRuleExceedQuota,
@@ -52,7 +52,7 @@ func (s *NetworkServiceV2) CreateSecgroup(opts *CreateSecgroupRequest) (*entity.
 }
 
 func (s *NetworkServiceV2) ListSecgroup(opts *ListSecgroupRequest) (*entity.ListSecgroups, error) {
-	url := listSecgroupURL(s.VserverClient, opts)
+	url := listSecgroupURL(s.VServerClient, opts)
 	resp := new(ListSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -61,7 +61,7 @@ func (s *NetworkServiceV2) ListSecgroup(opts *ListSecgroupRequest) (*entity.List
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
@@ -69,14 +69,14 @@ func (s *NetworkServiceV2) ListSecgroup(opts *ListSecgroupRequest) (*entity.List
 }
 
 func (s *NetworkServiceV2) DeleteSecgroupByID(opts *DeleteSecgroupByIDRequest) error {
-	url := deleteSecgroupByIDURL(s.VserverClient, opts)
+	url := deleteSecgroupByIDURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupInUse,
 			sdkerror.EcVServerSecgroupNotFound).

@@ -7,7 +7,7 @@ import (
 )
 
 func (s *NetworkServiceV2) GetNetworkByID(opts *GetNetworkByIDRequest) (*entity.Network, error) {
-	url := getNetworkByIDURL(s.VserverClient, opts)
+	url := getNetworkByIDURL(s.VServerClient, opts)
 	resp := new(GetNetworkByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -16,7 +16,7 @@ func (s *NetworkServiceV2) GetNetworkByID(opts *GetNetworkByIDRequest) (*entity.
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerNetworkNotFound).
 			WithKVparameters(

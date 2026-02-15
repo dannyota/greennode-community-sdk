@@ -18,7 +18,7 @@ const (
 const (
 	HealthCheckProtocolTCP     HealthCheckProtocol = "TCP"
 	HealthCheckProtocolHTTP    HealthCheckProtocol = "HTTP"
-	HealthCheckProtocolHTTPs   HealthCheckProtocol = "HTTPS"
+	HealthCheckProtocolHTTPS   HealthCheckProtocol = "HTTPS"
 	HealthCheckProtocolPINGUDP HealthCheckProtocol = "PING-UDP"
 )
 
@@ -29,8 +29,8 @@ const (
 )
 
 const (
-	HealthCheckHTTPVersionHttp1       HealthCheckHTTPVersion = "1.0"
-	HealthCheckHTTPVersionHttp1Minor1 HealthCheckHTTPVersion = "1.1"
+	HealthCheckHTTPVersionHTTP1       HealthCheckHTTPVersion = "1.0"
+	HealthCheckHTTPVersionHTTP1Minor1 HealthCheckHTTPVersion = "1.1"
 )
 
 const (
@@ -114,7 +114,7 @@ func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
 func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
 	return &Member{
 		Backup:      false,
-		IpAddress:   ipAddress,
+		IPAddress:   ipAddress,
 		MonitorPort: monitorPort,
 		Name:        name,
 		Port:        port,
@@ -223,7 +223,7 @@ type HealthMonitor struct {
 
 type Member struct {
 	Backup      bool   `json:"backup"`
-	IpAddress   string `json:"ipAddress"`
+	IPAddress   string `json:"ipAddress"`
 	MonitorPort int    `json:"monitorPort"`
 	Name        string `json:"name"`
 	Port        int    `json:"port"`
@@ -267,12 +267,12 @@ func (h *HealthMonitor) toRequestBody() *HealthMonitor {
 		h.HealthCheckMethod = nil
 		h.DomainName = nil
 
-	case HealthCheckProtocolHTTP, HealthCheckProtocolHTTPs:
+	case HealthCheckProtocolHTTP, HealthCheckProtocolHTTPS:
 		if h.HTTPVersion != nil {
 			switch opt := *h.HTTPVersion; opt {
-			case HealthCheckHTTPVersionHttp1:
+			case HealthCheckHTTPVersionHTTP1:
 				h.DomainName = nil
-			case HealthCheckHTTPVersionHttp1Minor1:
+			case HealthCheckHTTPVersionHTTP1Minor1:
 				if h.DomainName == nil ||
 					(h.DomainName != nil && len(*h.DomainName) < 1) {
 
@@ -465,7 +465,7 @@ func (m *Member) ToRequestBody() any {
 func (m *Member) ToMap() map[string]any {
 	return map[string]any{
 		"backup":      m.Backup,
-		"ipAddress":   m.IpAddress,
+		"ipAddress":   m.IPAddress,
 		"monitorPort": m.MonitorPort,
 		"name":        m.Name,
 		"port":        m.Port,

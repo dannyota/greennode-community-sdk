@@ -60,9 +60,9 @@ func (r *ListAddressPairsByVirtualAddressIDResponse) ToEntityListAddressPairs() 
 	for _, addressPair := range r.Data {
 		addressPairs = append(addressPairs, &entity.AddressPair{
 			ID:                 addressPair.UUID,
-			VirtualIpAddressID: addressPair.VirtualIpAddressID,
+			VirtualIPAddressID: addressPair.VirtualIPAddressID,
 			VirtualSubnetID:    addressPair.VirtualSubnetID,
-			NetworkInterfaceIp: addressPair.NetworkInterfaceIp,
+			NetworkInterfaceIP: addressPair.NetworkInterfaceIP,
 			NetworkInterfaceID: addressPair.NetworkInterfaceID,
 			CIDR:               addressPair.CIDR,
 		})

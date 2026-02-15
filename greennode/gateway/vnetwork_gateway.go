@@ -38,7 +38,7 @@ func NewVNetworkGatewayV1(svcClient client.ServiceClient) *VNetworkGatewayV1 {
 
 func NewVNetworkGatewayV2(svcClient client.ServiceClient) *VNetworkGatewayV2 {
 	return &VNetworkGatewayV2{
-		networkService: &networkv2.NetworkServiceV2{VserverClient: svcClient},
+		networkService: &networkv2.NetworkServiceV2{VServerClient: svcClient},
 	}
 }
 

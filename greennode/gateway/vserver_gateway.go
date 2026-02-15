@@ -36,7 +36,7 @@ func NewVServerGatewayV1(svcClient client.ServiceClient) *VServerGatewayV1 {
 
 func NewVServerGatewayV2(svcClient client.ServiceClient) *VServerGatewayV2 {
 	return &VServerGatewayV2{
-		networkService: &networkv2.NetworkServiceV2{VserverClient: svcClient},
+		networkService: &networkv2.NetworkServiceV2{VServerClient: svcClient},
 		computeService: &computev2.ComputeServiceV2{VServerClient: svcClient},
 		portalService:  &portalv2.PortalServiceV2{PortalClient: svcClient},
 		volumeService:  &volumev2.VolumeServiceV2{VServerClient: svcClient},

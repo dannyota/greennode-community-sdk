@@ -67,10 +67,10 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	opt := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
-			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
+			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
 				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
 				WithPath(common.Ptr("/sfdsaf")).
-				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1)).
+				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)).
 				WithSuccessCode(common.Ptr("200")).
 				WithDomainName(common.Ptr("example.com")),
 		).
@@ -98,11 +98,11 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 
 func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
+	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
 		WithDomainName(common.Ptr("exampleee.com")).
 		WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
 		WithPath(common.Ptr("/hghjgj")).
-		WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1))
+		WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1))
 	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
 		WithHealthMonitor(httpMonitor)
 
@@ -300,10 +300,10 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 	pool := v1.NewCreateGlobalPoolRequest("annd2-test-pool-5", v1.GlobalPoolProtocolTCP).
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(
-			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPs).
+			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
 				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
 				WithPath(common.Ptr("/sfdsaf")).
-				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHttp1Minor1)).
+				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)).
 				WithSuccessCode(common.Ptr("200")).
 				WithDomainName(common.Ptr("example.com")),
 		).

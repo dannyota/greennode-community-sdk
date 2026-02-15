@@ -7,7 +7,7 @@ import (
 )
 
 func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*entity.AddressPair, error) {
-	url := getAllAddressPairByVirtualSubnetIDURL(s.VserverClient, opts)
+	url := getAllAddressPairByVirtualSubnetIDURL(s.VServerClient, opts)
 	resp := new(GetAllAddressPairByVirtualSubnetIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -16,20 +16,14 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(opts *GetAllAddres
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
-		// sdkerror.WithErrorSubnetNotBelongNetwork(sdkErr),
-		// sdkerror.EcVServerSubnetNotFound).
-		// WithKVparameters(
-		// 	"virtualSubnetId", popts.GetVirtualSubnetId(),
-		// 	"projectId", s.getProjectId(),
-
 	}
 	return resp.ToListAddressPair(), nil
 }
 
 func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, error) {
-	url := setAddressPairInVirtualSubnetURL(s.VserverClient, opts)
+	url := setAddressPairInVirtualSubnetURL(s.VServerClient, opts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -39,21 +33,21 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(opts *SetAddressPairInV
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 	return resp.ToAddressPair(), nil
 }
 
 func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) error {
-	url := deleteAddressPairURL(s.VserverClient, opts)
+	url := deleteAddressPairURL(s.VServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithHeader("User-Agent", opts.ParseUserAgent()).
 		WithOkCodes(200, 201, 202, 203, 204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Delete(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Delete(url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters("addressPairId", opts.GetAddressPairID())
@@ -62,7 +56,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(opts *DeleteAddressPairRequest) err
 }
 
 func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*entity.AddressPair, error) {
-	url := createAddressPairURL(s.VserverClient, opts)
+	url := createAddressPairURL(s.VServerClient, opts)
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -72,7 +66,7 @@ func (s *NetworkServiceV2) CreateAddressPair(opts *CreateAddressPairRequest) (*e
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Post(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Post(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound,
 			sdkerror.EcVServerAddressPairExisted).

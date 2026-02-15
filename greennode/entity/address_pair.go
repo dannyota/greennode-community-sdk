@@ -2,9 +2,9 @@ package entity
 
 type AddressPair struct {
 	ID                 string
-	VirtualIpAddressID string
+	VirtualIPAddressID string
 	VirtualSubnetID    string
-	NetworkInterfaceIp string
+	NetworkInterfaceIP string
 	NetworkInterfaceID string
 	CIDR               string
 }

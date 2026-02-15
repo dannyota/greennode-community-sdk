@@ -207,7 +207,7 @@ func TestCreateInterVPCLoadBalancerWithPoolAndListenerSuccess(t *testing.T) {
 			WithMembers(inter.NewMember("cuongdm3-member-1", "10.84.0.22", 80, 80)).
 			WithHealthMonitor(inter.NewHealthMonitor(inter.HealthCheckProtocolTCP).
 				WithHealthCheckMethod(inter.HealthCheckMethodGET).
-				WithHTTPVersion(inter.HealthCheckHTTPVersionHttp1).
+				WithHTTPVersion(inter.HealthCheckHTTPVersionHTTP1).
 				WithHealthyThreshold(3).
 				WithUnhealthyThreshold(3).
 				WithTimeout(5).

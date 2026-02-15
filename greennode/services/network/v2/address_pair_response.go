@@ -8,25 +8,20 @@ type GetAllAddressPairByVirtualSubnetIDResponse struct {
 
 type AddressPairResponse struct {
 	UUID               string `json:"uuid"`
-	VirtualIpAddressID string `json:"virtualIpAddressId"`
+	VirtualIPAddressID string `json:"virtualIpAddressId"`
 	VirtualSubnetID    string `json:"virtualSubnetId"`
-	NetworkInterfaceIp string `json:"networkInterfaceIp"`
+	NetworkInterfaceIP string `json:"networkInterfaceIp"`
 	NetworkInterfaceID string `json:"networkInterfaceId"`
 
 	CIDR string `json:"cidr"`
-	// ID              string `json:"id"`
-	// BackendSubnetId int    `json:"backendSubnetId"`
-	// ProjectId       string `json:"projectId"`
-	// CreatedAt       string `json:"createdAt"`
-	// DeletedAt       string `json:"deletedAt"`
 }
 
 func (r *AddressPairResponse) toAddressPair() *entity.AddressPair {
 	return &entity.AddressPair{
 		ID:                 r.UUID,
-		VirtualIpAddressID: r.VirtualIpAddressID,
+		VirtualIPAddressID: r.VirtualIPAddressID,
 		VirtualSubnetID:    r.VirtualSubnetID,
-		NetworkInterfaceIp: r.NetworkInterfaceIp,
+		NetworkInterfaceIP: r.NetworkInterfaceIP,
 		NetworkInterfaceID: r.NetworkInterfaceID,
 		CIDR:               r.CIDR,
 	}

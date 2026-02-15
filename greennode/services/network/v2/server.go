@@ -7,7 +7,7 @@ import (
 )
 
 func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts *ListAllServersBySecgroupIDRequest) (*entity.ListServers, error) {
-	url := listAllServersBySecgroupIDURL(s.VserverClient, opts)
+	url := listAllServersBySecgroupIDURL(s.VServerClient, opts)
 	resp := new(ListAllServersBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -16,7 +16,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupID(opts *ListAllServersBySecg
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VserverClient.Get(url, req); sdkErr != nil {
+	if _, sdkErr := s.VServerClient.Get(url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(

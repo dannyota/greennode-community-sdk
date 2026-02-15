@@ -2,10 +2,6 @@ package v2
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
-/**
- * The group of Virtual Address APIs
- */
-
 // API Create virtual address cross project
 type CreateVirtualAddressCrossProjectRequest struct {
 	// Name is the name of the virtual address.
@@ -23,7 +19,7 @@ type CreateVirtualAddressCrossProjectRequest struct {
 		SubnetID string `json:"subnetId"` // required
 
 		// The IP address of the virtual address.
-		IpAddress string `json:"ipAddress"`
+		IPAddress string `json:"ipAddress"`
 	} `json:"crossProjectRequest"` // required
 
 	// others...
@@ -41,7 +37,7 @@ func (r *CreateVirtualAddressCrossProjectRequest) ToMap() map[string]any {
 		"crossProjectRequest": map[string]any{
 			"projectId": r.CrossProjectRequest.ProjectID,
 			"subnetId":  r.CrossProjectRequest.SubnetID,
-			"ipAddress": r.CrossProjectRequest.IpAddress,
+			"ipAddress": r.CrossProjectRequest.IPAddress,
 		},
 	}
 }

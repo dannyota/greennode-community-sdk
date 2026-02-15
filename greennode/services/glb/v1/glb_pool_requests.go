@@ -31,7 +31,7 @@ const (
 const (
 	GlobalPoolHealthCheckProtocolTCP   GlobalPoolHealthCheckProtocol = "TCP"
 	GlobalPoolHealthCheckProtocolHTTP  GlobalPoolHealthCheckProtocol = "HTTP"
-	GlobalPoolHealthCheckProtocolHTTPs GlobalPoolHealthCheckProtocol = "HTTPS"
+	GlobalPoolHealthCheckProtocolHTTPS GlobalPoolHealthCheckProtocol = "HTTPS"
 )
 
 const (
@@ -41,8 +41,8 @@ const (
 )
 
 const (
-	GlobalPoolHealthCheckHTTPVersionHttp1       GlobalPoolHealthCheckHTTPVersion = "1.0"
-	GlobalPoolHealthCheckHTTPVersionHttp1Minor1 GlobalPoolHealthCheckHTTPVersion = "1.1"
+	GlobalPoolHealthCheckHTTPVersionHTTP1       GlobalPoolHealthCheckHTTPVersion = "1.0"
+	GlobalPoolHealthCheckHTTPVersionHTTP1Minor1 GlobalPoolHealthCheckHTTPVersion = "1.1"
 )
 
 const (
@@ -267,9 +267,9 @@ func NewGlobalHealthMonitor(checkProtocol GlobalPoolHealthCheckProtocol) *Global
 		DomainName:          nil,
 		SuccessCode:         nil,
 	}
-	if checkProtocol == GlobalPoolHealthCheckProtocolHTTP || checkProtocol == GlobalPoolHealthCheckProtocolHTTPs {
+	if checkProtocol == GlobalPoolHealthCheckProtocolHTTP || checkProtocol == GlobalPoolHealthCheckProtocolHTTPS {
 		opts.HTTPMethod = common.Ptr(GlobalPoolHealthCheckMethodGET)
-		opts.HTTPVersion = common.Ptr(GlobalPoolHealthCheckHTTPVersionHttp1Minor1)
+		opts.HTTPVersion = common.Ptr(GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)
 		opts.Path = common.Ptr("/")
 		opts.DomainName = common.Ptr("")
 		opts.SuccessCode = common.Ptr("200")
