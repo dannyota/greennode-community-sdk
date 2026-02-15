@@ -18,7 +18,8 @@ Non-request interfaces (~73) have been renamed: `IClient` → `Client`,
 
 The ~106 `I*Request` interfaces (e.g., `ICreateLoadBalancerRequest`) that had
 name collisions with their concrete structs have been removed entirely per §2.2.
-One exception: `IBulkActionRequest` (3 implementations, genuine polymorphism).
+`IBulkActionRequest` (previously the sole exception) was also deleted when
+`ToMap()` was removed (§5.7).
 
 ### 1.2 `p` prefix on parameters — **RESOLVED**
 
@@ -124,14 +125,13 @@ actually need. This yields naturally small interfaces and decouples packages.
 ### 2.2 Interface-per-type (one-to-one interface/struct pairs) — **RESOLVED**
 
 All one-to-one `I*Request` interface/struct pairs (~142) have been removed.
-Method return types (`With*()`, `AddUserAgent()`) now return `*ConcreteType`
+Method return types (`With*()`) now return `*ConcreteType`
 instead of `I*Interface`. URL builders, service implementations, and parent
 service interfaces all accept concrete pointer types directly.
 
-**Exception kept:** `IBulkActionRequest` in `glb/v1/glb_pool_requests.go` has
-three implementations (`PatchGlobalPoolCreateBulkActionRequest`,
-`PatchGlobalPoolDeleteBulkActionRequest`,
-`PatchGlobalPoolUpdateBulkActionRequest`) — genuine polymorphism.
+The `IBulkActionRequest` interface (previously the sole exception) was also
+deleted when its only method `ToMap()` was removed (§5.7). The `BulkActions`
+field now uses `[]any`.
 
 ### 2.3 God interfaces (>10 methods) — **RESOLVED**
 
@@ -228,9 +228,9 @@ gateway constructors (7 + 9 sub-gateways), and client constructors
 (`NewClient`, `NewSdkConfigure`) now return `*ConcreteType`. Gateway and
 client interfaces have been deleted; their concrete structs are exported.
 
-**Deferred:** `ServiceClient`, `HTTPClient`, `Request`, `SdkAuthentication`
-(internal types used as parameters/fields in every service and gateway file —
-changing them requires touching 50+ files for minimal user-facing benefit).
+The four remaining internal interfaces (`ServiceClient`, `HTTPClient`,
+`Request`, `SdkAuthentication`) have now been concretized as well (§5.8).
+All constructors and builder methods return `*ConcreteStruct`.
 
 ### 5.2 100% pointer receivers — **PARTIALLY RESOLVED**
 
@@ -256,8 +256,8 @@ using `gofmt -r 'interface{} -> any'`.
 
 ~33 request-type assertions were removed along with their one-to-one interfaces
 (§2.2). 9 gateway assertions were removed when gateway interfaces were deleted
-(§5.1). Only 3 `IBulkActionRequest` assertions remain in
-`glb_pool_requests.go` — these are legitimate multi-implementation cases.
+(§5.1). The 3 `IBulkActionRequest` assertions in `glb_pool_requests.go` were
+removed when `IBulkActionRequest` was deleted (§5.7). No assertions remain.
 
 ### 5.5 Missing godoc
 
@@ -269,6 +269,76 @@ using `gofmt -r 'interface{} -> any'`.
 97% of exported types and functions have no documentation comments. Public API
 surface should have at minimum a one-line summary for each exported type,
 function, and method.
+
+### 5.6 `ToRequestBody()` boilerplate — **RESOLVED**
+
+54 request types implemented `ToRequestBody() any` as identity returns
+(`return r`). These were deleted and call sites changed from
+`WithJSONBody(opts.ToRequestBody())` to `WithJSONBody(opts)`.
+
+10 methods with actual cleanup logic (health monitor field clearing, listener
+certificate clearing, nested delegation in loadbalancer/glb) were refactored to
+unexported `prepare()` methods called from the service method before
+`WithJSONBody(opts)`.
+
+### 5.7 `ToMap()` boilerplate — **RESOLVED**
+
+72 hand-written `ToMap() map[string]any` methods (manually listing every field)
+were replaced with a generic helper in `greennode/services/common/`:
+
+```go
+func StructToMap(v any) map[string]any {
+    b, _ := json.Marshal(v)
+    var m map[string]any
+    _ = json.Unmarshal(b, &m)
+    return m
+}
+```
+
+Call sites changed from `WithParameters(opts.ToMap())` to
+`WithParameters(common.StructToMap(opts))`. All 72 `ToMap()` methods deleted.
+
+The `IBulkActionRequest` interface (which only declared `ToMap()`) was also
+deleted; its `BulkActions` field now uses `[]any`.
+
+### 5.8 `UserAgent` per-request embedding — **RESOLVED**
+
+Every request struct embedded `common.UserAgent` and every service method
+manually called `WithHeader("User-Agent", opts.ParseUserAgent())`. Replaced
+with a single `WithKvDefaultHeaders("User-Agent", c.userAgent)` call in
+`client/client.go` during `Configure()`.
+
+Deleted: `common.UserAgent` struct and `ParseUserAgent()` method, ~121
+`common.UserAgent` embeddings in request structs, ~97 `AddUserAgent()`
+forwarding methods, ~113 `WithHeader("User-Agent", ...)` lines in service
+methods.
+
+### 5.9 Missing `context.Context` — **RESOLVED**
+
+All ~137 service methods and the client infrastructure now accept
+`ctx context.Context` as their first parameter. The stored `context` field was
+removed from both `Client` and `HTTPClient` structs.
+
+Context is threaded through all internal HTTP client methods: `DoRequest`,
+`prepareRequest`, `executeHTTPMethod`, `handleReauthBeforeRequest`,
+`handleResponse`, `handleStatusCode`, `handleUnauthorized`, `reauthenticate`.
+
+The `reauthFunc` signature changed from `func() (*SdkAuthentication, error)` to
+`func(ctx context.Context) (*SdkAuthentication, error)`.
+
+### 5.10 Single-implementation interfaces (client package) — **RESOLVED**
+
+Four interfaces in `greennode/client/` had exactly one concrete implementation
+each. All four were deleted and replaced with exported concrete structs:
+
+| Interface | Concrete struct | Files changed |
+|-----------|----------------|---------------|
+| `Request` | `*Request` | 3 (client pkg) |
+| `SdkAuthentication` | `*SdkAuthentication` | 4 (client + entity) |
+| `HTTPClient` | `*HTTPClient` | 4 (client + gateway) |
+| `ServiceClient` | `*ServiceClient` | 43 (client, gateway, all service base.go + url.go) |
+
+All constructors and builder methods now return `*ConcreteStruct`.
 
 ---
 
@@ -286,7 +356,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 
 | Category | Items | Scope | Status |
 |----------|-------|-------|--------|
-| `I`-prefix interfaces | 184 interfaces | 34 files | **Done** (1 exception: `IBulkActionRequest`) |
+| `I`-prefix interfaces | 184 interfaces | 34 files | **Done** |
 | `p`-prefix parameters | ~1,456 occurrences | 140 files | **Done** |
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
@@ -294,14 +364,19 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Done** |
-| Interface-per-type | all request types | codebase-wide | **Done** (1 exception: `IBulkActionRequest`) |
+| Interface-per-type | all request types | codebase-wide | **Done** |
 | God interfaces (>10 methods) | 5 interfaces | 3 packages | **Done** (deleted with §2.1) |
 | `i`-prefixed filenames | 26 files | codebase-wide | **Done** |
 | Horizontal separators | ~113 occurrences | 24 files | **Done** |
 | Custom error framework | 1 package | `sdkerror` | **Done** (phases 1–3: `error` bridge, return types, classifier) |
-| Constructors returning interfaces | ~33 functions | gateways, clients | **Done** (4 deferred: `ServiceClient`, `HTTPClient`, `Request`, `SdkAuthentication`) |
+| Constructors returning interfaces | ~33 functions | gateways, clients | **Done** |
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
-| `var _` assertions | ~45 | codebase-wide | **Done** (3 remain: `IBulkActionRequest`) |
+| `var _` assertions | ~45 | codebase-wide | **Done** (0 remain; `IBulkActionRequest` deleted) |
 | Missing godoc | ~97% of exports | codebase-wide | Open |
 | V2/V1 mismatch bug | 1 | `gateway/gateway.go` | **Done** |
+| `ToRequestBody()` boilerplate | 54 methods | request + service files | **Done** |
+| `ToMap()` boilerplate | 72 methods | request + service files | **Done** |
+| `UserAgent` per-request embedding | ~218 embed+methods | request + service files | **Done** |
+| Missing `context.Context` | ~137 methods | service + client files | **Done** |
+| Single-impl interfaces (client pkg) | 4 interfaces | 43 files | **Done** |

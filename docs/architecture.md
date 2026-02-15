@@ -20,7 +20,7 @@ greennode-community-sdk/
 │   ├── client/                    Low-level HTTP client, ServiceClient, request builder
 │   ├── gateway/                   Versioned gateway multiplexers (6 gateways)
 │   ├── services/                  Per-service business logic (9 services, versioned)
-│   │   ├── common/                Shared embedded types (UserAgent, Paging)
+│   │   ├── common/                Shared helpers (StructToMap, Paging)
 │   │   ├── compute/               Server lifecycle, floating IPs, server groups
 │   │   ├── dns/                   Hosted zones, DNS records
 │   │   ├── glb/                   Global load balancer pools, listeners, health checks
@@ -115,7 +115,7 @@ reauthmut *reauthlock      — serializes token refresh
 
 ## 5. Request Lifecycle
 
-End-to-end trace of `client.VServerGateway().V2().ComputeService().CreateServer(req)`:
+End-to-end trace of `client.VServerGateway().V2().ComputeService().CreateServer(ctx, req)`:
 
 ```
 Step  Layer        Code path
@@ -123,17 +123,17 @@ Step  Layer        Code path
  1    Client       client/client.go — VServerGateway() returns gateway
  2    Gateway      greennode/gateway/gateway.go — V2() returns versioned gateway
  3    Gateway      greennode/gateway/vserver_gateway.go — ComputeService() returns service
- 4    Service      greennode/services/compute/v2/server.go — CreateServer()
+ 4    Service      greennode/services/compute/v2/server.go — CreateServer(ctx, opts)
  4a     URL        greennode/services/compute/v2/url.go — builds {endpoint}/v2/{projectId}/servers
- 4b     Request    greennode/client/request.go — NewRequest().WithJSONBody().WithOkCodes(202)...
- 4c     Dispatch   service calls s.VServerClient.Post(url, req)
- 5    HTTP Client  greennode/client/service_client.go — Post() delegates to httpClient.DoRequest()
- 6    HTTP Client  greennode/client/http.go — DoRequest():
- 6a     Prepare      prepareRequest() — set context, headers, marshal body
- 6b     Auth         needReauth() → reauthenticate() if token is nil/expiring
- 6c     Execute      executeHTTPMethod() — req/v3 HTTP call
+ 4b     Request    greennode/client/request.go — NewRequest().WithJSONBody(opts).WithOkCodes(202)...
+ 4c     Dispatch   service calls s.VServerClient.Post(ctx, url, req)
+ 5    HTTP Client  greennode/client/service_client.go — Post() delegates to httpClient.DoRequest(ctx, ...)
+ 6    HTTP Client  greennode/client/http.go — DoRequest(ctx, ...):
+ 6a     Prepare      prepareRequest(ctx, ...) — set headers, marshal body
+ 6b     Auth         needReauth() → reauthenticate(ctx) if token is nil/expiring
+ 6c     Execute      executeHTTPMethod(ctx, ...) — req/v3 HTTP call
  6d     Handle       handleResponse() → handleStatusCode()
- 6e     Retry        401 → handleUnauthorized() → reauthenticate() → retry DoRequest()
+ 6e     Retry        401 → handleUnauthorized(ctx, ...) → reauthenticate(ctx) → retry
  7    Response     JSON unmarshaled into entity struct; error enriched via SdkErrorHandler
 ```
 
@@ -175,7 +175,7 @@ At the service layer, errors are enriched with context:
 return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
     sdkerror.EcVServerServerNotFound,
     sdkerror.EcVServerVolumeInProcess).
-    WithParameters(opts.ToMap()).
+    WithParameters(common.StructToMap(opts)).
     WithKVparameters("projectId", s.getProjectID()).
     WithErrorCategories(sdkerror.ErrCatVServer)
 ```
@@ -212,8 +212,9 @@ from a `ServiceClient` (e.g., `createServerURL(s.VServerClient)` →
 `{endpoint}/v2/{projectId}/servers`).
 
 ### Shared Commons
-`greennode/services/common/` provides embedded types (`UserAgent`, `Paging`) that
-services compose into their request structs for consistent field handling.
+`greennode/services/common/` provides `StructToMap()` (generic struct-to-map
+conversion for error parameter enrichment) and the `Paging` embedded type for
+paginated request structs.
 
 ### Table-Driven Error Classification
 Error codes are registered in `init()` functions with match functions (string
@@ -251,43 +252,34 @@ first match.
 Patterns inherited from the upstream codebase that add complexity without
 proportional benefit. Ordered by impact.
 
-### 9.1 Missing `context.Context` on public methods
+### 9.1 Missing `context.Context` on public methods — **RESOLVED**
 
-Service methods store a single context at client creation and reuse it for all
-requests. Users cannot cancel individual calls, set per-call timeouts, or
-propagate tracing values. Every idiomatic Go HTTP client requires
-`ctx context.Context` as the first parameter on I/O methods.
+All ~137 service methods and the client infrastructure now accept
+`ctx context.Context` as their first parameter. The stored `context` field was
+removed from `Client` and `HTTPClient`. See go-style-audit.md §5.9.
 
-**Scope:** ~130 service methods, 3 client infrastructure files.
+### 9.2 Single-implementation interfaces — **RESOLVED**
 
-### 9.2 Single-implementation interfaces
+All four interfaces (`ServiceClient`, `HTTPClient`, `Request`,
+`SdkAuthentication`) deleted and replaced with exported concrete structs.
+See go-style-audit.md §5.10.
 
-`ServiceClient`, `HTTPClient`, `Request`, and `SdkAuthentication` are interfaces
-with exactly one concrete implementation each. They add indirection (callers see
-interface types, IDE can't jump to implementation) without enabling polymorphism.
+### 9.3 `ToRequestBody()` boilerplate — **RESOLVED**
 
-**Fix:** Export concrete structs, delete interfaces.
+54 identity-return methods deleted; 10 with cleanup logic refactored to
+unexported `prepare()` methods. Structs passed directly to `WithJSONBody()`.
+See go-style-audit.md §5.6.
 
-### 9.3 `ToRequestBody()` boilerplate
+### 9.4 `ToMap()` boilerplate — **RESOLVED**
 
-27 request types implement `ToRequestBody() any` as an identity return
-(`return r`). Two exceptions in loadbalancer pool requests do cleanup logic.
-Since structs already carry JSON tags, pass them directly to `WithJSONBody()`.
+72 hand-written methods replaced with generic `common.StructToMap()` helper
+using `json.Marshal`/`json.Unmarshal`. See go-style-audit.md §5.7.
 
-### 9.4 `ToMap()` boilerplate
+### 9.5 `UserAgent` embedded in every request struct — **RESOLVED**
 
-23 request types implement `ToMap() map[string]any` by manually listing every
-field. Used only for error parameter enrichment
-(`sdkerror.SdkErrorHandler(...).WithParameters(opts.ToMap())`). Fragile — fields
-are easily forgotten. Could be replaced by reflection or by passing the struct
-directly.
-
-### 9.5 `UserAgent` embedded in every request struct
-
-Every request struct embeds `common.UserAgent` and every service method
-manually adds `WithHeader("User-Agent", opts.ParseUserAgent())`. User-Agent is
-an infrastructure concern that should be set once at the HTTP client level, not
-per-request.
+`common.UserAgent` embedding, `AddUserAgent()` forwarding methods, and
+per-request `WithHeader("User-Agent", ...)` calls all deleted. User-Agent set
+once as a default header at the HTTP client level. See go-style-audit.md §5.8.
 
 ### 9.6 `common.*Common` embedded ID types
 
