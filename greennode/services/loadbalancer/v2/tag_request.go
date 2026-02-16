@@ -49,17 +49,6 @@ type UpdateTagsRequest struct {
 	LoadBalancerID string
 }
 
-func (r *CreateTagsRequest) WithTags(tags ...string) *CreateTagsRequest {
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.TagRequestList = append(r.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-	return r
-}
-
 func (r *UpdateTagsRequest) prepare(lstTags *entity.ListTags) {
 	st := map[string]common.Tag{}
 	for _, tag := range lstTags.Items {
@@ -80,15 +69,4 @@ func (r *UpdateTagsRequest) prepare(lstTags *entity.ListTags) {
 	}
 }
 
-func (r *UpdateTagsRequest) WithTags(tags ...string) *UpdateTagsRequest {
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.TagRequestList = append(r.TagRequestList, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-
-	return r
-}
 

@@ -19,7 +19,7 @@ func resizeLoadBalancerURL(sc *client.ServiceClient, opts *ResizeLoadBalancerReq
 func listLoadBalancerPackagesURL(sc *client.ServiceClient, opts *ListLoadBalancerPackagesRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
-		"loadBalancers", "packages") + "?zoneId=" + opts.GetZoneID()
+		"loadBalancers", "packages") + "?zoneId=" + string(opts.ZoneID)
 }
 
 func getLoadBalancerByIDURL(sc *client.ServiceClient, opts *GetLoadBalancerByIDRequest) string {
@@ -288,12 +288,12 @@ func getCertificateByIDURL(sc *client.ServiceClient, opts *GetCertificateByIDReq
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"cas",
-		opts.GetCertificateID())
+		opts.CertificateID)
 }
 
 func deleteCertificateByIDURL(sc *client.ServiceClient, opts *DeleteCertificateByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"cas",
-		opts.GetCertificateID())
+		opts.CertificateID)
 }

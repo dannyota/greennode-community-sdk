@@ -49,7 +49,9 @@ func TestCreateCertificate(t *testing.T) {
 		"test-certificate",
 		FakeCertificate,
 		v2.ImportOptsTypeOptTLS,
-	).WithPrivateKey(FakePrivateKey)
+	)
+	privateKey := FakePrivateKey
+	opt.PrivateKey = &privateKey
 
 	cert, err := vngcloud.LoadBalancer.CreateCertificate(context.Background(), opt)
 	if err != nil {

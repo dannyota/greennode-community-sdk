@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
@@ -154,15 +155,17 @@ func TestCreateInterLoadBalancerSuccess3(t *testing.T) {
 
 func TestCreateLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreateLoadBalancerRequest("test-lb-tags", "", "").
-		WithPackageID("lbp-f60d5354-0600-11f0-a0a4-ec2a72332f83").
-		WithSubnetID("sub-3409c1f9-6b03-47bd-979f-251c6e4bee97").
-		WithTags("test-key", "test-value", "env", "staging").
-		WithZoneID(common.HCM_03_1C_ZONE).
-		WithListener(lbv2.NewCreateListenerRequest("test-listener", lbv2.ListenerProtocolTCP, 80)).
-		WithPool(lbv2.NewCreatePoolRequest("test-pool", lbv2.PoolProtocolTCP).
-			WithMembers(lbv2.NewMember("test-member-1", "10.84.0.22", 80, 80)).
-			WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)))
+	opt := lbv2.NewCreateLoadBalancerRequest("test-lb-tags", "", "")
+	opt.PackageID = "lbp-f60d5354-0600-11f0-a0a4-ec2a72332f83"
+	opt.SubnetID = "sub-3409c1f9-6b03-47bd-979f-251c6e4bee97"
+	opt.Tags = common.NewTags("test-key", "test-value", "env", "staging")
+	zone := common.HCM_03_1C_ZONE
+	opt.ZoneID = &zone
+	opt.Listener = lbv2.NewCreateListenerRequest("test-listener", lbv2.ListenerProtocolTCP, 80)
+	pool := lbv2.NewCreatePoolRequest("test-pool", lbv2.PoolProtocolTCP)
+	pool.Members = append(pool.Members, lbv2.NewMember("test-member-1", "10.84.0.22", 80, 80))
+	pool.HealthMonitor = lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)
+	opt.Pool = pool
 
 	lb, sdkerr := vngcloud.LoadBalancer.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
@@ -179,14 +182,14 @@ func TestCreateLoadBalancerSuccess(t *testing.T) {
 
 func TestCreateLoadBalancerEmptyMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreateLoadBalancerRequest(
-		"test-lb-empty-members", "", "").
-		WithPackageID("lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa").
-		WithSubnetID("sub-27a0562d-07f9-4e87-81fd-e0ba9658f156").
-		WithTags("test-key", "test-value", "env", "staging").
-		WithListener(lbv2.NewCreateListenerRequest("test-listener", lbv2.ListenerProtocolTCP, 80)).
-		WithPool(lbv2.NewCreatePoolRequest("test-pool", lbv2.PoolProtocolTCP).
-			WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)))
+	opt := lbv2.NewCreateLoadBalancerRequest("test-lb-empty-members", "", "")
+	opt.PackageID = "lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa"
+	opt.SubnetID = "sub-27a0562d-07f9-4e87-81fd-e0ba9658f156"
+	opt.Tags = common.NewTags("test-key", "test-value", "env", "staging")
+	opt.Listener = lbv2.NewCreateListenerRequest("test-listener", lbv2.ListenerProtocolTCP, 80)
+	pool := lbv2.NewCreatePoolRequest("test-pool", lbv2.PoolProtocolTCP)
+	pool.HealthMonitor = lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)
+	opt.Pool = pool
 
 	lb, sdkerr := vngcloud.LoadBalancer.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
@@ -253,7 +256,8 @@ func TestResizeLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewResizeLoadBalancerRequest(
 		"lb-4d1508f9-8bb0-45a6-b55b-21a7412b4658",
-		"").WithPackageID("lbp-71cc3022-5fee-426d-9509-3341053e2477")
+		"")
+	opt.PackageID = "lbp-71cc3022-5fee-426d-9509-3341053e2477"
 
 	lb, sdkerr := vngcloud.LoadBalancer.ResizeLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
@@ -271,8 +275,9 @@ func TestResizeLoadBalancerSuccess(t *testing.T) {
 func TestListLoadBalancerPackagesSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewListLoadBalancerPackagesRequest()
+	opt.ZoneID = common.HCM_03_BKK_01_ZONE
 	packages, sdkerr := vngcloud.LoadBalancer.ListLoadBalancerPackages(
-		context.Background(), opt.WithZoneID(common.HCM_03_BKK_01_ZONE))
+		context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -322,7 +327,8 @@ func TestGetLoadBalancerFailure(t *testing.T) {
 
 func TestListLoadBalancer(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewListLoadBalancersRequest(1, 10).WithName("test-lb-empty-members")
+	opt := lbv2.NewListLoadBalancersRequest(1, 10)
+	opt.Name = "test-lb-empty-members"
 	lbs, sdkerr := vngcloud.LoadBalancer.ListLoadBalancers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -338,8 +344,8 @@ func TestListLoadBalancer(t *testing.T) {
 
 func TestListLoadBalancerByTagsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewListLoadBalancersRequest(1, 10).
-		WithTags("vks-owned-cluster", "hcm03a_user-11412_k8s-a3c03d8e-344c-4a1e-98e0-6d9999ac8077")
+	opt := lbv2.NewListLoadBalancersRequest(1, 10)
+	opt.Tags = common.NewTags("vks-owned-cluster", "hcm03a_user-11412_k8s-a3c03d8e-344c-4a1e-98e0-6d9999ac8077")
 
 	lbs, sdkerr := vngcloud.LoadBalancer.ListLoadBalancers(context.Background(), opt)
 	if sdkerr != nil {
@@ -356,9 +362,9 @@ func TestListLoadBalancerByTagsSuccess(t *testing.T) {
 
 func TestCreatePoolWithoutMembersSuccess(t *testing.T) {
 	vngcloud := validTestProjectSdkConfig()
-	opt := lbv2.NewCreatePoolRequest("test-pool-7", lbv2.PoolProtocolTCP).
-		WithLoadBalancerID("lb-fb378dc6-71c5-417a-9466-677c03885d6f").
-		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP))
+	opt := lbv2.NewCreatePoolRequest("test-pool-7", lbv2.PoolProtocolTCP)
+	opt.LoadBalancerID = "lb-fb378dc6-71c5-417a-9466-677c03885d6f"
+	opt.HealthMonitor = lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)
 	pool, sdkerr := vngcloud.LoadBalancer.CreatePool(context.Background(), opt)
 
 	if sdkerr != nil {
@@ -375,10 +381,10 @@ func TestCreatePoolWithoutMembersSuccess(t *testing.T) {
 
 func TestCreatePoolWithMembersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreatePoolRequest("test-pool-3", lbv2.PoolProtocolTCP).
-		WithLoadBalancerID("lb-8bd4ea07-ab40-483d-8387-124ed2f2cecb").
-		WithMembers(lbv2.NewMember("test-member-1", "10.84.0.32", 80, 80)).
-		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP))
+	opt := lbv2.NewCreatePoolRequest("test-pool-3", lbv2.PoolProtocolTCP)
+	opt.LoadBalancerID = "lb-8bd4ea07-ab40-483d-8387-124ed2f2cecb"
+	opt.Members = append(opt.Members, lbv2.NewMember("test-member-1", "10.84.0.32", 80, 80))
+	opt.HealthMonitor = lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)
 
 	pool, sdkerr := vngcloud.LoadBalancer.CreatePool(context.Background(), opt)
 
@@ -396,18 +402,19 @@ func TestCreatePoolWithMembersSuccess(t *testing.T) {
 
 func TestCreateListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreateListenerRequest("test-listener-100", lbv2.ListenerProtocolHTTP, 8081).
-		WithLoadBalancerID("lb-a02759ad-4661-4555-b281-500fd268497e").
-		WithInsertHeaders(
-			"X-Forwarded-For", "true",
-			"X-Forwarded-Proto", "true",
-			"Access-Control-Allow-Origin", "https://*.example.com, https://*.example2.com",
-			"Access-Control-Allow-Methods", "GET, HEAD, PATCH, PROPFIND, REPORT",
-			"Access-Control-Allow-Headers", "X-Requested-With, X-CSRF-Token, X-PINGOTHER",
-			"Access-Control-Max-Age", "86400",
-			"Access-Control-Allow-Credentials", "false",
-			"Access-Control-Expose-Headers", "X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After",
-		)
+	opt := lbv2.NewCreateListenerRequest("test-listener-100", lbv2.ListenerProtocolHTTP, 8081)
+	opt.LoadBalancerID = "lb-a02759ad-4661-4555-b281-500fd268497e"
+	headers := []entity.ListenerInsertHeader{
+		{HeaderName: "X-Forwarded-For", HeaderValue: "true"},
+		{HeaderName: "X-Forwarded-Proto", HeaderValue: "true"},
+		{HeaderName: "Access-Control-Allow-Origin", HeaderValue: "https://*.example.com, https://*.example2.com"},
+		{HeaderName: "Access-Control-Allow-Methods", HeaderValue: "GET, HEAD, PATCH, PROPFIND, REPORT"},
+		{HeaderName: "Access-Control-Allow-Headers", HeaderValue: "X-Requested-With, X-CSRF-Token, X-PINGOTHER"},
+		{HeaderName: "Access-Control-Max-Age", HeaderValue: "86400"},
+		{HeaderName: "Access-Control-Allow-Credentials", HeaderValue: "false"},
+		{HeaderName: "Access-Control-Expose-Headers", HeaderValue: "X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After"},
+	}
+	opt.InsertHeaders = &headers
 
 	listener, sdkerr := vngcloud.LoadBalancer.CreateListener(context.Background(), opt)
 	if sdkerr != nil {
@@ -424,9 +431,10 @@ func TestCreateListenerSuccess(t *testing.T) {
 
 func TestCreateListenerWithPoolIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreateListenerRequest("test-listener-14", lbv2.ListenerProtocolTCP, 8087).
-		WithLoadBalancerID("lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f").
-		WithDefaultPoolID("pool-82c3c670-6662-4087-bfc1-8098f25e84df")
+	opt := lbv2.NewCreateListenerRequest("test-listener-14", lbv2.ListenerProtocolTCP, 8087)
+	opt.LoadBalancerID = "lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f"
+	poolID := "pool-82c3c670-6662-4087-bfc1-8098f25e84df"
+	opt.DefaultPoolID = &poolID
 
 	listener, sdkerr := vngcloud.LoadBalancer.CreateListener(context.Background(), opt)
 	if sdkerr != nil {
@@ -446,12 +454,12 @@ func TestUpdateListenerSuccess(t *testing.T) {
 
 	opt := lbv2.NewUpdateListenerRequest(
 		"lb-ab73cad3-1dd3-4f2c-9c4c-49702133c5c9",
-		"lis-ed226fe5-65d2-4bb1-986e-7814deb3a55b").
-		WithTimeoutClient(50).
-		WithTimeoutConnection(5).
-		WithTimeoutMember(50).
-		WithCidrs("0.0.0.0/0").
-		WithDefaultPoolID("pool-a9239c24-9289-4641-a16b-2d71883d168b")
+		"lis-ed226fe5-65d2-4bb1-986e-7814deb3a55b")
+	opt.TimeoutClient = 50
+	opt.TimeoutConnection = 5
+	opt.TimeoutMember = 50
+	opt.AllowedCidrs = "0.0.0.0/0"
+	opt.DefaultPoolID = "pool-a9239c24-9289-4641-a16b-2d71883d168b"
 
 	sdkerr := vngcloud.LoadBalancer.UpdateListener(context.Background(), opt)
 	if sdkerr != nil {
@@ -501,8 +509,8 @@ func TestUpdatePoolMembersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewUpdatePoolMembersRequest(
 		"lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f",
-		"pool-82c3c670-6662-4087-bfc1-8098f25e84df").
-		WithMembers(lbv2.NewMember("test-member-50", "10.84.0.50", 80, 80))
+		"pool-82c3c670-6662-4087-bfc1-8098f25e84df")
+	opt.Members = append(opt.Members, lbv2.NewMember("test-member-50", "10.84.0.50", 80, 80))
 
 	sdkerr := vngcloud.LoadBalancer.UpdatePoolMembers(context.Background(), opt)
 	if sdkerr != nil {
@@ -589,8 +597,8 @@ func TestListTagsSuccess(t *testing.T) {
 
 func TestCreateTagsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewCreateTagsRequest("lb-3b53db2e-357a-406b-9c56-499f1c21a48c").
-		WithTags("vks-owned-cluster2", "none")
+	opt := lbv2.NewCreateTagsRequest("lb-3b53db2e-357a-406b-9c56-499f1c21a48c")
+	opt.TagRequestList = common.NewTags("vks-owned-cluster2", "none")
 	sdkErr := vngcloud.LoadBalancer.CreateTags(context.Background(), opt)
 	if sdkErr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkErr)
@@ -602,8 +610,8 @@ func TestCreateTagsSuccess(t *testing.T) {
 
 func TestUpdateTagsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewUpdateTagsRequest("lb-39e1750b-7141-455e-a668-a03d53b0328b").
-		WithTags("vks-user", "test-user")
+	opt := lbv2.NewUpdateTagsRequest("lb-39e1750b-7141-455e-a668-a03d53b0328b")
+	opt.TagRequestList = common.NewTags("vks-user", "test-user")
 	sdkErr := vngcloud.LoadBalancer.UpdateTags(context.Background(), opt)
 	if sdkErr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkErr)
@@ -618,10 +626,15 @@ func TestUpdatePoolSuccess(t *testing.T) {
 
 	opt := lbv2.NewUpdatePoolRequest(
 		"lb-2af92b71-1da8-4ba3-87bc-b32bb6ab3267",
-		"pool-e31c3e31-e285-493e-8ebd-0f0d2cf541b2").
-		WithAlgorithm(lbv2.PoolAlgorithmLeastConn).
-		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolPINGUDP).
-			WithTimeout(6).WithUnhealthyThreshold(4).WithHealthyThreshold(7).WithInterval(29))
+		"pool-e31c3e31-e285-493e-8ebd-0f0d2cf541b2")
+	opt.Algorithm = lbv2.PoolAlgorithmLeastConn
+	opt.HealthMonitor = &lbv2.HealthMonitor{
+		HealthCheckProtocol: lbv2.HealthCheckProtocolPINGUDP,
+		Timeout:             6,
+		UnhealthyThreshold:  4,
+		HealthyThreshold:    7,
+		Interval:            29,
+	}
 
 	sdkerr := vngcloud.LoadBalancer.UpdatePool(context.Background(), opt)
 	if sdkerr != nil {
@@ -675,18 +688,16 @@ func TestCreatePolicySuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewCreatePolicyRequest(
 		"lb-eb9f558a-4724-4d0b-a197-60fd642236f4",
-		"lis-b38a9abc-2979-444f-afce-da824e32ea75").
-		WithName("test-policy-1").
-		WithAction(lbv2.PolicyActionREJECT).
-		// WithRedirectPoolId("pool-1c5dfb52-922a-4dac-9dc0-970980637199").
-		// WithRedirectURL("https://vngcloud.vn").
-		// WithRedirectHTTPCode(301).
-		// WithKeepQueryString(true).
-		WithRules(lbv2.L7RuleRequest{
+		"lis-b38a9abc-2979-444f-afce-da824e32ea75")
+	opt.Name = "test-policy-1"
+	opt.Action = lbv2.PolicyActionREJECT
+	opt.Rules = []lbv2.L7RuleRequest{
+		{
 			CompareType: lbv2.PolicyCompareTypeCONTAINS,
 			RuleType:    lbv2.PolicyRuleTypeHOSTNAME,
 			RuleValue:   "vngcloud.vn",
-		})
+		},
+	}
 
 	policy, sdkerr := vngcloud.LoadBalancer.CreatePolicy(context.Background(), opt)
 	if sdkerr != nil {
@@ -725,17 +736,18 @@ func TestUpdatePolicySuccess(t *testing.T) {
 	opt := lbv2.NewUpdatePolicyRequest(
 		"lb-eb9f558a-4724-4d0b-a197-60fd642236f4",
 		"lis-b38a9abc-2979-444f-afce-da824e32ea75",
-		"policy-dea6106b-dd41-4fc1-bddc-61acc034787b").
-		WithAction(lbv2.PolicyActionREDIRECTTOURL).
-		// WithRedirectPoolId("pool-1c5dfb52-922a-4dac-9dc0-970980637199").
-		WithRedirectURL("https://vngcloud.vn").
-		WithRedirectHTTPCode(301).
-		WithKeepQueryString(true).
-		WithRules(lbv2.L7RuleRequest{
+		"policy-dea6106b-dd41-4fc1-bddc-61acc034787b")
+	opt.Action = lbv2.PolicyActionREDIRECTTOURL
+	opt.RedirectURL = "https://vngcloud.vn"
+	opt.RedirectHTTPCode = 301
+	opt.KeepQueryString = true
+	opt.Rules = []lbv2.L7RuleRequest{
+		{
 			CompareType: lbv2.PolicyCompareTypeCONTAINS,
 			RuleType:    lbv2.PolicyRuleTypeHOSTNAME,
 			RuleValue:   "vngcloud.com.vn",
-		})
+		},
+	}
 
 	sdkerr := vngcloud.LoadBalancer.UpdatePolicy(context.Background(), opt)
 	if sdkerr != nil {
@@ -765,13 +777,13 @@ func TestReorderPoliciesSucces(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewReorderPoliciesRequest(
 		"lb-d08b5093-b923-4064-b38c-828add7d439a",
-		"lis-654e4105-b729-4bd1-9a33-61ddacbe3430").
-		WithPoliciesOrder([]string{
-			"policy-57b9e7d3-7ae6-4cb3-a649-6aa35f3ae26d",
-			"policy-1d29aa49-e9da-4551-a349-39d3338cfc4a",
-			"policy-bdee1abb-a4b6-4331-92b2-d1a8ddd51904",
-			"policy-f6cfc6ec-3a4c-4cb0-a56e-16c9f9a2ac74",
-		})
+		"lis-654e4105-b729-4bd1-9a33-61ddacbe3430")
+	opt.PolicyPositions = []lbv2.PolicyPosition{
+		{Position: 1, PolicyID: "policy-57b9e7d3-7ae6-4cb3-a649-6aa35f3ae26d"},
+		{Position: 2, PolicyID: "policy-1d29aa49-e9da-4551-a349-39d3338cfc4a"},
+		{Position: 3, PolicyID: "policy-bdee1abb-a4b6-4331-92b2-d1a8ddd51904"},
+		{Position: 4, PolicyID: "policy-f6cfc6ec-3a4c-4cb0-a56e-16c9f9a2ac74"},
+	}
 
 	sdkerr := vngcloud.LoadBalancer.ReorderPolicies(context.Background(), opt)
 	if sdkerr != nil {
@@ -784,18 +796,18 @@ func TestReorderPoliciesSucces(t *testing.T) {
 
 func TestScaleLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := lbv2.NewScaleLoadBalancerRequest("lb-7dd1f328-c7d6-4cbd-b194-7d8502de3fc8").
-		WithScaling(&lbv2.ScalingConfig{
-			MinNodes: 2,
-			MaxNodes: 5,
-		}).
-		WithNetworking(&lbv2.NetworkingConfig{
-			Subnets: []string{
-				"sub-403b36d2-39fc-47c4-b40b-8df0ecb71045",
-				"sub-70b263e5-094b-44d4-9861-834a8ad190ce",
-				// "sub-5fc1ee76-b754-490e-afa7-c7d963848481",
-			},
-		})
+	opt := lbv2.NewScaleLoadBalancerRequest("lb-7dd1f328-c7d6-4cbd-b194-7d8502de3fc8")
+	opt.Scaling = &lbv2.ScalingConfig{
+		MinNodes: 2,
+		MaxNodes: 5,
+	}
+	opt.Networking = &lbv2.NetworkingConfig{
+		Subnets: []string{
+			"sub-403b36d2-39fc-47c4-b40b-8df0ecb71045",
+			"sub-70b263e5-094b-44d4-9861-834a8ad190ce",
+			// "sub-5fc1ee76-b754-490e-afa7-c7d963848481",
+		},
+	}
 
 	lb, sdkerr := vngcloud.LoadBalancer.ScaleLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {

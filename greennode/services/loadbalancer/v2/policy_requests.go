@@ -92,41 +92,6 @@ func (r *CreatePolicyRequest) toRequestBody() any {
 	return nil
 }
 
-func (r *CreatePolicyRequest) WithName(name string) *CreatePolicyRequest {
-	r.Name = name
-	return r
-}
-
-func (r *CreatePolicyRequest) WithAction(action PolicyAction) *CreatePolicyRequest {
-	r.Action = action
-	return r
-}
-
-func (r *CreatePolicyRequest) WithRules(rules ...L7RuleRequest) *CreatePolicyRequest {
-	r.Rules = rules
-	return r
-}
-
-func (r *CreatePolicyRequest) WithRedirectPoolID(redirectPoolID string) *CreatePolicyRequest {
-	r.RedirectPoolID = redirectPoolID
-	return r
-}
-
-func (r *CreatePolicyRequest) WithRedirectURL(redirectURL string) *CreatePolicyRequest {
-	r.RedirectURL = redirectURL
-	return r
-}
-
-func (r *CreatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) *CreatePolicyRequest {
-	r.RedirectHTTPCode = redirectHTTPCode
-	return r
-}
-
-func (r *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) *CreatePolicyRequest {
-	r.KeepQueryString = keepQueryString
-	return r
-}
-
 // update policy request
 func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 	return &UpdatePolicyRequest{
@@ -187,36 +152,6 @@ func (r *UpdatePolicyRequest) toRequestBody() any {
 	return nil
 }
 
-func (r *UpdatePolicyRequest) WithAction(action PolicyAction) *UpdatePolicyRequest {
-	r.Action = action
-	return r
-}
-
-func (r *UpdatePolicyRequest) WithRules(rules ...L7RuleRequest) *UpdatePolicyRequest {
-	r.Rules = rules
-	return r
-}
-
-func (r *UpdatePolicyRequest) WithRedirectPoolID(redirectPoolID string) *UpdatePolicyRequest {
-	r.RedirectPoolID = redirectPoolID
-	return r
-}
-
-func (r *UpdatePolicyRequest) WithRedirectURL(redirectURL string) *UpdatePolicyRequest {
-	r.RedirectURL = redirectURL
-	return r
-}
-
-func (r *UpdatePolicyRequest) WithRedirectHTTPCode(redirectHTTPCode int) *UpdatePolicyRequest {
-	r.RedirectHTTPCode = redirectHTTPCode
-	return r
-}
-
-func (r *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) *UpdatePolicyRequest {
-	r.KeepQueryString = keepQueryString
-	return r
-}
-
 // get policy by id request
 func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest {
 	return &GetPolicyByIDRequest{
@@ -247,7 +182,7 @@ type DeletePolicyByIDRequest struct {
 	PolicyID       string
 }
 
-type policyPositionRequest struct {
+type PolicyPosition struct {
 	Position int    `json:"position"`
 	PolicyID string `json:"policyId"`
 }
@@ -257,7 +192,7 @@ func NewReorderPoliciesRequest(lbID, lisID string) *ReorderPoliciesRequest {
 		LoadBalancerID: lbID,
 		ListenerID:     lisID,
 
-		policyPositions: make([]policyPositionRequest, 0),
+		PolicyPositions: make([]PolicyPosition, 0),
 	}
 }
 
@@ -265,23 +200,12 @@ type ReorderPoliciesRequest struct {
 	LoadBalancerID string
 	ListenerID     string
 
-	policyPositions []policyPositionRequest
-}
-
-func (r *ReorderPoliciesRequest) WithPoliciesOrder(policies []string) *ReorderPoliciesRequest {
-	r.policyPositions = make([]policyPositionRequest, len(policies))
-	for i, policy := range policies {
-		r.policyPositions[i] = policyPositionRequest{
-			Position: i + 1,
-			PolicyID: policy,
-		}
-	}
-	return r
+	PolicyPositions []PolicyPosition
 }
 
 func (r *ReorderPoliciesRequest) toRequestBody() any {
 	return map[string]any{
-		"policies": r.policyPositions,
+		"policies": r.PolicyPositions,
 	}
 }
 

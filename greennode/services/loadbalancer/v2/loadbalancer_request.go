@@ -134,16 +134,6 @@ type ScaleLoadBalancerRequest struct {
 	Networking *NetworkingConfig `json:"networking"`
 }
 
-func (r *ScaleLoadBalancerRequest) WithScaling(scaling *ScalingConfig) *ScaleLoadBalancerRequest {
-	r.Scaling = scaling
-	return r
-}
-
-func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) *ScaleLoadBalancerRequest {
-	r.Networking = networking
-	return r
-}
-
 // normalizeForAPI delegates to Pool and Listener normalization, clearing
 // protocol-irrelevant fields before the API call. This mutates the receiver.
 func (r *CreateLoadBalancerRequest) normalizeForAPI() {
@@ -154,102 +144,6 @@ func (r *CreateLoadBalancerRequest) normalizeForAPI() {
 	if r.Listener != nil {
 		r.Listener.normalizeForAPI()
 	}
-}
-
-func (r *CreateLoadBalancerRequest) WithListener(listener *CreateListenerRequest) *CreateLoadBalancerRequest {
-	r.Listener = listener
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithPool(pool *CreatePoolRequest) *CreateLoadBalancerRequest {
-	r.Pool = pool
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithTags(tags ...string) *CreateLoadBalancerRequest {
-	if r.Tags == nil {
-		r.Tags = make([]common.Tag, 0)
-	}
-
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithScheme(scheme LoadBalancerScheme) *CreateLoadBalancerRequest {
-	r.Scheme = scheme
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithAutoScalable(autoScalable bool) *CreateLoadBalancerRequest {
-	r.AutoScalable = autoScalable
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithPackageID(packageID string) *CreateLoadBalancerRequest {
-	r.PackageID = packageID
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithSubnetID(subnetID string) *CreateLoadBalancerRequest {
-	r.SubnetID = subnetID
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithType(typeVal LoadBalancerType) *CreateLoadBalancerRequest {
-	r.Type = typeVal
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithPoc(isPoc bool) *CreateLoadBalancerRequest {
-	r.IsPoc = isPoc
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBalancerRequest {
-	r.ZoneID = &zoneID
-	return r
-}
-
-func (r *ResizeLoadBalancerRequest) WithPackageID(packageID string) *ResizeLoadBalancerRequest {
-	r.PackageID = packageID
-	return r
-}
-
-func (r *ListLoadBalancerPackagesRequest) WithZoneID(zoneID common.Zone) *ListLoadBalancerPackagesRequest {
-	r.ZoneID = zoneID
-	return r
-}
-
-func (r *ListLoadBalancerPackagesRequest) GetZoneID() string {
-	return string(r.ZoneID)
-}
-
-func (r *ListLoadBalancersRequest) WithName(name string) *ListLoadBalancersRequest {
-	r.Name = name
-	return r
-}
-
-func (r *ListLoadBalancersRequest) WithTags(tags ...string) *ListLoadBalancersRequest {
-	if r.Tags == nil {
-		r.Tags = make([]common.Tag, 0)
-	}
-
-	if len(tags)%2 != 0 {
-		tags = append(tags, "")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-
-	return r
 }
 
 func (r *ListLoadBalancersRequest) ToListQuery() (string, error) {
