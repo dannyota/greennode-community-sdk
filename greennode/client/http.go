@@ -104,14 +104,14 @@ func (hc *HTTPClient) DoRequest(ctx context.Context, url string, preq *Request) 
 }
 
 func (hc *HTTPClient) prepareRequest(ctx context.Context, url string, preq *Request) (*http.Request, error) {
-	method := strings.ToUpper(preq.RequestMethod())
+	method := strings.ToUpper(string(preq.method))
 	if method == "" {
 		method = "GET"
 	}
 
 	var body io.Reader
-	if preq.RequestBody() != nil {
-		jsonData, err := json.Marshal(preq.RequestBody())
+	if preq.jsonBody != nil {
+		jsonData, err := json.Marshal(preq.jsonBody)
 		if err != nil {
 			return nil, sdkerror.ErrorHandler(err)
 		}
@@ -130,7 +130,7 @@ func (hc *HTTPClient) prepareRequest(ctx context.Context, url string, preq *Requ
 	for k, v := range hc.getDefaultHeaders() {
 		req.Header.Set(k, v)
 	}
-	for k, v := range preq.MoreHeaders() {
+	for k, v := range preq.moreHeaders {
 		req.Header.Set(k, v)
 	}
 
@@ -190,7 +190,7 @@ func (hc *HTTPClient) doWithRetry(req *http.Request) (*http.Response, error) {
 }
 
 func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	if !req.SkipAuthentication() && hc.reauthFunc != nil {
+	if !req.skipAuth && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return nil, sdkErr
 		}
@@ -214,17 +214,17 @@ func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *http
 		return nil, sdkErr
 	}
 
-	if preq.ContainsOkCode(resp.StatusCode) {
-		if opt := preq.JSONResponse(); opt != nil && len(bodyBytes) > 0 {
-			if err := json.Unmarshal(bodyBytes, opt); err != nil {
+	if preq.containsOKCode(resp.StatusCode) {
+		if preq.jsonResponse != nil && len(bodyBytes) > 0 {
+			if err := json.Unmarshal(bodyBytes, preq.jsonResponse); err != nil {
 				return resp, sdkerror.ErrorHandler(err)
 			}
 		}
 		return resp, nil
 	}
 
-	if opt := preq.JSONError(); opt != nil && len(bodyBytes) > 0 {
-		json.Unmarshal(bodyBytes, opt) //nolint:errcheck // best-effort error body parse
+	if preq.jsonError != nil && len(bodyBytes) > 0 {
+		json.Unmarshal(bodyBytes, preq.jsonError) //nolint:errcheck // best-effort error body parse
 	}
 
 	return resp, nil
@@ -255,7 +255,7 @@ func (hc *HTTPClient) handleStatusCode(ctx context.Context, url string, resp *ht
 }
 
 func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *http.Response, req *Request) error {
-	if !req.SkipAuthentication() && hc.reauthFunc != nil {
+	if !req.skipAuth && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return sdkErr
 		}
@@ -266,7 +266,7 @@ func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *
 }
 
 func (hc *HTTPClient) needReauth(req *Request) bool {
-	if req.SkipAuthentication() {
+	if req.skipAuth {
 		return false
 	}
 
@@ -343,7 +343,7 @@ func (f *reauthFuture) set(err error) {
 }
 
 func defaultErrorResponse(err error, url string, req *Request, resp *http.Response) *sdkerror.SdkError {
-	headers := req.MoreHeaders()
+	headers := req.moreHeaders
 
 	// Remove sensitive information
 	if headers != nil {
@@ -353,7 +353,7 @@ func defaultErrorResponse(err error, url string, req *Request, resp *http.Respon
 	return sdkerror.ErrorHandler(err).WithKVparameters(
 		"statusCode", resp.StatusCode,
 		"url", url,
-		"method", req.RequestMethod(),
+		"method", string(req.method),
 		"requestHeaders", headers,
 		"responseHeaders", resp.Header,
 	)

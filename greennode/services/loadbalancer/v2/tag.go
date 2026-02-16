@@ -14,7 +14,7 @@ func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequ
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -29,7 +29,7 @@ func (s *LoadBalancerServiceV2) CreateTags(ctx context.Context, opts *CreateTags
 	url := createTagsURL(s.ServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -58,7 +58,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTags
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.prepare(tags)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 

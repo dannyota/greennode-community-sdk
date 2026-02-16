@@ -18,23 +18,28 @@ func (sc *ServiceClient) ServiceURL(parts ...string) string {
 }
 
 func (sc *ServiceClient) Post(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	return sc.HTTP.DoRequest(ctx, url, req.WithRequestMethod(MethodPost))
+	req.method = MethodPost
+	return sc.HTTP.DoRequest(ctx, url, req)
 }
 
 func (sc *ServiceClient) Get(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	return sc.HTTP.DoRequest(ctx, url, req.WithRequestMethod(MethodGet))
+	req.method = MethodGet
+	return sc.HTTP.DoRequest(ctx, url, req)
 }
 
 func (sc *ServiceClient) Delete(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	return sc.HTTP.DoRequest(ctx, url, req.WithRequestMethod(MethodDelete))
+	req.method = MethodDelete
+	return sc.HTTP.DoRequest(ctx, url, req)
 }
 
 func (sc *ServiceClient) Put(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	return sc.HTTP.DoRequest(ctx, url, req.WithRequestMethod(MethodPut))
+	req.method = MethodPut
+	return sc.HTTP.DoRequest(ctx, url, req)
 }
 
 func (sc *ServiceClient) Patch(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	return sc.HTTP.DoRequest(ctx, url, req.WithRequestMethod(MethodPatch))
+	req.method = MethodPatch
+	return sc.HTTP.DoRequest(ctx, url, req)
 }
 
 func NormalizeURL(u string) string {

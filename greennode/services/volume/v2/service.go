@@ -26,7 +26,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlo
 	resp := new(CreateBlockVolumeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -48,7 +48,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *Delet
 	url := deleteBlockVolumeByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -67,7 +67,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockV
 	resp := new(ListBlockVolumesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -86,7 +86,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 	resp := new(GetBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -106,7 +106,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 	resp := new(ResizeBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -131,7 +131,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUn
 	resp := new(GetUnderBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -151,7 +151,7 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *Migr
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	resp := map[string]any{}
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts).
 		WithJSONError(errResp).
 		WithJSONResponse(&resp)

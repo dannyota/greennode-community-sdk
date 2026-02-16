@@ -26,7 +26,7 @@ func NewRequest() *Request {
 	}
 }
 
-func (r *Request) WithOkCodes(okCodes ...int) *Request {
+func (r *Request) WithOKCodes(okCodes ...int) *Request {
 	for _, c := range okCodes {
 		r.okCodes[c] = struct{}{}
 	}
@@ -52,38 +52,12 @@ func (r *Request) WithJSONError(jsonError any) *Request {
 	return r
 }
 
-func (r *Request) WithRequestMethod(method requestMethod) *Request {
-	r.method = method
-	return r
-}
-
 func (r *Request) WithSkipAuth(skipAuth bool) *Request {
 	r.skipAuth = skipAuth
 	return r
 }
 
-func (r *Request) RequestBody() any {
-	return r.jsonBody
-}
-
-func (r *Request) JSONError() any {
-	return r.jsonError
-}
-
-func (r *Request) RequestMethod() string {
-	return string(r.method)
-}
-
-func (r *Request) MoreHeaders() map[string]string {
-	return r.moreHeaders
-}
-
-func (r *Request) JSONResponse() any {
-	return r.jsonResponse
-}
-
-
-func (r *Request) ContainsOkCode(code ...int) bool {
+func (r *Request) containsOKCode(code ...int) bool {
 	for _, c := range code {
 		if _, ok := r.okCodes[c]; ok {
 			return true
@@ -103,20 +77,4 @@ func (r *Request) WithHeader(key, value string) *Request {
 
 	r.moreHeaders[key] = value
 	return r
-}
-
-func (r *Request) WithMapHeaders(headers map[string]string) *Request {
-	if r.moreHeaders == nil {
-		r.moreHeaders = make(map[string]string)
-	}
-
-	for k, v := range headers {
-		r.moreHeaders[k] = v
-	}
-
-	return r
-}
-
-func (r *Request) SkipAuthentication() bool {
-	return r.skipAuth
 }

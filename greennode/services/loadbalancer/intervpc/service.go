@@ -21,7 +21,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, op
 	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

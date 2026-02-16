@@ -31,10 +31,10 @@ func TestDoRequest_JSONResponseUnmarshal(t *testing.T) {
 	}
 
 	req := NewRequest().
-		WithRequestMethod(MethodGet).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(&got).
 		WithSkipAuth(true)
+	req.method = MethodGet
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	if err != nil {
@@ -59,10 +59,10 @@ func TestDoRequest_JSONRequestBody(t *testing.T) {
 
 	hc := NewHTTPClient().WithRetryCount(0)
 	req := NewRequest().
-		WithRequestMethod(MethodPost).
 		WithJSONBody(map[string]string{"key": "value"}).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithSkipAuth(true)
+	req.method = MethodPost
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	if err != nil {
@@ -93,9 +93,9 @@ func TestDoRequest_RetryOnFailure(t *testing.T) {
 
 	hc := NewHTTPClient().WithRetryCount(3).WithSleep(1 * time.Millisecond)
 	req := NewRequest().
-		WithRequestMethod(MethodGet).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithSkipAuth(true)
+	req.method = MethodGet
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	if err != nil {
@@ -120,10 +120,10 @@ func TestDoRequest_HeaderPropagation(t *testing.T) {
 
 	hc := NewHTTPClient().WithRetryCount(0).WithKvDefaultHeaders("X-Default", "default-val")
 	req := NewRequest().
-		WithRequestMethod(MethodGet).
 		WithHeader("X-Custom", "custom-val").
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithSkipAuth(true)
+	req.method = MethodGet
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	if err != nil {
@@ -140,9 +140,9 @@ func TestDoRequest_Timeout(t *testing.T) {
 
 	hc := NewHTTPClient().WithRetryCount(0).WithTimeout(50 * time.Millisecond)
 	req := NewRequest().
-		WithRequestMethod(MethodGet).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithSkipAuth(true)
+	req.method = MethodGet
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	if err == nil {
@@ -165,10 +165,10 @@ func TestDoRequest_JSONErrorUnmarshal(t *testing.T) {
 	var got errResp
 	hc := NewHTTPClient().WithRetryCount(0)
 	req := NewRequest().
-		WithRequestMethod(MethodPost).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONError(&got).
 		WithSkipAuth(true)
+	req.method = MethodPost
 
 	_, err := hc.DoRequest(context.Background(), ts.URL, req)
 	// No SDK error for non-special status codes — the response is returned as-is
@@ -204,9 +204,9 @@ func TestDoRequest_HTTPMethods(t *testing.T) {
 
 			hc := NewHTTPClient().WithRetryCount(0)
 			req := NewRequest().
-				WithRequestMethod(tt.method).
-				WithOkCodes(200).
+				WithOKCodes(200).
 				WithSkipAuth(true)
+			req.method = tt.method
 
 			_, err := hc.DoRequest(context.Background(), ts.URL, req)
 			if err != nil {
@@ -236,9 +236,9 @@ func TestDoRequest_StatusCodeErrors(t *testing.T) {
 
 			hc := NewHTTPClient().WithRetryCount(0)
 			req := NewRequest().
-				WithRequestMethod(MethodGet).
-				WithOkCodes(200).
+				WithOKCodes(200).
 				WithSkipAuth(true)
+			req.method = MethodGet
 
 			_, err := hc.DoRequest(context.Background(), ts.URL, req)
 			if err == nil {

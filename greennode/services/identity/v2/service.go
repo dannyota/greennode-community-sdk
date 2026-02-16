@@ -17,7 +17,7 @@ func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessT
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithSkipAuth(true).
 		WithJSONError(errResp).

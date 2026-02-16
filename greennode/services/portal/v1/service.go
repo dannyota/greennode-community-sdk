@@ -16,7 +16,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 	resp := new(Portal)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -33,7 +33,7 @@ func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRe
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

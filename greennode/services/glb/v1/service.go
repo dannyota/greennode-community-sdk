@@ -22,7 +22,7 @@ func (s *GLBServiceV1) ListGlobalPools(ctx context.Context, opts *ListGlobalPool
 	resp := new(ListGlobalPoolsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -41,7 +41,7 @@ func (s *GLBServiceV1) CreateGlobalPool(ctx context.Context, opts *CreateGlobalP
 	resp := new(GlobalPool)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -61,7 +61,7 @@ func (s *GLBServiceV1) UpdateGlobalPool(ctx context.Context, opts *UpdateGlobalP
 	resp := new(UpdateGlobalPoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -80,7 +80,7 @@ func (s *GLBServiceV1) DeleteGlobalPool(ctx context.Context, opts *DeleteGlobalP
 	url := deleteGlobalPoolURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -97,7 +97,7 @@ func (s *GLBServiceV1) ListGlobalPoolMembers(ctx context.Context, opts *ListGlob
 	resp := new(ListGlobalPoolMembersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -115,7 +115,7 @@ func (s *GLBServiceV1) GetGlobalPoolMember(ctx context.Context, opts *GetGlobalP
 	resp := new(GetGlobalPoolMemberResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -135,7 +135,7 @@ func (s *GLBServiceV1) DeleteGlobalPoolMember(ctx context.Context, opts *DeleteG
 	url := deleteGlobalPoolMemberURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -155,7 +155,7 @@ func (s *GLBServiceV1) UpdateGlobalPoolMember(ctx context.Context, opts *UpdateG
 	resp := new(UpdateGlobalPoolMemberResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -174,7 +174,7 @@ func (s *GLBServiceV1) PatchGlobalPoolMembers(ctx context.Context, opts *PatchGl
 	url := patchGlobalPoolMembersURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -193,7 +193,7 @@ func (s *GLBServiceV1) ListGlobalListeners(ctx context.Context, opts *ListGlobal
 	resp := new(ListGlobalListenersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -211,7 +211,7 @@ func (s *GLBServiceV1) CreateGlobalListener(ctx context.Context, opts *CreateGlo
 	resp := new(GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -231,7 +231,7 @@ func (s *GLBServiceV1) UpdateGlobalListener(ctx context.Context, opts *UpdateGlo
 	resp := new(GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -251,7 +251,7 @@ func (s *GLBServiceV1) GetGlobalListener(ctx context.Context, opts *GetGlobalLis
 	resp := new(GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -270,7 +270,7 @@ func (s *GLBServiceV1) DeleteGlobalListener(ctx context.Context, opts *DeleteGlo
 	url := deleteGlobalListenerURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -287,7 +287,7 @@ func (s *GLBServiceV1) ListGlobalLoadBalancers(ctx context.Context, opts *ListGl
 	resp := new(ListGlobalLoadBalancers)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -307,7 +307,7 @@ func (s *GLBServiceV1) CreateGlobalLoadBalancer(
 	resp := new(CreateGlobalLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -325,7 +325,7 @@ func (s *GLBServiceV1) DeleteGlobalLoadBalancer(ctx context.Context, opts *Delet
 	url := deleteGlobalLoadBalancerURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -345,7 +345,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
 	resp := new(GlobalLoadBalancer)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -363,7 +363,7 @@ func (s *GLBServiceV1) ListGlobalPackages(ctx context.Context, opts *ListGlobalP
 	resp := new(ListGlobalPackagesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -380,7 +380,7 @@ func (s *GLBServiceV1) ListGlobalRegions(ctx context.Context, opts *ListGlobalRe
 	resp := new(ListGlobalRegionsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -400,7 +400,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerUsageHistories(
 	resp := new(ListGlobalLoadBalancerUsageHistories)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

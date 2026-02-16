@@ -19,7 +19,7 @@ func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *Cr
 	resp := new([]SystemTag)
 
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

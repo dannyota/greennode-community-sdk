@@ -25,7 +25,7 @@ func (s *LoadBalancerServiceV2) CreateLoadBalancer(ctx context.Context, opts *Cr
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.normalizeForAPI()
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -45,7 +45,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancer(ctx context.Context, opts *Re
 	resp := new(ResizeLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -64,7 +64,7 @@ func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(ctx context.Context, op
 	resp := new(ListLoadBalancerPackagesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -80,7 +80,7 @@ func (s *LoadBalancerServiceV2) GetLoadBalancerByID(ctx context.Context, opts *G
 	resp := new(GetLoadBalancerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -99,7 +99,7 @@ func (s *LoadBalancerServiceV2) ListLoadBalancers(ctx context.Context, opts *Lis
 	resp := new(ListLoadBalancersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -116,7 +116,7 @@ func (s *LoadBalancerServiceV2) GetPoolHealthMonitorByID(ctx context.Context, op
 	resp := new(GetPoolHealthMonitorByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -135,7 +135,7 @@ func (s *LoadBalancerServiceV2) CreatePool(ctx context.Context, opts *CreatePool
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.normalizeForAPI()
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -157,7 +157,7 @@ func (s *LoadBalancerServiceV2) UpdatePool(ctx context.Context, opts *UpdatePool
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.normalizeForAPI()
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -177,7 +177,7 @@ func (s *LoadBalancerServiceV2) CreateListener(ctx context.Context, opts *Create
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.normalizeForAPI()
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -200,7 +200,7 @@ func (s *LoadBalancerServiceV2) UpdateListener(ctx context.Context, opts *Update
 	url := updateListenerURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -220,7 +220,7 @@ func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerID(ctx context.Contex
 	resp := new(ListListenersByLoadBalancerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -239,7 +239,7 @@ func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerID(ctx context.Context, o
 	resp := new(ListPoolsByLoadBalancerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -257,7 +257,7 @@ func (s *LoadBalancerServiceV2) UpdatePoolMembers(ctx context.Context, opts *Upd
 	url := updatePoolMembersURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -278,7 +278,7 @@ func (s *LoadBalancerServiceV2) ListPoolMembers(ctx context.Context, opts *ListP
 	resp := new(ListPoolMembersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -297,7 +297,7 @@ func (s *LoadBalancerServiceV2) DeletePoolByID(ctx context.Context, opts *Delete
 	url := deletePoolByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -315,7 +315,7 @@ func (s *LoadBalancerServiceV2) DeleteListenerByID(ctx context.Context, opts *De
 	url := deleteListenerByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -333,7 +333,7 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerByID(ctx context.Context, opts
 	url := deleteLoadBalancerByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -356,7 +356,7 @@ func (s *LoadBalancerServiceV2) GetPoolByID(ctx context.Context, opts *GetPoolBy
 	resp := new(GetPoolByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -378,7 +378,7 @@ func (s *LoadBalancerServiceV2) GetListenerByID(ctx context.Context, opts *GetLi
 	resp := new(GetListenerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -399,7 +399,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancerByID(ctx context.Context, opts
 	url := resizeLoadBalancerByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -421,7 +421,7 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(ctx context.Context, opts *Sca
 	resp := new(ScaleLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -444,7 +444,7 @@ func (s *LoadBalancerServiceV2) ListPolicies(ctx context.Context, opts *ListPoli
 	resp := new(ListPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -460,7 +460,7 @@ func (s *LoadBalancerServiceV2) CreatePolicy(ctx context.Context, opts *CreatePo
 	resp := new(CreatePolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts.toRequestBody()).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -480,7 +480,7 @@ func (s *LoadBalancerServiceV2) GetPolicyByID(ctx context.Context, opts *GetPoli
 	resp := new(GetPolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -498,7 +498,7 @@ func (s *LoadBalancerServiceV2) UpdatePolicy(ctx context.Context, opts *UpdatePo
 	url := updatePolicyURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts.toRequestBody()).
 		WithJSONError(errResp)
 
@@ -516,7 +516,7 @@ func (s *LoadBalancerServiceV2) DeletePolicyByID(ctx context.Context, opts *Dele
 	url := deletePolicyByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -533,7 +533,7 @@ func (s *LoadBalancerServiceV2) ReorderPolicies(ctx context.Context, opts *Reord
 	url := reorderPoliciesURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts.toRequestBody()).
 		WithJSONError(errResp)
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
@@ -551,7 +551,7 @@ func (s *LoadBalancerServiceV2) ListCertificates(ctx context.Context, opts *List
 	resp := new(ListCertificatesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -567,7 +567,7 @@ func (s *LoadBalancerServiceV2) GetCertificateByID(ctx context.Context, opts *Ge
 	resp := new(GetCertificateByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -583,7 +583,7 @@ func (s *LoadBalancerServiceV2) CreateCertificate(ctx context.Context, opts *Cre
 	resp := new(CreateCertificateResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -599,7 +599,7 @@ func (s *LoadBalancerServiceV2) DeleteCertificateByID(ctx context.Context, opts 
 	url := deleteCertificateByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {

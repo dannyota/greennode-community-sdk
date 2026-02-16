@@ -12,7 +12,7 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(ctx context.Contex
 	resp := new(GetAllAddressPairByVirtualSubnetIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -27,7 +27,7 @@ func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(ctx context.Context, op
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200, 201, 202, 203, 204).
+		WithOKCodes(200, 201, 202, 203, 204).
 		WithJSONBody(opts.AddressPairRequest).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -42,7 +42,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(ctx context.Context, opts *DeleteAd
 	url := deleteAddressPairURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200, 201, 202, 203, 204).
+		WithOKCodes(200, 201, 202, 203, 204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -58,7 +58,7 @@ func (s *NetworkServiceV2) CreateAddressPair(ctx context.Context, opts *CreateAd
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

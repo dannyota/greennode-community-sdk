@@ -13,7 +13,7 @@ func (s *NetworkServiceV2) CreateSecgroupRule(ctx context.Context, opts *CreateS
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -34,7 +34,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *Del
 	url := deleteSecgroupRuleByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -55,7 +55,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, op
 	resp := new(ListSecgroupRulesBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

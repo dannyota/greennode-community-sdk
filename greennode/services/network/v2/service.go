@@ -17,7 +17,7 @@ func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkB
 	resp := new(GetNetworkByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

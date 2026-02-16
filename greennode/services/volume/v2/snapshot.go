@@ -12,7 +12,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts
 	resp := new(ListSnapshotsByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -31,7 +31,7 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opt
 	resp := new(CreateSnapshotByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp).
 		WithJSONBody(opts)
@@ -52,7 +52,7 @@ func (s *VolumeServiceV2) DeleteSnapshotByID(ctx context.Context, opts *DeleteSn
 	url := deleteSnapshotByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {

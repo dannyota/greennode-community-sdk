@@ -23,7 +23,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 	resp := new(CreateServerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -59,7 +59,7 @@ func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByI
 	resp := new(GetServerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -77,7 +77,7 @@ func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteSer
 	url := deleteServerByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -101,7 +101,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 	resp := new(UpdateServerSecgroupsByServerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -124,7 +124,7 @@ func (s *ComputeServiceV2) AttachBlockVolume(ctx context.Context, opts *AttachBl
 	url := attachBlockVolumeURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
@@ -150,7 +150,7 @@ func (s *ComputeServiceV2) DetachBlockVolume(ctx context.Context, opts *DetachBl
 	url := detachBlockVolumeURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(202).
+		WithOKCodes(202).
 		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
@@ -173,7 +173,7 @@ func (s *ComputeServiceV2) AttachFloatingIp(ctx context.Context, opts *AttachFlo
 	url := attachFloatingIpURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -193,7 +193,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFlo
 	url := detachFloatingIpURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -215,7 +215,7 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *Li
 	resp := new(ListServerGroupPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -231,7 +231,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *Dele
 	url := deleteServerGroupByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -251,7 +251,7 @@ func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServe
 	resp := new(ListServerGroupsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -269,7 +269,7 @@ func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateSe
 	resp := new(CreateServerGroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

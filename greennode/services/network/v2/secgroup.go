@@ -12,7 +12,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgrou
 	resp := new(GetSecgroupByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -32,7 +32,7 @@ func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgr
 	resp := new(CreateSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -55,7 +55,7 @@ func (s *NetworkServiceV2) ListSecgroup(ctx context.Context, opts *ListSecgroupR
 	resp := new(ListSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -70,7 +70,7 @@ func (s *NetworkServiceV2) DeleteSecgroupByID(ctx context.Context, opts *DeleteS
 	url := deleteSecgroupByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {

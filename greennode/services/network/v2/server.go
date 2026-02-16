@@ -13,7 +13,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts 
 	resp := new(ListAllServersBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

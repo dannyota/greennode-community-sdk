@@ -16,7 +16,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*ListQuotas, er
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 

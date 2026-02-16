@@ -14,7 +14,7 @@ func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHo
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -34,7 +34,7 @@ func (s *VDnsServiceInternal) ListHostedZones(ctx context.Context, opts *ListHos
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -53,7 +53,7 @@ func (s *VDnsServiceInternal) CreateHostedZone(ctx context.Context, opts *Create
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -72,7 +72,7 @@ func (s *VDnsServiceInternal) DeleteHostedZone(ctx context.Context, opts *Delete
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -89,7 +89,7 @@ func (s *VDnsServiceInternal) UpdateHostedZone(ctx context.Context, opts *Update
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
@@ -108,7 +108,7 @@ func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecords
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -127,7 +127,7 @@ func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequ
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -145,7 +145,7 @@ func (s *VDnsServiceInternal) UpdateRecord(ctx context.Context, opts *UpdateReco
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
@@ -163,7 +163,7 @@ func (s *VDnsServiceInternal) DeleteRecord(ctx context.Context, opts *DeleteReco
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -181,7 +181,7 @@ func (s *VDnsServiceInternal) CreateDnsRecord(ctx context.Context, opts *CreateD
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

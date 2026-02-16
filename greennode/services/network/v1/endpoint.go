@@ -22,7 +22,7 @@ func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpoin
 	resp := new(GetEndpointByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		// WithUserId(s.getUserId()).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -43,7 +43,7 @@ func (s *NetworkServiceV1) CreateEndpoint(ctx context.Context, opts *CreateEndpo
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithUserID(opts.ResourceInfo.PortalUserID).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
@@ -71,7 +71,7 @@ func (s *NetworkServiceV1) DeleteEndpointByID(ctx context.Context, opts *DeleteE
 	url := deleteEndpointByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		// WithUserId(s.getUserId()).
 		WithJSONError(errResp)
@@ -93,7 +93,7 @@ func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpoint
 	resp := new(ListEndpointsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		// WithUserId(s.getUserId()).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -116,7 +116,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opt
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -135,7 +135,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(ctx context.Context,
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -156,7 +156,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(ctx context.Context, opts
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -175,7 +175,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(ctx context.Context,
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
@@ -195,7 +195,7 @@ func (s *NetworkServiceInternalV1) CreateEndpoint(ctx context.Context, opts *Cre
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		// WithUserId(s.getUserId()).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).

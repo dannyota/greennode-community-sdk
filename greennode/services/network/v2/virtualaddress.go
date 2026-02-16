@@ -13,7 +13,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(ctx context.Context,
 	resp := new(CreateVirtualAddressCrossProjectResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(201).
+		WithOKCodes(201).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -33,7 +33,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(ctx context.Context, opts *D
 	url := deleteVirtualAddressByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -53,7 +53,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetV
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithJSONResponse(resp).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
@@ -72,7 +72,7 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(ctx context.Contex
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithJSONResponse(resp).
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {

@@ -12,91 +12,67 @@ func TestNewRequest_Defaults(t *testing.T) {
 	if len(r.okCodes) != 0 {
 		t.Fatalf("expected empty okCodes, got %d", len(r.okCodes))
 	}
-	if r.RequestMethod() != "" {
-		t.Fatalf("expected empty method, got %q", r.RequestMethod())
+	if r.method != "" {
+		t.Fatalf("expected empty method, got %q", r.method)
 	}
-	if r.SkipAuthentication() {
+	if r.skipAuth {
 		t.Fatal("skipAuth should default to false")
 	}
 }
 
-func TestWithOkCodes(t *testing.T) {
-	r := NewRequest().WithOkCodes(200, 201)
-	if !r.ContainsOkCode(200) {
+func TestWithOKCodes(t *testing.T) {
+	r := NewRequest().WithOKCodes(200, 201)
+	if !r.containsOKCode(200) {
 		t.Fatal("expected 200")
 	}
-	if !r.ContainsOkCode(201) {
+	if !r.containsOKCode(201) {
 		t.Fatal("expected 201")
 	}
-	if r.ContainsOkCode(404) {
+	if r.containsOKCode(404) {
 		t.Fatal("unexpected 404")
 	}
 }
 
-func TestContainsOkCode_Multiple(t *testing.T) {
-	r := NewRequest().WithOkCodes(200)
-	// ContainsOkCode accepts variadic — returns true if ANY match
-	if !r.ContainsOkCode(404, 200) {
+func TestContainsOKCode_Multiple(t *testing.T) {
+	r := NewRequest().WithOKCodes(200)
+	// containsOKCode accepts variadic — returns true if ANY match
+	if !r.containsOKCode(404, 200) {
 		t.Fatal("expected match on 200")
 	}
-	if r.ContainsOkCode(404, 500) {
+	if r.containsOKCode(404, 500) {
 		t.Fatal("expected no match")
 	}
 }
 
 func TestWithHeader(t *testing.T) {
 	r := NewRequest().WithHeader("X-Custom", "val")
-	h := r.MoreHeaders()
-	if h["X-Custom"] != "val" {
-		t.Fatalf("got %q", h["X-Custom"])
+	if r.moreHeaders["X-Custom"] != "val" {
+		t.Fatalf("got %q", r.moreHeaders["X-Custom"])
 	}
 }
 
 func TestWithHeader_EmptyKeyOrValue(t *testing.T) {
 	r := NewRequest().WithHeader("", "val")
-	if r.MoreHeaders() != nil {
+	if r.moreHeaders != nil {
 		t.Fatal("empty key should be ignored")
 	}
 
 	r2 := NewRequest().WithHeader("key", "")
-	if r2.MoreHeaders() != nil {
+	if r2.moreHeaders != nil {
 		t.Fatal("empty value should be ignored")
-	}
-}
-
-func TestWithMapHeaders(t *testing.T) {
-	r := NewRequest().WithMapHeaders(map[string]string{
-		"A": "1",
-		"B": "2",
-	})
-	h := r.MoreHeaders()
-	if h["A"] != "1" || h["B"] != "2" {
-		t.Fatalf("got %v", h)
-	}
-}
-
-func TestWithMapHeaders_NilInit(t *testing.T) {
-	r := NewRequest()
-	if r.MoreHeaders() != nil {
-		t.Fatal("headers should be nil initially")
-	}
-	r.WithMapHeaders(map[string]string{"K": "V"})
-	if r.MoreHeaders()["K"] != "V" {
-		t.Fatal("expected K=V after WithMapHeaders")
 	}
 }
 
 func TestWithUserID(t *testing.T) {
 	r := NewRequest().WithUserID("user-123")
-	h := r.MoreHeaders()
-	if h["portal-user-id"] != "user-123" {
-		t.Fatalf("got %q", h["portal-user-id"])
+	if r.moreHeaders["portal-user-id"] != "user-123" {
+		t.Fatalf("got %q", r.moreHeaders["portal-user-id"])
 	}
 }
 
 func TestWithSkipAuth(t *testing.T) {
 	r := NewRequest().WithSkipAuth(true)
-	if !r.SkipAuthentication() {
+	if !r.skipAuth {
 		t.Fatal("expected skipAuth=true")
 	}
 }
@@ -104,7 +80,7 @@ func TestWithSkipAuth(t *testing.T) {
 func TestWithJSONBody(t *testing.T) {
 	body := map[string]string{"key": "val"}
 	r := NewRequest().WithJSONBody(body)
-	if r.RequestBody() == nil {
+	if r.jsonBody == nil {
 		t.Fatal("expected non-nil body")
 	}
 }
@@ -112,7 +88,7 @@ func TestWithJSONBody(t *testing.T) {
 func TestWithJSONResponse(t *testing.T) {
 	resp := &struct{ Name string }{}
 	r := NewRequest().WithJSONResponse(resp)
-	if r.JSONResponse() != resp {
+	if r.jsonResponse != resp {
 		t.Fatal("expected same response pointer")
 	}
 }
@@ -120,32 +96,15 @@ func TestWithJSONResponse(t *testing.T) {
 func TestWithJSONError(t *testing.T) {
 	errResp := &struct{ Message string }{}
 	r := NewRequest().WithJSONError(errResp)
-	if r.JSONError() != errResp {
+	if r.jsonError != errResp {
 		t.Fatal("expected same error pointer")
 	}
 }
 
-func TestWithJSONResponseOverwrite(t *testing.T) {
+func TestRequestMethod_DirectSet(t *testing.T) {
 	r := NewRequest()
-	resp := &struct{ X int }{}
-	r.WithJSONResponse(resp)
-	if r.JSONResponse() != resp {
-		t.Fatal("expected same pointer after WithJSONResponse")
-	}
-}
-
-func TestWithJSONErrorOverwrite(t *testing.T) {
-	r := NewRequest()
-	errResp := &struct{ X int }{}
-	r.WithJSONError(errResp)
-	if r.JSONError() != errResp {
-		t.Fatal("expected same pointer after WithJSONError")
-	}
-}
-
-func TestWithRequestMethod(t *testing.T) {
-	r := NewRequest().WithRequestMethod(MethodPost)
-	if r.RequestMethod() != "POST" {
-		t.Fatalf("got %q", r.RequestMethod())
+	r.method = MethodPost
+	if r.method != MethodPost {
+		t.Fatalf("got %q", r.method)
 	}
 }

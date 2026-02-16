@@ -12,7 +12,7 @@ func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByI
 	resp := new(GetSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -33,7 +33,7 @@ func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSub
 	resp := new(UpdateSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200, 201, 202, 203, 204).
+		WithOKCodes(200, 201, 202, 203, 204).
 		WithJSONBody(opts.UpdateSubnetBody).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

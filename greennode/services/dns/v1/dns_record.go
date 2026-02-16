@@ -13,7 +13,7 @@ func (s *VDnsServiceV1) ListRecords(ctx context.Context, opts *ListRecordsReques
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -31,7 +31,7 @@ func (s *VDnsServiceV1) GetRecord(ctx context.Context, opts *GetRecordRequest) (
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -48,7 +48,7 @@ func (s *VDnsServiceV1) UpdateRecord(ctx context.Context, opts *UpdateRecordRequ
 	url := updateRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
@@ -65,7 +65,7 @@ func (s *VDnsServiceV1) DeleteRecord(ctx context.Context, opts *DeleteRecordRequ
 	url := deleteRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -82,7 +82,7 @@ func (s *VDnsServiceV1) CreateDnsRecord(ctx context.Context, opts *CreateDnsReco
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

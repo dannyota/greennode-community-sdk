@@ -13,7 +13,7 @@ func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZo
 	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -32,7 +32,7 @@ func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZon
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
@@ -50,7 +50,7 @@ func (s *VDnsServiceV1) CreateHostedZone(ctx context.Context, opts *CreateHosted
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(200).
+		WithOKCodes(200).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -68,7 +68,7 @@ func (s *VDnsServiceV1) DeleteHostedZone(ctx context.Context, opts *DeleteHosted
 	url := deleteHostedZoneURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
@@ -84,7 +84,7 @@ func (s *VDnsServiceV1) UpdateHostedZone(ctx context.Context, opts *UpdateHosted
 	url := updateHostedZoneURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithOkCodes(204).
+		WithOKCodes(204).
 		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
