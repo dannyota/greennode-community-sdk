@@ -88,7 +88,7 @@ func SdkErrorHandler(err error, errResp ErrorResponse, codes ...ErrorCode) *SdkE
 			}
 			sdkErr.WithErrorCode(code).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
 			if c.category != "" {
-				sdkErr.WithErrorCategories(c.category)
+				sdkErr.AppendCategories(c.category)
 			}
 			return sdkErr
 		}
@@ -100,7 +100,7 @@ func SdkErrorHandler(err error, errResp ErrorResponse, codes ...ErrorCode) *SdkE
 			}
 			sdkErr.WithErrorCode(code).WithMessage(msg).WithErrors(errResp.Err())
 			if c.category != "" {
-				sdkErr.WithErrorCategories(c.category)
+				sdkErr.AppendCategories(c.category)
 			}
 			return sdkErr
 		}

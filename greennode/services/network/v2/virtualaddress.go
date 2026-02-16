@@ -23,7 +23,7 @@ func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(ctx context.Context,
 			sdkerror.EcVServerSubnetNotFound,
 			sdkerror.EcVServerVirtualAddressExceedQuota).
 			WithKVparameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
+			AppendCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityVirtualAddress(), nil
@@ -41,7 +41,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(ctx context.Context, opts *D
 			sdkerror.EcVServerVirtualAddressNotFound,
 			sdkerror.EcVServerVirtualAddressInUse).
 			WithKVparameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
+			AppendCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return nil
@@ -60,7 +60,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetV
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
+			AppendCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityVirtualAddress(), nil
@@ -79,7 +79,7 @@ func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(ctx context.Contex
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
 			WithKVparameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
+			AppendCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToEntityListAddressPairs(), nil

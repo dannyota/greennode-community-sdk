@@ -67,7 +67,7 @@ func (s *NetworkServiceV2) CreateAddressPair(ctx context.Context, opts *CreateAd
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound,
 			sdkerror.EcVServerAddressPairExisted).
-			WithErrorCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
+			AppendCategories(sdkerror.ErrCatVServer, sdkerror.ErrCatVirtualAddress)
 	}
 
 	return resp.ToAddressPair(), nil

@@ -40,7 +40,7 @@ func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpoin
 			WithKVparameters(
 				"endpointId", opts.EndpointID,
 				"projectId", s.getProjectID()).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil
@@ -69,7 +69,7 @@ func (s *NetworkServiceV1) CreateEndpoint(ctx context.Context, opts *CreateEndpo
 			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
 			sdkerror.EcVNetworkContainInvalidCharacter).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil
@@ -90,7 +90,7 @@ func (s *NetworkServiceV1) DeleteEndpointByID(ctx context.Context, opts *DeleteE
 			sdkerror.EcVServerNetworkNotFound,
 			sdkerror.EcVServerSubnetNotFound).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
@@ -110,7 +110,7 @@ func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpoint
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityListEndpoints(), nil
@@ -132,7 +132,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opt
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityListTags(), nil
@@ -153,7 +153,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(ctx context.Context,
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
@@ -172,7 +172,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(ctx context.Context, opts
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
@@ -192,7 +192,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(ctx context.Context,
 			sdkerror.EcVNetworkEndpointTagNotFound).
 			WithKVparameters("projectId", s.getProjectID()).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return nil
@@ -221,7 +221,7 @@ func (s *NetworkServiceInternalV1) CreateEndpoint(ctx context.Context, opts *Cre
 			sdkerror.EcVNetworkEndpointPackageNotBelongToEndpointService,
 			sdkerror.EcVNetworkContainInvalidCharacter).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
 	return resp.ToEntityEndpoint(), nil

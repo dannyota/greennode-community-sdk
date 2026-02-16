@@ -201,7 +201,7 @@ return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
     sdkerror.EcVServerVolumeInProcess).
     WithParameters(common.StructToMap(opts)).
     WithKVparameters("projectId", s.getProjectID()).
-    WithErrorCategories(sdkerror.ErrCatVServer)
+    AppendCategories(sdkerror.ErrCatVServer)
 ```
 
 ### Counts

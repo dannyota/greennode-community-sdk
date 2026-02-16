@@ -20,7 +20,7 @@ func (s *VDnsServiceV1) ListRecords(ctx context.Context, opts *ListRecordsReques
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListRecords(), nil
@@ -38,7 +38,7 @@ func (s *VDnsServiceV1) GetRecord(ctx context.Context, opts *GetRecordRequest) (
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil
@@ -55,7 +55,7 @@ func (s *VDnsServiceV1) UpdateRecord(ctx context.Context, opts *UpdateRecordRequ
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -71,7 +71,7 @@ func (s *VDnsServiceV1) DeleteRecord(ctx context.Context, opts *DeleteRecordRequ
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -90,7 +90,7 @@ func (s *VDnsServiceV1) CreateDnsRecord(ctx context.Context, opts *CreateDnsReco
 	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil

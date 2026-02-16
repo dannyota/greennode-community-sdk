@@ -22,7 +22,7 @@ func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHo
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"hostedZoneId", opts.HostedZoneID).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
@@ -41,7 +41,7 @@ func (s *VDnsServiceInternal) ListHostedZones(ctx context.Context, opts *ListHos
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListHostedZones(), nil
@@ -61,7 +61,7 @@ func (s *VDnsServiceInternal) CreateHostedZone(ctx context.Context, opts *Create
 	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
@@ -78,7 +78,7 @@ func (s *VDnsServiceInternal) DeleteHostedZone(ctx context.Context, opts *Delete
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -96,7 +96,7 @@ func (s *VDnsServiceInternal) UpdateHostedZone(ctx context.Context, opts *Update
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -115,7 +115,7 @@ func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecords
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListRecords(), nil
@@ -134,7 +134,7 @@ func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequ
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil
@@ -152,7 +152,7 @@ func (s *VDnsServiceInternal) UpdateRecord(ctx context.Context, opts *UpdateReco
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -169,7 +169,7 @@ func (s *VDnsServiceInternal) DeleteRecord(ctx context.Context, opts *DeleteReco
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -189,7 +189,7 @@ func (s *VDnsServiceInternal) CreateDnsRecord(ctx context.Context, opts *CreateD
 	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityDnsRecord(), nil

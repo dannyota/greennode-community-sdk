@@ -88,17 +88,6 @@ func (e *SdkError) WithErrors(errs ...error) *SdkError {
 	return e
 }
 
-func (e *SdkError) WithErrorCategories(categories ...ErrorCategory) *SdkError {
-	if e.categories == nil {
-		e.categories = make(map[ErrorCategory]struct{})
-	}
-	for _, c := range categories {
-		e.categories[c] = struct{}{}
-	}
-
-	return e
-}
-
 func (e *SdkError) WithParameters(params map[string]any) *SdkError {
 	if e.parameters == nil {
 		e.parameters = new(sync.Map)

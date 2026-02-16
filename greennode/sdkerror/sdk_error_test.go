@@ -55,9 +55,9 @@ func TestWithErrors_Empty(t *testing.T) {
 	}
 }
 
-func TestWithErrorCategories(t *testing.T) {
+func TestAppendCategories_Multiple(t *testing.T) {
 	e := &SdkError{}
-	e.WithErrorCategories(ErrCatQuota, ErrCatIAM)
+	e.AppendCategories(ErrCatQuota, ErrCatIAM)
 	if !e.IsCategory(ErrCatQuota) {
 		t.Fatal("expected quota category")
 	}
@@ -167,7 +167,7 @@ func TestError_ImplementsErrorInterface(t *testing.T) {
 
 func TestErrorCategories(t *testing.T) {
 	e := &SdkError{}
-	e.WithErrorCategories(ErrCatQuota, ErrCatProductVlb)
+	e.AppendCategories(ErrCatQuota, ErrCatProductVlb)
 	cats := e.ErrorCategories()
 	if len(cats) != 2 {
 		t.Fatalf("expected 2 categories, got %d", len(cats))
@@ -231,7 +231,7 @@ func TestIsCategories_NilCategories(t *testing.T) {
 
 func TestIsCategories(t *testing.T) {
 	e := &SdkError{}
-	e.WithErrorCategories(ErrCatQuota)
+	e.AppendCategories(ErrCatQuota)
 	if !e.IsCategories(ErrCatIAM, ErrCatQuota) {
 		t.Fatal("expected match on quota")
 	}
@@ -258,7 +258,7 @@ func TestAppendCategories(t *testing.T) {
 
 func TestRemoveCategories(t *testing.T) {
 	e := &SdkError{}
-	e.WithErrorCategories(ErrCatQuota, ErrCatIAM)
+	e.AppendCategories(ErrCatQuota, ErrCatIAM)
 	e.RemoveCategories(ErrCatQuota)
 	if e.IsCategory(ErrCatQuota) {
 		t.Fatal("expected quota removed")

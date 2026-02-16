@@ -51,7 +51,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 			sdkerror.EcVServerCreateBillingPaymentMethodNotAllowed).
 			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID()).
-			WithErrorCategories(sdkerror.ErrCatVServer)
+			AppendCategories(sdkerror.ErrCatVServer)
 	}
 
 	return resp.ToEntityServer(), nil

@@ -21,7 +21,7 @@ func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZo
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"hostedZoneId", opts.HostedZoneID).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
@@ -39,7 +39,7 @@ func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZon
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityListHostedZones(), nil
@@ -58,7 +58,7 @@ func (s *VDnsServiceV1) CreateHostedZone(ctx context.Context, opts *CreateHosted
 	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return resp.ToEntityHostedZone(), nil
@@ -74,7 +74,7 @@ func (s *VDnsServiceV1) DeleteHostedZone(ctx context.Context, opts *DeleteHosted
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
@@ -91,7 +91,7 @@ func (s *VDnsServiceV1) UpdateHostedZone(ctx context.Context, opts *UpdateHosted
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithErrorCategories(sdkerror.ErrCatProductVdns)
+			AppendCategories(sdkerror.ErrCatProductVdns)
 	}
 
 	return nil
