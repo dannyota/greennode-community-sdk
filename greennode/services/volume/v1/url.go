@@ -18,7 +18,7 @@ func getDefaultVolumeTypeURL(sc *client.ServiceClient) string {
 func getVolumeTypeZonesURL(sc *client.ServiceClient, opts *GetVolumeTypeZonesRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 	return sc.ServiceURL(
 		sc.ProjectID(),

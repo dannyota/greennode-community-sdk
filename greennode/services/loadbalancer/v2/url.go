@@ -32,7 +32,7 @@ func getLoadBalancerByIDURL(sc *client.ServiceClient, opts *GetLoadBalancerByIDR
 func listLoadBalancersURL(sc *client.ServiceClient, opts *ListLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(sc.ProjectID(), "loadBalancers") + query

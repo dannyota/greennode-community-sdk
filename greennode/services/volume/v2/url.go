@@ -18,7 +18,7 @@ func deleteBlockVolumeByIDURL(sc *client.ServiceClient, opts *DeleteBlockVolumeB
 func listBlockVolumesURL(sc *client.ServiceClient, opts *ListBlockVolumesRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(
@@ -44,7 +44,7 @@ func resizeBlockVolumeByIDURL(sc *client.ServiceClient, opts *ResizeBlockVolumeB
 func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapshotsByBlockVolumeIDRequest) string {
 	query, err := opts.ToQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(

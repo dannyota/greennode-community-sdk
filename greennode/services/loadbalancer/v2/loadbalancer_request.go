@@ -172,7 +172,7 @@ func (r *ListLoadBalancersRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
+func (r *ListLoadBalancersRequest) getDefaultQuery() string {
 	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListLoadBalancer, defaultSizeListLoadBalancer)
 }
 

@@ -135,7 +135,7 @@ func (r *ListServerGroupsRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *ListServerGroupsRequest) GetDefaultQuery() string {
+func (r *ListServerGroupsRequest) getDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d&name=", defaultOffsetListServerGroups, defaultLimitListServerGroups)
 }
 

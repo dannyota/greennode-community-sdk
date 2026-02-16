@@ -47,7 +47,7 @@ type DeleteSnapshotByIDRequest struct {
 	SnapshotID    string
 }
 
-func (r *ListSnapshotsByBlockVolumeIDRequest) GetDefaultQuery() string {
+func (r *ListSnapshotsByBlockVolumeIDRequest) getDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d", defaultPageListSnapshotsByBlockVolumeIDRequest, defaultSizeListSnapshotsByBlockVolumeIDRequest)
 }
 

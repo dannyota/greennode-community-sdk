@@ -111,7 +111,7 @@ func (r *ListEndpointsRequest) ToListQuery() (string, error) {
 	return query, nil
 }
 
-func (r *ListEndpointsRequest) GetDefaultQuery() string {
+func (r *ListEndpointsRequest) getDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
 	return query
@@ -139,7 +139,7 @@ func (r *ListTagsByEndpointIDRequest) GetProjectID() string {
 	return r.ProjectID
 }
 
-func (r *ListTagsByEndpointIDRequest) GetDefaultQuery() string {
+func (r *ListTagsByEndpointIDRequest) getDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
 	return query

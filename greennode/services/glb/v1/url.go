@@ -135,7 +135,7 @@ func getGlobalListenerURL(sc *client.ServiceClient, opts *GetGlobalListenerReque
 func listGlobalLoadBalancersURL(sc *client.ServiceClient, opts *ListGlobalLoadBalancersRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL("global-load-balancers") + query
@@ -170,7 +170,7 @@ func listGlobalRegionsURL(sc *client.ServiceClient, _ *ListGlobalRegionsRequest)
 func getGlobalLoadBalancerUsageHistoriesURL(sc *client.ServiceClient, opts *GetGlobalLoadBalancerUsageHistoriesRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	baseURL := sc.ServiceURL(

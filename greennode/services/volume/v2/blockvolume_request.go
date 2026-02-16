@@ -166,7 +166,7 @@ func (r *ListBlockVolumesRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *ListBlockVolumesRequest) GetDefaultQuery() string {
+func (r *ListBlockVolumesRequest) getDefaultQuery() string {
 	return fmt.Sprintf("page=%d&size=%d&name=", defaultPageListBlockVolumesRequest, defaultSizeListBlockVolumesRequest)
 }
 

@@ -35,7 +35,7 @@ type GetListVolumeTypeRequest struct {
 	VolumeTypeZoneID string
 }
 
-func (r *GetVolumeTypeZonesRequest) GetDefaultQuery() string {
+func (r *GetVolumeTypeZonesRequest) getDefaultQuery() string {
 	return fmt.Sprintf("zoneId=%s", defaultZoneGetVolumeTypeZonesRequest)
 }
 

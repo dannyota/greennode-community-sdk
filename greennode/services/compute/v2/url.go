@@ -91,7 +91,7 @@ func deleteServerGroupByIDURL(sc *client.ServiceClient, opts *DeleteServerGroupB
 func listServerGroupsURL(sc *client.ServiceClient, opts *ListServerGroupsRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(sc.ProjectID(), "serverGroups") + query

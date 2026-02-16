@@ -138,9 +138,9 @@ func TestListBlockVolumesRequest_ToQuery_ZeroPageSize(t *testing.T) {
 	}
 }
 
-func TestListBlockVolumesRequest_GetDefaultQuery(t *testing.T) {
+func TestListBlockVolumesRequest_getDefaultQuery(t *testing.T) {
 	r := &ListBlockVolumesRequest{}
-	q := r.GetDefaultQuery()
+	q := r.getDefaultQuery()
 	if !strings.Contains(q, "page=1") {
 		t.Fatalf("default query missing page: %q", q)
 	}

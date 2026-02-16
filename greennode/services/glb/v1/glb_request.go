@@ -63,7 +63,7 @@ func (r *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *ListGlobalLoadBalancersRequest) GetDefaultQuery() string {
+func (r *ListGlobalLoadBalancersRequest) getDefaultQuery() string {
 	return fmt.Sprintf("offset=%d&limit=%d", defaultOffsetListGlobalLoadBalancer, defaultLimitListGlobalLoadBalancer)
 }
 
@@ -137,7 +137,7 @@ func (r *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, erro
 	return v.Encode(), nil
 }
 
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {
+func (r *GetGlobalLoadBalancerUsageHistoriesRequest) getDefaultQuery() string {
 	return ""
 }
 

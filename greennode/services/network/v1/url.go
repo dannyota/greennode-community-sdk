@@ -28,7 +28,7 @@ func deleteEndpointByIDURL(sc *client.ServiceClient, opts *DeleteEndpointByIDReq
 func listEndpointsURL(sc *client.ServiceClient, opts *ListEndpointsRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(sc.ZoneID(), sc.ProjectID(), "endpoints?") + query
@@ -37,7 +37,7 @@ func listEndpointsURL(sc *client.ServiceClient, opts *ListEndpointsRequest) stri
 func listTagsByEndpointIDURL(sc *client.ServiceClient, opts *ListTagsByEndpointIDRequest) string {
 	query, err := opts.ToListQuery()
 	if err != nil {
-		query = opts.GetDefaultQuery()
+		query = opts.getDefaultQuery()
 	}
 
 	return sc.ServiceURL(
