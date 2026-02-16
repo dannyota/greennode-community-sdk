@@ -11,7 +11,7 @@ func TestDnsServiceInternal_ListHostedZonesDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	portalUserID := "53461"
 
-	req := dnsinternalv1.NewListHostedZonesRequest().WithName("")
+	req := dnsinternalv1.NewListHostedZonesRequest()
 
 	resp, sdkErr := vngcloud.DNSInternal.ListHostedZones(context.Background(), req, portalUserID)
 	if sdkErr != nil {

@@ -47,7 +47,8 @@ func TestDnsServiceV1_ListHostedZonesDefault(t *testing.T) {
 
 func TestDnsServiceV1_ListHostedZonesWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewListHostedZonesRequest().WithName("test-zone")
+	opt := v1.NewListHostedZonesRequest()
+	opt.Name = "test-zone"
 	listHostedZones, sdkerr := vngcloud.DNS.ListHostedZones(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -83,7 +84,8 @@ func TestDnsServiceV1_ListRecordsDefault(t *testing.T) {
 
 func TestDnsServiceV1_ListRecordsWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a").WithName("k8s")
+	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a")
+	opt.Name = "k8s"
 	listRecords, sdkerr := vngcloud.DNS.ListRecords(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -105,7 +107,8 @@ func TestDnsServiceV1_CreateHostedZone(t *testing.T) {
 		"test-sdk.example.com",
 		[]string{"net-dc14bb60-d500-40b5-945f-218540990187"},
 		v1.HostedZoneTypePrivate,
-	).WithDescription("Test hosted zone created by SDK")
+	)
+	opt.Description = "Test hosted zone created by SDK"
 
 	hostedZone, sdkerr := vngcloud.DNS.CreateHostedZone(context.Background(), opt)
 	if sdkerr != nil {
@@ -135,9 +138,9 @@ func TestDnsServiceV1_DeleteHostedZone(t *testing.T) {
 
 func TestDnsServiceV1_UpdateHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewUpdateHostedZoneRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a").
-		WithAssocVpcIDs([]string{"net-dc14bb60-d500-40b5-945f-218540990187"}).
-		WithDescription("Updated description for hosted zone.")
+	opt := v1.NewUpdateHostedZoneRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a")
+	opt.AssocVpcIDs = []string{"net-dc14bb60-d500-40b5-945f-218540990187"}
+	opt.Description = "Updated description for hosted zone."
 
 	sdkerr := vngcloud.DNS.UpdateHostedZone(context.Background(), opt)
 	if sdkerr != nil {
@@ -182,6 +185,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			v1.NewRecordValueRequest("www.example.com", nil, nil),
 		}
 
+		stickySession := false
 		opt := v1.NewCreateDnsRecordRequest(
 			hostedZoneID,
 			"test-cname",
@@ -189,7 +193,8 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			v1.DnsRecordTypeCNAME,
 			v1.RoutingPolicySimple,
 			cnameValues,
-		).WithEnableStickySession(false)
+		)
+		opt.EnableStickySession = &stickySession
 
 		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
@@ -349,12 +354,12 @@ func TestDnsServiceV1_UpdateRecord(t *testing.T) {
 		v1.NewRecordValueRequest("updated.example.com", nil, nil),
 	}
 
-	opt := v1.NewUpdateRecordRequest(hostedZoneID, recordID).
-		WithSubDomain("updated-test").
-		WithTTL(newTTL).
-		WithType(v1.DnsRecordTypeCNAME).
-		WithRoutingPolicy(v1.RoutingPolicySimple).
-		WithValue(values)
+	opt := v1.NewUpdateRecordRequest(hostedZoneID, recordID)
+	opt.SubDomain = "updated-test"
+	opt.TTL = newTTL
+	opt.Type = v1.DnsRecordTypeCNAME
+	opt.RoutingPolicy = v1.RoutingPolicySimple
+	opt.Value = values
 
 	sdkerr = vngcloud.DNS.UpdateRecord(context.Background(), opt)
 	if sdkerr != nil {

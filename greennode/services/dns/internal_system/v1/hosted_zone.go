@@ -22,7 +22,7 @@ func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHo
 	if _, sdkErr := s.DnsClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"hostedZoneId", opts.GetHostedZoneID()).
+				"hostedZoneId", opts.HostedZoneID).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
 	}
 
