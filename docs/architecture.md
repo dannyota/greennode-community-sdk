@@ -9,7 +9,7 @@ services exposed by VNG Cloud's REST APIs.
 
 - **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
 - **Go version:** 1.24
-- **Source files:** 192 `.go` files, ~19.1 k LOC
+- **Source files:** 195 `.go` files, ~19.5 k LOC
 
 ## 2. Package Map
 
@@ -17,6 +17,8 @@ services exposed by VNG Cloud's REST APIs.
 greennode-community-sdk/
 ├── greennode/
 │   ├── greennode.go               SDK entry point — Config, Client, NewClient()
+│   ├── endpoints.go               Default endpoint resolution from Region + auth method
+│   ├── auth/                      IAM user auth (PKCE + TOTP) and TOTP providers
 │   ├── client/                    Low-level HTTP client, ServiceClient, request builder
 │   ├── services/                  Per-service business logic (9 services, versioned)
 │   │   ├── common/                Shared helpers (StructToMap, Paging)
@@ -67,9 +69,11 @@ up, converted from raw JSON into domain entities at the service layer.
 
 ## 4. Authentication
 
-The SDK uses an IAM OAuth2 client-credentials flow.
+The SDK supports two authentication methods, selected by `Config` fields.
 
-### Token Acquisition
+### 4a. Client Credentials (service accounts)
+
+Set `ClientID` + `ClientSecret` in Config. Uses `IAMOauth2` auth option.
 
 1. `POST {iam_endpoint}/v2/auth/token` with HTTP Basic auth
    (`base64(clientId:clientSecret)`)
@@ -81,6 +85,33 @@ Implementation:
 - URL builder: `greennode/services/identity/v2/url.go`
 - Response conversion: `greennode/services/identity/v2/identity_response.go`
 - Authentication type: `greennode/client/auth.go`
+
+### 4b. IAM User Auth (username/password + optional TOTP)
+
+Set `IAMAuth` in Config with an `*auth.IAMUserAuth`. Uses `IAMUserOauth2` auth option.
+
+1. Generate PKCE verifier/challenge
+2. GET login page at `signin.vngcloud.vn`, extract CSRF token
+3. POST username/password credentials
+4. If 2FA required (redirect to `/ap/auth/iam/google`):
+   - GET 2FA page, extract CSRF
+   - Call `TOTPProvider.GetCode()` for the code
+   - POST TOTP code
+5. Extract authorization code from final redirect URL
+6. POST token exchange to dashboard API with Basic auth (dashboard client ID)
+7. Return `accessToken` and computed `expiresAt`
+
+Implementation:
+- Auth flow: `greennode/auth/iam_user.go`
+- TOTP providers: `greennode/auth/totp.go` (`TOTPProvider` interface, `TOTPFunc` adapter, `SecretTOTP`)
+- Wiring: `iamUserReauthFunc()` in `greennode/greennode.go`
+
+### Default Endpoints from Region
+
+`resolveEndpoints()` in `greennode/endpoints.go` fills empty endpoint fields
+based on `Config.Region` and the auth method. IAM user auth uses different
+gateway URLs (e.g. `iam-vserver-gateway` vs `vserver-gateway`) for VServer and
+VLB. Explicit endpoint fields always override the defaults.
 
 ### Token Refresh
 
@@ -229,6 +260,7 @@ first match.
 | **Identity** | `services/identity` | v2 | OAuth2 token acquisition |
 | **Portal** | `services/portal` | v1, v2 | Portal info, project listing |
 | **Server** | `services/server` | v1 | Internal server system tags |
+| **Auth** | `auth` | — | IAM user auth (PKCE + TOTP), TOTP providers |
 
 ### Client Service Wiring
 

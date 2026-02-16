@@ -10,6 +10,8 @@ go get github.com/dannyota/greennode-community-sdk/v2
 
 ## Quick Start
 
+### Service account (client credentials)
+
 ```go
 package main
 
@@ -23,12 +25,10 @@ import (
 
 func main() {
   c, err := greennode.NewClient(context.Background(), greennode.Config{
+    Region:       "hcm-3",
     ClientID:     "__YOUR_CLIENT_ID__",
     ClientSecret: "__YOUR_CLIENT_SECRET__",
     ProjectID:    "__YOUR_PROJECT_ID__",
-    IAMEndpoint:  "https://iamapis.vngcloud.vn/accounts-api",
-    VLBEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
-    RetryCount:   1,
   })
   if err != nil {
     panic(err)
@@ -45,6 +45,49 @@ func main() {
   }
 }
 ```
+
+### IAM user (username/password + optional TOTP)
+
+```go
+package main
+
+import (
+  "context"
+
+  "github.com/dannyota/greennode-community-sdk/v2/greennode"
+  "github.com/dannyota/greennode-community-sdk/v2/greennode/auth"
+)
+
+func main() {
+  c, err := greennode.NewClient(context.Background(), greennode.Config{
+    Region:    "hcm-3",
+    ProjectID: "__YOUR_PROJECT_ID__",
+    IAMAuth: &auth.IAMUserAuth{
+      RootEmail: "root@company.com",
+      Username:  "your-username",
+      Password:  "your-password",
+      TOTP:      &auth.SecretTOTP{Secret: "YOUR_BASE32_SECRET"}, // omit if no 2FA
+    },
+  })
+  if err != nil {
+    panic(err)
+  }
+
+  // Use c.Compute, c.LoadBalancer, etc. as normal
+  _ = c
+}
+```
+
+The `Region` field (e.g. `"hcm-3"`, `"han-1"`) derives all endpoint URLs automatically.
+Explicit endpoint fields (e.g. `VServerEndpoint`) override the defaults if set.
+
+#### TOTP providers
+
+| Provider | Usage |
+|----------|-------|
+| `&auth.SecretTOTP{Secret: "..."}` | Compute TOTP from a base32 shared secret |
+| `auth.TOTPFunc(func(ctx) (string, error) { ... })` | Bring your own source (Vault, env var, CLI prompt) |
+| `nil` | No 2FA required |
 
 ## Services
 

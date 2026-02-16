@@ -48,6 +48,7 @@ Unit tests live alongside the packages they test (139 tests across 14 files).
 
 | Package              | Description                     |
 | -------------------- | ------------------------------- |
+| `greennode/auth/`     | IAM user auth flow and TOTP providers |
 | `greennode/gateway/`  | Gateway routing layer (consolidated into `greennode.go`) |
 
 ### 1.4 Utility test files
@@ -125,6 +126,7 @@ reusable `newClientFromEnvKeys` function.
 ### Phase 2: Expand unit test coverage — **Open**
 
 Existing unit tests cover core packages. Remaining gaps:
+- `auth/`: TOTP computation (SecretTOTP against RFC 6238 test vectors), endpoint resolution
 - `services/compute/v2/`: request building, response parsing
 - `services/loadbalancer/v2/`: request building, response parsing
 - `services/dns/v1/`: request building, response parsing
