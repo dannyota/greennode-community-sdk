@@ -12,7 +12,7 @@ func deleteBlockVolumeByIDURL(sc *client.ServiceClient, opts *DeleteBlockVolumeB
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID())
+		opts.BlockVolumeID)
 }
 
 func listBlockVolumesURL(sc *client.ServiceClient, opts *ListBlockVolumesRequest) string {
@@ -30,14 +30,14 @@ func getBlockVolumeByIDURL(sc *client.ServiceClient, opts *GetBlockVolumeByIDReq
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID())
+		opts.BlockVolumeID)
 }
 
 func resizeBlockVolumeByIDURL(sc *client.ServiceClient, opts *ResizeBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"resize")
 }
 
@@ -50,7 +50,7 @@ func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapsho
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"snapshots",
 	) + query
 }
@@ -59,7 +59,7 @@ func createSnapshotByBlockVolumeIDURL(sc *client.ServiceClient, opts *CreateSnap
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"snapshots")
 }
 
@@ -67,9 +67,9 @@ func deleteSnapshotByIDURL(sc *client.ServiceClient, opts *DeleteSnapshotByIDReq
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"snapshots",
-		opts.GetSnapshotID(),
+		opts.SnapshotID,
 	)
 }
 
@@ -77,7 +77,7 @@ func getUnderBlockVolumeIDURL(sc *client.ServiceClient, opts *GetUnderBlockVolum
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"mapping",
 	)
 }
@@ -86,7 +86,7 @@ func migrateBlockVolumeByIDURL(sc *client.ServiceClient, opts *MigrateBlockVolum
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"change-device-type",
 	)
 }

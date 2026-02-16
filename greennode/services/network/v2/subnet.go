@@ -22,7 +22,7 @@ func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByI
 			sdkerror.EcVServerSubnetNotBelongNetwork,
 			sdkerror.EcVServerSubnetNotFound).
 			WithKVparameters(
-				"subnetId", opts.GetSubnetID(),
+				"subnetId", opts.SubnetID,
 				"projectId", s.getProjectID())
 	}
 

@@ -91,7 +91,7 @@ func (s *LoadBalancerServiceV2) GetLoadBalancerByID(ctx context.Context, opts *G
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -231,7 +231,7 @@ func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerID(ctx context.Contex
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -250,7 +250,7 @@ func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerID(ctx context.Context, o
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -290,7 +290,7 @@ func (s *LoadBalancerServiceV2) ListPoolMembers(ctx context.Context, opts *ListP
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBPoolNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID(), "poolId", opts.GetPoolID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID, "poolId", opts.PoolID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -347,7 +347,7 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerByID(ctx context.Context, opts
 			sdkerror.EcVLBLoadBalancerIsCreating,
 			sdkerror.EcVLBLoadBalancerIsDeleting).
 			WithKVparameters(
-				"loadBalancerId", opts.GetLoadBalancerID(),
+				"loadBalancerId", opts.LoadBalancerID,
 				"projectId", s.getProjectID()).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
@@ -369,8 +369,8 @@ func (s *LoadBalancerServiceV2) GetPoolByID(ctx context.Context, opts *GetPoolBy
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBPoolNotFound).
 			WithKVparameters(
-				"loadBalancerId", opts.GetLoadBalancerID(),
-				"poolId", opts.GetPoolID()).
+				"loadBalancerId", opts.LoadBalancerID,
+				"poolId", opts.PoolID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -391,8 +391,8 @@ func (s *LoadBalancerServiceV2) GetListenerByID(ctx context.Context, opts *GetLi
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBListenerNotFound).
 			WithKVparameters(
-				"loadBalancerId", opts.GetLoadBalancerID(),
-				"listenerId", opts.GetListenerID()).
+				"loadBalancerId", opts.LoadBalancerID,
+				"listenerId", opts.ListenerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -492,7 +492,7 @@ func (s *LoadBalancerServiceV2) GetPolicyByID(ctx context.Context, opts *GetPoli
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerNotFound,
 			sdkerror.EcVLBListenerNotFound,
-		).WithKVparameters("policyId", opts.GetPolicyID())
+		).WithKVparameters("policyId", opts.PolicyID)
 	}
 
 	return resp.ToEntityPolicy(), nil

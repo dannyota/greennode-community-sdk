@@ -38,7 +38,7 @@ func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpoin
 	if _, sdkErr := s.VNetworkClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"endpointId", opts.GetEndpointID(),
+				"endpointId", opts.EndpointID,
 				"projectId", s.getProjectID()).
 			WithErrorCategories(sdkerror.ErrCatProductVNetwork)
 	}

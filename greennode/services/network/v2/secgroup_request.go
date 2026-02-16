@@ -1,11 +1,9 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 type ListSecgroupRequest struct{}
 
 type DeleteSecgroupByIDRequest struct { //__________________________________________________________________________________
-	common.SecgroupCommon
+	SecgroupID string
 }
 
 type CreateSecgroupRequest struct { //__________________________________________________________________________________
@@ -18,7 +16,7 @@ func (r *CreateSecgroupRequest) GetSecgroupName() string {
 }
 
 type GetSecgroupByIDRequest struct { //_________________________________________________________________________________
-	common.SecgroupCommon
+	SecgroupID string
 }
 
 func NewCreateSecgroupRequest(name, description string) *CreateSecgroupRequest {
@@ -30,17 +28,13 @@ func NewCreateSecgroupRequest(name, description string) *CreateSecgroupRequest {
 
 func NewDeleteSecgroupByIDRequest(secgroupID string) *DeleteSecgroupByIDRequest {
 	return &DeleteSecgroupByIDRequest{
-		SecgroupCommon: common.SecgroupCommon{
-			SecgroupID: secgroupID,
-		},
+		SecgroupID: secgroupID,
 	}
 }
 
 func NewGetSecgroupByIDRequest(secgroupID string) *GetSecgroupByIDRequest {
 	return &GetSecgroupByIDRequest{
-		SecgroupCommon: common.SecgroupCommon{
-			SecgroupID: secgroupID,
-		},
+		SecgroupID: secgroupID,
 	}
 }
 

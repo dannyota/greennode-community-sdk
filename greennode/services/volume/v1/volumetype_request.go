@@ -3,15 +3,11 @@ package v1
 import (
 	"fmt"
 	"net/url"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewGetVolumeTypeByIDRequest(volumeTypeID string) *GetVolumeTypeByIDRequest {
 	return &GetVolumeTypeByIDRequest{
-		VolumeTypeCommon: common.VolumeTypeCommon{
-			VolumeTypeID: volumeTypeID,
-		},
+		VolumeTypeID: volumeTypeID,
 	}
 }
 
@@ -28,7 +24,7 @@ func NewGetVolumeTypeZonesRequest(zoneID string) *GetVolumeTypeZonesRequest {
 }
 
 type GetVolumeTypeByIDRequest struct {
-	common.VolumeTypeCommon
+	VolumeTypeID string
 }
 
 type GetVolumeTypeZonesRequest struct {

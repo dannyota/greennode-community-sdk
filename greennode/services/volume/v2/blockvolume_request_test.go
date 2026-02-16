@@ -92,8 +92,8 @@ func TestCreateBlockVolumeRequest_WithVolumeRestoreFromSnapshot(t *testing.T) {
 
 func TestNewDeleteBlockVolumeByIDRequest(t *testing.T) {
 	r := NewDeleteBlockVolumeByIDRequest("vol-123")
-	if r.GetBlockVolumeID() != "vol-123" {
-		t.Fatalf("got %q", r.GetBlockVolumeID())
+	if r.BlockVolumeID != "vol-123" {
+		t.Fatalf("got %q", r.BlockVolumeID)
 	}
 }
 

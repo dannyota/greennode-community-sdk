@@ -94,7 +94,7 @@ func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteSer
 			sdkerror.EcVServerServerDeleteCreatingServer,
 			sdkerror.EcVServerVolumeInProcess).
 			WithKVparameters("projectId", s.getProjectID(),
-				"serverId", opts.GetServerID())
+				"serverId", opts.ServerID)
 	}
 
 	return nil
@@ -117,7 +117,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 			sdkerror.EcVServerServerUpdatingSecgroups,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
-				"serverId", opts.GetServerID(),
+				"serverId", opts.ServerID,
 				"secgroupIds", opts.GetListSecgroupsIDs())
 	}
 
@@ -143,8 +143,8 @@ func (s *ComputeServiceV2) AttachBlockVolume(ctx context.Context, opts *AttachBl
 			sdkerror.EcVServerVolumeAlreadyAttachedThisServer,
 			sdkerror.EcVServerServerVolumeAttachQuotaExceeded).
 			WithKVparameters("projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID(),
-				"serverId", opts.GetServerID())
+				"volumeId", opts.BlockVolumeID,
+				"serverId", opts.ServerID)
 	}
 
 	return nil
@@ -166,8 +166,8 @@ func (s *ComputeServiceV2) DetachBlockVolume(ctx context.Context, opts *DetachBl
 			sdkerror.EcVServerVolumeIsMigrating,
 			sdkerror.EcVServerVolumeAvailable).
 			WithKVparameters("projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID(),
-				"serverId", opts.GetServerID())
+				"volumeId", opts.BlockVolumeID,
+				"serverId", opts.ServerID)
 	}
 
 	return nil
@@ -244,7 +244,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *Dele
 			sdkerror.EcVServerServerGroupInUse).
 			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID(),
-				"serverGroupId", opts.GetServerGroupID())
+				"serverGroupId", opts.ServerGroupID)
 	}
 
 	return nil

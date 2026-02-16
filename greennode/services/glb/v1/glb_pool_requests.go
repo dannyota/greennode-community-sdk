@@ -46,7 +46,7 @@ const (
 )
 
 type ListGlobalPoolsRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *ListGlobalPoolsRequest) WithLoadBalancerID(lbID string) *ListGlobalPoolsRequest {
@@ -70,7 +70,7 @@ type CreateGlobalPoolRequest struct {
 	HealthMonitor     *GlobalHealthMonitorRequest `json:"health"`
 	GlobalPoolMembers []*GlobalPoolMemberRequest  `json:"globalPoolMembers"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *CreateGlobalPoolRequest) WithAlgorithm(algorithm GlobalPoolAlgorithm) *CreateGlobalPoolRequest {
@@ -218,8 +218,8 @@ type GlobalPoolMemberRequest struct {
 	Type        GlobalPoolMemberType   `json:"type"`
 	Members     []*GlobalMemberRequest `json:"members"`
 
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 func (r *GlobalPoolMemberRequest) WithName(name string) *GlobalPoolMemberRequest {
@@ -348,8 +348,8 @@ func NewGlobalMemberRequest(name, address, subnetID string, port, monitorPort, w
 type UpdateGlobalPoolRequest struct {
 	Algorithm     GlobalPoolAlgorithm         `json:"algorithm"`
 	HealthMonitor *GlobalHealthMonitorRequest `json:"health"`
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 func (r *UpdateGlobalPoolRequest) WithAlgorithm(algorithm GlobalPoolAlgorithm) *UpdateGlobalPoolRequest {
@@ -374,21 +374,17 @@ func (r *UpdateGlobalPoolRequest) WithPoolID(poolID string) *UpdateGlobalPoolReq
 
 func NewUpdateGlobalPoolRequest(lbID, poolID string) *UpdateGlobalPoolRequest {
 	opts := &UpdateGlobalPoolRequest{
-		Algorithm:     GlobalPoolAlgorithmRoundRobin,
-		HealthMonitor: nil,
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		Algorithm:      GlobalPoolAlgorithmRoundRobin,
+		HealthMonitor:  nil,
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 	return opts
 }
 
 type DeleteGlobalPoolRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 func (r *DeleteGlobalPoolRequest) WithLoadBalancerID(lbID string) *DeleteGlobalPoolRequest {
@@ -403,19 +399,15 @@ func (r *DeleteGlobalPoolRequest) WithPoolID(poolID string) *DeleteGlobalPoolReq
 
 func NewDeleteGlobalPoolRequest(lbID, poolID string) *DeleteGlobalPoolRequest {
 	opts := &DeleteGlobalPoolRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 	return opts
 }
 
 type ListGlobalPoolMembersRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 func (r *ListGlobalPoolMembersRequest) WithLoadBalancerID(lbID string) *ListGlobalPoolMembersRequest {
@@ -430,20 +422,16 @@ func (r *ListGlobalPoolMembersRequest) WithPoolID(poolID string) *ListGlobalPool
 
 func NewListGlobalPoolMembersRequest(lbID, poolID string) *ListGlobalPoolMembersRequest {
 	opts := &ListGlobalPoolMembersRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 	return opts
 }
 
 type PatchGlobalPoolMembersRequest struct {
-	BulkActions []any `json:"bulkActions"`
-	common.LoadBalancerCommon
-	common.PoolCommon
+	BulkActions    []any `json:"bulkActions"`
+	LoadBalancerID string
+	PoolID         string
 }
 
 func (r *PatchGlobalPoolMembersRequest) WithBulkAction(action ...any) *PatchGlobalPoolMembersRequest {
@@ -463,13 +451,9 @@ func (r *PatchGlobalPoolMembersRequest) WithPoolID(poolID string) *PatchGlobalPo
 
 func NewPatchGlobalPoolMembersRequest(lbID, poolID string) *PatchGlobalPoolMembersRequest {
 	opts := &PatchGlobalPoolMembersRequest{
-		BulkActions: make([]any, 0),
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		BulkActions:    make([]any, 0),
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 	return opts
 }
@@ -519,9 +503,9 @@ type UpdateGlobalPoolMemberRequest struct {
 	TrafficDial int                    `json:"trafficDial"`
 	Members     []*GlobalMemberRequest `json:"members"`
 
-	common.LoadBalancerCommon
-	common.PoolCommon
-	common.PoolMemberCommon
+	LoadBalancerID string
+	PoolID         string
+	PoolMemberID   string
 }
 
 func (r *UpdateGlobalPoolMemberRequest) WithTrafficDial(dial int) *UpdateGlobalPoolMemberRequest {
@@ -551,25 +535,19 @@ func (r *UpdateGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *U
 
 func NewUpdateGlobalPoolMemberRequest(lbID, poolID, poolMemberID string, dial int) *UpdateGlobalPoolMemberRequest {
 	opts := &UpdateGlobalPoolMemberRequest{
-		TrafficDial: dial,
-		Members:     make([]*GlobalMemberRequest, 0),
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
-		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberID: poolMemberID,
-		},
+		TrafficDial:    dial,
+		Members:        make([]*GlobalMemberRequest, 0),
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
+		PoolMemberID:   poolMemberID,
 	}
 	return opts
 }
 
 type DeleteGlobalPoolMemberRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
-	common.PoolMemberCommon
+	LoadBalancerID string
+	PoolID         string
+	PoolMemberID   string
 }
 
 func (r *DeleteGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) *DeleteGlobalPoolMemberRequest {
@@ -589,23 +567,17 @@ func (r *DeleteGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *D
 
 func NewDeleteGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) *DeleteGlobalPoolMemberRequest {
 	opts := &DeleteGlobalPoolMemberRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
-		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberID: poolMemberID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
+		PoolMemberID:   poolMemberID,
 	}
 	return opts
 }
 
 type GetGlobalPoolMemberRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
-	common.PoolMemberCommon
+	LoadBalancerID string
+	PoolID         string
+	PoolMemberID   string
 }
 
 func (r *GetGlobalPoolMemberRequest) WithLoadBalancerID(lbID string) *GetGlobalPoolMemberRequest {
@@ -625,15 +597,9 @@ func (r *GetGlobalPoolMemberRequest) WithPoolMemberID(poolMemberID string) *GetG
 
 func NewGetGlobalPoolMemberRequest(lbID, poolID, poolMemberID string) *GetGlobalPoolMemberRequest {
 	opts := &GetGlobalPoolMemberRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
-		PoolMemberCommon: common.PoolMemberCommon{
-			PoolMemberID: poolMemberID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
+		PoolMemberID:   poolMemberID,
 	}
 	return opts
 }

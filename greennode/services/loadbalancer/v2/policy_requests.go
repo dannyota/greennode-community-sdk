@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 type (
 	PolicyAction      string
 	PolicyCompareType string
@@ -26,14 +24,14 @@ const (
 // create policy request
 func NewCreatePolicyRequest(lbID, lisID string) *CreatePolicyRequest {
 	return &CreatePolicyRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
 	}
 }
 
 type CreatePolicyRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 
 	Name             string          `json:"name"`
 	Action           PolicyAction    `json:"action"`
@@ -132,16 +130,16 @@ func (r *CreatePolicyRequest) WithKeepQueryString(keepQueryString bool) *CreateP
 // update policy request
 func NewUpdatePolicyRequest(lbID, lisID, policyID string) *UpdatePolicyRequest {
 	return &UpdatePolicyRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
-		PolicyCommon:       common.PolicyCommon{PolicyID: policyID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
+		PolicyID:       policyID,
 	}
 }
 
 type UpdatePolicyRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
-	common.PolicyCommon
+	LoadBalancerID string
+	ListenerID     string
+	PolicyID       string
 
 	Action           PolicyAction    `json:"action"`
 	Rules            []L7RuleRequest `json:"rules"`
@@ -222,31 +220,31 @@ func (r *UpdatePolicyRequest) WithKeepQueryString(keepQueryString bool) *UpdateP
 // get policy by id request
 func NewGetPolicyByIDRequest(lbID, lisID, policyID string) *GetPolicyByIDRequest {
 	return &GetPolicyByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
-		PolicyCommon:       common.PolicyCommon{PolicyID: policyID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
+		PolicyID:       policyID,
 	}
 }
 
 type GetPolicyByIDRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
-	common.PolicyCommon
+	LoadBalancerID string
+	ListenerID     string
+	PolicyID       string
 }
 
 // delete policy by id request
 func NewDeletePolicyByIDRequest(lbID, lisID, policyID string) *DeletePolicyByIDRequest {
 	return &DeletePolicyByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
-		PolicyCommon:       common.PolicyCommon{PolicyID: policyID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
+		PolicyID:       policyID,
 	}
 }
 
 type DeletePolicyByIDRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
-	common.PolicyCommon
+	LoadBalancerID string
+	ListenerID     string
+	PolicyID       string
 }
 
 type policyPositionRequest struct {
@@ -256,16 +254,16 @@ type policyPositionRequest struct {
 
 func NewReorderPoliciesRequest(lbID, lisID string) *ReorderPoliciesRequest {
 	return &ReorderPoliciesRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
 
 		policyPositions: make([]policyPositionRequest, 0),
 	}
 }
 
 type ReorderPoliciesRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 
 	policyPositions []policyPositionRequest
 }
@@ -291,12 +289,12 @@ func (r *ReorderPoliciesRequest) toRequestBody() any {
 // list policies request
 func NewListPoliciesRequest(lbID, lisID string) *ListPoliciesRequest {
 	return &ListPoliciesRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{LoadBalancerID: lbID},
-		ListenerCommon:     common.ListenerCommon{ListenerID: lisID},
+		LoadBalancerID: lbID,
+		ListenerID:     lisID,
 	}
 }
 
 type ListPoliciesRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }

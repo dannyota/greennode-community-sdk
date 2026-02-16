@@ -7,7 +7,7 @@ func getEndpointByIDURL(sc *client.ServiceClient, opts *GetEndpointByIDRequest) 
 		sc.GetZoneID(),
 		sc.GetProjectID(),
 		"endpoints",
-		opts.GetEndpointID())
+		opts.EndpointID)
 }
 
 func createEndpointURL(sc *client.ServiceClient) string {
@@ -22,7 +22,7 @@ func deleteEndpointByIDURL(sc *client.ServiceClient, opts *DeleteEndpointByIDReq
 		sc.GetZoneID(),
 		sc.GetProjectID(),
 		"endpoints",
-		opts.GetEndpointID())
+		opts.EndpointID)
 }
 
 func listEndpointsURL(sc *client.ServiceClient, opts *ListEndpointsRequest) string {

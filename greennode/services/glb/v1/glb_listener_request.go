@@ -2,8 +2,6 @@ package v1
 
 import (
 	"strings"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 type GlobalListenerProtocol string
@@ -13,7 +11,7 @@ const (
 )
 
 type ListGlobalListenersRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *ListGlobalListenersRequest) WithLoadBalancerID(lbID string) *ListGlobalListenersRequest {
@@ -39,7 +37,7 @@ type CreateGlobalListenerRequest struct {
 	TimeoutMember     int                    `json:"timeoutMember"`
 	GlobalPoolID      string                 `json:"globalPoolId"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *CreateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateGlobalListenerRequest {
@@ -109,9 +107,7 @@ func NewCreateGlobalListenerRequest(lbID, name string) *CreateGlobalListenerRequ
 		TimeoutConnection: 5,
 		TimeoutMember:     50,
 		GlobalPoolID:      "",
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID:    lbID,
 	}
 	return opts
 }
@@ -124,8 +120,8 @@ type UpdateGlobalListenerRequest struct {
 	Headers           *string `json:"headers"`
 	GlobalPoolID      string  `json:"globalPoolId"`
 
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 func (r *UpdateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *UpdateGlobalListenerRequest {
@@ -177,19 +173,15 @@ func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerReque
 		TimeoutConnection: 5,
 		Headers:           nil,
 		GlobalPoolID:      "",
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: lID,
-		},
+		LoadBalancerID:    lbID,
+		ListenerID:        lID,
 	}
 	return opts
 }
 
 type DeleteGlobalListenerRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 func (r *DeleteGlobalListenerRequest) WithLoadBalancerID(lbid string) *DeleteGlobalListenerRequest {
@@ -204,19 +196,15 @@ func (r *DeleteGlobalListenerRequest) WithListenerID(lid string) *DeleteGlobalLi
 
 func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerRequest {
 	opts := &DeleteGlobalListenerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: lID,
-		},
+		LoadBalancerID: lbID,
+		ListenerID:     lID,
 	}
 	return opts
 }
 
 type GetGlobalListenerRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 func (r *GetGlobalListenerRequest) WithLoadBalancerID(lbid string) *GetGlobalListenerRequest {
@@ -231,12 +219,8 @@ func (r *GetGlobalListenerRequest) WithListenerID(lid string) *GetGlobalListener
 
 func NewGetGlobalListenerRequest(lbID, lID string) *GetGlobalListenerRequest {
 	opts := &GetGlobalListenerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: lID,
-		},
+		LoadBalancerID: lbID,
+		ListenerID:     lID,
 	}
 	return opts
 }

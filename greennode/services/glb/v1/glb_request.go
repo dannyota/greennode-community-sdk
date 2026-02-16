@@ -147,7 +147,7 @@ func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRe
 }
 
 type DeleteGlobalLoadBalancerRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) *DeleteGlobalLoadBalancerRequest {
@@ -157,9 +157,7 @@ func (r *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) *Delet
 
 func NewDeleteGlobalLoadBalancerRequest(lbID string) *DeleteGlobalLoadBalancerRequest {
 	opts := &DeleteGlobalLoadBalancerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 	return opts
 }
@@ -183,7 +181,7 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	To   string
 	Type string
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerID(lbID string) *GetGlobalLoadBalancerUsageHistoriesRequest {
@@ -226,18 +224,16 @@ func (r *GetGlobalLoadBalancerUsageHistoriesRequest) GetDefaultQuery() string {
 
 func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType string) *GetGlobalLoadBalancerUsageHistoriesRequest {
 	opts := &GetGlobalLoadBalancerUsageHistoriesRequest{
-		From: from,
-		To:   to,
-		Type: usageType,
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		From:           from,
+		To:             to,
+		Type:           usageType,
+		LoadBalancerID: lbID,
 	}
 	return opts
 }
 
 type GetGlobalLoadBalancerByIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) *GetGlobalLoadBalancerByIDRequest {
@@ -247,9 +243,7 @@ func (r *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) *GetG
 
 func NewGetGlobalLoadBalancerByIDRequest(lbID string) *GetGlobalLoadBalancerByIDRequest {
 	opts := &GetGlobalLoadBalancerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 	return opts
 }

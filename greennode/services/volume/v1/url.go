@@ -6,7 +6,7 @@ func getVolumeTypeByIDURL(sc *client.ServiceClient, opts *GetVolumeTypeByIDReque
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volume_types",
-		opts.GetVolumeTypeID())
+		opts.VolumeTypeID)
 }
 
 func getDefaultVolumeTypeURL(sc *client.ServiceClient) string {

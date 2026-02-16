@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) *GetAllAddressPairByVirtualSubnetIDRequest {
 	return &GetAllAddressPairByVirtualSubnetIDRequest{
 		VirtualSubnetID: subnetID,
@@ -72,8 +70,7 @@ type CreateAddressPairRequest struct {
 	// Is the pair mode of the address pair.
 	Mode *AddressPairMode `json:"mode,omitempty"`
 
-	common.InternalNetworkInterfaceCommon
-	common.VirtualAddressCommon
+	VirtualAddressID string
 }
 
 func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddressPairRequest {
@@ -83,17 +80,13 @@ func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddress
 
 func NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID string) *ListAddressPairsByVirtualAddressIDRequest {
 	return &ListAddressPairsByVirtualAddressIDRequest{
-		VirtualAddressCommon: common.VirtualAddressCommon{
-			VirtualAddressID: virtualAddressID,
-		},
+		VirtualAddressID: virtualAddressID,
 	}
 }
 
 func NewCreateAddressPairRequest(virtualAddressID, internalNicID string) *CreateAddressPairRequest {
 	return &CreateAddressPairRequest{
 		InternalNetworkInterfaceID: internalNicID,
-		VirtualAddressCommon: common.VirtualAddressCommon{
-			VirtualAddressID: virtualAddressID,
-		},
+		VirtualAddressID:           virtualAddressID,
 	}
 }

@@ -38,14 +38,6 @@ const (
 	HAN_01_1A_ZONE     Zone = "HAN01-1A"
 )
 
-func (p *Paging) GetPage() int {
-	return p.Page
-}
-
-func (p *Paging) GetSize() int {
-	return p.Size
-}
-
 
 type Tag struct {
 	Key      string `json:"key"`

@@ -43,7 +43,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *Del
 			sdkerror.EcVServerSecgroupRuleNotFound,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
-				"secgroupId", opts.GetSecgroupID(),
+				"secgroupId", opts.SecgroupID,
 				"secgroupRuleId", opts.GetSecgroupRuleID(),
 				"projectId", s.getProjectID())
 	}
@@ -63,7 +63,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, op
 	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
-			WithKVparameters("projectId", s.getProjectID(), "secgroupId", opts.GetSecgroupID())
+			WithKVparameters("projectId", s.getProjectID(), "secgroupId", opts.SecgroupID)
 	}
 
 	return resp.ToEntityListSecgroupRules(), nil

@@ -48,10 +48,8 @@ func NewCreateLoadBalancerRequest(name, packageID, subnetID string) *CreateLoadB
 
 func NewResizeLoadBalancerRequest(lbID, packageID string) *ResizeLoadBalancerRequest {
 	return &ResizeLoadBalancerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PackageID: packageID,
+		LoadBalancerID: lbID,
+		PackageID:      packageID,
 	}
 }
 
@@ -61,9 +59,7 @@ func NewListLoadBalancerPackagesRequest() *ListLoadBalancerPackagesRequest {
 
 func NewGetLoadBalancerByIDRequest(lbID string) *GetLoadBalancerByIDRequest {
 	return &GetLoadBalancerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
@@ -76,17 +72,13 @@ func NewListLoadBalancersRequest(page, size int) *ListLoadBalancersRequest {
 
 func NewDeleteLoadBalancerByIDRequest(lbID string) *DeleteLoadBalancerByIDRequest {
 	return &DeleteLoadBalancerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
 func NewScaleLoadBalancerRequest(lbID string) *ScaleLoadBalancerRequest {
 	return &ScaleLoadBalancerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
@@ -105,8 +97,8 @@ type CreateLoadBalancerRequest struct {
 }
 
 type ResizeLoadBalancerRequest struct {
-	PackageID string `json:"packageId"`
-	common.LoadBalancerCommon
+	PackageID      string `json:"packageId"`
+	LoadBalancerID string
 }
 
 type ListLoadBalancerPackagesRequest struct {
@@ -114,7 +106,7 @@ type ListLoadBalancerPackagesRequest struct {
 }
 
 type GetLoadBalancerByIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type ListLoadBalancersRequest struct {
@@ -126,17 +118,17 @@ type ListLoadBalancersRequest struct {
 }
 
 type DeleteLoadBalancerByIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type ResizeLoadBalancerByIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 
 	PackageID string `json:"packageId"`
 }
 
 type ScaleLoadBalancerRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 
 	Scaling    *ScalingConfig    `json:"scaling"`
 	Networking *NetworkingConfig `json:"networking"`
@@ -293,9 +285,7 @@ func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
 
 func NewResizeLoadBalancerByIDRequest(lbID, packageID string) *ResizeLoadBalancerByIDRequest {
 	return &ResizeLoadBalancerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PackageID: packageID,
+		LoadBalancerID: lbID,
+		PackageID:      packageID,
 	}
 }

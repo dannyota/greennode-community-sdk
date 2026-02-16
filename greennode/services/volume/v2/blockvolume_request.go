@@ -20,9 +20,7 @@ func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) *Cre
 
 func NewDeleteBlockVolumeByIDRequest(volumeID string) *DeleteBlockVolumeByIDRequest {
 	return &DeleteBlockVolumeByIDRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
+		BlockVolumeID: volumeID,
 	}
 }
 
@@ -35,37 +33,29 @@ func NewListBlockVolumesRequest(page, size int) *ListBlockVolumesRequest {
 
 func NewGetBlockVolumeByIDRequest(volumeID string) *GetBlockVolumeByIDRequest {
 	return &GetBlockVolumeByIDRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
+		BlockVolumeID: volumeID,
 	}
 }
 
 func NewResizeBlockVolumeByIDRequest(volumeID, volumeType string, size int) *ResizeBlockVolumeByIDRequest {
 	return &ResizeBlockVolumeByIDRequest{
-		NewSize:      size,
-		VolumeTypeID: volumeType,
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
+		NewSize:       size,
+		VolumeTypeID:  volumeType,
+		BlockVolumeID: volumeID,
 	}
 }
 
 func NewGetUnderVolumeIDRequest(volumeID string) *GetUnderBlockVolumeIDRequest {
 	return &GetUnderBlockVolumeIDRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
+		BlockVolumeID: volumeID,
 	}
 }
 
 func NewMigrateBlockVolumeByIDRequest(volumeID, volumeType string) *MigrateBlockVolumeByIDRequest {
 	return &MigrateBlockVolumeByIDRequest{
-		Action:       InitMigrateAction,
-		VolumeTypeID: volumeType,
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
+		Action:        InitMigrateAction,
+		VolumeTypeID:  volumeType,
+		BlockVolumeID: volumeID,
 	}
 }
 
@@ -98,13 +88,13 @@ type CreateBlockVolumeRequest struct {
 }
 
 type DeleteBlockVolumeByIDRequest struct {
-	common.BlockVolumeCommon
+	BlockVolumeID string
 }
 
 type ResizeBlockVolumeByIDRequest struct {
-	NewSize      int    `json:"newSize"`         // NewSize is the new size of the volume, in GB
-	VolumeTypeID string `json:"newVolumeTypeId"` // VolumeTypeID is the type of the volume
-	common.BlockVolumeCommon
+	NewSize       int    `json:"newSize"`         // NewSize is the new size of the volume, in GB
+	VolumeTypeID  string `json:"newVolumeTypeId"` // VolumeTypeID is the type of the volume
+	BlockVolumeID string
 }
 
 type ListBlockVolumesRequest struct {
@@ -114,16 +104,16 @@ type ListBlockVolumesRequest struct {
 }
 
 type AttachBlockVolumeRequest struct {
-	common.BlockVolumeCommon
-	common.ServerCommon
+	BlockVolumeID string
+	ServerID      string
 }
 
 type GetBlockVolumeByIDRequest struct {
-	common.BlockVolumeCommon
+	BlockVolumeID string
 }
 
 type GetUnderBlockVolumeIDRequest struct {
-	common.BlockVolumeCommon
+	BlockVolumeID string
 }
 
 type MigrateBlockVolumeByIDRequest struct {
@@ -132,8 +122,7 @@ type MigrateBlockVolumeByIDRequest struct {
 	Tags           []common.Tag `json:"tags"`
 	VolumeTypeID   string       `json:"volumeTypeId"`
 	Auto           bool
-
-	common.BlockVolumeCommon
+	BlockVolumeID  string
 }
 
 type (

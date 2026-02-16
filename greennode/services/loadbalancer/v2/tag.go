@@ -41,7 +41,7 @@ func (s *LoadBalancerServiceV2) CreateTags(ctx context.Context, opts *CreateTags
 }
 
 func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTagsRequest) error {
-	tmpTags, sdkErr := s.ListTags(ctx, NewListTagsRequest(opts.GetLoadBalancerID()))
+	tmpTags, sdkErr := s.ListTags(ctx, NewListTagsRequest(opts.LoadBalancerID))
 	if sdkErr != nil {
 		return sdkErr
 	}

@@ -12,21 +12,21 @@ func getServerByIDURL(sc *client.ServiceClient, opts *GetServerByIDRequest) stri
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
-		opts.GetServerID())
+		opts.ServerID)
 }
 
 func deleteServerByIDURL(sc *client.ServiceClient, opts *DeleteServerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
-		opts.GetServerID())
+		opts.ServerID)
 }
 
 func updateServerSecgroupsByServerIDURL(sc *client.ServiceClient, opts *UpdateServerSecgroupsByServerIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
-		opts.GetServerID(),
+		opts.ServerID,
 		"update-sec-group")
 }
 
@@ -34,9 +34,9 @@ func attachBlockVolumeURL(sc *client.ServiceClient, opts *AttachBlockVolumeReque
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"servers",
-		opts.GetServerID(),
+		opts.ServerID,
 		"attach")
 }
 
@@ -44,9 +44,9 @@ func detachBlockVolumeURL(sc *client.ServiceClient, opts *DetachBlockVolumeReque
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"volumes",
-		opts.GetBlockVolumeID(),
+		opts.BlockVolumeID,
 		"servers",
-		opts.GetServerID(),
+		opts.ServerID,
 		"detach",
 	)
 }
@@ -55,7 +55,7 @@ func attachFloatingIpURL(sc *client.ServiceClient, opts *AttachFloatingIpRequest
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
-		opts.GetServerID(),
+		opts.ServerID,
 		"wan-ips",
 		"auto",
 		"attach")
@@ -66,9 +66,9 @@ func detachFloatingIpURL(sc *client.ServiceClient, opts *DetachFloatingIpRequest
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"servers",
-		opts.GetServerID(),
+		opts.ServerID,
 		"wan-ips",
-		opts.GetWanID(),
+		opts.WanID,
 		"detach")
 }
 
@@ -84,7 +84,7 @@ func deleteServerGroupByIDURL(sc *client.ServiceClient, opts *DeleteServerGroupB
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"serverGroups",
-		opts.GetServerGroupID(),
+		opts.ServerGroupID,
 	)
 }
 

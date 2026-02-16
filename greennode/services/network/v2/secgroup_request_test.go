@@ -19,15 +19,15 @@ func TestNewCreateSecgroupRequest(t *testing.T) {
 
 func TestNewDeleteSecgroupByIDRequest(t *testing.T) {
 	r := NewDeleteSecgroupByIDRequest("sg-123")
-	if r.GetSecgroupID() != "sg-123" {
-		t.Fatalf("got %q", r.GetSecgroupID())
+	if r.SecgroupID != "sg-123" {
+		t.Fatalf("got %q", r.SecgroupID)
 	}
 }
 
 func TestNewGetSecgroupByIDRequest(t *testing.T) {
 	r := NewGetSecgroupByIDRequest("sg-456")
-	if r.GetSecgroupID() != "sg-456" {
-		t.Fatalf("got %q", r.GetSecgroupID())
+	if r.SecgroupID != "sg-456" {
+		t.Fatalf("got %q", r.SecgroupID)
 	}
 }
 

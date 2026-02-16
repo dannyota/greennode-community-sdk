@@ -29,7 +29,7 @@ func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkB
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerNetworkNotFound).
 			WithKVparameters(
-				"networkId", opts.GetNetworkID(),
+				"networkId", opts.NetworkID,
 				"projectId", s.getProjectID())
 	}
 

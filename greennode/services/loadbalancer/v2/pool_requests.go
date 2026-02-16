@@ -1,6 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
@@ -48,65 +47,43 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest
 
 func NewUpdatePoolRequest(lbID, poolID string) *UpdatePoolRequest {
 	return &UpdatePoolRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 }
 
 func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) *GetPoolHealthMonitorByIDRequest {
 	return &GetPoolHealthMonitorByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 }
 
 func NewListPoolsByLoadBalancerIDRequest(lbID string) *ListPoolsByLoadBalancerIDRequest {
 	return &ListPoolsByLoadBalancerIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
 func NewUpdatePoolMembersRequest(lbID, poolID string) *UpdatePoolMembersRequest {
 	return &UpdatePoolMembersRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
-		Members: make([]*Member, 0),
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
+		Members:        make([]*Member, 0),
 	}
 }
 
 func NewListPoolMembersRequest(lbID, poolID string) *ListPoolMembersRequest {
 	return &ListPoolMembersRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 }
 
 func NewDeletePoolByIDRequest(lbID, poolID string) *DeletePoolByIDRequest {
 	return &DeletePoolByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 }
 
@@ -133,12 +110,8 @@ func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
 
 func NewGetPoolByIDRequest(lbID, poolID string) *GetPoolByIDRequest {
 	return &GetPoolByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		PoolCommon: common.PoolCommon{
-			PoolID: poolID,
-		},
+		LoadBalancerID: lbID,
+		PoolID:         poolID,
 	}
 }
 
@@ -159,7 +132,7 @@ type CreatePoolRequest struct {
 	HealthMonitor *HealthMonitor `json:"healthMonitor"`
 	Members       []*Member      `json:"members"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type UpdatePoolRequest struct {
@@ -168,28 +141,28 @@ type UpdatePoolRequest struct {
 	TLSEncryption *bool          `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
 	HealthMonitor *HealthMonitor `json:"healthMonitor"`
 
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 type GetPoolHealthMonitorByIDRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 type ListPoolMembersRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 type DeletePoolByIDRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 type GetPoolByIDRequest struct {
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 type HealthMonitor struct {
@@ -215,14 +188,14 @@ type Member struct {
 }
 
 type ListPoolsByLoadBalancerIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type UpdatePoolMembersRequest struct {
 	Members []*Member `json:"members"`
 
-	common.LoadBalancerCommon
-	common.PoolCommon
+	LoadBalancerID string
+	PoolID         string
 }
 
 // normalizeForAPI clears health monitor fields that are irrelevant for the

@@ -1,10 +1,6 @@
 package inter
 
-import (
-	"strings"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-)
+import "strings"
 
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
@@ -40,7 +36,7 @@ type CreateListenerRequest struct {
 	ClientCertificate           *string          `json:"clientCertificate"`
 	DefaultCertificateAuthority *string          `json:"defaultCertificateAuthority"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string `json:"-"`
 }
 
 // normalizeForAPI clears certificate fields when the listener protocol is not

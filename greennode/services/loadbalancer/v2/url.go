@@ -12,7 +12,7 @@ func resizeLoadBalancerURL(sc *client.ServiceClient, opts *ResizeLoadBalancerReq
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"resize")
 }
 
@@ -26,7 +26,7 @@ func getLoadBalancerByIDURL(sc *client.ServiceClient, opts *GetLoadBalancerByIDR
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID())
+		opts.LoadBalancerID)
 }
 
 func listLoadBalancersURL(sc *client.ServiceClient, opts *ListLoadBalancersRequest) string {
@@ -42,9 +42,9 @@ func getPoolHealthMonitorByIDURL(sc *client.ServiceClient, opts *GetPoolHealthMo
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID(),
+		opts.PoolID,
 		"healthMonitor")
 }
 
@@ -52,7 +52,7 @@ func createPoolURL(sc *client.ServiceClient, opts *CreatePoolRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools")
 }
 
@@ -60,16 +60,16 @@ func updatePoolURL(sc *client.ServiceClient, opts *UpdatePoolRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID())
+		opts.PoolID)
 }
 
 func createListenerURL(sc *client.ServiceClient, opts *CreateListenerRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners")
 }
 
@@ -77,16 +77,16 @@ func updateListenerURL(sc *client.ServiceClient, opts *UpdateListenerRequest) st
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID())
+		opts.ListenerID)
 }
 
 func listListenersByLoadBalancerIDURL(sc *client.ServiceClient, opts *ListListenersByLoadBalancerIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners")
 }
 
@@ -94,7 +94,7 @@ func listPoolsByLoadBalancerIDURL(sc *client.ServiceClient, opts *ListPoolsByLoa
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools")
 }
 
@@ -102,9 +102,9 @@ func updatePoolMembersURL(sc *client.ServiceClient, opts *UpdatePoolMembersReque
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID(),
+		opts.PoolID,
 		"members")
 }
 
@@ -112,9 +112,9 @@ func listPoolMembersURL(sc *client.ServiceClient, opts *ListPoolMembersRequest) 
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID(),
+		opts.PoolID,
 		"members")
 }
 
@@ -122,25 +122,25 @@ func deletePoolByIDURL(sc *client.ServiceClient, opts *DeletePoolByIDRequest) st
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID())
+		opts.PoolID)
 }
 
 func deleteListenerByIDURL(sc *client.ServiceClient, opts *DeleteListenerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID())
+		opts.ListenerID)
 }
 
 func deleteLoadBalancerByIDURL(sc *client.ServiceClient, opts *DeleteLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID())
+		opts.LoadBalancerID)
 }
 
 func listTagsURL(sc *client.ServiceClient, opts *ListTagsRequest) string {
@@ -148,7 +148,7 @@ func listTagsURL(sc *client.ServiceClient, opts *ListTagsRequest) string {
 		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerID())
+		opts.LoadBalancerID)
 }
 
 func createTagsURL(sc *client.ServiceClient, opts *CreateTagsRequest) string {
@@ -156,7 +156,7 @@ func createTagsURL(sc *client.ServiceClient, opts *CreateTagsRequest) string {
 		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerID())
+		opts.LoadBalancerID)
 }
 
 func updateTagsURL(sc *client.ServiceClient, opts *UpdateTagsRequest) string {
@@ -164,7 +164,7 @@ func updateTagsURL(sc *client.ServiceClient, opts *UpdateTagsRequest) string {
 		sc.GetProjectID(),
 		"tag",
 		"resource",
-		opts.GetLoadBalancerID())
+		opts.LoadBalancerID)
 }
 
 // Policy
@@ -173,9 +173,9 @@ func listPoliciesURL(sc *client.ServiceClient, opts *ListPoliciesRequest) string
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"l7policies",
 	)
 }
@@ -184,9 +184,9 @@ func createPolicyURL(sc *client.ServiceClient, opts *CreatePolicyRequest) string
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"l7policies",
 	)
 }
@@ -195,11 +195,11 @@ func getPolicyByIDURL(sc *client.ServiceClient, opts *GetPolicyByIDRequest) stri
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"l7policies",
-		opts.GetPolicyID(),
+		opts.PolicyID,
 	)
 }
 
@@ -207,11 +207,11 @@ func updatePolicyURL(sc *client.ServiceClient, opts *UpdatePolicyRequest) string
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"l7policies",
-		opts.GetPolicyID(),
+		opts.PolicyID,
 	)
 }
 
@@ -219,11 +219,11 @@ func deletePolicyByIDURL(sc *client.ServiceClient, opts *DeletePolicyByIDRequest
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"l7policies",
-		opts.GetPolicyID(),
+		opts.PolicyID,
 	)
 }
 
@@ -231,9 +231,9 @@ func reorderPoliciesURL(sc *client.ServiceClient, opts *ReorderPoliciesRequest) 
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID(),
+		opts.ListenerID,
 		"reorderL7Policies")
 }
 
@@ -241,25 +241,25 @@ func getPoolByIDURL(sc *client.ServiceClient, opts *GetPoolByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"pools",
-		opts.GetPoolID())
+		opts.PoolID)
 }
 
 func getListenerByIDURL(sc *client.ServiceClient, opts *GetListenerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"listeners",
-		opts.GetListenerID())
+		opts.ListenerID)
 }
 
 func resizeLoadBalancerByIDURL(sc *client.ServiceClient, opts *ResizeLoadBalancerByIDRequest) string {
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"resize")
 }
 
@@ -267,7 +267,7 @@ func scaleLoadBalancerURL(sc *client.ServiceClient, opts *ScaleLoadBalancerReque
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"loadBalancers",
-		opts.GetLoadBalancerID(),
+		opts.LoadBalancerID,
 		"rebalancing")
 }
 

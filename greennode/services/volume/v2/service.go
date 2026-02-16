@@ -60,7 +60,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *Delet
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 	}
 
 	return nil
@@ -99,7 +99,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 	}
 
 	return resp.ToEntityVolume(), nil
@@ -123,8 +123,8 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 			sdkerror.EcVServerVolumeUnchanged).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID(),
-				"size", opts.GetSize())
+				"volumeId", opts.BlockVolumeID,
+				"size", opts.NewSize)
 	}
 
 	return resp.ToEntityVolume(), nil
@@ -144,7 +144,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUn
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 	}
 
 	return resp.ToEntityVolume(), nil
@@ -173,7 +173,7 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *Migr
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 
 		if opts.IsConfirm() {
 			switch enriched.ErrorCode() {

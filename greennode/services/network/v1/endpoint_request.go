@@ -23,7 +23,7 @@ const (
 )
 
 type GetEndpointByIDRequest struct {
-	common.EndpointCommon
+	EndpointID string
 }
 
 type CreateEndpointRequest struct {
@@ -159,7 +159,7 @@ type DeleteEndpointByIDRequest struct {
 	RegionUuid          string `json:"regionUuid"`
 	VpcUuid             string `json:"vpcUuid"`
 
-	common.EndpointCommon
+	EndpointID string
 }
 
 func (r *DeleteEndpointByIDRequest) ToRequestBody(svc *client.ServiceClient) any {
@@ -222,7 +222,7 @@ func (r *ListEndpointsRequest) GetDefaultQuery() string {
 // _____________________________________________________________________ ListTagsByEndpointIdRequest
 
 type ListTagsByEndpointIDRequest struct {
-	common.EndpointCommon
+	EndpointID string
 	common.PortalUser
 
 	ProjectID string
@@ -254,7 +254,7 @@ func (r *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
 // _________________________________________________________________ CreateTagsWithEndpointIdRequest
 
 type CreateTagsWithEndpointIDRequest struct {
-	common.EndpointCommon
+	EndpointID string
 	common.PortalUser
 
 	ProjectID    string
@@ -331,9 +331,7 @@ func (r *UpdateTagValueOfEndpointRequest) GetProjectID() string {
 }
 func NewGetEndpointByIDRequest(endpointID string) *GetEndpointByIDRequest {
 	return &GetEndpointByIDRequest{
-		EndpointCommon: common.EndpointCommon{
-			EndpointID: endpointID,
-		},
+		EndpointID: endpointID,
 	}
 }
 
@@ -353,9 +351,7 @@ func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) *
 		EndpointUuid:        endpointID,
 		VpcUuid:             vpcID,
 		EndpointServiceUuid: endpointServiceID,
-		EndpointCommon: common.EndpointCommon{
-			EndpointID: endpointID,
-		},
+		EndpointID: endpointID,
 	}
 }
 
@@ -370,9 +366,7 @@ func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) *ListT
 	return &ListTagsByEndpointIDRequest{
 		ID:        endpointID,
 		ProjectID: projectID,
-		EndpointCommon: common.EndpointCommon{
-			EndpointID: endpointID,
-		},
+		EndpointID: endpointID,
 		PortalUser: common.PortalUser{ID: userID},
 	}
 }
@@ -382,9 +376,7 @@ func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) *C
 		ResourceUuid: endpointID,
 		SystemTag:    true,
 		ProjectID:    projectID,
-		EndpointCommon: common.EndpointCommon{
-			EndpointID: endpointID,
-		},
+		EndpointID: endpointID,
 		PortalUser: common.PortalUser{ID: userID},
 	}
 }

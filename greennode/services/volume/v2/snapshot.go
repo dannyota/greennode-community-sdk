@@ -21,7 +21,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 	}
 
 	return resp.ToEntityListSnapshots(), nil
@@ -43,7 +43,7 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opt
 			sdkerror.EcVServerSnapshotNameNotValid).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeId", opts.GetBlockVolumeID())
+				"volumeId", opts.BlockVolumeID)
 	}
 
 	return resp.ToEntitySnapshot(), nil
@@ -61,7 +61,7 @@ func (s *VolumeServiceV2) DeleteSnapshotByID(ctx context.Context, opts *DeleteSn
 			sdkerror.EcVServerSnapshotNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"snapshotId", opts.GetSnapshotID())
+				"snapshotId", opts.SnapshotID)
 	}
 
 	return nil

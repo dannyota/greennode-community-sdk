@@ -21,7 +21,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts 
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
-				"secgroupId", opts.GetSecgroupID(),
+				"secgroupId", opts.SecgroupID,
 				"projectId", s.getProjectID())
 	}
 

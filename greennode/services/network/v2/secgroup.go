@@ -21,7 +21,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgrou
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
-				"secgroupId", opts.GetSecgroupID(),
+				"secgroupId", opts.SecgroupID,
 				"projectId", s.getProjectID())
 	}
 
@@ -79,7 +79,7 @@ func (s *NetworkServiceV2) DeleteSecgroupByID(ctx context.Context, opts *DeleteS
 			sdkerror.EcVServerSecgroupInUse,
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
-				"secgroupId", opts.GetSecgroupID(),
+				"secgroupId", opts.SecgroupID,
 				"projectId", s.getProjectID())
 	}
 

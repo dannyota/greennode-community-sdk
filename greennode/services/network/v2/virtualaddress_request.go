@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 // API Create virtual address cross project
 type CreateVirtualAddressCrossProjectRequest struct {
 	// Name is the name of the virtual address.
@@ -30,19 +28,19 @@ func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description st
 
 // API Delete virtual address by ID
 type DeleteVirtualAddressByIDRequest struct {
-	common.VirtualAddressCommon
+	VirtualAddressID string
 }
 
 // Api Get virtual address by ID
 
 type GetVirtualAddressByIDRequest struct {
-	common.VirtualAddressCommon
+	VirtualAddressID string
 }
 
 // Api list address pairs by virtual address ID
 
 type ListAddressPairsByVirtualAddressIDRequest struct {
-	common.VirtualAddressCommon
+	VirtualAddressID string
 }
 
 
@@ -57,16 +55,12 @@ func NewCreateVirtualAddressCrossProjectRequest(name, projectID, subnetID string
 
 func NewDeleteVirtualAddressByIDRequest(virtualAddressID string) *DeleteVirtualAddressByIDRequest {
 	return &DeleteVirtualAddressByIDRequest{
-		VirtualAddressCommon: common.VirtualAddressCommon{
-			VirtualAddressID: virtualAddressID,
-		},
+		VirtualAddressID: virtualAddressID,
 	}
 }
 
 func NewGetVirtualAddressByIDRequest(virtualAddressID string) *GetVirtualAddressByIDRequest {
 	return &GetVirtualAddressByIDRequest{
-		VirtualAddressCommon: common.VirtualAddressCommon{
-			VirtualAddressID: virtualAddressID,
-		},
+		VirtualAddressID: virtualAddressID,
 	}
 }

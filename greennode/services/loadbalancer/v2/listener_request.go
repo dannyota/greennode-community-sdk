@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -28,42 +27,28 @@ func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) 
 
 func NewUpdateListenerRequest(lbID, listenerID string) *UpdateListenerRequest {
 	return &UpdateListenerRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: listenerID,
-		},
+		LoadBalancerID: lbID,
+		ListenerID:     listenerID,
 	}
 }
 
 func NewListListenersByLoadBalancerIDRequest(lbID string) *ListListenersByLoadBalancerIDRequest {
 	return &ListListenersByLoadBalancerIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
 func NewDeleteListenerByIDRequest(lbID, listenerID string) *DeleteListenerByIDRequest {
 	return &DeleteListenerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: listenerID,
-		},
+		LoadBalancerID: lbID,
+		ListenerID:     listenerID,
 	}
 }
 
 func NewGetListenerByIDRequest(lbID, listenerID string) *GetListenerByIDRequest {
 	return &GetListenerByIDRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
-		ListenerCommon: common.ListenerCommon{
-			ListenerID: listenerID,
-		},
+		LoadBalancerID: lbID,
+		ListenerID:     listenerID,
 	}
 }
 
@@ -83,7 +68,7 @@ type CreateListenerRequest struct {
 	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
 	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type UpdateListenerRequest struct {
@@ -97,22 +82,22 @@ type UpdateListenerRequest struct {
 	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
 	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
 
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 type ListListenersByLoadBalancerIDRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type DeleteListenerByIDRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 type GetListenerByIDRequest struct {
-	common.LoadBalancerCommon
-	common.ListenerCommon
+	LoadBalancerID string
+	ListenerID     string
 }
 
 // normalizeForAPI clears certificate fields when the listener protocol is not

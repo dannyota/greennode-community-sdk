@@ -34,7 +34,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolume
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
-				"volumeTypeId", opts.GetVolumeTypeID())
+				"volumeTypeId", opts.VolumeTypeID)
 	}
 
 	return resp.ToEntityVolumeType(), nil
@@ -89,7 +89,7 @@ func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListV
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
-				"volumeTypeZoneId", opts.GetVolumeTypeZoneID())
+				"volumeTypeZoneId", opts.VolumeTypeZoneID)
 	}
 
 	return resp.ToEntityListVolumeType(), nil

@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 func NewCreateSecgroupRuleRequest(
 	direction SecgroupRuleDirection,
 	etherType SecgroupRuleEtherType,
@@ -26,17 +24,13 @@ func NewCreateSecgroupRuleRequest(
 func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) *DeleteSecgroupRuleByIDRequest {
 	return &DeleteSecgroupRuleByIDRequest{
 		SecgroupRuleID: secgroupRuleID,
-		SecgroupCommon: common.SecgroupCommon{
-			SecgroupID: "undefined",
-		},
+		SecgroupID:     "undefined",
 	}
 }
 
 func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) *ListSecgroupRulesBySecgroupIDRequest {
 	return &ListSecgroupRulesBySecgroupIDRequest{
-		SecgroupCommon: common.SecgroupCommon{
-			SecgroupID: securityGroupID,
-		},
+		SecgroupID: securityGroupID,
 	}
 }
 
@@ -69,7 +63,7 @@ type ( //_______________________________________________________________________
 		RemoteIPPrefix  string                `json:"remoteIpPrefix"`
 		SecurityGroupID string                `json:"securityGroupId"`
 
-		common.SecgroupCommon
+		SecgroupID string
 	}
 
 	SecgroupRuleDirection string
@@ -80,7 +74,7 @@ type ( //_______________________________________________________________________
 type DeleteSecgroupRuleByIDRequest struct { //__________________________________________________________________________
 	SecgroupRuleID string
 
-	common.SecgroupCommon
+	SecgroupID string
 }
 
 func (r *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
@@ -88,5 +82,5 @@ func (r *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
 }
 
 type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________________________________________________
-	common.SecgroupCommon
+	SecgroupID string
 }

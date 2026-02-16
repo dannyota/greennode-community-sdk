@@ -31,7 +31,7 @@ func (s *GLBServiceV1) ListGlobalPools(ctx context.Context, opts *ListGlobalPool
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -125,9 +125,9 @@ func (s *GLBServiceV1) GetGlobalPoolMember(ctx context.Context, opts *GetGlobalP
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
-			WithKVparameters("poolId", opts.GetPoolID()).
-			WithKVparameters("poolMemberId", opts.GetPoolMemberID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
+			WithKVparameters("poolId", opts.PoolID).
+			WithKVparameters("poolMemberId", opts.PoolMemberID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -144,9 +144,9 @@ func (s *GLBServiceV1) DeleteGlobalPoolMember(ctx context.Context, opts *DeleteG
 	if _, sdkErr := s.VLBClient.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
-			WithKVparameters("poolId", opts.GetPoolID()).
-			WithKVparameters("poolMemberId", opts.GetPoolMemberID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
+			WithKVparameters("poolId", opts.PoolID).
+			WithKVparameters("poolMemberId", opts.PoolMemberID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
@@ -262,8 +262,8 @@ func (s *GLBServiceV1) GetGlobalListener(ctx context.Context, opts *GetGlobalLis
 	if _, sdkErr := s.VLBClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
-			WithKVparameters("loadBalancerId", opts.GetLoadBalancerID()).
-			WithKVparameters("listenerId", opts.GetListenerID()).
+			WithKVparameters("loadBalancerId", opts.LoadBalancerID).
+			WithKVparameters("listenerId", opts.ListenerID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 

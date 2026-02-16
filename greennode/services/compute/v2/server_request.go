@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 const (
@@ -57,13 +55,13 @@ type ServerNetworkInterface struct {
 }
 
 type AttachBlockVolumeRequest struct {
-	common.BlockVolumeCommon
-	common.ServerCommon
+	BlockVolumeID string
+	ServerID      string
 }
 
 type DetachBlockVolumeRequest struct {
-	common.BlockVolumeCommon
-	common.ServerCommon
+	BlockVolumeID string
+	ServerID      string
 }
 
 type DataDiskEncryptionType string
@@ -164,12 +162,12 @@ func (r *CreateServerRequest) WithNetwork(networkID, subnetID string) *CreateSer
 }
 
 type GetServerByIDRequest struct {
-	common.ServerCommon
+	ServerID string
 }
 
 type DeleteServerByIDRequest struct {
 	DeleteAllVolume bool `json:"deleteAllVolume"`
-	common.ServerCommon
+	ServerID        string
 }
 
 func (r *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) *DeleteServerByIDRequest {
@@ -179,8 +177,7 @@ func (r *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) *DeleteServerByID
 
 type UpdateServerSecgroupsByServerIDRequest struct {
 	Secgroups []string `json:"securityGroup"`
-
-	common.ServerCommon
+	ServerID  string
 }
 
 func (r *UpdateServerSecgroupsByServerIDRequest) GetListSecgroupsIDs() []string {
@@ -188,24 +185,22 @@ func (r *UpdateServerSecgroupsByServerIDRequest) GetListSecgroupsIDs() []string 
 }
 
 type AttachFloatingIpRequest struct {
-	NetworkInterfaceID string `json:"networkInterfaceId"`
-
-	common.InternalNetworkInterfaceCommon
-	common.ServerCommon
+	NetworkInterfaceID            string `json:"networkInterfaceId"`
+	InternalNetworkInterfaceID    string
+	ServerID                      string
 }
 
 type DetachFloatingIpRequest struct {
-	NetworkInterfaceID string `json:"networkInterfaceId"`
-
-	common.ServerCommon
-	common.WanCommon
-	common.InternalNetworkInterfaceCommon
+	NetworkInterfaceID            string `json:"networkInterfaceId"`
+	ServerID                      string
+	WanID                         string
+	InternalNetworkInterfaceID    string
 }
 
 type ListServerGroupPoliciesRequest struct{}
 
 type DeleteServerGroupByIDRequest struct {
-	common.ServerGroupCommon
+	ServerGroupID string
 }
 
 type ListServerGroupsRequest struct {
@@ -252,76 +247,52 @@ func NewCreateServerRequest(name, imageID, flavorID, rootDiskType string, rootDi
 
 func NewGetServerByIDRequest(serverID string) *GetServerByIDRequest {
 	return &GetServerByIDRequest{
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		ServerID: serverID,
 	}
 }
 
 func NewDeleteServerByIDRequest(serverID string) *DeleteServerByIDRequest {
 	return &DeleteServerByIDRequest{
 		DeleteAllVolume: false,
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		ServerID:        serverID,
 	}
 }
 
 func NewUpdateServerSecgroupsRequest(serverID string, secgroups ...string) *UpdateServerSecgroupsByServerIDRequest {
 	return &UpdateServerSecgroupsByServerIDRequest{
 		Secgroups: secgroups,
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		ServerID:  serverID,
 	}
 }
 
 func NewAttachBlockVolumeRequest(serverID, volumeID string) *AttachBlockVolumeRequest {
 	return &AttachBlockVolumeRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		BlockVolumeID: volumeID,
+		ServerID:      serverID,
 	}
 }
 
 func NewDetachBlockVolumeRequest(serverID, volumeID string) *DetachBlockVolumeRequest {
 	return &DetachBlockVolumeRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: volumeID,
-		},
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		BlockVolumeID: volumeID,
+		ServerID:      serverID,
 	}
 }
 
 func NewAttachFloatingIpRequest(serverID, niid string) *AttachFloatingIpRequest {
 	return &AttachFloatingIpRequest{
-		NetworkInterfaceID: niid,
-		InternalNetworkInterfaceCommon: common.InternalNetworkInterfaceCommon{
-			InternalNetworkInterfaceID: niid,
-		},
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
+		NetworkInterfaceID:         niid,
+		InternalNetworkInterfaceID: niid,
+		ServerID:                   serverID,
 	}
 }
 
 func NewDetachFloatingIpRequest(serverID, wanID, niid string) *DetachFloatingIpRequest {
 	return &DetachFloatingIpRequest{
-		NetworkInterfaceID: niid,
-		ServerCommon: common.ServerCommon{
-			ServerID: serverID,
-		},
-		WanCommon: common.WanCommon{
-			WanID: wanID,
-		},
-		InternalNetworkInterfaceCommon: common.InternalNetworkInterfaceCommon{
-			InternalNetworkInterfaceID: niid,
-		},
+		NetworkInterfaceID:         niid,
+		ServerID:                   serverID,
+		WanID:                      wanID,
+		InternalNetworkInterfaceID: niid,
 	}
 }
 
@@ -331,9 +302,7 @@ func NewListServerGroupPoliciesRequest() *ListServerGroupPoliciesRequest {
 
 func NewDeleteServerGroupByIDRequest(serverGroupID string) *DeleteServerGroupByIDRequest {
 	return &DeleteServerGroupByIDRequest{
-		ServerGroupCommon: common.ServerGroupCommon{
-			ServerGroupID: serverGroupID,
-		},
+		ServerGroupID: serverGroupID,
 	}
 }
 

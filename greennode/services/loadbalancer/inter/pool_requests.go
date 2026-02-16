@@ -1,7 +1,5 @@
 package inter
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-
 const (
 	PoolAlgorithmRoundRobin PoolAlgorithm = "ROUND_ROBIN"
 	PoolAlgorithmLeastConn  PoolAlgorithm = "LEAST_CONNECTIONS"
@@ -84,7 +82,7 @@ type CreatePoolRequest struct {
 	HealthMonitor *HealthMonitor `json:"healthMonitor"`
 	Members       []*Member     `json:"members"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string `json:"-"`
 }
 
 type HealthMonitor struct {

@@ -7,17 +7,13 @@ import (
 
 func NewListTagsRequest(lbID string) *ListTagsRequest {
 	return &ListTagsRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 	}
 }
 
 func NewCreateTagsRequest(lbID string) *CreateTagsRequest {
 	return &CreateTagsRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 		ResourceID:     lbID,
 		ResourceType:   "LOAD-BALANCER",
 		TagRequestList: make([]common.Tag, 0),
@@ -26,9 +22,7 @@ func NewCreateTagsRequest(lbID string) *CreateTagsRequest {
 
 func NewUpdateTagsRequest(lbID string) *UpdateTagsRequest {
 	return &UpdateTagsRequest{
-		LoadBalancerCommon: common.LoadBalancerCommon{
-			LoadBalancerID: lbID,
-		},
+		LoadBalancerID: lbID,
 		ResourceID:     lbID,
 		ResourceType:   "LOAD-BALANCER",
 		TagRequestList: make([]common.Tag, 0),
@@ -36,7 +30,7 @@ func NewUpdateTagsRequest(lbID string) *UpdateTagsRequest {
 }
 
 type ListTagsRequest struct {
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type CreateTagsRequest struct {
@@ -44,7 +38,7 @@ type CreateTagsRequest struct {
 	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 type UpdateTagsRequest struct {
@@ -52,7 +46,7 @@ type UpdateTagsRequest struct {
 	ResourceType   string       `json:"resourceType"`
 	TagRequestList []common.Tag `json:"tagRequestList"`
 
-	common.LoadBalancerCommon
+	LoadBalancerID string
 }
 
 func (r *CreateTagsRequest) WithTags(tags ...string) *CreateTagsRequest {

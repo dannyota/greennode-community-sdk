@@ -4,59 +4,47 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
 func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) *ListSnapshotsByBlockVolumeIDRequest {
 	return &ListSnapshotsByBlockVolumeIDRequest{
-		Page: page,
-		Size: size,
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: blockVolumeID,
-		},
+		Page:          page,
+		Size:          size,
+		BlockVolumeID: blockVolumeID,
 	}
 }
 
 func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) *CreateSnapshotByBlockVolumeIDRequest {
 	return &CreateSnapshotByBlockVolumeIDRequest{
-		Name: name,
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: blockVolumeID,
-		},
+		Name:          name,
+		BlockVolumeID: blockVolumeID,
 	}
 }
 
 func NewDeleteSnapshotByIDRequest(snapshotID string) *DeleteSnapshotByIDRequest {
 	return &DeleteSnapshotByIDRequest{
-		BlockVolumeCommon: common.BlockVolumeCommon{
-			BlockVolumeID: "undefined",
-		},
-		SnapshotCommon: common.SnapshotCommon{
-			SnapshotID: snapshotID,
-		},
+		BlockVolumeID: "undefined",
+		SnapshotID:    snapshotID,
 	}
 }
 
 type ListSnapshotsByBlockVolumeIDRequest struct {
-	Page int
-	Size int
-
-	common.BlockVolumeCommon
+	Page          int
+	Size          int
+	BlockVolumeID string
 }
 
 type CreateSnapshotByBlockVolumeIDRequest struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Permanently bool   `json:"isPermanently"`
-	RetainedDay uint64 `json:"retainedDay"`
-
-	common.BlockVolumeCommon
+	Name          string `json:"name"`
+	Description   string `json:"description"`
+	Permanently   bool   `json:"isPermanently"`
+	RetainedDay   uint64 `json:"retainedDay"`
+	BlockVolumeID string
 }
 
 type DeleteSnapshotByIDRequest struct {
-	common.BlockVolumeCommon
-	common.SnapshotCommon
+	BlockVolumeID string
+	SnapshotID    string
 }
 
 func (r *ListSnapshotsByBlockVolumeIDRequest) GetDefaultQuery() string {
