@@ -14,7 +14,7 @@ type PortalServiceV1 struct {
 
 func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*entity.Portal, error) {
 	url := getPortalInfoURL(s.PortalClient, opts)
-	resp := new(GetPortalInfoResponse)
+	resp := new(entity.Portal)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -26,7 +26,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 			WithKVparameters("backendProjectId", opts.BackEndProjectID)
 	}
 
-	return resp.ToEntityPortal(), nil
+	return resp, nil
 }
 
 func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRequest) (*entity.ListPortals, error) {

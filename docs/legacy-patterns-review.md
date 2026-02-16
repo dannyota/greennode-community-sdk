@@ -301,10 +301,15 @@ Minor issue — small count.
 - [x] Remove remnant `Get*()` getters on request types (missed in phase 2)
 - [x] Update all internal callers and tests
 
-### Phase 4: Reduce DTO overhead — IN PROGRESS
+### Phase 4: Reduce DTO overhead — DONE
 - [x] Add JSON tags to all entity types (derived from API response field names)
 - [x] Simplify GLB response layer: eliminated ~15 redundant response types, unmarshal directly into entity types
-- [ ] Simplify remaining service response layers (loadbalancer/v2, compute/v2, network, volume, portal) — deferred to future PRs
+- [x] Simplify portal/v1: eliminated `GetPortalInfoResponse`, unmarshal directly into `entity.Portal`; simplified `ListProjectsResponse` to use `[]entity.Portal`
+- [x] Simplify server/v1: eliminated `SystemTagResponse`, unmarshal directly into `[]entity.SystemTag`
+- [x] Simplify volume/v1: eliminated local `VolumeType` and `VolumeTypeZone` types + 4 `toEntity*()` methods; envelope wrappers use entity types directly
+- [x] Removed debug `fmt.Println` in glb/v1 service
+- [x] Standardized converter naming (`toEntityAddressPair`) and pointer receivers in glb/v1
+- Remaining services (loadbalancer/v2, compute/v2, network, volume/v2, portal/v2, identity/v2) have structural conversions — not worth simplifying
 
 ---
 

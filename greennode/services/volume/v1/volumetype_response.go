@@ -3,7 +3,7 @@ package v1
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 
 type GetVolumeTypeByIDResponse struct {
-	VolumeTypes []VolumeType `json:"volumeTypes"`
+	VolumeTypes []entity.VolumeType `json:"volumeTypes"`
 }
 
 type GetDefaultVolumeTypeResponse struct {
@@ -11,30 +11,12 @@ type GetDefaultVolumeTypeResponse struct {
 	ZoneID string `json:"volumeTypeZoneId"`
 }
 
-type (
-	VolumeTypeZone struct {
-		ID       string   `json:"id"`
-		Name     string   `json:"name"`
-		PoolName []string `json:"poolName,omitempty"`
-	}
-
-	VolumeType struct {
-		ID         string `json:"id"`
-		Iops       int    `json:"iops"`
-		MaxSize    int    `json:"maxSize"`
-		MinSize    int    `json:"minSize"`
-		Name       string `json:"name"`
-		ThroughPut int    `json:"throughPut,omitempty"`
-		ZoneID     string `json:"zoneId,omitempty"`
-	}
-)
-
 type ListVolumeTypeZonesResponse struct {
-	VolumeTypeZones []VolumeTypeZone `json:"volumeTypeZones"`
+	VolumeTypeZones []entity.VolumeTypeZone `json:"volumeTypeZones"`
 }
 
 type ListVolumeTypeResponse struct {
-	VolumeTypes []VolumeType `json:"volumeTypes"`
+	VolumeTypes []entity.VolumeType `json:"volumeTypes"`
 }
 
 func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
@@ -42,7 +24,7 @@ func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
 		return nil
 	}
 
-	return r.VolumeTypes[0].toEntityVolumeType()
+	return &r.VolumeTypes[0]
 }
 
 func (r *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
@@ -52,31 +34,11 @@ func (r *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
 	}
 }
 
-func (v VolumeType) toEntityVolumeType() *entity.VolumeType {
-	return &entity.VolumeType{
-		ID:         v.ID,
-		Iops:       v.Iops,
-		MaxSize:    v.MaxSize,
-		MinSize:    v.MinSize,
-		Name:       v.Name,
-		ThroughPut: v.ThroughPut,
-		ZoneID:     v.ZoneID,
-	}
-}
-
-func (v VolumeTypeZone) toEntityVolumeTypeZone() *entity.VolumeTypeZone {
-	return &entity.VolumeTypeZone{
-		ID:       v.ID,
-		Name:     v.Name,
-		PoolName: v.PoolName,
-	}
-}
-
 func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.ListVolumeTypeZones {
 	sl := new(entity.ListVolumeTypeZones)
 
-	for _, item := range r.VolumeTypeZones {
-		sl.VolumeTypeZones = append(sl.VolumeTypeZones, item.toEntityVolumeTypeZone())
+	for i := range r.VolumeTypeZones {
+		sl.VolumeTypeZones = append(sl.VolumeTypeZones, &r.VolumeTypeZones[i])
 	}
 
 	return sl
@@ -85,8 +47,8 @@ func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.List
 func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeType {
 	sl := new(entity.ListVolumeType)
 
-	for _, item := range r.VolumeTypes {
-		sl.VolumeTypes = append(sl.VolumeTypes, item.toEntityVolumeType())
+	for i := range r.VolumeTypes {
+		sl.VolumeTypes = append(sl.VolumeTypes, &r.VolumeTypes[i])
 	}
 
 	return sl

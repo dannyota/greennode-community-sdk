@@ -16,7 +16,7 @@ type AddressPairResponse struct {
 	CIDR string `json:"cidr"`
 }
 
-func (r *AddressPairResponse) toAddressPair() *entity.AddressPair {
+func (r *AddressPairResponse) toEntityAddressPair() *entity.AddressPair {
 	return &entity.AddressPair{
 		ID:                 r.UUID,
 		VirtualIPAddressID: r.VirtualIPAddressID,
@@ -30,7 +30,7 @@ func (r *AddressPairResponse) toAddressPair() *entity.AddressPair {
 func (r *GetAllAddressPairByVirtualSubnetIDResponse) ToListAddressPair() []*entity.AddressPair {
 	addressPairs := make([]*entity.AddressPair, 0, len(r.Data))
 	for _, addressPair := range r.Data {
-		addressPairs = append(addressPairs, addressPair.toAddressPair())
+		addressPairs = append(addressPairs, addressPair.toEntityAddressPair())
 	}
 	return addressPairs
 }
@@ -40,7 +40,7 @@ type SetAddressPairInVirtualSubnetResponse struct {
 }
 
 func (r *SetAddressPairInVirtualSubnetResponse) ToAddressPair() *entity.AddressPair {
-	return r.Data.toAddressPair()
+	return r.Data.toEntityAddressPair()
 }
 
 type CreateAddressPairResponse struct {
@@ -48,5 +48,5 @@ type CreateAddressPairResponse struct {
 }
 
 func (r *CreateAddressPairResponse) ToAddressPair() *entity.AddressPair {
-	return r.Data.toAddressPair()
+	return r.Data.toEntityAddressPair()
 }

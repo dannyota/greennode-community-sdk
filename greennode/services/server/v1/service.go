@@ -17,23 +17,17 @@ func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *Cr
 	url := createSystemTagURL(s.VServerClient)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 
-	rawResp := new([]SystemTagResponse)
+	resp := new([]entity.SystemTag)
 
 	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJSONBody(opts).
-		WithJSONResponse(rawResp).
+		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
-	result := make([]entity.SystemTag, 0, len(*rawResp))
-
-	for _, r := range *rawResp {
-		result = append(result, r.toSystemTag())
-	}
-
-	return &result, nil
+	return resp, nil
 }

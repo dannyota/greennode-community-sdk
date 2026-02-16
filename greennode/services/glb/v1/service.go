@@ -2,7 +2,6 @@ package v1
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
@@ -49,7 +48,6 @@ func (s *GLBServiceV1) CreateGlobalPool(ctx context.Context, opts *CreateGlobalP
 		WithJSONError(errResp)
 
 	if _, sdkErr := s.VLBClient.Post(ctx, url, req); sdkErr != nil {
-		fmt.Println("sdkErr: ", sdkErr)
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcGlobalLoadBalancerNotFound).
 			WithParameters(common.StructToMap(opts)).
