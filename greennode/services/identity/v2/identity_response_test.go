@@ -51,21 +51,17 @@ func TestGetAccessTokenResponse_ToEntityAccessToken(t *testing.T) {
 	}
 }
 
-func TestGetAccessTokenResponse_ToEntityAccessToken_ToSdkAuth(t *testing.T) {
+func TestGetAccessTokenResponse_ToEntityAccessToken_Fields(t *testing.T) {
 	resp := &GetAccessTokenResponse{
 		AccessToken: "token-abc",
 		ExpiresIn:   7200,
 	}
 	entity := resp.ToEntityAccessToken()
-	auth := entity.ToSdkAuthentication()
 
-	if auth.AccessToken() != "token-abc" {
-		t.Fatalf("AccessToken: got %q", auth.AccessToken())
+	if entity.Token != "token-abc" {
+		t.Fatalf("Token: got %q", entity.Token)
 	}
-	if auth.ExpiresAt() != entity.ExpiresAt {
-		t.Fatalf("ExpiresAt mismatch: auth=%d, entity=%d", auth.ExpiresAt(), entity.ExpiresAt)
-	}
-	if auth.NeedReauth() {
-		t.Fatal("fresh token should not need reauth")
+	if entity.ExpiresAt <= 0 {
+		t.Fatalf("ExpiresAt should be positive: got %d", entity.ExpiresAt)
 	}
 }

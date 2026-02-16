@@ -12,6 +12,6 @@ func listProjectsURL(sc *client.ServiceClient) string {
 
 func listZonesURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.GetProjectID(),
+		sc.ProjectID(),
 		"zones")
 }

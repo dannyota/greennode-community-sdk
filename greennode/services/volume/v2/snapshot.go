@@ -9,7 +9,7 @@ import (
 )
 
 func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts *ListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, error) {
-	url := listSnapshotsByBlockVolumeIDURL(s.VServerClient, opts)
+	url := listSnapshotsByBlockVolumeIDURL(s.Client, opts)
 	resp := new(ListSnapshotsByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -17,7 +17,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"projectId", s.getProjectID(),
@@ -28,7 +28,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts
 }
 
 func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opts *CreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, error) {
-	url := createSnapshotByBlockVolumeIDURL(s.VServerClient, opts)
+	url := createSnapshotByBlockVolumeIDURL(s.Client, opts)
 	resp := new(CreateSnapshotByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -37,7 +37,7 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opt
 		WithJSONError(errResp).
 		WithJSONBody(opts)
 
-	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound,
 			sdkerror.EcVServerSnapshotNameNotValid).
@@ -50,13 +50,13 @@ func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opt
 }
 
 func (s *VolumeServiceV2) DeleteSnapshotByID(ctx context.Context, opts *DeleteSnapshotByIDRequest) error {
-	url := deleteSnapshotByIDURL(s.VServerClient, opts)
+	url := deleteSnapshotByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSnapshotNotFound).
 			WithKVparameters(

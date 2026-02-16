@@ -9,11 +9,11 @@ import (
 )
 
 type PortalServiceV1 struct {
-	PortalClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*entity.Portal, error) {
-	url := getPortalInfoURL(s.PortalClient, opts)
+	url := getPortalInfoURL(s.Client, opts)
 	resp := new(entity.Portal)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -21,7 +21,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("backendProjectId", opts.BackEndProjectID)
 	}
@@ -30,7 +30,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 }
 
 func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRequest) (*entity.ListPortals, error) {
-	url := listProjectsURL(s.PortalClient)
+	url := listProjectsURL(s.Client)
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -38,7 +38,7 @@ func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRe
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 

@@ -9,15 +9,15 @@ import (
 )
 
 type NetworkServiceV2 struct {
-	VServerClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *NetworkServiceV2) getProjectID() string {
-	return s.VServerClient.GetProjectID()
+	return s.Client.ProjectID()
 }
 
 func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkByIDRequest) (*entity.Network, error) {
-	url := getNetworkByIDURL(s.VServerClient, opts)
+	url := getNetworkByIDURL(s.Client, opts)
 	resp := new(GetNetworkByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -25,7 +25,7 @@ func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkB
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerNetworkNotFound).
 			WithKVparameters(

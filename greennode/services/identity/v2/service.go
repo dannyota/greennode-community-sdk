@@ -10,11 +10,11 @@ import (
 )
 
 type IdentityServiceV2 struct {
-	IAMClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
-	url := getAccessTokenURL(s.IAMClient)
+	url := getAccessTokenURL(s.Client)
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)
 	req := client.NewRequest().
@@ -26,7 +26,7 @@ func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessT
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
 		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.ClientID+":"+opts.ClientSecret)))
 
-	if _, sdkErr := s.IAMClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcTooManyFailedLogins,
 			sdkerror.EcAuthenticationFailed,

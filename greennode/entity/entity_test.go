@@ -217,13 +217,12 @@ func TestListSecgroupRules_Len_Get(t *testing.T) {
 // AccessToken
 // ---------------------------------------------------------------------------
 
-func TestAccessToken_ToSdkAuthentication(t *testing.T) {
+func TestAccessToken_Fields(t *testing.T) {
 	at := AccessToken{Token: "tok", ExpiresAt: 123456789}
-	auth := at.ToSdkAuthentication()
-	if auth.AccessToken() != "tok" {
-		t.Fatalf("AccessToken: got %q", auth.AccessToken())
+	if at.Token != "tok" {
+		t.Fatalf("Token: got %q", at.Token)
 	}
-	if auth.ExpiresAt() != 123456789 {
-		t.Fatalf("ExpiresAt: got %d", auth.ExpiresAt())
+	if at.ExpiresAt != 123456789 {
+		t.Fatalf("ExpiresAt: got %d", at.ExpiresAt)
 	}
 }

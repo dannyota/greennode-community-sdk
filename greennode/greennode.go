@@ -2,7 +2,6 @@ package greennode
 
 import (
 	"context"
-	"strings"
 	"time"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
@@ -84,72 +83,72 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 
 	// IAM / Identity
 	if cfg.IAMEndpoint != "" {
-		iamSvc := newServiceClient(cfg.IAMEndpoint+"v2", cfg.ProjectID, "", "", hc)
-		c.Identity = &identityv2.IdentityServiceV2{IAMClient: iamSvc}
+		iamSvc := newServiceClient(cfg.IAMEndpoint+"v2", cfg.ProjectID, "", hc)
+		c.Identity = &identityv2.IdentityServiceV2{Client: iamSvc}
 	}
 
 	// VServer services (compute, network, volume, portal)
 	if cfg.VServerEndpoint != "" {
-		ep := normalizeURL(cfg.VServerEndpoint)
+		ep := client.NormalizeURL(cfg.VServerEndpoint)
 
-		svcV2 := newServiceClient(ep+"v2", cfg.ProjectID, "", "", hc)
-		c.Compute = &computev2.ComputeServiceV2{VServerClient: svcV2}
-		c.Network = &networkv2.NetworkServiceV2{VServerClient: svcV2}
-		c.Volume = &volumev2.VolumeServiceV2{VServerClient: svcV2}
-		c.Portal = &portalv2.PortalServiceV2{PortalClient: svcV2}
+		svcV2 := newServiceClient(ep+"v2", cfg.ProjectID, "", hc)
+		c.Compute = &computev2.ComputeServiceV2{Client: svcV2}
+		c.Network = &networkv2.NetworkServiceV2{Client: svcV2}
+		c.Volume = &volumev2.VolumeServiceV2{Client: svcV2}
+		c.Portal = &portalv2.PortalServiceV2{Client: svcV2}
 
-		svcV1 := newServiceClient(ep+"v1", cfg.ProjectID, "", "", hc)
-		c.VolumeV1 = &volumev1.VolumeServiceV1{VServerClient: svcV1}
-		c.PortalV1 = &portalv1.PortalServiceV1{PortalClient: svcV1}
+		svcV1 := newServiceClient(ep+"v1", cfg.ProjectID, "", hc)
+		c.VolumeV1 = &volumev1.VolumeServiceV1{Client: svcV1}
+		c.PortalV1 = &portalv1.PortalServiceV1{Client: svcV1}
 
-		svcInternal := newServiceClient(ep+"internal", cfg.ProjectID, "", "", hc)
-		c.ServerInternal = &serverv1.ServerServiceInternalV1{VServerClient: svcInternal}
+		svcInternal := newServiceClient(ep+"internal", cfg.ProjectID, "", hc)
+		c.ServerInternal = &serverv1.ServerServiceInternalV1{Client: svcInternal}
 	}
 
 	// VLB (load balancer)
 	if cfg.VLBEndpoint != "" {
-		vlbEp := normalizeURL(cfg.VLBEndpoint)
+		vlbEp := client.NormalizeURL(cfg.VLBEndpoint)
 
-		vlbSvcV2 := newServiceClient(vlbEp+"v2", cfg.ProjectID, "", "", hc)
+		vlbSvcV2 := newServiceClient(vlbEp+"v2", cfg.ProjectID, "", hc)
 		var vserverSvcV2 *client.ServiceClient
 		if cfg.VServerEndpoint != "" {
-			vserverSvcV2 = newServiceClient(normalizeURL(cfg.VServerEndpoint)+"v2", cfg.ProjectID, "", "", hc)
+			vserverSvcV2 = newServiceClient(client.NormalizeURL(cfg.VServerEndpoint)+"v2", cfg.ProjectID, "", hc)
 		}
-		c.LoadBalancer = &lbv2.LoadBalancerServiceV2{VLBClient: vlbSvcV2, VServerClient: vserverSvcV2}
+		c.LoadBalancer = &lbv2.LoadBalancerServiceV2{Client: vlbSvcV2, ServerClient: vserverSvcV2}
 
-		vlbSvcInternal := newServiceClient(vlbEp+"internal", cfg.ProjectID, "", "", hc)
-		c.LoadBalancerInternal = &lbinter.LoadBalancerServiceInternal{VLBClient: vlbSvcInternal}
+		vlbSvcInternal := newServiceClient(vlbEp+"internal", cfg.ProjectID, "", hc)
+		c.LoadBalancerInternal = &lbinter.LoadBalancerServiceInternal{Client: vlbSvcInternal}
 	}
 
 	// VNetwork
 	if cfg.VNetworkEndpoint != "" {
-		vnEp := normalizeURL(cfg.VNetworkEndpoint)
+		vnEp := client.NormalizeURL(cfg.VNetworkEndpoint)
 
-		vnetV1 := newServiceClient(vnEp+"vnetwork/v1", cfg.ProjectID, cfg.ZoneID, cfg.UserID, hc)
-		c.NetworkV1 = &networkv1.NetworkServiceV1{VNetworkClient: vnetV1}
+		vnetV1 := newServiceClient(vnEp+"vnetwork/v1", cfg.ProjectID, cfg.ZoneID, hc)
+		c.NetworkV1 = &networkv1.NetworkServiceV1{Client: vnetV1}
 
-		vnetAZ := newServiceClient(vnEp+"vnetwork/az/v1", cfg.ProjectID, cfg.ZoneID, cfg.UserID, hc)
-		c.NetworkAZ = &networkv2.NetworkServiceV2{VServerClient: vnetAZ}
+		vnetAZ := newServiceClient(vnEp+"vnetwork/az/v1", cfg.ProjectID, cfg.ZoneID, hc)
+		c.NetworkAZ = &networkv2.NetworkServiceV2{Client: vnetAZ}
 
-		vnetInternal := newServiceClient(vnEp+"internal/v1", cfg.ProjectID, cfg.ZoneID, cfg.UserID, hc)
-		c.NetworkInternal = &networkv1.NetworkServiceInternalV1{VNetworkClient: vnetInternal}
+		vnetInternal := newServiceClient(vnEp+"internal/v1", cfg.ProjectID, cfg.ZoneID, hc)
+		c.NetworkInternal = &networkv1.NetworkServiceInternalV1{Client: vnetInternal}
 	}
 
 	// GLB (global load balancer)
 	if cfg.GLBEndpoint != "" {
-		glbSvc := newServiceClient(cfg.GLBEndpoint+"v1", "", "", "", hc)
-		c.GLB = &glbv1.GLBServiceV1{VLBClient: glbSvc}
+		glbSvc := newServiceClient(cfg.GLBEndpoint+"v1", "", "", hc)
+		c.GLB = &glbv1.GLBServiceV1{Client: glbSvc}
 	}
 
 	// DNS
 	if cfg.DNSEndpoint != "" {
-		dnsEp := normalizeURL(cfg.DNSEndpoint)
+		dnsEp := client.NormalizeURL(cfg.DNSEndpoint)
 
-		dnsSvc := newServiceClient(dnsEp+"v1", cfg.ProjectID, "", "", hc)
-		c.DNS = &dnsv1.VDnsServiceV1{DnsClient: dnsSvc}
+		dnsSvc := newServiceClient(dnsEp+"v1", cfg.ProjectID, "", hc)
+		c.DNS = &dnsv1.VDnsServiceV1{Client: dnsSvc}
 
-		dnsInternalSvc := newServiceClient(dnsEp+"internal/v1", cfg.ProjectID, "", "", hc)
-		c.DNSInternal = &dnsinternalv1.VDnsServiceInternal{DnsClient: dnsInternalSvc}
+		dnsInternalSvc := newServiceClient(dnsEp+"internal/v1", cfg.ProjectID, "", hc)
+		c.DNSInternal = &dnsinternalv1.VDnsServiceInternal{Client: dnsInternalSvc}
 	}
 
 	// Set up IAM reauth
@@ -166,11 +165,13 @@ func reauthFunc(identity *identityv2.IdentityServiceV2, clientID, clientSecret s
 		if err != nil {
 			return nil, err
 		}
-		return token.ToSdkAuthentication(), nil
+		return client.NewSdkAuthentication().
+			WithAccessToken(token.Token).
+			WithExpiresAt(token.ExpiresAt), nil
 	}
 }
 
-func newServiceClient(endpoint, projectID, zoneID, userID string, hc *client.HTTPClient) *client.ServiceClient {
+func newServiceClient(endpoint, projectID, zoneID string, hc *client.HTTPClient) *client.ServiceClient {
 	sc := client.NewServiceClient().
 		WithEndpoint(endpoint).
 		WithClient(hc)
@@ -180,15 +181,5 @@ func newServiceClient(endpoint, projectID, zoneID, userID string, hc *client.HTT
 	if zoneID != "" {
 		sc.WithZoneID(zoneID)
 	}
-	if userID != "" {
-		sc.WithUserID(userID)
-	}
 	return sc
-}
-
-func normalizeURL(u string) string {
-	if !strings.HasSuffix(u, "/") {
-		return u + "/"
-	}
-	return u
 }

@@ -9,12 +9,12 @@ import (
 )
 
 type ServerServiceInternalV1 struct {
-	VServerClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *CreateSystemTagRequest) (*[]entity.SystemTag, error) {
 
-	url := createSystemTagURL(s.VServerClient)
+	url := createSystemTagURL(s.Client)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 
 	resp := new([]entity.SystemTag)
@@ -25,7 +25,7 @@ func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *Cr
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 

@@ -64,8 +64,8 @@ func (r *CreateEndpointRequest) ToRequestBody(svc *client.ServiceClient) any {
 	r.ResourceType = "endpoint"
 	r.Action = "create"
 	r.ResourceInfo.EnableAZ = true
-	r.ResourceInfo.RegionUuid = svc.GetZoneID()
-	r.ResourceInfo.ProjectUuid = svc.GetProjectID()
+	r.ResourceInfo.RegionUuid = svc.ZoneID()
+	r.ResourceInfo.ProjectUuid = svc.ProjectID()
 
 	return r
 }
@@ -81,8 +81,8 @@ type DeleteEndpointByIDRequest struct {
 }
 
 func (r *DeleteEndpointByIDRequest) ToRequestBody(svc *client.ServiceClient) any {
-	r.ProjectUuid = svc.GetProjectID()
-	r.RegionUuid = svc.GetZoneID()
+	r.ProjectUuid = svc.ProjectID()
+	r.RegionUuid = svc.ZoneID()
 
 	return r
 }

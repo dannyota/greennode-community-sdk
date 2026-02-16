@@ -10,7 +10,7 @@ import (
 )
 
 func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecordsRequest, portalUserID string) (*entity.ListDnsRecords, error) {
-	url := listRecordsURL(s.DnsClient, opts)
+	url := listRecordsURL(s.Client, opts)
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -19,7 +19,7 @@ func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecords
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -29,7 +29,7 @@ func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecords
 }
 
 func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequest, portalUserID string) (*entity.DnsRecord, error) {
-	url := getRecordURL(s.DnsClient, opts)
+	url := getRecordURL(s.Client, opts)
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -38,7 +38,7 @@ func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequ
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -48,15 +48,15 @@ func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequ
 }
 
 func (s *VDnsServiceInternal) UpdateRecord(ctx context.Context, opts *UpdateRecordRequest, portalUserID string) error {
-	url := updateRecordURL(s.DnsClient, opts)
+	url := updateRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
 		WithOkCodes(204).
-		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -66,14 +66,14 @@ func (s *VDnsServiceInternal) UpdateRecord(ctx context.Context, opts *UpdateReco
 }
 
 func (s *VDnsServiceInternal) DeleteRecord(ctx context.Context, opts *DeleteRecordRequest, portalUserID string) error {
-	url := deleteRecordURL(s.DnsClient, opts)
+	url := deleteRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -83,17 +83,17 @@ func (s *VDnsServiceInternal) DeleteRecord(ctx context.Context, opts *DeleteReco
 }
 
 func (s *VDnsServiceInternal) CreateDnsRecord(ctx context.Context, opts *CreateDnsRecordRequest, portalUserID string) (*entity.DnsRecord, error) {
-	url := createDnsRecordURL(s.DnsClient, opts)
+	url := createDnsRecordURL(s.Client, opts)
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithUserID(portalUserID).
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)

@@ -9,7 +9,7 @@ import (
 )
 
 func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByIDRequest) (*entity.Subnet, error) {
-	url := getSubnetByIDURL(s.VServerClient, opts)
+	url := getSubnetByIDURL(s.Client, opts)
 	resp := new(GetSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -17,7 +17,7 @@ func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByI
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSubnetNotBelongNetwork,
 			sdkerror.EcVServerSubnetNotFound).
@@ -30,7 +30,7 @@ func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByI
 }
 
 func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSubnetByIDRequest) (*entity.Subnet, error) {
-	url := updateSubnetByIDURL(s.VServerClient, opts)
+	url := updateSubnetByIDURL(s.Client, opts)
 	resp := new(UpdateSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -39,7 +39,7 @@ func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSub
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	_, sdkErr := s.VServerClient.Patch(ctx, url, req)
+	_, sdkErr := s.Client.Patch(ctx, url, req)
 	if sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}

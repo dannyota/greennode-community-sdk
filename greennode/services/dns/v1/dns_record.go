@@ -10,7 +10,7 @@ import (
 )
 
 func (s *VDnsServiceV1) ListRecords(ctx context.Context, opts *ListRecordsRequest) (*entity.ListDnsRecords, error) {
-	url := listRecordsURL(s.DnsClient, opts)
+	url := listRecordsURL(s.Client, opts)
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -18,7 +18,7 @@ func (s *VDnsServiceV1) ListRecords(ctx context.Context, opts *ListRecordsReques
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -28,7 +28,7 @@ func (s *VDnsServiceV1) ListRecords(ctx context.Context, opts *ListRecordsReques
 }
 
 func (s *VDnsServiceV1) GetRecord(ctx context.Context, opts *GetRecordRequest) (*entity.DnsRecord, error) {
-	url := getRecordURL(s.DnsClient, opts)
+	url := getRecordURL(s.Client, opts)
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
@@ -36,7 +36,7 @@ func (s *VDnsServiceV1) GetRecord(ctx context.Context, opts *GetRecordRequest) (
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -46,14 +46,14 @@ func (s *VDnsServiceV1) GetRecord(ctx context.Context, opts *GetRecordRequest) (
 }
 
 func (s *VDnsServiceV1) UpdateRecord(ctx context.Context, opts *UpdateRecordRequest) error {
-	url := updateRecordURL(s.DnsClient, opts)
+	url := updateRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
-		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -63,13 +63,13 @@ func (s *VDnsServiceV1) UpdateRecord(ctx context.Context, opts *UpdateRecordRequ
 }
 
 func (s *VDnsServiceV1) DeleteRecord(ctx context.Context, opts *DeleteRecordRequest) error {
-	url := deleteRecordURL(s.DnsClient, opts)
+	url := deleteRecordURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)
@@ -79,16 +79,16 @@ func (s *VDnsServiceV1) DeleteRecord(ctx context.Context, opts *DeleteRecordRequ
 }
 
 func (s *VDnsServiceV1) CreateDnsRecord(ctx context.Context, opts *CreateDnsRecordRequest) (*entity.DnsRecord, error) {
-	url := createDnsRecordURL(s.DnsClient, opts)
+	url := createDnsRecordURL(s.Client, opts)
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
-		WithJSONBody(opts.ToRequestBody(s.DnsClient)).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.DnsClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithErrorCategories(sdkerror.ErrCatProductVdns)

@@ -10,7 +10,7 @@ import (
 )
 
 func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequest) (*entity.ListTags, error) {
-	url := listTagsURL(s.VServerClient, opts)
+	url := listTagsURL(s.ServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -18,7 +18,7 @@ func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequ
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.ServerClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
@@ -26,14 +26,14 @@ func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequ
 }
 
 func (s *LoadBalancerServiceV2) CreateTags(ctx context.Context, opts *CreateTagsRequest) error {
-	url := createTagsURL(s.VServerClient, opts)
+	url := createTagsURL(s.ServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.ServerClient.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp)
 	}
 
@@ -54,7 +54,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTags
 		}
 	}
 
-	url := updateTagsURL(s.VServerClient, opts)
+	url := updateTagsURL(s.ServerClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.prepare(tags)
 	req := client.NewRequest().
@@ -62,7 +62,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTags
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr = s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr = s.ServerClient.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcTagKeyInvalid).WithParameters(common.StructToMap(opts))
 	}

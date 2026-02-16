@@ -10,11 +10,11 @@ import (
 )
 
 type ComputeServiceV2 struct {
-	VServerClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *ComputeServiceV2) getProjectID() string {
-	return s.VServerClient.GetProjectID()
+	return s.Client.ProjectID()
 }
 
 const (
@@ -23,7 +23,7 @@ const (
 )
 
 func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*entity.Server, error) {
-	url := createServerURL(s.VServerClient)
+	url := createServerURL(s.Client)
 	resp := new(CreateServerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -32,7 +32,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcPurchaseIssue,
 			sdkerror.EcVServerSubnetNotFound,
@@ -59,7 +59,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 }
 
 func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByIDRequest) (*entity.Server, error) {
-	url := getServerByIDURL(s.VServerClient, opts)
+	url := getServerByIDURL(s.Client, opts)
 	resp := new(GetServerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -67,7 +67,7 @@ func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByI
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound).
 			WithParameters(common.StructToMap(opts)).
@@ -78,14 +78,14 @@ func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByI
 }
 
 func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteServerByIDRequest) error {
-	url := deleteServerByIDURL(s.VServerClient, opts)
+	url := deleteServerByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerServerDeleteDeletingServer,
@@ -101,7 +101,7 @@ func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteSer
 }
 
 func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, opts *UpdateServerSecgroupsByServerIDRequest) (*entity.Server, error) {
-	url := updateServerSecgroupsByServerIDURL(s.VServerClient, opts)
+	url := updateServerSecgroupsByServerIDURL(s.Client, opts)
 	resp := new(UpdateServerSecgroupsByServerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -110,7 +110,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerServerExpired,
@@ -125,14 +125,14 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 }
 
 func (s *ComputeServiceV2) AttachBlockVolume(ctx context.Context, opts *AttachBlockVolumeRequest) error {
-	url := attachBlockVolumeURL(s.VServerClient, opts)
+	url := attachBlockVolumeURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound,
 			sdkerror.EcVServerServerNotFound,
@@ -151,14 +151,14 @@ func (s *ComputeServiceV2) AttachBlockVolume(ctx context.Context, opts *AttachBl
 }
 
 func (s *ComputeServiceV2) DetachBlockVolume(ctx context.Context, opts *DetachBlockVolumeRequest) error {
-	url := detachBlockVolumeURL(s.VServerClient, opts)
+	url := detachBlockVolumeURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(map[string]any{}).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound,
 			sdkerror.EcVServerVolumeInProcess,
@@ -174,14 +174,14 @@ func (s *ComputeServiceV2) DetachBlockVolume(ctx context.Context, opts *DetachBl
 }
 
 func (s *ComputeServiceV2) AttachFloatingIp(ctx context.Context, opts *AttachFloatingIpRequest) error {
-	url := attachFloatingIpURL(s.VServerClient, opts)
+	url := attachFloatingIpURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerServerCanNotAttachFloatingIp,
@@ -194,14 +194,14 @@ func (s *ComputeServiceV2) AttachFloatingIp(ctx context.Context, opts *AttachFlo
 }
 
 func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFloatingIpRequest) error {
-	url := detachFloatingIpURL(s.VServerClient, opts)
+	url := detachFloatingIpURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerWanIpAvailable,
 			sdkerror.EcVServerServerNotFound,
@@ -215,7 +215,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFlo
 }
 
 func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *ListServerGroupPoliciesRequest) (*entity.ListServerGroupPolicies, error) {
-	url := listServerGroupPoliciesURL(s.VServerClient)
+	url := listServerGroupPoliciesURL(s.Client)
 	resp := new(ListServerGroupPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -223,7 +223,7 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *Li
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -232,13 +232,13 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *Li
 }
 
 func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *DeleteServerGroupByIDRequest) error {
-	url := deleteServerGroupByIDURL(s.VServerClient, opts)
+	url := deleteServerGroupByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(204).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerGroupNotFound,
 			sdkerror.EcVServerServerGroupInUse).
@@ -251,7 +251,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *Dele
 }
 
 func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServerGroupsRequest) (*entity.ListServerGroups, error) {
-	url := listServerGroupsURL(s.VServerClient, opts)
+	url := listServerGroupsURL(s.Client, opts)
 	resp := new(ListServerGroupsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -259,7 +259,7 @@ func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServe
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
 			WithKVparameters("projectId", s.getProjectID())
@@ -269,7 +269,7 @@ func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServe
 }
 
 func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateServerGroupRequest) (*entity.ServerGroup, error) {
-	url := createServerGroupURL(s.VServerClient, opts)
+	url := createServerGroupURL(s.Client, opts)
 	resp := new(CreateServerGroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -278,7 +278,7 @@ func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateSe
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerGroupNameMustBeUnique).
 			WithParameters(common.StructToMap(opts)).

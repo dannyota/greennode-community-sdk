@@ -10,11 +10,11 @@ import (
 )
 
 type VolumeServiceV2 struct {
-	VServerClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *VolumeServiceV2) getProjectID() string {
-	return s.VServerClient.GetProjectID()
+	return s.Client.ProjectID()
 }
 
 const (
@@ -26,7 +26,7 @@ const (
 )
 
 func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlockVolumeRequest) (*entity.Volume, error) {
-	url := createBlockVolumeURL(s.VServerClient)
+	url := createBlockVolumeURL(s.Client)
 	resp := new(CreateBlockVolumeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -35,7 +35,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlo
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound,
 			sdkerror.EcVServerVolumeSizeOutOfRange,
@@ -49,13 +49,13 @@ func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlo
 }
 
 func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *DeleteBlockVolumeByIDRequest) error {
-	url := deleteBlockVolumeByIDURL(s.VServerClient, opts)
+	url := deleteBlockVolumeByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
@@ -67,7 +67,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *Delet
 }
 
 func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockVolumesRequest) (*entity.ListVolumes, error) {
-	url := listBlockVolumesURL(s.VServerClient, opts)
+	url := listBlockVolumesURL(s.Client, opts)
 	resp := new(ListBlockVolumesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -75,7 +75,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockV
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcPagingInvalid).
 			WithKVparameters("projectId", s.getProjectID()).
@@ -86,7 +86,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockV
 }
 
 func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlockVolumeByIDRequest) (*entity.Volume, error) {
-	url := getBlockVolumeByIDURL(s.VServerClient, opts)
+	url := getBlockVolumeByIDURL(s.Client, opts)
 	resp := new(GetBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -94,7 +94,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
@@ -106,7 +106,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 }
 
 func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *ResizeBlockVolumeByIDRequest) (*entity.Volume, error) {
-	url := resizeBlockVolumeByIDURL(s.VServerClient, opts)
+	url := resizeBlockVolumeByIDURL(s.Client, opts)
 	resp := new(ResizeBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -115,7 +115,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Put(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound,
 			sdkerror.EcVServerVolumeSizeOutOfRange,
@@ -131,7 +131,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 }
 
 func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUnderBlockVolumeIDRequest) (*entity.Volume, error) {
-	url := getUnderBlockVolumeIDURL(s.VServerClient, opts)
+	url := getUnderBlockVolumeIDURL(s.Client, opts)
 	resp := new(GetUnderBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -139,7 +139,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUn
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VServerClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
@@ -151,7 +151,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUn
 }
 
 func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *MigrateBlockVolumeByIDRequest) error {
-	url := migrateBlockVolumeByIDURL(s.VServerClient, opts)
+	url := migrateBlockVolumeByIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	resp := map[string]any{}
 	req := client.NewRequest().
@@ -160,7 +160,7 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *Migr
 		WithJSONError(errResp).
 		WithJSONResponse(&resp)
 
-	if _, err := s.VServerClient.Put(ctx, url, req); err != nil {
+	if _, err := s.Client.Put(ctx, url, req); err != nil {
 		enriched := sdkerror.SdkErrorHandler(err, errResp,
 			sdkerror.EcVServerVolumeMigrateInSameZone,
 			sdkerror.EcVServerVolumeMigrateMissingInit,

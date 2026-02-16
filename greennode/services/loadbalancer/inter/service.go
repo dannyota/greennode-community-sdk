@@ -10,14 +10,14 @@ import (
 )
 
 type LoadBalancerServiceInternal struct {
-	VLBClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, opts *CreateLoadBalancerRequest) (*entity.LoadBalancer, error) {
-	url := createLoadBalancerURL(s.VLBClient)
+	url := createLoadBalancerURL(s.Client)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.ProjectID = s.VLBClient.GetProjectID()
+	opts.ProjectID = s.Client.ProjectID()
 	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
@@ -26,7 +26,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, op
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.VLBClient.Post(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVLBLoadBalancerExceedQuota).
 			WithParameters(common.StructToMap(opts)).

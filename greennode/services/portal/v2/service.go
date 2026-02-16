@@ -9,11 +9,11 @@ import (
 )
 
 type PortalServiceV2 struct {
-	PortalClient *client.ServiceClient
+	Client *client.ServiceClient
 }
 
 func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuotas, error) {
-	url := listAllQuotaUsedURL(s.PortalClient)
+	url := listAllQuotaUsedURL(s.Client)
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
@@ -21,7 +21,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuo
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
 
-	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters("projectId", s.getProjectID())
 	}
@@ -44,5 +44,5 @@ func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNa
 }
 
 func (s *PortalServiceV2) getProjectID() string {
-	return s.PortalClient.GetProjectID()
+	return s.Client.ProjectID()
 }

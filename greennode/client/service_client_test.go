@@ -57,9 +57,9 @@ func TestNormalizeURL(t *testing.T) {
 		{"https://api.example.com/", "https://api.example.com/"},
 	}
 	for _, tt := range tests {
-		got := normalizeURL(tt.input)
+		got := NormalizeURL(tt.input)
 		if got != tt.want {
-			t.Fatalf("normalizeURL(%q) = %q, want %q", tt.input, got, tt.want)
+			t.Fatalf("NormalizeURL(%q) = %q, want %q", tt.input, got, tt.want)
 		}
 	}
 }
@@ -67,37 +67,13 @@ func TestNormalizeURL(t *testing.T) {
 func TestServiceClientBuilders(t *testing.T) {
 	sc := NewServiceClient().
 		WithEndpoint("https://api.example.com").
-		WithName("test-service").
 		WithProjectID("proj-1").
-		WithZoneID("zone-a").
-		WithUserID("user-x")
+		WithZoneID("zone-a")
 
-	if sc.GetProjectID() != "proj-1" {
-		t.Fatalf("projectID: got %q", sc.GetProjectID())
+	if sc.ProjectID() != "proj-1" {
+		t.Fatalf("projectID: got %q", sc.ProjectID())
 	}
-	if sc.GetZoneID() != "zone-a" {
-		t.Fatalf("zoneID: got %q", sc.GetZoneID())
+	if sc.ZoneID() != "zone-a" {
+		t.Fatalf("zoneID: got %q", sc.ZoneID())
 	}
-	if sc.GetUserID() != "user-x" {
-		t.Fatalf("userID: got %q", sc.GetUserID())
-	}
-}
-
-func TestWithMoreHeaders(t *testing.T) {
-	sc := NewServiceClient().WithMoreHeaders(map[string]string{"X-Test": "1"})
-	if sc.moreHeaders["X-Test"] != "1" {
-		t.Fatalf("got %v", sc.moreHeaders)
-	}
-}
-
-// BUG: WithKVheader panics if moreHeaders is nil (no nil-map guard).
-// This test documents the bug. If you fix it, change the test.
-func TestWithKVheader_PanicOnNilMap(t *testing.T) {
-	sc := NewServiceClient()
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("expected panic when moreHeaders is nil, but got none — bug may have been fixed")
-		}
-	}()
-	sc.WithKVheader("key", "value")
 }
