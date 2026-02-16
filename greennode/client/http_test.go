@@ -25,9 +25,10 @@ func TestDoRequest_JSONResponseUnmarshal(t *testing.T) {
 
 	var got resp
 	hc := NewHTTPClient().WithRetryCount(0)
-	hc.accessToken = NewSdkAuthentication().
-		WithAccessToken("tok").
-		WithExpiresAt(time.Now().Add(1 * time.Hour).UnixNano())
+	hc.token = &Token{
+		AccessToken: "tok",
+		ExpiresAt:   time.Now().Add(1 * time.Hour).UnixNano(),
+	}
 
 	req := NewRequest().
 		WithRequestMethod(MethodGet).

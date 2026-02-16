@@ -24,10 +24,10 @@ type (
 		retryInterval time.Duration
 		client        *http.Client
 
-		reauthFunc   func(ctx context.Context) (*SdkAuthentication, error)
+		reauthFunc   func(ctx context.Context) (*Token, error)
 		reauthOption AuthOpts
 
-		accessToken    *SdkAuthentication
+		token          *Token
 		defaultHeaders map[string]string
 
 		mut       *sync.RWMutex
@@ -88,7 +88,7 @@ func (hc *HTTPClient) WithKvDefaultHeaders(args ...string) *HTTPClient {
 	return hc
 }
 
-func (hc *HTTPClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (*SdkAuthentication, error)) *HTTPClient {
+func (hc *HTTPClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (*Token, error)) *HTTPClient {
 	hc.reauthFunc = reauthFunc
 	hc.reauthOption = authOpt
 	return hc
@@ -270,11 +270,11 @@ func (hc *HTTPClient) needReauth(req *Request) bool {
 		return false
 	}
 
-	if hc.accessToken == nil {
+	if hc.token == nil {
 		return true
 	}
 
-	return hc.accessToken.NeedReauth()
+	return hc.token.NeedsReauth()
 }
 
 func (hc *HTTPClient) reauthenticate(ctx context.Context) error {
@@ -299,17 +299,17 @@ func (hc *HTTPClient) reauthenticate(ctx context.Context) error {
 	hc.reauthmut.ongoing = nil
 	hc.reauthmut.Unlock()
 
-	hc.setAccessToken(auth)
+	hc.setToken(auth)
 
 	return sdkerr
 }
 
-func (hc *HTTPClient) setAccessToken(newToken *SdkAuthentication) *HTTPClient {
+func (hc *HTTPClient) setToken(newToken *Token) *HTTPClient {
 	hc.mut.Lock()
 	defer hc.mut.Unlock()
 	if newToken != nil {
-		hc.accessToken = newToken
-		hc.WithKvDefaultHeaders("Authorization", "Bearer "+hc.accessToken.AccessToken())
+		hc.token = newToken
+		hc.WithKvDefaultHeaders("Authorization", "Bearer "+hc.token.AccessToken)
 	}
 
 	return hc

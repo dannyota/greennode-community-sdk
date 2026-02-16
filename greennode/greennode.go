@@ -165,27 +165,29 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 	return c, nil
 }
 
-func reauthFunc(identity *identityv2.IdentityServiceV2, clientID, clientSecret string) func(ctx context.Context) (*client.SdkAuthentication, error) {
-	return func(ctx context.Context) (*client.SdkAuthentication, error) {
+func reauthFunc(identity *identityv2.IdentityServiceV2, clientID, clientSecret string) func(ctx context.Context) (*client.Token, error) {
+	return func(ctx context.Context) (*client.Token, error) {
 		token, err := identity.GetAccessToken(ctx, identityv2.NewGetAccessTokenRequest(clientID, clientSecret))
 		if err != nil {
 			return nil, err
 		}
-		return client.NewSdkAuthentication().
-			WithAccessToken(token.Token).
-			WithExpiresAt(token.ExpiresAt), nil
+		return &client.Token{
+			AccessToken: token.Token,
+			ExpiresAt:   token.ExpiresAt,
+		}, nil
 	}
 }
 
-func iamUserReauthFunc(iamAuth *auth.IAMUserAuth) func(ctx context.Context) (*client.SdkAuthentication, error) {
-	return func(ctx context.Context) (*client.SdkAuthentication, error) {
+func iamUserReauthFunc(iamAuth *auth.IAMUserAuth) func(ctx context.Context) (*client.Token, error) {
+	return func(ctx context.Context) (*client.Token, error) {
 		token, expiresAt, err := iamAuth.Authenticate(ctx)
 		if err != nil {
 			return nil, err
 		}
-		return client.NewSdkAuthentication().
-			WithAccessToken(token).
-			WithExpiresAt(expiresAt), nil
+		return &client.Token{
+			AccessToken: token,
+			ExpiresAt:   expiresAt,
+		}, nil
 	}
 }
 
