@@ -28,7 +28,7 @@ func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZo
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest) (*entity.ListHostedZone, error) {
+func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest) (*entity.ListHostedZones, error) {
 	url := listHostedZonesURL(s.Client, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

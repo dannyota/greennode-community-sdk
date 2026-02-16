@@ -20,8 +20,8 @@ type ListHostedZonesResponse struct {
 	TotalItem int                  `json:"totalItem"`
 }
 
-func (r *ListHostedZonesResponse) ToEntityListHostedZones() *entity.ListHostedZone {
-	return &entity.ListHostedZone{
+func (r *ListHostedZonesResponse) ToEntityListHostedZones() *entity.ListHostedZones {
+	return &entity.ListHostedZones{
 		ListData:  r.ListData,
 		Page:      r.Page,
 		PageSize:  r.PageSize,

@@ -10,6 +10,6 @@ type VolumeType struct {
 	ZoneID     string `json:"zoneId"`
 }
 
-type ListVolumeType struct {
+type ListVolumeTypes struct {
 	VolumeTypes []*VolumeType
 }

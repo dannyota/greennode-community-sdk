@@ -44,8 +44,8 @@ func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.List
 	return sl
 }
 
-func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeType {
-	sl := new(entity.ListVolumeType)
+func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeTypes {
+	sl := new(entity.ListVolumeTypes)
 
 	for i := range r.VolumeTypes {
 		sl.VolumeTypes = append(sl.VolumeTypes, &r.VolumeTypes[i])

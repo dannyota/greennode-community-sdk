@@ -22,7 +22,7 @@ type HostedZone struct {
 	UpdatedAt         time.Time      `json:"updatedAt"`
 }
 
-type ListHostedZone struct {
+type ListHostedZones struct {
 	ListData  []*HostedZone `json:"listData"`
 	Page      int           `json:"page"`
 	PageSize  int           `json:"pageSize"`

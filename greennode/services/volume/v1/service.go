@@ -76,7 +76,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolum
 	return resp.ToEntityListVolumeTypeZones(), nil
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListVolumeTypeRequest) (*entity.ListVolumeType, error) {
+func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListVolumeTypeRequest) (*entity.ListVolumeTypes, error) {
 	url := getVolumeTypesURL(s.Client, opts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
