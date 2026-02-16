@@ -47,6 +47,3 @@ func (r *GetVolumeTypeZonesRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *GetListVolumeTypeRequest) GetVolumeTypeZoneID() string {
-	return r.VolumeTypeZoneID
-}

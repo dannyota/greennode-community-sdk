@@ -7,33 +7,16 @@ const (
 )
 
 type ResourceType string
-type CreateSystemTagRequest struct { // __________________________________________________________________________________
+
+type SystemTag struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+type CreateSystemTagRequest struct {
 	ResourceID   string       `json:"resourceId"`
 	ResourceType ResourceType `json:"resourceType"`
-	Tags         []struct {
-		Key   string `json:"key"`
-		Value string `json:"value"`
-	} `json:"tagRequestList"`
-}
-
-func (r *CreateSystemTagRequest) GetResourceID() string {
-	return r.ResourceID
-}
-
-func (r *CreateSystemTagRequest) GetResourceType() ResourceType {
-	return r.ResourceType
-}
-
-func (r *CreateSystemTagRequest) AddTag(key, value string) *CreateSystemTagRequest {
-	r.Tags = append(r.Tags, struct {
-		Key   string `json:"key"`
-		Value string `json:"value"`
-	}{
-		Key:   key,
-		Value: value,
-	})
-
-	return r
+	Tags         []SystemTag  `json:"tagRequestList"`
 }
 
 func NewSystemTagRequest(resourceID string, resourceType ResourceType) *CreateSystemTagRequest {
