@@ -91,7 +91,7 @@ func TestDoRequest_RetryOnFailure(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	hc := NewHTTPClient().WithRetryCount(3).WithSleep(1 * time.Millisecond)
+	hc := NewHTTPClient().WithRetryCount(3).WithRetryInterval(1 * time.Millisecond)
 	req := NewRequest().
 		WithOKCodes(200).
 		WithSkipAuth(true)
@@ -118,7 +118,7 @@ func TestDoRequest_HeaderPropagation(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	hc := NewHTTPClient().WithRetryCount(0).WithKvDefaultHeaders("X-Default", "default-val")
+	hc := NewHTTPClient().WithRetryCount(0).WithDefaultHeaders("X-Default", "default-val")
 	req := NewRequest().
 		WithHeader("X-Custom", "custom-val").
 		WithOKCodes(200).

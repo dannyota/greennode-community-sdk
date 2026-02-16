@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	IAMOauth2     AuthOpts = "IamOauth2"
-	IAMUserOauth2 AuthOpts = "IamUserOauth2"
+	IAMOauth2     AuthMethod = "IamOauth2"
+	IAMUserOauth2 AuthMethod = "IamUserOauth2"
 )
 
 type (
@@ -25,7 +25,7 @@ type (
 		client        *http.Client
 
 		reauthFunc   func(ctx context.Context) (*Token, error)
-		reauthOption AuthOpts
+		authMethod AuthMethod
 
 		token          *Token
 		defaultHeaders map[string]string
@@ -44,7 +44,7 @@ type (
 		err  error
 	}
 
-	AuthOpts string
+	AuthMethod string
 )
 
 func NewHTTPClient() *HTTPClient {
@@ -67,30 +67,30 @@ func (hc *HTTPClient) WithTimeout(timeout time.Duration) *HTTPClient {
 	return hc
 }
 
-func (hc *HTTPClient) WithSleep(sleep time.Duration) *HTTPClient {
-	hc.retryInterval = sleep
+func (hc *HTTPClient) WithRetryInterval(interval time.Duration) *HTTPClient {
+	hc.retryInterval = interval
 	return hc
 }
 
-func (hc *HTTPClient) WithKvDefaultHeaders(args ...string) *HTTPClient {
+func (hc *HTTPClient) WithDefaultHeaders(kvPairs ...string) *HTTPClient {
 	if hc.defaultHeaders == nil {
 		hc.defaultHeaders = make(map[string]string)
 	}
 
-	if len(args)%2 != 0 {
-		args = append(args, "")
+	if len(kvPairs)%2 != 0 {
+		kvPairs = append(kvPairs, "")
 	}
 
-	for i := 0; i < len(args); i += 2 {
-		hc.defaultHeaders[args[i]] = args[i+1]
+	for i := 0; i < len(kvPairs); i += 2 {
+		hc.defaultHeaders[kvPairs[i]] = kvPairs[i+1]
 	}
 
 	return hc
 }
 
-func (hc *HTTPClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx context.Context) (*Token, error)) *HTTPClient {
+func (hc *HTTPClient) WithReauthFunc(authOpt AuthMethod, reauthFunc func(ctx context.Context) (*Token, error)) *HTTPClient {
 	hc.reauthFunc = reauthFunc
-	hc.reauthOption = authOpt
+	hc.authMethod = authOpt
 	return hc
 }
 
@@ -138,7 +138,7 @@ func (hc *HTTPClient) prepareRequest(ctx context.Context, url string, preq *Requ
 }
 
 func (hc *HTTPClient) executeRequest(ctx context.Context, url string, preq *Request) (*http.Response, error) {
-	if hc.needReauth(preq) {
+	if hc.needsReauth(preq) {
 		return hc.handleReauthBeforeRequest(ctx, url, preq)
 	}
 
@@ -265,7 +265,7 @@ func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *
 	return defaultErrorResponse(nil, url, req, resp)
 }
 
-func (hc *HTTPClient) needReauth(req *Request) bool {
+func (hc *HTTPClient) needsReauth(req *Request) bool {
 	if req.skipAuth {
 		return false
 	}
@@ -309,7 +309,7 @@ func (hc *HTTPClient) setToken(newToken *Token) *HTTPClient {
 	defer hc.mut.Unlock()
 	if newToken != nil {
 		hc.token = newToken
-		hc.WithKvDefaultHeaders("Authorization", "Bearer "+hc.token.AccessToken)
+		hc.WithDefaultHeaders("Authorization", "Bearer "+hc.token.AccessToken)
 	}
 
 	return hc

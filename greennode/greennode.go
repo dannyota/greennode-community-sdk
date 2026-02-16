@@ -76,11 +76,11 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 		hc.WithRetryCount(cfg.RetryCount)
 	}
 	if cfg.SleepDuration > 0 {
-		hc.WithSleep(cfg.SleepDuration)
+		hc.WithRetryInterval(cfg.SleepDuration)
 	}
-	hc.WithKvDefaultHeaders("Content-Type", "application/json")
+	hc.WithDefaultHeaders("Content-Type", "application/json")
 	if cfg.UserAgent != "" {
-		hc.WithKvDefaultHeaders("User-Agent", cfg.UserAgent)
+		hc.WithDefaultHeaders("User-Agent", cfg.UserAgent)
 	}
 
 	c := &Client{}
