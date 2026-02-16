@@ -24,14 +24,14 @@ func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessT
 		WithJSONError(errResp).
 		WithJSONBody(opts).
 		WithHeader("Content-Type", "application/x-www-form-urlencoded").
-		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.GetClientID()+":"+opts.GetClientSecret())))
+		WithHeader("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(opts.ClientID+":"+opts.ClientSecret)))
 
 	if _, sdkErr := s.IAMClient.Post(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcTooManyFailedLogins,
 			sdkerror.EcAuthenticationFailed,
 			sdkerror.EcUnknownAuthFailure). // Always put this handler at the end
-			WithKVparameters("clientId", opts.GetClientID())
+			WithKVparameters("clientId", opts.ClientID)
 	}
 
 	return resp.ToEntityAccessToken(), nil

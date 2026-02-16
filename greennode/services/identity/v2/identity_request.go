@@ -15,21 +15,4 @@ func NewGetAccessTokenRequest(clientID, clientSecret string) *GetAccessTokenRequ
 	}
 }
 
-func (r *GetAccessTokenRequest) WithClientID(clientID string) *GetAccessTokenRequest {
-	r.ClientID = clientID
-	return r
-}
-
-func (r *GetAccessTokenRequest) WithClientSecret(clientSecret string) *GetAccessTokenRequest {
-	r.ClientSecret = clientSecret
-	return r
-}
-
-func (r *GetAccessTokenRequest) GetClientID() string {
-	return r.ClientID
-}
-
-func (r *GetAccessTokenRequest) GetClientSecret() string {
-	return r.ClientSecret
-}
 

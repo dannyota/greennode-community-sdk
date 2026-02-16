@@ -17,14 +17,14 @@ func TestNewGetAccessTokenRequest(t *testing.T) {
 	}
 }
 
-func TestGetAccessTokenRequest_Setters(t *testing.T) {
-	r := NewGetAccessTokenRequest("a", "b").
-		WithClientID("new-id").
-		WithClientSecret("new-secret")
-	if r.GetClientID() != "new-id" {
-		t.Fatalf("got %q", r.GetClientID())
+func TestGetAccessTokenRequest_DirectFieldAccess(t *testing.T) {
+	r := NewGetAccessTokenRequest("a", "b")
+	r.ClientID = "new-id"
+	r.ClientSecret = "new-secret"
+	if r.ClientID != "new-id" {
+		t.Fatalf("got %q", r.ClientID)
 	}
-	if r.GetClientSecret() != "new-secret" {
-		t.Fatalf("got %q", r.GetClientSecret())
+	if r.ClientSecret != "new-secret" {
+		t.Fatalf("got %q", r.ClientSecret)
 	}
 }
