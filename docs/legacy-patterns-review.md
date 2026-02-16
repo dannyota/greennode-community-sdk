@@ -292,11 +292,14 @@ Minor issue — small count.
 - [x] Remove Common wrapper structs — inline the ID fields into request types (17 inlined, 8 files deleted)
 - [x] Remove `Get*()` getters on Common types (Paging getters removed)
 
-### Phase 3: Modernize request API (breaking change, needs major version)
-- [ ] Replace `With*()` builder pattern with one of:
-  - Struct literals (simplest — export fields, let users set directly)
-  - Functional options (if many optional fields with defaults)
-- [ ] Simplify `New*()` constructors to only take truly required params
+### Phase 3: Remove With*() builder methods from service requests — DONE
+- [x] Replace `With*()` builder pattern with direct struct field access (318 removed from `greennode/services/`)
+- [x] Move validation logic from `With*()` into `normalizeForAPI()` methods
+- [x] Add `NewTags()` / `NewServerTags()` / `NewVolumeTags()` helpers for variadic kv-pair convenience
+- [x] Export `PolicyPosition` type and `PolicyPositions` field in loadbalancer/v2
+- [x] Extract anonymous tag struct to named `SystemTag` in server/v1
+- [x] Remove remnant `Get*()` getters on request types (missed in phase 2)
+- [x] Update all internal callers and tests
 
 ### Phase 4: Reduce DTO overhead (breaking change, optional)
 - [ ] Evaluate which `ToEntity*()` conversions are 1:1 copies vs genuine mappings
