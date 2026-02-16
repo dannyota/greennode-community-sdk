@@ -35,9 +35,9 @@ func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNa
 		return nil, sdkErr
 	}
 
-	quota := listQuotas.FindQuotaByName(string(opts.GetName()))
+	quota := listQuotas.FindQuotaByName(string(opts.Name))
 	if quota == nil {
-		return nil, sdkerror.NewQuotaNotFound().WithKVparameters("quotaName", opts.GetName())
+		return nil, sdkerror.NewQuotaNotFound().WithKVparameters("quotaName", opts.Name)
 	}
 
 	return quota, nil

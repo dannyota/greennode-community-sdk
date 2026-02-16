@@ -23,7 +23,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 
 	if _, sdkErr := s.PortalClient.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("backendProjectId", opts.GetBackEndProjectID())
+			WithKVparameters("backendProjectId", opts.BackEndProjectID)
 	}
 
 	return resp.ToEntityPortal(), nil
