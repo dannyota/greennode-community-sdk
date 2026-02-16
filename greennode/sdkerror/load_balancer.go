@@ -21,7 +21,7 @@ const (
 	patternLoadBalancerIsDeleting          = `load balancer id [^.]+ is deleting`
 	patternLoadBalancerIsCreating          = `load balancer id [^.]+ is creating`
 	patternLoadBalancerResizeSamePackage   = "is the same as the current package"
-	patternLoadbalancerPackageNotFound     = "invalid package id"
+	patternLoadBalancerPackageNotFound     = "invalid package id"
 	patternLoadBalancerIsUpdating          = `load balancer id [^.]+ is updating`
 	patternGlobalLoadBalancerNotFound      = "global load balancer is not found"
 )
@@ -59,6 +59,6 @@ func init() {
 	})
 	register(EcVLBMemberMustIdentical, &classifier{match: containsAny(patternMemberMustIdentical)})
 	register(EcVLBLoadBalancerResizeSamePackage, &classifier{match: containsAny(patternLoadBalancerResizeSamePackage)})
-	register(EcVLBLoadBalancerPackageNotFound, &classifier{match: containsAny(patternLoadbalancerPackageNotFound)})
+	register(EcVLBLoadBalancerPackageNotFound, &classifier{match: containsAny(patternLoadBalancerPackageNotFound)})
 	register(EcGlobalLoadBalancerNotFound, &classifier{match: containsAny(patternGlobalLoadBalancerNotFound)})
 }

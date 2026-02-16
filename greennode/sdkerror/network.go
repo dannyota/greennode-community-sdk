@@ -9,7 +9,7 @@ const (
 	patternSubnetNotBelongNetwork           = `subnet id: [^.]+ belong to network id: [^.]+ not found`
 	patternInternalNetworkInterfaceNotFound = `internal network interface with id [^.]+ is not found`
 	patternWanIpAvailable                   = "wan ip is available"
-	pattermWapIDNotFound                    = "cannot get wan ip with id"
+	patternWapIDNotFound                    = "cannot get wan ip with id"
 	patternAddressPairExisted               = `address pair with internal network interface  id [^.]+ already exists`
 )
 
@@ -32,5 +32,5 @@ func init() {
 	register(EcVServerInternalNetworkInterfaceNotFound, &classifier{match: matchRegexps(regexErrorInternalNetworkInterfaceNotFound)})
 	register(EcVServerAddressPairExisted, &classifier{match: matchRegexps(regexErrorAddressPairExisted)})
 	register(EcVServerWanIpAvailable, &classifier{match: containsAny(patternWanIpAvailable)})
-	register(EcVServerWanIDNotFound, &classifier{match: containsAny(pattermWapIDNotFound)})
+	register(EcVServerWanIDNotFound, &classifier{match: containsAny(patternWapIDNotFound)})
 }

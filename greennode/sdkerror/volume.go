@@ -12,7 +12,7 @@ const (
 	patternVolumeAlreadyAttached           = "already attached to instance"
 	patternVolumeAlreadyAttachedThisServer = "this volume has been attached"
 	patternVolumeInProcess                 = "is in-process"
-	patternVolumeUnchaged                  = "volume size or volume type must be changed"
+	patternVolumeUnchanged                  = "volume size or volume type must be changed"
 	patternVolumeMustSameZone              = "new volume type must be same zone"
 	patternVolumeMigrateMissingInit        = "the action must be init-migrate or migrate or confirm-migrate"
 	patternVolumeMigrateNeedProcess        = "this volume cannot initialize migration because state is ready to migrate difference"
@@ -49,7 +49,7 @@ func init() {
 	register(EcVServerVolumeAlreadyAttached, &classifier{match: containsAny(patternVolumeAlreadyAttached)})
 	register(EcVServerVolumeAlreadyAttachedThisServer, &classifier{match: containsAny(patternVolumeAlreadyAttachedThisServer)})
 	register(EcVServerVolumeInProcess, &classifier{match: containsAny(patternVolumeInProcess)})
-	register(EcVServerVolumeUnchanged, &classifier{match: containsAny(patternVolumeUnchaged)})
+	register(EcVServerVolumeUnchanged, &classifier{match: containsAny(patternVolumeUnchanged)})
 	register(EcVServerVolumeMustSameZone, &classifier{match: containsAny(patternVolumeMustSameZone)})
 	register(EcVServerVolumeMigrateMissingInit, &classifier{match: containsAny(patternVolumeMigrateMissingInit)})
 	register(EcVServerVolumeMigrateNeedProcess, &classifier{match: containsAny(patternVolumeMigrateNeedProcess)})

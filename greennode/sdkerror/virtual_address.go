@@ -25,6 +25,6 @@ func init() {
 	})
 	register(EcVServerVirtualAddressInUse, &classifier{
 		match: matchAnyOf(containsAny(patternVirtualAddressInUse), matchRegexps(regexErrorVirtualAddressInUse)),
-		category: ErrCatQuota,
+		category: ErrCatVirtualAddress,
 	})
 }
