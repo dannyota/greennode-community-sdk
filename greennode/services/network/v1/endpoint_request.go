@@ -145,10 +145,6 @@ func (r *ListTagsByEndpointIDRequest) getDefaultQuery() string {
 	return query
 }
 
-func (r *ListTagsByEndpointIDRequest) GetMapHeaders() map[string]string {
-	return r.PortalUser.GetMapHeaders()
-}
-
 // _________________________________________________________________ CreateTagsWithEndpointIdRequest
 
 type CreateTagsWithEndpointIDRequest struct {
@@ -162,10 +158,6 @@ type CreateTagsWithEndpointIDRequest struct {
 	SystemTag bool `json:"systemTag"`
 }
 
-func (r *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
-	return r.PortalUser.GetMapHeaders()
-}
-
 func (r *CreateTagsWithEndpointIDRequest) GetProjectID() string {
 	return r.ProjectID
 }
@@ -177,10 +169,6 @@ type DeleteTagOfEndpointRequest struct {
 
 	ProjectID string
 	TagID     string
-}
-
-func (r *DeleteTagOfEndpointRequest) GetMapHeaders() map[string]string {
-	return r.PortalUser.GetMapHeaders()
 }
 
 func (r *DeleteTagOfEndpointRequest) GetTagID() string {
@@ -199,10 +187,6 @@ type UpdateTagValueOfEndpointRequest struct {
 	TagID     string
 	ProjectID string
 	TagValue  string `json:"tagValue"`
-}
-
-func (r *UpdateTagValueOfEndpointRequest) GetMapHeaders() map[string]string {
-	return r.PortalUser.GetMapHeaders()
 }
 
 func (r *UpdateTagValueOfEndpointRequest) GetTagID() string {

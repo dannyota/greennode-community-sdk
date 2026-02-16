@@ -67,8 +67,3 @@ func (pu *PortalUser) GetPortalUserID() string {
 }
 
 
-func (pu *PortalUser) GetMapHeaders() map[string]string {
-	return map[string]string{
-		"portal-user-id": pu.ID,
-	}
-}

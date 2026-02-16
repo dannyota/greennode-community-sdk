@@ -20,7 +20,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, op
 	opts.ProjectID = s.Client.ProjectID()
 	opts.normalizeForAPI()
 	req := client.NewRequest().
-		WithMapHeaders(opts.GetMapHeaders()).
+		WithUserID(opts.PortalUser.ID).
 		WithOkCodes(202).
 		WithJSONBody(opts).
 		WithJSONResponse(resp).

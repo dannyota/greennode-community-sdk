@@ -168,11 +168,6 @@ func TestPortalUser(t *testing.T) {
 	if got := pu.GetPortalUserID(); got != "user-456" {
 		t.Fatalf("got %q, want %q", got, "user-456")
 	}
-
-	headers := pu.GetMapHeaders()
-	if headers["portal-user-id"] != "user-456" {
-		t.Fatalf("header: got %q, want %q", headers["portal-user-id"], "user-456")
-	}
 }
 
 // ---------------------------------------------------------------------------

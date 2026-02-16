@@ -46,10 +46,6 @@ func (r *CreateLoadBalancerRequest) normalizeForAPI() {
 	}
 }
 
-func (r *CreateLoadBalancerRequest) GetMapHeaders() map[string]string {
-	return r.PortalUser.GetMapHeaders()
-}
-
 func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) *CreateLoadBalancerRequest {
 	return &CreateLoadBalancerRequest{
 		Name:            name,

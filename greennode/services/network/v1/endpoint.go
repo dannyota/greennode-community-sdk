@@ -123,7 +123,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opt
 	resp := new(ListTagsByEndpointIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithMapHeaders(opts.GetMapHeaders()).
+		WithUserID(opts.PortalUser.ID).
 		WithOkCodes(200).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)
@@ -142,7 +142,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(ctx context.Context,
 	url := createTagsWithEndpointIDURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithMapHeaders(opts.GetMapHeaders()).
+		WithUserID(opts.PortalUser.ID).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
@@ -163,7 +163,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(ctx context.Context, opts
 	url := deleteTagOfEndpointURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithMapHeaders(opts.GetMapHeaders()).
+		WithUserID(opts.PortalUser.ID).
 		WithOkCodes(200).
 		WithJSONError(errResp)
 
@@ -182,7 +182,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(ctx context.Context,
 	url := updateTagValueOfEndpointURL(s.Client, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
-		WithMapHeaders(opts.GetMapHeaders()).
+		WithUserID(opts.PortalUser.ID).
 		WithOkCodes(200).
 		WithJSONBody(opts).
 		WithJSONError(errResp)
