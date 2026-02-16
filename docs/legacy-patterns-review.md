@@ -290,6 +290,11 @@ Minor issue — small count.
 - [x] Remove `Get*()` getters on entity types — users access fields directly (22 removed)
 - [x] Remove Common wrapper structs — inline the ID fields into request types (17 inlined, 8 files deleted)
 - [x] Remove `Get*()` getters on Common types (Paging getters removed)
+- [x] Remove `GetProjectID()` / `GetPortalUserID()` on `common.Project` and `common.PortalUser`
+- [x] Remove `GetMapHeaders()` on `common.PortalUser` — callers use `WithUserID(opts.PortalUser.ID)` directly
+- [x] Remove `GetProjectID()` / `GetTagID()` on network/v1 request types — callers use direct field access
+- [x] Unexport `GetDefaultQuery()` → `getDefaultQuery()` (package-internal only)
+- [x] Unify `WithErrorCategories()` into `AppendCategories()` (removed duplicate method)
 
 ### Phase 3: Remove With*() builder methods from service requests — DONE
 - [x] Replace `With*()` builder pattern with direct struct field access (318 removed from `greennode/services/`)
@@ -323,4 +328,4 @@ internals (client, request, error) rather than service request DTOs:
 | Client builders | `greennode/client/request.go` | 9 |
 | Client builders | `greennode/client/http.go` | 5 |
 | Client builders | `greennode/client/auth.go` | 2 |
-| Error builders | `greennode/sdkerror/sdk_error.go` | 6 |
+| Error builders | `greennode/sdkerror/sdk_error.go` | 5 |

@@ -79,11 +79,11 @@ Also removed: commented-out struct fields (`address_pair_response.go`),
 commented-out error handling code (`address_pair.go`), and a lone `/** */`
 block comment (`virtualaddress_request.go`).
 
-### 1.6 Java-style getters — **PARTIALLY RESOLVED**
+### 1.6 Java-style getters — **RESOLVED**
 
 (Renumbered from §1.5)
 
-Most `Get*()` accessors have been simplified:
+All `Get*()` accessors have been simplified or removed:
 
 | Change | Status |
 |--------|--------|
@@ -92,10 +92,14 @@ Most `Get*()` accessors have been simplified:
 | `GetErrorCategories()` → `ErrorCategories()` | Done |
 | `GetAccessToken()` → `AccessToken()` | Done |
 | `GetExpiresAt()` → `ExpiresAt()` | Done |
+| `GetProjectID()` on `common.Project` | Done (deleted — use `p.ID`) |
+| `GetPortalUserID()` on `common.PortalUser` | Done (deleted — use `pu.ID`) |
+| `GetMapHeaders()` on `common.PortalUser` | Done (deleted — callers use `WithUserID(opts.PortalUser.ID)`) |
+| `GetProjectID()`/`GetTagID()` on network/v1 request types | Done (deleted — callers use direct field access) |
+| `GetDefaultQuery()` on request types | Done (unexported to `getDefaultQuery()` — package-internal only) |
+| `WithErrorCategories()` duplicate | Done (removed — use `AppendCategories()`) |
 
-**Kept with `Get` prefix** (name collisions with exported struct fields used for
-JSON serialization on request types):
-- `GetProjectID()` on `common.Project` and network/v1 request types
+**Kept with `Get` prefix:**
 - `GetMessage()` (collides with `Message` field on error response structs)
 
 `ServiceClient.GetProjectID()` and `GetZoneID()` have since been renamed to
@@ -364,7 +368,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Abbreviation casing (secondary: `Ip`, `Http1`, `Vserver`) | 19 files | loadbalancer, glb, network, entity | **Done** |
-| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (2 kept due to collisions: `GetProjectID`, `GetMessage`) |
+| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Done** (1 kept: `GetMessage` — field name collision) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Done** |
 | Interface-per-type | all request types | codebase-wide | **Done** |
