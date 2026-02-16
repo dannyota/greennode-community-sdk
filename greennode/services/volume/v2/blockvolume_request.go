@@ -141,6 +141,19 @@ type (
 	}
 )
 
+// NewVolumeTags creates a []VolumeTag from variadic key-value string pairs.
+// If an odd number of strings is provided, the last value defaults to "none".
+func NewVolumeTags(kvPairs ...string) []VolumeTag {
+	if len(kvPairs)%2 != 0 {
+		kvPairs = append(kvPairs, "none")
+	}
+	tags := make([]VolumeTag, 0, len(kvPairs)/2)
+	for i := 0; i < len(kvPairs); i += 2 {
+		tags = append(tags, VolumeTag{Key: kvPairs[i], Value: kvPairs[i+1]})
+	}
+	return tags
+}
+
 func (r *CreateBlockVolumeRequest) WithZone(zone string) *CreateBlockVolumeRequest {
 	r.Zone = zone
 	return r

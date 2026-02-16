@@ -45,6 +45,19 @@ type Tag struct {
 	IsEdited bool   `json:"isEdited,omitempty"`
 }
 
+// NewTags creates a []Tag from variadic key-value string pairs.
+// If an odd number of strings is provided, the last value defaults to "none".
+func NewTags(kvPairs ...string) []Tag {
+	if len(kvPairs)%2 != 0 {
+		kvPairs = append(kvPairs, "none")
+	}
+	tags := make([]Tag, 0, len(kvPairs)/2)
+	for i := 0; i < len(kvPairs); i += 2 {
+		tags = append(tags, Tag{Key: kvPairs[i], Value: kvPairs[i+1]})
+	}
+	return tags
+}
+
 type PortalUser struct {
 	ID string
 }

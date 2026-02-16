@@ -71,6 +71,19 @@ type ServerTag struct {
 	Value string `json:"value"`
 }
 
+// NewServerTags creates a []ServerTag from variadic key-value string pairs.
+// If an odd number of strings is provided, the last value defaults to "none".
+func NewServerTags(kvPairs ...string) []ServerTag {
+	if len(kvPairs)%2 != 0 {
+		kvPairs = append(kvPairs, "none")
+	}
+	tags := make([]ServerTag, 0, len(kvPairs)/2)
+	for i := 0; i < len(kvPairs); i += 2 {
+		tags = append(tags, ServerTag{Key: kvPairs[i], Value: kvPairs[i+1]})
+	}
+	return tags
+}
+
 func (r *CreateServerRequest) WithZone(zoneID string) *CreateServerRequest {
 	r.Zone = zoneID
 	return r
