@@ -21,11 +21,6 @@ type CreateVirtualAddressCrossProjectRequest struct {
 	} `json:"crossProjectRequest"` // required
 }
 
-func (r *CreateVirtualAddressCrossProjectRequest) WithDescription(description string) *CreateVirtualAddressCrossProjectRequest {
-	r.Description = description
-	return r
-}
-
 // API Delete virtual address by ID
 type DeleteVirtualAddressByIDRequest struct {
 	VirtualAddressID string

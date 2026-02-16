@@ -32,10 +32,9 @@ func TestCreateEndpoint(t *testing.T) {
 		"f3d11a4c-f071-4009-88a6-4a21346c8708",
 		"net-5ac170fc-834a-4621-b512-481e09b82fc8",
 		"sub-0c508dd6-5af6-4f0e-a860-35346b530cf1",
-	).WithDescription(
-		"This is the service endpoint for vStorage APIs, established by the VKS product. " +
-			"Please refrain from DELETING it manually.",
 	)
+	opt.ResourceInfo.Description = "This is the service endpoint for vStorage APIs, established by the VKS product. " +
+		"Please refrain from DELETING it manually."
 
 	lb, sdkerr := vngcloud.NetworkV1.CreateEndpoint(context.Background(), opt)
 	if sdkerr != nil {
@@ -57,13 +56,18 @@ func TestCreateEndpointInternal(t *testing.T) {
 		"c36bb265-f569-4748-a03a-fca52c7588ea",
 		"net-dc14bb60-d500-40b5-945f-218540990187",
 		"sub-3f7a1d9b-1d68-44d0-a14f-4cc6bf18a7c4",
-	).WithDescription(
-		"This is the service endpoint for vStorage APIs, established by the VKS product. "+
-			"Please refrain from DELETING it manually.",
-	).AddNetworking("HCM-1B", "sub-3f7a1d9b-1d68-44d0-a14f-4cc6bf18a7c4").
-		AddNetworking("HCM-1A", "sub-85ba01f6-02ec-4dfc-8884-ee0036c68a5b").
-		WithScaling(1, 3).
-		WithEnableDnsName(true).WithBuyMorePoc(false).WithPoc(false).WithEnableAutoRenew(true)
+	)
+	opt.ResourceInfo.Description = "This is the service endpoint for vStorage APIs, established by the VKS product. " +
+		"Please refrain from DELETING it manually."
+	opt.ResourceInfo.Networking = append(opt.ResourceInfo.Networking,
+		networkv1.EndpointNetworking{Zone: "HCM-1B", SubnetUuid: "sub-3f7a1d9b-1d68-44d0-a14f-4cc6bf18a7c4"},
+		networkv1.EndpointNetworking{Zone: "HCM-1A", SubnetUuid: "sub-85ba01f6-02ec-4dfc-8884-ee0036c68a5b"},
+	)
+	opt.ResourceInfo.Scaling = networkv1.EndpointScaling{MinSize: 1, MaxSize: 3}
+	opt.ResourceInfo.EnableDnsName = true
+	opt.ResourceInfo.IsBuyMorePoc = false
+	opt.ResourceInfo.IsPoc = false
+	opt.ResourceInfo.IsEnableAutoRenew = true
 
 	lb, sdkerr := vngcloud.NetworkV1.CreateEndpoint(context.Background(), opt)
 	if sdkerr != nil {
@@ -96,7 +100,8 @@ func TestDeleteEndpoint(t *testing.T) {
 
 func TestListEndpoints(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv1.NewListEndpointsRequest(1, 100).WithUuid("enp-9349271b-af44-4e39-8829-615d945fa6c2")
+	opt := networkv1.NewListEndpointsRequest(1, 100)
+	opt.Uuid = "enp-9349271b-af44-4e39-8829-615d945fa6c2"
 
 	lb, sdkerr := vngcloud.NetworkV1.ListEndpoints(context.Background(), opt)
 	if sdkerr != nil {
@@ -145,7 +150,8 @@ func TestCreateEndpointTags(t *testing.T) {
 		"60108",
 		"pro-88265bae-d2ef-424b-b8a7-9eeb08aec1f7",
 		"enp-7e8e4476-feeb-414c-ac03-3501aae607d0",
-	).AddTag("test-key", "test-value")
+	)
+	opt.Tags = []networkv1.EndpointTag{{TagKey: "test-key", TagValue: "test-value"}}
 
 	sdkerr := vngcloud.NetworkInternal.CreateTagsWithEndpointID(context.Background(), opt)
 	if sdkerr != nil {

@@ -26,33 +26,37 @@ type GetEndpointByIDRequest struct {
 	EndpointID string
 }
 
+type EndpointNetworking struct {
+	Zone       string `json:"zone"`
+	SubnetUuid string `json:"subnetUuid"`
+}
+
+type EndpointScaling struct {
+	MinSize int `json:"minSize"`
+	MaxSize int `json:"maxSize"`
+}
+
 type CreateEndpointRequest struct {
 	ResourceType string `json:"resourceType"`
 	Action       string `json:"action"`
 	ResourceInfo struct {
-		IsBuyMorePoc      bool   `json:"isBuyMorePoc"`
-		IsPoc             bool   `json:"isPoc"`
-		IsEnableAutoRenew bool   `json:"isEnableAutoRenew"`
-		EndpointName      string `json:"endpointName"`
-		CategoryUuid      string `json:"categoryUuid"`
-		ServiceUuid       string `json:"serviceUuid"`
-		PackageUuid       string `json:"packageUuid"`
-		VpcUuid           string `json:"vpcUuid"`
-		PortalUserID      string `json:"portalUserId"`
-		SubnetUuid        string `json:"subnetUuid"`
-		RegionUuid        string `json:"regionUuid"`
-		ProjectUuid       string `json:"projectUuid"`
-		Description       string `json:"description"`
-		EnableAZ          bool   `json:"enableAZ"`
-		EnableDnsName     bool   `json:"enableDnsName"`
-		Networking        []struct {
-			Zone       string `json:"zone"`
-			SubnetUuid string `json:"subnetUuid"`
-		} `json:"networking"`
-		Scaling struct {
-			MinSize int `json:"minSize"`
-			MaxSize int `json:"maxSize"`
-		} `json:"scaling"`
+		IsBuyMorePoc      bool                 `json:"isBuyMorePoc"`
+		IsPoc             bool                 `json:"isPoc"`
+		IsEnableAutoRenew bool                 `json:"isEnableAutoRenew"`
+		EndpointName      string               `json:"endpointName"`
+		CategoryUuid      string               `json:"categoryUuid"`
+		ServiceUuid       string               `json:"serviceUuid"`
+		PackageUuid       string               `json:"packageUuid"`
+		VpcUuid           string               `json:"vpcUuid"`
+		PortalUserID      string               `json:"portalUserId"`
+		SubnetUuid        string               `json:"subnetUuid"`
+		RegionUuid        string               `json:"regionUuid"`
+		ProjectUuid       string               `json:"projectUuid"`
+		Description       string               `json:"description"`
+		EnableAZ          bool                 `json:"enableAZ"`
+		EnableDnsName     bool                 `json:"enableDnsName"`
+		Networking        []EndpointNetworking `json:"networking"`
+		Scaling           EndpointScaling      `json:"scaling"`
 	} `json:"resourceInfo"`
 }
 
@@ -63,92 +67,6 @@ func (r *CreateEndpointRequest) ToRequestBody(svc *client.ServiceClient) any {
 	r.ResourceInfo.RegionUuid = svc.GetZoneID()
 	r.ResourceInfo.ProjectUuid = svc.GetProjectID()
 
-	return r
-}
-
-func (r *CreateEndpointRequest) WithEndpointName(endpointName string) *CreateEndpointRequest {
-	r.ResourceInfo.EndpointName = endpointName
-	return r
-}
-
-func (r *CreateEndpointRequest) WithCategoryUuid(categoryUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.CategoryUuid = categoryUuid
-	return r
-}
-
-func (r *CreateEndpointRequest) WithServiceUuid(serviceUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.ServiceUuid = serviceUuid
-	return r
-}
-
-func (r *CreateEndpointRequest) WithPackageUuid(packageUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.PackageUuid = packageUuid
-	return r
-}
-
-func (r *CreateEndpointRequest) WithVpcUuid(vpcUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.VpcUuid = vpcUuid
-	return r
-}
-
-func (r *CreateEndpointRequest) WithPortalUserID(portalUserID string) *CreateEndpointRequest {
-	r.ResourceInfo.PortalUserID = portalUserID
-	return r
-}
-
-func (r *CreateEndpointRequest) GetPortalUserID() string {
-	return r.ResourceInfo.PortalUserID
-}
-
-func (r *CreateEndpointRequest) WithSubnetUuid(subnetUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.SubnetUuid = subnetUuid
-	return r
-}
-
-func (r *CreateEndpointRequest) WithDescription(desp string) *CreateEndpointRequest {
-	r.ResourceInfo.Description = desp
-	return r
-}
-
-func (r *CreateEndpointRequest) WithPoc(yes bool) *CreateEndpointRequest {
-	r.ResourceInfo.IsPoc = yes
-	return r
-}
-
-func (r *CreateEndpointRequest) WithEnableDnsName(yes bool) *CreateEndpointRequest {
-	r.ResourceInfo.EnableDnsName = yes
-	return r
-}
-
-func (r *CreateEndpointRequest) WithBuyMorePoc(yes bool) *CreateEndpointRequest {
-	r.ResourceInfo.IsBuyMorePoc = yes
-	return r
-}
-
-func (r *CreateEndpointRequest) WithEnableAutoRenew(yes bool) *CreateEndpointRequest {
-	r.ResourceInfo.IsEnableAutoRenew = yes
-	return r
-}
-
-func (r *CreateEndpointRequest) AddNetworking(zone, subnetUuid string) *CreateEndpointRequest {
-	r.ResourceInfo.Networking = append(r.ResourceInfo.Networking, struct {
-		Zone       string `json:"zone"`
-		SubnetUuid string `json:"subnetUuid"`
-	}{
-		Zone:       zone,
-		SubnetUuid: subnetUuid,
-	})
-	return r
-}
-
-func (r *CreateEndpointRequest) WithScaling(minSize int, maxSize int) *CreateEndpointRequest {
-	r.ResourceInfo.Scaling = struct {
-		MinSize int `json:"minSize"`
-		MaxSize int `json:"maxSize"`
-	}{
-		MinSize: minSize,
-		MaxSize: maxSize,
-	}
 	return r
 }
 
@@ -174,26 +92,6 @@ type ListEndpointsRequest struct {
 	Size  int
 	VpcID string
 	Uuid  string
-}
-
-func (r *ListEndpointsRequest) WithPage(page int) *ListEndpointsRequest {
-	r.Page = page
-	return r
-}
-
-func (r *ListEndpointsRequest) WithSize(size int) *ListEndpointsRequest {
-	r.Size = size
-	return r
-}
-
-func (r *ListEndpointsRequest) WithVpcID(vpcID string) *ListEndpointsRequest {
-	r.VpcID = vpcID
-	return r
-}
-
-func (r *ListEndpointsRequest) WithUuid(uuid string) *ListEndpointsRequest {
-	r.Uuid = uuid
-	return r
 }
 
 func (r *ListEndpointsRequest) ToListQuery() (string, error) {
@@ -257,30 +155,15 @@ type CreateTagsWithEndpointIDRequest struct {
 	EndpointID string
 	common.PortalUser
 
-	ProjectID    string
-	ResourceUuid string `json:"resourceUuid"`
-	Tags         []struct {
-		TagKey   string `json:"tagKey"`
-		TagValue string `json:"tagValue"`
-	} `json:"tags"`
+	ProjectID    string        `json:"-"`
+	ResourceUuid string        `json:"resourceUuid"`
+	Tags         []EndpointTag `json:"tags"`
 
 	SystemTag bool `json:"systemTag"`
 }
 
 func (r *CreateTagsWithEndpointIDRequest) GetMapHeaders() map[string]string {
 	return r.PortalUser.GetMapHeaders()
-}
-
-func (r *CreateTagsWithEndpointIDRequest) AddTag(key, value string) *CreateTagsWithEndpointIDRequest {
-	r.Tags = append(r.Tags, struct {
-		TagKey   string `json:"tagKey"`
-		TagValue string `json:"tagValue"`
-	}{
-		TagKey:   key,
-		TagValue: value,
-	})
-
-	return r
 }
 
 func (r *CreateTagsWithEndpointIDRequest) GetProjectID() string {
@@ -351,7 +234,7 @@ func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) *
 		EndpointUuid:        endpointID,
 		VpcUuid:             vpcID,
 		EndpointServiceUuid: endpointServiceID,
-		EndpointID: endpointID,
+		EndpointID:          endpointID,
 	}
 }
 
@@ -364,8 +247,8 @@ func NewListEndpointsRequest(page, size int) *ListEndpointsRequest {
 
 func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) *ListTagsByEndpointIDRequest {
 	return &ListTagsByEndpointIDRequest{
-		ID:        endpointID,
-		ProjectID: projectID,
+		ID:         endpointID,
+		ProjectID:  projectID,
 		EndpointID: endpointID,
 		PortalUser: common.PortalUser{ID: userID},
 	}
@@ -376,8 +259,8 @@ func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) *C
 		ResourceUuid: endpointID,
 		SystemTag:    true,
 		ProjectID:    projectID,
-		EndpointID: endpointID,
-		PortalUser: common.PortalUser{ID: userID},
+		EndpointID:   endpointID,
+		PortalUser:   common.PortalUser{ID: userID},
 	}
 }
 

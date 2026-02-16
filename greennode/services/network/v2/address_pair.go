@@ -49,7 +49,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(ctx context.Context, opts *DeleteAd
 	if _, sdkErr := s.VServerClient.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVirtualAddressNotFound).
-			WithKVparameters("addressPairId", opts.GetAddressPairID())
+			WithKVparameters("addressPairId", opts.AddressPairID)
 	}
 	return nil
 }

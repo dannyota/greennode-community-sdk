@@ -77,10 +77,6 @@ type DeleteSecgroupRuleByIDRequest struct { //__________________________________
 	SecgroupID string
 }
 
-func (r *DeleteSecgroupRuleByIDRequest) GetSecgroupRuleID() string {
-	return r.SecgroupRuleID
-}
-
 type ListSecgroupRulesBySecgroupIDRequest struct { //___________________________________________________________________
 	SecgroupID string
 }

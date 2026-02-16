@@ -10,11 +10,6 @@ type GetAllAddressPairByVirtualSubnetIDRequest struct {
 	VirtualSubnetID string
 }
 
-func (r *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string {
-	return r.VirtualSubnetID
-}
-
-
 func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) *SetAddressPairInVirtualSubnetRequest {
 	return &SetAddressPairInVirtualSubnetRequest{
 		VirtualSubnetID: subnetID,
@@ -28,10 +23,6 @@ func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR 
 type SetAddressPairInVirtualSubnetRequest struct {
 	VirtualSubnetID    string
 	AddressPairRequest AddressPairRequest
-}
-
-func (r *SetAddressPairInVirtualSubnetRequest) GetVirtualSubnetID() string {
-	return r.VirtualSubnetID
 }
 
 type AddressPairRequest struct {
@@ -50,11 +41,6 @@ type DeleteAddressPairRequest struct {
 	AddressPairID string
 }
 
-func (r *DeleteAddressPairRequest) GetAddressPairID() string {
-	return r.AddressPairID
-}
-
-
 // Api create address pair
 
 type AddressPairMode string
@@ -71,11 +57,6 @@ type CreateAddressPairRequest struct {
 	Mode *AddressPairMode `json:"mode,omitempty"`
 
 	VirtualAddressID string
-}
-
-func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddressPairRequest {
-	r.Mode = &mode
-	return r
 }
 
 func NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID string) *ListAddressPairsByVirtualAddressIDRequest {

@@ -12,8 +12,8 @@ func TestNewCreateSecgroupRequest(t *testing.T) {
 	if r.Description != "test description" {
 		t.Fatalf("Description: got %q", r.Description)
 	}
-	if r.GetSecgroupName() != "my-sg" {
-		t.Fatalf("GetSecgroupName: got %q", r.GetSecgroupName())
+	if r.Name != "my-sg" {
+		t.Fatalf("Name: got %q", r.Name)
 	}
 }
 

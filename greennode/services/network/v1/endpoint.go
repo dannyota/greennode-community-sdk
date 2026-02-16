@@ -52,7 +52,7 @@ func (s *NetworkServiceV1) CreateEndpoint(ctx context.Context, opts *CreateEndpo
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
 	req := client.NewRequest().
 		WithOkCodes(201).
-		WithUserID(opts.GetPortalUserID()).
+		WithUserID(opts.ResourceInfo.PortalUserID).
 		WithJSONBody(opts.ToRequestBody(s.VNetworkClient)).
 		WithJSONResponse(resp).
 		WithJSONError(errResp)

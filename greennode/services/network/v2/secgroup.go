@@ -44,7 +44,7 @@ func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgr
 			sdkerror.EcVServerSecgroupRuleExceedQuota,
 			sdkerror.EcVServerSecgroupExceedQuota).
 			WithKVparameters(
-				"secgroupName", opts.GetSecgroupName(),
+				"secgroupName", opts.Name,
 				"projectId", s.getProjectID())
 	}
 

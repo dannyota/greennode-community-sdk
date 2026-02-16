@@ -42,7 +42,7 @@ func deleteSecgroupRuleByIDURL(sc *client.ServiceClient, opts *DeleteSecgroupRul
 		"secgroups",
 		opts.SecgroupID,
 		"secgroupRules",
-		opts.GetSecgroupRuleID())
+		opts.SecgroupRuleID)
 }
 
 func listSecgroupRulesBySecgroupIDURL(sc *client.ServiceClient, opts *ListSecgroupRulesBySecgroupIDRequest) string {
@@ -82,7 +82,7 @@ func getAllAddressPairByVirtualSubnetIDURL(sc *client.ServiceClient, opts *GetAl
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtual-subnets",
-		opts.GetVirtualSubnetID(),
+		opts.VirtualSubnetID,
 		"addressPairs")
 }
 
@@ -90,7 +90,7 @@ func setAddressPairInVirtualSubnetURL(sc *client.ServiceClient, opts *SetAddress
 	return sc.ServiceURL(
 		sc.GetProjectID(),
 		"virtual-subnets",
-		opts.GetVirtualSubnetID(),
+		opts.VirtualSubnetID,
 		"addressPairs")
 }
 
@@ -99,7 +99,7 @@ func deleteAddressPairURL(sc *client.ServiceClient, opts *DeleteAddressPairReque
 		sc.GetProjectID(),
 		"virtual-subnets",
 		"addressPairs",
-		opts.GetAddressPairID())
+		opts.AddressPairID)
 }
 
 func createAddressPairURL(sc *client.ServiceClient, opts *CreateAddressPairRequest) string {

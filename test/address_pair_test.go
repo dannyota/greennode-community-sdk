@@ -65,8 +65,9 @@ func TestCreateAddressPair(t *testing.T) {
 	virtualAddressID := "vip-0d2402cf-49e8-43bf-abbe-b707597320e9"
 	internalNicID := "net-in-3b076753-6561-4e3e-8a66-e10dc79cab2d"
 
-	opt := networkv2.NewCreateAddressPairRequest(virtualAddressID, internalNicID).
-		WithMode(networkv2.AddressPairModeActiveActive)
+	opt := networkv2.NewCreateAddressPairRequest(virtualAddressID, internalNicID)
+	mode := networkv2.AddressPairModeActiveActive
+	opt.Mode = &mode
 
 	ap, err := vngcloud.Network.CreateAddressPair(context.Background(), opt)
 	if err != nil {

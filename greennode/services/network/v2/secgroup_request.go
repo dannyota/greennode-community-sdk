@@ -11,10 +11,6 @@ type CreateSecgroupRequest struct { //__________________________________________
 	Description string `json:"description"`
 }
 
-func (r *CreateSecgroupRequest) GetSecgroupName() string {
-	return r.Name
-}
-
 type GetSecgroupByIDRequest struct { //_________________________________________________________________________________
 	SecgroupID string
 }

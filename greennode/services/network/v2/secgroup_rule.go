@@ -44,7 +44,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *Del
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.SecgroupID,
-				"secgroupRuleId", opts.GetSecgroupRuleID(),
+				"secgroupRuleId", opts.SecgroupRuleID,
 				"projectId", s.getProjectID())
 	}
 
