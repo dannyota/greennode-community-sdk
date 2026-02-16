@@ -17,22 +17,25 @@ import (
   "context"
   "fmt"
 
-  "github.com/dannyota/greennode-community-sdk/v2/client"
+  "github.com/dannyota/greennode-community-sdk/v2/greennode"
   lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )
 
 func main() {
-  sdkConfig := client.NewSdkConfigure().
-    WithClientID("__YOUR_CLIENT_ID__").
-    WithClientSecret("__YOUR_CLIENT_SECRET__").
-    WithProjectID("__YOUR_PROJECT_ID__").
-    WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-    WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
+  c, err := greennode.NewClient(context.Background(), greennode.Config{
+    ClientID:     "__YOUR_CLIENT_ID__",
+    ClientSecret: "__YOUR_CLIENT_SECRET__",
+    ProjectID:    "__YOUR_PROJECT_ID__",
+    IAMEndpoint:  "https://iamapis.vngcloud.vn/accounts-api",
+    VLBEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+    RetryCount:   1,
+  })
+  if err != nil {
+    panic(err)
+  }
 
-  c := client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
-
-  packages, err := c.VLBGateway().V2().LoadBalancerService().
-    ListLoadBalancerPackages(context.Background(), lbv2.NewListLoadBalancerPackagesRequest())
+  packages, err := c.LoadBalancer.ListLoadBalancerPackages(
+    context.Background(), lbv2.NewListLoadBalancerPackagesRequest())
   if err != nil {
     panic(err)
   }

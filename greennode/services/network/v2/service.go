@@ -8,6 +8,14 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
+type NetworkServiceV2 struct {
+	VServerClient *client.ServiceClient
+}
+
+func (s *NetworkServiceV2) getProjectID() string {
+	return s.VServerClient.GetProjectID()
+}
+
 func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkByIDRequest) (*entity.Network, error) {
 	url := getNetworkByIDURL(s.VServerClient, opts)
 	resp := new(GetNetworkByIDResponse)

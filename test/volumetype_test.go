@@ -10,7 +10,7 @@ import (
 func TestGetVolumeTypeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeByIDRequest("fake-id")
-	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(context.Background(), opt)
+	volume, sdkerr := vngcloud.VolumeV1.GetVolumeTypeByID(context.Background(), opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -26,7 +26,7 @@ func TestGetVolumeTypeFailure(t *testing.T) {
 func TestGetVolumeTypeSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeByIDRequest("vtype-2fc64a6c-38e3-4f08-93a5-18018cb3ab23")
-	volume, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeByID(context.Background(), opt)
+	volume, sdkerr := vngcloud.VolumeV1.GetVolumeTypeByID(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -42,7 +42,7 @@ func TestGetVolumeTypeSuccess(t *testing.T) {
 
 func TestGetDefaultVolumeType(t *testing.T) {
 	vngcloud := validSdkConfig()
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetDefaultVolumeType(context.Background())
+	volType, sdkerr := vngcloud.VolumeV1.GetDefaultVolumeType(context.Background())
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -57,7 +57,7 @@ func TestGetVolumeTypeZones(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewGetVolumeTypeZonesRequest("HCM03-1A")
 
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetVolumeTypeZones(context.Background(), opt)
+	volType, sdkerr := vngcloud.VolumeV1.GetVolumeTypeZones(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -72,7 +72,7 @@ func TestGetVolumeTypes(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := volumev1.NewListVolumeTypeRequest("0745BE12-9433-4DD4-90A1-384631504EBE")
 
-	volType, sdkerr := vngcloud.VServerGateway().V1().VolumeService().GetListVolumeTypes(context.Background(), opt)
+	volType, sdkerr := vngcloud.VolumeV1.GetListVolumeTypes(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}

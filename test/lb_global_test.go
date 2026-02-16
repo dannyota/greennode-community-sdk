@@ -13,7 +13,7 @@ import (
 func TestListGlobalPoolsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalPoolsRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
-	pools, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalPools(context.Background(), opt)
+	pools, sdkerr := vngcloud.GLB.ListGlobalPools(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -39,7 +39,7 @@ func TestCreateGlobalPoolSuccess(t *testing.T) {
 		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
 		WithHealthMonitor(v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolTCP)).
 		WithMembers(poolMember)
-	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(context.Background(), opt)
+	pool, sdkerr := vngcloud.GLB.CreateGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
@@ -76,7 +76,7 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 				WithDomainName(common.Ptr("example.com")),
 		).
 		WithMembers(poolMember)
-	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalPool(context.Background(), opt)
+	pool, sdkerr := vngcloud.GLB.CreateGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
@@ -107,7 +107,7 @@ func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
 		WithHealthMonitor(httpMonitor)
 
-	pool, sdkerr := vngcloud.GLBGateway().V1().GLBService().UpdateGlobalPool(context.Background(), opt)
+	pool, sdkerr := vngcloud.GLB.UpdateGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
@@ -131,7 +131,7 @@ func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 func TestDeleteGlobalPoolSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-1ffbe2f4-0bb5-4272-afe9-0dfa8a4365df")
-	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalPool(context.Background(), opt)
+	sdkerr := vngcloud.GLB.DeleteGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
@@ -150,7 +150,7 @@ func TestDeleteGlobalPoolSuccess(t *testing.T) {
 func TestListGlobalPoolMembersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalPoolMembersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-0f4ba08b-e09d-4a1c-b953-523179cea006")
-	members, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalPoolMembers(context.Background(), opt)
+	members, sdkerr := vngcloud.GLB.ListGlobalPoolMembers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -191,7 +191,7 @@ func TestPatchGlobalPoolMemberSuccess(t *testing.T) {
 			// deleteAction,
 			updateAction,
 		)
-	sdkerr := vngcloud.GLBGateway().V1().GLBService().PatchGlobalPoolMembers(context.Background(), opt)
+	sdkerr := vngcloud.GLB.PatchGlobalPoolMembers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -202,7 +202,7 @@ func TestPatchGlobalPoolMemberSuccess(t *testing.T) {
 func TestListGlobalListenersSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalListenersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
-	listeners, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalListeners(context.Background(), opt)
+	listeners, sdkerr := vngcloud.GLB.ListGlobalListeners(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -227,7 +227,7 @@ func TestCreateGlobalListenerSuccess(t *testing.T) {
 		WithTimeoutConnection(5).
 		WithTimeoutMember(50).
 		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
-	listener, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalListener(context.Background(), opt)
+	listener, sdkerr := vngcloud.GLB.CreateGlobalListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -247,7 +247,7 @@ func TestUpdateGlobalListenerSuccess(t *testing.T) {
 		WithTimeoutConnection(6).
 		WithTimeoutMember(60).
 		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
-	listener, sdkerr := vngcloud.GLBGateway().V1().GLBService().UpdateGlobalListener(context.Background(), opt)
+	listener, sdkerr := vngcloud.GLB.UpdateGlobalListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -263,7 +263,7 @@ func TestUpdateGlobalListenerSuccess(t *testing.T) {
 func TestDeleteGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "glis-7ffc4f19-7218-4d38-8016-e3ad2401e3bd")
-	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalListener(context.Background(), opt)
+	sdkerr := vngcloud.GLB.DeleteGlobalListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -274,7 +274,7 @@ func TestDeleteGlobalListenerSuccess(t *testing.T) {
 func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListGlobalLoadBalancersRequest(0, 10)
-	lbs, sdkerr := vngcloud.GLBGateway().V1().GLBService().ListGlobalLoadBalancers(context.Background(), opt)
+	lbs, sdkerr := vngcloud.GLB.ListGlobalLoadBalancers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -331,7 +331,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 		WithGlobalListener(listener).
 		WithGlobalPool(pool).WithPackage("pkg-b02e62ab-a282-4faf-8732-a172ef497a7b")
 
-	lb, sdkerr := vngcloud.GLBGateway().V1().GLBService().CreateGlobalLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.GLB.CreateGlobalLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -347,7 +347,7 @@ func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
 func TestDeleteGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteGlobalLoadBalancerRequest("glb-3fd57a7e-7bb3-4152-a329-adba6d779c4a")
-	sdkerr := vngcloud.GLBGateway().V1().GLBService().DeleteGlobalLoadBalancer(context.Background(), opt)
+	sdkerr := vngcloud.GLB.DeleteGlobalLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -358,7 +358,7 @@ func TestDeleteGlobalLoadBalancerSuccess(t *testing.T) {
 func TestGetGlobalLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewGetGlobalLoadBalancerByIDRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7")
-	lb, sdkerr := vngcloud.GLBGateway().V1().GLBService().GetGlobalLoadBalancerByID(context.Background(), opt)
+	lb, sdkerr := vngcloud.GLB.GetGlobalLoadBalancerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}

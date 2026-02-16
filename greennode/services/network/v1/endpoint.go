@@ -9,6 +9,22 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type NetworkServiceV1 struct {
+	VNetworkClient *client.ServiceClient
+}
+
+func (s *NetworkServiceV1) getProjectID() string {
+	return s.VNetworkClient.GetProjectID()
+}
+
+type NetworkServiceInternalV1 struct {
+	VNetworkClient *client.ServiceClient
+}
+
+func (s *NetworkServiceInternalV1) getProjectID() string {
+	return s.VNetworkClient.GetProjectID()
+}
+
 func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpointByIDRequest) (*entity.Endpoint, error) {
 	url := getEndpointByIDURL(s.VNetworkClient, opts)
 	resp := new(GetEndpointByIDResponse)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/dannyota/greennode-community-sdk/v2/greennode"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
@@ -18,7 +19,7 @@ func TestCreateInterLoadBalancerSuccess1(t *testing.T) {
 		"sub-6d9aa273-713a-47a4-b4c2-38e150bd809c", // demo
 		"sub-fc1461fa-d8d6-4afd-b8c4-07fd6245dff6", // qc2
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -40,7 +41,7 @@ func TestCreateInterLoadBalancerV2(t *testing.T) {
 		"sub-403b36d2-39fc-47c4-b40b-8df0ecb71045",
 		"sub-f7770744-6aa4-4292-9ff9-b43b44716ede",
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -62,7 +63,7 @@ func TestCreateInterLoadBalancerForProject(t *testing.T) {
 		"sub-a5e4f8e9-e99e-498c-b99a-6b4720cf5c6f",
 		"sub-0f20f37a-602c-4b17-b5f8-f81d4c36aab1",
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -84,7 +85,7 @@ func TestCreateInterLoadBalancerSuccess2(t *testing.T) {
 		"sub-0f20f37a-602c-4b17-b5f8-f81d4c36aab1",
 		"sub-d1c1e1bf-2364-4a6a-b300-7bc25785a634",
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -106,7 +107,7 @@ func TestCreateInterVpcLbHcm3b(t *testing.T) {
 		"sub-0f20f37a-602c-4b17-b5f8-f81d4c36aab1",
 		"sub-511ef030-c961-45b5-baac-9d2dadf7e44c",
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -120,7 +121,17 @@ func TestCreateInterVpcLbHcm3b(t *testing.T) {
 }
 
 func TestCreateInterLoadBalancerSuccess3(t *testing.T) {
-	vngcloud := validSecondaryUserSdkConfig().WithProjectID("pro-c8e87532-dc1a-421c-8c5e-4604d772829f")
+	vngcloud, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        getValueOfEnv("SECONDARY_CLIENT_ID"),
+		ClientSecret:    getValueOfEnv("SECONDARY_CLIENT_SECRET"),
+		ZoneID:          getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:       "pro-c8e87532-dc1a-421c-8c5e-4604d772829f",
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:     "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
 	opt := inter.NewCreateLoadBalancerRequest(
 		getValueOfEnv("SECONDARY_USER_ID"),
 		"test-15percent-2",
@@ -128,7 +139,7 @@ func TestCreateInterLoadBalancerSuccess3(t *testing.T) {
 		"sub-0f20f37a-602c-4b17-b5f8-f81d4c36aab1",
 		"sub-0725ef54-a32e-404c-96f2-34745239c28d",
 	)
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -153,7 +164,7 @@ func TestCreateLoadBalancerSuccess(t *testing.T) {
 			WithMembers(lbv2.NewMember("test-member-1", "10.84.0.22", 80, 80)).
 			WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)))
 
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -177,7 +188,7 @@ func TestCreateLoadBalancerEmptyMemberSuccess(t *testing.T) {
 		WithPool(lbv2.NewCreatePoolRequest("test-pool", lbv2.PoolProtocolTCP).
 			WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP)))
 
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -217,7 +228,7 @@ func TestCreateInterVPCLoadBalancerWithPoolAndListenerSuccess(t *testing.T) {
 				WithDomainName("vngcloud.com").
 				WithSuccessCode("200")))
 
-	lb, sdkerr := vngcloud.VLBGateway().Internal().LoadBalancerService().CreateLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -236,7 +247,7 @@ func TestResizeLoadBalancerSuccess(t *testing.T) {
 		"lb-4d1508f9-8bb0-45a6-b55b-21a7412b4658",
 		"").WithPackageID("lbp-71cc3022-5fee-426d-9509-3341053e2477")
 
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ResizeLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.ResizeLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -252,7 +263,7 @@ func TestResizeLoadBalancerSuccess(t *testing.T) {
 func TestListLoadBalancerPackagesSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewListLoadBalancerPackagesRequest()
-	packages, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListLoadBalancerPackages(
+	packages, sdkerr := vngcloud.LoadBalancer.ListLoadBalancerPackages(
 		context.Background(), opt.WithZoneID(common.HCM_03_BKK_01_ZONE))
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -272,7 +283,7 @@ func TestListLoadBalancerPackagesSuccess(t *testing.T) {
 func TestGetLoadBalancerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-8f54cbd4-b8ee-4b86-aa9b-d365c468a902")
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetLoadBalancerByID(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.GetLoadBalancerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -288,7 +299,7 @@ func TestGetLoadBalancerSuccess(t *testing.T) {
 func TestGetLoadBalancerFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewGetLoadBalancerByIDRequest("lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cc6f")
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetLoadBalancerByID(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.GetLoadBalancerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -304,7 +315,7 @@ func TestGetLoadBalancerFailure(t *testing.T) {
 func TestListLoadBalancer(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewListLoadBalancersRequest(1, 10).WithName("test-lb-empty-members")
-	lbs, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListLoadBalancers(context.Background(), opt)
+	lbs, sdkerr := vngcloud.LoadBalancer.ListLoadBalancers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -322,7 +333,7 @@ func TestListLoadBalancerByTagsSuccess(t *testing.T) {
 	opt := lbv2.NewListLoadBalancersRequest(1, 10).
 		WithTags("vks-owned-cluster", "hcm03a_user-11412_k8s-a3c03d8e-344c-4a1e-98e0-6d9999ac8077")
 
-	lbs, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListLoadBalancers(context.Background(), opt)
+	lbs, sdkerr := vngcloud.LoadBalancer.ListLoadBalancers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -340,7 +351,7 @@ func TestCreatePoolWithoutMembersSuccess(t *testing.T) {
 	opt := lbv2.NewCreatePoolRequest("test-pool-7", lbv2.PoolProtocolTCP).
 		WithLoadBalancerID("lb-fb378dc6-71c5-417a-9466-677c03885d6f").
 		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP))
-	pool, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreatePool(context.Background(), opt)
+	pool, sdkerr := vngcloud.LoadBalancer.CreatePool(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -361,7 +372,7 @@ func TestCreatePoolWithMembersSuccess(t *testing.T) {
 		WithMembers(lbv2.NewMember("test-member-1", "10.84.0.32", 80, 80)).
 		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolTCP))
 
-	pool, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreatePool(context.Background(), opt)
+	pool, sdkerr := vngcloud.LoadBalancer.CreatePool(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -390,7 +401,7 @@ func TestCreateListenerSuccess(t *testing.T) {
 			"Access-Control-Expose-Headers", "X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After",
 		)
 
-	listener, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateListener(context.Background(), opt)
+	listener, sdkerr := vngcloud.LoadBalancer.CreateListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -409,7 +420,7 @@ func TestCreateListenerWithPoolIDSuccess(t *testing.T) {
 		WithLoadBalancerID("lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f").
 		WithDefaultPoolID("pool-82c3c670-6662-4087-bfc1-8098f25e84df")
 
-	listener, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateListener(context.Background(), opt)
+	listener, sdkerr := vngcloud.LoadBalancer.CreateListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -434,7 +445,7 @@ func TestUpdateListenerSuccess(t *testing.T) {
 		WithCidrs("0.0.0.0/0").
 		WithDefaultPoolID("pool-a9239c24-9289-4641-a16b-2d71883d168b")
 
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdateListener(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.UpdateListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -446,7 +457,7 @@ func TestUpdateListenerSuccess(t *testing.T) {
 func TestListListenersByLoadBalancerID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewListListenersByLoadBalancerIDRequest("lb-1d3a92bb-6ebd-4b19-ad4b-5f47f5953144")
-	listeners, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListListenersByLoadBalancerID(context.Background(), opt)
+	listeners, sdkerr := vngcloud.LoadBalancer.ListListenersByLoadBalancerID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -462,7 +473,7 @@ func TestListListenersByLoadBalancerID(t *testing.T) {
 func TestListPoolsByLoadBalancerID(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewListPoolsByLoadBalancerIDRequest("lb-4cc1add7-677f-4130-b71a-206940dad28e")
-	pools, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListPoolsByLoadBalancerID(context.Background(), opt)
+	pools, sdkerr := vngcloud.LoadBalancer.ListPoolsByLoadBalancerID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -485,7 +496,7 @@ func TestUpdatePoolMembersSuccess(t *testing.T) {
 		"pool-82c3c670-6662-4087-bfc1-8098f25e84df").
 		WithMembers(lbv2.NewMember("test-member-50", "10.84.0.50", 80, 80))
 
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdatePoolMembers(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.UpdatePoolMembers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -499,7 +510,7 @@ func TestListPoolMembersSuccess(t *testing.T) {
 	opt := lbv2.NewListPoolMembersRequest(
 		"lb-8bd4ea07-ab40-483d-8387-124ed2f2cecb",
 		"pool-528261c5-9fb4-40bb-bd48-f47b79b272f3")
-	members, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListPoolMembers(context.Background(), opt)
+	members, sdkerr := vngcloud.LoadBalancer.ListPoolMembers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -517,7 +528,7 @@ func TestDeletePoolSuccess(t *testing.T) {
 	opt := lbv2.NewDeletePoolByIDRequest(
 		"lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f",
 		"pool-82c3c670-6662-4087-bfc1-8098f25e84df")
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().DeletePoolByID(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.DeletePoolByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -531,7 +542,7 @@ func TestDeleteListenterSuccess(t *testing.T) {
 	opt := lbv2.NewDeleteListenerByIDRequest(
 		"lb-f7adf4ba-7734-45f3-8cb5-9b0c3850cd6f",
 		"lis-23655c30-e458-49ac-ba55-49dfcd104db8")
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteListenerByID(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.DeleteListenerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -543,7 +554,7 @@ func TestDeleteListenterSuccess(t *testing.T) {
 func TestDeleteLoadBalancer(t *testing.T) {
 	vngcloud := validHcm3bSdkConfig()
 	opt := lbv2.NewDeleteLoadBalancerByIDRequest("lb-50b72305-02a5-4235-8422-42d6638c7845")
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().DeleteLoadBalancerByID(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.DeleteLoadBalancerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -555,7 +566,7 @@ func TestDeleteLoadBalancer(t *testing.T) {
 func TestListTagsSuccess(t *testing.T) {
 	vngcloud := validSuperSdkConfig2()
 	opt := lbv2.NewListTagsRequest("lb-b1153f05-fd44-4861-8b66-d8b811597faf")
-	tags, sdkErr := vngcloud.VLBGateway().V2().LoadBalancerService().ListTags(context.Background(), opt)
+	tags, sdkErr := vngcloud.LoadBalancer.ListTags(context.Background(), opt)
 	if sdkErr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkErr)
 	}
@@ -572,7 +583,7 @@ func TestCreateTagsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewCreateTagsRequest("lb-3b53db2e-357a-406b-9c56-499f1c21a48c").
 		WithTags("vks-owned-cluster2", "none")
-	sdkErr := vngcloud.VLBGateway().V2().LoadBalancerService().CreateTags(context.Background(), opt)
+	sdkErr := vngcloud.LoadBalancer.CreateTags(context.Background(), opt)
 	if sdkErr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkErr)
 	}
@@ -585,7 +596,7 @@ func TestUpdateTagsSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewUpdateTagsRequest("lb-39e1750b-7141-455e-a668-a03d53b0328b").
 		WithTags("vks-user", "test-user")
-	sdkErr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdateTags(context.Background(), opt)
+	sdkErr := vngcloud.LoadBalancer.UpdateTags(context.Background(), opt)
 	if sdkErr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkErr)
 	}
@@ -604,7 +615,7 @@ func TestUpdatePoolSuccess(t *testing.T) {
 		WithHealthMonitor(lbv2.NewHealthMonitor(lbv2.HealthCheckProtocolPINGUDP).
 			WithTimeout(6).WithUnhealthyThreshold(4).WithHealthyThreshold(7).WithInterval(29))
 
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdatePool(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.UpdatePool(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -618,7 +629,7 @@ func TestGetPoolHealthMonitorSuccess(t *testing.T) {
 	opt := lbv2.NewGetPoolHealthMonitorByIDRequest(
 		"lb-d5501a8c-d40e-4e3d-b86a-3e4041c629f7",
 		"pool-1c5dfb52-922a-4dac-9dc0-970980637199")
-	hm, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetPoolHealthMonitorByID(context.Background(), opt)
+	hm, sdkerr := vngcloud.LoadBalancer.GetPoolHealthMonitorByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -636,7 +647,7 @@ func TestListPoliciesSuccess(t *testing.T) {
 	opt := lbv2.NewListPoliciesRequest(
 		"lb-eb9f558a-4724-4d0b-a197-60fd642236f4",
 		"lis-b38a9abc-2979-444f-afce-da824e32ea75")
-	policies, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ListPolicies(context.Background(), opt)
+	policies, sdkerr := vngcloud.LoadBalancer.ListPolicies(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -669,7 +680,7 @@ func TestCreatePolicySuccess(t *testing.T) {
 			RuleValue:   "vngcloud.vn",
 		})
 
-	policy, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().CreatePolicy(context.Background(), opt)
+	policy, sdkerr := vngcloud.LoadBalancer.CreatePolicy(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -688,7 +699,7 @@ func TestGetPolicyByIDSuccess(t *testing.T) {
 		"lb-eb9f558a-4724-4d0b-a197-60fd642236f4",
 		"lis-b38a9abc-2979-444f-afce-da824e32ea75",
 		"policy-dea6106b-dd41-4fc1-bddc-61acc034787b")
-	policy, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().GetPolicyByID(context.Background(), opt)
+	policy, sdkerr := vngcloud.LoadBalancer.GetPolicyByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -718,7 +729,7 @@ func TestUpdatePolicySuccess(t *testing.T) {
 			RuleValue:   "vngcloud.com.vn",
 		})
 
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().UpdatePolicy(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.UpdatePolicy(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -733,7 +744,7 @@ func TestDeletePolicySuccess(t *testing.T) {
 		"lb-eb9f558a-4724-4d0b-a197-60fd642236f4",
 		"lis-b38a9abc-2979-444f-afce-da824e32ea75",
 		"policy-5cf4bacb-93b6-4078-bbf7-cb5d0d701828")
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().DeletePolicyByID(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.DeletePolicyByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -754,7 +765,7 @@ func TestReorderPoliciesSucces(t *testing.T) {
 			"policy-f6cfc6ec-3a4c-4cb0-a56e-16c9f9a2ac74",
 		})
 
-	sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ReorderPolicies(context.Background(), opt)
+	sdkerr := vngcloud.LoadBalancer.ReorderPolicies(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -778,7 +789,7 @@ func TestScaleLoadBalancerSuccess(t *testing.T) {
 			},
 		})
 
-	lb, sdkerr := vngcloud.VLBGateway().V2().LoadBalancerService().ScaleLoadBalancer(context.Background(), opt)
+	lb, sdkerr := vngcloud.LoadBalancer.ScaleLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}

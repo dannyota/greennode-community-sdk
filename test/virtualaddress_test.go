@@ -16,7 +16,7 @@ func TestCreateVirtualAddressCrossProject(t *testing.T) {
 	opt := networkv2.NewCreateVirtualAddressCrossProjectRequest(
 		virtualAddressName, projectID, subnetID).
 		WithDescription("Private DNS endpoint address for VPC created by vDNS. Please DO NOT delete this address.")
-	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().CreateVirtualAddressCrossProject(context.Background(), opt)
+	vaddr, err := vngcloud.Network.CreateVirtualAddressCrossProject(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -35,7 +35,7 @@ func TestDeleteVirtualAddressByID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewDeleteVirtualAddressByIDRequest(virtualAddressID)
-	err := vngcloud.VServerGateway().V2().NetworkService().DeleteVirtualAddressByID(context.Background(), opt)
+	err := vngcloud.Network.DeleteVirtualAddressByID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -49,7 +49,7 @@ func TestGetVirtualAddessByID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewGetVirtualAddressByIDRequest(virtualAddressID)
-	vaddr, err := vngcloud.VServerGateway().V2().NetworkService().GetVirtualAddressByID(context.Background(), opt)
+	vaddr, err := vngcloud.Network.GetVirtualAddressByID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)
@@ -68,7 +68,7 @@ func TestListAddressPairsByVirtualAddressID(t *testing.T) {
 
 	vngcloud := validSdkConfigHanRegion()
 	opt := networkv2.NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID)
-	pairs, err := vngcloud.VServerGateway().V2().NetworkService().ListAddressPairsByVirtualAddressID(context.Background(), opt)
+	pairs, err := vngcloud.Network.ListAddressPairsByVirtualAddressID(context.Background(), opt)
 
 	if err != nil {
 		t.Errorf("Expect error to be nil but got %+v", err)

@@ -9,6 +9,10 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type LoadBalancerServiceInternal struct {
+	VLBClient *client.ServiceClient
+}
+
 func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, opts *CreateLoadBalancerRequest) (*entity.LoadBalancer, error) {
 	url := createLoadBalancerURL(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)

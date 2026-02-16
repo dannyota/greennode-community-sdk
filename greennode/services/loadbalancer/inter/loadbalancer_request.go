@@ -83,3 +83,14 @@ func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBa
 	r.ZoneID = &zoneID
 	return r
 }
+func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) *CreateLoadBalancerRequest {
+	opt := new(CreateLoadBalancerRequest)
+	opt.SetPortalUserID(userID)
+	opt.Name = name
+	opt.PackageID = packageID
+	opt.Scheme = InterVpcLoadBalancerScheme
+	opt.BackEndSubnetID = beSubnetID
+	opt.SubnetID = subnetID
+	opt.Type = CreateOptsTypeOptLayer4
+	return opt
+}

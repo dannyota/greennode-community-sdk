@@ -8,6 +8,10 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
+type PortalServiceV1 struct {
+	PortalClient *client.ServiceClient
+}
+
 func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*entity.Portal, error) {
 	url := getPortalInfoURL(s.PortalClient, opts)
 	resp := new(GetPortalInfoResponse)

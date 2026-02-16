@@ -9,6 +9,22 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type VolumeServiceV2 struct {
+	VServerClient *client.ServiceClient
+}
+
+func (s *VolumeServiceV2) getProjectID() string {
+	return s.VServerClient.GetProjectID()
+}
+
+const (
+	defaultPageListBlockVolumesRequest = 1
+	defaultSizeListBlockVolumesRequest = 10000
+
+	defaultPageListSnapshotsByBlockVolumeIDRequest = 1
+	defaultSizeListSnapshotsByBlockVolumeIDRequest = 10000
+)
+
 func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlockVolumeRequest) (*entity.Volume, error) {
 	url := createBlockVolumeURL(s.VServerClient)
 	resp := new(CreateBlockVolumeResponse)

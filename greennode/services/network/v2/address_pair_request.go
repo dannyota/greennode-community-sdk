@@ -80,3 +80,16 @@ func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddress
 	r.Mode = &mode
 	return r
 }
+
+func NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID string) *ListAddressPairsByVirtualAddressIDRequest {
+	opts := new(ListAddressPairsByVirtualAddressIDRequest)
+	opts.VirtualAddressID = virtualAddressID
+	return opts
+}
+
+func NewCreateAddressPairRequest(virtualAddressID, internalNicID string) *CreateAddressPairRequest {
+	opts := new(CreateAddressPairRequest)
+	opts.VirtualAddressID = virtualAddressID
+	opts.InternalNetworkInterfaceID = internalNicID
+	return opts
+}

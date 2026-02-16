@@ -10,7 +10,7 @@ import (
 func TestGetNetworkByIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewGetNetworkByIDRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd2")
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetNetworkByID(context.Background(), opt)
+	network, err := vngcloud.Network.GetNetworkByID(context.Background(), opt)
 
 	if err == nil {
 		t.Errorf("Expect error not to be nil but got nil")
@@ -27,7 +27,7 @@ func TestGetNetworkByIDFailure(t *testing.T) {
 func TestGetNetworkByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := networkv2.NewGetNetworkByIDRequest("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3")
-	network, err := vngcloud.VServerGateway().V2().NetworkService().GetNetworkByID(context.Background(), opt)
+	network, err := vngcloud.Network.GetNetworkByID(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expect error to be nil but got %+v", err)

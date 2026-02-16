@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/v2/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
 )
@@ -44,272 +44,290 @@ func getEnv() (string, string) {
 	return clientID, clientSecret
 }
 
-// newClientFromEnvKeys creates a client using the given env key names for client ID/secret,
-// an optional project ID key, and a list of endpoint configurators.
-func newClientFromEnvKeys(
-	clientIDKey, clientSecretKey string,
-	opts ...func(*client.SdkConfigure),
-) *client.Client {
-	cid, csec := getValueOfEnv(clientIDKey), getValueOfEnv(clientSecretKey)
-	sdkCfg := client.NewSdkConfigure().
-		WithClientID(cid).
-		WithClientSecret(csec).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api")
-	for _, o := range opts {
-		o(sdkCfg)
-	}
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkCfg)
-}
-
 func getValueOfEnv(key string) string {
 	envFile, _ := readEnvFile("./env.yaml")
 	value := envFile[key]
 	return value
 }
 
-func validSdkConfig() *client.Client {
+// newClientFromEnvKeys creates a client using the given env key names for client ID/secret
+// and an optional set of config overrides.
+func newClientFromEnvKeys(
+	clientIDKey, clientSecretKey string,
+	overrides ...func(*greennode.Config),
+) *greennode.Client {
+	cfg := greennode.Config{
+		ClientID:     getValueOfEnv(clientIDKey),
+		ClientSecret: getValueOfEnv(clientSecretKey),
+		IAMEndpoint:  "https://iamapis.vngcloud.vn/accounts-api",
+		RetryCount:   1,
+		SleepDuration: 10,
+	}
+	for _, o := range overrides {
+		o(&cfg)
+	}
+	c, _ := greennode.NewClient(context.Background(), cfg)
+	return c
+}
+
+func validSdkConfig() *greennode.Client {
 	clientID, clientSecret := getEnv()
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork").
-		WithGLBEndpoint("https://glb.console.vngcloud.vn/glb-controller/").
-		WithVDnsEndpoint("https://vdns.api.vngcloud.vn/")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         clientID,
+		ClientSecret:     clientSecret,
+		UserID:           getValueOfEnv("VNGCLOUD_USER_ID"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("VNGCLOUD_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		GLBEndpoint:      "https://glb.console.vngcloud.vn/glb-controller/",
+		DNSEndpoint:      "https://vdns.api.vngcloud.vn/",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validUserSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("USER_CLIENT_ID"), getValueOfEnv("USER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("USER_PROJECT")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validUserSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("USER_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("USER_CLIENT_SECRET"),
+		UserID:           getValueOfEnv("VNGCLOUD_USER_ID"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("USER_PROJECT"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validAltUserSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("ALT_USER_CLIENT_ID"), getValueOfEnv("ALT_USER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("ALT_USER_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validAltUserSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("ALT_USER_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("ALT_USER_CLIENT_SECRET"),
+		ProjectID:        getValueOfEnv("ALT_USER_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validSdkConfigHanRegion() *client.Client {
+func validSdkConfigHanRegion() *greennode.Client {
 	clientID, clientSecret := getEnv()
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithUserID(getValueOfEnv("VNGCLOUD_USER_ID")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("HAN01_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://han-1.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://han-1.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork").
-		WithUserAgent("vngcloud-go-sdk")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         clientID,
+		ClientSecret:     clientSecret,
+		UserID:           getValueOfEnv("VNGCLOUD_USER_ID"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("HAN01_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://han-1.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://han-1.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		UserAgent:        "vngcloud-go-sdk",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validHcm3bSdkConfig() *client.Client {
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(getValueOfEnv("HCM3B_CLIENT_ID")).
-		WithClientSecret(getValueOfEnv("HCM3B_CLIENT_SECRET")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("HCM3B_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validHcm3bSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("HCM3B_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("HCM3B_CLIENT_SECRET"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("HCM3B_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validHcm3bSuperSdkConfig() *client.Client {
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(getValueOfEnv("HCM3B_SUPER_CLIENT_ID")).
-		WithClientSecret(getValueOfEnv("HCM3B_SUPER_CLIENT_SECRET")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("HCM3B_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validHcm3bSuperSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("HCM3B_SUPER_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("HCM3B_SUPER_CLIENT_SECRET"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("HCM3B_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validSecondaryUserSdkConfig() *client.Client {
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(getValueOfEnv("SECONDARY_CLIENT_ID")).
-		WithClientSecret(getValueOfEnv("SECONDARY_CLIENT_SECRET")).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("SECONDARY_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03.vngcloud.vn/vnetwork-gateway/vnetwork").
-		WithVNetworkEndpoint("https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validSecondaryUserSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("SECONDARY_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("SECONDARY_CLIENT_SECRET"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("SECONDARY_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://hcm-3.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func customerSdkConfig() *client.Client {
-	sdkConfig := client.NewSdkConfigure().
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func customerSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:     "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
-func validTestProjectSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("TEST_PROJECT_CLIENT_ID"), getValueOfEnv("TEST_PROJECT_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("TEST_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validTestProjectSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        getValueOfEnv("TEST_PROJECT_CLIENT_ID"),
+		ClientSecret:    getValueOfEnv("TEST_PROJECT_CLIENT_SECRET"),
+		ProjectID:       getValueOfEnv("TEST_PROJECT_ID"),
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:     "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
-func validSuperSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("VNGCLOUD_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validSuperSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("VNGCLOUD_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validSuperSdkHcm03bConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_ID"), getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithZoneID(getValueOfEnv("VNGCLOUD_ZONE_ID")).
-		WithProjectID(getValueOfEnv("VNGCLOUD_PROD_HCM03B_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validSuperSdkHcm03bConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("VNGCLOUD_PROD_HCM03B_CLIENT_SECRET"),
+		ZoneID:           getValueOfEnv("VNGCLOUD_ZONE_ID"),
+		ProjectID:        getValueOfEnv("VNGCLOUD_PROD_HCM03B_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validSuperWithTargetProjectSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("TARGET_USER_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validSuperWithTargetProjectSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"),
+		ClientSecret:    getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET"),
+		ProjectID:       getValueOfEnv("TARGET_USER_PROJECT_ID"),
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:     "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
-func validTargetUserSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("TARGET_USER_CLIENT_ID"), getValueOfEnv("TARGET_USER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("TARGET_USER_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway").
-		WithVNetworkEndpoint("https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validTargetUserSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:         getValueOfEnv("TARGET_USER_CLIENT_ID"),
+		ClientSecret:     getValueOfEnv("TARGET_USER_CLIENT_SECRET"),
+		ProjectID:        getValueOfEnv("TARGET_USER_PROJECT_ID"),
+		IAMEndpoint:      "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint:  "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:      "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		VNetworkEndpoint: "https://vnetwork-hcm03-api.vngcloud.vn/vnetwork-gateway",
+		RetryCount:       1,
+		SleepDuration:    10,
+	})
+	return c
 }
 
-func validSuperSdkConfig2() *client.Client {
-	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("SECONDARY_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway").
-		WithVLBEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validSuperSdkConfig2() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"),
+		ClientSecret:    getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET"),
+		ProjectID:       getValueOfEnv("SECONDARY_PROJECT_ID"),
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		VLBEndpoint:     "https://hcm-3.api.vngcloud.vn/vserver/vlb-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
-func validServiceAccountSdkConfig() *client.Client {
-	clientID, clientSecret := getValueOfEnv("SERVICE_ACCOUNT_CLIENT_ID"), getValueOfEnv("SERVICE_ACCOUNT_CLIENT_SECRET")
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithProjectID(getValueOfEnv("SERVICE_ACCOUNT_PROJECT_ID")).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func validServiceAccountSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        getValueOfEnv("SERVICE_ACCOUNT_CLIENT_ID"),
+		ClientSecret:    getValueOfEnv("SERVICE_ACCOUNT_CLIENT_SECRET"),
+		ProjectID:       getValueOfEnv("SERVICE_ACCOUNT_PROJECT_ID"),
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
-func invalidSdkConfig() *client.Client {
-	clientID := "invalid-id"
-	clientSecret := "invalid-secret"
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
-
-	return client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+func invalidSdkConfig() *greennode.Client {
+	c, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        "invalid-id",
+		ClientSecret:    "invalid-secret",
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
+	return c
 }
 
 func TestAuthenFailed(t *testing.T) {
 	clientID := "cc136360-709c-4248-9358-e8e96c74480a"
 	clientSecret := "invalid-secret"
 
-	sdkConfig := client.NewSdkConfigure().
-		WithClientID(clientID).
-		WithClientSecret(clientSecret).
-		WithIAMEndpoint("https://iamapis.vngcloud.vn/accounts-api").
-		WithVServerEndpoint("https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway")
-
-	vngcloud := client.NewClient().WithRetryCount(1).WithSleep(10).Configure(sdkConfig)
+	vngcloud, _ := greennode.NewClient(context.Background(), greennode.Config{
+		ClientID:        clientID,
+		ClientSecret:    clientSecret,
+		IAMEndpoint:     "https://iamapis.vngcloud.vn/accounts-api",
+		VServerEndpoint: "https://hcm-3.api.vngcloud.vn/vserver/vserver-gateway",
+		RetryCount:      1,
+		SleepDuration:   10,
+	})
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
+	token, err := vngcloud.Identity.GetAccessToken(context.Background(), opt)
 
 	if err == nil {
 		t.Error("Error MUST not be nil")
@@ -336,7 +354,7 @@ func TestAuthenPass(t *testing.T) {
 	clientID, clientSecret := getEnv()
 	vngcloud := validSdkConfig()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
+	token, err := vngcloud.Identity.GetAccessToken(context.Background(), opt)
 
 	if err != nil {
 		t.Fatalf("Expected no error but got: %v", err)
@@ -352,7 +370,7 @@ func TestSuperAdminAuthenPass(t *testing.T) {
 	clientID, clientSecret := getValueOfEnv("VNGCLOUD_SUPER_CLIENT_ID"), getValueOfEnv("VNGCLOUD_SUPER_CLIENT_SECRET")
 	vngcloud := validSdkConfig()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
+	token, err := vngcloud.Identity.GetAccessToken(context.Background(), opt)
 
 	if err != nil || token == nil {
 		t.Fatal("This testcase MUST pass")
@@ -365,7 +383,7 @@ func TestSecondaryUserAuthenPass(t *testing.T) {
 	clientID, clientSecret := getValueOfEnv("SECONDARY_CLIENT_ID"), getValueOfEnv("SECONDARY_CLIENT_SECRET")
 	vngcloud := validSuperSdkConfig2()
 	opt := identityv2.NewGetAccessTokenRequest(clientID, clientSecret)
-	token, err := vngcloud.IAMGateway().V2().IdentityService().GetAccessToken(context.Background(), opt)
+	token, err := vngcloud.Identity.GetAccessToken(context.Background(), opt)
 
 	if err != nil || token == nil {
 		t.Fatal("This testcase MUST pass")

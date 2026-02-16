@@ -36,3 +36,9 @@ func (r *CreateSystemTagRequest) AddTag(key, value string) *CreateSystemTagReque
 	return r
 }
 
+func NewSystemTagRequest(resourceID string, resourceType ResourceType) *CreateSystemTagRequest {
+	opt := new(CreateSystemTagRequest)
+	opt.ResourceID = resourceID
+	opt.ResourceType = resourceType
+	return opt
+}

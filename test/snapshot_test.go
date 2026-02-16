@@ -10,7 +10,7 @@ import (
 func TestListSnapshotFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListSnapshotsByBlockVolumeIDRequest(1, 10, "fsffsfsdfdsfsdf")
-	snapshots, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeID(context.Background(), opt)
+	snapshots, sdkerr := vngcloud.Volume.ListSnapshotsByBlockVolumeID(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -25,7 +25,7 @@ func TestListSnapshotFailure(t *testing.T) {
 func TestListSnapshotSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewListSnapshotsByBlockVolumeIDRequest(1, 10, "vol-d360fd83-948d-4efa-ab46-aab97328e275")
-	snapshots, sdkerr := vngcloud.VServerGateway().V2().VolumeService().ListSnapshotsByBlockVolumeID(context.Background(), opt)
+	snapshots, sdkerr := vngcloud.Volume.ListSnapshotsByBlockVolumeID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -43,7 +43,7 @@ func TestCreateSnapshotFailure(t *testing.T) {
 	opt := v2.NewCreateSnapshotByBlockVolumeIDRequest(
 		"teasdadasdadst",
 		"vol-d360fd83-948d-4efa-ab46-aab97328e275").WithPermanently(true)
-	snapshot, sdkerr := vngcloud.VServerGateway().V2().VolumeService().CreateSnapshotByBlockVolumeID(context.Background(), opt)
+	snapshot, sdkerr := vngcloud.Volume.CreateSnapshotByBlockVolumeID(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -58,7 +58,7 @@ func TestCreateSnapshotFailure(t *testing.T) {
 func TestDeleteSnapshot(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewDeleteSnapshotByIDRequest("snap-vol-pt-03e5891b-xxxx-4eb9-b2e6-be599f4e2a4b")
-	sdkerr := vngcloud.VServerGateway().V2().VolumeService().DeleteSnapshotByID(context.Background(), opt)
+	sdkerr := vngcloud.Volume.DeleteSnapshotByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}

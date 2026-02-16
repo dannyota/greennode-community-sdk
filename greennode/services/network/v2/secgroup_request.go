@@ -20,3 +20,26 @@ func (r *CreateSecgroupRequest) GetSecgroupName() string {
 type GetSecgroupByIDRequest struct { //_________________________________________________________________________________
 	common.SecgroupCommon
 }
+
+func NewCreateSecgroupRequest(name, description string) *CreateSecgroupRequest {
+	return &CreateSecgroupRequest{
+		Name:        name,
+		Description: description,
+	}
+}
+
+func NewDeleteSecgroupByIDRequest(secgroupID string) *DeleteSecgroupByIDRequest {
+	opts := new(DeleteSecgroupByIDRequest)
+	opts.SecgroupID = secgroupID
+	return opts
+}
+
+func NewGetSecgroupByIDRequest(secgroupID string) *GetSecgroupByIDRequest {
+	opt := new(GetSecgroupByIDRequest)
+	opt.SecgroupID = secgroupID
+	return opt
+}
+
+func NewListSecgroupRequest() *ListSecgroupRequest {
+	return &ListSecgroupRequest{}
+}

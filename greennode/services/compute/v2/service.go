@@ -9,6 +9,19 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type ComputeServiceV2 struct {
+	VServerClient *client.ServiceClient
+}
+
+func (s *ComputeServiceV2) getProjectID() string {
+	return s.VServerClient.GetProjectID()
+}
+
+const (
+	defaultOffsetListServerGroups = 0
+	defaultLimitListServerGroups  = 10
+)
+
 func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*entity.Server, error) {
 	url := createServerURL(s.VServerClient)
 	resp := new(CreateServerResponse)

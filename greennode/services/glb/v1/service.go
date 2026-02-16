@@ -10,6 +10,15 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
+type GLBServiceV1 struct {
+	VLBClient *client.ServiceClient
+}
+
+const (
+	defaultOffsetListGlobalLoadBalancer = 0
+	defaultLimitListGlobalLoadBalancer  = 10
+)
+
 func (s *GLBServiceV1) ListGlobalPools(ctx context.Context, opts *ListGlobalPoolsRequest) (*entity.ListGlobalPools, error) {
 	url := listGlobalPoolsURL(s.VLBClient, opts)
 	resp := new(ListGlobalPoolsResponse)

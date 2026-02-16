@@ -21,7 +21,7 @@ func TestCreateServerFailed(t *testing.T) {
 		30,
 	).WithNetwork("net-4f35f173-e0fe-4202-9c2b-5121b558bcd2",
 		"sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -45,7 +45,7 @@ func TestCreateServerSuccess(t *testing.T) {
 	).WithTags("test-key", "test-value", "owner", "sdk-test").
 		WithNetwork("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3",
 			"sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -61,7 +61,7 @@ func TestCreateServerSuccess(t *testing.T) {
 func TestGetServerByIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewGetServerByIDRequest("server-1")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().GetServerByID(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.GetServerByID(context.Background(), opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
 	}
@@ -77,7 +77,7 @@ func TestGetServerByIDFailure(t *testing.T) {
 func TestGetServerByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewGetServerByIDRequest(getValueOfEnv("SERVER_ID"))
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().GetServerByID(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.GetServerByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -93,7 +93,7 @@ func TestGetServerByIDSuccess(t *testing.T) {
 func TestDeleteServerByIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewDeleteServerByIDRequest("this-is-fake-id")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DeleteServerByID(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DeleteServerByID(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -106,7 +106,7 @@ func TestDeleteServerByIDFailure(t *testing.T) {
 func TestDeleteServerByIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewDeleteServerByIDRequest(getValueOfEnv("DELETE_SERVER_ID"))
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DeleteServerByID(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DeleteServerByID(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -118,7 +118,7 @@ func TestDeleteServerByIDSuccess(t *testing.T) {
 func TestDeleteServerByIDSuccess2(t *testing.T) {
 	vngcloud := customerSdkConfig()
 	opt := computev2.NewDeleteServerByIDRequest("ins-b40e3911-c524-47e1-a58f-d12efcb0ad66")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DeleteServerByID(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DeleteServerByID(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -130,7 +130,7 @@ func TestDeleteServerByIDSuccess2(t *testing.T) {
 func TestUpdateServerSecgroupsByServerIDFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewUpdateServerSecgroupsRequest("this-is-fake-id")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().UpdateServerSecgroupsByServerID(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.UpdateServerSecgroupsByServerID(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -149,7 +149,7 @@ func TestUpdateServerSecgroupsByServerIDFailure2(t *testing.T) {
 	opt := computev2.NewUpdateServerSecgroupsRequest(getValueOfEnv("SERVER_ID"),
 		"secg-93c6c259-0ec7-4905-a232-fe5dccb6674c",
 		"this-is-fake-secgroup-id")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().UpdateServerSecgroupsByServerID(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.UpdateServerSecgroupsByServerID(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -167,7 +167,7 @@ func TestUpdateServerSecgroupsByServerIDSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewUpdateServerSecgroupsRequest(getValueOfEnv("SERVER_ID"),
 		"secg-93c6c259-0ec7-4905-a232-fe5dccb6674c")
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().UpdateServerSecgroupsByServerID(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.UpdateServerSecgroupsByServerID(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -196,7 +196,7 @@ func TestCreateServerWithAutoRenew(t *testing.T) {
 		WithType("VKS").WithProduct("VKS").
 		WithPoc(false)
 
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -212,7 +212,7 @@ func TestCreateServerWithAutoRenew(t *testing.T) {
 func TestAttachVolumeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewAttachBlockVolumeRequest("this-is-fake-server-id", "vol-a9484a51-243b-4217-81d4-9f55a7ad426d")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().AttachBlockVolume(context.Background(), opt)
+	sdkerr := vngcloud.Compute.AttachBlockVolume(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -229,7 +229,7 @@ func TestAttachVolumeSuccess(t *testing.T) {
 	opt := computev2.NewAttachBlockVolumeRequest(
 		"ins-869ad034-60c2-4f39-bb41-fcdf6b3d4bd4",
 		"vol-3aced398-5f8e-4040-84aa-7309a5c5b365")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().AttachBlockVolume(context.Background(), opt)
+	sdkerr := vngcloud.Compute.AttachBlockVolume(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -243,7 +243,7 @@ func TestDetachVolumeSuccess(t *testing.T) {
 	opt := computev2.NewDetachBlockVolumeRequest(
 		"ins-c7acd1d3-376c-xxxx-a4bd-27dd87b72a83",
 		"vol-17dc6df0-43d3-4ad2-be88-69ddaef2f146")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DetachBlockVolume(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DetachBlockVolume(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Errorf("Expect error but got nil")
@@ -256,7 +256,7 @@ func TestDetachVolumeSuccess(t *testing.T) {
 func TestDetachVolumeFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := computev2.NewDetachBlockVolumeRequest("ins-6f6b7238-1d57-4c4b-a683-225454a2e168", "this-is-fake-volume-id")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DetachBlockVolume(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DetachBlockVolume(context.Background(), opt)
 
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -273,7 +273,7 @@ func TestAttachFloatingIpSuccess(t *testing.T) {
 	serverID := "ins-1ac74cf8-df72-4ce2-926f-1c5f89ffda9f"
 	netID := "net-in-53c08d94-9ab2-414a-8ee9-169d5b36d52c"
 	opt := computev2.NewAttachFloatingIpRequest(serverID, netID)
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().AttachFloatingIp(context.Background(), opt)
+	sdkerr := vngcloud.Compute.AttachFloatingIp(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Errorf("Expect nil but got %v", sdkerr)
@@ -288,7 +288,7 @@ func TestDetachFloatingIp(t *testing.T) {
 	wanID := "wan-61dcdecc-85d2-4cea-892a-a4a11be52d02"
 	netID := "net-in-53c08d95-9ab2-414a-8ee9-169d5b36d52c"
 	opt := computev2.NewDetachFloatingIpRequest(serverID, wanID, netID)
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DetachFloatingIp(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DetachFloatingIp(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Errorf("Expect nil but got %v", sdkerr)
@@ -317,7 +317,7 @@ func TestCreateDnsServer(t *testing.T) {
 		false,
 	)
 
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -343,7 +343,7 @@ func TestCreateServerVks(t *testing.T) {
 		WithType("VKS").
 		WithProduct("VKS")
 
-	server, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServer(context.Background(), opt)
+	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -355,7 +355,7 @@ func TestCreateServerVks(t *testing.T) {
 func TestListServerGroupPolicies(t *testing.T) {
 	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewListServerGroupPoliciesRequest()
-	policies, sdkerr := vngcloud.VServerGateway().V2().ComputeService().ListServerGroupPolicies(context.Background(), opt)
+	policies, sdkerr := vngcloud.Compute.ListServerGroupPolicies(context.Background(), opt)
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
 		if errors.As(sdkerr, &sdkErr) {
@@ -370,7 +370,7 @@ func TestListServerGroupPolicies(t *testing.T) {
 func TestDeleteServerGroupByID(t *testing.T) {
 	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewDeleteServerGroupByIDRequest("server-group-ac0dc0ca-3ac3-4f52-a942-3269573ec1de")
-	sdkerr := vngcloud.VServerGateway().V2().ComputeService().DeleteServerGroupByID(context.Background(), opt)
+	sdkerr := vngcloud.Compute.DeleteServerGroupByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -381,7 +381,7 @@ func TestDeleteServerGroupByID(t *testing.T) {
 func TestListServerGroups(t *testing.T) {
 	vngcloud := validAltUserSdkConfig()
 	opt := computev2.NewListServerGroupsRequest(1, 10)
-	groups, sdkerr := vngcloud.VServerGateway().V2().ComputeService().ListServerGroups(context.Background(), opt)
+	groups, sdkerr := vngcloud.Compute.ListServerGroups(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -395,7 +395,7 @@ func TestCreateServerGroup(t *testing.T) {
 		"test-server-group",
 		"test server group description",
 		"a2162216-cff2-11eb-b8bc-0242ac130003")
-	groups, sdkerr := vngcloud.VServerGateway().V2().ComputeService().CreateServerGroup(context.Background(), opt)
+	groups, sdkerr := vngcloud.Compute.CreateServerGroup(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
 	}
@@ -408,7 +408,7 @@ func TestCreateSystemTags(t *testing.T) {
 	opt := serverv1.NewSystemTagRequest("ins-da59addd-6263-4544-b405-420a65ccfb1f", serverv1.Server).
 		AddTag("vng.billing.product", "VKS")
 
-	response, sdkerr := vngcloud.VServerGateway().InternalV1().ServerService().CreateSystemTags(context.Background(), opt)
+	response, sdkerr := vngcloud.ServerInternal.CreateSystemTags(context.Background(), opt)
 	if sdkerr != nil {
 		var sdkErr *sdkerror.SdkError
 		if errors.As(sdkerr, &sdkErr) {

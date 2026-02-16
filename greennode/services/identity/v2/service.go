@@ -9,6 +9,10 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
+type IdentityServiceV2 struct {
+	IAMClient *client.ServiceClient
+}
+
 func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
 	url := getAccessTokenURL(s.IAMClient)
 	resp := new(GetAccessTokenResponse)

@@ -8,6 +8,10 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
+type PortalServiceV2 struct {
+	PortalClient *client.ServiceClient
+}
+
 func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuotas, error) {
 	url := listAllQuotaUsedURL(s.PortalClient)
 	resp := new(ListAllQuotaUsedResponse)

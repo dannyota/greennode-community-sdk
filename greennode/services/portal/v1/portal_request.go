@@ -9,3 +9,12 @@ func (r *GetPortalInfoRequest) GetBackEndProjectID() string {
 }
 
 type ListProjectsRequest struct{}
+func NewGetPortalInfoRequest(backendProjectID string) *GetPortalInfoRequest {
+	return &GetPortalInfoRequest{
+		BackEndProjectID: backendProjectID,
+	}
+}
+
+func NewListProjectsRequest() *ListProjectsRequest {
+	return &ListProjectsRequest{}
+}

@@ -14,7 +14,7 @@ func TestDnsServiceV1_GetHostedZoneByID(t *testing.T) {
 	opt := v1.NewGetHostedZoneByIDRequest(
 		"hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a",
 	)
-	hostedZone, sdkerr := vngcloud.VDnsGateway().V1().DnsService().GetHostedZoneByID(context.Background(), opt)
+	hostedZone, sdkerr := vngcloud.DNS.GetHostedZoneByID(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -30,7 +30,7 @@ func TestDnsServiceV1_GetHostedZoneByID(t *testing.T) {
 func TestDnsServiceV1_ListHostedZonesDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListHostedZonesRequest()
-	listHostedZones, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListHostedZones(context.Background(), opt)
+	listHostedZones, sdkerr := vngcloud.DNS.ListHostedZones(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -48,7 +48,7 @@ func TestDnsServiceV1_ListHostedZonesDefault(t *testing.T) {
 func TestDnsServiceV1_ListHostedZonesWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListHostedZonesRequest().WithName("test-zone")
-	listHostedZones, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListHostedZones(context.Background(), opt)
+	listHostedZones, sdkerr := vngcloud.DNS.ListHostedZones(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -66,7 +66,7 @@ func TestDnsServiceV1_ListHostedZonesWithFilter(t *testing.T) {
 func TestDnsServiceV1_ListRecordsDefault(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a")
-	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(context.Background(), opt)
+	listRecords, sdkerr := vngcloud.DNS.ListRecords(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -84,7 +84,7 @@ func TestDnsServiceV1_ListRecordsDefault(t *testing.T) {
 func TestDnsServiceV1_ListRecordsWithFilter(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewListRecordsRequest("hosted-zone-32a21aa3-99a3-4d03-9045-37aa701fa03a").WithName("k8s")
-	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(context.Background(), opt)
+	listRecords, sdkerr := vngcloud.DNS.ListRecords(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -107,7 +107,7 @@ func TestDnsServiceV1_CreateHostedZone(t *testing.T) {
 		v1.HostedZoneTypePrivate,
 	).WithDescription("Test hosted zone created by SDK")
 
-	hostedZone, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateHostedZone(context.Background(), opt)
+	hostedZone, sdkerr := vngcloud.DNS.CreateHostedZone(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -124,7 +124,7 @@ func TestDnsServiceV1_DeleteHostedZone(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v1.NewDeleteHostedZoneRequest("hosted-zone-8d556e58-e84c-4dff-aeda-dc246b296f32")
 
-	sdkerr := vngcloud.VDnsGateway().V1().DnsService().DeleteHostedZone(context.Background(), opt)
+	sdkerr := vngcloud.DNS.DeleteHostedZone(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -139,7 +139,7 @@ func TestDnsServiceV1_UpdateHostedZone(t *testing.T) {
 		WithAssocVpcIDs([]string{"net-dc14bb60-d500-40b5-945f-218540990187"}).
 		WithDescription("Updated description for hosted zone.")
 
-	sdkerr := vngcloud.VDnsGateway().V1().DnsService().UpdateHostedZone(context.Background(), opt)
+	sdkerr := vngcloud.DNS.UpdateHostedZone(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -169,7 +169,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			aRecordValues,
 		)
 
-		dnsRecord, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateDnsRecord(context.Background(), opt)
+		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
 			t.Fatalf("Expect nil but got %+v", sdkerr)
 		}
@@ -191,7 +191,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			cnameValues,
 		).WithEnableStickySession(false)
 
-		dnsRecord, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateDnsRecord(context.Background(), opt)
+		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
 			t.Fatalf("Expect nil but got %+v", sdkerr)
 		}
@@ -214,7 +214,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			txtValues,
 		)
 
-		dnsRecord, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateDnsRecord(context.Background(), opt)
+		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
 			t.Fatalf("Expect nil but got %+v", sdkerr)
 		}
@@ -238,7 +238,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			mxValues,
 		)
 
-		dnsRecord, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateDnsRecord(context.Background(), opt)
+		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
 			t.Fatalf("Expect nil but got %+v", sdkerr)
 		}
@@ -262,7 +262,7 @@ func TestDnsServiceV1_CreateDnsRecord(t *testing.T) {
 			srvValues,
 		)
 
-		dnsRecord, sdkerr := vngcloud.VDnsGateway().V1().DnsService().CreateDnsRecord(context.Background(), opt)
+		dnsRecord, sdkerr := vngcloud.DNS.CreateDnsRecord(context.Background(), opt)
 		if sdkerr != nil {
 			t.Fatalf("Expect nil but got %+v", sdkerr)
 		}
@@ -280,7 +280,7 @@ func TestDnsServiceV1_GetRecord(t *testing.T) {
 
 	// First list records to get a record ID
 	listOpt := v1.NewListRecordsRequest(hostedZoneID)
-	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(context.Background(), listOpt)
+	listRecords, sdkerr := vngcloud.DNS.ListRecords(context.Background(), listOpt)
 	if sdkerr != nil {
 		t.Fatalf("Failed to list records: %+v", sdkerr)
 	}
@@ -294,7 +294,7 @@ func TestDnsServiceV1_GetRecord(t *testing.T) {
 
 	// Test GetRecord
 	opt := v1.NewGetRecordRequest(hostedZoneID, recordID)
-	record, sdkerr := vngcloud.VDnsGateway().V1().DnsService().GetRecord(context.Background(), opt)
+	record, sdkerr := vngcloud.DNS.GetRecord(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -318,7 +318,7 @@ func TestDnsServiceV1_UpdateRecord(t *testing.T) {
 
 	// First list records to get a record ID
 	listOpt := v1.NewListRecordsRequest(hostedZoneID)
-	listRecords, sdkerr := vngcloud.VDnsGateway().V1().DnsService().ListRecords(context.Background(), listOpt)
+	listRecords, sdkerr := vngcloud.DNS.ListRecords(context.Background(), listOpt)
 	if sdkerr != nil {
 		t.Fatalf("Failed to list records: %+v", sdkerr)
 	}
@@ -356,7 +356,7 @@ func TestDnsServiceV1_UpdateRecord(t *testing.T) {
 		WithRoutingPolicy(v1.RoutingPolicySimple).
 		WithValue(values)
 
-	sdkerr = vngcloud.VDnsGateway().V1().DnsService().UpdateRecord(context.Background(), opt)
+	sdkerr = vngcloud.DNS.UpdateRecord(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}
@@ -372,7 +372,7 @@ func TestDnsServiceV1_DeleteRecord(t *testing.T) {
 	recordID := "record-63ecb31a-2477-4afa-a46b-12ca3f2b1060"
 
 	deleteOpt := v1.NewDeleteRecordRequest(hostedZoneID, recordID)
-	sdkerr := vngcloud.VDnsGateway().V1().DnsService().DeleteRecord(context.Background(), deleteOpt)
+	sdkerr := vngcloud.DNS.DeleteRecord(context.Background(), deleteOpt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
 	}

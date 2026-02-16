@@ -8,6 +8,10 @@ import (
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
+type ServerServiceInternalV1 struct {
+	VServerClient *client.ServiceClient
+}
+
 func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *CreateSystemTagRequest) (*[]entity.SystemTag, error) {
 
 	url := createSystemTagURL(s.VServerClient)
