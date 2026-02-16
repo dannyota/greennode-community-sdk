@@ -2,10 +2,9 @@ package sdkerror
 
 import (
 	"fmt"
+	"net/http"
 	"regexp"
 	"strings"
-
-	"github.com/imroc/req/v3"
 )
 
 const (
@@ -142,28 +141,21 @@ func NewReauthFuncNotSet() *SdkError {
 	}
 }
 
-func NewUnexpectedError(response *req.Response) *SdkError {
+func NewUnexpectedError(response *http.Response) *SdkError {
 	statusCode := 0
 	url := ""
-	err := fmt.Errorf("unexpected error from making request to external service")
 	if response != nil {
-		if response.Response != nil && response.StatusCode != 0 {
-			statusCode = response.StatusCode
-		}
+		statusCode = response.StatusCode
 
 		if response.Request != nil && response.Request.URL != nil {
 			url = response.Request.URL.String()
-		}
-
-		if response.Err != nil {
-			err = response.Err
 		}
 	}
 
 	sdkErr := &SdkError{
 		errorCode: EcUnexpectedError,
 		message:   "Unexpected Error",
-		error:     err,
+		error:     fmt.Errorf("unexpected error from making request to external service"),
 	}
 	sdkErr.WithParameters(map[string]any{
 		"statusCode": statusCode,

@@ -1,13 +1,14 @@
 package client
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"io"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/imroc/req/v3"
 
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
@@ -19,8 +20,9 @@ const (
 
 type (
 	HTTPClient struct {
-		retryCount int
-		client     *req.Client
+		retryCount    int
+		retryInterval time.Duration
+		client        *http.Client
 
 		reauthFunc   func(ctx context.Context) (*SdkAuthentication, error)
 		reauthOption AuthOpts
@@ -47,28 +49,26 @@ type (
 
 func NewHTTPClient() *HTTPClient {
 	return &HTTPClient{
-		retryCount: 0,
-		client: req.NewClient().
-			SetCommonRetryCount(3).
-			SetCommonRetryFixedInterval(10).
-			SetTimeout(120 * time.Second),
-		mut:       new(sync.RWMutex),
-		reauthmut: new(reauthlock),
+		retryCount:    3,
+		retryInterval: 10 * time.Second,
+		client:        &http.Client{Timeout: 120 * time.Second},
+		mut:           new(sync.RWMutex),
+		reauthmut:     new(reauthlock),
 	}
 }
 
 func (hc *HTTPClient) WithRetryCount(retryCount int) *HTTPClient {
-	hc.client.SetCommonRetryCount(retryCount)
+	hc.retryCount = retryCount
 	return hc
 }
 
 func (hc *HTTPClient) WithTimeout(timeout time.Duration) *HTTPClient {
-	hc.client.SetTimeout(timeout)
+	hc.client.Timeout = timeout
 	return hc
 }
 
 func (hc *HTTPClient) WithSleep(sleep time.Duration) *HTTPClient {
-	hc.client.SetCommonRetryFixedInterval(sleep)
+	hc.retryInterval = sleep
 	return hc
 }
 
@@ -94,10 +94,8 @@ func (hc *HTTPClient) WithReauthFunc(authOpt AuthOpts, reauthFunc func(ctx conte
 	return hc
 }
 
-func (hc *HTTPClient) DoRequest(ctx context.Context, url string, preq *Request) (*req.Response, error) {
-	req := hc.prepareRequest(ctx, preq)
-
-	resp, sdkErr := hc.executeRequest(ctx, url, req, preq)
+func (hc *HTTPClient) DoRequest(ctx context.Context, url string, preq *Request) (*http.Response, error) {
+	resp, sdkErr := hc.executeRequest(ctx, url, preq)
 	if sdkErr != nil {
 		return resp, sdkErr
 	}
@@ -105,56 +103,93 @@ func (hc *HTTPClient) DoRequest(ctx context.Context, url string, preq *Request) 
 	return hc.handleResponse(ctx, url, resp, preq)
 }
 
-func (hc *HTTPClient) prepareRequest(ctx context.Context, preq *Request) *req.Request {
-	req := hc.client.R().SetContext(ctx).SetHeaders(hc.getDefaultHeaders()).SetHeaders(preq.MoreHeaders())
-
-	if opt := preq.RequestBody(); opt != nil {
-		req.SetBodyJsonMarshal(opt)
+func (hc *HTTPClient) prepareRequest(ctx context.Context, url string, preq *Request) (*http.Request, error) {
+	method := strings.ToUpper(preq.RequestMethod())
+	if method == "" {
+		method = "GET"
 	}
 
-	if opt := preq.JSONResponse(); opt != nil {
-		req.SetSuccessResult(opt)
+	var body io.Reader
+	if preq.RequestBody() != nil {
+		jsonData, err := json.Marshal(preq.RequestBody())
+		if err != nil {
+			return nil, sdkerror.ErrorHandler(err)
+		}
+		body = bytes.NewReader(jsonData)
 	}
 
-	if opt := preq.JSONError(); opt != nil {
-		req.SetErrorResult(opt)
+	req, err := http.NewRequestWithContext(ctx, method, url, body)
+	if err != nil {
+		return nil, sdkerror.ErrorHandler(err)
 	}
 
-	return req
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
+
+	for k, v := range hc.getDefaultHeaders() {
+		req.Header.Set(k, v)
+	}
+	for k, v := range preq.MoreHeaders() {
+		req.Header.Set(k, v)
+	}
+
+	return req, nil
 }
 
-func (hc *HTTPClient) executeRequest(ctx context.Context, url string, req *req.Request, preq *Request) (*req.Response, error) {
+func (hc *HTTPClient) executeRequest(ctx context.Context, url string, preq *Request) (*http.Response, error) {
 	if hc.needReauth(preq) {
 		return hc.handleReauthBeforeRequest(ctx, url, preq)
 	}
 
-	resp, err := hc.executeHTTPMethod(url, req, preq)
+	req, err := hc.prepareRequest(ctx, url, preq)
+	if err != nil {
+		return nil, err
+	}
 
-	if err != nil && resp == nil {
-		return resp, sdkerror.ErrorHandler(err)
+	resp, err := hc.doWithRetry(req)
+	if err != nil {
+		return nil, sdkerror.ErrorHandler(err)
 	}
 
 	return resp, nil
 }
 
-func (hc *HTTPClient) executeHTTPMethod(url string, req *req.Request, preq *Request) (*req.Response, error) {
-	switch strings.ToUpper(preq.RequestMethod()) {
-	case "POST":
-		return req.Post(url)
-	case "GET":
-		return req.Get(url)
-	case "DELETE":
-		return req.Delete(url)
-	case "PUT":
-		return req.Put(url)
-	case "PATCH":
-		return req.Patch(url)
-	default:
-		return nil, nil
+func (hc *HTTPClient) doWithRetry(req *http.Request) (*http.Response, error) {
+	var (
+		resp *http.Response
+		err  error
+		body []byte
+	)
+
+	// Buffer the request body so we can retry
+	if req.Body != nil {
+		body, err = io.ReadAll(req.Body)
+		req.Body.Close()
+		if err != nil {
+			return nil, err
+		}
 	}
+
+	for attempt := 0; attempt <= hc.retryCount; attempt++ {
+		if body != nil {
+			req.Body = io.NopCloser(bytes.NewReader(body))
+		}
+
+		resp, err = hc.client.Do(req)
+		if err == nil {
+			break
+		}
+
+		if attempt < hc.retryCount {
+			time.Sleep(hc.retryInterval)
+		}
+	}
+
+	return resp, err
 }
 
-func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string, req *Request) (*req.Response, error) {
+func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string, req *Request) (*http.Response, error) {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return nil, sdkErr
@@ -164,56 +199,70 @@ func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string,
 	return nil, nil
 }
 
-func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *req.Response, req *Request) (*req.Response, error) {
-	if resp == nil || resp.Response == nil {
-		return nil, sdkerror.NewUnexpectedError(resp)
+func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *http.Response, preq *Request) (*http.Response, error) {
+	if resp == nil {
+		return nil, sdkerror.NewUnexpectedError(nil)
 	}
 
-	if sdkErr := hc.handleStatusCode(ctx, url, resp, req); sdkErr != nil {
+	defer resp.Body.Close()
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return resp, sdkerror.ErrorHandler(err)
+	}
+
+	if sdkErr := hc.handleStatusCode(ctx, url, resp, preq); sdkErr != nil {
 		return nil, sdkErr
 	}
 
-	if req.ContainsOkCode(resp.StatusCode) {
+	if preq.ContainsOkCode(resp.StatusCode) {
+		if opt := preq.JSONResponse(); opt != nil && len(bodyBytes) > 0 {
+			if err := json.Unmarshal(bodyBytes, opt); err != nil {
+				return resp, sdkerror.ErrorHandler(err)
+			}
+		}
 		return resp, nil
 	}
 
-	return resp, sdkerror.ErrorHandler(resp.Err)
+	if opt := preq.JSONError(); opt != nil && len(bodyBytes) > 0 {
+		json.Unmarshal(bodyBytes, opt) //nolint:errcheck // best-effort error body parse
+	}
+
+	return resp, nil
 }
 
-func (hc *HTTPClient) handleStatusCode(ctx context.Context, url string, resp *req.Response, preq *Request) error {
+func (hc *HTTPClient) handleStatusCode(ctx context.Context, url string, resp *http.Response, preq *Request) error {
 	switch resp.StatusCode {
 	case http.StatusUnauthorized:
 		return hc.handleUnauthorized(ctx, url, resp, preq)
 	case http.StatusTooManyRequests:
-		return defaultErrorResponse(resp.Err, url, preq, resp).
+		return defaultErrorResponse(nil, url, preq, resp).
 			WithErrorCode(sdkerror.EcPermissionDenied).
 			WithMessage("Permission Denied")
 	case http.StatusInternalServerError:
-		return defaultErrorResponse(resp.Err, url, preq, resp).
+		return defaultErrorResponse(nil, url, preq, resp).
 			WithErrorCode(sdkerror.EcInternalServerError).
 			WithMessage("Internal Server Error")
 	case http.StatusServiceUnavailable:
-		return defaultErrorResponse(resp.Err, url, preq, resp).
+		return defaultErrorResponse(nil, url, preq, resp).
 			WithErrorCode(sdkerror.EcServiceMaintenance).
 			WithMessage("Service Maintenance")
 	case http.StatusForbidden:
-		return defaultErrorResponse(resp.Err, url, preq, resp).
+		return defaultErrorResponse(nil, url, preq, resp).
 			WithErrorCode(sdkerror.EcPermissionDenied).
 			WithMessage("Permission Denied")
 	}
 	return nil
 }
 
-func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *req.Response, req *Request) error {
+func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *http.Response, req *Request) error {
 	if !req.SkipAuthentication() && hc.reauthFunc != nil {
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return sdkErr
 		}
-		// Note: This will cause recursion - returning to trigger DoRequest again
 		_, err := hc.DoRequest(ctx, url, req)
 		return err
 	}
-	return defaultErrorResponse(resp.Err, url, req, resp)
+	return defaultErrorResponse(nil, url, req, resp)
 }
 
 func (hc *HTTPClient) needReauth(req *Request) bool {
@@ -293,7 +342,7 @@ func (f *reauthFuture) set(err error) {
 	close(f.done)
 }
 
-func defaultErrorResponse(err error, url string, req *Request, resp *req.Response) *sdkerror.SdkError {
+func defaultErrorResponse(err error, url string, req *Request, resp *http.Response) *sdkerror.SdkError {
 	headers := req.MoreHeaders()
 
 	// Remove sensitive information
