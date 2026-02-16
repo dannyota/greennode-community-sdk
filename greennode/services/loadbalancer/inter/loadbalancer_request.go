@@ -46,45 +46,10 @@ func (r *CreateLoadBalancerRequest) normalizeForAPI() {
 	}
 }
 
-func (r *CreateLoadBalancerRequest) WithProjectID(projectID string) *CreateLoadBalancerRequest {
-	r.ProjectID = projectID
-	return r
-}
-
 func (r *CreateLoadBalancerRequest) GetMapHeaders() map[string]string {
 	return r.PortalUser.GetMapHeaders()
 }
 
-func (r *CreateLoadBalancerRequest) WithListener(listener *CreateListenerRequest) *CreateLoadBalancerRequest {
-	r.Listener = listener
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithPool(pool *CreatePoolRequest) *CreateLoadBalancerRequest {
-	r.Pool = pool
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithTags(tags ...string) *CreateLoadBalancerRequest {
-	if r.Tags == nil {
-		r.Tags = make([]common.Tag, 0)
-	}
-
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-
-	return r
-}
-
-func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBalancerRequest {
-	r.ZoneID = &zoneID
-	return r
-}
 func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) *CreateLoadBalancerRequest {
 	return &CreateLoadBalancerRequest{
 		Name:            name,

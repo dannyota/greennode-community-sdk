@@ -114,8 +114,22 @@ func (r *CreatePoolRequest) normalizeForAPI() {
 }
 
 // normalizeForAPI clears fields that don't apply to the current health check
-// protocol and sets a default domain name for HTTP/1.1 when none is provided.
+// protocol, enforces sane defaults, and sets a default domain name for
+// HTTP/1.1 when none is provided.
 func (h *HealthMonitor) normalizeForAPI() {
+	if h.HealthyThreshold < 1 {
+		h.HealthyThreshold = 3
+	}
+	if h.UnhealthyThreshold < 1 {
+		h.UnhealthyThreshold = 3
+	}
+	if h.Interval < 1 {
+		h.Interval = 30
+	}
+	if h.Timeout < 1 {
+		h.Timeout = 5
+	}
+
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -141,84 +155,4 @@ func (h *HealthMonitor) normalizeForAPI() {
 	}
 }
 
-func (r *CreatePoolRequest) WithHealthMonitor(monitor *HealthMonitor) *CreatePoolRequest {
-	r.HealthMonitor = monitor
-	return r
-}
-
-func (r *CreatePoolRequest) WithMembers(members ...*Member) *CreatePoolRequest {
-	r.Members = append(r.Members, members...)
-	return r
-}
-
-func (r *CreatePoolRequest) WithLoadBalancerID(lbID string) *CreatePoolRequest {
-	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRequest {
-	r.Algorithm = algorithm
-	return r
-}
-
-func (h *HealthMonitor) WithHealthyThreshold(ht int) *HealthMonitor {
-	if ht < 1 {
-		ht = 3
-	}
-
-	h.HealthyThreshold = ht
-	return h
-}
-
-func (h *HealthMonitor) WithUnhealthyThreshold(uht int) *HealthMonitor {
-	if uht < 1 {
-		uht = 3
-	}
-
-	h.UnhealthyThreshold = uht
-	return h
-}
-
-func (h *HealthMonitor) WithInterval(interval int) *HealthMonitor {
-	if interval < 1 {
-		interval = 30
-	}
-
-	h.Interval = interval
-	return h
-}
-
-func (h *HealthMonitor) WithTimeout(to int) *HealthMonitor {
-	if to < 1 {
-		to = 5
-	}
-
-	h.Timeout = to
-	return h
-}
-
-func (h *HealthMonitor) WithHealthCheckMethod(method HealthCheckMethod) *HealthMonitor {
-	h.HealthCheckMethod = &method
-	return h
-}
-
-func (h *HealthMonitor) WithHTTPVersion(version HealthCheckHTTPVersion) *HealthMonitor {
-	h.HTTPVersion = &version
-	return h
-}
-
-func (h *HealthMonitor) WithHealthCheckPath(path string) *HealthMonitor {
-	h.HealthCheckPath = &path
-	return h
-}
-
-func (h *HealthMonitor) WithDomainName(domain string) *HealthMonitor {
-	h.DomainName = &domain
-	return h
-}
-
-func (h *HealthMonitor) WithSuccessCode(code string) *HealthMonitor {
-	h.SuccessCode = &code
-	return h
-}
 

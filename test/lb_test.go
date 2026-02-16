@@ -203,30 +203,38 @@ func TestCreateLoadBalancerEmptyMemberSuccess(t *testing.T) {
 
 func TestCreateInterVPCLoadBalancerWithPoolAndListenerSuccess(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
+	hcMethod := inter.HealthCheckMethodGET
+	httpVer := inter.HealthCheckHTTPVersionHTTP1
+	hcPath := "/health"
+	domainName := "vngcloud.com"
+	successCode := "200"
 	opt := inter.NewCreateLoadBalancerRequest(
 		getValueOfEnv("VNGCLOUD_PORTAL_USER_ID"),
 		"test-intervpc",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
 		"sub-27a0562d-07f9-4e87-81fd-e0ba9658f156",
-		"sub-888d8fd2-3fed-4aaa-a62d-8554c0aff651").
-		WithTags("test-key", "test-value", "env", "staging").
-		WithListener(inter.NewCreateListenerRequest("test-listener", inter.ListenerProtocolTCP, 80).
-			WithAllowedCidrs("0.0.0.0/0").
-			WithTimeoutClient(50).
-			WithTimeoutMember(50).
-			WithTimeoutConnection(5)).
-		WithPool(inter.NewCreatePoolRequest("test-pool", inter.PoolProtocolTCP).
-			WithMembers(inter.NewMember("test-member-1", "10.84.0.22", 80, 80)).
-			WithHealthMonitor(inter.NewHealthMonitor(inter.HealthCheckProtocolTCP).
-				WithHealthCheckMethod(inter.HealthCheckMethodGET).
-				WithHTTPVersion(inter.HealthCheckHTTPVersionHTTP1).
-				WithHealthyThreshold(3).
-				WithUnhealthyThreshold(3).
-				WithTimeout(5).
-				WithInterval(30).
-				WithHealthCheckPath("/health").
-				WithDomainName("vngcloud.com").
-				WithSuccessCode("200")))
+		"sub-888d8fd2-3fed-4aaa-a62d-8554c0aff651")
+	opt.Tags = common.NewTags("test-key", "test-value", "env", "staging")
+	opt.Listener = inter.NewCreateListenerRequest("test-listener", inter.ListenerProtocolTCP, 80)
+	opt.Listener.AllowedCidrs = "0.0.0.0/0"
+	opt.Listener.TimeoutClient = 50
+	opt.Listener.TimeoutMember = 50
+	opt.Listener.TimeoutConnection = 5
+	pool := inter.NewCreatePoolRequest("test-pool", inter.PoolProtocolTCP)
+	pool.Members = append(pool.Members, inter.NewMember("test-member-1", "10.84.0.22", 80, 80))
+	pool.HealthMonitor = &inter.HealthMonitor{
+		HealthCheckProtocol: inter.HealthCheckProtocolTCP,
+		HealthyThreshold:    3,
+		UnhealthyThreshold:  3,
+		Timeout:             5,
+		Interval:            30,
+		HealthCheckMethod:   &hcMethod,
+		HTTPVersion:         &httpVer,
+		HealthCheckPath:     &hcPath,
+		DomainName:          &domainName,
+		SuccessCode:         &successCode,
+	}
+	opt.Pool = pool
 
 	lb, sdkerr := vngcloud.LoadBalancerInternal.CreateLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {

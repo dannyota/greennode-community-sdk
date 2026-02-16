@@ -1,7 +1,5 @@
 package inter
 
-import "strings"
-
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
 	ListenerProtocolUDP   ListenerProtocol = "UDP"
@@ -55,51 +53,4 @@ func (r *CreateListenerRequest) normalizeForAPI() {
 	r.DefaultCertificateAuthority = nil
 }
 
-func (r *CreateListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateListenerRequest {
-	if len(cidrs) < 1 {
-		return r
-	}
-
-	r.AllowedCidrs = strings.Join(cidrs, ",")
-	return r
-}
-
-func (r *CreateListenerRequest) WithTimeoutClient(toc int) *CreateListenerRequest {
-	r.TimeoutClient = toc
-	return r
-}
-
-func (r *CreateListenerRequest) WithTimeoutConnection(toc int) *CreateListenerRequest {
-	r.TimeoutConnection = toc
-	return r
-}
-
-func (r *CreateListenerRequest) WithTimeoutMember(tom int) *CreateListenerRequest {
-	r.TimeoutMember = tom
-	return r
-}
-
-func (r *CreateListenerRequest) WithLoadBalancerID(lbid string) *CreateListenerRequest {
-	r.LoadBalancerID = lbid
-	return r
-}
-
-func (r *CreateListenerRequest) WithDefaultPoolID(poolID string) *CreateListenerRequest {
-	r.DefaultPoolID = &poolID
-	return r
-}
-
-func (r *CreateListenerRequest) AddCidrs(cidrs ...string) *CreateListenerRequest {
-	if len(cidrs) < 1 {
-		return r
-	}
-
-	if r.AllowedCidrs == "" {
-		return r.WithAllowedCidrs(cidrs...)
-	} else {
-		r.AllowedCidrs = r.AllowedCidrs + "," + strings.Join(cidrs, ",")
-	}
-
-	return r
-}
 
