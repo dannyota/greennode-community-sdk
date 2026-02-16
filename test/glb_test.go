@@ -79,7 +79,8 @@ func TestUpdateGlobalPoolMemberSuccess(t *testing.T) {
 		"gpool-e5de4670-27e6-45cf-bc68-ec3803ed6849",
 		"gpool-mem-4b3a819d-a83f-4964-8336-da6cb8edf529",
 		100,
-	).WithMembers(
+	)
+	opt.Members = append(opt.Members,
 		v1.NewGlobalMemberRequest("updated-member", "10.0.0.9", "sub-e208484a-69cd-4a70-a7dd-f60bbfd4b04d", 80, 80, 1, false),
 		v1.NewGlobalMemberRequest("updated-member", "10.0.0.10", "sub-e208484a-69cd-4a70-a7dd-f60bbfd4b04d", 80, 80, 1, false),
 	)

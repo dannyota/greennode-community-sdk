@@ -37,27 +37,6 @@ type ListGlobalLoadBalancersRequest struct {
 	Tags []common.Tag
 }
 
-func (r *ListGlobalLoadBalancersRequest) WithName(name string) *ListGlobalLoadBalancersRequest {
-	r.Name = name
-	return r
-}
-
-func (r *ListGlobalLoadBalancersRequest) WithTags(tags ...string) *ListGlobalLoadBalancersRequest {
-	if r.Tags == nil {
-		r.Tags = make([]common.Tag, 0)
-	}
-
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.Tags = append(r.Tags, common.Tag{Key: tags[i], Value: tags[i+1]})
-	}
-
-	return r
-}
-
 func (r *ListGlobalLoadBalancersRequest) ToListQuery() (string, error) {
 	v := url.Values{}
 	v.Set("name", r.Name)
@@ -98,41 +77,6 @@ type CreateGlobalLoadBalancerRequest struct {
 	GlobalPool     *CreateGlobalPoolRequest      `json:"globalPool"`
 }
 
-func (r *CreateGlobalLoadBalancerRequest) WithDescription(desc string) *CreateGlobalLoadBalancerRequest {
-	r.Description = desc
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithName(name string) *CreateGlobalLoadBalancerRequest {
-	r.Name = name
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithType(typeVal GlobalLoadBalancerType) *CreateGlobalLoadBalancerRequest {
-	r.Type = typeVal
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithPackage(packageID string) *CreateGlobalLoadBalancerRequest {
-	r.Package = packageID
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithPaymentFlow(paymentFlow GlobalLoadBalancerPaymentFlow) *CreateGlobalLoadBalancerRequest {
-	r.PaymentFlow = paymentFlow
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithGlobalListener(listener *CreateGlobalListenerRequest) *CreateGlobalLoadBalancerRequest {
-	r.GlobalListener = listener
-	return r
-}
-
-func (r *CreateGlobalLoadBalancerRequest) WithGlobalPool(pool *CreateGlobalPoolRequest) *CreateGlobalLoadBalancerRequest {
-	r.GlobalPool = pool
-	return r
-}
-
 func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRequest {
 	opts := &CreateGlobalLoadBalancerRequest{
 		Description:    "",
@@ -148,11 +92,6 @@ func NewCreateGlobalLoadBalancerRequest(name string) *CreateGlobalLoadBalancerRe
 
 type DeleteGlobalLoadBalancerRequest struct {
 	LoadBalancerID string
-}
-
-func (r *DeleteGlobalLoadBalancerRequest) WithLoadBalancerID(lbID string) *DeleteGlobalLoadBalancerRequest {
-	r.LoadBalancerID = lbID
-	return r
 }
 
 func NewDeleteGlobalLoadBalancerRequest(lbID string) *DeleteGlobalLoadBalancerRequest {
@@ -182,26 +121,6 @@ type GetGlobalLoadBalancerUsageHistoriesRequest struct {
 	Type string
 
 	LoadBalancerID string
-}
-
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithLoadBalancerID(lbID string) *GetGlobalLoadBalancerUsageHistoriesRequest {
-	r.LoadBalancerID = lbID
-	return r
-}
-
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithFrom(from string) *GetGlobalLoadBalancerUsageHistoriesRequest {
-	r.From = from
-	return r
-}
-
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithTo(to string) *GetGlobalLoadBalancerUsageHistoriesRequest {
-	r.To = to
-	return r
-}
-
-func (r *GetGlobalLoadBalancerUsageHistoriesRequest) WithType(typeVal string) *GetGlobalLoadBalancerUsageHistoriesRequest {
-	r.Type = typeVal
-	return r
 }
 
 func (r *GetGlobalLoadBalancerUsageHistoriesRequest) ToListQuery() (string, error) {
@@ -234,11 +153,6 @@ func NewGetGlobalLoadBalancerUsageHistoriesRequest(lbID, from, to, usageType str
 
 type GetGlobalLoadBalancerByIDRequest struct {
 	LoadBalancerID string
-}
-
-func (r *GetGlobalLoadBalancerByIDRequest) WithLoadBalancerID(lbID string) *GetGlobalLoadBalancerByIDRequest {
-	r.LoadBalancerID = lbID
-	return r
 }
 
 func NewGetGlobalLoadBalancerByIDRequest(lbID string) *GetGlobalLoadBalancerByIDRequest {

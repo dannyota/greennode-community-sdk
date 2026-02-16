@@ -1,9 +1,5 @@
 package v1
 
-import (
-	"strings"
-)
-
 type GlobalListenerProtocol string
 
 const (
@@ -12,11 +8,6 @@ const (
 
 type ListGlobalListenersRequest struct {
 	LoadBalancerID string
-}
-
-func (r *ListGlobalListenersRequest) WithLoadBalancerID(lbID string) *ListGlobalListenersRequest {
-	r.LoadBalancerID = lbID
-	return r
 }
 
 func NewListGlobalListenersRequest(lbID string) *ListGlobalListenersRequest {
@@ -38,61 +29,6 @@ type CreateGlobalListenerRequest struct {
 	GlobalPoolID      string                 `json:"globalPoolId"`
 
 	LoadBalancerID string
-}
-
-func (r *CreateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *CreateGlobalListenerRequest {
-	r.AllowedCidrs = strings.Join(cidrs, ",")
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithDescription(desc string) *CreateGlobalListenerRequest {
-	r.Description = desc
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithHeaders(headers ...string) *CreateGlobalListenerRequest {
-	r.Headers = headers
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithName(name string) *CreateGlobalListenerRequest {
-	r.Name = name
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithPort(port int) *CreateGlobalListenerRequest {
-	r.Port = port
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithProtocol(protocol GlobalListenerProtocol) *CreateGlobalListenerRequest {
-	r.Protocol = protocol
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithTimeoutClient(toc int) *CreateGlobalListenerRequest {
-	r.TimeoutClient = toc
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithTimeoutConnection(toc int) *CreateGlobalListenerRequest {
-	r.TimeoutConnection = toc
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithTimeoutMember(tom int) *CreateGlobalListenerRequest {
-	r.TimeoutMember = tom
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithGlobalPoolID(poolID string) *CreateGlobalListenerRequest {
-	r.GlobalPoolID = poolID
-	return r
-}
-
-func (r *CreateGlobalListenerRequest) WithLoadBalancerID(lbid string) *CreateGlobalListenerRequest {
-	r.LoadBalancerID = lbid
-	return r
 }
 
 func NewCreateGlobalListenerRequest(lbID, name string) *CreateGlobalListenerRequest {
@@ -124,47 +60,6 @@ type UpdateGlobalListenerRequest struct {
 	ListenerID     string
 }
 
-func (r *UpdateGlobalListenerRequest) WithAllowedCidrs(cidrs ...string) *UpdateGlobalListenerRequest {
-	r.AllowedCidrs = strings.Join(cidrs, ",")
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithTimeoutClient(toc int) *UpdateGlobalListenerRequest {
-	r.TimeoutClient = toc
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithTimeoutMember(tom int) *UpdateGlobalListenerRequest {
-	r.TimeoutMember = tom
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithTimeoutConnection(toc int) *UpdateGlobalListenerRequest {
-	r.TimeoutConnection = toc
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithHeaders(headers ...string) *UpdateGlobalListenerRequest {
-	h := strings.Join(headers, ",")
-	r.Headers = &h
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithGlobalPoolID(poolID string) *UpdateGlobalListenerRequest {
-	r.GlobalPoolID = poolID
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithLoadBalancerID(lbid string) *UpdateGlobalListenerRequest {
-	r.LoadBalancerID = lbid
-	return r
-}
-
-func (r *UpdateGlobalListenerRequest) WithListenerID(lid string) *UpdateGlobalListenerRequest {
-	r.ListenerID = lid
-	return r
-}
-
 func NewUpdateGlobalListenerRequest(lbID, lID string) *UpdateGlobalListenerRequest {
 	opts := &UpdateGlobalListenerRequest{
 		AllowedCidrs:      "0.0.0.0/0",
@@ -184,16 +79,6 @@ type DeleteGlobalListenerRequest struct {
 	ListenerID     string
 }
 
-func (r *DeleteGlobalListenerRequest) WithLoadBalancerID(lbid string) *DeleteGlobalListenerRequest {
-	r.LoadBalancerID = lbid
-	return r
-}
-
-func (r *DeleteGlobalListenerRequest) WithListenerID(lid string) *DeleteGlobalListenerRequest {
-	r.ListenerID = lid
-	return r
-}
-
 func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerRequest {
 	opts := &DeleteGlobalListenerRequest{
 		LoadBalancerID: lbID,
@@ -205,16 +90,6 @@ func NewDeleteGlobalListenerRequest(lbID, lID string) *DeleteGlobalListenerReque
 type GetGlobalListenerRequest struct {
 	LoadBalancerID string
 	ListenerID     string
-}
-
-func (r *GetGlobalListenerRequest) WithLoadBalancerID(lbid string) *GetGlobalListenerRequest {
-	r.LoadBalancerID = lbid
-	return r
-}
-
-func (r *GetGlobalListenerRequest) WithListenerID(lid string) *GetGlobalListenerRequest {
-	r.ListenerID = lid
-	return r
 }
 
 func NewGetGlobalListenerRequest(lbID, lID string) *GetGlobalListenerRequest {

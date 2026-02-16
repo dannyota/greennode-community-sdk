@@ -34,11 +34,11 @@ func TestCreateGlobalPoolSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePublic)
-	poolMember.WithMembers(member)
-	opt := v1.NewCreateGlobalPoolRequest("test-pool-4", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
-		WithHealthMonitor(v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolTCP)).
-		WithMembers(poolMember)
+	poolMember.Members = append(poolMember.Members, member)
+	opt := v1.NewCreateGlobalPoolRequest("test-pool-4", v1.GlobalPoolProtocolTCP)
+	opt.LoadBalancerID = "glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7"
+	opt.HealthMonitor = v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolTCP)
+	opt.GlobalPoolMembers = append(opt.GlobalPoolMembers, poolMember)
 	pool, sdkerr := vngcloud.GLB.CreateGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
@@ -64,18 +64,17 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	member := v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false)
 	poolMember := v1.NewGlobalPoolMemberRequest("p_name", "hcm", "net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2", 100, v1.GlobalPoolMemberTypePrivate)
-	poolMember.WithMembers(member)
-	opt := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
-		WithHealthMonitor(
-			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
-				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(common.Ptr("/sfdsaf")).
-				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)).
-				WithSuccessCode(common.Ptr("200")).
-				WithDomainName(common.Ptr("example.com")),
-		).
-		WithMembers(poolMember)
+	poolMember.Members = append(poolMember.Members, member)
+	healthMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS)
+	healthMonitor.HTTPMethod = common.Ptr(v1.GlobalPoolHealthCheckMethodGET)
+	healthMonitor.Path = common.Ptr("/sfdsaf")
+	healthMonitor.HTTPVersion = common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)
+	healthMonitor.SuccessCode = common.Ptr("200")
+	healthMonitor.DomainName = common.Ptr("example.com")
+	opt := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP)
+	opt.LoadBalancerID = "glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7"
+	opt.HealthMonitor = healthMonitor
+	opt.GlobalPoolMembers = append(opt.GlobalPoolMembers, poolMember)
 	pool, sdkerr := vngcloud.GLB.CreateGlobalPool(context.Background(), opt)
 
 	if sdkerr != nil {
@@ -99,13 +98,13 @@ func TestCreateGlobalPoolHTTPSSuccess(t *testing.T) {
 
 func TestUpdateGlobalPoolHTTPSSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
-		WithDomainName(common.Ptr("exampleee.com")).
-		WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodPOST)).
-		WithPath(common.Ptr("/hghjgj")).
-		WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1))
-	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab").
-		WithHealthMonitor(httpMonitor)
+	httpMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS)
+	httpMonitor.DomainName = common.Ptr("exampleee.com")
+	httpMonitor.HTTPMethod = common.Ptr(v1.GlobalPoolHealthCheckMethodPOST)
+	httpMonitor.Path = common.Ptr("/hghjgj")
+	httpMonitor.HTTPVersion = common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)
+	opt := v1.NewUpdateGlobalPoolRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-30c2a387-7912-4be7-8e3b-448ef16548ab")
+	opt.HealthMonitor = httpMonitor
 
 	pool, sdkerr := vngcloud.GLB.UpdateGlobalPool(context.Background(), opt)
 
@@ -171,26 +170,25 @@ func TestListGlobalPoolMembersSuccess(t *testing.T) {
 
 func TestPatchGlobalPoolMemberSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	createAction := v1.NewPatchGlobalPoolCreateBulkActionRequest(
-		v1.NewGlobalPoolMemberRequest("patch_name", "hcm", "net-86b7c84a-b3dd-4e6a-b66b-d28f36f3fc5f", 100, v1.GlobalPoolMemberTypePublic).
-			WithMembers(
-				v1.NewGlobalMemberRequest("patch_name_4", "10.105.0.4", "sub-7ceeed28-2cad-4bcd-9a4a-a0041c6d6304", 80, 80, 1, false),
-				v1.NewGlobalMemberRequest("patch_name_3", "10.105.0.3", "sub-a7fceae7-5ab5-4768-993f-8e6465f75050", 80, 80, 1, false),
-			),
+	patchMember := v1.NewGlobalPoolMemberRequest("patch_name", "hcm", "net-86b7c84a-b3dd-4e6a-b66b-d28f36f3fc5f", 100, v1.GlobalPoolMemberTypePublic)
+	patchMember.Members = append(patchMember.Members,
+		v1.NewGlobalMemberRequest("patch_name_4", "10.105.0.4", "sub-7ceeed28-2cad-4bcd-9a4a-a0041c6d6304", 80, 80, 1, false),
+		v1.NewGlobalMemberRequest("patch_name_3", "10.105.0.3", "sub-a7fceae7-5ab5-4768-993f-8e6465f75050", 80, 80, 1, false),
 	)
-	updateAction := v1.NewPatchGlobalPoolUpdateBulkActionRequest("gpool-mem-4568b7da-e82b-4417-b991-ac040967c0c1",
-		v1.NewUpdateGlobalPoolMemberRequest("", "", "", 100).WithMembers(
-			v1.NewGlobalMemberRequest("patch_name_44", "10.105.0.44", "sub-7ceeed28-2cad-4bcd-9a4a-a0041c6d6304", 80, 80, 1, false),
-			v1.NewGlobalMemberRequest("patch_name_33", "10.105.0.33", "sub-a7fceae7-5ab5-4768-993f-8e6465f75050", 80, 80, 1, false),
-		),
+	createAction := v1.NewPatchGlobalPoolCreateBulkActionRequest(patchMember)
+	updateMember := v1.NewUpdateGlobalPoolMemberRequest("", "", "", 100)
+	updateMember.Members = append(updateMember.Members,
+		v1.NewGlobalMemberRequest("patch_name_44", "10.105.0.44", "sub-7ceeed28-2cad-4bcd-9a4a-a0041c6d6304", 80, 80, 1, false),
+		v1.NewGlobalMemberRequest("patch_name_33", "10.105.0.33", "sub-a7fceae7-5ab5-4768-993f-8e6465f75050", 80, 80, 1, false),
 	)
+	updateAction := v1.NewPatchGlobalPoolUpdateBulkActionRequest("gpool-mem-4568b7da-e82b-4417-b991-ac040967c0c1", updateMember)
 	// deleteAction := v1.NewPatchGlobalPoolDeleteBulkActionRequest("gpool-mem-e4a56d03-baf8-448b-98ab-404219fddede")
-	opt := v1.NewPatchGlobalPoolMembersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-0f4ba08b-e09d-4a1c-b953-523179cea006").
-		WithBulkAction(
-			createAction,
-			// deleteAction,
-			updateAction,
-		)
+	opt := v1.NewPatchGlobalPoolMembersRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "gpool-0f4ba08b-e09d-4a1c-b953-523179cea006")
+	opt.BulkActions = []any{
+		createAction,
+		// deleteAction,
+		updateAction,
+	}
 	sdkerr := vngcloud.GLB.PatchGlobalPoolMembers(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -220,13 +218,13 @@ func TestListGlobalListenersSuccess(t *testing.T) {
 
 func TestCreateGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener").
-		WithDescription("hihi").
-		WithPort(85).
-		WithTimeoutClient(50).
-		WithTimeoutConnection(5).
-		WithTimeoutMember(50).
-		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+	opt := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener")
+	opt.Description = "hihi"
+	opt.Port = 85
+	opt.TimeoutClient = 50
+	opt.TimeoutConnection = 5
+	opt.TimeoutMember = 50
+	opt.GlobalPoolID = "gpool-7000d491-b441-40a0-af01-8039baa8e346"
 	listener, sdkerr := vngcloud.GLB.CreateGlobalListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -242,11 +240,11 @@ func TestCreateGlobalListenerSuccess(t *testing.T) {
 
 func TestUpdateGlobalListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v1.NewUpdateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "glis-7ffc4f19-7218-4d38-8016-e3ad2401e3bd").
-		WithTimeoutClient(60).
-		WithTimeoutConnection(6).
-		WithTimeoutMember(60).
-		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+	opt := v1.NewUpdateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "glis-7ffc4f19-7218-4d38-8016-e3ad2401e3bd")
+	opt.TimeoutClient = 60
+	opt.TimeoutConnection = 6
+	opt.TimeoutMember = 60
+	opt.GlobalPoolID = "gpool-7000d491-b441-40a0-af01-8039baa8e346"
 	listener, sdkerr := vngcloud.GLB.UpdateGlobalListener(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %+v", sdkerr)
@@ -297,39 +295,38 @@ func TestListGlobalLoadBalancerSuccess(t *testing.T) {
 }
 
 func TestCreateGlobalLoadBalancerSuccess(t *testing.T) {
-	pool := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP).
-		WithLoadBalancerID("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7").
-		WithHealthMonitor(
-			v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS).
-				WithHealthCheckMethod(common.Ptr(v1.GlobalPoolHealthCheckMethodGET)).
-				WithPath(common.Ptr("/sfdsaf")).
-				WithHTTPVersion(common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)).
-				WithSuccessCode(common.Ptr("200")).
-				WithDomainName(common.Ptr("example.com")),
-		).
-		WithMembers(
-			v1.NewGlobalPoolMemberRequest(
-				"p_name",
-				"hcm",
-				"net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2",
-				100,
-				v1.GlobalPoolMemberTypePrivate).
-				WithMembers(
-					v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false),
-				),
-		)
-	listener := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener").
-		WithDescription("hihi").
-		WithPort(85).
-		WithTimeoutClient(50).
-		WithTimeoutConnection(5).
-		WithTimeoutMember(50).
-		WithGlobalPoolID("gpool-7000d491-b441-40a0-af01-8039baa8e346")
+	healthMonitor := v1.NewGlobalHealthMonitor(v1.GlobalPoolHealthCheckProtocolHTTPS)
+	healthMonitor.HTTPMethod = common.Ptr(v1.GlobalPoolHealthCheckMethodGET)
+	healthMonitor.Path = common.Ptr("/sfdsaf")
+	healthMonitor.HTTPVersion = common.Ptr(v1.GlobalPoolHealthCheckHTTPVersionHTTP1Minor1)
+	healthMonitor.SuccessCode = common.Ptr("200")
+	healthMonitor.DomainName = common.Ptr("example.com")
+	poolMember := v1.NewGlobalPoolMemberRequest(
+		"p_name",
+		"hcm",
+		"net-80a4eb74-c7d9-46b4-9705-ffed0e2bc3c2",
+		100,
+		v1.GlobalPoolMemberTypePrivate)
+	poolMember.Members = append(poolMember.Members,
+		v1.NewGlobalMemberRequest("p_name", "10.105.0.4", "sub-8aa727dd-9857-472f-8766-ece41282d437", 80, 80, 1, false),
+	)
+	pool := v1.NewCreateGlobalPoolRequest("test-pool-5", v1.GlobalPoolProtocolTCP)
+	pool.LoadBalancerID = "glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7"
+	pool.HealthMonitor = healthMonitor
+	pool.GlobalPoolMembers = append(pool.GlobalPoolMembers, poolMember)
+	listener := v1.NewCreateGlobalListenerRequest("glb-2e550a10-8a9e-4e0e-9086-80d8297ca3f7", "test-listener")
+	listener.Description = "hihi"
+	listener.Port = 85
+	listener.TimeoutClient = 50
+	listener.TimeoutConnection = 5
+	listener.TimeoutMember = 50
+	listener.GlobalPoolID = "gpool-7000d491-b441-40a0-af01-8039baa8e346"
 	vngcloud := validSdkConfig()
-	opt := v1.NewCreateGlobalLoadBalancerRequest("test-glb").
-		WithDescription("hihi").
-		WithGlobalListener(listener).
-		WithGlobalPool(pool).WithPackage("pkg-b02e62ab-a282-4faf-8732-a172ef497a7b")
+	opt := v1.NewCreateGlobalLoadBalancerRequest("test-glb")
+	opt.Description = "hihi"
+	opt.GlobalListener = listener
+	opt.GlobalPool = pool
+	opt.Package = "pkg-b02e62ab-a282-4faf-8732-a172ef497a7b"
 
 	lb, sdkerr := vngcloud.GLB.CreateGlobalLoadBalancer(context.Background(), opt)
 	if sdkerr != nil {
