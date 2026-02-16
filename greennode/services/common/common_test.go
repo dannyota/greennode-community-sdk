@@ -124,13 +124,13 @@ func TestStructToMap(t *testing.T) {
 
 func TestProject(t *testing.T) {
 	var p Project
-	if p.GetProjectID() != "" {
+	if p.ID != "" {
 		t.Fatal("zero-value project should return empty string")
 	}
 
 	p.ID = "proj-123"
-	if got := p.GetProjectID(); got != "proj-123" {
-		t.Fatalf("got %q, want %q", got, "proj-123")
+	if p.ID != "proj-123" {
+		t.Fatalf("got %q, want %q", p.ID, "proj-123")
 	}
 }
 
@@ -160,13 +160,13 @@ func TestPaging(t *testing.T) {
 
 func TestPortalUser(t *testing.T) {
 	var pu PortalUser
-	if pu.GetPortalUserID() != "" {
+	if pu.ID != "" {
 		t.Fatal("zero-value should return empty string")
 	}
 
 	pu.ID = "user-456"
-	if got := pu.GetPortalUserID(); got != "user-456" {
-		t.Fatalf("got %q, want %q", got, "user-456")
+	if pu.ID != "user-456" {
+		t.Fatalf("got %q, want %q", pu.ID, "user-456")
 	}
 }
 

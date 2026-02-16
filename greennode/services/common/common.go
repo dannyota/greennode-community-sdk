@@ -18,11 +18,6 @@ type Project struct {
 	ID string
 }
 
-func (pr *Project) GetProjectID() string {
-	return pr.ID
-}
-
-
 type Paging struct {
 	Page int
 	Size int
@@ -60,10 +55,6 @@ func NewTags(kvPairs ...string) []Tag {
 
 type PortalUser struct {
 	ID string
-}
-
-func (pu *PortalUser) GetPortalUserID() string {
-	return pu.ID
 }
 
 
