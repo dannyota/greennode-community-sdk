@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgroupByIDRequest) (*entity.Secgroup, error) {
+func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgroupByIDRequest) (*Secgroup, error) {
 	url := getSecgroupByIDURL(s.Client, opts)
 	resp := new(GetSecgroupByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -28,7 +27,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgrou
 	return resp.ToEntitySecgroup(), nil
 }
 
-func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgroupRequest) (*entity.Secgroup, error) {
+func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgroupRequest) (*Secgroup, error) {
 	url := createSecgroupURL(s.Client)
 	resp := new(CreateSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -51,7 +50,7 @@ func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgr
 	return resp.ToEntitySecgroup(), nil
 }
 
-func (s *NetworkServiceV2) ListSecgroup(ctx context.Context, opts *ListSecgroupRequest) (*entity.ListSecgroups, error) {
+func (s *NetworkServiceV2) ListSecgroup(ctx context.Context, opts *ListSecgroupRequest) (*ListSecgroups, error) {
 	url := listSecgroupURL(s.Client, opts)
 	resp := new(ListSecgroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

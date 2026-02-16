@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
@@ -406,7 +405,7 @@ func TestCreateListenerSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := lbv2.NewCreateListenerRequest("test-listener-100", lbv2.ListenerProtocolHTTP, 8081)
 	opt.LoadBalancerID = "lb-a02759ad-4661-4555-b281-500fd268497e"
-	headers := []entity.ListenerInsertHeader{
+	headers := []lbv2.ListenerInsertHeader{
 		{HeaderName: "X-Forwarded-For", HeaderValue: "true"},
 		{HeaderName: "X-Forwarded-Proto", HeaderValue: "true"},
 		{HeaderName: "Access-Control-Allow-Origin", HeaderValue: "https://*.example.com, https://*.example2.com"},

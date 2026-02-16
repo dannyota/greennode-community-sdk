@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *PortalServiceV1) ListZones(ctx context.Context) (*entity.ListZones, error) {
+func (s *PortalServiceV1) ListZones(ctx context.Context) (*ListZones, error) {
 	url := listZonesURL(s.Client)
 	resp := new(ListZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

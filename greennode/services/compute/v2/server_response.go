@@ -1,34 +1,32 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type (
-	Server struct {
-		BootVolumeID       string             `json:"bootVolumeId"`
-		CreatedAt          string             `json:"createdAt"`
-		EncryptionVolume   bool               `json:"encryptionVolume"`
-		Licence            bool               `json:"licence"`
-		Location           string             `json:"location"`
-		Metadata           string             `json:"metadata"`
-		MigrateState       string             `json:"migrateState"`
-		Name               string             `json:"name"`
-		Product            string             `json:"product"`
-		ServerGroupID      string             `json:"serverGroupId"`
-		ServerGroupName    string             `json:"serverGroupName"`
-		SshKeyName         string             `json:"sshKeyName"`
-		Status             string             `json:"status"`
-		StopBeforeMigrate  bool               `json:"stopBeforeMigrate"`
-		User               string             `json:"user"`
-		Uuid               string             `json:"uuid"`
-		Image              Image              `json:"image"`
-		Flavor             Flavor             `json:"flavor"`
-		SecGroups          []ServerSecgroup   `json:"secGroups"`
-		ZoneID             string             `json:"zoneId"`
-		ExternalInterfaces []NetworkInterface `json:"externalInterfaces"`
-		InternalInterfaces []NetworkInterface `json:"internalInterfaces"`
+	serverResp struct {
+		BootVolumeID       string                `json:"bootVolumeId"`
+		CreatedAt          string                `json:"createdAt"`
+		EncryptionVolume   bool                  `json:"encryptionVolume"`
+		Licence            bool                  `json:"licence"`
+		Location           string                `json:"location"`
+		Metadata           string                `json:"metadata"`
+		MigrateState       string                `json:"migrateState"`
+		Name               string                `json:"name"`
+		Product            string                `json:"product"`
+		ServerGroupID      string                `json:"serverGroupId"`
+		ServerGroupName    string                `json:"serverGroupName"`
+		SshKeyName         string                `json:"sshKeyName"`
+		Status             string                `json:"status"`
+		StopBeforeMigrate  bool                  `json:"stopBeforeMigrate"`
+		User               string                `json:"user"`
+		Uuid               string                `json:"uuid"`
+		Image              imageResp             `json:"image"`
+		Flavor             flavorResp            `json:"flavor"`
+		SecGroups          []serverSecgroupResp  `json:"secGroups"`
+		ZoneID             string                `json:"zoneId"`
+		ExternalInterfaces []networkInterfaceResp `json:"externalInterfaces"`
+		InternalInterfaces []networkInterfaceResp `json:"internalInterfaces"`
 	}
 
-	NetworkInterface struct {
+	networkInterfaceResp struct {
 		CreatedAt     string `json:"createdAt"`
 		FixedIp       string `json:"fixedIp"`
 		FloatingIp    string `json:"floatingIp,omitempty"`
@@ -46,7 +44,7 @@ type (
 		Uuid          string `json:"uuid"`
 	}
 
-	Flavor struct {
+	flavorResp struct {
 		Bandwidth              int64  `json:"bandwidth"`
 		BandwidthUnit          string `json:"bandwidthUnit"`
 		Cpu                    int64  `json:"cpu"`
@@ -61,27 +59,27 @@ type (
 		ZoneID                 string `json:"zoneId"`
 	}
 
-	Image struct {
-		FlavorZoneIDs []string     `json:"flavorZoneIds"`
-		ID            string       `json:"id"`
-		ImageType     string       `json:"imageType"`
-		ImageVersion  string       `json:"imageVersion"`
-		Licence       bool         `json:"licence"`
-		PackageLimit  PackageLimit `json:"packageLimit"`
+	imageResp struct {
+		FlavorZoneIDs []string         `json:"flavorZoneIds"`
+		ID            string           `json:"id"`
+		ImageType     string           `json:"imageType"`
+		ImageVersion  string           `json:"imageVersion"`
+		Licence       bool             `json:"licence"`
+		PackageLimit  packageLimitResp `json:"packageLimit"`
 	}
 
-	PackageLimit struct {
+	packageLimitResp struct {
 		Cpu      int64 `json:"cpu"`
 		DiskSize int64 `json:"diskSize"`
 		Memory   int64 `json:"memory"`
 	}
 
-	ServerSecgroup struct {
+	serverSecgroupResp struct {
 		Name string `json:"name"`
 		Uuid string `json:"uuid"`
 	}
 
-	ServerSecgroupPolicy struct {
+	serverSecgroupPolicyResp struct {
 		Name          string `json:"name"`
 		UUID          string `json:"uuid"`
 		Status        string `json:"status"`
@@ -90,18 +88,18 @@ type (
 	}
 
 	ListServerGroupPoliciesResponse struct {
-		Data []ServerSecgroupPolicy `json:"data"`
+		Data []serverSecgroupPolicyResp `json:"data"`
 	}
 
 	ListServerGroupsResponse struct {
-		ListData  []ServerGroup `json:"listData"`
-		Page      int           `json:"page"`
-		PageSize  int           `json:"pageSize"`
-		TotalPage int           `json:"totalPage"`
-		TotalItem int           `json:"totalItem"`
+		ListData  []serverGroupResp `json:"listData"`
+		Page      int               `json:"page"`
+		PageSize  int               `json:"pageSize"`
+		TotalPage int               `json:"totalPage"`
+		TotalItem int               `json:"totalItem"`
 	}
 
-	ServerGroup struct {
+	serverGroupResp struct {
 		UUID        string `json:"uuid"`
 		Name        string `json:"name"`
 		Description string `json:"description"`
@@ -125,14 +123,14 @@ type (
 	}
 )
 
-func (i Image) toEntityImage() entity.Image {
-	return entity.Image{
+func (i imageResp) toEntityImage() Image {
+	return Image{
 		FlavorZoneIDs: i.FlavorZoneIDs,
 		ID:            i.ID,
 		ImageType:     i.ImageType,
 		ImageVersion:  i.ImageVersion,
 		Licence:       i.Licence,
-		PackageLimit: entity.PackageLimit{
+		PackageLimit: PackageLimit{
 			Cpu:      i.PackageLimit.Cpu,
 			DiskSize: i.PackageLimit.DiskSize,
 			Memory:   i.PackageLimit.Memory,
@@ -140,8 +138,8 @@ func (i Image) toEntityImage() entity.Image {
 	}
 }
 
-func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *entity.ServerGroupPolicy {
-	return &entity.ServerGroupPolicy{
+func (s serverSecgroupPolicyResp) toEntityServerGroupPolicy() *ServerGroupPolicy {
+	return &ServerGroupPolicy{
 		Name:   s.Name,
 		UUID:   s.UUID,
 		Status: s.Status,
@@ -152,8 +150,8 @@ func (s ServerSecgroupPolicy) toEntityServerGroupPolicy() *entity.ServerGroupPol
 	}
 }
 
-func (n NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
-	return entity.NetworkInterface{
+func (n networkInterfaceResp) toEntityNetworkInterface() NetworkInterface {
+	return NetworkInterface{
 		CreatedAt:     n.CreatedAt,
 		FixedIp:       n.FixedIp,
 		FloatingIp:    n.FloatingIp,
@@ -172,15 +170,15 @@ func (n NetworkInterface) toEntityNetworkInterface() entity.NetworkInterface {
 	}
 }
 
-func (s ServerSecgroup) toEntityServerSecgroup() entity.ServerSecgroup {
-	return entity.ServerSecgroup{
+func (s serverSecgroupResp) toEntityServerSecgroup() ServerSecgroup {
+	return ServerSecgroup{
 		Name: s.Name,
 		Uuid: s.Uuid,
 	}
 }
 
-func (f Flavor) toEntityFlavor() entity.Flavor {
-	return entity.Flavor{
+func (f flavorResp) toEntityFlavor() Flavor {
+	return Flavor{
 		Bandwidth:              f.Bandwidth,
 		BandwidthUnit:          f.BandwidthUnit,
 		Cpu:                    f.Cpu,
@@ -196,8 +194,8 @@ func (f Flavor) toEntityFlavor() entity.Flavor {
 	}
 }
 
-func (sv Server) toEntityServer() *entity.Server {
-	server := new(entity.Server)
+func (sv serverResp) toEntityServer() *Server {
+	server := new(Server)
 	server.BootVolumeID = sv.BootVolumeID
 	server.CreatedAt = sv.CreatedAt
 	server.EncryptionVolume = sv.EncryptionVolume
@@ -234,41 +232,41 @@ func (sv Server) toEntityServer() *entity.Server {
 }
 
 type CreateServerResponse struct {
-	Data Server `json:"data"`
+	Data serverResp `json:"data"`
 }
 
-func (r *CreateServerResponse) ToEntityServer() *entity.Server {
+func (r *CreateServerResponse) ToEntityServer() *Server {
 	return r.Data.toEntityServer()
 }
 
 type GetServerByIDResponse struct {
-	Data Server `json:"data"`
+	Data serverResp `json:"data"`
 }
 
-func (r *GetServerByIDResponse) ToEntityServer() *entity.Server {
+func (r *GetServerByIDResponse) ToEntityServer() *Server {
 	return r.Data.toEntityServer()
 }
 
 type UpdateServerSecgroupsByServerIDResponse struct {
-	Data Server `json:"data"`
+	Data serverResp `json:"data"`
 }
 
-func (r *UpdateServerSecgroupsByServerIDResponse) ToEntityServer() *entity.Server {
+func (r *UpdateServerSecgroupsByServerIDResponse) ToEntityServer() *Server {
 	return r.Data.toEntityServer()
 }
 
-func (r *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *entity.ListServerGroupPolicies {
-	serverGroupPolicies := &entity.ListServerGroupPolicies{}
+func (r *ListServerGroupPoliciesResponse) ToEntityListServerGroupPolicies() *ListServerGroupPolicies {
+	serverGroupPolicies := &ListServerGroupPolicies{}
 	for _, itemServerGroupPolicy := range r.Data {
 		serverGroupPolicies.Add(itemServerGroupPolicy.toEntityServerGroupPolicy())
 	}
 	return serverGroupPolicies
 }
 
-func (r *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServerGroups {
-	serverGroups := &entity.ListServerGroups{}
+func (r *ListServerGroupsResponse) ToEntityListServerGroups() *ListServerGroups {
+	serverGroups := &ListServerGroups{}
 	for _, itemServerGroup := range r.ListData {
-		serverGroup := &entity.ServerGroup{
+		serverGroup := &ServerGroup{
 			UUID:        itemServerGroup.UUID,
 			Name:        itemServerGroup.Name,
 			Description: itemServerGroup.Description,
@@ -277,7 +275,7 @@ func (r *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServer
 		}
 
 		for _, server := range itemServerGroup.Servers {
-			serverGroup.Servers = append(serverGroup.Servers, entity.ServerGroupMember{
+			serverGroup.Servers = append(serverGroup.Servers, ServerGroupMember{
 				Name: server.Name,
 				UUID: server.UUID,
 			})
@@ -293,8 +291,8 @@ func (r *ListServerGroupsResponse) ToEntityListServerGroups() *entity.ListServer
 	return serverGroups
 }
 
-func (r *CreateServerGroupResponse) ToEntityServerGroup() *entity.ServerGroup {
-	return &entity.ServerGroup{
+func (r *CreateServerGroupResponse) ToEntityServerGroup() *ServerGroup {
+	return &ServerGroup{
 		UUID:        r.Data.UUID,
 		Name:        r.Data.Name,
 		Description: r.Data.Description,

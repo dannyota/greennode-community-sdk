@@ -1,4 +1,4 @@
-package entity
+package v2
 
 import "strings"
 
@@ -86,13 +86,6 @@ type (
 		Name string `json:"name"`
 		Uuid string `json:"uuid"`
 	}
-
-	SystemTag struct {
-		Key       string `json:"key"`
-		Value     string `json:"value"`
-		CreatedAt string `json:"createdAt"`
-		SystemTag bool   `json:"systemTag"`
-	}
 )
 
 type ListServers struct {
@@ -152,4 +145,67 @@ func (sv Server) CanAttachFloatingIp() bool {
 	}
 
 	return true
+}
+
+type ServerGroup struct {
+	UUID        string              `json:"uuid"`
+	Name        string              `json:"name"`
+	Description string              `json:"description"`
+	PolicyID    string              `json:"policyId"`
+	PolicyName  string              `json:"policyName"`
+	Servers     []ServerGroupMember `json:"servers"`
+}
+
+type ServerGroupMember struct {
+	Name string `json:"name"`
+	UUID string `json:"uuid"`
+}
+
+type ListServerGroups struct {
+	Items     []*ServerGroup `json:"listData"`
+	Page      int            `json:"page"`
+	PageSize  int            `json:"pageSize"`
+	TotalPage int            `json:"totalPage"`
+	TotalItem int            `json:"totalItem"`
+}
+
+func (l *ListServerGroups) Add(item *ServerGroup) {
+	l.Items = append(l.Items, item)
+}
+
+func (l *ListServerGroups) FindServerGroupByServerGroupID(serverGroupID string) (*ServerGroup, bool) {
+	for _, item := range l.Items {
+		if item.UUID == serverGroupID {
+			return item, true
+		}
+	}
+
+	return nil, false
+}
+
+type ServerGroupPolicy struct {
+	Name         string            `json:"name"`
+	UUID         string            `json:"uuid"`
+	Status       string            `json:"status"`
+	Descriptions map[string]string `json:"descriptions"`
+}
+
+type ListServerGroupPolicies struct {
+	Items []*ServerGroupPolicy
+}
+
+func (l *ListServerGroupPolicies) Add(item *ServerGroupPolicy) {
+	l.Items = append(l.Items, item)
+}
+
+func (l *ListServerGroupPolicies) At(idx int) *ServerGroupPolicy {
+	if idx < 0 || idx >= l.Len() {
+		return nil
+	}
+
+	return l.Items[idx]
+}
+
+func (l *ListServerGroupPolicies) Len() int {
+	return len(l.Items)
 }

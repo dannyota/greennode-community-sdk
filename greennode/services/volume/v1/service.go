@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
@@ -20,7 +19,7 @@ func (s *VolumeServiceV1) getProjectID() string {
 	return s.Client.ProjectID()
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolumeTypeByIDRequest) (*entity.VolumeType, error) {
+func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolumeTypeByIDRequest) (*VolumeType, error) {
 	url := getVolumeTypeByIDURL(s.Client, opts)
 	resp := new(GetVolumeTypeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -40,7 +39,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolume
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetDefaultVolumeType(ctx context.Context) (*entity.VolumeType, error) {
+func (s *VolumeServiceV1) GetDefaultVolumeType(ctx context.Context) (*VolumeType, error) {
 	url := getDefaultVolumeTypeURL(s.Client)
 	resp := new(GetDefaultVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -58,7 +57,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType(ctx context.Context) (*entity.Vol
 	return resp.ToEntityVolumeType(), nil
 }
 
-func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolumeTypeZonesRequest) (*entity.ListVolumeTypeZones, error) {
+func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolumeTypeZonesRequest) (*ListVolumeTypeZones, error) {
 	url := getVolumeTypeZonesURL(s.Client, opts)
 	resp := new(ListVolumeTypeZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -76,7 +75,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolum
 	return resp.ToEntityListVolumeTypeZones(), nil
 }
 
-func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListVolumeTypeRequest) (*entity.ListVolumeTypes, error) {
+func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListVolumeTypeRequest) (*ListVolumeTypes, error) {
 	url := getVolumeTypesURL(s.Client, opts)
 	resp := new(ListVolumeTypeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

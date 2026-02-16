@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
-func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest, portalUserID string) (*entity.HostedZone, error) {
+func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest, portalUserID string) (*dnsv1.HostedZone, error) {
 	url := getHostedZoneByIDURL(s.Client, opts)
 	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -29,7 +29,7 @@ func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHo
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceInternal) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest, portalUserID string) (*entity.ListHostedZones, error) {
+func (s *VDnsServiceInternal) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest, portalUserID string) (*dnsv1.ListHostedZones, error) {
 	url := listHostedZonesURL(s.Client, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -48,7 +48,7 @@ func (s *VDnsServiceInternal) ListHostedZones(ctx context.Context, opts *ListHos
 	return resp.ToEntityListHostedZones(), nil
 }
 
-func (s *VDnsServiceInternal) CreateHostedZone(ctx context.Context, opts *CreateHostedZoneRequest, portalUserID string) (*entity.HostedZone, error) {
+func (s *VDnsServiceInternal) CreateHostedZone(ctx context.Context, opts *CreateHostedZoneRequest, portalUserID string) (*dnsv1.HostedZone, error) {
 	url := createHostedZoneURL(s.Client)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

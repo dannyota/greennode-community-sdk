@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type certResponseData struct {
 	UUID               string `json:"uuid"`
 	Name               string `json:"name"`
@@ -20,8 +18,8 @@ type certResponseData struct {
 	// SubjectAlternativeNames
 }
 
-func (r *certResponseData) ToEntityCertificate() *entity.Certificate {
-	return &entity.Certificate{
+func (r *certResponseData) ToEntityCertificate() *Certificate {
+	return &Certificate{
 		UUID:               r.UUID,
 		Name:               r.Name,
 		CertificateType:    r.CertificateType,
@@ -48,13 +46,13 @@ type ListCertificatesResponse struct {
 	TotalItem int                `json:"totalItem"`
 }
 
-func (r *ListCertificatesResponse) ToEntityListCertificates() *entity.ListCertificates {
-	certs := make([]entity.Certificate, 0, len(r.ListData))
+func (r *ListCertificatesResponse) ToEntityListCertificates() *ListCertificates {
+	certs := make([]Certificate, 0, len(r.ListData))
 	for _, cert := range r.ListData {
 		certs = append(certs, *cert.ToEntityCertificate())
 	}
 
-	return &entity.ListCertificates{
+	return &ListCertificates{
 		Certificates: certs,
 	}
 }
@@ -69,6 +67,6 @@ type CreateCertificateResponse struct {
 	Data certResponseData `json:"data"`
 }
 
-func (r *CreateCertificateResponse) ToEntityCertificate() *entity.Certificate {
+func (r *CreateCertificateResponse) ToEntityCertificate() *Certificate {
 	return r.Data.ToEntityCertificate()
 }

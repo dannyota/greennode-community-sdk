@@ -1,6 +1,6 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 
 type ListAllServersBySecgroupIDResponse struct {
 	Data []struct {
@@ -10,16 +10,16 @@ type ListAllServersBySecgroupIDResponse struct {
 	} `json:"data"`
 }
 
-func (r *ListAllServersBySecgroupIDResponse) ToEntityListServers() *entity.ListServers {
-	servers := make([]*entity.Server, 0, len(r.Data))
+func (r *ListAllServersBySecgroupIDResponse) ToEntityListServers() *computev2.ListServers {
+	servers := make([]*computev2.Server, 0, len(r.Data))
 	for _, server := range r.Data {
-		servers = append(servers, &entity.Server{
+		servers = append(servers, &computev2.Server{
 			Name:   server.Name,
 			Uuid:   server.UUID,
 			Status: server.Status,
 		})
 	}
-	return &entity.ListServers{
+	return &computev2.ListServers{
 		Items: servers,
 	}
 }

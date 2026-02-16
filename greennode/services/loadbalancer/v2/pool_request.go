@@ -41,7 +41,7 @@ func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest
 		PoolName:     name,
 		Algorithm:    PoolAlgorithmRoundRobin,
 		PoolProtocol: protocol,
-		Members:      make([]*Member, 0),
+		Members:      make([]*MemberInput, 0),
 	}
 }
 
@@ -69,7 +69,7 @@ func NewUpdatePoolMembersRequest(lbID, poolID string) *UpdatePoolMembersRequest 
 	return &UpdatePoolMembersRequest{
 		LoadBalancerID: lbID,
 		PoolID:         poolID,
-		Members:        make([]*Member, 0),
+		Members:        make([]*MemberInput, 0),
 	}
 }
 
@@ -87,8 +87,8 @@ func NewDeletePoolByIDRequest(lbID, poolID string) *DeletePoolByIDRequest {
 	}
 }
 
-func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
-	return &HealthMonitor{
+func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitorInput {
+	return &HealthMonitorInput{
 		HealthCheckProtocol: checkProtocol,
 		HealthyThreshold:    3,
 		UnhealthyThreshold:  3,
@@ -97,8 +97,8 @@ func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
 	}
 }
 
-func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
-	return &Member{
+func NewMember(name, ipAddress string, port int, monitorPort int) *MemberInput {
+	return &MemberInput{
 		Backup:      false,
 		IPAddress:   ipAddress,
 		MonitorPort: monitorPort,
@@ -124,22 +124,22 @@ type (
 )
 
 type CreatePoolRequest struct {
-	Algorithm     PoolAlgorithm  `json:"algorithm"`
-	PoolName      string         `json:"poolName"`
-	PoolProtocol  PoolProtocol   `json:"poolProtocol"`
-	Stickiness    *bool          `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
-	TLSEncryption *bool          `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
-	HealthMonitor *HealthMonitor `json:"healthMonitor"`
-	Members       []*Member      `json:"members"`
+	Algorithm     PoolAlgorithm     `json:"algorithm"`
+	PoolName      string            `json:"poolName"`
+	PoolProtocol  PoolProtocol      `json:"poolProtocol"`
+	Stickiness    *bool             `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
+	TLSEncryption *bool             `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
+	HealthMonitor *HealthMonitorInput `json:"healthMonitor"`
+	Members       []*MemberInput      `json:"members"`
 
 	LoadBalancerID string
 }
 
 type UpdatePoolRequest struct {
-	Algorithm     PoolAlgorithm  `json:"algorithm"`
-	Stickiness    *bool          `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
-	TLSEncryption *bool          `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
-	HealthMonitor *HealthMonitor `json:"healthMonitor"`
+	Algorithm     PoolAlgorithm     `json:"algorithm"`
+	Stickiness    *bool             `json:"stickiness,omitempty"`    // only for l7, l4 doesn't have this field => nil
+	TLSEncryption *bool             `json:"tlsEncryption,omitempty"` // only for l7, l4 doesn't have this field => nil
+	HealthMonitor *HealthMonitorInput `json:"healthMonitor"`
 
 	LoadBalancerID string
 	PoolID         string
@@ -165,7 +165,7 @@ type GetPoolByIDRequest struct {
 	PoolID         string
 }
 
-type HealthMonitor struct {
+type HealthMonitorInput struct {
 	HealthCheckProtocol HealthCheckProtocol     `json:"healthCheckProtocol"`
 	HealthyThreshold    int                     `json:"healthyThreshold"`
 	UnhealthyThreshold  int                     `json:"unhealthyThreshold"`
@@ -178,7 +178,7 @@ type HealthMonitor struct {
 	SuccessCode         *string                 `json:"successCode,omitempty"`
 }
 
-type Member struct {
+type MemberInput struct {
 	Backup      bool   `json:"backup"`
 	IPAddress   string `json:"ipAddress"`
 	MonitorPort int    `json:"monitorPort"`
@@ -192,7 +192,7 @@ type ListPoolsByLoadBalancerIDRequest struct {
 }
 
 type UpdatePoolMembersRequest struct {
-	Members []*Member `json:"members"`
+	Members []*MemberInput `json:"members"`
 
 	LoadBalancerID string
 	PoolID         string
@@ -207,7 +207,7 @@ func (r *CreatePoolRequest) normalizeForAPI() {
 // normalizeForAPI clears fields that don't apply to the current health check
 // protocol (e.g. TCP doesn't use HTTP path/version) and sets a default domain
 // name for HTTP/1.1 when none is provided.
-func (h *HealthMonitor) normalizeForAPI() {
+func (h *HealthMonitorInput) normalizeForAPI() {
 	if h.HealthyThreshold < 1 {
 		h.HealthyThreshold = 3
 	}
@@ -249,5 +249,3 @@ func (h *HealthMonitor) normalizeForAPI() {
 func (r *UpdatePoolRequest) normalizeForAPI() {
 	r.HealthMonitor.normalizeForAPI()
 }
-
-

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
@@ -12,7 +11,7 @@ type PortalServiceV2 struct {
 	Client *client.ServiceClient
 }
 
-func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuotas, error) {
+func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*ListQuotas, error) {
 	url := listAllQuotaUsedURL(s.Client)
 	resp := new(ListAllQuotaUsedResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -29,7 +28,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*entity.ListQuo
 	return resp.ToEntityListQuotas(), nil
 }
 
-func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNameRequest) (*entity.Quota, error) {
+func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNameRequest) (*Quota, error) {
 	listQuotas, sdkErr := s.ListAllQuotaUsed(ctx)
 	if sdkErr != nil {
 		return nil, sdkErr

@@ -157,7 +157,7 @@ type CreateTagsWithEndpointIDRequest struct {
 
 	ProjectID    string        `json:"-"`
 	ResourceUuid string        `json:"resourceUuid"`
-	Tags         []EndpointTag `json:"tags"`
+	Tags         []endpointTagResp `json:"tags"`
 
 	SystemTag bool `json:"systemTag"`
 }

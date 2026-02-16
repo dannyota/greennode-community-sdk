@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
@@ -13,7 +12,7 @@ type IdentityServiceV2 struct {
 	Client *client.ServiceClient
 }
 
-func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessTokenRequest) (*entity.AccessToken, error) {
+func (s *IdentityServiceV2) GetAccessToken(ctx context.Context, opts *GetAccessTokenRequest) (*AccessToken, error) {
 	url := getAccessTokenURL(s.Client)
 	resp := new(GetAccessTokenResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.IAMErrorType)

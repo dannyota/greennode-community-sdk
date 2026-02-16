@@ -1,8 +1,8 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+import "github.com/dannyota/greennode-community-sdk/v2/greennode/types"
 
-type Endpoint struct {
+type endpointResp struct {
 	Uuid              string `json:"uuid,omitempty"`
 	EndpointName      string `json:"endpointName,omitempty"`
 	EndpointServiceID string `json:"endpointServiceId,omitempty"`
@@ -12,7 +12,7 @@ type Endpoint struct {
 	Status            string `json:"status,omitempty"`
 }
 
-type EndpointTag struct {
+type endpointTagResp struct {
 	Uuid         string `json:"uuid,omitempty"`
 	TagKey       string `json:"tagKey,omitempty"`
 	TagValue     string `json:"tagValue,omitempty"`
@@ -23,8 +23,8 @@ type EndpointTag struct {
 	UpdatedAt    string `json:"updatedAt,omitempty"`
 }
 
-func (e *Endpoint) toEntityEndpoint() *entity.Endpoint {
-	return &entity.Endpoint{
+func (e *endpointResp) toEntityEndpoint() *Endpoint {
+	return &Endpoint{
 		ID:          e.Uuid,
 		Name:        e.EndpointName,
 		VpcID:       e.VpcID,
@@ -35,10 +35,10 @@ func (e *Endpoint) toEntityEndpoint() *entity.Endpoint {
 }
 
 type GetEndpointByIDResponse struct {
-	Data Endpoint `json:"data"`
+	Data endpointResp `json:"data"`
 }
 
-func (r *GetEndpointByIDResponse) ToEntityEndpoint() *entity.Endpoint {
+func (r *GetEndpointByIDResponse) ToEntityEndpoint() *Endpoint {
 	return r.Data.toEntityEndpoint()
 }
 
@@ -49,27 +49,27 @@ type CreateEndpointResponse struct {
 	} `json:"data"`
 }
 
-func (r *CreateEndpointResponse) ToEntityEndpoint() *entity.Endpoint {
-	return &entity.Endpoint{
+func (r *CreateEndpointResponse) ToEntityEndpoint() *Endpoint {
+	return &Endpoint{
 		ID:   r.Data.Uuid,
 		Name: r.Data.Name,
 	}
 }
 
 type ListEndpointsResponse struct {
-	Data      []Endpoint `json:"data"`
-	Page      int        `json:"page"`
-	Size      int        `json:"size"`
-	TotalPage int        `json:"totalPage"`
-	Total     int        `json:"total"`
+	Data      []endpointResp `json:"data"`
+	Page      int            `json:"page"`
+	Size      int            `json:"size"`
+	TotalPage int            `json:"totalPage"`
+	Total     int            `json:"total"`
 }
 
-func (r *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
-	items := make([]*entity.Endpoint, 0, len(r.Data))
+func (r *ListEndpointsResponse) ToEntityListEndpoints() *ListEndpoints {
+	items := make([]*Endpoint, 0, len(r.Data))
 	for _, item := range r.Data {
 		items = append(items, item.toEntityEndpoint())
 	}
-	return &entity.ListEndpoints{
+	return &ListEndpoints{
 		Items:     items,
 		Page:      r.Page,
 		PageSize:  r.Size,
@@ -79,13 +79,13 @@ func (r *ListEndpointsResponse) ToEntityListEndpoints() *entity.ListEndpoints {
 }
 
 type ListTagsByEndpointIDResponse struct {
-	Data []EndpointTag `json:"data"`
+	Data []endpointTagResp `json:"data"`
 }
 
-func (r *ListTagsByEndpointIDResponse) ToEntityListTags() *entity.ListTags {
-	items := make([]*entity.Tag, 0, len(r.Data))
+func (r *ListTagsByEndpointIDResponse) ToEntityListTags() *types.ListTags {
+	items := make([]*types.Tag, 0, len(r.Data))
 	for _, item := range r.Data {
-		items = append(items, &entity.Tag{
+		items = append(items, &types.Tag{
 			Key:        item.TagKey,
 			Value:      item.TagValue,
 			SystemTag:  item.SystemTag,
@@ -93,7 +93,7 @@ func (r *ListTagsByEndpointIDResponse) ToEntityListTags() *entity.ListTags {
 			TagID:      item.Uuid,
 		})
 	}
-	return &entity.ListTags{
+	return &types.ListTags{
 		Items: items,
 	}
 }

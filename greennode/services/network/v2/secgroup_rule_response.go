@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type CreateSecgroupRuleResponse struct {
 	Data struct {
 		ID             int     `json:"id"`
@@ -23,8 +21,8 @@ type CreateSecgroupRuleResponse struct {
 	} `json:"data"`
 }
 
-func (r *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *entity.SecgroupRule {
-	return &entity.SecgroupRule{
+func (r *CreateSecgroupRuleResponse) ToEntitySecgroupRule() *SecgroupRule {
+	return &SecgroupRule{
 		ID:             r.Data.UUID,
 		SecgroupID:     r.Data.SecgroupUuid,
 		Direction:      r.Data.Direction,
@@ -53,13 +51,13 @@ type ListSecgroupRulesBySecgroupIDResponse struct {
 	} `json:"data"`
 }
 
-func (r *ListSecgroupRulesBySecgroupIDResponse) ToEntityListSecgroupRules() *entity.ListSecgroupRules {
-	lsr := &entity.ListSecgroupRules{
-		Items: make([]*entity.SecgroupRule, 0),
+func (r *ListSecgroupRulesBySecgroupIDResponse) ToEntityListSecgroupRules() *ListSecgroupRules {
+	lsr := &ListSecgroupRules{
+		Items: make([]*SecgroupRule, 0),
 	}
 
 	for _, rule := range r.Data {
-		lsr.Items = append(lsr.Items, &entity.SecgroupRule{
+		lsr.Items = append(lsr.Items, &SecgroupRule{
 			ID:             rule.ID,
 			Direction:      rule.Direction,
 			EtherType:      rule.EtherType,

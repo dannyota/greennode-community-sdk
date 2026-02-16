@@ -1,19 +1,19 @@
 package v1
 
 import (
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
 type ListRecordsResponse struct {
-	ListData  []*entity.DnsRecord `json:"listData"`
-	Page      int                 `json:"page"`
-	PageSize  int                 `json:"pageSize"`
-	TotalPage int                 `json:"totalPage"`
-	TotalItem int                 `json:"totalItem"`
+	ListData  []*dnsv1.DnsRecord `json:"listData"`
+	Page      int                `json:"page"`
+	PageSize  int                `json:"pageSize"`
+	TotalPage int                `json:"totalPage"`
+	TotalItem int                `json:"totalItem"`
 }
 
-func (r *ListRecordsResponse) ToEntityListRecords() *entity.ListDnsRecords {
-	return &entity.ListDnsRecords{
+func (r *ListRecordsResponse) ToEntityListRecords() *dnsv1.ListDnsRecords {
+	return &dnsv1.ListDnsRecords{
 		ListData:  r.ListData,
 		Page:      r.Page,
 		PageSize:  r.PageSize,
@@ -23,17 +23,17 @@ func (r *ListRecordsResponse) ToEntityListRecords() *entity.ListDnsRecords {
 }
 
 type GetRecordResponse struct {
-	Data *entity.DnsRecord `json:"data"`
+	Data *dnsv1.DnsRecord `json:"data"`
 }
 
-func (r *GetRecordResponse) ToEntityDnsRecord() *entity.DnsRecord {
+func (r *GetRecordResponse) ToEntityDnsRecord() *dnsv1.DnsRecord {
 	return r.Data
 }
 
 type CreateDnsRecordResponse struct {
-	Data *entity.DnsRecord `json:"data"`
+	Data *dnsv1.DnsRecord `json:"data"`
 }
 
-func (r *CreateDnsRecordResponse) ToEntityDnsRecord() *entity.DnsRecord {
+func (r *CreateDnsRecordResponse) ToEntityDnsRecord() *dnsv1.DnsRecord {
 	return r.Data
 }

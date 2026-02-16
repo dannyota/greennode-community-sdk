@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -23,7 +22,7 @@ const (
 	defaultSizeListLoadBalancer = 10
 )
 
-func (s *LoadBalancerServiceV2) CreateLoadBalancer(ctx context.Context, opts *CreateLoadBalancerRequest) (*entity.LoadBalancer, error) {
+func (s *LoadBalancerServiceV2) CreateLoadBalancer(ctx context.Context, opts *CreateLoadBalancerRequest) (*LoadBalancer, error) {
 	url := createLoadBalancerURL(s.Client)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -44,7 +43,7 @@ func (s *LoadBalancerServiceV2) CreateLoadBalancer(ctx context.Context, opts *Cr
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ResizeLoadBalancer(ctx context.Context, opts *ResizeLoadBalancerRequest) (*entity.LoadBalancer, error) {
+func (s *LoadBalancerServiceV2) ResizeLoadBalancer(ctx context.Context, opts *ResizeLoadBalancerRequest) (*LoadBalancer, error) {
 	url := resizeLoadBalancerURL(s.Client, opts)
 	resp := new(ResizeLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -63,7 +62,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancer(ctx context.Context, opts *Re
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(ctx context.Context, opts *ListLoadBalancerPackagesRequest) (*entity.ListLoadBalancerPackages, error) {
+func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(ctx context.Context, opts *ListLoadBalancerPackagesRequest) (*ListLoadBalancerPackages, error) {
 	url := listLoadBalancerPackagesURL(s.Client, opts)
 	resp := new(ListLoadBalancerPackagesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -79,7 +78,7 @@ func (s *LoadBalancerServiceV2) ListLoadBalancerPackages(ctx context.Context, op
 	return resp.ToEntityListLoadBalancerPackages(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetLoadBalancerByID(ctx context.Context, opts *GetLoadBalancerByIDRequest) (*entity.LoadBalancer, error) {
+func (s *LoadBalancerServiceV2) GetLoadBalancerByID(ctx context.Context, opts *GetLoadBalancerByIDRequest) (*LoadBalancer, error) {
 	url := getLoadBalancerByIDURL(s.Client, opts)
 	resp := new(GetLoadBalancerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -98,7 +97,7 @@ func (s *LoadBalancerServiceV2) GetLoadBalancerByID(ctx context.Context, opts *G
 	return resp.ToEntityLoadBalancer(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListLoadBalancers(ctx context.Context, opts *ListLoadBalancersRequest) (*entity.ListLoadBalancers, error) {
+func (s *LoadBalancerServiceV2) ListLoadBalancers(ctx context.Context, opts *ListLoadBalancersRequest) (*ListLoadBalancers, error) {
 	url := listLoadBalancersURL(s.Client, opts)
 	resp := new(ListLoadBalancersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -115,7 +114,7 @@ func (s *LoadBalancerServiceV2) ListLoadBalancers(ctx context.Context, opts *Lis
 	return resp.ToEntityListLoadBalancers(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetPoolHealthMonitorByID(ctx context.Context, opts *GetPoolHealthMonitorByIDRequest) (*entity.HealthMonitor, error) {
+func (s *LoadBalancerServiceV2) GetPoolHealthMonitorByID(ctx context.Context, opts *GetPoolHealthMonitorByIDRequest) (*HealthMonitor, error) {
 	url := getPoolHealthMonitorByIDURL(s.Client, opts)
 	resp := new(GetPoolHealthMonitorByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -133,7 +132,7 @@ func (s *LoadBalancerServiceV2) GetPoolHealthMonitorByID(ctx context.Context, op
 	return resp.ToEntityHealthMonitor(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreatePool(ctx context.Context, opts *CreatePoolRequest) (*entity.Pool, error) {
+func (s *LoadBalancerServiceV2) CreatePool(ctx context.Context, opts *CreatePoolRequest) (*Pool, error) {
 	url := createPoolURL(s.Client, opts)
 	resp := new(CreatePoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -175,7 +174,7 @@ func (s *LoadBalancerServiceV2) UpdatePool(ctx context.Context, opts *UpdatePool
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) CreateListener(ctx context.Context, opts *CreateListenerRequest) (*entity.Listener, error) {
+func (s *LoadBalancerServiceV2) CreateListener(ctx context.Context, opts *CreateListenerRequest) (*Listener, error) {
 	url := createListenerURL(s.Client, opts)
 	resp := new(CreateListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -219,7 +218,7 @@ func (s *LoadBalancerServiceV2) UpdateListener(ctx context.Context, opts *Update
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerID(ctx context.Context, opts *ListListenersByLoadBalancerIDRequest) (*entity.ListListeners, error) {
+func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerID(ctx context.Context, opts *ListListenersByLoadBalancerIDRequest) (*ListListeners, error) {
 	url := listListenersByLoadBalancerIDURL(s.Client, opts)
 	resp := new(ListListenersByLoadBalancerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -238,7 +237,7 @@ func (s *LoadBalancerServiceV2) ListListenersByLoadBalancerID(ctx context.Contex
 	return resp.ToEntityListListeners(), nil
 }
 
-func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerID(ctx context.Context, opts *ListPoolsByLoadBalancerIDRequest) (*entity.ListPools, error) {
+func (s *LoadBalancerServiceV2) ListPoolsByLoadBalancerID(ctx context.Context, opts *ListPoolsByLoadBalancerIDRequest) (*ListPools, error) {
 	url := listPoolsByLoadBalancerIDURL(s.Client, opts)
 	resp := new(ListPoolsByLoadBalancerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -277,7 +276,7 @@ func (s *LoadBalancerServiceV2) UpdatePoolMembers(ctx context.Context, opts *Upd
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ListPoolMembers(ctx context.Context, opts *ListPoolMembersRequest) (*entity.ListMembers, error) {
+func (s *LoadBalancerServiceV2) ListPoolMembers(ctx context.Context, opts *ListPoolMembersRequest) (*ListMembers, error) {
 	url := listPoolMembersURL(s.Client, opts)
 	resp := new(ListPoolMembersResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -355,7 +354,7 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerByID(ctx context.Context, opts
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) GetPoolByID(ctx context.Context, opts *GetPoolByIDRequest) (*entity.Pool, error) {
+func (s *LoadBalancerServiceV2) GetPoolByID(ctx context.Context, opts *GetPoolByIDRequest) (*Pool, error) {
 	url := getPoolByIDURL(s.Client, opts)
 	resp := new(GetPoolByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -377,7 +376,7 @@ func (s *LoadBalancerServiceV2) GetPoolByID(ctx context.Context, opts *GetPoolBy
 	return resp.ToEntityPool(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetListenerByID(ctx context.Context, opts *GetListenerByIDRequest) (*entity.Listener, error) {
+func (s *LoadBalancerServiceV2) GetListenerByID(ctx context.Context, opts *GetListenerByIDRequest) (*Listener, error) {
 	url := getListenerByIDURL(s.Client, opts)
 	resp := new(GetListenerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -420,7 +419,7 @@ func (s *LoadBalancerServiceV2) ResizeLoadBalancerByID(ctx context.Context, opts
 	return nil
 }
 
-func (s *LoadBalancerServiceV2) ScaleLoadBalancer(ctx context.Context, opts *ScaleLoadBalancerRequest) (*entity.LoadBalancer, error) {
+func (s *LoadBalancerServiceV2) ScaleLoadBalancer(ctx context.Context, opts *ScaleLoadBalancerRequest) (*LoadBalancer, error) {
 	url := scaleLoadBalancerURL(s.Client, opts)
 	resp := new(ScaleLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -443,7 +442,7 @@ func (s *LoadBalancerServiceV2) ScaleLoadBalancer(ctx context.Context, opts *Sca
 
 // policy
 
-func (s *LoadBalancerServiceV2) ListPolicies(ctx context.Context, opts *ListPoliciesRequest) (*entity.ListPolicies, error) {
+func (s *LoadBalancerServiceV2) ListPolicies(ctx context.Context, opts *ListPoliciesRequest) (*ListPolicies, error) {
 	url := listPoliciesURL(s.Client, opts)
 	resp := new(ListPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -459,7 +458,7 @@ func (s *LoadBalancerServiceV2) ListPolicies(ctx context.Context, opts *ListPoli
 	return resp.ToEntityListPolicies(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreatePolicy(ctx context.Context, opts *CreatePolicyRequest) (*entity.Policy, error) {
+func (s *LoadBalancerServiceV2) CreatePolicy(ctx context.Context, opts *CreatePolicyRequest) (*Policy, error) {
 	url := createPolicyURL(s.Client, opts)
 	resp := new(CreatePolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -479,7 +478,7 @@ func (s *LoadBalancerServiceV2) CreatePolicy(ctx context.Context, opts *CreatePo
 	return resp.ToEntityPolicy(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetPolicyByID(ctx context.Context, opts *GetPolicyByIDRequest) (*entity.Policy, error) {
+func (s *LoadBalancerServiceV2) GetPolicyByID(ctx context.Context, opts *GetPolicyByIDRequest) (*Policy, error) {
 	url := getPolicyByIDURL(s.Client, opts)
 	resp := new(GetPolicyResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -550,7 +549,7 @@ func (s *LoadBalancerServiceV2) ReorderPolicies(ctx context.Context, opts *Reord
 }
 
 
-func (s *LoadBalancerServiceV2) ListCertificates(ctx context.Context, opts *ListCertificatesRequest) (*entity.ListCertificates, error) {
+func (s *LoadBalancerServiceV2) ListCertificates(ctx context.Context, opts *ListCertificatesRequest) (*ListCertificates, error) {
 	url := listCertificatesURL(s.Client)
 	resp := new(ListCertificatesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -566,7 +565,7 @@ func (s *LoadBalancerServiceV2) ListCertificates(ctx context.Context, opts *List
 	return resp.ToEntityListCertificates(), nil
 }
 
-func (s *LoadBalancerServiceV2) GetCertificateByID(ctx context.Context, opts *GetCertificateByIDRequest) (*entity.Certificate, error) {
+func (s *LoadBalancerServiceV2) GetCertificateByID(ctx context.Context, opts *GetCertificateByIDRequest) (*Certificate, error) {
 	url := getCertificateByIDURL(s.Client, opts)
 	resp := new(GetCertificateByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -582,7 +581,7 @@ func (s *LoadBalancerServiceV2) GetCertificateByID(ctx context.Context, opts *Ge
 	return resp.ToEntityCertificate(), nil
 }
 
-func (s *LoadBalancerServiceV2) CreateCertificate(ctx context.Context, opts *CreateCertificateRequest) (*entity.Certificate, error) {
+func (s *LoadBalancerServiceV2) CreateCertificate(ctx context.Context, opts *CreateCertificateRequest) (*Certificate, error) {
 	url := createCertificateURL(s.Client)
 	resp := new(CreateCertificateResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

@@ -4,12 +4,11 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(ctx context.Context, opts *CreateVirtualAddressCrossProjectRequest) (*entity.VirtualAddress, error) {
+func (s *NetworkServiceV2) CreateVirtualAddressCrossProject(ctx context.Context, opts *CreateVirtualAddressCrossProjectRequest) (*VirtualAddress, error) {
 	url := createVirtualAddressCrossProjectURL(s.Client)
 	resp := new(CreateVirtualAddressCrossProjectResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -48,7 +47,7 @@ func (s *NetworkServiceV2) DeleteVirtualAddressByID(ctx context.Context, opts *D
 	return nil
 }
 
-func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetVirtualAddressByIDRequest) (*entity.VirtualAddress, error) {
+func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetVirtualAddressByIDRequest) (*VirtualAddress, error) {
 	url := getVirtualAddressByIDURL(s.Client, opts)
 	resp := new(GetVirtualAddressByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -67,7 +66,7 @@ func (s *NetworkServiceV2) GetVirtualAddressByID(ctx context.Context, opts *GetV
 	return resp.ToEntityVirtualAddress(), nil
 }
 
-func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(ctx context.Context, opts *ListAddressPairsByVirtualAddressIDRequest) (*entity.ListAddressPairs, error) {
+func (s *NetworkServiceV2) ListAddressPairsByVirtualAddressID(ctx context.Context, opts *ListAddressPairsByVirtualAddressIDRequest) (*ListAddressPairs, error) {
 	url := listAddressPairsByVirtualAddressIDURL(s.Client, opts)
 	resp := new(ListAddressPairsByVirtualAddressIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

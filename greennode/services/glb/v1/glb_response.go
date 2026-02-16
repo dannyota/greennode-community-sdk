@@ -1,35 +1,33 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 // CreateGlobalLoadBalancerResponse is a multi-object envelope returned
 // when creating a global load balancer.
 type CreateGlobalLoadBalancerResponse struct {
-	GlobalLoadBalancer entity.GlobalLoadBalancer `json:"globalLoadBalancer"`
-	GlobalListener     entity.GlobalListener     `json:"globalListener"`
-	GlobalPool         entity.GlobalPool         `json:"globalPool"`
+	GlobalLoadBalancer GlobalLoadBalancer `json:"globalLoadBalancer"`
+	GlobalListener     GlobalListener     `json:"globalListener"`
+	GlobalPool         GlobalPool         `json:"globalPool"`
 }
 
-func (r *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *entity.GlobalLoadBalancer {
+func (r *CreateGlobalLoadBalancerResponse) ToEntityGlobalLoadBalancer() *GlobalLoadBalancer {
 	return &r.GlobalLoadBalancer
 }
 
 // ListGlobalPackagesResponse wraps a bare JSON array of packages.
-type ListGlobalPackagesResponse []entity.GlobalPackage
+type ListGlobalPackagesResponse []GlobalPackage
 
-func (r *ListGlobalPackagesResponse) ToEntityListGlobalPackages() *entity.ListGlobalPackages {
+func (r *ListGlobalPackagesResponse) ToEntityListGlobalPackages() *ListGlobalPackages {
 	if r == nil {
-		return &entity.ListGlobalPackages{}
+		return &ListGlobalPackages{}
 	}
-	return &entity.ListGlobalPackages{Items: []entity.GlobalPackage(*r)}
+	return &ListGlobalPackages{Items: []GlobalPackage(*r)}
 }
 
 // ListGlobalRegionsResponse wraps a bare JSON array of regions.
-type ListGlobalRegionsResponse []entity.GlobalRegion
+type ListGlobalRegionsResponse []GlobalRegion
 
-func (r *ListGlobalRegionsResponse) ToEntityListGlobalRegions() *entity.ListGlobalRegions {
+func (r *ListGlobalRegionsResponse) ToEntityListGlobalRegions() *ListGlobalRegions {
 	if r == nil {
-		return &entity.ListGlobalRegions{}
+		return &ListGlobalRegions{}
 	}
-	return &entity.ListGlobalRegions{Items: []entity.GlobalRegion(*r)}
+	return &ListGlobalRegions{Items: []GlobalRegion(*r)}
 }

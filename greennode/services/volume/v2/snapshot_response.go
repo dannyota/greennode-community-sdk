@@ -1,21 +1,19 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type ListSnapshotsByBlockVolumeIDResponse struct {
-	Items      []Snapshot `json:"items"`
-	Page       int        `json:"page"`
-	PageSize   int        `json:"pageSize"`
-	TotalPages int        `json:"totalPages"`
-	TotalItems int        `json:"totalItems"`
+	Items      []snapshotResp `json:"items"`
+	Page       int            `json:"page"`
+	PageSize   int            `json:"pageSize"`
+	TotalPages int            `json:"totalPages"`
+	TotalItems int            `json:"totalItems"`
 }
 
 type CreateSnapshotByBlockVolumeIDResponse struct {
-	Snapshot
+	snapshotResp
 }
 
 type (
-	Snapshot struct {
+	snapshotResp struct {
 		BackendID           string         `json:"backendId"`
 		BackendSnapshotID   *string        `json:"backendSnapshotId"`
 		BackendSnapshotName *string        `json:"backendSnapshotName"`
@@ -68,8 +66,8 @@ type (
 	}
 )
 
-func (r *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *entity.ListSnapshots {
-	sl := new(entity.ListSnapshots)
+func (r *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *ListSnapshots {
+	sl := new(ListSnapshots)
 
 	for _, item := range r.Items {
 		sl.Items = append(sl.Items, item.toEntitySnapshot())
@@ -83,8 +81,8 @@ func (r *ListSnapshotsByBlockVolumeIDResponse) ToEntityListSnapshots() *entity.L
 	return sl
 }
 
-func (s *Snapshot) toEntitySnapshot() *entity.Snapshot {
-	return &entity.Snapshot{
+func (s *snapshotResp) toEntitySnapshot() *Snapshot {
+	return &Snapshot{
 		ID:        s.ID,
 		Name:      s.Name,
 		CreatedAt: s.CreatedAt,
@@ -94,6 +92,6 @@ func (s *Snapshot) toEntitySnapshot() *entity.Snapshot {
 	}
 }
 
-func (r *CreateSnapshotByBlockVolumeIDResponse) ToEntitySnapshot() *entity.Snapshot {
+func (r *CreateSnapshotByBlockVolumeIDResponse) ToEntitySnapshot() *Snapshot {
 	return r.toEntitySnapshot()
 }

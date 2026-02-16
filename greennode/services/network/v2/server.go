@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 )
 
-func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts *ListAllServersBySecgroupIDRequest) (*entity.ListServers, error) {
+func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts *ListAllServersBySecgroupIDRequest) (*computev2.ListServers, error) {
 	url := listAllServersBySecgroupIDURL(s.Client, opts)
 	resp := new(ListAllServersBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

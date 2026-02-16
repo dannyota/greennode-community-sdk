@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
-func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecordsRequest, portalUserID string) (*entity.ListDnsRecords, error) {
+func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecordsRequest, portalUserID string) (*dnsv1.ListDnsRecords, error) {
 	url := listRecordsURL(s.Client, opts)
 	resp := new(ListRecordsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -28,7 +28,7 @@ func (s *VDnsServiceInternal) ListRecords(ctx context.Context, opts *ListRecords
 	return resp.ToEntityListRecords(), nil
 }
 
-func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequest, portalUserID string) (*entity.DnsRecord, error) {
+func (s *VDnsServiceInternal) GetRecord(ctx context.Context, opts *GetRecordRequest, portalUserID string) (*dnsv1.DnsRecord, error) {
 	url := getRecordURL(s.Client, opts)
 	resp := new(GetRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -82,7 +82,7 @@ func (s *VDnsServiceInternal) DeleteRecord(ctx context.Context, opts *DeleteReco
 	return nil
 }
 
-func (s *VDnsServiceInternal) CreateDnsRecord(ctx context.Context, opts *CreateDnsRecordRequest, portalUserID string) (*entity.DnsRecord, error) {
+func (s *VDnsServiceInternal) CreateDnsRecord(ctx context.Context, opts *CreateDnsRecordRequest, portalUserID string) (*dnsv1.DnsRecord, error) {
 	url := createDnsRecordURL(s.Client, opts)
 	resp := new(CreateDnsRecordResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

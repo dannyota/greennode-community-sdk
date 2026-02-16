@@ -1,4 +1,4 @@
-package entity
+package v1
 
 type Endpoint struct {
 	IPv4Address string `json:"endpointIp"`

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
@@ -12,12 +11,12 @@ type ServerServiceInternalV1 struct {
 	Client *client.ServiceClient
 }
 
-func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *CreateSystemTagRequest) (*[]entity.SystemTag, error) {
+func (s *ServerServiceInternalV1) CreateSystemTags(ctx context.Context, opts *CreateSystemTagRequest) (*[]SystemTag, error) {
 
 	url := createSystemTagURL(s.Client)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 
-	resp := new([]entity.SystemTag)
+	resp := new([]SystemTag)
 
 	req := client.NewRequest().
 		WithOkCodes(200).

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -22,7 +21,7 @@ const (
 	defaultLimitListServerGroups  = 10
 )
 
-func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*entity.Server, error) {
+func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*Server, error) {
 	url := createServerURL(s.Client)
 	resp := new(CreateServerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -58,7 +57,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 	return resp.ToEntityServer(), nil
 }
 
-func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByIDRequest) (*entity.Server, error) {
+func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByIDRequest) (*Server, error) {
 	url := getServerByIDURL(s.Client, opts)
 	resp := new(GetServerByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -100,7 +99,7 @@ func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteSer
 	return nil
 }
 
-func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, opts *UpdateServerSecgroupsByServerIDRequest) (*entity.Server, error) {
+func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, opts *UpdateServerSecgroupsByServerIDRequest) (*Server, error) {
 	url := updateServerSecgroupsByServerIDURL(s.Client, opts)
 	resp := new(UpdateServerSecgroupsByServerIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -214,7 +213,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFlo
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *ListServerGroupPoliciesRequest) (*entity.ListServerGroupPolicies, error) {
+func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *ListServerGroupPoliciesRequest) (*ListServerGroupPolicies, error) {
 	url := listServerGroupPoliciesURL(s.Client)
 	resp := new(ListServerGroupPoliciesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -250,7 +249,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *Dele
 	return nil
 }
 
-func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServerGroupsRequest) (*entity.ListServerGroups, error) {
+func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServerGroupsRequest) (*ListServerGroups, error) {
 	url := listServerGroupsURL(s.Client, opts)
 	resp := new(ListServerGroupsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -268,7 +267,7 @@ func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServe
 	return resp.ToEntityListServerGroups(), nil
 }
 
-func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateServerGroupRequest) (*entity.ServerGroup, error) {
+func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateServerGroupRequest) (*ServerGroup, error) {
 	url := createServerGroupURL(s.Client, opts)
 	resp := new(CreateServerGroupResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

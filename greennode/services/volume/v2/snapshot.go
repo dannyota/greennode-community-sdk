@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts *ListSnapshotsByBlockVolumeIDRequest) (*entity.ListSnapshots, error) {
+func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts *ListSnapshotsByBlockVolumeIDRequest) (*ListSnapshots, error) {
 	url := listSnapshotsByBlockVolumeIDURL(s.Client, opts)
 	resp := new(ListSnapshotsByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -27,7 +26,7 @@ func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts
 	return resp.ToEntityListSnapshots(), nil
 }
 
-func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opts *CreateSnapshotByBlockVolumeIDRequest) (*entity.Snapshot, error) {
+func (s *VolumeServiceV2) CreateSnapshotByBlockVolumeID(ctx context.Context, opts *CreateSnapshotByBlockVolumeIDRequest) (*Snapshot, error) {
 	url := createSnapshotByBlockVolumeIDURL(s.Client, opts)
 	resp := new(CreateSnapshotByBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

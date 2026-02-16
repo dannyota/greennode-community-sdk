@@ -1,4 +1,4 @@
-package entity
+package v2
 
 type Volume struct {
 	Name             string   `json:"name"`
@@ -46,7 +46,7 @@ func (v Volume) IsAvailable() bool {
 }
 
 func (v Volume) IsError() bool {
-	return v.Status == ServerStatusError
+	return v.Status == "ERROR"
 }
 
 func (v Volume) IsInUse() bool {
@@ -63,4 +63,22 @@ func (v Volume) CanDelete() bool {
 	}
 
 	return false
+}
+
+type Snapshot struct {
+	ID         string `json:"id"`
+	CreatedAt  string `json:"createdAt"`
+	VolumeID   string `json:"volumeId"`
+	Size       int64  `json:"size"`
+	VolumeSize int64  `json:"volumeSize"`
+	Status     string `json:"status"`
+	Name       string `json:"name"`
+}
+
+type ListSnapshots struct {
+	Items      []*Snapshot
+	TotalPages int
+	Page       int
+	PageSize   int
+	TotalItems int
 }

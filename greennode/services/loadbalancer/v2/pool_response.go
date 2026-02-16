@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type GetPoolHealthMonitorByIDResponse struct {
 	Data struct {
 		UUID                string  `json:"uuid"`
@@ -22,12 +20,12 @@ type GetPoolHealthMonitorByIDResponse struct {
 	} `json:"data"`
 }
 
-func (r *GetPoolHealthMonitorByIDResponse) ToEntityHealthMonitor() *entity.HealthMonitor {
+func (r *GetPoolHealthMonitorByIDResponse) ToEntityHealthMonitor() *HealthMonitor {
 	if r == nil {
 		return nil
 	}
 
-	return &entity.HealthMonitor{
+	return &HealthMonitor{
 		Timeout:             r.Data.Timeout,
 		CreatedAt:           r.Data.CreatedAt,
 		UpdatedAt:           r.Data.UpdatedAt,
@@ -50,33 +48,33 @@ type CreatePoolResponse struct {
 }
 
 type ListPoolsByLoadBalancerIDResponse struct {
-	Data []Pool `json:"data"`
+	Data []poolResp `json:"data"`
 }
 
 type ListPoolMembersResponse struct {
-	Data []PoolMember `json:"data"`
+	Data []poolMemberResp `json:"data"`
 }
 
 type GetPoolByIDResponse struct {
-	Data Pool `json:"data"`
+	Data poolResp `json:"data"`
 }
 
-type Pool struct {
-	UUID              string       `json:"uuid"`
-	Name              string       `json:"name"`
-	Protocol          string       `json:"protocol"`
-	Description       string       `json:"description,omitempty"`
-	LoadBalanceMethod string       `json:"loadBalanceMethod"`
-	DisplayStatus     string       `json:"displayStatus"`
-	CreatedAt         string       `json:"createdAt"`
-	UpdatedAt         string       `json:"updatedAt"`
-	Stickiness        bool         `json:"stickiness"`
-	TLSEncryption     bool         `json:"tlsEncryption"`
-	ProgressStatus    string       `json:"progressStatus"`
-	Members           []PoolMember `json:"members"`
+type poolResp struct {
+	UUID              string           `json:"uuid"`
+	Name              string           `json:"name"`
+	Protocol          string           `json:"protocol"`
+	Description       string           `json:"description,omitempty"`
+	LoadBalanceMethod string           `json:"loadBalanceMethod"`
+	DisplayStatus     string           `json:"displayStatus"`
+	CreatedAt         string           `json:"createdAt"`
+	UpdatedAt         string           `json:"updatedAt"`
+	Stickiness        bool             `json:"stickiness"`
+	TLSEncryption     bool             `json:"tlsEncryption"`
+	ProgressStatus    string           `json:"progressStatus"`
+	Members           []poolMemberResp `json:"members"`
 }
 
-type PoolMember struct {
+type poolMemberResp struct {
 	Address        string `json:"address"`
 	Backup         bool   `json:"backup"`
 	CreatedAt      string `json:"createdAt"`
@@ -93,14 +91,14 @@ type PoolMember struct {
 	Weight         int    `json:"weight"`
 }
 
-func (r *CreatePoolResponse) ToEntityPool() *entity.Pool {
-	return &entity.Pool{
+func (r *CreatePoolResponse) ToEntityPool() *Pool {
+	return &Pool{
 		UUID: r.UUID,
 	}
 }
 
-func (r *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *entity.ListPools {
-	listPools := new(entity.ListPools)
+func (r *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *ListPools {
+	listPools := new(ListPools)
 	for _, pool := range r.Data {
 		listPools.Add(pool.toEntityPool())
 	}
@@ -108,8 +106,8 @@ func (r *ListPoolsByLoadBalancerIDResponse) ToEntityListPools() *entity.ListPool
 	return listPools
 }
 
-func (p *PoolMember) toEntityMember() *entity.Member {
-	return &entity.Member{
+func (p *poolMemberResp) toEntityMember() *Member {
+	return &Member{
 		Address:        p.Address,
 		Backup:         p.Backup,
 		Name:           p.Name,
@@ -126,16 +124,16 @@ func (p *PoolMember) toEntityMember() *entity.Member {
 	}
 }
 
-func (p *Pool) toEntityListMembers() *entity.ListMembers {
-	listMembers := &entity.ListMembers{}
+func (p *poolResp) toEntityListMembers() *ListMembers {
+	listMembers := &ListMembers{}
 	for _, member := range p.Members {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (p *Pool) toEntityPool() *entity.Pool {
-	return &entity.Pool{
+func (p *poolResp) toEntityPool() *Pool {
+	return &Pool{
 		UUID:              p.UUID,
 		Name:              p.Name,
 		Protocol:          p.Protocol,
@@ -148,14 +146,14 @@ func (p *Pool) toEntityPool() *entity.Pool {
 	}
 }
 
-func (r *ListPoolMembersResponse) ToEntityListMembers() *entity.ListMembers {
-	listMembers := &entity.ListMembers{}
+func (r *ListPoolMembersResponse) ToEntityListMembers() *ListMembers {
+	listMembers := &ListMembers{}
 	for _, member := range r.Data {
 		listMembers.Add(member.toEntityMember())
 	}
 	return listMembers
 }
 
-func (r *GetPoolByIDResponse) ToEntityPool() *entity.Pool {
+func (r *GetPoolByIDResponse) ToEntityPool() *Pool {
 	return r.Data.toEntityPool()
 }

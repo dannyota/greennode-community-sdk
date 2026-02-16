@@ -6,7 +6,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	v1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 )
 
@@ -335,7 +334,7 @@ func TestDnsServiceV1_UpdateRecord(t *testing.T) {
 	}
 
 	// Find a record that's not NS or SOA (system records that can't be modified)
-	var targetRecord *entity.DnsRecord
+	var targetRecord *v1.DnsRecord
 	for _, record := range listRecords.ListData {
 		if record.Type != "NS" && record.Type != "SOA" {
 			targetRecord = record

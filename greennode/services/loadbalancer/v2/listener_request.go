@@ -1,9 +1,5 @@
 package v2
 
-import (
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-)
-
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"
 	ListenerProtocolUDP   ListenerProtocol = "UDP"
@@ -53,32 +49,32 @@ func NewGetListenerByIDRequest(lbID, listenerID string) *GetListenerByIDRequest 
 type ListenerProtocol string
 
 type CreateListenerRequest struct {
-	AllowedCidrs                string                         `json:"allowedCidrs"`
-	ListenerName                string                         `json:"listenerName"`
-	ListenerProtocol            ListenerProtocol               `json:"listenerProtocol"`
-	ListenerProtocolPort        int                            `json:"listenerProtocolPort"`
-	TimeoutClient               int                            `json:"timeoutClient"`
-	TimeoutConnection           int                            `json:"timeoutConnection"`
-	TimeoutMember               int                            `json:"timeoutMember"`
-	DefaultPoolID               *string                        `json:"defaultPoolId"`
-	CertificateAuthorities      *[]string                      `json:"certificateAuthorities"`
-	ClientCertificate           *string                        `json:"clientCertificate"`
-	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
-	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
+	AllowedCidrs                string                  `json:"allowedCidrs"`
+	ListenerName                string                  `json:"listenerName"`
+	ListenerProtocol            ListenerProtocol        `json:"listenerProtocol"`
+	ListenerProtocolPort        int                     `json:"listenerProtocolPort"`
+	TimeoutClient               int                     `json:"timeoutClient"`
+	TimeoutConnection           int                     `json:"timeoutConnection"`
+	TimeoutMember               int                     `json:"timeoutMember"`
+	DefaultPoolID               *string                 `json:"defaultPoolId"`
+	CertificateAuthorities      *[]string               `json:"certificateAuthorities"`
+	ClientCertificate           *string                 `json:"clientCertificate"`
+	DefaultCertificateAuthority *string                 `json:"defaultCertificateAuthority"`
+	InsertHeaders               *[]ListenerInsertHeader `json:"insertHeaders"`
 
 	LoadBalancerID string
 }
 
 type UpdateListenerRequest struct {
-	AllowedCidrs                string                         `json:"allowedCidrs"`
-	DefaultPoolID               string                         `json:"defaultPoolId"`
-	TimeoutClient               int                            `json:"timeoutClient"`
-	TimeoutConnection           int                            `json:"timeoutConnection"`
-	TimeoutMember               int                            `json:"timeoutMember"`
-	CertificateAuthorities      *[]string                      `json:"certificateAuthorities"`
-	ClientCertificate           *string                        `json:"clientCertificate"`
-	DefaultCertificateAuthority *string                        `json:"defaultCertificateAuthority"`
-	InsertHeaders               *[]entity.ListenerInsertHeader `json:"insertHeaders"`
+	AllowedCidrs                string                  `json:"allowedCidrs"`
+	DefaultPoolID               string                  `json:"defaultPoolId"`
+	TimeoutClient               int                     `json:"timeoutClient"`
+	TimeoutConnection           int                     `json:"timeoutConnection"`
+	TimeoutMember               int                     `json:"timeoutMember"`
+	CertificateAuthorities      *[]string               `json:"certificateAuthorities"`
+	ClientCertificate           *string                 `json:"clientCertificate"`
+	DefaultCertificateAuthority *string                 `json:"defaultCertificateAuthority"`
+	InsertHeaders               *[]ListenerInsertHeader `json:"insertHeaders"`
 
 	LoadBalancerID string
 	ListenerID     string
@@ -113,4 +109,3 @@ func (r *CreateListenerRequest) normalizeForAPI() {
 	r.ClientCertificate = nil
 	r.DefaultCertificateAuthority = nil
 }
-

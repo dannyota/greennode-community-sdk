@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type CreateBlockVolumeResponse struct {
 	Data BlockVolume `json:"data"`
 }
@@ -30,7 +28,7 @@ type Zone struct {
 	Uuid string `json:"uuid"`
 }
 
-func (r *GetBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
+func (r *GetBlockVolumeByIDResponse) ToEntityVolume() *Volume {
 	return r.Data.toEntityVolume()
 }
 
@@ -60,12 +58,12 @@ type (
 	}
 )
 
-func (r *CreateBlockVolumeResponse) ToEntityVolume() *entity.Volume {
+func (r *CreateBlockVolumeResponse) ToEntityVolume() *Volume {
 	return r.Data.toEntityVolume()
 }
 
-func (r *ListBlockVolumesResponse) ToEntityListVolumes() *entity.ListVolumes {
-	lstVolumes := new(entity.ListVolumes)
+func (r *ListBlockVolumesResponse) ToEntityListVolumes() *ListVolumes {
+	lstVolumes := new(ListVolumes)
 	for _, vol := range r.ListData {
 		lstVolumes.Items = append(lstVolumes.Items, vol.toEntityVolume())
 	}
@@ -73,8 +71,8 @@ func (r *ListBlockVolumesResponse) ToEntityListVolumes() *entity.ListVolumes {
 	return lstVolumes
 }
 
-func (b *BlockVolume) toEntityVolume() *entity.Volume {
-	return &entity.Volume{
+func (b *BlockVolume) toEntityVolume() *Volume {
+	return &Volume{
 		ID:              b.UUID,
 		Name:            b.Name,
 		Size:            b.Size,
@@ -90,12 +88,12 @@ func (b *BlockVolume) toEntityVolume() *entity.Volume {
 	}
 }
 
-func (r *ResizeBlockVolumeByIDResponse) ToEntityVolume() *entity.Volume {
+func (r *ResizeBlockVolumeByIDResponse) ToEntityVolume() *Volume {
 	return r.Data.toEntityVolume()
 }
 
-func (r *GetUnderBlockVolumeIDResponse) ToEntityVolume() *entity.Volume {
-	return &entity.Volume{
+func (r *GetUnderBlockVolumeIDResponse) ToEntityVolume() *Volume {
+	return &Volume{
 		UnderID: r.Uuid,
 	}
 }

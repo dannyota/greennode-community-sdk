@@ -1,9 +1,7 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type GetVolumeTypeByIDResponse struct {
-	VolumeTypes []entity.VolumeType `json:"volumeTypes"`
+	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
 type GetDefaultVolumeTypeResponse struct {
@@ -12,14 +10,14 @@ type GetDefaultVolumeTypeResponse struct {
 }
 
 type ListVolumeTypeZonesResponse struct {
-	VolumeTypeZones []entity.VolumeTypeZone `json:"volumeTypeZones"`
+	VolumeTypeZones []VolumeTypeZone `json:"volumeTypeZones"`
 }
 
 type ListVolumeTypeResponse struct {
-	VolumeTypes []entity.VolumeType `json:"volumeTypes"`
+	VolumeTypes []VolumeType `json:"volumeTypes"`
 }
 
-func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
+func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *VolumeType {
 	if len(r.VolumeTypes) == 0 {
 		return nil
 	}
@@ -27,15 +25,15 @@ func (r *GetVolumeTypeByIDResponse) ToEntityVolumeType() *entity.VolumeType {
 	return &r.VolumeTypes[0]
 }
 
-func (r *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *entity.VolumeType {
-	return &entity.VolumeType{
+func (r *GetDefaultVolumeTypeResponse) ToEntityVolumeType() *VolumeType {
+	return &VolumeType{
 		ID:     r.ID,
 		ZoneID: r.ZoneID,
 	}
 }
 
-func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.ListVolumeTypeZones {
-	sl := new(entity.ListVolumeTypeZones)
+func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *ListVolumeTypeZones {
+	sl := new(ListVolumeTypeZones)
 
 	for i := range r.VolumeTypeZones {
 		sl.VolumeTypeZones = append(sl.VolumeTypeZones, &r.VolumeTypeZones[i])
@@ -44,8 +42,8 @@ func (r *ListVolumeTypeZonesResponse) ToEntityListVolumeTypeZones() *entity.List
 	return sl
 }
 
-func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *entity.ListVolumeTypes {
-	sl := new(entity.ListVolumeTypes)
+func (r *ListVolumeTypeResponse) ToEntityListVolumeType() *ListVolumeTypes {
+	sl := new(ListVolumeTypes)
 
 	for i := range r.VolumeTypes {
 		sl.VolumeTypes = append(sl.VolumeTypes, &r.VolumeTypes[i])

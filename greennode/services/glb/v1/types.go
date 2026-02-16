@@ -1,4 +1,4 @@
-package entity
+package v1
 
 type GlobalLoadBalancer struct {
 	CreatedAt   string                      `json:"createdAt"`
@@ -128,7 +128,6 @@ type ListGlobalPoolMembers struct {
 	Items []*GlobalPoolMember
 }
 
-
 type GlobalListener struct {
 	CreatedAt            string  `json:"createdAt"`
 	UpdatedAt            string  `json:"updatedAt"`
@@ -151,7 +150,6 @@ type GlobalListener struct {
 type ListGlobalListeners struct {
 	Items []*GlobalListener
 }
-
 
 type GlobalPackage struct {
 	ID                          string       `json:"id"`
@@ -184,7 +182,6 @@ type ListGlobalPackages struct {
 	Items []GlobalPackage `json:"items"`
 }
 
-
 type GlobalRegion struct {
 	ID               string `json:"id"`
 	Name             string `json:"name"`
@@ -196,7 +193,6 @@ type GlobalRegion struct {
 type ListGlobalRegions struct {
 	Items []GlobalRegion `json:"items"`
 }
-
 
 type GlobalLoadBalancerUsageHistory struct {
 	Timestamp string  `json:"timestamp"`

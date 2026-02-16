@@ -1,9 +1,4 @@
-package entity
-
-type Portal struct {
-	ProjectID string `json:"projectId"`
-	UserID    int    `json:"userId"`
-}
+package v2
 
 type Quota struct {
 	Description string `json:"description"`
@@ -25,22 +20,4 @@ func (l ListQuotas) FindQuotaByName(name string) *Quota {
 	}
 
 	return nil
-}
-
-type ListPortals struct {
-	Items []*Portal
-}
-
-func NewListPortals() *ListPortals {
-	return &ListPortals{
-		Items: make([]*Portal, 0),
-	}
-}
-
-func (l ListPortals) At(index int) *Portal {
-	if index < 0 || index >= len(l.Items) {
-		return nil
-	}
-
-	return l.Items[index]
 }

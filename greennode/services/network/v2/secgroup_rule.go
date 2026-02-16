@@ -4,12 +4,11 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *NetworkServiceV2) CreateSecgroupRule(ctx context.Context, opts *CreateSecgroupRuleRequest) (*entity.SecgroupRule, error) {
+func (s *NetworkServiceV2) CreateSecgroupRule(ctx context.Context, opts *CreateSecgroupRuleRequest) (*SecgroupRule, error) {
 	url := createSecgroupRuleURL(s.Client, opts)
 	resp := new(CreateSecgroupRuleResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -51,7 +50,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *Del
 	return nil
 }
 
-func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, opts *ListSecgroupRulesBySecgroupIDRequest) (*entity.ListSecgroupRules, error) {
+func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, opts *ListSecgroupRulesBySecgroupIDRequest) (*ListSecgroupRules, error) {
 	url := listSecgroupRulesBySecgroupIDURL(s.Client, opts)
 	resp := new(ListSecgroupRulesBySecgroupIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

@@ -1,4 +1,4 @@
-package entity
+package types
 
 type Tag struct {
 	Key        string `json:"key"`

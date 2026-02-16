@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
@@ -25,7 +24,7 @@ const (
 	defaultSizeListSnapshotsByBlockVolumeIDRequest = 10000
 )
 
-func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlockVolumeRequest) (*entity.Volume, error) {
+func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlockVolumeRequest) (*Volume, error) {
 	url := createBlockVolumeURL(s.Client)
 	resp := new(CreateBlockVolumeResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -66,7 +65,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *Delet
 	return nil
 }
 
-func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockVolumesRequest) (*entity.ListVolumes, error) {
+func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockVolumesRequest) (*ListVolumes, error) {
 	url := listBlockVolumesURL(s.Client, opts)
 	resp := new(ListBlockVolumesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -85,7 +84,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockV
 	return resp.ToEntityListVolumes(), nil
 }
 
-func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlockVolumeByIDRequest) (*entity.Volume, error) {
+func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlockVolumeByIDRequest) (*Volume, error) {
 	url := getBlockVolumeByIDURL(s.Client, opts)
 	resp := new(GetBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -105,7 +104,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *ResizeBlockVolumeByIDRequest) (*entity.Volume, error) {
+func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *ResizeBlockVolumeByIDRequest) (*Volume, error) {
 	url := resizeBlockVolumeByIDURL(s.Client, opts)
 	resp := new(ResizeBlockVolumeByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -130,7 +129,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 	return resp.ToEntityVolume(), nil
 }
 
-func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUnderBlockVolumeIDRequest) (*entity.Volume, error) {
+func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUnderBlockVolumeIDRequest) (*Volume, error) {
 	url := getUnderBlockVolumeIDURL(s.Client, opts)
 	resp := new(GetUnderBlockVolumeIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

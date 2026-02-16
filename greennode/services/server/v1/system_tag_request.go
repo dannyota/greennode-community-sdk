@@ -8,15 +8,15 @@ const (
 
 type ResourceType string
 
-type SystemTag struct {
+type SystemTagInput struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
 type CreateSystemTagRequest struct {
-	ResourceID   string       `json:"resourceId"`
-	ResourceType ResourceType `json:"resourceType"`
-	Tags         []SystemTag  `json:"tagRequestList"`
+	ResourceID   string           `json:"resourceId"`
+	ResourceType ResourceType     `json:"resourceType"`
+	Tags         []SystemTagInput `json:"tagRequestList"`
 }
 
 func NewSystemTagRequest(resourceID string, resourceType ResourceType) *CreateSystemTagRequest {

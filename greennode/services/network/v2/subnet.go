@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByIDRequest) (*entity.Subnet, error) {
+func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByIDRequest) (*Subnet, error) {
 	url := getSubnetByIDURL(s.Client, opts)
 	resp := new(GetSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -29,7 +28,7 @@ func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByI
 	return resp.ToEntitySubnet(), nil
 }
 
-func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSubnetByIDRequest) (*entity.Subnet, error) {
+func (s *NetworkServiceV2) UpdateSubnetByID(ctx context.Context, opts *UpdateSubnetByIDRequest) (*Subnet, error) {
 	url := updateSubnetByIDURL(s.Client, opts)
 	resp := new(UpdateSubnetByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

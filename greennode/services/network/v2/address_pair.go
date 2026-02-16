@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
-func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(ctx context.Context, opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*entity.AddressPair, error) {
+func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(ctx context.Context, opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*AddressPair, error) {
 	url := getAllAddressPairByVirtualSubnetIDURL(s.Client, opts)
 	resp := new(GetAllAddressPairByVirtualSubnetIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -23,7 +22,7 @@ func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(ctx context.Contex
 	return resp.ToListAddressPair(), nil
 }
 
-func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(ctx context.Context, opts *SetAddressPairInVirtualSubnetRequest) (*entity.AddressPair, error) {
+func (s *NetworkServiceV2) SetAddressPairInVirtualSubnet(ctx context.Context, opts *SetAddressPairInVirtualSubnetRequest) (*AddressPair, error) {
 	url := setAddressPairInVirtualSubnetURL(s.Client, opts)
 	resp := new(SetAddressPairInVirtualSubnetResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -54,7 +53,7 @@ func (s *NetworkServiceV2) DeleteAddressPair(ctx context.Context, opts *DeleteAd
 	return nil
 }
 
-func (s *NetworkServiceV2) CreateAddressPair(ctx context.Context, opts *CreateAddressPairRequest) (*entity.AddressPair, error) {
+func (s *NetworkServiceV2) CreateAddressPair(ctx context.Context, opts *CreateAddressPairRequest) (*AddressPair, error) {
 	url := createAddressPairURL(s.Client, opts)
 	resp := new(CreateAddressPairResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

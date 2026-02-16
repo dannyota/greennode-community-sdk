@@ -2,8 +2,6 @@ package v2
 
 import (
 	"strconv"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 const (
@@ -11,7 +9,7 @@ const (
 )
 
 type (
-	Quota struct {
+	quotaResp struct {
 		Description string    `json:"description,omitempty"`
 		Name        QuotaName `json:"quotaName"`
 		Type        QuotaType `json:"type"`
@@ -24,12 +22,12 @@ type (
 )
 
 type ListAllQuotaUsedResponse struct {
-	Data []Quota `json:"data"`
+	Data []quotaResp `json:"data"`
 }
 
-func (r *ListAllQuotaUsedResponse) ToEntityListQuotas() *entity.ListQuotas {
-	listQuotas := &entity.ListQuotas{
-		Items: make([]*entity.Quota, 0),
+func (r *ListAllQuotaUsedResponse) ToEntityListQuotas() *ListQuotas {
+	listQuotas := &ListQuotas{
+		Items: make([]*Quota, 0),
 	}
 	for _, q := range r.Data {
 		listQuotas.Items = append(listQuotas.Items, q.ToEntityQuota())
@@ -38,7 +36,7 @@ func (r *ListAllQuotaUsedResponse) ToEntityListQuotas() *entity.ListQuotas {
 	return listQuotas
 }
 
-func (q *Quota) ToEntityQuota() *entity.Quota {
+func (q *quotaResp) ToEntityQuota() *Quota {
 	var (
 		used int
 		err  error
@@ -48,7 +46,7 @@ func (q *Quota) ToEntityQuota() *entity.Quota {
 		used = 0
 	}
 
-	return &entity.Quota{
+	return &Quota{
 		Description: q.Description,
 		Name:        string(q.Name),
 		Type:        string(q.Type),

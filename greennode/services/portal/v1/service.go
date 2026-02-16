@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 )
 
@@ -12,9 +11,9 @@ type PortalServiceV1 struct {
 	Client *client.ServiceClient
 }
 
-func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*entity.Portal, error) {
+func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*Portal, error) {
 	url := getPortalInfoURL(s.Client, opts)
-	resp := new(entity.Portal)
+	resp := new(Portal)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -29,7 +28,7 @@ func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfo
 	return resp, nil
 }
 
-func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRequest) (*entity.ListPortals, error) {
+func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRequest) (*ListPortals, error) {
 	url := listProjectsURL(s.Client)
 	resp := new(ListProjectsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)

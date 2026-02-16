@@ -1,7 +1,7 @@
 package v2
 
 import (
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
+	types "github.com/dannyota/greennode-community-sdk/v2/greennode/types"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
@@ -49,7 +49,7 @@ type UpdateTagsRequest struct {
 	LoadBalancerID string
 }
 
-func (r *UpdateTagsRequest) prepare(lstTags *entity.ListTags) {
+func (r *UpdateTagsRequest) prepare(lstTags *types.ListTags) {
 	st := map[string]common.Tag{}
 	for _, tag := range lstTags.Items {
 		st[tag.Key] = common.Tag{
@@ -68,5 +68,3 @@ func (r *UpdateTagsRequest) prepare(lstTags *entity.ListTags) {
 		r.TagRequestList = append(r.TagRequestList, tag)
 	}
 }
-
-

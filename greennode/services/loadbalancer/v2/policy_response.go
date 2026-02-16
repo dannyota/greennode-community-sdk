@@ -1,7 +1,5 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
-
 type responseData struct {
 	UUID             string   `json:"uuid"`
 	Name             string   `json:"name"`
@@ -31,8 +29,8 @@ type l7Rule struct {
 	OperatingStatus    string `json:"operatingStatus"`
 }
 
-func (l *l7Rule) toL7Rule() *entity.L7Rule {
-	return &entity.L7Rule{
+func (l *l7Rule) toL7Rule() *L7Rule {
+	return &L7Rule{
 		UUID:               l.UUID,
 		CompareType:        l.CompareType,
 		RuleValue:          l.RuleValue,
@@ -52,18 +50,18 @@ type ListPoliciesResponse struct {
 	TotalItem int            `json:"totalItem"`
 }
 
-func (r *ListPoliciesResponse) ToEntityListPolicies() *entity.ListPolicies {
+func (r *ListPoliciesResponse) ToEntityListPolicies() *ListPolicies {
 	if r == nil || r.ListData == nil {
 		return nil
 	}
 
-	items := make([]*entity.Policy, 0, len(r.ListData))
+	items := make([]*Policy, 0, len(r.ListData))
 	for _, item := range r.ListData {
-		l7Rule := make([]*entity.L7Rule, 0)
+		l7Rule := make([]*L7Rule, 0)
 		for _, rule := range item.L7Rules {
 			l7Rule = append(l7Rule, rule.toL7Rule())
 		}
-		items = append(items, &entity.Policy{
+		items = append(items, &Policy{
 			UUID:             item.UUID,
 			Name:             item.Name,
 			Description:      item.Description,
@@ -81,7 +79,7 @@ func (r *ListPoliciesResponse) ToEntityListPolicies() *entity.ListPolicies {
 			L7Rules:          l7Rule,
 		})
 	}
-	return &entity.ListPolicies{
+	return &ListPolicies{
 		Items: items,
 	}
 }
@@ -92,11 +90,11 @@ type CreatePolicyResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (r *CreatePolicyResponse) ToEntityPolicy() *entity.Policy {
+func (r *CreatePolicyResponse) ToEntityPolicy() *Policy {
 	if r == nil {
 		return nil
 	}
-	return &entity.Policy{
+	return &Policy{
 		UUID: r.UUID,
 	}
 }
@@ -107,15 +105,15 @@ type GetPolicyResponse struct {
 	Data responseData `json:"data"`
 }
 
-func (r *GetPolicyResponse) ToEntityPolicy() *entity.Policy {
+func (r *GetPolicyResponse) ToEntityPolicy() *Policy {
 	if r == nil {
 		return nil
 	}
-	l7Rule := make([]*entity.L7Rule, 0)
+	l7Rule := make([]*L7Rule, 0)
 	for _, rule := range r.Data.L7Rules {
 		l7Rule = append(l7Rule, rule.toL7Rule())
 	}
-	return &entity.Policy{
+	return &Policy{
 		UUID:             r.Data.UUID,
 		Name:             r.Data.Name,
 		Description:      r.Data.Description,

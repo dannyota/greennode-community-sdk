@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/types"
 )
 
 type NetworkServiceV1 struct {
@@ -25,7 +25,7 @@ func (s *NetworkServiceInternalV1) getProjectID() string {
 	return s.Client.ProjectID()
 }
 
-func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpointByIDRequest) (*entity.Endpoint, error) {
+func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpointByIDRequest) (*Endpoint, error) {
 	url := getEndpointByIDURL(s.Client, opts)
 	resp := new(GetEndpointByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -46,7 +46,7 @@ func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpoin
 	return resp.ToEntityEndpoint(), nil
 }
 
-func (s *NetworkServiceV1) CreateEndpoint(ctx context.Context, opts *CreateEndpointRequest) (*entity.Endpoint, error) {
+func (s *NetworkServiceV1) CreateEndpoint(ctx context.Context, opts *CreateEndpointRequest) (*Endpoint, error) {
 	url := createEndpointURL(s.Client)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -96,7 +96,7 @@ func (s *NetworkServiceV1) DeleteEndpointByID(ctx context.Context, opts *DeleteE
 	return nil
 }
 
-func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpointsRequest) (*entity.ListEndpoints, error) {
+func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpointsRequest) (*ListEndpoints, error) {
 	url := listEndpointsURL(s.Client, opts)
 	resp := new(ListEndpointsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -118,7 +118,7 @@ func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpoint
 
 // ________________________________________________________________________ NetworkServiceInternalV1
 
-func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opts *ListTagsByEndpointIDRequest) (*entity.ListTags, error) {
+func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opts *ListTagsByEndpointIDRequest) (*types.ListTags, error) {
 	url := listTagsByEndpointIDURL(s.Client, opts)
 	resp := new(ListTagsByEndpointIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -198,7 +198,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(ctx context.Context,
 	return nil
 }
 
-func (s *NetworkServiceInternalV1) CreateEndpoint(ctx context.Context, opts *CreateEndpointRequest) (*entity.Endpoint, error) {
+func (s *NetworkServiceInternalV1) CreateEndpoint(ctx context.Context, opts *CreateEndpointRequest) (*Endpoint, error) {
 	url := createEndpointURL(s.Client)
 	resp := new(CreateEndpointResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)

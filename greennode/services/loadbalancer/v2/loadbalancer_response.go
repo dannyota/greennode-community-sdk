@@ -2,8 +2,6 @@ package v2
 
 import (
 	"strings"
-
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 )
 
 type CreateLoadBalancerResponse struct {
@@ -14,8 +12,8 @@ type ResizeLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (r *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
-	return &entity.LoadBalancer{
+func (r *ResizeLoadBalancerResponse) ToEntityLoadBalancer() *LoadBalancer {
+	return &LoadBalancer{
 		UUID: r.UUID,
 	}
 }
@@ -24,8 +22,8 @@ type ScaleLoadBalancerResponse struct {
 	UUID string `json:"uuid"`
 }
 
-func (r *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
-	return &entity.LoadBalancer{
+func (r *ScaleLoadBalancerResponse) ToEntityLoadBalancer() *LoadBalancer {
+	return &LoadBalancer{
 		UUID: r.UUID,
 	}
 }
@@ -46,19 +44,19 @@ type LoadBalancerPackageResponse struct {
 }
 
 type GetLoadBalancerByIDResponse struct {
-	Data LoadBalancer `json:"data"`
+	Data loadBalancerResp `json:"data"`
 }
 
 type ListLoadBalancersResponse struct {
-	ListData  []LoadBalancer `json:"listData"`
-	Page      int            `json:"page"`
-	PageSize  int            `json:"pageSize"`
-	TotalPage int            `json:"totalPage"`
-	TotalItem int            `json:"totalItem"`
+	ListData  []loadBalancerResp `json:"listData"`
+	Page      int                `json:"page"`
+	PageSize  int                `json:"pageSize"`
+	TotalPage int                `json:"totalPage"`
+	TotalItem int                `json:"totalItem"`
 }
 
 type (
-	LoadBalancer struct {
+	loadBalancerResp struct {
 		UUID               string `json:"uuid"`
 		Name               string `json:"name"`
 		DisplayStatus      string `json:"displayStatus"`
@@ -80,25 +78,18 @@ type (
 			DataTransfer     int    `json:"dataTransfer"`
 			Name             string `json:"name"`
 		} `json:"packageInfo"`
-		ProgressStatus string `json:"progressStatus"`
-		AutoScalable   bool   `json:"autoScalable"`
+		ProgressStatus string     `json:"progressStatus"`
+		AutoScalable   bool       `json:"autoScalable"`
 		Zone           struct {
 			UUID string `json:"uuid"`
-			// Name        string `json:"name"`
-			// ZoneType    string `json:"zoneType"`
-			// IsDefault   bool   `json:"isDefault"`
-			// Description string `json:"description"`
-			// IsEnabled   bool   `json:"isEnabled"`
-			// VolumeCount int    `json:"volumeCount"`
-			// ServerCount int    `json:"serverCount"`
 		} `json:"zone"`
-		MinSize    int    `json:"minSize"`
-		MaxSize    int    `json:"maxSize"`
-		TotalNodes int    `json:"totalNodes"`
-		Nodes      []Node `json:"nodes"`
+		MinSize    int        `json:"minSize"`
+		MaxSize    int        `json:"maxSize"`
+		TotalNodes int        `json:"totalNodes"`
+		Nodes      []nodeResp `json:"nodes"`
 	}
 
-	Node struct {
+	nodeResp struct {
 		Status   string `json:"status"`
 		ZoneID   string `json:"zoneId"`
 		ZoneName string `json:"zoneName"`
@@ -106,25 +97,25 @@ type (
 	}
 )
 
-func (r *CreateLoadBalancerResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
-	return &entity.LoadBalancer{
+func (r *CreateLoadBalancerResponse) ToEntityLoadBalancer() *LoadBalancer {
+	return &LoadBalancer{
 		UUID: r.UUID,
 	}
 }
 
-func (r *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *entity.ListLoadBalancerPackages {
+func (r *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *ListLoadBalancerPackages {
 	if r == nil || r.ListData == nil || len(r.ListData) < 1 {
-		return &entity.ListLoadBalancerPackages{
-			Items: make([]*entity.LoadBalancerPackage, 0),
+		return &ListLoadBalancerPackages{
+			Items: make([]*LoadBalancerPackage, 0),
 		}
 	}
 
-	result := &entity.ListLoadBalancerPackages{
-		Items: make([]*entity.LoadBalancerPackage, 0),
+	result := &ListLoadBalancerPackages{
+		Items: make([]*LoadBalancerPackage, 0),
 	}
 
 	for _, item := range r.ListData {
-		result.Items = append(result.Items, &entity.LoadBalancerPackage{
+		result.Items = append(result.Items, &LoadBalancerPackage{
 			UUID:             item.UUID,
 			Name:             item.Name,
 			Type:             item.Type,
@@ -139,7 +130,7 @@ func (r *ListLoadBalancerPackagesResponse) ToEntityListLoadBalancerPackages() *e
 	return result
 }
 
-func (r *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *entity.LoadBalancer {
+func (r *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *LoadBalancer {
 	if r == nil {
 		return nil
 	}
@@ -147,18 +138,18 @@ func (r *GetLoadBalancerByIDResponse) ToEntityLoadBalancer() *entity.LoadBalance
 	return r.Data.toEntityLoadBalancer()
 }
 
-func (r *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoadBalancers {
+func (r *ListLoadBalancersResponse) ToEntityListLoadBalancers() *ListLoadBalancers {
 	if r == nil || r.ListData == nil || len(r.ListData) < 1 {
-		return &entity.ListLoadBalancers{
+		return &ListLoadBalancers{
 			Page:      0,
 			PageSize:  0,
 			TotalPage: 0,
 			TotalItem: 0,
-			Items:     make([]*entity.LoadBalancer, 0),
+			Items:     make([]*LoadBalancer, 0),
 		}
 	}
 
-	result := &entity.ListLoadBalancers{
+	result := &ListLoadBalancers{
 		Page:      r.Page,
 		PageSize:  r.PageSize,
 		TotalPage: r.TotalPage,
@@ -172,13 +163,13 @@ func (r *ListLoadBalancersResponse) ToEntityListLoadBalancers() *entity.ListLoad
 	return result
 }
 
-func (lb *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
+func (lb *loadBalancerResp) toEntityLoadBalancer() *LoadBalancer {
 	internal := strings.TrimSpace(strings.ToUpper(lb.LoadBalancerSchema)) == "INTERNAL"
 
 	// Convert nodes from response to entity
-	nodes := make([]*entity.Node, 0, len(lb.Nodes))
+	nodes := make([]*Node, 0, len(lb.Nodes))
 	for _, node := range lb.Nodes {
-		nodes = append(nodes, &entity.Node{
+		nodes = append(nodes, &Node{
 			Status:   node.Status,
 			ZoneID:   node.ZoneID,
 			ZoneName: node.ZoneName,
@@ -186,7 +177,7 @@ func (lb *LoadBalancer) toEntityLoadBalancer() *entity.LoadBalancer {
 		})
 	}
 
-	return &entity.LoadBalancer{
+	return &LoadBalancer{
 		UUID:               lb.UUID,
 		Name:               lb.Name,
 		Address:            lb.Address,

@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	types "github.com/dannyota/greennode-community-sdk/v2/greennode/types"
 )
 
-func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequest) (*entity.ListTags, error) {
+func (s *LoadBalancerServiceV2) ListTags(ctx context.Context, opts *ListTagsRequest) (*types.ListTags, error) {
 	url := listTagsURL(s.ServerClient, opts)
 	resp := new(ListTagsResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
@@ -47,7 +47,7 @@ func (s *LoadBalancerServiceV2) UpdateTags(ctx context.Context, opts *UpdateTags
 	}
 
 	// Do not update system tags
-	tags := new(entity.ListTags)
+	tags := new(types.ListTags)
 	for _, tag := range tmpTags.Items {
 		if !tag.SystemTag {
 			tags.Items = append(tags.Items, tag)

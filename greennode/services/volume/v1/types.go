@@ -1,4 +1,4 @@
-package entity
+package v1
 
 type VolumeType struct {
 	ID         string `json:"id"`
@@ -12,4 +12,14 @@ type VolumeType struct {
 
 type ListVolumeTypes struct {
 	VolumeTypes []*VolumeType
+}
+
+type VolumeTypeZone struct {
+	ID       string   `json:"id"`
+	Name     string   `json:"name"`
+	PoolName []string `json:"poolName"`
+}
+
+type ListVolumeTypeZones struct {
+	VolumeTypeZones []*VolumeTypeZone
 }

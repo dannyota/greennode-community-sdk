@@ -4,12 +4,11 @@ import (
 	"context"
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/entity"
 	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 )
 
-func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest) (*entity.HostedZone, error) {
+func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest) (*HostedZone, error) {
 	url := getHostedZoneByIDURL(s.Client, opts)
 	resp := new(GetHostedZoneByIDResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -28,7 +27,7 @@ func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZo
 	return resp.ToEntityHostedZone(), nil
 }
 
-func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest) (*entity.ListHostedZones, error) {
+func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest) (*ListHostedZones, error) {
 	url := listHostedZonesURL(s.Client, opts)
 	resp := new(ListHostedZonesResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
@@ -46,7 +45,7 @@ func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZon
 	return resp.ToEntityListHostedZones(), nil
 }
 
-func (s *VDnsServiceV1) CreateHostedZone(ctx context.Context, opts *CreateHostedZoneRequest) (*entity.HostedZone, error) {
+func (s *VDnsServiceV1) CreateHostedZone(ctx context.Context, opts *CreateHostedZoneRequest) (*HostedZone, error) {
 	url := createHostedZoneURL(s.Client)
 	resp := new(CreateHostedZoneResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
