@@ -42,7 +42,8 @@ func TestCreateSnapshotFailure(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewCreateSnapshotByBlockVolumeIDRequest(
 		"teasdadasdadst",
-		"vol-d360fd83-948d-4efa-ab46-aab97328e275").WithPermanently(true)
+		"vol-d360fd83-948d-4efa-ab46-aab97328e275")
+	opt.Permanently = true
 	snapshot, sdkerr := vngcloud.Volume.CreateSnapshotByBlockVolumeID(context.Background(), opt)
 
 	if sdkerr == nil {

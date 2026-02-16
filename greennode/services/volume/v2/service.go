@@ -175,16 +175,16 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *Migr
 				"projectId", s.getProjectID(),
 				"volumeId", opts.BlockVolumeID)
 
-		if opts.IsConfirm() {
+		if opts.ConfirmMigrate {
 			switch enriched.ErrorCode() {
 			case sdkerror.EcVServerVolumeMigrateMissingInit:
-				opts = opts.WithAction(InitMigrateAction)
+				opts.Action = InitMigrateAction
 				return s.MigrateBlockVolumeByID(ctx, opts)
 			case sdkerror.EcVServerVolumeMigrateNeedProcess:
-				opts = opts.WithAction(ProcessMigrateAction)
+				opts.Action = ProcessMigrateAction
 				return s.MigrateBlockVolumeByID(ctx, opts)
 			case sdkerror.EcVServerVolumeMigrateNeedConfirm:
-				opts = opts.WithAction(ConfirmMigrateAction)
+				opts.Action = ConfirmMigrateAction
 				return s.MigrateBlockVolumeByID(ctx, opts)
 			}
 		}

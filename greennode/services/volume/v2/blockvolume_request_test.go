@@ -22,23 +22,23 @@ func TestNewCreateBlockVolumeRequest(t *testing.T) {
 	}
 }
 
-func TestCreateBlockVolumeRequest_OptionalSetters(t *testing.T) {
-	r := NewCreateBlockVolumeRequest("vol", "type", 10).
-		WithZone("zone-a").
-		WithPoolName("pool-1").
-		WithPoc(true).
-		WithAutoRenew(true).
-		WithMultiAttach(true).
-		WithSize(100).
-		WithEncryptionType(AesXtsPlain64_128).
-		WithVolumeType("new-type").
-		WithTags("env", "prod", "team", "infra")
+func TestCreateBlockVolumeRequest_DirectFieldAccess(t *testing.T) {
+	r := NewCreateBlockVolumeRequest("vol", "type", 10)
+	r.Zone = "zone-a"
+	r.PoolName = "pool-1"
+	r.IsPoc = true
+	r.IsEnableAutoRenew = true
+	r.MultiAttach = true
+	r.Size = 100
+	r.EncryptionType = AesXtsPlain64_128
+	r.VolumeTypeID = "new-type"
+	r.Tags = NewVolumeTags("env", "prod", "team", "infra")
 
-	if r.GetZone() != "zone-a" {
-		t.Fatalf("Zone: got %q", r.GetZone())
+	if r.Zone != "zone-a" {
+		t.Fatalf("Zone: got %q", r.Zone)
 	}
-	if r.GetPoolName() != "pool-1" {
-		t.Fatalf("PoolName: got %q", r.GetPoolName())
+	if r.PoolName != "pool-1" {
+		t.Fatalf("PoolName: got %q", r.PoolName)
 	}
 	if !r.IsPoc {
 		t.Fatal("IsPoc should be true")
@@ -49,14 +49,14 @@ func TestCreateBlockVolumeRequest_OptionalSetters(t *testing.T) {
 	if !r.MultiAttach {
 		t.Fatal("MultiAttach should be true")
 	}
-	if r.GetSize() != 100 {
-		t.Fatalf("Size: got %d", r.GetSize())
+	if r.Size != 100 {
+		t.Fatalf("Size: got %d", r.Size)
 	}
 	if r.EncryptionType != AesXtsPlain64_128 {
 		t.Fatalf("EncryptionType: got %q", r.EncryptionType)
 	}
-	if r.GetVolumeType() != "new-type" {
-		t.Fatalf("VolumeType: got %q", r.GetVolumeType())
+	if r.VolumeTypeID != "new-type" {
+		t.Fatalf("VolumeType: got %q", r.VolumeTypeID)
 	}
 	if len(r.Tags) != 2 {
 		t.Fatalf("Tags: got %d, want 2", len(r.Tags))
@@ -66,19 +66,23 @@ func TestCreateBlockVolumeRequest_OptionalSetters(t *testing.T) {
 	}
 }
 
-func TestCreateBlockVolumeRequest_WithTags_OddCount(t *testing.T) {
-	r := NewCreateBlockVolumeRequest("v", "t", 1).WithTags("key1")
-	if len(r.Tags) != 1 {
-		t.Fatalf("expected 1 tag, got %d", len(r.Tags))
+func TestNewVolumeTags_OddCount(t *testing.T) {
+	tags := NewVolumeTags("key1")
+	if len(tags) != 1 {
+		t.Fatalf("expected 1 tag, got %d", len(tags))
 	}
-	if r.Tags[0].Value != "none" {
-		t.Fatalf("odd tag value: got %q, want %q", r.Tags[0].Value, "none")
+	if tags[0].Value != "none" {
+		t.Fatalf("odd tag value: got %q, want %q", tags[0].Value, "none")
 	}
 }
 
-func TestCreateBlockVolumeRequest_WithVolumeRestoreFromSnapshot(t *testing.T) {
-	r := NewCreateBlockVolumeRequest("v", "t", 1).
-		WithVolumeRestoreFromSnapshot("snap-123", "vtype-456")
+func TestCreateBlockVolumeRequest_VolumeRestoreFromSnapshot(t *testing.T) {
+	r := NewCreateBlockVolumeRequest("v", "t", 1)
+	r.CreatedFrom = CreateFromSnapshot
+	r.ConfigureVolumeRestore = &ConfigureVolumeRestore{
+		SnapshotVolumePointID: "snap-123",
+		VolumeTypeID:          "vtype-456",
+	}
 	if r.CreatedFrom != CreateFromSnapshot {
 		t.Fatalf("CreatedFrom: got %q", r.CreatedFrom)
 	}
@@ -105,7 +109,8 @@ func TestNewListBlockVolumesRequest(t *testing.T) {
 }
 
 func TestListBlockVolumesRequest_ToQuery(t *testing.T) {
-	r := NewListBlockVolumesRequest(1, 25).WithName("test-vol")
+	r := NewListBlockVolumesRequest(1, 25)
+	r.Name = "test-vol"
 	q, err := r.ToQuery()
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

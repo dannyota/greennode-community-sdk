@@ -62,17 +62,3 @@ func (r *ListSnapshotsByBlockVolumeIDRequest) ToQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithDescription(desc string) *CreateSnapshotByBlockVolumeIDRequest {
-	r.Description = desc
-	return r
-}
-
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithPermanently(val bool) *CreateSnapshotByBlockVolumeIDRequest {
-	r.Permanently = val
-	return r
-}
-
-func (r *CreateSnapshotByBlockVolumeIDRequest) WithRetainedDay(val uint64) *CreateSnapshotByBlockVolumeIDRequest {
-	r.RetainedDay = val
-	return r
-}

@@ -33,7 +33,8 @@ func TestCreateVolumeSuccess(t *testing.T) {
 		"test-volume-tags",
 		"vtype-7a7a8610-34f5-11ee-be56-0242ac120002",
 		20,
-	).WithTags("test-key", "test-value", "owner", "sdk-test")
+	)
+	opt.Tags = v2.NewVolumeTags("test-key", "test-value", "owner", "sdk-test")
 	volume, sdkerr := vngcloud.Volume.CreateBlockVolume(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -89,7 +90,8 @@ func TestListBlockVolumeSuccess(t *testing.T) {
 
 func TestListBlockVolumeWithNameSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := v2.NewListBlockVolumesRequest(1, 10).WithName("pvc-24182151-aa4a-4a55-9572-f551c3d003aa")
+	opt := v2.NewListBlockVolumesRequest(1, 10)
+	opt.Name = "pvc-24182151-aa4a-4a55-9572-f551c3d003aa"
 	volumes, sdkerr := vngcloud.Volume.ListBlockVolumes(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -214,7 +216,9 @@ func TestMigrateBlockVolume(t *testing.T) {
 	vngcloud := validSdkConfig()
 	opt := v2.NewMigrateBlockVolumeByIDRequest(
 		"vol-78c26ee6-20b2-45a3-9f0a-e7728349c300",
-		vtSsd).WithConfirm(true).WithAction(v2.ProcessMigrateAction)
+		vtSsd)
+	opt.ConfirmMigrate = true
+	opt.Action = v2.ProcessMigrateAction
 	sdkerr := vngcloud.Volume.MigrateBlockVolumeByID(context.Background(), opt)
 
 	t.Log("Error: ", sdkerr)
