@@ -9,7 +9,7 @@ services exposed by VNG Cloud's REST APIs.
 
 - **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
 - **Go version:** 1.24
-- **Source files:** 210 `.go` files, ~22.5 k LOC
+- **Source files:** 191 `.go` files, ~19.2 k LOC
 
 ## 2. Package Map
 
@@ -30,7 +30,7 @@ greennode-community-sdk/
 │   │   ├── portal/                Portal info, project listing
 │   │   ├── server/                Internal server system tags
 │   │   └── volume/                Block volumes, snapshots, volume types
-│   ├── entity/                    Domain model structs (26 entities)
+│   ├── entity/                    Domain model structs (~80 types)
 │   └── sdkerror/                  Error codes, categories, handler chain
 └── test/                          Integration tests
 ```
@@ -281,8 +281,7 @@ using `json.Marshal`/`json.Unmarshal`. See go-style-audit.md §5.7.
 per-request `WithHeader("User-Agent", ...)` calls all deleted. User-Agent set
 once as a default header at the HTTP client level. See go-style-audit.md §5.8.
 
-### 9.6 `common.*Common` embedded ID types
+### 9.6 `common.*Common` embedded ID types — **RESOLVED**
 
-Single-field structs like `ServerCommon{ServerID string}` are embedded in
-requests to provide getter methods (`GetServerID()`). Plain fields with methods
-on the request type itself would be simpler.
+17 single-field Common wrapper structs were inlined directly into request types.
+8 files deleted. See legacy-patterns-review.md phase 2.

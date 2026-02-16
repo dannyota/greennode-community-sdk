@@ -284,7 +284,7 @@ Minor issue — small count.
 
 ### Phase 1: Quick wins (non-breaking internal changes) — DONE
 - [x] Replace `new(T)` + assignment with struct literals in `New*()` functions (20 files, ~70 instances)
-- [x] Rename hidden `prepare()` to `normalizeForAPI()` with doc comments (v2 + inter packages)
+- [x] Rename hidden `prepare()` to `normalizeForAPI()` with doc comments (v2 + inter packages; one `prepare()` kept on `UpdateTagsRequest` in loadbalancer/v2 — distinct pattern that takes a parameter and merges tags)
 - [x] Remove `Set*()` methods — replaced callers with direct field access or struct literals (7 removed)
 
 ### Phase 2: Export field access (breaking change) — DONE
@@ -313,19 +313,14 @@ Minor issue — small count.
 
 ---
 
-## File Quick Reference
+## Remaining `With*()` Methods (client/SDK infrastructure)
 
-| Area | Path | Key Issue |
-|------|------|-----------|
-| Entity getters | `greennode/entity/*.go` | 25+ unnecessary `Get*()` |
-| Common wrappers | `greennode/services/common/*.go` | 17 wrapper structs + 26 getters |
-| Client builders | `greennode/client/service_client.go` | 10 `With*()` methods |
-| Client builders | `greennode/client/request.go` | 9 `With*()` + 2 `Set*()` |
-| Client builders | `greennode/client/http.go` | 5 `With*()` methods |
-| Error builders | `greennode/sdkerror/sdk_error.go` | 6 `With*()` methods |
-| GLB requests | `greennode/services/glb/v1/*_requests.go` | 96 `With*()` methods |
-| LB requests | `greennode/services/loadbalancer/v2/*_request*.go` | 74 `With*()` methods |
-| DNS requests | `greennode/services/dns/v1/*_request.go` | 31 `With*()` methods |
-| Network requests | `greennode/services/network/v1/*_request.go` | 23 `With*()` methods |
-| Volume requests | `greennode/services/volume/v2/*_request.go` | 17 `With*()` methods |
-| Compute requests | `greennode/services/compute/v2/*_request.go` | 16 `With*()` methods |
+The following `With*()` methods are intentionally kept — they configure SDK
+internals (client, request, error) rather than service request DTOs:
+
+| Area | Path | Count |
+|------|------|-------|
+| Client builders | `greennode/client/service_client.go` | 10 |
+| Client builders | `greennode/client/request.go` | 9 |
+| Client builders | `greennode/client/http.go` | 5 |
+| Error builders | `greennode/sdkerror/sdk_error.go` | 6 |

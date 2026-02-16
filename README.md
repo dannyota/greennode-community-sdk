@@ -65,6 +65,7 @@ See [docs/architecture.md](docs/architecture.md) for the full architecture overv
 
 - [Architecture](docs/architecture.md) — layered design, request lifecycle, error handling
 - [Go Style Audit](docs/go-style-audit.md) — refactoring roadmap and status
+- [Legacy Patterns Review](docs/legacy-patterns-review.md) — Java/C# pattern cleanup tracker
 - [Test Coverage](docs/test-coverage.md) — coverage map and improvement plan
 
 ## Contributing

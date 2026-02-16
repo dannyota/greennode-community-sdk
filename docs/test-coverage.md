@@ -8,37 +8,49 @@ serves as the roadmap for improving test quality.
 
 ## 1. Coverage Map
 
-### 1.1 Services with tests
+### 1.1 Integration tests
 
-All existing tests are **live integration tests** that call real VNGCloud APIs.
-There are currently **zero unit tests**.
+Integration tests live in `test/` and call real VNGCloud APIs (181 tests
+across 22 files).
 
 | Service                | Test File(s)                                                                                                                       | Tests |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----- |
 | identity/v2            | `identity_test.go`                                                                                                                 | 4     |
-| loadbalancer/v2        | `lb_test.go`                                                                                                                       | 30    |
-| loadbalancer/inter     | `lb_test.go`                                                                                                                       | 6     |
+| loadbalancer/v2        | `lb_test.go`                                                                                                                       | 39    |
+| loadbalancer/inter     | `lb_test.go`                                                                                                                       | (included above) |
+| loadbalancer/v2 certs  | `certificate_test.go`                                                                                                              | 4     |
 | glb/v1                 | `glb_test.go`, `lb_global_test.go`                                                                                                 | 22    |
-| compute/v2             | `server_test.go`                                                                                                                   | 16    |
-| volume/v2              | `volume_test.go`, `snapshot_test.go`                                                                                               | 15    |
+| compute/v2             | `server_test.go`                                                                                                                   | 24    |
+| volume/v2              | `volume_test.go`, `snapshot_test.go`                                                                                               | 17    |
 | volume/v1              | `volumetype_test.go`                                                                                                               | 5     |
-| network/v2             | `network_test.go`, `secgroup_test.go`, `secgroup_rule_test.go`, `subnet_test.go`, `virtualaddress_test.go`, `address_pair_test.go` | 20    |
+| network/v2             | `network_test.go`, `secgroup_test.go`, `secgroup_rule_test.go`, `subnet_test.go`, `virtualaddress_test.go`, `address_pair_test.go` | 26    |
 | network/v1             | `endpoint_test.go`                                                                                                                 | 10    |
-| portal/v1, v2          | `portal_test.go`                                                                                                                   | 9     |
-| dns/v1                 | `dns_test.go`                                                                                                                      | 14    |
-| dns/internal_system/v1 | `dns_internal_test.go`                                                                                                             | 5     |
-| server/v1              | `server_test.go`                                                                                                                   | 1     |
+| portal/v1, v2          | `portal_test.go`                                                                                                                   | 10    |
+| dns/v1                 | `dns_test.go`                                                                                                                      | 12    |
+| dns/internal_system/v1 | `dns_internal_test.go`                                                                                                             | 6     |
+| server/v1              | `server_test.go`                                                                                                                   | (included in compute above) |
 
-### 1.2 Packages with zero tests
+### 1.2 Unit tests
 
-| Package                      | Description                                                         |
-| ---------------------------- | ------------------------------------------------------------------- |
-| `greennode/client/`          | HTTP client, request building, service client — core infrastructure |
-| `greennode/gateway/`         | All 5 gateway files — routing layer                                 |
-| `greennode/sdkerror/`        | 18 error classification files — error handling logic                |
-| `greennode/services/common/` | 9 shared utility files                                              |
+Unit tests live alongside the packages they test (141 tests across 14 files).
 
-### 1.3 Utility test files
+| Package                    | Test File(s)                                          | Tests |
+| -------------------------- | ----------------------------------------------------- | ----- |
+| `greennode/sdkerror/`      | `sdk_error_test.go`, `classifier_test.go`, `errors_test.go` | 61    |
+| `greennode/client/`        | `auth_test.go`, `request_test.go`, `service_client_test.go` | 28    |
+| `greennode/entity/`        | `entity_test.go`                                      | 16    |
+| `greennode/services/volume/v2/`   | `blockvolume_request_test.go`, `blockvolume_response_test.go` | 16    |
+| `greennode/services/common/`      | `common_test.go`                                      | 7     |
+| `greennode/services/network/v2/`  | `secgroup_request_test.go`, `secgroup_response_test.go` | 8     |
+| `greennode/services/identity/v2/` | `identity_request_test.go`, `identity_response_test.go` | 5     |
+
+### 1.3 Packages with zero tests
+
+| Package              | Description                     |
+| -------------------- | ------------------------------- |
+| `greennode/gateway/`  | Gateway routing layer (consolidated into `greennode.go`) |
+
+### 1.4 Utility test files
 
 | File            | Purpose                                              |
 | --------------- | ---------------------------------------------------- |
@@ -50,31 +62,24 @@ There are currently **zero unit tests**.
 
 ## 2. Remaining Issues
 
-### 2.1 No unit tests — **Open**
-
-0% unit test coverage on the `greennode/` package tree. No mocking or stubbing
-of HTTP calls. Request building, response parsing, URL construction, and error
-classification are all untested in isolation. The `client/`, `gateway/`,
-`sdkerror/`, and `services/common/` packages have no tests at all.
-
-### 2.2 Hardcoded resource IDs — **Open**
+### 2.1 Hardcoded resource IDs — **Open**
 
 Every integration test uses hardcoded UUIDs for cloud resources (e.g.,
 `"lb-8f54cbd4-b8ee-4b86-aa9b-d365c468a902"`), making tests non-reproducible
 across environments and fragile if resources are deleted.
 
-### 2.3 No build tags on integration tests — **Open**
+### 2.2 No build tags on integration tests — **Open**
 
 All 22 test files run against live APIs but lack `//go:build integration` tags.
-Running `go test ./test/...` always attempts live API calls. Unit tests (once
-added) cannot be run in isolation.
+Running `go test ./test/...` always attempts live API calls. Unit tests cannot
+be run in isolation from integration tests.
 
-### 2.4 `TestGetLoadBalancerFailure` asserts success — **Open**
+### 2.3 `TestGetLoadBalancerFailure` asserts success — **Open**
 
 Named as a failure test but asserts success conditions (error must be nil,
 result must not be nil).
 
-### 2.5 `TestUnixNano` noise — **Open**
+### 2.4 `TestUnixNano` noise — **Open**
 
 Unrelated to SDK functionality; should be removed.
 
@@ -107,16 +112,25 @@ reusable `newClientFromEnvKeys` function.
 
 `TestASuperuthenPass` renamed to `TestSuperAdminAuthenPass`.
 
+### 3.6 No unit tests — **RESOLVED**
+
+141 unit tests added across `sdkerror/`, `client/`, `entity/`,
+`services/common/`, `services/volume/v2/`, `services/network/v2/`, and
+`services/identity/v2/`.
+
 ---
 
 ## 4. Improvement Plan
 
-### Phase 2: Add unit tests — **Open**
+### Phase 2: Expand unit test coverage — **Open**
 
-- `sdkerror/`: error creation, classification, code matching
-- `client/`: request building, URL construction, retry logic
-- `services/`: `New*Request()` builders produce correct JSON, `*Response` structs parse correctly
-- `entity/`: struct marshal/unmarshal
+Existing unit tests cover core packages. Remaining gaps:
+- `services/compute/v2/`: request building, response parsing
+- `services/loadbalancer/v2/`: request building, response parsing
+- `services/dns/v1/`: request building, response parsing
+- `services/glb/v1/`: request building, response parsing
+- `services/network/v1/`: request building, response parsing
+- `services/portal/`: request building, response parsing
 
 ### Phase 3: Integration test infrastructure — **Open**
 

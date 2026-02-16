@@ -95,7 +95,7 @@ Most `Get*()` accessors have been simplified:
 
 **Kept with `Get` prefix** (name collisions with exported struct fields used for
 JSON serialization on request types):
-- `GetProjectID()`, `GetZoneID()`, `GetUserID()`, `GetClientID()`, `GetClientSecret()`
+- `GetProjectID()`, `GetZoneID()`, `GetUserID()`
 - `GetMessage()` (collides with `Message` field on error response structs)
 
 ### 1.7 Package names with underscores — **RESOLVED**
@@ -263,10 +263,10 @@ removed when `IBulkActionRequest` was deleted (§5.7). No assertions remain.
 
 | Metric | Value |
 |--------|-------|
-| Exported symbols | ~1,046 |
-| Documented | ~30 (~3%) |
+| Exported symbols | ~535 |
+| Documented | ~54 (~10%) |
 
-97% of exported types and functions have no documentation comments. Public API
+90% of exported types and functions have no documentation comments. Public API
 surface should have at minimum a one-line summary for each exported type,
 function, and method.
 
@@ -361,7 +361,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Abbreviation casing (secondary: `Ip`, `Http1`, `Vserver`) | 19 files | loadbalancer, glb, network, entity | **Done** |
-| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (6 kept due to collisions) |
+| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (4 kept due to collisions) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Done** |
 | Interface-per-type | all request types | codebase-wide | **Done** |
@@ -373,7 +373,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | Pointer receivers on read-only types | 20 types, ~54 methods | entity, sdkerror | **Partial** (entity + error types done) |
 | `interface{}` → `any` | ~411 occurrences | ~47 files | **Done** |
 | `var _` assertions | ~45 | codebase-wide | **Done** (0 remain; `IBulkActionRequest` deleted) |
-| Missing godoc | ~97% of exports | codebase-wide | Open |
+| Missing godoc | ~90% of exports | codebase-wide | Open |
 | V2/V1 mismatch bug | 1 | `gateway/gateway.go` | **Done** |
 | `ToRequestBody()` boilerplate | 54 methods | request + service files | **Done** |
 | `ToMap()` boilerplate | 72 methods | request + service files | **Done** |
