@@ -41,26 +41,26 @@ func listTagsByEndpointIDURL(sc *client.ServiceClient, opts *ListTagsByEndpointI
 	}
 
 	return sc.ServiceURL(
-		opts.GetProjectID(),
+		opts.ProjectID,
 		"tags") + query
 }
 
 func createTagsWithEndpointIDURL(sc *client.ServiceClient, opts *CreateTagsWithEndpointIDRequest) string {
 	return sc.ServiceURL(
-		opts.GetProjectID(),
+		opts.ProjectID,
 		"tags")
 }
 
 func deleteTagOfEndpointURL(sc *client.ServiceClient, opts *DeleteTagOfEndpointRequest) string {
 	return sc.ServiceURL(
-		opts.GetProjectID(),
+		opts.ProjectID,
 		"tags",
-		opts.GetTagID())
+		opts.TagID)
 }
 
 func updateTagValueOfEndpointURL(sc *client.ServiceClient, opts *UpdateTagValueOfEndpointRequest) string {
 	return sc.ServiceURL(
-		opts.GetProjectID(),
+		opts.ProjectID,
 		"tags",
-		opts.GetTagID())
+		opts.TagID)
 }

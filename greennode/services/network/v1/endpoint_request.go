@@ -135,10 +135,6 @@ func (r *ListTagsByEndpointIDRequest) ToListQuery() (string, error) {
 	return v.Encode(), nil
 }
 
-func (r *ListTagsByEndpointIDRequest) GetProjectID() string {
-	return r.ProjectID
-}
-
 func (r *ListTagsByEndpointIDRequest) getDefaultQuery() string {
 	query := fmt.Sprintf(`{"page":%d,"size":%d}`, defaultListEndpointsRequestPage, defaultListEndpointsRequestSize)
 	query = "params=" + url.QueryEscape(query)
@@ -158,10 +154,6 @@ type CreateTagsWithEndpointIDRequest struct {
 	SystemTag bool `json:"systemTag"`
 }
 
-func (r *CreateTagsWithEndpointIDRequest) GetProjectID() string {
-	return r.ProjectID
-}
-
 // ____________________________________________________________________ DeleteTagByEndpointIdRequest
 
 type DeleteTagOfEndpointRequest struct {
@@ -169,14 +161,6 @@ type DeleteTagOfEndpointRequest struct {
 
 	ProjectID string
 	TagID     string
-}
-
-func (r *DeleteTagOfEndpointRequest) GetTagID() string {
-	return r.TagID
-}
-
-func (r *DeleteTagOfEndpointRequest) GetProjectID() string {
-	return r.ProjectID
 }
 
 // _________________________________________________________________ UpdateTagValueOfEndpointRequest
@@ -189,13 +173,6 @@ type UpdateTagValueOfEndpointRequest struct {
 	TagValue  string `json:"tagValue"`
 }
 
-func (r *UpdateTagValueOfEndpointRequest) GetTagID() string {
-	return r.TagID
-}
-
-func (r *UpdateTagValueOfEndpointRequest) GetProjectID() string {
-	return r.ProjectID
-}
 func NewGetEndpointByIDRequest(endpointID string) *GetEndpointByIDRequest {
 	return &GetEndpointByIDRequest{
 		EndpointID: endpointID,
