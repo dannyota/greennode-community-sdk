@@ -1,140 +1,267 @@
 # Test Coverage
 
-This document catalogs the current state of test coverage across the
-`greennode-community-sdk` project. It identifies gaps, remaining issues, and
-serves as the roadmap for improving test quality.
+Current state of testing in the `greennode-community-sdk` project, organized
+into unit tests and integration tests.
 
 ---
 
-## 1. Coverage Map
+## 1. Unit Tests
 
-### 1.1 Integration tests
+Unit tests live alongside the packages they test under `greennode/`. They
+require no credentials, no network, and run in milliseconds.
 
-Integration tests live in `test/` and call real VNGCloud APIs (181 tests
-across 22 files).
+**Run:** `go test ./greennode/...`
 
-| Service                | Test File(s)                                                                                                                       | Tests |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| identity/v2            | `identity_test.go`                                                                                                                 | 4     |
-| loadbalancer/v2        | `lb_test.go`                                                                                                                       | 39    |
-| loadbalancer/inter     | `lb_test.go`                                                                                                                       | (included above) |
-| loadbalancer/v2 certs  | `certificate_test.go`                                                                                                              | 4     |
-| glb/v1                 | `glb_test.go`, `lb_global_test.go`                                                                                                 | 22    |
-| compute/v2             | `server_test.go`                                                                                                                   | 24    |
-| volume/v2              | `volume_test.go`, `snapshot_test.go`                                                                                               | 17    |
-| volume/v1              | `volumetype_test.go`                                                                                                               | 5     |
-| network/v2             | `network_test.go`, `secgroup_test.go`, `secgroup_rule_test.go`, `subnet_test.go`, `virtualaddress_test.go`, `address_pair_test.go` | 26    |
-| network/v1             | `endpoint_test.go`                                                                                                                 | 10    |
-| portal/v1, v2          | `portal_test.go`                                                                                                                   | 10    |
-| dns/v1                 | `dns_test.go`                                                                                                                      | 12    |
-| dns/internal_system/v1 | `dns_internal_test.go`                                                                                                             | 6     |
-| server/v1              | `server_test.go`                                                                                                                   | (included in compute above) |
+### 1.1 Coverage by package
 
-### 1.2 Unit tests
+| Package | Coverage | Test files |
+| ------- | -------- | ---------- |
+| `greennode/sdkerror/` | **94.5%** | `sdk_error_test.go`, `classifier_test.go`, `errors_test.go` |
+| `greennode/client/` | **69.7%** | `auth_test.go`, `http_test.go`, `request_test.go`, `service_client_test.go` |
+| `greennode/services/common/` | **57.1%** | `common_test.go` |
+| `greennode/entity/` | **42.6%** | `entity_test.go` |
+| `greennode/services/identity/v2/` | **20.0%** | `identity_request_test.go`, `identity_response_test.go` |
+| `greennode/services/volume/v2/` | **18.1%** | `blockvolume_request_test.go`, `blockvolume_response_test.go` |
+| `greennode/services/network/v2/` | **4.8%** | `secgroup_request_test.go`, `secgroup_response_test.go` |
 
-Unit tests live alongside the packages they test (139 tests across 14 files).
+### 1.2 Packages with zero unit test coverage
 
-| Package                    | Test File(s)                                          | Tests |
-| -------------------------- | ----------------------------------------------------- | ----- |
-| `greennode/sdkerror/`      | `sdk_error_test.go`, `classifier_test.go`, `errors_test.go` | 61    |
-| `greennode/client/`        | `auth_test.go`, `request_test.go`, `service_client_test.go` | 26    |
-| `greennode/entity/`        | `entity_test.go`                                      | 16    |
-| `greennode/services/volume/v2/`   | `blockvolume_request_test.go`, `blockvolume_response_test.go` | 16    |
-| `greennode/services/common/`      | `common_test.go`                                      | 7     |
-| `greennode/services/network/v2/`  | `secgroup_request_test.go`, `secgroup_response_test.go` | 8     |
-| `greennode/services/identity/v2/` | `identity_request_test.go`, `identity_response_test.go` | 5     |
+| Package | What it does |
+| ------- | ------------ |
+| `greennode/` (root) | Client constructor, config, top-level wiring |
+| `greennode/auth/` | IAM user auth flow, TOTP provider |
+| `greennode/services/compute/v2/` | Server request/response types |
+| `greennode/services/loadbalancer/v2/` | Load balancer request/response types |
+| `greennode/services/loadbalancer/inter/` | Inter-region LB request/response types |
+| `greennode/services/dns/v1/` | DNS request/response types |
+| `greennode/services/dns/internal_system/v1/` | DNS internal request/response types |
+| `greennode/services/glb/v1/` | Global LB request/response types |
+| `greennode/services/network/v1/` | Network v1 request/response types |
+| `greennode/services/portal/v1/` | Portal v1 request/response types |
+| `greennode/services/portal/v2/` | Portal v2 request/response types |
+| `greennode/services/server/v1/` | Server v1 request/response types |
+| `greennode/services/volume/v1/` | Volume v1 request/response types |
 
-### 1.3 Packages with zero tests
+### 1.3 Future work
 
-| Package              | Description                     |
-| -------------------- | ------------------------------- |
-| `greennode/auth/`     | IAM user auth flow and TOTP providers |
-| `greennode/gateway/`  | Gateway routing layer (consolidated into `greennode.go`) |
+Priority order for expanding unit test coverage:
 
-### 1.4 Utility test files
-
-| File            | Purpose                                              |
-| --------------- | ---------------------------------------------------- |
-| `data_test.go`  | Fake certs/keys constants for test use               |
-| `error_test.go` | 1 test for error message format                      |
-| `other_test.go` | `TestUnixNano` — unrelated to SDK, should be removed |
-
----
-
-## 2. Remaining Issues
-
-### 2.1 Hardcoded resource IDs — **Open**
-
-Every integration test uses hardcoded UUIDs for cloud resources (e.g.,
-`"lb-8f54cbd4-b8ee-4b86-aa9b-d365c468a902"`), making tests non-reproducible
-across environments and fragile if resources are deleted.
-
-### 2.2 No build tags on integration tests — **Open**
-
-All 22 test files run against live APIs but lack `//go:build integration` tags.
-Running `go test ./test/...` always attempts live API calls. Unit tests cannot
-be run in isolation from integration tests.
-
-### 2.3 `TestGetLoadBalancerFailure` asserts success — **Open**
-
-Named as a failure test but asserts success conditions (error must be nil,
-result must not be nil).
-
-### 2.4 `TestUnixNano` noise — **Open**
-
-Unrelated to SDK functionality; should be removed.
+1. **`auth/`** — TOTP computation (test against RFC 6238 vectors), endpoint
+   resolution logic
+2. **`client/`** — increase from 69.7% to 85%+, cover remaining retry/auth
+   edge cases
+3. **`entity/`** — increase from 42.6%, cover remaining entity validation
+   methods
+4. **Service request/response packages** — each has a builder pattern that
+   can be tested without any network calls:
+   - `services/compute/v2/`
+   - `services/loadbalancer/v2/`
+   - `services/dns/v1/`
+   - `services/glb/v1/`
+   - `services/network/v1/`
+   - `services/portal/v1/`, `services/portal/v2/`
 
 ---
 
-## 3. Resolved Issues
+## 2. Integration Tests
 
-### 3.1 Developer names in test code — **RESOLVED**
+Integration tests live in `test/` and make real API calls to GreenNode/VNGCloud
+services. They validate end-to-end behavior against live infrastructure.
 
-All personal identifiers (cuongdm3, vinhnt8, annd2, hannibal, phongnt10,
-tantm3, duynh7, tytv2, User11412) replaced with generic test names across
-12 files (~50 replacements). Inappropriate strings removed.
+**Run:** `go test -tags=integration ./test/...`
 
-### 3.2 False-passing tests — **RESOLVED**
+### 2.1 Test inventory by service
 
-12 tests used `t.Logf`/`t.Log` instead of `t.Fatalf` for error checks, causing
-them to report success when API calls failed. All changed to `t.Fatalf`.
+| Service | Test file(s) | Tests |
+| ------- | ------------ | ----- |
+| Identity / Auth | `identity_test.go` | 4 |
+| Load Balancer | `lb_test.go` | 39 |
+| LB Certificates | `certificate_test.go` | 4 |
+| Global LB | `glb_test.go` | 22 |
+| Compute (Servers) | `server_test.go` | 24 |
+| Block Volume | `volume_test.go`, `snapshot_test.go` | 17 |
+| Volume Types | `volumetype_test.go` | 5 |
+| Network / VPC | `network_test.go`, `subnet_test.go` | 10 |
+| Security Groups | `secgroup_test.go`, `secgroup_rule_test.go` | 12 |
+| Virtual Addresses | `virtualaddress_test.go`, `address_pair_test.go` | 6 |
+| Endpoints | `endpoint_test.go` | 10 |
+| Portal | `portal_test.go` | 10 |
+| DNS | `dns_test.go` | 12 |
+| DNS Internal | `dns_internal_test.go` | 6 |
 
-### 3.3 Nil pointer panic in `TestAuthenPass` — **RESOLVED**
+**Support files** (not tests themselves):
 
-`TestAuthenPass` dereferenced `token.Token` without nil check, crashing the
-suite. Fixed with proper nil guard and `t.Fatalf`.
+| File | Purpose |
+| ---- | ------- |
+| `helpers_test.go` | Client constructors, env reading, shared utilities |
+| `data_test.go` | Fake certs/keys/tokens for test inputs |
 
-### 3.4 Config helper bloat — **RESOLVED**
+### 2.2 Current credential model (env.yaml)
 
-9 developer-named config functions consolidated into generic helpers. Added
-reusable `newClientFromEnvKeys` function.
+Tests currently read credentials from `test/env.yaml` (gitignored). The file
+uses `KEY=VALUE` format:
 
-### 3.5 Test name typo — **RESOLVED**
+```yaml
+# Service account
+VNGCLOUD_CLIENT_ID=<service-account-client-id>
+VNGCLOUD_CLIENT_SECRET=<service-account-secret>
 
-`TestASuperuthenPass` renamed to `TestSuperAdminAuthenPass`.
+# IAM user credentials
+USER_CLIENT_ID=<user-client-id>
+USER_CLIENT_SECRET=<user-secret>
+ALT_USER_CLIENT_ID=<alt-user-client-id>
+ALT_USER_CLIENT_SECRET=<alt-user-secret>
 
-### 3.6 No unit tests — **RESOLVED**
+# Resource identifiers
+VNGCLOUD_USER_ID=<portal-user-id>
+VNGCLOUD_ZONE_ID=<zone-id>
+VNGCLOUD_PROJECT_ID=<project-id>
+USER_PROJECT=<user-project>
+ALT_USER_PROJECT_ID=<alt-user-project>
+HAN01_PROJECT_ID=<han-region-project>
+HCM3B_PROJECT_ID=<hcm3b-region-project>
+VNGCLOUD_PORTAL_USER_ID=<portal-user-id>
+SECONDARY_USER_ID=<secondary-user-id>
+SERVER_ID=<existing-server-id>
 
-141 unit tests added across `sdkerror/`, `client/`, `entity/`,
-`services/common/`, `services/volume/v2/`, `services/network/v2/`, and
-`services/identity/v2/`.
+# Regional
+HCM3B_CLIENT_ID=<hcm3b-client-id>
+HCM3B_CLIENT_SECRET=<hcm3b-secret>
+```
+
+### 2.3 Target credential model (HashiCorp Vault)
+
+Replace `env.yaml` with HashiCorp Vault for secrets management. This enables:
+- No secrets on disk — credentials are fetched at test runtime
+- Centralized rotation — update secrets in one place
+- Audit trail — Vault logs all secret access
+- CI/CD friendly — authenticate via Vault token or AppRole
+
+**Vault secret layout** (proposed):
+
+```
+secret/greennode-sdk/test/
+  service-account      → client_id, client_secret
+  user                 → client_id, client_secret
+  alt-user             → client_id, client_secret
+  hcm3b                → client_id, client_secret
+  resources            → user_id, zone_id, project_id, server_id, ...
+  regional             → han01_project_id, hcm3b_project_id, ...
+```
+
+**How tests will read credentials:**
+
+1. Tests check for `VAULT_ADDR` and `VAULT_TOKEN` environment variables
+2. If set, read credentials from Vault using the Vault Go client
+3. If not set, fall back to `env.yaml` for local development
+4. A `testconfig` helper package handles the abstraction
+
+```
+VAULT_ADDR=https://vault.example.com VAULT_TOKEN=s.xxx go test -tags=integration ./test/...
+```
+
+### 2.4 File restructuring
+
+Current state has test helpers mixed into `identity_test.go`. Target structure:
+
+```
+test/
+  helpers_test.go          # client constructors, config reading, Vault integration
+  data_test.go             # fake certs/keys/tokens (no changes)
+  identity_test.go         # identity/auth tests only (helpers extracted)
+  lb_test.go               # load balancer tests
+  lb_global_test.go        # global LB tests
+  glb_test.go              # GLB tests
+  server_test.go           # compute tests
+  volume_test.go           # volume tests
+  volumetype_test.go       # volume type tests
+  snapshot_test.go         # snapshot tests
+  network_test.go          # network/VPC tests
+  subnet_test.go           # subnet tests
+  secgroup_test.go         # security group tests
+  secgroup_rule_test.go    # security group rule tests
+  address_pair_test.go     # address pair tests
+  virtualaddress_test.go   # virtual address tests
+  endpoint_test.go         # endpoint tests
+  certificate_test.go      # certificate tests
+  portal_test.go           # portal tests
+  dns_test.go              # DNS tests
+  dns_internal_test.go     # DNS internal tests
+```
+
+**Changes completed:**
+
+1. **Extracted helpers from `identity_test.go`** into `helpers_test.go` —
+   `readEnvFile()`, `getEnv()`, `getValueOfEnv()`, `newClientFromEnvKeys()`,
+   and all `validXxxSdkConfig()` functions
+2. **Deleted `other_test.go`** — `TestUnixNano` was unrelated to the SDK
+3. **Deleted `error_test.go`** — `TestDeleteListener` was a misplaced unit test
+4. **Added `//go:build integration`** tag to all 21 test files
+
+### 2.5 Running tests
+
+```bash
+# Unit tests only (default — no credentials needed)
+go test ./greennode/...
+
+# Integration tests (requires env.yaml or Vault credentials)
+go test -tags=integration ./test/...
+
+# Both
+go test -tags=integration ./...
+```
+
+### 2.6 Known issues
+
+| Issue | Status | Description |
+| ----- | ------ | ----------- |
+| Hardcoded resource IDs | Open | Tests use hardcoded UUIDs (e.g. `lb-8f54cbd4-...`) — fragile if resources are deleted |
+| `TestGetLoadBalancerFailure` | Open | Named as failure test but asserts success conditions |
 
 ---
 
-## 4. Improvement Plan
+## 3. Implementation roadmap
 
-### Phase 2: Expand unit test coverage — **Open**
+### Phase 1: Restructure integration tests — **DONE**
 
-Existing unit tests cover core packages. Remaining gaps:
-- `auth/`: TOTP computation (SecretTOTP against RFC 6238 test vectors), endpoint resolution
-- `services/compute/v2/`: request building, response parsing
-- `services/loadbalancer/v2/`: request building, response parsing
-- `services/dns/v1/`: request building, response parsing
-- `services/glb/v1/`: request building, response parsing
-- `services/network/v1/`: request building, response parsing
-- `services/portal/`: request building, response parsing
+- [x] Extract helpers from `identity_test.go` into `helpers_test.go`
+- [x] Delete `other_test.go`
+- [x] Delete `error_test.go`
+- [x] Add `//go:build integration` to all `test/*_test.go` files
+- [ ] Move hardcoded resource IDs into `helpers_test.go` as named constants
 
-### Phase 3: Integration test infrastructure — **Open**
+### Phase 2: Vault integration
 
-- Tag all integration tests with `//go:build integration`
-- Add HTTP mocking with `httptest.Server` or fixture files
+- [ ] Add `github.com/hashicorp/vault/api` dependency
+- [ ] Implement Vault reader in `helpers_test.go` with `env.yaml` fallback
+- [ ] Document Vault setup in this file
+- [ ] Set up CI/CD pipeline with Vault-authenticated test runs
+
+### Phase 3: Expand unit test coverage
+
+- [ ] `auth/` — TOTP against RFC 6238, endpoint resolution
+- [ ] `client/` — increase to 85%+
+- [ ] `entity/` — increase to 70%+
+- [ ] Service request/response packages (compute, LB, DNS, GLB, network, portal)
+
+### Phase 4: CI/CD integration
+
+- [ ] GitHub Actions workflow for unit tests (on every PR)
+- [ ] GitHub Actions workflow for integration tests (nightly or manual trigger, Vault-authenticated)
+- [ ] Coverage reporting and badges
+
+---
+
+## 4. Resolved issues (historical)
+
+<details>
+<summary>Previously fixed issues</summary>
+
+- **Developer names in test code** — personal identifiers replaced with generic names
+- **False-passing tests** — 12 tests changed from `t.Log` to `t.Fatalf`
+- **Nil pointer panic in TestAuthenPass** — added nil guard
+- **Config helper bloat** — 9 functions consolidated into `newClientFromEnvKeys`
+- **Test name typo** — `TestASuperuthenPass` renamed to `TestSuperAdminAuthenPass`
+- **No unit tests** — 139+ unit tests added across core packages
+
+</details>

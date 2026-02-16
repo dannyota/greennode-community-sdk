@@ -1,3 +1,5 @@
+//go:build integration
+
 package test
 
 // TestData contains all fake/mock data used in tests
