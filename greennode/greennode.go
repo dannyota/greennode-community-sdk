@@ -192,14 +192,10 @@ func iamUserReauthFunc(iamAuth *auth.IAMUserAuth) func(ctx context.Context) (*cl
 }
 
 func newServiceClient(endpoint, projectID, zoneID string, hc *client.HTTPClient) *client.ServiceClient {
-	sc := client.NewServiceClient().
-		WithEndpoint(endpoint).
-		WithClient(hc)
-	if projectID != "" {
-		sc.WithProjectID(projectID)
+	return &client.ServiceClient{
+		Endpoint:  client.NormalizeURL(endpoint),
+		ProjectID: projectID,
+		ZoneID:    zoneID,
+		HTTP:      hc,
 	}
-	if zoneID != "" {
-		sc.WithZoneID(zoneID)
-	}
-	return sc
 }

@@ -22,7 +22,7 @@ func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*ListQuotas, er
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListQuotas(), nil
@@ -42,6 +42,3 @@ func (s *PortalServiceV2) GetQuotaByName(ctx context.Context, opts *GetQuotaByNa
 	return quota, nil
 }
 
-func (s *PortalServiceV2) getProjectID() string {
-	return s.Client.ProjectID()
-}

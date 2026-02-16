@@ -4,23 +4,23 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 func getEndpointByIDURL(sc *client.ServiceClient, opts *GetEndpointByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ZoneID(),
-		sc.ProjectID(),
+		sc.ZoneID,
+		sc.ProjectID,
 		"endpoints",
 		opts.EndpointID)
 }
 
 func createEndpointURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.ZoneID(),
-		sc.ProjectID(),
+		sc.ZoneID,
+		sc.ProjectID,
 		"endpoints")
 }
 
 func deleteEndpointByIDURL(sc *client.ServiceClient, opts *DeleteEndpointByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ZoneID(),
-		sc.ProjectID(),
+		sc.ZoneID,
+		sc.ProjectID,
 		"endpoints",
 		opts.EndpointID)
 }
@@ -31,7 +31,7 @@ func listEndpointsURL(sc *client.ServiceClient, opts *ListEndpointsRequest) stri
 		query = opts.getDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.ZoneID(), sc.ProjectID(), "endpoints?") + query
+	return sc.ServiceURL(sc.ZoneID, sc.ProjectID, "endpoints?") + query
 }
 
 func listTagsByEndpointIDURL(sc *client.ServiceClient, opts *ListTagsByEndpointIDRequest) string {

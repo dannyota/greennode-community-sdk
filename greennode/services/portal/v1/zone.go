@@ -18,7 +18,7 @@ func (s *PortalServiceV1) ListZones(ctx context.Context) (*ListZones, error) {
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.Client.ProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListZones(), nil

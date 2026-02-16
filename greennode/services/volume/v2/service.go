@@ -12,9 +12,6 @@ type VolumeServiceV2 struct {
 	Client *client.ServiceClient
 }
 
-func (s *VolumeServiceV2) getProjectID() string {
-	return s.Client.ProjectID()
-}
 
 const (
 	defaultPageListBlockVolumesRequest = 1
@@ -40,7 +37,7 @@ func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlo
 			sdkerror.EcVServerVolumeSizeOutOfRange,
 			sdkerror.EcVServerVolumeSizeExceedGlobalQuota,
 			sdkerror.EcVServerVolumeNameNotValid).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts))
 	}
 
@@ -58,7 +55,7 @@ func (s *VolumeServiceV2) DeleteBlockVolumeByID(ctx context.Context, opts *Delet
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID)
 	}
 
@@ -77,7 +74,7 @@ func (s *VolumeServiceV2) ListBlockVolumes(ctx context.Context, opts *ListBlockV
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcPagingInvalid).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts))
 	}
 
@@ -97,7 +94,7 @@ func (s *VolumeServiceV2) GetBlockVolumeByID(ctx context.Context, opts *GetBlock
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID)
 	}
 
@@ -121,7 +118,7 @@ func (s *VolumeServiceV2) ResizeBlockVolumeByID(ctx context.Context, opts *Resiz
 			sdkerror.EcVServerVolumeMustSameZone,
 			sdkerror.EcVServerVolumeUnchanged).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID,
 				"size", opts.NewSize)
 	}
@@ -142,7 +139,7 @@ func (s *VolumeServiceV2) GetUnderBlockVolumeID(ctx context.Context, opts *GetUn
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID)
 	}
 
@@ -171,7 +168,7 @@ func (s *VolumeServiceV2) MigrateBlockVolumeByID(ctx context.Context, opts *Migr
 			sdkerror.EcVServerVolumeMigrateBeingFinish,
 			sdkerror.EcVServerVolumeNotFound).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID)
 
 		if opts.ConfirmMigrate {

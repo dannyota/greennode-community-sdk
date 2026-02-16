@@ -4,13 +4,13 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 func createBlockVolumeURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes")
 }
 
 func deleteBlockVolumeByIDURL(sc *client.ServiceClient, opts *DeleteBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID)
 }
@@ -22,20 +22,20 @@ func listBlockVolumesURL(sc *client.ServiceClient, opts *ListBlockVolumesRequest
 	}
 
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes") + query
 }
 
 func getBlockVolumeByIDURL(sc *client.ServiceClient, opts *GetBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID)
 }
 
 func resizeBlockVolumeByIDURL(sc *client.ServiceClient, opts *ResizeBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"resize")
@@ -48,7 +48,7 @@ func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapsho
 	}
 
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"snapshots",
@@ -57,7 +57,7 @@ func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapsho
 
 func createSnapshotByBlockVolumeIDURL(sc *client.ServiceClient, opts *CreateSnapshotByBlockVolumeIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"snapshots")
@@ -65,7 +65,7 @@ func createSnapshotByBlockVolumeIDURL(sc *client.ServiceClient, opts *CreateSnap
 
 func deleteSnapshotByIDURL(sc *client.ServiceClient, opts *DeleteSnapshotByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"snapshots",
@@ -75,7 +75,7 @@ func deleteSnapshotByIDURL(sc *client.ServiceClient, opts *DeleteSnapshotByIDReq
 
 func getUnderBlockVolumeIDURL(sc *client.ServiceClient, opts *GetUnderBlockVolumeIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"mapping",
@@ -84,7 +84,7 @@ func getUnderBlockVolumeIDURL(sc *client.ServiceClient, opts *GetUnderBlockVolum
 
 func migrateBlockVolumeByIDURL(sc *client.ServiceClient, opts *MigrateBlockVolumeByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"change-device-type",

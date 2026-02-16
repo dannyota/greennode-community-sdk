@@ -15,9 +15,6 @@ type VolumeServiceV1 struct {
 	Client *client.ServiceClient
 }
 
-func (s *VolumeServiceV1) getProjectID() string {
-	return s.Client.ProjectID()
-}
 
 func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolumeTypeByIDRequest) (*VolumeType, error) {
 	url := getVolumeTypeByIDURL(s.Client, opts)
@@ -32,7 +29,7 @@ func (s *VolumeServiceV1) GetVolumeTypeByID(ctx context.Context, opts *GetVolume
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
 			WithKVparameters(
-				"projectId", s.getProjectID(),
+				"projectId", s.Client.ProjectID,
 				"volumeTypeId", opts.VolumeTypeID)
 	}
 
@@ -51,7 +48,7 @@ func (s *VolumeServiceV1) GetDefaultVolumeType(ctx context.Context) (*VolumeType
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityVolumeType(), nil
@@ -69,7 +66,7 @@ func (s *VolumeServiceV1) GetVolumeTypeZones(ctx context.Context, opts *GetVolum
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListVolumeTypeZones(), nil
@@ -87,7 +84,7 @@ func (s *VolumeServiceV1) GetListVolumeTypes(ctx context.Context, opts *GetListV
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerVolumeTypeNotFound).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"volumeTypeZoneId", opts.VolumeTypeZoneID)
 	}
 

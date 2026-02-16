@@ -11,9 +11,6 @@ type NetworkServiceV2 struct {
 	Client *client.ServiceClient
 }
 
-func (s *NetworkServiceV2) getProjectID() string {
-	return s.Client.ProjectID()
-}
 
 func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkByIDRequest) (*Network, error) {
 	url := getNetworkByIDURL(s.Client, opts)
@@ -29,7 +26,7 @@ func (s *NetworkServiceV2) GetNetworkByID(ctx context.Context, opts *GetNetworkB
 			sdkerror.EcVServerNetworkNotFound).
 			WithKVparameters(
 				"networkId", opts.NetworkID,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityNetwork(), nil

@@ -12,9 +12,6 @@ type ComputeServiceV2 struct {
 	Client *client.ServiceClient
 }
 
-func (s *ComputeServiceV2) getProjectID() string {
-	return s.Client.ProjectID()
-}
 
 const (
 	defaultOffsetListServerGroups = 0
@@ -50,7 +47,7 @@ func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerR
 			sdkerror.EcProjectConflict,
 			sdkerror.EcVServerCreateBillingPaymentMethodNotAllowed).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			AppendCategories(sdkerror.ErrCatVServer)
 	}
 
@@ -70,7 +67,7 @@ func (s *ComputeServiceV2) GetServerByID(ctx context.Context, opts *GetServerByI
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerNotFound).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityServer(), nil
@@ -92,7 +89,7 @@ func (s *ComputeServiceV2) DeleteServerByID(ctx context.Context, opts *DeleteSer
 			sdkerror.EcVServerServerDeleteBillingServer,
 			sdkerror.EcVServerServerDeleteCreatingServer,
 			sdkerror.EcVServerVolumeInProcess).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"serverId", opts.ServerID)
 	}
 
@@ -115,7 +112,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 			sdkerror.EcVServerServerExpired,
 			sdkerror.EcVServerServerUpdatingSecgroups,
 			sdkerror.EcVServerSecgroupNotFound).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"serverId", opts.ServerID,
 				"secgroupIds", opts.Secgroups)
 	}
@@ -141,7 +138,7 @@ func (s *ComputeServiceV2) AttachBlockVolume(ctx context.Context, opts *AttachBl
 			sdkerror.EcVServerServerAttachEncryptedVolume,
 			sdkerror.EcVServerVolumeAlreadyAttachedThisServer,
 			sdkerror.EcVServerServerVolumeAttachQuotaExceeded).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID,
 				"serverId", opts.ServerID)
 	}
@@ -164,7 +161,7 @@ func (s *ComputeServiceV2) DetachBlockVolume(ctx context.Context, opts *DetachBl
 			sdkerror.EcVServerServerNotFound,
 			sdkerror.EcVServerVolumeIsMigrating,
 			sdkerror.EcVServerVolumeAvailable).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"volumeId", opts.BlockVolumeID,
 				"serverId", opts.ServerID)
 	}
@@ -186,7 +183,7 @@ func (s *ComputeServiceV2) AttachFloatingIp(ctx context.Context, opts *AttachFlo
 			sdkerror.EcVServerServerCanNotAttachFloatingIp,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return nil
@@ -207,7 +204,7 @@ func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFlo
 			sdkerror.EcVServerWanIDNotFound,
 			sdkerror.EcVServerInternalNetworkInterfaceNotFound).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return nil
@@ -224,7 +221,7 @@ func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *Li
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListServerGroupPolicies(), nil
@@ -242,7 +239,7 @@ func (s *ComputeServiceV2) DeleteServerGroupByID(ctx context.Context, opts *Dele
 			sdkerror.EcVServerServerGroupNotFound,
 			sdkerror.EcVServerServerGroupInUse).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID(),
+			WithKVparameters("projectId", s.Client.ProjectID,
 				"serverGroupId", opts.ServerGroupID)
 	}
 
@@ -261,7 +258,7 @@ func (s *ComputeServiceV2) ListServerGroups(ctx context.Context, opts *ListServe
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListServerGroups(), nil
@@ -281,7 +278,7 @@ func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateSe
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerServerGroupNameMustBeUnique).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityServerGroup(), nil

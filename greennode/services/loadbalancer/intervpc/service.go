@@ -17,7 +17,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, op
 	url := createLoadBalancerURL(s.Client)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.ProjectID = s.Client.ProjectID()
+	opts.ProjectID = s.Client.ProjectID
 	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithUserID(opts.PortalUser.ID).

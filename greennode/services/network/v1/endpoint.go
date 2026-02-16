@@ -13,16 +13,8 @@ type NetworkServiceV1 struct {
 	Client *client.ServiceClient
 }
 
-func (s *NetworkServiceV1) getProjectID() string {
-	return s.Client.ProjectID()
-}
-
 type NetworkServiceInternalV1 struct {
 	Client *client.ServiceClient
-}
-
-func (s *NetworkServiceInternalV1) getProjectID() string {
-	return s.Client.ProjectID()
 }
 
 func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpointByIDRequest) (*Endpoint, error) {
@@ -39,7 +31,7 @@ func (s *NetworkServiceV1) GetEndpointByID(ctx context.Context, opts *GetEndpoin
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
 			WithKVparameters(
 				"endpointId", opts.EndpointID,
-				"projectId", s.getProjectID()).
+				"projectId", s.Client.ProjectID).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
 
@@ -108,7 +100,7 @@ func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpoint
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -130,7 +122,7 @@ func (s *NetworkServiceInternalV1) ListTagsByEndpointID(ctx context.Context, opt
 
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -151,7 +143,7 @@ func (s *NetworkServiceInternalV1) CreateTagsWithEndpointID(ctx context.Context,
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVNetworkEndpointTagExisted,
 			sdkerror.EcVNetworkEndpointTagNotFound).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -170,7 +162,7 @@ func (s *NetworkServiceInternalV1) DeleteTagOfEndpoint(ctx context.Context, opts
 	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVNetworkEndpointTagNotFound).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}
@@ -190,7 +182,7 @@ func (s *NetworkServiceInternalV1) UpdateTagValueOfEndpoint(ctx context.Context,
 	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
 		return sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVNetworkEndpointTagNotFound).
-			WithKVparameters("projectId", s.getProjectID()).
+			WithKVparameters("projectId", s.Client.ProjectID).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVNetwork)
 	}

@@ -24,7 +24,7 @@ func (s *NetworkServiceV2) CreateSecgroupRule(ctx context.Context, opts *CreateS
 			sdkerror.EcVServerSecgroupRuleExceedQuota,
 			sdkerror.EcVServerSecgroupRuleAlreadyExists).
 			WithParameters(common.StructToMap(opts)).
-			WithKVparameters("projectId", s.getProjectID())
+			WithKVparameters("projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntitySecgroupRule(), nil
@@ -44,7 +44,7 @@ func (s *NetworkServiceV2) DeleteSecgroupRuleByID(ctx context.Context, opts *Del
 			WithKVparameters(
 				"secgroupId", opts.SecgroupID,
 				"secgroupRuleId", opts.SecgroupRuleID,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return nil
@@ -62,7 +62,7 @@ func (s *NetworkServiceV2) ListSecgroupRulesBySecgroupID(ctx context.Context, op
 	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
 		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp,
 			sdkerror.EcVServerSecgroupNotFound).
-			WithKVparameters("projectId", s.getProjectID(), "secgroupId", opts.SecgroupID)
+			WithKVparameters("projectId", s.Client.ProjectID, "secgroupId", opts.SecgroupID)
 	}
 
 	return resp.ToEntityListSecgroupRules(), nil

@@ -13,9 +13,6 @@ type LoadBalancerServiceV2 struct {
 	ServerClient *client.ServiceClient
 }
 
-func (s *LoadBalancerServiceV2) getProjectID() string {
-	return s.Client.ProjectID()
-}
 
 const (
 	defaultPageListLoadBalancer = 1
@@ -347,7 +344,7 @@ func (s *LoadBalancerServiceV2) DeleteLoadBalancerByID(ctx context.Context, opts
 			sdkerror.EcVLBLoadBalancerIsDeleting).
 			WithKVparameters(
 				"loadBalancerId", opts.LoadBalancerID,
-				"projectId", s.getProjectID()).
+				"projectId", s.Client.ProjectID).
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 

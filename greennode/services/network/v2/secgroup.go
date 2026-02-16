@@ -21,7 +21,7 @@ func (s *NetworkServiceV2) GetSecgroupByID(ctx context.Context, opts *GetSecgrou
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.SecgroupID,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntitySecgroup(), nil
@@ -44,7 +44,7 @@ func (s *NetworkServiceV2) CreateSecgroup(ctx context.Context, opts *CreateSecgr
 			sdkerror.EcVServerSecgroupExceedQuota).
 			WithKVparameters(
 				"secgroupName", opts.Name,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntitySecgroup(), nil
@@ -79,7 +79,7 @@ func (s *NetworkServiceV2) DeleteSecgroupByID(ctx context.Context, opts *DeleteS
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.SecgroupID,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return nil

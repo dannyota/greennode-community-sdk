@@ -22,7 +22,7 @@ func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts 
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters(
 				"secgroupId", opts.SecgroupID,
-				"projectId", s.getProjectID())
+				"projectId", s.Client.ProjectID)
 	}
 
 	return resp.ToEntityListServers(), nil

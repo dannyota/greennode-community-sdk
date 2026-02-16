@@ -39,7 +39,7 @@ func TestServiceURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sc := NewServiceClient().WithEndpoint(tt.endpoint)
+			sc := &ServiceClient{Endpoint: NormalizeURL(tt.endpoint)}
 			got := sc.ServiceURL(tt.parts...)
 			if got != tt.want {
 				t.Fatalf("got %q, want %q", got, tt.want)
@@ -64,16 +64,17 @@ func TestNormalizeURL(t *testing.T) {
 	}
 }
 
-func TestServiceClientBuilders(t *testing.T) {
-	sc := NewServiceClient().
-		WithEndpoint("https://api.example.com").
-		WithProjectID("proj-1").
-		WithZoneID("zone-a")
-
-	if sc.ProjectID() != "proj-1" {
-		t.Fatalf("projectID: got %q", sc.ProjectID())
+func TestServiceClient_Fields(t *testing.T) {
+	sc := &ServiceClient{
+		Endpoint:  NormalizeURL("https://api.example.com"),
+		ProjectID: "proj-1",
+		ZoneID:    "zone-a",
 	}
-	if sc.ZoneID() != "zone-a" {
-		t.Fatalf("zoneID: got %q", sc.ZoneID())
+
+	if sc.ProjectID != "proj-1" {
+		t.Fatalf("projectID: got %q", sc.ProjectID)
+	}
+	if sc.ZoneID != "zone-a" {
+		t.Fatalf("zoneID: got %q", sc.ZoneID)
 	}
 }

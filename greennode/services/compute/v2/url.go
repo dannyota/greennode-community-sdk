@@ -4,27 +4,27 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
 func createServerURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers")
 }
 
 func getServerByIDURL(sc *client.ServiceClient, opts *GetServerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers",
 		opts.ServerID)
 }
 
 func deleteServerByIDURL(sc *client.ServiceClient, opts *DeleteServerByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers",
 		opts.ServerID)
 }
 
 func updateServerSecgroupsByServerIDURL(sc *client.ServiceClient, opts *UpdateServerSecgroupsByServerIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers",
 		opts.ServerID,
 		"update-sec-group")
@@ -32,7 +32,7 @@ func updateServerSecgroupsByServerIDURL(sc *client.ServiceClient, opts *UpdateSe
 
 func attachBlockVolumeURL(sc *client.ServiceClient, opts *AttachBlockVolumeRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"servers",
@@ -42,7 +42,7 @@ func attachBlockVolumeURL(sc *client.ServiceClient, opts *AttachBlockVolumeReque
 
 func detachBlockVolumeURL(sc *client.ServiceClient, opts *DetachBlockVolumeRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"volumes",
 		opts.BlockVolumeID,
 		"servers",
@@ -53,7 +53,7 @@ func detachBlockVolumeURL(sc *client.ServiceClient, opts *DetachBlockVolumeReque
 
 func attachFloatingIpURL(sc *client.ServiceClient, opts *AttachFloatingIpRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers",
 		opts.ServerID,
 		"wan-ips",
@@ -64,7 +64,7 @@ func attachFloatingIpURL(sc *client.ServiceClient, opts *AttachFloatingIpRequest
 
 func detachFloatingIpURL(sc *client.ServiceClient, opts *DetachFloatingIpRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"servers",
 		opts.ServerID,
 		"wan-ips",
@@ -74,7 +74,7 @@ func detachFloatingIpURL(sc *client.ServiceClient, opts *DetachFloatingIpRequest
 
 func listServerGroupPoliciesURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"serverGroups",
 		"policies",
 	)
@@ -82,7 +82,7 @@ func listServerGroupPoliciesURL(sc *client.ServiceClient) string {
 
 func deleteServerGroupByIDURL(sc *client.ServiceClient, opts *DeleteServerGroupByIDRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"serverGroups",
 		opts.ServerGroupID,
 	)
@@ -94,12 +94,12 @@ func listServerGroupsURL(sc *client.ServiceClient, opts *ListServerGroupsRequest
 		query = opts.getDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.ProjectID(), "serverGroups") + query
+	return sc.ServiceURL(sc.ProjectID, "serverGroups") + query
 }
 
 func createServerGroupURL(sc *client.ServiceClient, _ *CreateServerGroupRequest) string {
 	return sc.ServiceURL(
-		sc.ProjectID(),
+		sc.ProjectID,
 		"serverGroups",
 	)
 }
