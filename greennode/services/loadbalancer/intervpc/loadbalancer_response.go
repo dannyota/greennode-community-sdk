@@ -1,4 +1,4 @@
-package inter
+package intervpc
 
 import (
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"

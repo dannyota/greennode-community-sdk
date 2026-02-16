@@ -1,4 +1,4 @@
-package inter
+package intervpc
 
 const (
 	ListenerProtocolTCP   ListenerProtocol = "TCP"

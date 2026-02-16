@@ -8,13 +8,13 @@ import (
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/intervpc"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 )
 
 func TestCreateInterLoadBalancerSuccess1(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		"53461",
 		"test-intervpc-2",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -36,7 +36,7 @@ func TestCreateInterLoadBalancerSuccess1(t *testing.T) {
 
 func TestCreateInterLoadBalancerV2(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("VNGCLOUD_PORTAL_USER_ID"),
 		"test-intervpc",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -58,7 +58,7 @@ func TestCreateInterLoadBalancerV2(t *testing.T) {
 
 func TestCreateInterLoadBalancerForProject(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("VNGCLOUD_PORTAL_USER_ID"),
 		"test-lb-cross-project",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -80,7 +80,7 @@ func TestCreateInterLoadBalancerForProject(t *testing.T) {
 
 func TestCreateInterLoadBalancerSuccess2(t *testing.T) {
 	vngcloud := validSecondaryUserSdkConfig()
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("SECONDARY_USER_ID"),
 		"lb-overlap-private-2",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -102,7 +102,7 @@ func TestCreateInterLoadBalancerSuccess2(t *testing.T) {
 
 func TestCreateInterVpcLbHcm3b(t *testing.T) {
 	vngcloud := validHcm3bSuperSdkConfig()
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("HCM3B_USER_ID"),
 		"test-hcm04-vstorage",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -134,7 +134,7 @@ func TestCreateInterLoadBalancerSuccess3(t *testing.T) {
 		RetryCount:      1,
 		SleepDuration:   10,
 	})
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("SECONDARY_USER_ID"),
 		"test-15percent-2",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
@@ -207,27 +207,27 @@ func TestCreateLoadBalancerEmptyMemberSuccess(t *testing.T) {
 
 func TestCreateInterVPCLoadBalancerWithPoolAndListenerSuccess(t *testing.T) {
 	vngcloud := validSuperSdkConfig()
-	hcMethod := inter.HealthCheckMethodGET
-	httpVer := inter.HealthCheckHTTPVersionHTTP1
+	hcMethod := intervpc.HealthCheckMethodGET
+	httpVer := intervpc.HealthCheckHTTPVersionHTTP1
 	hcPath := "/health"
 	domainName := "vngcloud.com"
 	successCode := "200"
-	opt := inter.NewCreateLoadBalancerRequest(
+	opt := intervpc.NewCreateLoadBalancerRequest(
 		getValueOfEnv("VNGCLOUD_PORTAL_USER_ID"),
 		"test-intervpc",
 		"lbp-96b6b072-aadb-4b58-9d5f-c16ad69d36aa",
 		"sub-27a0562d-07f9-4e87-81fd-e0ba9658f156",
 		"sub-888d8fd2-3fed-4aaa-a62d-8554c0aff651")
 	opt.Tags = common.NewTags("test-key", "test-value", "env", "staging")
-	opt.Listener = inter.NewCreateListenerRequest("test-listener", inter.ListenerProtocolTCP, 80)
+	opt.Listener = intervpc.NewCreateListenerRequest("test-listener", intervpc.ListenerProtocolTCP, 80)
 	opt.Listener.AllowedCidrs = "0.0.0.0/0"
 	opt.Listener.TimeoutClient = 50
 	opt.Listener.TimeoutMember = 50
 	opt.Listener.TimeoutConnection = 5
-	pool := inter.NewCreatePoolRequest("test-pool", inter.PoolProtocolTCP)
-	pool.Members = append(pool.Members, inter.NewMember("test-member-1", "10.84.0.22", 80, 80))
-	pool.HealthMonitor = &inter.HealthMonitor{
-		HealthCheckProtocol: inter.HealthCheckProtocolTCP,
+	pool := intervpc.NewCreatePoolRequest("test-pool", intervpc.PoolProtocolTCP)
+	pool.Members = append(pool.Members, intervpc.NewMember("test-member-1", "10.84.0.22", 80, 80))
+	pool.HealthMonitor = &intervpc.HealthMonitor{
+		HealthCheckProtocol: intervpc.HealthCheckProtocolTCP,
 		HealthyThreshold:    3,
 		UnhealthyThreshold:  3,
 		Timeout:             5,

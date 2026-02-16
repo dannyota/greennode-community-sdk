@@ -10,7 +10,7 @@ import (
 	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 	glbv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
-	lbinter "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/inter"
+	lbintervpc "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/intervpc"
 	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
 	networkv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
 	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
@@ -61,7 +61,7 @@ type Client struct {
 	NetworkInternal      *networkv1.NetworkServiceInternalV1
 	VolumeV1             *volumev1.VolumeServiceV1
 	PortalV1             *portalv1.PortalServiceV1
-	LoadBalancerInternal *lbinter.LoadBalancerServiceInternal
+	LoadBalancerInternal *lbintervpc.LoadBalancerServiceInternal
 	ServerInternal       *serverv1.ServerServiceInternalV1
 	DNSInternal          *dnsv1.VDnsServiceInternal
 }
@@ -121,7 +121,7 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 		c.LoadBalancer = &lbv2.LoadBalancerServiceV2{Client: vlbSvcV2, ServerClient: vserverSvcV2}
 
 		vlbSvcInternal := newServiceClient(vlbEp+"internal", cfg.ProjectID, "", hc)
-		c.LoadBalancerInternal = &lbinter.LoadBalancerServiceInternal{Client: vlbSvcInternal}
+		c.LoadBalancerInternal = &lbintervpc.LoadBalancerServiceInternal{Client: vlbSvcInternal}
 	}
 
 	// VNetwork

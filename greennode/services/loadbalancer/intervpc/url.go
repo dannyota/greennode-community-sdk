@@ -1,4 +1,4 @@
-package inter
+package intervpc
 
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 
