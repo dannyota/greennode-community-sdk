@@ -9,10 +9,6 @@ type AddressPair struct {
 	CIDR               string
 }
 
-func (ap AddressPair) GetID() string {
-	return ap.ID
-}
-
 type ListAddressPairs struct {
 	Items []*AddressPair
 }

@@ -42,18 +42,6 @@ type ListLoadBalancers struct {
 	TotalItem int
 }
 
-func (lb LoadBalancer) GetID() string {
-	return lb.UUID
-}
-
-func (lb LoadBalancer) GetName() string {
-	return lb.Name
-}
-
-func (lb LoadBalancer) GetAddress() string {
-	return lb.Address
-}
-
 func (l *ListLoadBalancers) Len() int {
 	return len(l.Items)
 }

@@ -67,10 +67,6 @@ type ListMembers struct {
 	Items []*Member
 }
 
-func (p Pool) GetID() string {
-	return p.UUID
-}
-
 func (l *ListPools) Add(pools ...*Pool) {
 	l.Items = append(l.Items, pools...)
 }
