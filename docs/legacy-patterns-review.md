@@ -287,10 +287,10 @@ Minor issue — small count.
 - [x] Rename hidden `prepare()` to `normalizeForAPI()` with doc comments (v2 + inter packages)
 - [x] Remove `Set*()` methods — replaced callers with direct field access or struct literals (7 removed)
 
-### Phase 2: Export field access (breaking change, needs major version)
-- [ ] Remove `Get*()` getters on entity types — users access fields directly
-- [ ] Remove Common wrapper structs — inline the ID fields into request types
-- [ ] Remove `Get*()` getters on Common types
+### Phase 2: Export field access (breaking change) — DONE
+- [x] Remove `Get*()` getters on entity types — users access fields directly (22 removed)
+- [x] Remove Common wrapper structs — inline the ID fields into request types (17 inlined, 8 files deleted)
+- [x] Remove `Get*()` getters on Common types (Paging getters removed)
 
 ### Phase 3: Modernize request API (breaking change, needs major version)
 - [ ] Replace `With*()` builder pattern with one of:
