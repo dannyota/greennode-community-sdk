@@ -111,7 +111,6 @@ func (l *LoadBalancerCommon) GetLoadBalancerID() string { return l.LoadBalancerI
 **Locations:**
 - `greennode/entity/` — 25+ getters across endpoint, virtualaddress, loadbalancer, listener, pool, server
 - `greennode/services/common/` — 26+ getters on Common wrapper structs
-- `greennode/client/service_client.go` — 3 getters
 - `greennode/sdkerror/` — GetMessage()
 
 **Idiomatic Go**: Just access the exported field directly (`endpoint.ID`, `endpoint.Name`).
@@ -320,7 +319,8 @@ internals (client, request, error) rather than service request DTOs:
 
 | Area | Path | Count |
 |------|------|-------|
-| Client builders | `greennode/client/service_client.go` | 10 |
+| Client builders | `greennode/client/service_client.go` | 4 |
 | Client builders | `greennode/client/request.go` | 9 |
 | Client builders | `greennode/client/http.go` | 5 |
+| Client builders | `greennode/client/auth.go` | 2 |
 | Error builders | `greennode/sdkerror/sdk_error.go` | 6 |

@@ -95,8 +95,11 @@ Most `Get*()` accessors have been simplified:
 
 **Kept with `Get` prefix** (name collisions with exported struct fields used for
 JSON serialization on request types):
-- `GetProjectID()`, `GetZoneID()`, `GetUserID()`
+- `GetProjectID()` on `common.Project` and network/v1 request types
 - `GetMessage()` (collides with `Message` field on error response structs)
+
+`ServiceClient.GetProjectID()` and `GetZoneID()` have since been renamed to
+`ProjectID()` and `ZoneID()`. `GetUserID()` was removed.
 
 ### 1.7 Package names with underscores — **RESOLVED**
 
@@ -334,7 +337,7 @@ each. All four were deleted and replaced with exported concrete structs:
 | Interface | Concrete struct | Files changed |
 |-----------|----------------|---------------|
 | `Request` | `*Request` | 3 (client pkg) |
-| `SdkAuthentication` | `*SdkAuthentication` | 4 (client + entity) |
+| `SdkAuthentication` | `*SdkAuthentication` | 3 (client pkg: `auth.go`, `http.go`, `service_client.go`) |
 | `HTTPClient` | `*HTTPClient` | 4 (client + gateway) |
 | `ServiceClient` | `*ServiceClient` | 43 (client, gateway, all service base.go + url.go) |
 
@@ -361,7 +364,7 @@ Added `vnetworkGatewayV2` struct and `NewVNetworkGatewayV2` constructor.
 | `s` receiver name | ~967 methods | 86 files | **Done** |
 | Acronym casing (`Id`, `Json`, `Http`) | ~284 identifiers | codebase-wide | **Done** |
 | Abbreviation casing (secondary: `Ip`, `Http1`, `Vserver`) | 19 files | loadbalancer, glb, network, entity | **Done** |
-| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (4 kept due to collisions) |
+| Java-style `Get*()` accessors | ~162 methods | codebase-wide | **Partial** (2 kept due to collisions: `GetProjectID`, `GetMessage`) |
 | Underscore package names | 1 package | `sdkerror` | **Done** |
 | Producer-side interfaces | all interfaces | codebase-wide | **Done** |
 | Interface-per-type | all request types | codebase-wide | **Done** |

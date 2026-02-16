@@ -32,12 +32,12 @@ across 22 files).
 
 ### 1.2 Unit tests
 
-Unit tests live alongside the packages they test (141 tests across 14 files).
+Unit tests live alongside the packages they test (139 tests across 14 files).
 
 | Package                    | Test File(s)                                          | Tests |
 | -------------------------- | ----------------------------------------------------- | ----- |
 | `greennode/sdkerror/`      | `sdk_error_test.go`, `classifier_test.go`, `errors_test.go` | 61    |
-| `greennode/client/`        | `auth_test.go`, `request_test.go`, `service_client_test.go` | 28    |
+| `greennode/client/`        | `auth_test.go`, `request_test.go`, `service_client_test.go` | 26    |
 | `greennode/entity/`        | `entity_test.go`                                      | 16    |
 | `greennode/services/volume/v2/`   | `blockvolume_request_test.go`, `blockvolume_response_test.go` | 16    |
 | `greennode/services/common/`      | `common_test.go`                                      | 7     |

@@ -9,16 +9,15 @@ services exposed by VNG Cloud's REST APIs.
 
 - **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
 - **Go version:** 1.24
-- **Source files:** 191 `.go` files, ~19.2 k LOC
+- **Source files:** 192 `.go` files, ~19.1 k LOC
 
 ## 2. Package Map
 
 ```
 greennode-community-sdk/
-├── client/                        SDK entry point — top-level Client, SdkConfigure
 ├── greennode/
+│   ├── greennode.go               SDK entry point — Config, Client, NewClient()
 │   ├── client/                    Low-level HTTP client, ServiceClient, request builder
-│   ├── gateway/                   Versioned gateway multiplexers (6 gateways)
 │   ├── services/                  Per-service business logic (9 services, versioned)
 │   │   ├── common/                Shared helpers (StructToMap, Paging)
 │   │   ├── compute/               Server lifecycle, floating IPs, server groups
@@ -30,7 +29,7 @@ greennode-community-sdk/
 │   │   ├── portal/                Portal info, project listing
 │   │   ├── server/                Internal server system tags
 │   │   └── volume/                Block volumes, snapshots, volume types
-│   ├── entity/                    Domain model structs (~80 types)
+│   ├── entity/                    Domain model structs (~79 types)
 │   └── sdkerror/                  Error codes, categories, handler chain
 └── test/                          Integration tests
 ```
@@ -40,31 +39,26 @@ greennode-community-sdk/
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  User Code                                                  │
-│  client.VServerGateway().V2().ComputeService().CreateServer │
+│  client.Compute.CreateServer(ctx, req)                      │
 └──────────────────────────┬──────────────────────────────────┘
                            │
 ┌──────────────────────────▼──────────────────────────────────┐
-│  1. Client               client/client.go                   │
-│     Orchestration, gateway creation, auth configuration     │
+│  1. Client               greennode/greennode.go              │
+│     Config, flat service fields, auth wiring                │
 └──────────────────────────┬──────────────────────────────────┘
                            │
 ┌──────────────────────────▼──────────────────────────────────┐
-│  2. Gateway              greennode/gateway/                  │
-│     Version multiplexing — V1 / V2 / Internal per service   │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────┐
-│  3. Service              greennode/services/*/v*/            │
+│  2. Service              greennode/services/*/v*/            │
 │     Request building, URL construction, error enrichment    │
 └──────────────────────────┬──────────────────────────────────┘
                            │
 ┌──────────────────────────▼──────────────────────────────────┐
-│  4. HTTP Client          greennode/client/                   │
+│  3. HTTP Client          greennode/client/                   │
 │     Token management, retry, reauth, request execution      │
 └──────────────────────────┬──────────────────────────────────┘
                            │
 ┌──────────────────────────▼──────────────────────────────────┐
-│  5. API                  *.vngcloud.vn REST endpoints        │
+│  4. API                  *.vngcloud.vn REST endpoints        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -86,6 +80,7 @@ Implementation:
 - Token request: `greennode/services/identity/v2/identity.go`
 - URL builder: `greennode/services/identity/v2/url.go`
 - Response conversion: `greennode/services/identity/v2/identity_response.go`
+- Authentication type: `greennode/client/auth.go`
 
 ### Token Refresh
 
@@ -93,7 +88,7 @@ Two refresh strategies run automatically:
 
 | Strategy | Trigger | Mechanism |
 |----------|---------|-----------|
-| **Proactive** | Token expires within 5 minutes | `NeedReauth()` in `greennode/client/service_client.go` checks `time.Until(expiresAt) < 5*time.Minute` before every request |
+| **Proactive** | Token expires within 5 minutes | `NeedReauth()` in `greennode/client/auth.go` checks `time.Until(expiresAt) < 5*time.Minute` before every request |
 | **Reactive** | HTTP 401 response | `handleUnauthorized()` in `greennode/client/http.go` triggers reauth then retries the original request |
 
 ### Concurrency Safety
@@ -115,26 +110,24 @@ reauthmut *reauthlock      — serializes token refresh
 
 ## 5. Request Lifecycle
 
-End-to-end trace of `client.VServerGateway().V2().ComputeService().CreateServer(ctx, req)`:
+End-to-end trace of `client.Compute.CreateServer(ctx, req)`:
 
 ```
 Step  Layer        Code path
 ────  ───────────  ──────────────────────────────────────────────
- 1    Client       client/client.go — VServerGateway() returns gateway
- 2    Gateway      greennode/gateway/gateway.go — V2() returns versioned gateway
- 3    Gateway      greennode/gateway/vserver_gateway.go — ComputeService() returns service
- 4    Service      greennode/services/compute/v2/server.go — CreateServer(ctx, opts)
- 4a     URL        greennode/services/compute/v2/url.go — builds {endpoint}/v2/{projectId}/servers
- 4b     Request    greennode/client/request.go — NewRequest().WithJSONBody(opts).WithOkCodes(202)...
- 4c     Dispatch   service calls s.VServerClient.Post(ctx, url, req)
- 5    HTTP Client  greennode/client/service_client.go — Post() delegates to httpClient.DoRequest(ctx, ...)
- 6    HTTP Client  greennode/client/http.go — DoRequest(ctx, ...):
- 6a     Prepare      prepareRequest(ctx, ...) — set headers, marshal body
- 6b     Auth         needReauth() → reauthenticate(ctx) if token is nil/expiring
- 6c     Execute      executeHTTPMethod(ctx, ...) — req/v3 HTTP call
- 6d     Handle       handleResponse() → handleStatusCode()
- 6e     Retry        401 → handleUnauthorized(ctx, ...) → reauthenticate(ctx) → retry
- 7    Response     JSON unmarshaled into entity struct; error enriched via SdkErrorHandler
+ 1    Client       greennode/greennode.go — client.Compute is *ComputeServiceV2
+ 2    Service      greennode/services/compute/v2/server.go — CreateServer(ctx, opts)
+ 2a     URL        greennode/services/compute/v2/url.go — builds {endpoint}/v2/{projectId}/servers
+ 2b     Request    greennode/client/request.go — NewRequest().WithJSONBody(opts).WithOkCodes(202)...
+ 2c     Dispatch   service calls s.Client.Post(ctx, url, req)
+ 3    HTTP Client  greennode/client/service_client.go — Post() delegates to httpClient.DoRequest(ctx, ...)
+ 4    HTTP Client  greennode/client/http.go — DoRequest(ctx, ...):
+ 4a     Prepare      prepareRequest(ctx, ...) — set headers, marshal body
+ 4b     Auth         needReauth() → reauthenticate(ctx) if token is nil/expiring
+ 4c     Execute      executeHTTPMethod(...) — req/v3 HTTP call
+ 4d     Handle       handleResponse() → handleStatusCode()
+ 4e     Retry        401 → handleUnauthorized(ctx, ...) → reauthenticate(ctx) → retry
+ 5    Response     JSON unmarshaled into entity struct; error enriched via SdkErrorHandler
 ```
 
 ## 6. Error Handling
@@ -195,10 +188,11 @@ Request objects use fluent builders (`NewRequest().WithJSONBody().WithOkCodes()`
 SDK configuration follows the same style (`NewClient().WithAuthOption().Configure()`).
 
 ### Version Multiplexing
-Each gateway creates per-version `ServiceClient` instances with versioned endpoint
-suffixes (`endpoint + "v1"`, `endpoint + "v2"`, `endpoint + "internal"`). User code
-selects a version via `gateway.V2()`, which returns a concrete struct exposing only
-that version's services.
+`NewClient()` creates per-version `ServiceClient` instances with versioned endpoint
+suffixes (`endpoint + "v1"`, `endpoint + "v2"`, `endpoint + "internal"`). Each
+service struct receives the `ServiceClient` for its API version. The `Client`
+struct exposes primary services (latest version) as top-level fields and
+legacy/internal versions as secondary fields.
 
 ### Entity Conversion
 API responses are unmarshaled into `*Response` structs (in service packages), then
@@ -208,7 +202,7 @@ the public domain model.
 
 ### URL Helpers
 Each service version has a `url.go` file with functions that build endpoint paths
-from a `ServiceClient` (e.g., `createServerURL(s.VServerClient)` →
+from a `ServiceClient` (e.g., `createServerURL(s.Client)` →
 `{endpoint}/v2/{projectId}/servers`).
 
 ### Shared Commons
@@ -228,24 +222,26 @@ first match.
 |---------|---------|----------|---------|
 | **Compute** | `services/compute` | v2 | Server lifecycle, floating IPs, server groups |
 | **Volume** | `services/volume` | v1, v2 | Block volumes, snapshots, volume types |
-| **Network** | `services/network` | v1, v2, internal | VPCs, subnets, security groups, endpoints, virtual addresses |
-| **Load Balancer** | `services/loadbalancer` | v2, internal | Load balancers, listeners, pools, policies, certificates |
+| **Network** | `services/network` | v1, v2 | VPCs, subnets, security groups, endpoints, virtual addresses |
+| **Load Balancer** | `services/loadbalancer` | v2, inter | Load balancers, listeners, pools, policies, certificates |
 | **GLB** | `services/glb` | v1 | Global load balancer pools, listeners, health checks |
-| **DNS** | `services/dns` | v1, internal | Hosted zones, DNS records |
+| **DNS** | `services/dns` | v1, internal_system | Hosted zones, DNS records |
 | **Identity** | `services/identity` | v2 | OAuth2 token acquisition |
 | **Portal** | `services/portal` | v1, v2 | Portal info, project listing |
-| **Server** | `services/server` | internal | Internal server system tags |
+| **Server** | `services/server` | v1 | Internal server system tags |
 
-### Gateway Routing
+### Client Service Wiring
 
-| Gateway | Versions | Services |
-|---------|----------|----------|
+`NewClient()` in `greennode/greennode.go` wires each API endpoint to its services:
+
+| Endpoint | Version suffixes | Services |
+|----------|-----------------|----------|
 | **IAM** | v2 | Identity |
 | **VServer** | v1, v2, internal | Compute, Volume, Portal, Network, Server |
 | **VLB** | v2, internal | Load Balancer |
-| **VNetwork** | v1, v2, internal | Network |
+| **VNetwork** | vnetwork/v1, vnetwork/az/v1, internal/v1 | Network (V1, AZ, Internal) |
 | **GLB** | v1 | GLB |
-| **VDns** | v1, internal | DNS |
+| **DNS** | v1, internal/v1 | DNS |
 
 ## 9. Simplification Opportunities
 
@@ -267,7 +263,7 @@ See go-style-audit.md §5.10.
 ### 9.3 `ToRequestBody()` boilerplate — **RESOLVED**
 
 54 identity-return methods deleted; 10 with cleanup logic refactored to
-unexported `prepare()` methods. Structs passed directly to `WithJSONBody()`.
+unexported `normalizeForAPI()` methods. Structs passed directly to `WithJSONBody()`.
 See go-style-audit.md §5.6.
 
 ### 9.4 `ToMap()` boilerplate — **RESOLVED**
