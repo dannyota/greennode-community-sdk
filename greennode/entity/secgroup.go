@@ -1,10 +1,10 @@
 package entity
 
 type Secgroup struct {
-	ID          string
-	Name        string
-	Description string
-	Status      string
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Status      string `json:"status"`
 }
 
 type ListSecgroups struct {

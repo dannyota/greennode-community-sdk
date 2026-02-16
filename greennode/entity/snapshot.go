@@ -1,13 +1,13 @@
 package entity
 
 type Snapshot struct {
-	ID         string
-	CreatedAt  string
-	VolumeID   string
-	Size       int64
-	VolumeSize int64
-	Status     string
-	Name       string
+	ID         string `json:"id"`
+	CreatedAt  string `json:"createdAt"`
+	VolumeID   string `json:"volumeId"`
+	Size       int64  `json:"size"`
+	VolumeSize int64  `json:"volumeSize"`
+	Status     string `json:"status"`
+	Name       string `json:"name"`
 }
 
 type ListSnapshots struct {

@@ -301,10 +301,10 @@ Minor issue — small count.
 - [x] Remove remnant `Get*()` getters on request types (missed in phase 2)
 - [x] Update all internal callers and tests
 
-### Phase 4: Reduce DTO overhead (breaking change, optional)
-- [ ] Evaluate which `ToEntity*()` conversions are 1:1 copies vs genuine mappings
-- [ ] For 1:1 cases, consider using entity types directly as response targets
-- [ ] Keep separate response types only where API shape genuinely differs
+### Phase 4: Reduce DTO overhead — IN PROGRESS
+- [x] Add JSON tags to all entity types (derived from API response field names)
+- [x] Simplify GLB response layer: eliminated ~15 redundant response types, unmarshal directly into entity types
+- [ ] Simplify remaining service response layers (loadbalancer/v2, compute/v2, network, volume, portal) — deferred to future PRs
 
 ---
 

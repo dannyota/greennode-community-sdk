@@ -1,11 +1,11 @@
 package entity
 
 type Tag struct {
-	Key        string
-	Value      string
-	SystemTag  bool
-	ResourceID string
-	TagID      string
+	Key        string `json:"key"`
+	Value      string `json:"value"`
+	SystemTag  bool   `json:"systemTag"`
+	ResourceID string `json:"resourceId"`
+	TagID      string `json:"tagId"`
 }
 
 type ListTags struct {

@@ -1,20 +1,20 @@
 package entity
 
 type Subnet struct {
-	ID                     string
-	NetworkID              string
-	Name                   string
-	Status                 string
-	Cidr                   string
-	RouteTableID           string
-	InterfaceAclPolicyID   string
-	InterfaceAclPolicyName string
-	SecondarySubnets       []SubnetSecondaryRange
-	ZoneID                 string
+	ID                     string                 `json:"uuid"`
+	NetworkID              string                 `json:"networkUuid"`
+	Name                   string                 `json:"name"`
+	Status                 string                 `json:"status"`
+	Cidr                   string                 `json:"cidr"`
+	RouteTableID           string                 `json:"routeTableUuid"`
+	InterfaceAclPolicyID   string                 `json:"interfaceAclPolicyUuid"`
+	InterfaceAclPolicyName string                 `json:"interfaceAclPolicyName"`
+	SecondarySubnets       []SubnetSecondaryRange `json:"secondarySubnets"`
+	ZoneID                 string                 `json:"zoneId"`
 }
 
 type SubnetSecondaryRange struct {
-	ID   string
-	Name string
-	Cidr string
+	ID   string `json:"uuid"`
+	Name string `json:"name"`
+	Cidr string `json:"cidr"`
 }

@@ -3,34 +3,34 @@ package entity
 import "encoding/json"
 
 type Pool struct {
-	UUID              string
-	Name              string
-	Protocol          string
-	Description       string
-	LoadBalanceMethod string
-	Status            string
-	Stickiness        bool
-	TLSEncryption     bool
-	Members           *ListMembers
-	HealthMonitor     *HealthMonitor
+	UUID              string         `json:"uuid"`
+	Name              string         `json:"name"`
+	Protocol          string         `json:"protocol"`
+	Description       string         `json:"description"`
+	LoadBalanceMethod string         `json:"loadBalanceMethod"`
+	Status            string         `json:"displayStatus"`
+	Stickiness        bool           `json:"stickiness"`
+	TLSEncryption     bool           `json:"tlsEncryption"`
+	Members           *ListMembers   `json:"members"`
+	HealthMonitor     *HealthMonitor `json:"healthMonitor"`
 }
 
 type Member struct {
-	UUID           string
-	Address        string
-	ProtocolPort   int
-	Weight         int
-	MonitorPort    int
-	SubnetID       string
-	Name           string
-	PoolID         string
-	TypeCreate     string
-	Backup         bool
-	DisplayStatus  string
-	CreatedAt      string
-	UpdatedAt      string
-	CreatedBy      string
-	ProgressStatus string
+	UUID           string `json:"uuid"`
+	Address        string `json:"address"`
+	ProtocolPort   int    `json:"protocolPort"`
+	Weight         int    `json:"weight"`
+	MonitorPort    int    `json:"monitorPort"`
+	SubnetID       string `json:"subnetId"`
+	Name           string `json:"name"`
+	PoolID         string `json:"poolId"`
+	TypeCreate     string `json:"typeCreate"`
+	Backup         bool   `json:"backup"`
+	DisplayStatus  string `json:"displayStatus"`
+	CreatedAt      string `json:"createdAt"`
+	UpdatedAt      string `json:"updateAt"`
+	CreatedBy      string `json:"createdBy"`
+	ProgressStatus string `json:"progressStatus"`
 }
 
 type HealthMonitor struct {

@@ -1,25 +1,25 @@
 package entity
 
 type ServerGroup struct {
-	UUID        string
-	Name        string
-	Description string
-	PolicyID    string
-	PolicyName  string
-	Servers     []ServerGroupMember
+	UUID        string              `json:"uuid"`
+	Name        string              `json:"name"`
+	Description string              `json:"description"`
+	PolicyID    string              `json:"policyId"`
+	PolicyName  string              `json:"policyName"`
+	Servers     []ServerGroupMember `json:"servers"`
 }
 
 type ServerGroupMember struct {
-	Name string
-	UUID string
+	Name string `json:"name"`
+	UUID string `json:"uuid"`
 }
 
 type ListServerGroups struct {
-	Items     []*ServerGroup
-	Page      int
-	PageSize  int
-	TotalPage int
-	TotalItem int
+	Items     []*ServerGroup `json:"listData"`
+	Page      int            `json:"page"`
+	PageSize  int            `json:"pageSize"`
+	TotalPage int            `json:"totalPage"`
+	TotalItem int            `json:"totalItem"`
 }
 
 func (l *ListServerGroups) Add(item *ServerGroup) {

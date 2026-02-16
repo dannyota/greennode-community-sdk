@@ -1,15 +1,15 @@
 package entity
 
 type SecgroupRule struct {
-	ID             string
-	SecgroupID     string
-	Direction      string
-	EtherType      string
-	Protocol       string
-	Description    string
-	RemoteIPPrefix string
-	PortRangeMax   int
-	PortRangeMin   int
+	ID             string `json:"id"`
+	SecgroupID     string `json:"secgroupId"`
+	Direction      string `json:"direction"`
+	EtherType      string `json:"etherType"`
+	Protocol       string `json:"protocol"`
+	Description    string `json:"description"`
+	RemoteIPPrefix string `json:"remoteIpPrefix"`
+	PortRangeMax   int    `json:"portRangeMax"`
+	PortRangeMin   int    `json:"portRangeMin"`
 }
 
 type ListSecgroupRules struct {

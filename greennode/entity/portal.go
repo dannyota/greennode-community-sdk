@@ -1,16 +1,16 @@
 package entity
 
 type Portal struct {
-	ProjectID string
-	UserID    int
+	ProjectID string `json:"projectId"`
+	UserID    int    `json:"userId"`
 }
 
 type Quota struct {
-	Description string
-	Name        string
-	Type        string
-	Limit       int
-	Used        int
+	Description string `json:"description"`
+	Name        string `json:"quotaName"`
+	Type        string `json:"type"`
+	Limit       int    `json:"limit"`
+	Used        int    `json:"used"`
 }
 
 type ListQuotas struct {

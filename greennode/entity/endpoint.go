@@ -1,12 +1,12 @@
 package entity
 
 type Endpoint struct {
-	IPv4Address string
-	EndpointURL string
-	Status      string
-	VpcID       string
-	ID          string
-	Name        string
+	IPv4Address string `json:"endpointIp"`
+	EndpointURL string `json:"endpointUrl"`
+	Status      string `json:"status"`
+	VpcID       string `json:"vpcId"`
+	ID          string `json:"uuid"`
+	Name        string `json:"endpointName"`
 }
 
 func (e Endpoint) IsUsable() bool {

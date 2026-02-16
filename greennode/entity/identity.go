@@ -5,8 +5,8 @@ import (
 )
 
 type AccessToken struct {
-	Token     string
-	ExpiresAt int64
+	Token     string `json:"access_token"`
+	ExpiresAt int64  `json:"expiresAt"`
 }
 
 func (t AccessToken) ToSdkAuthentication() *client.SdkAuthentication {

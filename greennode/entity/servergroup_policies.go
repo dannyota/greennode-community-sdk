@@ -1,10 +1,10 @@
 package entity
 
 type ServerGroupPolicy struct {
-	Name         string
-	UUID         string
-	Status       string
-	Descriptions map[string]string
+	Name         string            `json:"name"`
+	UUID         string            `json:"uuid"`
+	Status       string            `json:"status"`
+	Descriptions map[string]string `json:"descriptions"`
 }
 
 type ListServerGroupPolicies struct {

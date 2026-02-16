@@ -1,22 +1,22 @@
 package entity
 
 type Volume struct {
-	Name             string
-	ID               string
-	VolumeTypeID     string
-	ClusterID        *string
-	VmID             string
-	Size             uint64
-	IopsID           uint64
-	Status           string
-	CreatedAt        string
-	UpdatedAt        *string
-	PersistentVolume bool
-	AttachedMachine  []string
-	UnderID          string
-	MigrateState     string
-	MultiAttach      bool
-	ZoneID           string
+	Name             string   `json:"name"`
+	ID               string   `json:"uuid"`
+	VolumeTypeID     string   `json:"volumeTypeId"`
+	ClusterID        *string  `json:"clusterId"`
+	VmID             string   `json:"serverId"`
+	Size             uint64   `json:"size"`
+	IopsID           uint64   `json:"iopsId"`
+	Status           string   `json:"status"`
+	CreatedAt        string   `json:"createdAt"`
+	UpdatedAt        *string  `json:"updatedAt"`
+	PersistentVolume bool     `json:"persistentVolume"`
+	AttachedMachine  []string `json:"serverIdList"`
+	UnderID          string   `json:"underId"`
+	MigrateState     string   `json:"migrateState"`
+	MultiAttach      bool     `json:"multiAttach"`
+	ZoneID           string   `json:"zoneId"`
 }
 
 type ListVolumes struct {

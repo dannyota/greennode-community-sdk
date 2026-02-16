@@ -1,10 +1,10 @@
 package entity
 
 type Network struct {
-	Status     string
-	ElasticIps []string
-	Name       string
-	ID         string
-	CreatedAt  string
-	Cidr       string
+	Status     string   `json:"status"`
+	ElasticIps []string `json:"elasticIps"`
+	Name       string   `json:"displayName"`
+	ID         string   `json:"id"`
+	CreatedAt  string   `json:"createdAt"`
+	Cidr       string   `json:"cidr"`
 }

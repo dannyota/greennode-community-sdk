@@ -40,7 +40,7 @@ func (s *GLBServiceV1) ListGlobalPools(ctx context.Context, opts *ListGlobalPool
 
 func (s *GLBServiceV1) CreateGlobalPool(ctx context.Context, opts *CreateGlobalPoolRequest) (*entity.GlobalPool, error) {
 	url := createGlobalPoolURL(s.VLBClient, opts)
-	resp := new(CreateGlobalPoolResponse)
+	resp := new(entity.GlobalPool)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
@@ -56,7 +56,7 @@ func (s *GLBServiceV1) CreateGlobalPool(ctx context.Context, opts *CreateGlobalP
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityPool(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) UpdateGlobalPool(ctx context.Context, opts *UpdateGlobalPoolRequest) (*entity.GlobalPool, error) {
@@ -211,7 +211,7 @@ func (s *GLBServiceV1) ListGlobalListeners(ctx context.Context, opts *ListGlobal
 
 func (s *GLBServiceV1) CreateGlobalListener(ctx context.Context, opts *CreateGlobalListenerRequest) (*entity.GlobalListener, error) {
 	url := createGlobalListenerURL(s.VLBClient, opts)
-	resp := new(CreateGlobalListenerResponse)
+	resp := new(entity.GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
@@ -226,12 +226,12 @@ func (s *GLBServiceV1) CreateGlobalListener(ctx context.Context, opts *CreateGlo
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityGlobalListener(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) UpdateGlobalListener(ctx context.Context, opts *UpdateGlobalListenerRequest) (*entity.GlobalListener, error) {
 	url := updateGlobalListenerURL(s.VLBClient, opts)
-	resp := new(UpdateGlobalListenerResponse)
+	resp := new(entity.GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(202).
@@ -244,15 +244,14 @@ func (s *GLBServiceV1) UpdateGlobalListener(ctx context.Context, opts *UpdateGlo
 			sdkerror.EcGlobalLoadBalancerNotFound).
 			WithParameters(common.StructToMap(opts)).
 			AppendCategories(sdkerror.ErrCatProductVlb)
-
 	}
 
-	return resp.ToEntityGlobalListener(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) GetGlobalListener(ctx context.Context, opts *GetGlobalListenerRequest) (*entity.GlobalListener, error) {
 	url := getGlobalListenerURL(s.VLBClient, opts)
-	resp := new(GetGlobalListenerResponse)
+	resp := new(entity.GlobalListener)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -267,7 +266,7 @@ func (s *GLBServiceV1) GetGlobalListener(ctx context.Context, opts *GetGlobalLis
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityGlobalListener(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) DeleteGlobalListener(ctx context.Context, opts *DeleteGlobalListenerRequest) error {
@@ -288,7 +287,7 @@ func (s *GLBServiceV1) DeleteGlobalListener(ctx context.Context, opts *DeleteGlo
 
 func (s *GLBServiceV1) ListGlobalLoadBalancers(ctx context.Context, opts *ListGlobalLoadBalancersRequest) (*entity.ListGlobalLoadBalancers, error) {
 	url := listGlobalLoadBalancersURL(s.VLBClient, opts)
-	resp := new(ListGlobalLoadBalancersResponse)
+	resp := new(entity.ListGlobalLoadBalancers)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -300,7 +299,7 @@ func (s *GLBServiceV1) ListGlobalLoadBalancers(ctx context.Context, opts *ListGl
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityListGlobalLoadBalancers(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) CreateGlobalLoadBalancer(
@@ -346,7 +345,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
 	opts *GetGlobalLoadBalancerByIDRequest,
 ) (*entity.GlobalLoadBalancer, error) {
 	url := getGlobalLoadBalancerByIDURL(s.VLBClient, opts)
-	resp := new(GetGlobalLoadBalancerByIDResponse)
+	resp := new(entity.GlobalLoadBalancer)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -359,7 +358,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerByID(
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityGlobalLoadBalancer(), nil
+	return resp, nil
 }
 
 func (s *GLBServiceV1) ListGlobalPackages(ctx context.Context, opts *ListGlobalPackagesRequest) (*entity.ListGlobalPackages, error) {
@@ -401,7 +400,7 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerUsageHistories(
 	opts *GetGlobalLoadBalancerUsageHistoriesRequest,
 ) (*entity.ListGlobalLoadBalancerUsageHistories, error) {
 	url := getGlobalLoadBalancerUsageHistoriesURL(s.VLBClient, opts)
-	resp := new(GetGlobalLoadBalancerUsageHistoriesResponse)
+	resp := new(entity.ListGlobalLoadBalancerUsageHistories)
 	errResp := sdkerror.NewErrorResponse(sdkerror.GlobalLoadBalancerErrorType)
 	req := client.NewRequest().
 		WithOkCodes(200).
@@ -414,5 +413,5 @@ func (s *GLBServiceV1) GetGlobalLoadBalancerUsageHistories(
 			AppendCategories(sdkerror.ErrCatProductVlb)
 	}
 
-	return resp.ToEntityGlobalLoadBalancerUsageHistories(), nil
+	return resp, nil
 }

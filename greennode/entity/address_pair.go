@@ -1,12 +1,12 @@
 package entity
 
 type AddressPair struct {
-	ID                 string
-	VirtualIPAddressID string
-	VirtualSubnetID    string
-	NetworkInterfaceIP string
-	NetworkInterfaceID string
-	CIDR               string
+	ID                 string `json:"uuid"`
+	VirtualIPAddressID string `json:"virtualIpAddressId"`
+	VirtualSubnetID    string `json:"virtualSubnetId"`
+	NetworkInterfaceIP string `json:"networkInterfaceIp"`
+	NetworkInterfaceID string `json:"networkInterfaceId"`
+	CIDR               string `json:"cidr"`
 }
 
 type ListAddressPairs struct {

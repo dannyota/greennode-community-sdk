@@ -6,26 +6,26 @@ type ListenerInsertHeader struct {
 }
 
 type Listener struct {
-	UUID                            string
-	Name                            string
-	Description                     string
-	Protocol                        string
-	ProtocolPort                    int
-	ConnectionLimit                 int
-	DefaultPoolID                   string
-	DefaultPoolName                 string
-	TimeoutClient                   int
-	TimeoutMember                   int
-	TimeoutConnection               int
-	AllowedCidrs                    string
-	CertificateAuthorities          []string
-	DisplayStatus                   string
-	CreatedAt                       string
-	UpdatedAt                       string
-	DefaultCertificateAuthority     *string
-	ClientCertificateAuthentication *string
-	ProgressStatus                  string
-	InsertHeaders                   []ListenerInsertHeader
+	UUID                            string                 `json:"uuid"`
+	Name                            string                 `json:"name"`
+	Description                     string                 `json:"description"`
+	Protocol                        string                 `json:"protocol"`
+	ProtocolPort                    int                    `json:"protocolPort"`
+	ConnectionLimit                 int                    `json:"connectionLimit"`
+	DefaultPoolID                   string                 `json:"defaultPoolId"`
+	DefaultPoolName                 string                 `json:"defaultPoolName"`
+	TimeoutClient                   int                    `json:"timeoutClient"`
+	TimeoutMember                   int                    `json:"timeoutMember"`
+	TimeoutConnection               int                    `json:"timeoutConnection"`
+	AllowedCidrs                    string                 `json:"allowedCidrs"`
+	CertificateAuthorities          []string               `json:"certificateAuthorities"`
+	DisplayStatus                   string                 `json:"displayStatus"`
+	CreatedAt                       string                 `json:"createdAt"`
+	UpdatedAt                       string                 `json:"updatedAt"`
+	DefaultCertificateAuthority     *string                `json:"defaultCertificateAuthority"`
+	ClientCertificateAuthentication *string                `json:"clientCertificateAuthentication"`
+	ProgressStatus                  string                 `json:"progressStatus"`
+	InsertHeaders                   []ListenerInsertHeader `json:"insertHeaders"`
 }
 
 type ListListeners struct {
