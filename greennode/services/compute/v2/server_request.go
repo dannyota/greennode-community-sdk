@@ -84,96 +84,6 @@ func NewServerTags(kvPairs ...string) []ServerTag {
 	return tags
 }
 
-func (r *CreateServerRequest) WithZone(zoneID string) *CreateServerRequest {
-	r.Zone = zoneID
-	return r
-}
-
-func (r *CreateServerRequest) WithServerNetworkInterface(projectID, networkID, subnetID string, attachFloating bool) *CreateServerRequest {
-	r.Networks = append(r.Networks, ServerNetworkInterface{
-		ProjectID:      projectID,
-		NetworkID:      networkID,
-		SubnetID:       subnetID,
-		AttachFloating: attachFloating,
-	})
-
-	return r.WithNetwork(r.Networks[0].NetworkID, r.Networks[0].SubnetID)
-}
-
-func (r *CreateServerRequest) WithRootDiskEncryptionType(dataDisk DataDiskEncryptionType) *CreateServerRequest {
-	r.EncryptionVolume = true
-	r.RootDiskEncryptionType = dataDisk
-	return r
-}
-
-func (r *CreateServerRequest) WithEncryptionVolume(enabled bool) *CreateServerRequest {
-	r.EncryptionVolume = enabled
-	return r
-}
-
-func (r *CreateServerRequest) WithUserData(userData string, base64Encode bool) *CreateServerRequest {
-	r.UserData = userData
-	r.UserDataBase64Encoded = base64Encode
-	return r
-}
-
-func (r *CreateServerRequest) WithAutoRenew(val bool) *CreateServerRequest {
-	r.AutoRenew = val
-	return r
-}
-
-func (r *CreateServerRequest) WithTags(tags ...string) *CreateServerRequest {
-	if r.Tags == nil {
-		r.Tags = make([]ServerTag, 0)
-	}
-
-	if len(tags)%2 != 0 {
-		tags = append(tags, "none")
-	}
-
-	for i := 0; i < len(tags); i += 2 {
-		r.Tags = append(r.Tags, ServerTag{Key: tags[i], Value: tags[i+1]})
-	}
-	return r
-}
-
-func (r *CreateServerRequest) WithAttachFloating(attachFloating bool) *CreateServerRequest {
-	r.AttachFloating = attachFloating
-	return r
-}
-
-func (r *CreateServerRequest) WithSecgroups(secgroups ...string) *CreateServerRequest {
-	r.SecurityGroup = append(r.SecurityGroup, secgroups...)
-	return r
-}
-
-func (r *CreateServerRequest) WithServerGroupID(serverGroupID string) *CreateServerRequest {
-	r.ServerGroupID = serverGroupID
-	return r
-}
-
-func (r *CreateServerRequest) WithPoc(isPoc bool) *CreateServerRequest {
-	r.IsPoc = isPoc
-	return r
-}
-
-func (r *CreateServerRequest) WithType(typeVal string) *CreateServerRequest {
-	r.Type = typeVal
-	return r
-}
-
-func (r *CreateServerRequest) WithProduct(product string) *CreateServerRequest {
-	r.Product = product
-	return r
-}
-
-func (r *CreateServerRequest) WithNetwork(networkID, subnetID string) *CreateServerRequest {
-	r.NetworkID = networkID
-	r.SubnetID = subnetID
-
-	return r
-}
-
 type GetServerByIDRequest struct {
 	ServerID string
 }
@@ -183,18 +93,9 @@ type DeleteServerByIDRequest struct {
 	ServerID        string
 }
 
-func (r *DeleteServerByIDRequest) WithDeleteAllVolume(ok bool) *DeleteServerByIDRequest {
-	r.DeleteAllVolume = ok
-	return r
-}
-
 type UpdateServerSecgroupsByServerIDRequest struct {
 	Secgroups []string `json:"securityGroup"`
 	ServerID  string
-}
-
-func (r *UpdateServerSecgroupsByServerIDRequest) GetListSecgroupsIDs() []string {
-	return r.Secgroups
 }
 
 type AttachFloatingIpRequest struct {
@@ -220,11 +121,6 @@ type ListServerGroupsRequest struct {
 	Name string
 	Page int
 	Size int
-}
-
-func (r *ListServerGroupsRequest) WithName(name string) *ListServerGroupsRequest {
-	r.Name = name
-	return r
 }
 
 func (r *ListServerGroupsRequest) ToListQuery() (string, error) {

@@ -118,7 +118,7 @@ func (s *ComputeServiceV2) UpdateServerSecgroupsByServerID(ctx context.Context, 
 			sdkerror.EcVServerSecgroupNotFound).
 			WithKVparameters("projectId", s.getProjectID(),
 				"serverId", opts.ServerID,
-				"secgroupIds", opts.GetListSecgroupsIDs())
+				"secgroupIds", opts.Secgroups)
 	}
 
 	return resp.ToEntityServer(), nil

@@ -19,8 +19,9 @@ func TestCreateServerFailed(t *testing.T) {
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
 		30,
-	).WithNetwork("net-4f35f173-e0fe-4202-9c2b-5121b558bcd2",
-		"sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63")
+	)
+	opt.NetworkID = "net-4f35f173-e0fe-4202-9c2b-5121b558bcd2"
+	opt.SubnetID = "sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63"
 	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr == nil {
 		t.Fatalf("Expect error but got nil")
@@ -42,9 +43,10 @@ func TestCreateServerSuccess(t *testing.T) {
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
 		30,
-	).WithTags("test-key", "test-value", "owner", "sdk-test").
-		WithNetwork("net-4f35f173-e0fe-4202-9c2b-5121b558bcd3",
-			"sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63")
+	)
+	opt.Tags = computev2.NewServerTags("test-key", "test-value", "owner", "sdk-test")
+	opt.NetworkID = "net-4f35f173-e0fe-4202-9c2b-5121b558bcd3"
+	opt.SubnetID = "sub-1f98ff1e-2e36-4a40-a0f4-4eadfeb1ea63"
 	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
 		t.Fatalf("Expect nil but got %v", sdkerr)
@@ -188,13 +190,14 @@ func TestCreateServerWithAutoRenew(t *testing.T) {
 		"img-108b3a77-ab58-4000-9b3e-190d0b4b07fc",
 		"flav-3929c073-9da9-486f-a96f-9282dbb8d83f",
 		"vtype-61c3fc5b-f4e9-45b4-8957-8aa7b6029018",
-		30).
-		WithNetwork("net-dae83c7a-f837-4227-bcfa-ec0755549724",
-			"sub-f7770744-6aa4-4292-9ff9-b43b44716ede").
-		WithTags("test-key", "test-value", "owner", "sdk-test").
-		WithAutoRenew(false).
-		WithType("VKS").WithProduct("VKS").
-		WithPoc(false)
+		30)
+	opt.NetworkID = "net-dae83c7a-f837-4227-bcfa-ec0755549724"
+	opt.SubnetID = "sub-f7770744-6aa4-4292-9ff9-b43b44716ede"
+	opt.Tags = computev2.NewServerTags("test-key", "test-value", "owner", "sdk-test")
+	opt.AutoRenew = false
+	opt.Type = "VKS"
+	opt.Product = "VKS"
+	opt.IsPoc = false
 
 	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
@@ -305,17 +308,13 @@ func TestCreateDnsServer(t *testing.T) {
 		"flav-8066e9ff-5d80-4e8f-aeae-9e8a934bfc44",
 		"vtype-7a7a8610-34f5-11ee-be56-0242ac120002",
 		30,
-	).WithNetwork("", "").WithServerNetworkInterface(
-		"pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491",
-		"net-6ad5cc2d-5dfe-4632-a578-6446e6503dd0",
-		"sub-33ec4719-915f-4818-85b0-f17bdf7f899b",
-		true,
-	).WithServerNetworkInterface(
-		"pro-e5af9dda-cccb-4f49-bb15-de890cb015c7",
-		"net-0dc4cf1e-d961-4483-b848-62ed86fa69f1",
-		"sub-1a7e3339-5a73-4cd4-a998-77df31e39303",
-		false,
 	)
+	opt.Networks = []computev2.ServerNetworkInterface{
+		{ProjectID: "pro-5ce9da27-8ac9-40db-8743-d80f6cbf1491", NetworkID: "net-6ad5cc2d-5dfe-4632-a578-6446e6503dd0", SubnetID: "sub-33ec4719-915f-4818-85b0-f17bdf7f899b", AttachFloating: true},
+		{ProjectID: "pro-e5af9dda-cccb-4f49-bb15-de890cb015c7", NetworkID: "net-0dc4cf1e-d961-4483-b848-62ed86fa69f1", SubnetID: "sub-1a7e3339-5a73-4cd4-a998-77df31e39303", AttachFloating: false},
+	}
+	opt.NetworkID = opt.Networks[0].NetworkID
+	opt.SubnetID = opt.Networks[0].SubnetID
 
 	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 
@@ -335,13 +334,14 @@ func TestCreateServerVks(t *testing.T) {
 		"img-e9e4240f-6534-47c3-b922-9489fdd30aa3",
 		"flav-8066e9ff-5d80-4e8f-aeae-9e8a934bfc44",
 		"vtype-7a7a8610-34f5-11ee-be56-0242ac120002",
-		140).
-		WithAttachFloating(true).
-		WithNetwork("net-7c072f8cdb", "sub-07d3bf64684").
-		WithPoc(true).
-		WithAutoRenew(false).
-		WithType("VKS").
-		WithProduct("VKS")
+		140)
+	opt.AttachFloating = true
+	opt.NetworkID = "net-7c072f8cdb"
+	opt.SubnetID = "sub-07d3bf64684"
+	opt.IsPoc = true
+	opt.AutoRenew = false
+	opt.Type = "VKS"
+	opt.Product = "VKS"
 
 	server, sdkerr := vngcloud.Compute.CreateServer(context.Background(), opt)
 	if sdkerr != nil {
