@@ -8,21 +8,23 @@ import (
 )
 
 func NewGetVolumeTypeByIDRequest(volumeTypeID string) *GetVolumeTypeByIDRequest {
-	opt := new(GetVolumeTypeByIDRequest)
-	opt.VolumeTypeID = volumeTypeID
-	return opt
+	return &GetVolumeTypeByIDRequest{
+		VolumeTypeCommon: common.VolumeTypeCommon{
+			VolumeTypeID: volumeTypeID,
+		},
+	}
 }
 
 func NewListVolumeTypeRequest(volumeTypeZoneID string) *GetListVolumeTypeRequest {
-	opt := new(GetListVolumeTypeRequest)
-	opt.VolumeTypeZoneID = volumeTypeZoneID
-	return opt
+	return &GetListVolumeTypeRequest{
+		VolumeTypeZoneID: volumeTypeZoneID,
+	}
 }
 
 func NewGetVolumeTypeZonesRequest(zoneID string) *GetVolumeTypeZonesRequest {
-	opt := new(GetVolumeTypeZonesRequest)
-	opt.ZoneID = zoneID
-	return opt
+	return &GetVolumeTypeZonesRequest{
+		ZoneID: zoneID,
+	}
 }
 
 type GetVolumeTypeByIDRequest struct {

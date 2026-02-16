@@ -10,54 +10,63 @@ import (
 )
 
 func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) *CreateBlockVolumeRequest {
-	opt := new(CreateBlockVolumeRequest)
-	opt.VolumeTypeID = volumeType
-	opt.CreatedFrom = CreateFromNew
-	opt.Name = volumeName
-	opt.Size = size
-
-	return opt
+	return &CreateBlockVolumeRequest{
+		VolumeTypeID: volumeType,
+		CreatedFrom:  CreateFromNew,
+		Name:         volumeName,
+		Size:         size,
+	}
 }
 
 func NewDeleteBlockVolumeByIDRequest(volumeID string) *DeleteBlockVolumeByIDRequest {
-	opt := new(DeleteBlockVolumeByIDRequest)
-	opt.BlockVolumeID = volumeID
-	return opt
+	return &DeleteBlockVolumeByIDRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+	}
 }
 
 func NewListBlockVolumesRequest(page, size int) *ListBlockVolumesRequest {
-	opt := new(ListBlockVolumesRequest)
-	opt.Page = page
-	opt.Size = size
-	return opt
+	return &ListBlockVolumesRequest{
+		Page: page,
+		Size: size,
+	}
 }
 
 func NewGetBlockVolumeByIDRequest(volumeID string) *GetBlockVolumeByIDRequest {
-	opt := new(GetBlockVolumeByIDRequest)
-	opt.BlockVolumeID = volumeID
-	return opt
+	return &GetBlockVolumeByIDRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+	}
 }
 
 func NewResizeBlockVolumeByIDRequest(volumeID, volumeType string, size int) *ResizeBlockVolumeByIDRequest {
-	opt := new(ResizeBlockVolumeByIDRequest)
-	opt.BlockVolumeID = volumeID
-	opt.NewSize = size
-	opt.VolumeTypeID = volumeType
-	return opt
+	return &ResizeBlockVolumeByIDRequest{
+		NewSize:      size,
+		VolumeTypeID: volumeType,
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+	}
 }
 
 func NewGetUnderVolumeIDRequest(volumeID string) *GetUnderBlockVolumeIDRequest {
-	opt := new(GetUnderBlockVolumeIDRequest)
-	opt.BlockVolumeID = volumeID
-	return opt
+	return &GetUnderBlockVolumeIDRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+	}
 }
 
 func NewMigrateBlockVolumeByIDRequest(volumeID, volumeType string) *MigrateBlockVolumeByIDRequest {
-	opt := new(MigrateBlockVolumeByIDRequest)
-	opt.BlockVolumeID = volumeID
-	opt.VolumeTypeID = volumeType
-	opt.Action = InitMigrateAction
-	return opt
+	return &MigrateBlockVolumeByIDRequest{
+		Action:       InitMigrateAction,
+		VolumeTypeID: volumeType,
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+	}
 }
 
 const (

@@ -47,21 +47,26 @@ type ListAddressPairsByVirtualAddressIDRequest struct {
 
 
 func NewCreateVirtualAddressCrossProjectRequest(name, projectID, subnetID string) *CreateVirtualAddressCrossProjectRequest {
-	opts := new(CreateVirtualAddressCrossProjectRequest)
-	opts.Name = name
+	opts := &CreateVirtualAddressCrossProjectRequest{
+		Name: name,
+	}
 	opts.CrossProjectRequest.ProjectID = projectID
 	opts.CrossProjectRequest.SubnetID = subnetID
 	return opts
 }
 
 func NewDeleteVirtualAddressByIDRequest(virtualAddressID string) *DeleteVirtualAddressByIDRequest {
-	opts := new(DeleteVirtualAddressByIDRequest)
-	opts.VirtualAddressID = virtualAddressID
-	return opts
+	return &DeleteVirtualAddressByIDRequest{
+		VirtualAddressCommon: common.VirtualAddressCommon{
+			VirtualAddressID: virtualAddressID,
+		},
+	}
 }
 
 func NewGetVirtualAddressByIDRequest(virtualAddressID string) *GetVirtualAddressByIDRequest {
-	opts := new(GetVirtualAddressByIDRequest)
-	opts.VirtualAddressID = virtualAddressID
-	return opts
+	return &GetVirtualAddressByIDRequest{
+		VirtualAddressCommon: common.VirtualAddressCommon{
+			VirtualAddressID: virtualAddressID,
+		},
+	}
 }

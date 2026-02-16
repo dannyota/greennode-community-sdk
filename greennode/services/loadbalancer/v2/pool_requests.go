@@ -38,72 +38,86 @@ const (
 )
 
 func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest {
-	opts := new(CreatePoolRequest)
-	opts.PoolName = name
-	opts.Algorithm = PoolAlgorithmRoundRobin
-	opts.PoolProtocol = protocol
-	opts.Members = make([]*Member, 0)
-
-	return opts
+	return &CreatePoolRequest{
+		PoolName:     name,
+		Algorithm:    PoolAlgorithmRoundRobin,
+		PoolProtocol: protocol,
+		Members:      make([]*Member, 0),
+	}
 }
 
 func NewUpdatePoolRequest(lbID, poolID string) *UpdatePoolRequest {
-	opts := new(UpdatePoolRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-
-	return opts
+	return &UpdatePoolRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+	}
 }
 
 func NewGetPoolHealthMonitorByIDRequest(lbID, poolID string) *GetPoolHealthMonitorByIDRequest {
-	opts := new(GetPoolHealthMonitorByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-
-	return opts
+	return &GetPoolHealthMonitorByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+	}
 }
 
 func NewListPoolsByLoadBalancerIDRequest(lbID string) *ListPoolsByLoadBalancerIDRequest {
-	opts := new(ListPoolsByLoadBalancerIDRequest)
-	opts.LoadBalancerID = lbID
-
-	return opts
+	return &ListPoolsByLoadBalancerIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+	}
 }
 
 func NewUpdatePoolMembersRequest(lbID, poolID string) *UpdatePoolMembersRequest {
-	opts := new(UpdatePoolMembersRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-	opts.Members = make([]*Member, 0)
-
-	return opts
+	return &UpdatePoolMembersRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+		Members: make([]*Member, 0),
+	}
 }
 
 func NewListPoolMembersRequest(lbID, poolID string) *ListPoolMembersRequest {
-	opts := new(ListPoolMembersRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-
-	return opts
+	return &ListPoolMembersRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+	}
 }
 
 func NewDeletePoolByIDRequest(lbID, poolID string) *DeletePoolByIDRequest {
-	opts := new(DeletePoolByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-
-	return opts
+	return &DeletePoolByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+	}
 }
 
 func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
-	opts := new(HealthMonitor)
-	opts.HealthCheckProtocol = checkProtocol
-	opts.HealthyThreshold = 3
-	opts.UnhealthyThreshold = 3
-	opts.Interval = 30
-	opts.Timeout = 5
-
-	return opts
+	return &HealthMonitor{
+		HealthCheckProtocol: checkProtocol,
+		HealthyThreshold:    3,
+		UnhealthyThreshold:  3,
+		Interval:            30,
+		Timeout:             5,
+	}
 }
 
 func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
@@ -118,11 +132,14 @@ func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
 }
 
 func NewGetPoolByIDRequest(lbID, poolID string) *GetPoolByIDRequest {
-	opts := new(GetPoolByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.PoolID = poolID
-
-	return opts
+	return &GetPoolByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PoolCommon: common.PoolCommon{
+			PoolID: poolID,
+		},
+	}
 }
 
 type (
@@ -208,11 +225,16 @@ type UpdatePoolMembersRequest struct {
 	common.PoolCommon
 }
 
-func (r *CreatePoolRequest) prepare() {
-	r.HealthMonitor.prepare()
+// normalizeForAPI clears health monitor fields that are irrelevant for the
+// configured protocol before the API call. This mutates the receiver.
+func (r *CreatePoolRequest) normalizeForAPI() {
+	r.HealthMonitor.normalizeForAPI()
 }
 
-func (h *HealthMonitor) prepare() {
+// normalizeForAPI clears fields that don't apply to the current health check
+// protocol (e.g. TCP doesn't use HTTP path/version) and sets a default domain
+// name for HTTP/1.1 when none is provided.
+func (h *HealthMonitor) normalizeForAPI() {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil
@@ -263,8 +285,8 @@ func (r *CreatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *CreatePoolRe
 	return r
 }
 
-func (r *UpdatePoolRequest) prepare() {
-	r.HealthMonitor.prepare()
+func (r *UpdatePoolRequest) normalizeForAPI() {
+	r.HealthMonitor.normalizeForAPI()
 }
 
 func (r *UpdatePoolRequest) WithAlgorithm(algorithm PoolAlgorithm) *UpdatePoolRequest {

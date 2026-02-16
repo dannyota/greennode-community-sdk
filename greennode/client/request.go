@@ -82,13 +82,6 @@ func (r *Request) JSONResponse() any {
 	return r.jsonResponse
 }
 
-func (r *Request) SetJSONResponse(jsonResponse any) {
-	r.jsonResponse = jsonResponse
-}
-
-func (r *Request) SetJSONError(jsonError any) {
-	r.jsonError = jsonError
-}
 
 func (r *Request) ContainsOkCode(code ...int) bool {
 	for _, c := range code {

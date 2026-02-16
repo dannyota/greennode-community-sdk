@@ -241,64 +241,88 @@ type CreateServerGroupRequest struct {
 	PolicyID    string `json:"policyId,omitempty"`
 }
 func NewCreateServerRequest(name, imageID, flavorID, rootDiskType string, rootDiskSize int) *CreateServerRequest {
-	opt := new(CreateServerRequest)
-	opt.Name = name
-	opt.ImageID = imageID
-	opt.FlavorID = flavorID
-	opt.RootDiskTypeID = rootDiskType
-	opt.RootDiskSize = rootDiskSize
-	return opt
+	return &CreateServerRequest{
+		Name:           name,
+		ImageID:        imageID,
+		FlavorID:       flavorID,
+		RootDiskTypeID: rootDiskType,
+		RootDiskSize:   rootDiskSize,
+	}
 }
 
 func NewGetServerByIDRequest(serverID string) *GetServerByIDRequest {
-	opt := new(GetServerByIDRequest)
-	opt.ServerID = serverID
-	return opt
+	return &GetServerByIDRequest{
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewDeleteServerByIDRequest(serverID string) *DeleteServerByIDRequest {
-	opt := new(DeleteServerByIDRequest)
-	opt.ServerID = serverID
-	opt.DeleteAllVolume = false
-	return opt
+	return &DeleteServerByIDRequest{
+		DeleteAllVolume: false,
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewUpdateServerSecgroupsRequest(serverID string, secgroups ...string) *UpdateServerSecgroupsByServerIDRequest {
-	opt := new(UpdateServerSecgroupsByServerIDRequest)
-	opt.ServerID = serverID
-	opt.Secgroups = secgroups
-	return opt
+	return &UpdateServerSecgroupsByServerIDRequest{
+		Secgroups: secgroups,
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewAttachBlockVolumeRequest(serverID, volumeID string) *AttachBlockVolumeRequest {
-	opt := new(AttachBlockVolumeRequest)
-	opt.ServerID = serverID
-	opt.BlockVolumeID = volumeID
-	return opt
+	return &AttachBlockVolumeRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewDetachBlockVolumeRequest(serverID, volumeID string) *DetachBlockVolumeRequest {
-	opt := new(DetachBlockVolumeRequest)
-	opt.ServerID = serverID
-	opt.BlockVolumeID = volumeID
-	return opt
+	return &DetachBlockVolumeRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: volumeID,
+		},
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewAttachFloatingIpRequest(serverID, niid string) *AttachFloatingIpRequest {
-	opt := new(AttachFloatingIpRequest)
-	opt.ServerID = serverID
-	opt.InternalNetworkInterfaceID = niid
-	opt.NetworkInterfaceID = niid
-	return opt
+	return &AttachFloatingIpRequest{
+		NetworkInterfaceID: niid,
+		InternalNetworkInterfaceCommon: common.InternalNetworkInterfaceCommon{
+			InternalNetworkInterfaceID: niid,
+		},
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+	}
 }
 
 func NewDetachFloatingIpRequest(serverID, wanID, niid string) *DetachFloatingIpRequest {
-	opt := new(DetachFloatingIpRequest)
-	opt.ServerID = serverID
-	opt.InternalNetworkInterfaceID = niid
-	opt.NetworkInterfaceID = niid
-	opt.WanID = wanID
-	return opt
+	return &DetachFloatingIpRequest{
+		NetworkInterfaceID: niid,
+		ServerCommon: common.ServerCommon{
+			ServerID: serverID,
+		},
+		WanCommon: common.WanCommon{
+			WanID: wanID,
+		},
+		InternalNetworkInterfaceCommon: common.InternalNetworkInterfaceCommon{
+			InternalNetworkInterfaceID: niid,
+		},
+	}
 }
 
 func NewListServerGroupPoliciesRequest() *ListServerGroupPoliciesRequest {
@@ -306,25 +330,25 @@ func NewListServerGroupPoliciesRequest() *ListServerGroupPoliciesRequest {
 }
 
 func NewDeleteServerGroupByIDRequest(serverGroupID string) *DeleteServerGroupByIDRequest {
-	opt := new(DeleteServerGroupByIDRequest)
-	opt.ServerGroupID = serverGroupID
-	return opt
+	return &DeleteServerGroupByIDRequest{
+		ServerGroupCommon: common.ServerGroupCommon{
+			ServerGroupID: serverGroupID,
+		},
+	}
 }
 
 func NewListServerGroupsRequest(page, size int) *ListServerGroupsRequest {
-	opt := new(ListServerGroupsRequest)
-	opt.Page = page
-	opt.Size = size
-	opt.Name = ""
-
-	return opt
+	return &ListServerGroupsRequest{
+		Page: page,
+		Size: size,
+		Name: "",
+	}
 }
 
 func NewCreateServerGroupRequest(name, description, policyID string) *CreateServerGroupRequest {
-	opt := new(CreateServerGroupRequest)
-	opt.Name = name
-	opt.Description = description
-	opt.PolicyID = policyID
-
-	return opt
+	return &CreateServerGroupRequest{
+		Name:        name,
+		Description: description,
+		PolicyID:    policyID,
+	}
 }

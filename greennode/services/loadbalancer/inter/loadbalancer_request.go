@@ -34,13 +34,15 @@ type CreateLoadBalancerRequest struct {
 	common.PortalUser
 }
 
-func (r *CreateLoadBalancerRequest) prepare() {
+// normalizeForAPI delegates to Pool and Listener normalization, clearing
+// protocol-irrelevant fields before the API call. This mutates the receiver.
+func (r *CreateLoadBalancerRequest) normalizeForAPI() {
 	if r.Pool != nil {
-		r.Pool.prepare()
+		r.Pool.normalizeForAPI()
 	}
 
 	if r.Listener != nil {
-		r.Listener.prepare()
+		r.Listener.normalizeForAPI()
 	}
 }
 
@@ -84,13 +86,13 @@ func (r *CreateLoadBalancerRequest) WithZoneID(zoneID common.Zone) *CreateLoadBa
 	return r
 }
 func NewCreateLoadBalancerRequest(userID, name, packageID, beSubnetID, subnetID string) *CreateLoadBalancerRequest {
-	opt := new(CreateLoadBalancerRequest)
-	opt.SetPortalUserID(userID)
-	opt.Name = name
-	opt.PackageID = packageID
-	opt.Scheme = InterVpcLoadBalancerScheme
-	opt.BackEndSubnetID = beSubnetID
-	opt.SubnetID = subnetID
-	opt.Type = CreateOptsTypeOptLayer4
-	return opt
+	return &CreateLoadBalancerRequest{
+		Name:            name,
+		PackageID:       packageID,
+		Scheme:          InterVpcLoadBalancerScheme,
+		BackEndSubnetID: beSubnetID,
+		SubnetID:        subnetID,
+		Type:            CreateOptsTypeOptLayer4,
+		PortalUser:      common.PortalUser{ID: userID},
+	}
 }

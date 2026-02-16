@@ -9,28 +9,33 @@ import (
 )
 
 func NewListSnapshotsByBlockVolumeIDRequest(page, size int, blockVolumeID string) *ListSnapshotsByBlockVolumeIDRequest {
-	opt := new(ListSnapshotsByBlockVolumeIDRequest)
-	opt.BlockVolumeID = blockVolumeID
-	opt.Page = page
-	opt.Size = size
-
-	return opt
+	return &ListSnapshotsByBlockVolumeIDRequest{
+		Page: page,
+		Size: size,
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: blockVolumeID,
+		},
+	}
 }
 
 func NewCreateSnapshotByBlockVolumeIDRequest(name, blockVolumeID string) *CreateSnapshotByBlockVolumeIDRequest {
-	opt := new(CreateSnapshotByBlockVolumeIDRequest)
-	opt.Name = name
-	opt.BlockVolumeID = blockVolumeID
-
-	return opt
+	return &CreateSnapshotByBlockVolumeIDRequest{
+		Name: name,
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: blockVolumeID,
+		},
+	}
 }
 
 func NewDeleteSnapshotByIDRequest(snapshotID string) *DeleteSnapshotByIDRequest {
-	opt := new(DeleteSnapshotByIDRequest)
-	opt.BlockVolumeID = "undefined"
-	opt.SnapshotID = snapshotID
-
-	return opt
+	return &DeleteSnapshotByIDRequest{
+		BlockVolumeCommon: common.BlockVolumeCommon{
+			BlockVolumeID: "undefined",
+		},
+		SnapshotCommon: common.SnapshotCommon{
+			SnapshotID: snapshotID,
+		},
+	}
 }
 
 type ListSnapshotsByBlockVolumeIDRequest struct {

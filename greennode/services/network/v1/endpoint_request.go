@@ -330,13 +330,15 @@ func (r *UpdateTagValueOfEndpointRequest) GetProjectID() string {
 	return r.ProjectID
 }
 func NewGetEndpointByIDRequest(endpointID string) *GetEndpointByIDRequest {
-	opt := new(GetEndpointByIDRequest)
-	opt.EndpointID = endpointID
-	return opt
+	return &GetEndpointByIDRequest{
+		EndpointCommon: common.EndpointCommon{
+			EndpointID: endpointID,
+		},
+	}
 }
 
 func NewCreateEndpointRequest(name, serviceID, vpcID, subnetID string) *CreateEndpointRequest {
-	opts := new(CreateEndpointRequest)
+	opts := &CreateEndpointRequest{}
 	opts.ResourceInfo.EndpointName = name
 	opts.ResourceInfo.ServiceUuid = serviceID
 	opts.ResourceInfo.VpcUuid = vpcID
@@ -347,13 +349,14 @@ func NewCreateEndpointRequest(name, serviceID, vpcID, subnetID string) *CreateEn
 }
 
 func NewDeleteEndpointByIDRequest(endpointID, vpcID, endpointServiceID string) *DeleteEndpointByIDRequest {
-	opt := new(DeleteEndpointByIDRequest)
-	opt.EndpointID = endpointID
-	opt.EndpointUuid = endpointID
-	opt.VpcUuid = vpcID
-	opt.EndpointServiceUuid = endpointServiceID
-
-	return opt
+	return &DeleteEndpointByIDRequest{
+		EndpointUuid:        endpointID,
+		VpcUuid:             vpcID,
+		EndpointServiceUuid: endpointServiceID,
+		EndpointCommon: common.EndpointCommon{
+			EndpointID: endpointID,
+		},
+	}
 }
 
 func NewListEndpointsRequest(page, size int) *ListEndpointsRequest {
@@ -364,40 +367,41 @@ func NewListEndpointsRequest(page, size int) *ListEndpointsRequest {
 }
 
 func NewListTagsByEndpointIDRequest(userID, projectID, endpointID string) *ListTagsByEndpointIDRequest {
-	opt := new(ListTagsByEndpointIDRequest)
-	opt.ID = endpointID
-	opt.EndpointID = endpointID
-	opt.ProjectID = projectID
-	opt.SetPortalUserID(userID)
-	return opt
+	return &ListTagsByEndpointIDRequest{
+		ID:        endpointID,
+		ProjectID: projectID,
+		EndpointCommon: common.EndpointCommon{
+			EndpointID: endpointID,
+		},
+		PortalUser: common.PortalUser{ID: userID},
+	}
 }
 
 func NewCreateTagsWithEndpointIDRequest(userID, projectID, endpointID string) *CreateTagsWithEndpointIDRequest {
-	opt := new(CreateTagsWithEndpointIDRequest)
-	opt.ResourceUuid = endpointID
-	opt.EndpointID = endpointID
-	opt.SystemTag = true
-	opt.ProjectID = projectID
-	opt.SetPortalUserID(userID)
-
-	return opt
+	return &CreateTagsWithEndpointIDRequest{
+		ResourceUuid: endpointID,
+		SystemTag:    true,
+		ProjectID:    projectID,
+		EndpointCommon: common.EndpointCommon{
+			EndpointID: endpointID,
+		},
+		PortalUser: common.PortalUser{ID: userID},
+	}
 }
 
 func NewDeleteTagOfEndpointRequest(userID, projectID, tagID string) *DeleteTagOfEndpointRequest {
-	opt := new(DeleteTagOfEndpointRequest)
-	opt.TagID = tagID
-	opt.ProjectID = projectID
-	opt.SetPortalUserID(userID)
-
-	return opt
+	return &DeleteTagOfEndpointRequest{
+		TagID:      tagID,
+		ProjectID:  projectID,
+		PortalUser: common.PortalUser{ID: userID},
+	}
 }
 
 func NewUpdateTagValueOfEndpointRequest(userID, projectID, tagID, value string) *UpdateTagValueOfEndpointRequest {
-	opt := new(UpdateTagValueOfEndpointRequest)
-	opt.TagID = tagID
-	opt.TagValue = value
-	opt.ProjectID = projectID
-	opt.SetPortalUserID(userID)
-
-	return opt
+	return &UpdateTagValueOfEndpointRequest{
+		TagID:      tagID,
+		TagValue:   value,
+		ProjectID:  projectID,
+		PortalUser: common.PortalUser{ID: userID},
+	}
 }

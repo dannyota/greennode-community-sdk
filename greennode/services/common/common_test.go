@@ -128,7 +128,7 @@ func TestProject(t *testing.T) {
 		t.Fatal("zero-value project should return empty string")
 	}
 
-	p.SetProjectID("proj-123")
+	p.ID = "proj-123"
 	if got := p.GetProjectID(); got != "proj-123" {
 		t.Fatalf("got %q, want %q", got, "proj-123")
 	}
@@ -144,10 +144,8 @@ func TestPaging(t *testing.T) {
 		t.Fatal("zero-value paging should return 0")
 	}
 
-	result := p.SetPage(3).SetSize(25)
-	if result != &p {
-		t.Fatal("SetPage/SetSize should return receiver pointer")
-	}
+	p.Page = 3
+	p.Size = 25
 	if p.GetPage() != 3 {
 		t.Fatalf("page: got %d, want 3", p.GetPage())
 	}
@@ -166,7 +164,7 @@ func TestPortalUser(t *testing.T) {
 		t.Fatal("zero-value should return empty string")
 	}
 
-	pu.SetPortalUserID("user-456")
+	pu.ID = "user-456"
 	if got := pu.GetPortalUserID(); got != "user-456" {
 		t.Fatalf("got %q, want %q", got, "user-456")
 	}

@@ -282,10 +282,10 @@ Minor issue — small count.
 
 ## Refactoring Priority
 
-### Phase 1: Quick wins (non-breaking internal changes)
-- [ ] Replace `new(T)` + assignment with struct literals in `New*()` functions
-- [ ] Remove hidden `prepare()` mutations — apply defaults in constructors
-- [ ] Clean up `Set*()` methods (7 instances)
+### Phase 1: Quick wins (non-breaking internal changes) — DONE
+- [x] Replace `new(T)` + assignment with struct literals in `New*()` functions (20 files, ~70 instances)
+- [x] Rename hidden `prepare()` to `normalizeForAPI()` with doc comments (v2 + inter packages)
+- [x] Remove `Set*()` methods — replaced callers with direct field access or struct literals (7 removed)
 
 ### Phase 2: Export field access (breaking change, needs major version)
 - [ ] Remove `Get*()` getters on entity types — users access fields directly

@@ -18,7 +18,7 @@ func (s *LoadBalancerServiceInternal) CreateLoadBalancer(ctx context.Context, op
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
 	opts.WithProjectID(s.VLBClient.GetProjectID())
-	opts.prepare()
+	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithMapHeaders(opts.GetMapHeaders()).
 		WithOkCodes(202).

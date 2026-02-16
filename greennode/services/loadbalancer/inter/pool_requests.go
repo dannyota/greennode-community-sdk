@@ -38,24 +38,22 @@ const (
 )
 
 func NewCreatePoolRequest(name string, protocol PoolProtocol) *CreatePoolRequest {
-	opts := new(CreatePoolRequest)
-	opts.PoolName = name
-	opts.Algorithm = PoolAlgorithmRoundRobin
-	opts.PoolProtocol = protocol
-	opts.Members = make([]*Member, 0)
-
-	return opts
+	return &CreatePoolRequest{
+		PoolName:     name,
+		Algorithm:    PoolAlgorithmRoundRobin,
+		PoolProtocol: protocol,
+		Members:      make([]*Member, 0),
+	}
 }
 
 func NewHealthMonitor(checkProtocol HealthCheckProtocol) *HealthMonitor {
-	opts := new(HealthMonitor)
-	opts.HealthCheckProtocol = checkProtocol
-	opts.HealthyThreshold = 3
-	opts.UnhealthyThreshold = 3
-	opts.Interval = 30
-	opts.Timeout = 5
-
-	return opts
+	return &HealthMonitor{
+		HealthCheckProtocol: checkProtocol,
+		HealthyThreshold:    3,
+		UnhealthyThreshold:  3,
+		Interval:            30,
+		Timeout:             5,
+	}
 }
 
 func NewMember(name, ipAddress string, port int, monitorPort int) *Member {
@@ -111,11 +109,15 @@ type Member struct {
 	Weight      int    `json:"weight"`
 }
 
-func (r *CreatePoolRequest) prepare() {
-	r.HealthMonitor.prepare()
+// normalizeForAPI clears health monitor fields that are irrelevant for the
+// configured protocol before the API call. This mutates the receiver.
+func (r *CreatePoolRequest) normalizeForAPI() {
+	r.HealthMonitor.normalizeForAPI()
 }
 
-func (h *HealthMonitor) prepare() {
+// normalizeForAPI clears fields that don't apply to the current health check
+// protocol and sets a default domain name for HTTP/1.1 when none is provided.
+func (h *HealthMonitor) normalizeForAPI() {
 	switch h.HealthCheckProtocol {
 	case HealthCheckProtocolPINGUDP, HealthCheckProtocolTCP:
 		h.HealthCheckPath = nil

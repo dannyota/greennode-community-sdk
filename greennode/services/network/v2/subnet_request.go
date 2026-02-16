@@ -3,10 +3,14 @@ package v2
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetSubnetByIDRequest(networkID, subnetID string) *GetSubnetByIDRequest {
-	opt := new(GetSubnetByIDRequest)
-	opt.NetworkID = networkID
-	opt.SubnetID = subnetID
-	return opt
+	return &GetSubnetByIDRequest{
+		SubnetCommon: common.SubnetCommon{
+			SubnetID: subnetID,
+		},
+		NetworkCommon: common.NetworkCommon{
+			NetworkID: networkID,
+		},
+	}
 }
 
 type GetSubnetByIDRequest struct {
@@ -25,11 +29,15 @@ type UpdateSubnetBody struct {
 }
 
 func NewUpdateSubnetByIDRequest(networkID, subnetID string, updateBody *UpdateSubnetBody) *UpdateSubnetByIDRequest {
-	opt := new(UpdateSubnetByIDRequest)
-	opt.NetworkID = networkID
-	opt.SubnetID = subnetID
-	opt.UpdateSubnetBody = updateBody
-	return opt
+	return &UpdateSubnetByIDRequest{
+		UpdateSubnetBody: updateBody,
+		SubnetCommon: common.SubnetCommon{
+			SubnetID: subnetID,
+		},
+		NetworkCommon: common.NetworkCommon{
+			NetworkID: networkID,
+		},
+	}
 }
 
 type UpdateSubnetByIDRequest struct {

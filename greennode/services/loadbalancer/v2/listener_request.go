@@ -15,47 +15,56 @@ const (
 )
 
 func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) *CreateListenerRequest {
-	opts := new(CreateListenerRequest)
-	opts.ListenerName = name
-	opts.ListenerProtocol = protocol
-	opts.ListenerProtocolPort = port
-	opts.AllowedCidrs = "0.0.0.0/0"
-	opts.TimeoutClient = 50
-	opts.TimeoutMember = 50
-	opts.TimeoutConnection = 5
-
-	return opts
+	return &CreateListenerRequest{
+		ListenerName:        name,
+		ListenerProtocol:    protocol,
+		ListenerProtocolPort: port,
+		AllowedCidrs:        "0.0.0.0/0",
+		TimeoutClient:       50,
+		TimeoutMember:       50,
+		TimeoutConnection:   5,
+	}
 }
 
 func NewUpdateListenerRequest(lbID, listenerID string) *UpdateListenerRequest {
-	opts := new(UpdateListenerRequest)
-	opts.LoadBalancerID = lbID
-	opts.ListenerID = listenerID
-
-	return opts
+	return &UpdateListenerRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		ListenerCommon: common.ListenerCommon{
+			ListenerID: listenerID,
+		},
+	}
 }
 
 func NewListListenersByLoadBalancerIDRequest(lbID string) *ListListenersByLoadBalancerIDRequest {
-	opts := new(ListListenersByLoadBalancerIDRequest)
-	opts.LoadBalancerID = lbID
-
-	return opts
+	return &ListListenersByLoadBalancerIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+	}
 }
 
 func NewDeleteListenerByIDRequest(lbID, listenerID string) *DeleteListenerByIDRequest {
-	opts := new(DeleteListenerByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.ListenerID = listenerID
-
-	return opts
+	return &DeleteListenerByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		ListenerCommon: common.ListenerCommon{
+			ListenerID: listenerID,
+		},
+	}
 }
 
 func NewGetListenerByIDRequest(lbID, listenerID string) *GetListenerByIDRequest {
-	opts := new(GetListenerByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.ListenerID = listenerID
-
-	return opts
+	return &GetListenerByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		ListenerCommon: common.ListenerCommon{
+			ListenerID: listenerID,
+		},
+	}
 }
 
 type ListenerProtocol string
@@ -106,7 +115,9 @@ type GetListenerByIDRequest struct {
 	common.ListenerCommon
 }
 
-func (r *CreateListenerRequest) prepare() {
+// normalizeForAPI clears certificate fields when the listener protocol is not
+// HTTPS, since they are only relevant for TLS termination. This mutates the receiver.
+func (r *CreateListenerRequest) normalizeForAPI() {
 	if r == nil {
 		return
 	}

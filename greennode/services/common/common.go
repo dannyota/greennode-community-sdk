@@ -22,9 +22,6 @@ func (pr *Project) GetProjectID() string {
 	return pr.ID
 }
 
-func (pr *Project) SetProjectID(id string) {
-	pr.ID = id
-}
 
 type Paging struct {
 	Page int
@@ -49,15 +46,6 @@ func (p *Paging) GetSize() int {
 	return p.Size
 }
 
-func (p *Paging) SetPage(page int) *Paging {
-	p.Page = page
-	return p
-}
-
-func (p *Paging) SetSize(size int) *Paging {
-	p.Size = size
-	return p
-}
 
 type Tag struct {
 	Key      string `json:"key"`
@@ -73,9 +61,6 @@ func (pu *PortalUser) GetPortalUserID() string {
 	return pu.ID
 }
 
-func (pu *PortalUser) SetPortalUserID(id string) {
-	pu.ID = id
-}
 
 func (pu *PortalUser) GetMapHeaders() map[string]string {
 	return map[string]string{

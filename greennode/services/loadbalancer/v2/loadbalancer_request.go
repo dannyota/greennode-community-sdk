@@ -60,22 +60,26 @@ func NewListLoadBalancerPackagesRequest() *ListLoadBalancerPackagesRequest {
 }
 
 func NewGetLoadBalancerByIDRequest(lbID string) *GetLoadBalancerByIDRequest {
-	opts := new(GetLoadBalancerByIDRequest)
-	opts.LoadBalancerID = lbID
-	return opts
+	return &GetLoadBalancerByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+	}
 }
 
 func NewListLoadBalancersRequest(page, size int) *ListLoadBalancersRequest {
-	opts := new(ListLoadBalancersRequest)
-	opts.Page = page
-	opts.Size = size
-	return opts
+	return &ListLoadBalancersRequest{
+		Page: page,
+		Size: size,
+	}
 }
 
 func NewDeleteLoadBalancerByIDRequest(lbID string) *DeleteLoadBalancerByIDRequest {
-	opts := new(DeleteLoadBalancerByIDRequest)
-	opts.LoadBalancerID = lbID
-	return opts
+	return &DeleteLoadBalancerByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+	}
 }
 
 func NewScaleLoadBalancerRequest(lbID string) *ScaleLoadBalancerRequest {
@@ -148,13 +152,15 @@ func (r *ScaleLoadBalancerRequest) WithNetworking(networking *NetworkingConfig) 
 	return r
 }
 
-func (r *CreateLoadBalancerRequest) prepare() {
+// normalizeForAPI delegates to Pool and Listener normalization, clearing
+// protocol-irrelevant fields before the API call. This mutates the receiver.
+func (r *CreateLoadBalancerRequest) normalizeForAPI() {
 	if r.Pool != nil {
-		r.Pool.prepare()
+		r.Pool.normalizeForAPI()
 	}
 
 	if r.Listener != nil {
-		r.Listener.prepare()
+		r.Listener.normalizeForAPI()
 	}
 }
 
@@ -286,8 +292,10 @@ func (r *ListLoadBalancersRequest) GetDefaultQuery() string {
 
 
 func NewResizeLoadBalancerByIDRequest(lbID, packageID string) *ResizeLoadBalancerByIDRequest {
-	opts := new(ResizeLoadBalancerByIDRequest)
-	opts.LoadBalancerID = lbID
-	opts.PackageID = packageID
-	return opts
+	return &ResizeLoadBalancerByIDRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		PackageID: packageID,
+	}
 }

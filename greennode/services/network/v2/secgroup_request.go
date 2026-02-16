@@ -29,15 +29,19 @@ func NewCreateSecgroupRequest(name, description string) *CreateSecgroupRequest {
 }
 
 func NewDeleteSecgroupByIDRequest(secgroupID string) *DeleteSecgroupByIDRequest {
-	opts := new(DeleteSecgroupByIDRequest)
-	opts.SecgroupID = secgroupID
-	return opts
+	return &DeleteSecgroupByIDRequest{
+		SecgroupCommon: common.SecgroupCommon{
+			SecgroupID: secgroupID,
+		},
+	}
 }
 
 func NewGetSecgroupByIDRequest(secgroupID string) *GetSecgroupByIDRequest {
-	opt := new(GetSecgroupByIDRequest)
-	opt.SecgroupID = secgroupID
-	return opt
+	return &GetSecgroupByIDRequest{
+		SecgroupCommon: common.SecgroupCommon{
+			SecgroupID: secgroupID,
+		},
+	}
 }
 
 func NewListSecgroupRequest() *ListSecgroupRequest {

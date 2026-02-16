@@ -125,21 +125,21 @@ func TestWithJSONError(t *testing.T) {
 	}
 }
 
-func TestSetJSONResponse(t *testing.T) {
+func TestWithJSONResponseOverwrite(t *testing.T) {
 	r := NewRequest()
 	resp := &struct{ X int }{}
-	r.SetJSONResponse(resp)
+	r.WithJSONResponse(resp)
 	if r.JSONResponse() != resp {
-		t.Fatal("expected same pointer after SetJSONResponse")
+		t.Fatal("expected same pointer after WithJSONResponse")
 	}
 }
 
-func TestSetJSONError(t *testing.T) {
+func TestWithJSONErrorOverwrite(t *testing.T) {
 	r := NewRequest()
 	errResp := &struct{ X int }{}
-	r.SetJSONError(errResp)
+	r.WithJSONError(errResp)
 	if r.JSONError() != errResp {
-		t.Fatal("expected same pointer after SetJSONError")
+		t.Fatal("expected same pointer after WithJSONError")
 	}
 }
 

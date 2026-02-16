@@ -3,9 +3,9 @@ package v2
 import "github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
 
 func NewGetAllAddressPairByVirtualSubnetIDRequest(subnetID string) *GetAllAddressPairByVirtualSubnetIDRequest {
-	opt := new(GetAllAddressPairByVirtualSubnetIDRequest)
-	opt.VirtualSubnetID = subnetID
-	return opt
+	return &GetAllAddressPairByVirtualSubnetIDRequest{
+		VirtualSubnetID: subnetID,
+	}
 }
 
 type GetAllAddressPairByVirtualSubnetIDRequest struct {
@@ -18,13 +18,13 @@ func (r *GetAllAddressPairByVirtualSubnetIDRequest) GetVirtualSubnetID() string 
 
 
 func NewSetAddressPairInVirtualSubnetRequest(subnetID, networkInterfaceID, CIDR string) *SetAddressPairInVirtualSubnetRequest {
-	opt := new(SetAddressPairInVirtualSubnetRequest)
-	opt.VirtualSubnetID = subnetID
-	opt.AddressPairRequest = AddressPairRequest{
-		CIDR:                       CIDR,
-		InternalNetworkInterfaceID: networkInterfaceID,
+	return &SetAddressPairInVirtualSubnetRequest{
+		VirtualSubnetID: subnetID,
+		AddressPairRequest: AddressPairRequest{
+			CIDR:                       CIDR,
+			InternalNetworkInterfaceID: networkInterfaceID,
+		},
 	}
-	return opt
 }
 
 type SetAddressPairInVirtualSubnetRequest struct {
@@ -43,9 +43,9 @@ type AddressPairRequest struct {
 
 
 func NewDeleteAddressPairRequest(addressPairID string) *DeleteAddressPairRequest {
-	opt := new(DeleteAddressPairRequest)
-	opt.AddressPairID = addressPairID
-	return opt
+	return &DeleteAddressPairRequest{
+		AddressPairID: addressPairID,
+	}
 }
 
 type DeleteAddressPairRequest struct {
@@ -82,14 +82,18 @@ func (r *CreateAddressPairRequest) WithMode(mode AddressPairMode) *CreateAddress
 }
 
 func NewListAddressPairsByVirtualAddressIDRequest(virtualAddressID string) *ListAddressPairsByVirtualAddressIDRequest {
-	opts := new(ListAddressPairsByVirtualAddressIDRequest)
-	opts.VirtualAddressID = virtualAddressID
-	return opts
+	return &ListAddressPairsByVirtualAddressIDRequest{
+		VirtualAddressCommon: common.VirtualAddressCommon{
+			VirtualAddressID: virtualAddressID,
+		},
+	}
 }
 
 func NewCreateAddressPairRequest(virtualAddressID, internalNicID string) *CreateAddressPairRequest {
-	opts := new(CreateAddressPairRequest)
-	opts.VirtualAddressID = virtualAddressID
-	opts.InternalNetworkInterfaceID = internalNicID
-	return opts
+	return &CreateAddressPairRequest{
+		InternalNetworkInterfaceID: internalNicID,
+		VirtualAddressCommon: common.VirtualAddressCommon{
+			VirtualAddressID: virtualAddressID,
+		},
+	}
 }

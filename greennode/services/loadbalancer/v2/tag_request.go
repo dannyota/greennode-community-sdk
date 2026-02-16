@@ -6,29 +6,33 @@ import (
 )
 
 func NewListTagsRequest(lbID string) *ListTagsRequest {
-	opt := new(ListTagsRequest)
-	opt.LoadBalancerID = lbID
-	return opt
+	return &ListTagsRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+	}
 }
 
 func NewCreateTagsRequest(lbID string) *CreateTagsRequest {
-	opts := new(CreateTagsRequest)
-	opts.LoadBalancerID = lbID
-	opts.ResourceID = lbID
-	opts.ResourceType = "LOAD-BALANCER"
-	opts.TagRequestList = make([]common.Tag, 0)
-
-	return opts
+	return &CreateTagsRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		ResourceID:     lbID,
+		ResourceType:   "LOAD-BALANCER",
+		TagRequestList: make([]common.Tag, 0),
+	}
 }
 
 func NewUpdateTagsRequest(lbID string) *UpdateTagsRequest {
-	opts := new(UpdateTagsRequest)
-	opts.LoadBalancerID = lbID
-	opts.ResourceID = lbID
-	opts.ResourceType = "LOAD-BALANCER"
-	opts.TagRequestList = make([]common.Tag, 0)
-
-	return opts
+	return &UpdateTagsRequest{
+		LoadBalancerCommon: common.LoadBalancerCommon{
+			LoadBalancerID: lbID,
+		},
+		ResourceID:     lbID,
+		ResourceType:   "LOAD-BALANCER",
+		TagRequestList: make([]common.Tag, 0),
+	}
 }
 
 type ListTagsRequest struct {

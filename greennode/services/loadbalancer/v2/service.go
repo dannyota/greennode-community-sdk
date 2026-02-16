@@ -27,7 +27,7 @@ func (s *LoadBalancerServiceV2) CreateLoadBalancer(ctx context.Context, opts *Cr
 	url := createLoadBalancerURL(s.VLBClient)
 	resp := new(CreateLoadBalancerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.prepare()
+	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(opts).
@@ -137,7 +137,7 @@ func (s *LoadBalancerServiceV2) CreatePool(ctx context.Context, opts *CreatePool
 	url := createPoolURL(s.VLBClient, opts)
 	resp := new(CreatePoolResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.prepare()
+	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(opts).
@@ -159,7 +159,7 @@ func (s *LoadBalancerServiceV2) CreatePool(ctx context.Context, opts *CreatePool
 func (s *LoadBalancerServiceV2) UpdatePool(ctx context.Context, opts *UpdatePoolRequest) error {
 	url := updatePoolURL(s.VLBClient, opts)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.prepare()
+	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(opts).
@@ -179,7 +179,7 @@ func (s *LoadBalancerServiceV2) CreateListener(ctx context.Context, opts *Create
 	url := createListenerURL(s.VLBClient, opts)
 	resp := new(CreateListenerResponse)
 	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
-	opts.prepare()
+	opts.normalizeForAPI()
 	req := client.NewRequest().
 		WithOkCodes(202).
 		WithJSONBody(opts).

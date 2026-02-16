@@ -14,16 +14,15 @@ const (
 )
 
 func NewCreateListenerRequest(name string, protocol ListenerProtocol, port int) *CreateListenerRequest {
-	opts := new(CreateListenerRequest)
-	opts.ListenerName = name
-	opts.ListenerProtocol = protocol
-	opts.ListenerProtocolPort = port
-	opts.AllowedCidrs = "0.0.0.0/0"
-	opts.TimeoutClient = 50
-	opts.TimeoutMember = 50
-	opts.TimeoutConnection = 5
-
-	return opts
+	return &CreateListenerRequest{
+		ListenerName:         name,
+		ListenerProtocol:     protocol,
+		ListenerProtocolPort: port,
+		AllowedCidrs:         "0.0.0.0/0",
+		TimeoutClient:        50,
+		TimeoutMember:        50,
+		TimeoutConnection:    5,
+	}
 }
 
 type ListenerProtocol string
@@ -44,7 +43,9 @@ type CreateListenerRequest struct {
 	common.LoadBalancerCommon
 }
 
-func (r *CreateListenerRequest) prepare() {
+// normalizeForAPI clears certificate fields when the listener protocol is not
+// HTTPS, since they are only relevant for TLS termination. This mutates the receiver.
+func (r *CreateListenerRequest) normalizeForAPI() {
 	if r == nil {
 		return
 	}

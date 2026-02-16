@@ -24,16 +24,20 @@ func NewCreateSecgroupRuleRequest(
 }
 
 func NewDeleteSecgroupRuleByIDRequest(secgroupRuleID string) *DeleteSecgroupRuleByIDRequest {
-	opt := new(DeleteSecgroupRuleByIDRequest)
-	opt.SecgroupID = "undefined"
-	opt.SecgroupRuleID = secgroupRuleID
-	return opt
+	return &DeleteSecgroupRuleByIDRequest{
+		SecgroupRuleID: secgroupRuleID,
+		SecgroupCommon: common.SecgroupCommon{
+			SecgroupID: "undefined",
+		},
+	}
 }
 
 func NewListSecgroupRulesBySecgroupIDRequest(securityGroupID string) *ListSecgroupRulesBySecgroupIDRequest {
-	opt := new(ListSecgroupRulesBySecgroupIDRequest)
-	opt.SecgroupID = securityGroupID
-	return opt
+	return &ListSecgroupRulesBySecgroupIDRequest{
+		SecgroupCommon: common.SecgroupCommon{
+			SecgroupID: securityGroupID,
+		},
+	}
 }
 
 const (
