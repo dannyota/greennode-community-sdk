@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	IAMOauth2 AuthOpts = "IamOauth2"
+	IAMOauth2     AuthOpts = "IamOauth2"
+	IAMUserOauth2 AuthOpts = "IamUserOauth2"
 )
 
 type (

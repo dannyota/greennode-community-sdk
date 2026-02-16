@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/auth"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
@@ -23,12 +24,14 @@ import (
 
 // Config holds all configuration needed to create an SDK client.
 type Config struct {
+	Region       string // e.g. "hcm-3", "han-1" — derives default endpoint URLs
 	ClientID     string
 	ClientSecret string
 	ProjectID    string
 	UserID       string
 	ZoneID       string
 	UserAgent    string
+	IAMAuth      *auth.IAMUserAuth // optional — enables IAM user auth instead of client credentials
 
 	RetryCount    int
 	SleepDuration time.Duration
@@ -66,6 +69,8 @@ type Client struct {
 
 // NewClient creates a fully-wired SDK client from the given configuration.
 func NewClient(ctx context.Context, cfg Config) (*Client, error) {
+	resolveEndpoints(&cfg)
+
 	hc := client.NewHTTPClient()
 
 	if cfg.RetryCount > 0 {
@@ -151,8 +156,10 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 		c.DNSInternal = &dnsinternalv1.VDnsServiceInternal{Client: dnsInternalSvc}
 	}
 
-	// Set up IAM reauth
-	if c.Identity != nil && cfg.ClientID != "" && cfg.ClientSecret != "" {
+	// Set up auth
+	if cfg.IAMAuth != nil {
+		hc.WithReauthFunc(client.IAMUserOauth2, iamUserReauthFunc(cfg.IAMAuth))
+	} else if c.Identity != nil && cfg.ClientID != "" && cfg.ClientSecret != "" {
 		hc.WithReauthFunc(client.IAMOauth2, reauthFunc(c.Identity, cfg.ClientID, cfg.ClientSecret))
 	}
 
@@ -168,6 +175,18 @@ func reauthFunc(identity *identityv2.IdentityServiceV2, clientID, clientSecret s
 		return client.NewSdkAuthentication().
 			WithAccessToken(token.Token).
 			WithExpiresAt(token.ExpiresAt), nil
+	}
+}
+
+func iamUserReauthFunc(iamAuth *auth.IAMUserAuth) func(ctx context.Context) (*client.SdkAuthentication, error) {
+	return func(ctx context.Context) (*client.SdkAuthentication, error) {
+		token, expiresAt, err := iamAuth.Authenticate(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return client.NewSdkAuthentication().
+			WithAccessToken(token).
+			WithExpiresAt(expiresAt), nil
 	}
 }
 
