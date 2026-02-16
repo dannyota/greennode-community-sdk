@@ -7,7 +7,6 @@ import (
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/auth"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
-	dnsinternalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/internal_system/v1"
 	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 	glbv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
 	identityv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/identity/v2"
@@ -64,7 +63,7 @@ type Client struct {
 	PortalV1             *portalv1.PortalServiceV1
 	LoadBalancerInternal *lbinter.LoadBalancerServiceInternal
 	ServerInternal       *serverv1.ServerServiceInternalV1
-	DNSInternal          *dnsinternalv1.VDnsServiceInternal
+	DNSInternal          *dnsv1.VDnsServiceInternal
 }
 
 // NewClient creates a fully-wired SDK client from the given configuration.
@@ -153,7 +152,7 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 		c.DNS = &dnsv1.VDnsServiceV1{Client: dnsSvc}
 
 		dnsInternalSvc := newServiceClient(dnsEp+"internal/v1", cfg.ProjectID, "", hc)
-		c.DNSInternal = &dnsinternalv1.VDnsServiceInternal{Client: dnsInternalSvc}
+		c.DNSInternal = &dnsv1.VDnsServiceInternal{Client: dnsInternalSvc}
 	}
 
 	// Set up auth

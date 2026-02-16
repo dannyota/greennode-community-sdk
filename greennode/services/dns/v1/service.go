@@ -5,3 +5,7 @@ import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
 type VDnsServiceV1 struct {
 	Client *client.ServiceClient
 }
+
+type VDnsServiceInternal struct {
+	Client *client.ServiceClient
+}
