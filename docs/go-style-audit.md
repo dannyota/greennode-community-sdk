@@ -90,8 +90,8 @@ All `Get*()` accessors have been simplified or removed:
 | `GetErrorCode()` → `ErrorCode()` | Done |
 | `GetParameters()` → `Parameters()` | Done |
 | `GetErrorCategories()` → `ErrorCategories()` | Done |
-| `GetAccessToken()` → `AccessToken()` | Done |
-| `GetExpiresAt()` → `ExpiresAt()` | Done |
+| `GetAccessToken()` → `AccessToken` (exported field) | Done |
+| `GetExpiresAt()` → `ExpiresAt` (exported field) | Done |
 | `GetProjectID()` on `common.Project` | Done (deleted — use `p.ID`) |
 | `GetPortalUserID()` on `common.PortalUser` | Done (deleted — use `pu.ID`) |
 | `GetMapHeaders()` on `common.PortalUser` | Done (deleted — callers use `WithUserID(opts.PortalUser.ID)`) |
@@ -102,8 +102,10 @@ All `Get*()` accessors have been simplified or removed:
 **Kept with `Get` prefix:**
 - `GetMessage()` (collides with `Message` field on error response structs)
 
-`ServiceClient.GetProjectID()` and `GetZoneID()` have since been renamed to
-`ProjectID()` and `ZoneID()`. `GetUserID()` was removed.
+`ServiceClient.ProjectID()` and `ZoneID()` getters have been replaced with
+exported fields (`sc.ProjectID`, `sc.ZoneID`). `SdkAuthentication` was renamed
+to `Token` with exported fields. `Request` getters (`RequestBody()`,
+`JSONResponse()`, etc.) deleted — `http.go` uses direct field access.
 
 ### 1.7 Package names with underscores — **RESOLVED**
 
@@ -331,7 +333,7 @@ Context is threaded through all internal HTTP client methods: `DoRequest`,
 `handleResponse`, `handleStatusCode`, `handleUnauthorized`, `reauthenticate`.
 
 The `reauthFunc` signature changed from `func() (*SdkAuthentication, error)` to
-`func(ctx context.Context) (*SdkAuthentication, error)`.
+`func(ctx context.Context) (*Token, error)`.
 
 ### 5.10 Single-implementation interfaces (client package) — **RESOLVED**
 
@@ -341,11 +343,18 @@ each. All four were deleted and replaced with exported concrete structs:
 | Interface | Concrete struct | Files changed |
 |-----------|----------------|---------------|
 | `Request` | `*Request` | 3 (client pkg) |
-| `SdkAuthentication` | `*SdkAuthentication` | 3 (client pkg: `auth.go`, `http.go`, `service_client.go`) |
+| `SdkAuthentication` | `*Token` (renamed, exported fields) | 3 (client pkg: `auth.go`, `http.go`, `service_client.go`) |
 | `HTTPClient` | `*HTTPClient` | 4 (client + gateway) |
 | `ServiceClient` | `*ServiceClient` | 43 (client, gateway, all service base.go + url.go) |
 
 All constructors and builder methods now return `*ConcreteStruct`.
+
+The client package has been further refactored to idiomatic Go:
+- `SdkAuthentication` → `Token` with exported fields (factory/builders/getters deleted)
+- `ServiceClient` fields exported (`Endpoint`, `ProjectID`, `ZoneID`, `HTTP`); factory/builders/getters deleted
+- `Request` getters deleted (`http.go` uses direct field access); `WithMapHeaders`/`WithRequestMethod` deleted
+- `WithOkCodes` → `WithOKCodes`; `WithSleep` → `WithRetryInterval`; `WithKvDefaultHeaders` → `WithDefaultHeaders`
+- `AuthOpts` → `AuthMethod`; `NeedReauth` → `NeedsReauth`
 
 ---
 

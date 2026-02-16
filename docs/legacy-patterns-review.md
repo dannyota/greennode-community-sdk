@@ -322,10 +322,17 @@ Minor issue — small count.
 The following `With*()` methods are intentionally kept — they configure SDK
 internals (client, request, error) rather than service request DTOs:
 
-| Area | Path | Count |
-|------|------|-------|
-| Client builders | `greennode/client/service_client.go` | 4 |
-| Client builders | `greennode/client/request.go` | 9 |
-| Client builders | `greennode/client/http.go` | 5 |
-| Client builders | `greennode/client/auth.go` | 2 |
+| Area | Path | Methods |
+|------|------|---------|
+| Request builders | `greennode/client/request.go` | `WithOKCodes`, `WithUserID`, `WithJSONBody`, `WithJSONResponse`, `WithJSONError`, `WithSkipAuth`, `WithHeader` (7) |
+| HTTP client builders | `greennode/client/http.go` | `WithRetryCount`, `WithTimeout`, `WithRetryInterval`, `WithDefaultHeaders`, `WithReauthFunc` (5) |
 | Error builders | `greennode/sdkerror/sdk_error.go` | 5 |
+
+**Removed in client/ refactor:**
+- `SdkAuthentication` → `Token` (exported fields, deleted factory/builders/getters/`UpdateAuth`)
+- `ServiceClient` factory + `WithEndpoint`/`WithProjectID`/`WithZoneID`/`WithClient` builders + `ProjectID()`/`ZoneID()` getters
+- `Request` getters (`RequestBody`, `JSONResponse`, `JSONError`, `MoreHeaders`, `RequestMethod`, `SkipAuthentication`, `ContainsOkCode`) — `http.go` uses direct field access
+- `WithMapHeaders`, `WithRequestMethod` — dead code / internal-only
+- `WithOkCodes` → `WithOKCodes`, `ContainsOkCode` → `containsOKCode` (Go naming)
+- `WithSleep` → `WithRetryInterval`, `WithKvDefaultHeaders` → `WithDefaultHeaders`
+- `AuthOpts` → `AuthMethod`, `NeedReauth` → `NeedsReauth`
