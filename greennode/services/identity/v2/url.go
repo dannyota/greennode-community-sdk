@@ -1,7 +1,7 @@
 package v2
 
 import (
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	"danny.vn/greennode/greennode/client"
 )
 
 func getAccessTokenURL(sc *client.ServiceClient) string {

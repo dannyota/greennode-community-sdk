@@ -1,6 +1,6 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/greennode/client"
+import "danny.vn/greennode/greennode/client"
 
 func getPortalInfoURL(sc *client.ServiceClient, opts *GetPortalInfoRequest) string {
 	return sc.ServiceURL("projects", opts.BackEndProjectID, "detail")

@@ -5,8 +5,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
-	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
+	"danny.vn/greennode/greennode/client"
+	"danny.vn/greennode/greennode/services/common"
 )
 
 const (

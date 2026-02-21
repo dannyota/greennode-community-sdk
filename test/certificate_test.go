@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	v2 "github.com/dannyota/greennode-community-sdk/greennode/services/loadbalancer/v2"
+	v2 "danny.vn/greennode/greennode/services/loadbalancer/v2"
 )
 
 func TestListCertificates(t *testing.T) {

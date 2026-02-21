@@ -7,9 +7,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/greennode"
-	"github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
-	identityv2 "github.com/dannyota/greennode-community-sdk/greennode/services/identity/v2"
+	"danny.vn/greennode/greennode"
+	"danny.vn/greennode/greennode/sdkerror"
+	identityv2 "danny.vn/greennode/greennode/services/identity/v2"
 )
 
 func TestAuthenFailed(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
+	"danny.vn/greennode/greennode/services/common"
 )
 
 type (

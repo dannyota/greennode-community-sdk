@@ -1,6 +1,6 @@
 package v2
 
-import types "github.com/dannyota/greennode-community-sdk/greennode/types"
+import types "danny.vn/greennode/greennode/types"
 
 type ListTagResponse struct {
 	Key       string `json:"key"`

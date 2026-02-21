@@ -3,9 +3,9 @@ package v2
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
-	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
+	"danny.vn/greennode/greennode/client"
+	sdkerror "danny.vn/greennode/greennode/sdkerror"
+	"danny.vn/greennode/greennode/services/common"
 )
 
 type ComputeServiceV2 struct {

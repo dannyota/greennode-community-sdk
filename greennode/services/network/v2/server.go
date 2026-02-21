@@ -3,9 +3,9 @@ package v2
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
-	computev2 "github.com/dannyota/greennode-community-sdk/greennode/services/compute/v2"
+	"danny.vn/greennode/greennode/client"
+	sdkerror "danny.vn/greennode/greennode/sdkerror"
+	computev2 "danny.vn/greennode/greennode/services/compute/v2"
 )
 
 func (s *NetworkServiceV2) ListAllServersBySecgroupID(ctx context.Context, opts *ListAllServersBySecgroupIDRequest) (*computev2.ListServers, error) {

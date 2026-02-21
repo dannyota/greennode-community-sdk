@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	v1 "github.com/dannyota/greennode-community-sdk/greennode/services/dns/v1"
+	v1 "danny.vn/greennode/greennode/services/dns/v1"
 )
 
 func TestDnsServiceV1_GetHostedZoneByID(t *testing.T) {

@@ -1,6 +1,6 @@
 package intervpc
 
-import "github.com/dannyota/greennode-community-sdk/greennode/services/common"
+import "danny.vn/greennode/greennode/services/common"
 
 const (
 	InterVpcLoadBalancerScheme LoadBalancerScheme = "InterVPC"

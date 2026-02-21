@@ -1,6 +1,6 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/greennode/client"
+import "danny.vn/greennode/greennode/client"
 
 func getSecgroupByIDURL(sc *client.ServiceClient, opts *GetSecgroupByIDRequest) string {
 	return sc.ServiceURL(

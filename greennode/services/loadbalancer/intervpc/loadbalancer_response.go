@@ -1,7 +1,7 @@
 package intervpc
 
 import (
-	lbv2 "github.com/dannyota/greennode-community-sdk/greennode/services/loadbalancer/v2"
+	lbv2 "danny.vn/greennode/greennode/services/loadbalancer/v2"
 )
 
 type CreateLoadBalancerResponse struct {

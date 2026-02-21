@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	"danny.vn/greennode/greennode/client"
 )
 
 type GetHostedZoneByIDRequest struct {

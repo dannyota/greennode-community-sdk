@@ -1,3 +1,3 @@
-module github.com/dannyota/greennode-community-sdk
+module danny.vn/greennode
 
 go 1.24

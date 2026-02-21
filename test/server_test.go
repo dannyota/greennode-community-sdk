@@ -7,10 +7,10 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
-	serverv1 "github.com/dannyota/greennode-community-sdk/greennode/services/server/v1"
+	"danny.vn/greennode/greennode/sdkerror"
+	serverv1 "danny.vn/greennode/greennode/services/server/v1"
 
-	computev2 "github.com/dannyota/greennode-community-sdk/greennode/services/compute/v2"
+	computev2 "danny.vn/greennode/greennode/services/compute/v2"
 )
 
 func TestCreateServerFailed(t *testing.T) {

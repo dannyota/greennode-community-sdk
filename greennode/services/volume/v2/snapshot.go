@@ -3,8 +3,8 @@ package v2
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
+	"danny.vn/greennode/greennode/client"
+	sdkerror "danny.vn/greennode/greennode/sdkerror"
 )
 
 func (s *VolumeServiceV2) ListSnapshotsByBlockVolumeID(ctx context.Context, opts *ListSnapshotsByBlockVolumeIDRequest) (*ListSnapshots, error) {

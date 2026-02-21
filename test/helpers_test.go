@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/dannyota/greennode-community-sdk/greennode"
+	"danny.vn/greennode/greennode"
 )
 
 func readEnvFile(path string) (map[string]string, error) {

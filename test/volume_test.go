@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	v2 "github.com/dannyota/greennode-community-sdk/greennode/services/volume/v2"
+	v2 "danny.vn/greennode/greennode/services/volume/v2"
 )
 
 func TestCreateVolumeFailure(t *testing.T) {

@@ -1,6 +1,6 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/greennode/services/common"
+import "danny.vn/greennode/greennode/services/common"
 
 type (
 	GlobalPoolAlgorithm              string

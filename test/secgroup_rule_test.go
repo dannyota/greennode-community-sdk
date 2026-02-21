@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	networkv2 "github.com/dannyota/greennode-community-sdk/greennode/services/network/v2"
+	networkv2 "danny.vn/greennode/greennode/services/network/v2"
 )
 
 func TestCreateSecgroupRuleSuccess(t *testing.T) {

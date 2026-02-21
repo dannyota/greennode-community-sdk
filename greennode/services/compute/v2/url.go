@@ -1,6 +1,6 @@
 package v2
 
-import "github.com/dannyota/greennode-community-sdk/greennode/client"
+import "danny.vn/greennode/greennode/client"
 
 func createServerURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
