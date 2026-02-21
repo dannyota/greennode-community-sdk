@@ -5,7 +5,7 @@ A community Go SDK for GreenNode cloud services.
 ## Installation
 
 ```bash
-go get github.com/dannyota/greennode-community-sdk/v2
+go get danny.vn/greennode
 ```
 
 ## Quick Start
@@ -19,8 +19,8 @@ import (
   "context"
   "fmt"
 
-  "github.com/dannyota/greennode-community-sdk/v2/greennode"
-  lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+  "danny.vn/greennode"
+  lbv2 "danny.vn/greennode/services/loadbalancer/v2"
 )
 
 func main() {
@@ -54,8 +54,8 @@ package main
 import (
   "context"
 
-  "github.com/dannyota/greennode-community-sdk/v2/greennode"
-  "github.com/dannyota/greennode-community-sdk/v2/greennode/auth"
+  "danny.vn/greennode"
+  "danny.vn/greennode/auth"
 )
 
 func main() {
@@ -80,6 +80,35 @@ func main() {
 
 The `Region` field (e.g. `"hcm-3"`, `"han-1"`) derives all endpoint URLs automatically.
 Explicit endpoint fields (e.g. `VServerEndpoint`) override the defaults if set.
+
+### Custom HTTP client
+
+Use `option.WithHTTPClient` to inject a custom `*http.Client` — useful for rate limiting, tracing, or proxies:
+
+```go
+import (
+  "net/http"
+
+  "danny.vn/greennode"
+  "danny.vn/greennode/option"
+)
+
+httpClient := &http.Client{
+  Transport: myRateLimitedTransport,
+}
+
+c, err := greennode.NewClient(ctx, greennode.Config{...},
+  option.WithHTTPClient(httpClient),
+)
+```
+
+Other options:
+
+| Option | Description |
+|--------|-------------|
+| `option.WithHTTPClient(c)` | Replace the underlying `*http.Client` |
+| `option.WithTransport(t)` | Set a custom `http.RoundTripper` on the default client |
+| `option.WithUserAgent(ua)` | Override the `User-Agent` header |
 
 #### TOTP providers
 

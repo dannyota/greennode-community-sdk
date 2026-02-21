@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"danny.vn/greennode/greennode"
+	"danny.vn/greennode"
 )
 
 func readEnvFile(path string) (map[string]string, error) {

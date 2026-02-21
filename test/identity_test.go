@@ -7,9 +7,9 @@ import (
 	"errors"
 	"testing"
 
-	"danny.vn/greennode/greennode"
-	"danny.vn/greennode/greennode/sdkerror"
-	identityv2 "danny.vn/greennode/greennode/services/identity/v2"
+	"danny.vn/greennode"
+	"danny.vn/greennode/sdkerror"
+	identityv2 "danny.vn/greennode/services/identity/v2"
 )
 
 func TestAuthenFailed(t *testing.T) {

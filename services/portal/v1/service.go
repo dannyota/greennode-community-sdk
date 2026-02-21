@@ -1,0 +1,45 @@
+package v1
+
+import (
+	"context"
+
+	"danny.vn/greennode/client"
+	sdkerror "danny.vn/greennode/sdkerror"
+)
+
+type PortalServiceV1 struct {
+	Client *client.ServiceClient
+}
+
+func (s *PortalServiceV1) GetPortalInfo(ctx context.Context, opts *GetPortalInfoRequest) (*Portal, error) {
+	url := getPortalInfoURL(s.Client, opts)
+	resp := new(Portal)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters("backendProjectId", opts.BackEndProjectID)
+	}
+
+	return resp, nil
+}
+
+func (s *PortalServiceV1) ListProjects(ctx context.Context, opts *ListProjectsRequest) (*ListPortals, error) {
+	url := listProjectsURL(s.Client)
+	resp := new(ListProjectsResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp)
+	}
+
+	return resp.ToEntityListPortals(), nil
+}

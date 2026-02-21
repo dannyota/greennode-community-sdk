@@ -7,9 +7,9 @@ import (
 	"errors"
 	"testing"
 
-	"danny.vn/greennode/greennode/sdkerror"
-	portalv1 "danny.vn/greennode/greennode/services/portal/v1"
-	portalv2 "danny.vn/greennode/greennode/services/portal/v2"
+	"danny.vn/greennode/sdkerror"
+	portalv1 "danny.vn/greennode/services/portal/v1"
+	portalv2 "danny.vn/greennode/services/portal/v2"
 )
 
 func TestGetPortalInfoFailed(t *testing.T) {

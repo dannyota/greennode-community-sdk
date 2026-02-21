@@ -7,10 +7,10 @@ import (
 	"errors"
 	"testing"
 
-	"danny.vn/greennode/greennode/sdkerror"
-	serverv1 "danny.vn/greennode/greennode/services/server/v1"
+	"danny.vn/greennode/sdkerror"
+	serverv1 "danny.vn/greennode/services/server/v1"
 
-	computev2 "danny.vn/greennode/greennode/services/compute/v2"
+	computev2 "danny.vn/greennode/services/compute/v2"
 )
 
 func TestCreateServerFailed(t *testing.T) {

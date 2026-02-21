@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"danny.vn/greennode/greennode/sdkerror"
-	"danny.vn/greennode/greennode/services/common"
-	v1 "danny.vn/greennode/greennode/services/glb/v1"
+	"danny.vn/greennode/sdkerror"
+	"danny.vn/greennode/services/common"
+	v1 "danny.vn/greennode/services/glb/v1"
 )
 
 func TestGetGlobalListenerSuccess(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	dnsv1 "danny.vn/greennode/greennode/services/dns/v1"
+	dnsv1 "danny.vn/greennode/services/dns/v1"
 )
 
 func TestDnsServiceInternal_ListHostedZonesDefault(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"testing"
 
-	networkv1 "danny.vn/greennode/greennode/services/network/v1"
+	networkv1 "danny.vn/greennode/services/network/v1"
 )
 
 func TestGetEndpointSuccess(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	networkv2 "danny.vn/greennode/greennode/services/network/v2"
+	networkv2 "danny.vn/greennode/services/network/v2"
 )
 
 func TestGetAllAddressPairByVirtualSubnetID(t *testing.T) {

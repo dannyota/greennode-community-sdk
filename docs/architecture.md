@@ -7,7 +7,7 @@ greennode-community-sdk is a multi-layered Go SDK for VNG Cloud services, built 
 provides typed clients for compute, networking, storage, load balancing, DNS, and identity
 services exposed by VNG Cloud's REST APIs.
 
-- **Module path:** `github.com/dannyota/greennode-community-sdk/v2`
+- **Module path:** `danny.vn/greennode`
 - **Go version:** 1.24
 - **Source files:** 195 `.go` files, ~19.5 k LOC
 

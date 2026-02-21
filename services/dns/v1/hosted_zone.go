@@ -1,0 +1,98 @@
+package v1
+
+import (
+	"context"
+
+	"danny.vn/greennode/client"
+	sdkerror "danny.vn/greennode/sdkerror"
+	"danny.vn/greennode/services/common"
+)
+
+func (s *VDnsServiceV1) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest) (*HostedZone, error) {
+	url := getHostedZoneByIDURL(s.Client, opts)
+	resp := new(GetHostedZoneByIDResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters(
+				"hostedZoneId", opts.HostedZoneID).
+			AppendCategories(sdkerror.ErrCatProductVdns)
+	}
+
+	return resp.ToEntityHostedZone(), nil
+}
+
+func (s *VDnsServiceV1) ListHostedZones(ctx context.Context, opts *ListHostedZonesRequest) (*ListHostedZones, error) {
+	url := listHostedZonesURL(s.Client, opts)
+	resp := new(ListHostedZonesResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			AppendCategories(sdkerror.ErrCatProductVdns)
+	}
+
+	return resp.ToEntityListHostedZones(), nil
+}
+
+func (s *VDnsServiceV1) CreateHostedZone(ctx context.Context, opts *CreateHostedZoneRequest) (*HostedZone, error) {
+	url := createHostedZoneURL(s.Client)
+	resp := new(CreateHostedZoneResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Post(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			AppendCategories(sdkerror.ErrCatProductVdns)
+	}
+
+	return resp.ToEntityHostedZone(), nil
+}
+
+func (s *VDnsServiceV1) DeleteHostedZone(ctx context.Context, opts *DeleteHostedZoneRequest) error {
+	url := deleteHostedZoneURL(s.Client, opts)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(204).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Delete(ctx, url, req); sdkErr != nil {
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			AppendCategories(sdkerror.ErrCatProductVdns)
+	}
+
+	return nil
+}
+
+func (s *VDnsServiceV1) UpdateHostedZone(ctx context.Context, opts *UpdateHostedZoneRequest) error {
+	url := updateHostedZoneURL(s.Client, opts)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(204).
+		WithJSONBody(opts.ToRequestBody(s.Client)).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Put(ctx, url, req); sdkErr != nil {
+		return sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			AppendCategories(sdkerror.ErrCatProductVdns)
+	}
+
+	return nil
+}

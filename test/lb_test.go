@@ -6,10 +6,10 @@ import (
 	"context"
 	"testing"
 
-	"danny.vn/greennode/greennode"
-	"danny.vn/greennode/greennode/services/common"
-	"danny.vn/greennode/greennode/services/loadbalancer/intervpc"
-	lbv2 "danny.vn/greennode/greennode/services/loadbalancer/v2"
+	"danny.vn/greennode"
+	"danny.vn/greennode/services/common"
+	"danny.vn/greennode/services/loadbalancer/intervpc"
+	lbv2 "danny.vn/greennode/services/loadbalancer/v2"
 )
 
 func TestCreateInterLoadBalancerSuccess1(t *testing.T) {
