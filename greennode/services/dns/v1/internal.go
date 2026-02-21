@@ -3,9 +3,9 @@ package v1
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
 )
 
 func (s *VDnsServiceInternal) GetHostedZoneByID(ctx context.Context, opts *GetHostedZoneByIDRequest, portalUserID string) (*HostedZone, error) {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/base64"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
 )
 
 type IdentityServiceV2 struct {

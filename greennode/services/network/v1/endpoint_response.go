@@ -1,6 +1,6 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/types"
+import "github.com/dannyota/greennode-community-sdk/greennode/types"
 
 type endpointResp struct {
 	Uuid              string `json:"uuid,omitempty"`

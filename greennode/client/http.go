@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
 )
 
 const (

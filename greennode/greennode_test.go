@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/option"
+	"github.com/dannyota/greennode-community-sdk/greennode/option"
 )
 
 func TestNewClientWithHTTPClient(t *testing.T) {

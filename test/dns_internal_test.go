@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
+	dnsv1 "github.com/dannyota/greennode-community-sdk/greennode/services/dns/v1"
 )
 
 func TestDnsServiceInternal_ListHostedZonesDefault(t *testing.T) {

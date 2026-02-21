@@ -7,9 +7,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
-	portalv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v1"
-	portalv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/portal/v2"
+	"github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
+	portalv1 "github.com/dannyota/greennode-community-sdk/greennode/services/portal/v1"
+	portalv2 "github.com/dannyota/greennode-community-sdk/greennode/services/portal/v2"
 )
 
 func TestGetPortalInfoFailed(t *testing.T) {

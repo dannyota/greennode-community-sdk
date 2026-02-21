@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	networkv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v2"
+	networkv2 "github.com/dannyota/greennode-community-sdk/greennode/services/network/v2"
 )
 
 func TestGetAllAddressPairByVirtualSubnetID(t *testing.T) {

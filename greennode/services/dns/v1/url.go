@@ -1,6 +1,6 @@
 package v1
 
-import "github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+import "github.com/dannyota/greennode-community-sdk/greennode/client"
 
 func getHostedZoneByIDURL(sc *client.ServiceClient, opts *GetHostedZoneByIDRequest) string {
 	return sc.ServiceURL(

@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	v2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/volume/v2"
+	v2 "github.com/dannyota/greennode-community-sdk/greennode/services/volume/v2"
 )
 
 func TestListSnapshotFailure(t *testing.T) {

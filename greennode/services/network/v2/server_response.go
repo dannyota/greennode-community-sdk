@@ -1,6 +1,6 @@
 package v2
 
-import computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
+import computev2 "github.com/dannyota/greennode-community-sdk/greennode/services/compute/v2"
 
 type ListAllServersBySecgroupIDResponse struct {
 	Data []struct {

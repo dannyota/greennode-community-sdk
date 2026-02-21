@@ -1,8 +1,8 @@
 package v2
 
 import (
-	types "github.com/dannyota/greennode-community-sdk/v2/greennode/types"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	types "github.com/dannyota/greennode-community-sdk/greennode/types"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
 )
 
 func NewListTagsRequest(lbID string) *ListTagsRequest {

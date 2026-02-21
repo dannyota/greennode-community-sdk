@@ -3,8 +3,8 @@ package v2
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
 )
 
 func (s *NetworkServiceV2) GetAllAddressPairByVirtualSubnetID(ctx context.Context, opts *GetAllAddressPairByVirtualSubnetIDRequest) ([]*AddressPair, error) {

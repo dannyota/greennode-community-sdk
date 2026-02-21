@@ -6,10 +6,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/intervpc"
-	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+	"github.com/dannyota/greennode-community-sdk/greennode"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/loadbalancer/intervpc"
+	lbv2 "github.com/dannyota/greennode-community-sdk/greennode/services/loadbalancer/v2"
 )
 
 func TestCreateInterLoadBalancerSuccess1(t *testing.T) {

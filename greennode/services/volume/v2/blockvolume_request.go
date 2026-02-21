@@ -6,7 +6,7 @@ import (
 
 	"strconv"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
 )
 
 func NewCreateBlockVolumeRequest(volumeName, volumeType string, size int64) *CreateBlockVolumeRequest {

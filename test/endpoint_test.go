@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"testing"
 
-	networkv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/network/v1"
+	networkv1 "github.com/dannyota/greennode-community-sdk/greennode/services/network/v1"
 )
 
 func TestGetEndpointSuccess(t *testing.T) {

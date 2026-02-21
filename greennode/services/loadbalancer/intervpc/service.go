@@ -3,10 +3,10 @@ package intervpc
 import (
 	"context"
 
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
-	sdkerror "github.com/dannyota/greennode-community-sdk/v2/greennode/sdkerror"
-	"github.com/dannyota/greennode-community-sdk/v2/greennode/services/common"
-	lbv2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/loadbalancer/v2"
+	"github.com/dannyota/greennode-community-sdk/greennode/client"
+	sdkerror "github.com/dannyota/greennode-community-sdk/greennode/sdkerror"
+	"github.com/dannyota/greennode-community-sdk/greennode/services/common"
+	lbv2 "github.com/dannyota/greennode-community-sdk/greennode/services/loadbalancer/v2"
 )
 
 type LoadBalancerServiceInternal struct {
