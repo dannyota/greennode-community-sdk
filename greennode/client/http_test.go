@@ -248,6 +248,14 @@ func TestDoRequest_StatusCodeErrors(t *testing.T) {
 	}
 }
 
+func TestWithUnderlyingClient(t *testing.T) {
+	custom := &http.Client{Timeout: 5 * time.Second}
+	hc := NewHTTPClient().WithUnderlyingClient(custom)
+	if hc.client != custom {
+		t.Fatal("expected underlying client to be replaced")
+	}
+}
+
 func TestNewHTTPClient_Defaults(t *testing.T) {
 	hc := NewHTTPClient()
 	if hc.retryCount != 3 {

@@ -72,6 +72,19 @@ func (hc *HTTPClient) WithRetryInterval(interval time.Duration) *HTTPClient {
 	return hc
 }
 
+// WithUnderlyingClient replaces the SDK's default http.Client with the provided one.
+// Auth, retry, and header injection still apply on top of it.
+func (hc *HTTPClient) WithUnderlyingClient(c *http.Client) *HTTPClient {
+	hc.client = c
+	return hc
+}
+
+// WithTransport sets a custom RoundTripper on the SDK's default http.Client.
+func (hc *HTTPClient) WithTransport(t http.RoundTripper) *HTTPClient {
+	hc.client.Transport = t
+	return hc
+}
+
 func (hc *HTTPClient) WithDefaultHeaders(kvPairs ...string) *HTTPClient {
 	if hc.defaultHeaders == nil {
 		hc.defaultHeaders = make(map[string]string)

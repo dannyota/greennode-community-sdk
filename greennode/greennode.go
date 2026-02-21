@@ -6,6 +6,7 @@ import (
 
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/auth"
 	"github.com/dannyota/greennode-community-sdk/v2/greennode/client"
+	"github.com/dannyota/greennode-community-sdk/v2/greennode/option"
 	computev2 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/compute/v2"
 	dnsv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/dns/v1"
 	glbv1 "github.com/dannyota/greennode-community-sdk/v2/greennode/services/glb/v1"
@@ -67,10 +68,17 @@ type Client struct {
 }
 
 // NewClient creates a fully-wired SDK client from the given configuration.
-func NewClient(ctx context.Context, cfg Config) (*Client, error) {
+func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*Client, error) {
 	resolveEndpoints(&cfg)
 
+	settings := option.Apply(opts)
+
 	hc := client.NewHTTPClient()
+	if settings.HTTPClient != nil {
+		hc.WithUnderlyingClient(settings.HTTPClient)
+	} else if settings.Transport != nil {
+		hc.WithTransport(settings.Transport)
+	}
 
 	if cfg.RetryCount > 0 {
 		hc.WithRetryCount(cfg.RetryCount)
@@ -79,8 +87,13 @@ func NewClient(ctx context.Context, cfg Config) (*Client, error) {
 		hc.WithRetryInterval(cfg.SleepDuration)
 	}
 	hc.WithDefaultHeaders("Content-Type", "application/json")
-	if cfg.UserAgent != "" {
-		hc.WithDefaultHeaders("User-Agent", cfg.UserAgent)
+
+	ua := cfg.UserAgent
+	if settings.UserAgent != "" {
+		ua = settings.UserAgent
+	}
+	if ua != "" {
+		hc.WithDefaultHeaders("User-Agent", ua)
 	}
 
 	c := &Client{}
