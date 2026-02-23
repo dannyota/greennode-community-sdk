@@ -32,13 +32,23 @@ func TestNeedsReauth_ExpiredToken(t *testing.T) {
 	}
 }
 
-func TestNeedsReauth_ExpiringWithin5Min(t *testing.T) {
+func TestNeedsReauth_ExpiringWithin30s(t *testing.T) {
 	tok := &Token{
 		AccessToken: "tok",
-		ExpiresAt:   time.Now().Add(3 * time.Minute).UnixNano(),
+		ExpiresAt:   time.Now().Add(10 * time.Second).UnixNano(),
 	}
 	if !tok.NeedsReauth() {
-		t.Fatal("token expiring within 5 min should need reauth")
+		t.Fatal("token expiring within 30s should need reauth")
+	}
+}
+
+func TestNeedsReauth_ExpiringIn2Min(t *testing.T) {
+	tok := &Token{
+		AccessToken: "tok",
+		ExpiresAt:   time.Now().Add(2 * time.Minute).UnixNano(),
+	}
+	if tok.NeedsReauth() {
+		t.Fatal("token expiring in 2 min should not need reauth")
 	}
 }
 

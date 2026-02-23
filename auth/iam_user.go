@@ -9,11 +9,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -27,16 +29,40 @@ const (
 )
 
 // IAMUserAuth holds credentials for IAM user authentication.
+// Token is cached so multiple SDK clients sharing the same instance
+// do not trigger redundant logins.
 type IAMUserAuth struct {
 	RootEmail string
 	Username  string
 	Password  string
 	TOTP      TOTPProvider // optional, for accounts with 2FA
+
+	mu          sync.Mutex
+	cachedToken string
+	expiresAt   int64 // Unix nanoseconds
 }
 
-// Authenticate performs the full OAuth2 PKCE + login + optional TOTP flow
-// and returns an access token with its expiry (Unix nanoseconds).
+// Authenticate returns a valid access token. If a cached token exists and
+// has not expired, it is returned immediately without a network call.
 func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, expiresAt int64, err error) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
+	if a.cachedToken != "" && time.Now().UnixNano() < a.expiresAt {
+		return a.cachedToken, a.expiresAt, nil
+	}
+
+	token, exp, err := a.login(ctx)
+	if err != nil {
+		return "", 0, err
+	}
+	a.cachedToken = token
+	a.expiresAt = exp
+	return token, exp, nil
+}
+
+// login performs the full OAuth2 PKCE + login + optional TOTP flow.
+func (a *IAMUserAuth) login(ctx context.Context) (accessToken string, expiresAt int64, err error) {
 	jar, _ := cookiejar.New(nil)
 	client := &http.Client{
 		Jar: jar,
@@ -45,7 +71,7 @@ func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, exp
 		},
 	}
 
-	_, challenge := generatePKCE()
+	verifier, challenge := generatePKCE()
 
 	// GET login page for CSRF token
 	loginURL := fmt.Sprintf("%s%s?clientId=%s&responseType=code&codeChallenge=%s&codeChallengeMethod=S256&redirectUri=%s&rootEmail=%s",
@@ -55,10 +81,13 @@ func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, exp
 		url.QueryEscape(a.RootEmail),
 	)
 
+	step := time.Now()
+	log.Printf("[auth] GET login page %s", loginURL)
 	pageBody, err := doGet(ctx, client, loginURL)
 	if err != nil {
 		return "", 0, fmt.Errorf("auth: GET login page: %w", err)
 	}
+	log.Printf("[auth] GET login page OK (%v, %d bytes)", time.Since(step), len(pageBody))
 
 	csrfToken := extractCSRFToken(string(pageBody))
 	if csrfToken == "" {
@@ -73,12 +102,15 @@ func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, exp
 		"password":  {a.Password},
 	}
 
-	location, err := doPostForm(ctx, client, loginURL, formData)
+	step = time.Now()
+	log.Printf("[auth] POST login credentials")
+	location, respBody, err := doPostForm(ctx, client, loginURL, formData)
 	if err != nil {
 		return "", 0, fmt.Errorf("auth: POST login: %w", err)
 	}
+	log.Printf("[auth] POST login OK (%v, location=%q)", time.Since(step), location)
 	if location == "" {
-		return "", 0, fmt.Errorf("auth: login failed (no redirect)")
+		return "", 0, fmt.Errorf("auth: login failed (no redirect, response body: %s)", truncate(respBody, 500))
 	}
 
 	// Handle 2FA if needed
@@ -86,10 +118,13 @@ func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, exp
 		if a.TOTP == nil {
 			return "", 0, fmt.Errorf("auth: 2FA required but no TOTPProvider configured")
 		}
+		step = time.Now()
+		log.Printf("[auth] 2FA required, handling...")
 		location, err = a.handle2FA(ctx, client, location)
 		if err != nil {
 			return "", 0, err
 		}
+		log.Printf("[auth] 2FA OK (%v, location=%q)", time.Since(step), location)
 	}
 
 	// Extract auth code from redirect
@@ -99,14 +134,15 @@ func (a *IAMUserAuth) Authenticate(ctx context.Context) (accessToken string, exp
 	}
 
 	// Exchange code for token
-	token, err := exchangeToken(ctx, client, authCode)
+	step = time.Now()
+	log.Printf("[auth] exchanging auth code for token at %s", tokenURL)
+	token, err := exchangeToken(ctx, client, authCode, verifier)
 	if err != nil {
 		return "", 0, err
 	}
+	log.Printf("[auth] token exchange OK (%v, expires_in=%ds)", time.Since(step), token.ExpiresIn)
 
-	// Compute expiresAt as nanoseconds (matching SdkAuthentication convention)
 	expiresAt = time.Now().Add(time.Duration(token.ExpiresIn) * time.Second).UnixNano()
-
 	return token.AccessToken, expiresAt, nil
 }
 
@@ -136,12 +172,12 @@ func (a *IAMUserAuth) handle2FA(ctx context.Context, client *http.Client, redire
 		"token": {totpCode},
 	}
 
-	location, err := doPostForm(ctx, client, twoFAURL, formData)
+	location, respBody, err := doPostForm(ctx, client, twoFAURL, formData)
 	if err != nil {
 		return "", fmt.Errorf("auth: POST 2FA: %w", err)
 	}
 	if location == "" {
-		return "", fmt.Errorf("auth: 2FA failed (no redirect)")
+		return "", fmt.Errorf("auth: 2FA failed (no redirect, response body: %s)", truncate(respBody, 500))
 	}
 
 	return location, nil
@@ -152,12 +188,13 @@ type tokenResponse struct {
 	ExpiresIn   int64  `json:"expiresIn"`
 }
 
-func exchangeToken(ctx context.Context, client *http.Client, authCode string) (*tokenResponse, error) {
+func exchangeToken(ctx context.Context, client *http.Client, authCode, codeVerifier string) (*tokenResponse, error) {
 	body, _ := json.Marshal(map[string]string{
-		"grantType":   "authorization_code",
-		"code":        authCode,
-		"redirectUri": dashboardURI,
-		"scope":       "openid",
+		"grantType":    "authorization_code",
+		"code":         authCode,
+		"redirectUri":  dashboardURI,
+		"scope":        "openid",
+		"codeVerifier": codeVerifier,
 	})
 
 	req, err := http.NewRequestWithContext(ctx, "POST", tokenURL, bytes.NewReader(body))
@@ -220,10 +257,11 @@ func doGet(ctx context.Context, client *http.Client, reqURL string) ([]byte, err
 }
 
 // doPostForm POSTs form data with no-redirect and returns the Location header.
-func doPostForm(ctx context.Context, client *http.Client, postURL string, form url.Values) (string, error) {
+// If there is no redirect, it reads the response body to provide a meaningful error.
+func doPostForm(ctx context.Context, client *http.Client, postURL string, form url.Values) (location string, body []byte, err error) {
 	req, err := http.NewRequestWithContext(ctx, "POST", postURL, strings.NewReader(form.Encode()))
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Origin", signinBaseURL)
@@ -231,11 +269,17 @@ func doPostForm(ctx context.Context, client *http.Client, postURL string, form u
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	defer resp.Body.Close()
 
-	return resp.Header.Get("Location"), nil
+	loc := resp.Header.Get("Location")
+	if loc != "" {
+		return loc, nil, nil
+	}
+
+	respBody, _ := io.ReadAll(resp.Body)
+	return "", respBody, nil
 }
 
 var (
@@ -251,6 +295,13 @@ func extractCSRFToken(html string) string {
 		return m[1]
 	}
 	return ""
+}
+
+func truncate(b []byte, maxLen int) string {
+	if len(b) <= maxLen {
+		return string(b)
+	}
+	return string(b[:maxLen]) + "..."
 }
 
 func extractAuthCode(location string) string {

@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"sync"
@@ -152,7 +153,9 @@ func (hc *HTTPClient) prepareRequest(ctx context.Context, url string, preq *Requ
 
 func (hc *HTTPClient) executeRequest(ctx context.Context, url string, preq *Request) (*http.Response, error) {
 	if hc.needsReauth(preq) {
-		return hc.handleReauthBeforeRequest(ctx, url, preq)
+		if err := hc.reauthOrWait(ctx, preq); err != nil {
+			return nil, err
+		}
 	}
 
 	req, err := hc.prepareRequest(ctx, url, preq)
@@ -166,6 +169,14 @@ func (hc *HTTPClient) executeRequest(ctx context.Context, url string, preq *Requ
 	}
 
 	return resp, nil
+}
+
+// reauthOrWait authenticates if needed. Does NOT send the API request.
+func (hc *HTTPClient) reauthOrWait(ctx context.Context, req *Request) error {
+	if req.skipAuth || hc.reauthFunc == nil {
+		return nil
+	}
+	return hc.reauthenticate(ctx)
 }
 
 func (hc *HTTPClient) doWithRetry(req *http.Request) (*http.Response, error) {
@@ -202,16 +213,6 @@ func (hc *HTTPClient) doWithRetry(req *http.Request) (*http.Response, error) {
 	return resp, err
 }
 
-func (hc *HTTPClient) handleReauthBeforeRequest(ctx context.Context, url string, req *Request) (*http.Response, error) {
-	if !req.skipAuth && hc.reauthFunc != nil {
-		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
-			return nil, sdkErr
-		}
-		return hc.DoRequest(ctx, url, req)
-	}
-	return nil, nil
-}
-
 func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *http.Response, preq *Request) (*http.Response, error) {
 	if resp == nil {
 		return nil, sdkerror.NewUnexpectedError(nil)
@@ -222,6 +223,8 @@ func (hc *HTTPClient) handleResponse(ctx context.Context, url string, resp *http
 	if err != nil {
 		return resp, sdkerror.ErrorHandler(err)
 	}
+
+	log.Printf("[sdk] %s %s → %d (%d bytes)", strings.ToUpper(string(preq.method)), url, resp.StatusCode, len(bodyBytes))
 
 	if sdkErr := hc.handleStatusCode(ctx, url, resp, preq); sdkErr != nil {
 		return nil, sdkErr
@@ -272,7 +275,10 @@ func (hc *HTTPClient) handleUnauthorized(ctx context.Context, url string, resp *
 		if sdkErr := hc.reauthenticate(ctx); sdkErr != nil {
 			return sdkErr
 		}
+		// Retry once with skipAuth to prevent infinite 401 loop.
+		req.skipAuth = true
 		_, err := hc.DoRequest(ctx, url, req)
+		req.skipAuth = false
 		return err
 	}
 	return defaultErrorResponse(nil, url, req, resp)

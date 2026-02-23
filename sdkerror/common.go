@@ -66,12 +66,14 @@ func SdkErrorHandler(err error, errResp ErrorResponse, codes ...ErrorCode) *SdkE
 		return sdkErr
 	}
 
-	if errResp != nil {
-		sdkErr.WithErrorCode(EcUnknownError).WithMessage(errResp.GetMessage()).WithErrors(errResp.Err())
-	}
-
 	if errResp == nil {
 		return sdkErr
+	}
+
+	// Only overwrite the error with errResp values if errResp actually has content.
+	// Otherwise, the original error message (e.g., from auth failure) is preserved.
+	if msg := errResp.GetMessage(); msg != "" {
+		sdkErr.WithErrorCode(EcUnknownError).WithMessage(msg).WithErrors(errResp.Err())
 	}
 
 	lowerMsg := strings.ToLower(strings.TrimSpace(errResp.GetMessage()))

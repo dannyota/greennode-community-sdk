@@ -120,7 +120,11 @@ func listServerGroupsURL(sc *client.ServiceClient, opts *ListServerGroupsRequest
 		query = opts.getDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.ProjectID, "serverGroups") + query
+	base := sc.ServiceURL(sc.ProjectID, "serverGroups")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
 }
 
 func createServerGroupURL(sc *client.ServiceClient, _ *CreateServerGroupRequest) string {

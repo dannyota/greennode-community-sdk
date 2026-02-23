@@ -13,5 +13,5 @@ func (t *Token) NeedsReauth() bool {
 	}
 
 	ea := time.Unix(0, t.ExpiresAt)
-	return time.Until(ea) < 5*time.Minute
+	return time.Until(ea) < 30*time.Second
 }
