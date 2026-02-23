@@ -11,6 +11,23 @@ type PortalServiceV2 struct {
 	Client *client.ServiceClient
 }
 
+func (s *PortalServiceV2) ListRegions(ctx context.Context) (*ListRegions, error) {
+	url := listRegionsURL(s.Client)
+	resp := new(ListRegionsResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters("projectId", s.Client.ProjectID)
+	}
+
+	return resp.ToEntityListRegions(), nil
+}
+
 func (s *PortalServiceV2) ListAllQuotaUsed(ctx context.Context) (*ListQuotas, error) {
 	url := listAllQuotaUsedURL(s.Client)
 	resp := new(ListAllQuotaUsedResponse)

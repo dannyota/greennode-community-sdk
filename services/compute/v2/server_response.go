@@ -231,6 +231,68 @@ func (sv serverResp) toEntityServer() *Server {
 	return server
 }
 
+type ListServersResponse struct {
+	ListData  []serverResp `json:"listData"`
+	Page      int          `json:"page"`
+	PageSize  int          `json:"pageSize"`
+	TotalPage int          `json:"totalPage"`
+	TotalItem int          `json:"totalItem"`
+}
+
+func (r *ListServersResponse) ToEntityListServers() *ListServers {
+	servers := &ListServers{
+		Page:      r.Page,
+		PageSize:  r.PageSize,
+		TotalPage: r.TotalPage,
+		TotalItem: r.TotalItem,
+	}
+	for _, item := range r.ListData {
+		servers.Items = append(servers.Items, item.toEntityServer())
+	}
+	return servers
+}
+
+type sshKeyResp struct {
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	CreatedAt  string `json:"createdAt"`
+	PubKey     string `json:"pubKey"`
+	PrivateKey string `json:"privateKey"`
+	Status     string `json:"status"`
+}
+
+func (r sshKeyResp) toEntitySSHKey() *SSHKey {
+	return &SSHKey{
+		ID:         r.ID,
+		Name:       r.Name,
+		CreatedAt:  r.CreatedAt,
+		PubKey:     r.PubKey,
+		PrivateKey: r.PrivateKey,
+		Status:     r.Status,
+	}
+}
+
+type ListSSHKeysResponse struct {
+	ListData  []sshKeyResp `json:"listData"`
+	Page      int          `json:"page"`
+	PageSize  int          `json:"pageSize"`
+	TotalPage int          `json:"totalPage"`
+	TotalItem int          `json:"totalItem"`
+}
+
+func (r *ListSSHKeysResponse) ToEntityListSSHKeys() *ListSSHKeys {
+	keys := &ListSSHKeys{
+		Page:      r.Page,
+		PageSize:  r.PageSize,
+		TotalPage: r.TotalPage,
+		TotalItem: r.TotalItem,
+	}
+	for _, item := range r.ListData {
+		keys.Items = append(keys.Items, item.toEntitySSHKey())
+	}
+	return keys
+}
+
 type CreateServerResponse struct {
 	Data serverResp `json:"data"`
 }

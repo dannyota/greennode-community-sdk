@@ -16,6 +16,12 @@ type ComputeServiceV2 struct {
 const (
 	defaultOffsetListServerGroups = 0
 	defaultLimitListServerGroups  = 10
+
+	defaultPageListServers = 1
+	defaultSizeListServers = 50
+
+	defaultPageListSSHKeys = 1
+	defaultSizeListSSHKeys = 50
 )
 
 func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*Server, error) {
@@ -208,6 +214,42 @@ func (s *ComputeServiceV2) DetachFloatingIp(ctx context.Context, opts *DetachFlo
 	}
 
 	return nil
+}
+
+func (s *ComputeServiceV2) ListServers(ctx context.Context, opts *ListServersRequest) (*ListServers, error) {
+	url := listServersURL(s.Client, opts)
+	resp := new(ListServersResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			WithKVparameters("projectId", s.Client.ProjectID)
+	}
+
+	return resp.ToEntityListServers(), nil
+}
+
+func (s *ComputeServiceV2) ListSSHKeys(ctx context.Context, opts *ListSSHKeysRequest) (*ListSSHKeys, error) {
+	url := listSSHKeysURL(s.Client, opts)
+	resp := new(ListSSHKeysResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			WithKVparameters("projectId", s.Client.ProjectID)
+	}
+
+	return resp.ToEntityListSSHKeys(), nil
 }
 
 func (s *ComputeServiceV2) ListServerGroupPolicies(ctx context.Context, opts *ListServerGroupPoliciesRequest) (*ListServerGroupPolicies, error) {

@@ -111,6 +111,48 @@ type DetachFloatingIpRequest struct {
 	InternalNetworkInterfaceID    string
 }
 
+type ListServersRequest struct {
+	Page int
+	Size int
+}
+
+func (r *ListServersRequest) ToListQuery() (string, error) {
+	v := url.Values{}
+	if r.Page > 0 {
+		v.Set("page", strconv.Itoa(r.Page))
+	}
+	if r.Size > 0 {
+		v.Set("size", strconv.Itoa(r.Size))
+	}
+	return v.Encode(), nil
+}
+
+func (r *ListServersRequest) getDefaultQuery() string {
+	return fmt.Sprintf("page=%d&size=%d", defaultPageListServers, defaultSizeListServers)
+}
+
+type ListSSHKeysRequest struct {
+	Name string
+	Page int
+	Size int
+}
+
+func (r *ListSSHKeysRequest) ToListQuery() (string, error) {
+	v := url.Values{}
+	v.Set("name", r.Name)
+	if r.Page > 0 {
+		v.Set("page", strconv.Itoa(r.Page))
+	}
+	if r.Size > 0 {
+		v.Set("size", strconv.Itoa(r.Size))
+	}
+	return v.Encode(), nil
+}
+
+func (r *ListSSHKeysRequest) getDefaultQuery() string {
+	return fmt.Sprintf("name=&page=%d&size=%d", defaultPageListSSHKeys, defaultSizeListSSHKeys)
+}
+
 type ListServerGroupPoliciesRequest struct{}
 
 type DeleteServerGroupByIDRequest struct {
@@ -220,6 +262,20 @@ func NewListServerGroupsRequest(page, size int) *ListServerGroupsRequest {
 		Page: page,
 		Size: size,
 		Name: "",
+	}
+}
+
+func NewListServersRequest(page, size int) *ListServersRequest {
+	return &ListServersRequest{
+		Page: page,
+		Size: size,
+	}
+}
+
+func NewListSSHKeysRequest(page, size int) *ListSSHKeysRequest {
+	return &ListSSHKeysRequest{
+		Page: page,
+		Size: size,
 	}
 }
 

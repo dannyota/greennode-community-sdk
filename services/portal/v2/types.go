@@ -8,6 +8,16 @@ type Quota struct {
 	Used        int    `json:"used"`
 }
 
+type Region struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type ListRegions struct {
+	Items []*Region
+}
+
 type ListQuotas struct {
 	Items []*Quota
 }

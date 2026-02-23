@@ -89,7 +89,11 @@ type (
 )
 
 type ListServers struct {
-	Items []*Server
+	Items     []*Server
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
 }
 
 func (sv Server) CanDelete() bool {
@@ -145,6 +149,23 @@ func (sv Server) CanAttachFloatingIp() bool {
 	}
 
 	return true
+}
+
+type SSHKey struct {
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	CreatedAt  string `json:"createdAt"`
+	PubKey     string `json:"pubKey"`
+	PrivateKey string `json:"privateKey"`
+	Status     string `json:"status"`
+}
+
+type ListSSHKeys struct {
+	Items     []*SSHKey
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
 }
 
 type ServerGroup struct {

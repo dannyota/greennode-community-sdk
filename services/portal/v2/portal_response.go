@@ -21,6 +21,20 @@ type (
 	QuotaName string
 )
 
+type ListRegionsResponse struct {
+	Data []Region `json:"data"`
+}
+
+func (r *ListRegionsResponse) ToEntityListRegions() *ListRegions {
+	listRegions := &ListRegions{
+		Items: make([]*Region, 0, len(r.Data)),
+	}
+	for i := range r.Data {
+		listRegions.Items = append(listRegions.Items, &r.Data[i])
+	}
+	return listRegions
+}
+
 type ListAllQuotaUsedResponse struct {
 	Data []quotaResp `json:"data"`
 }

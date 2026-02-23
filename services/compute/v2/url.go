@@ -72,6 +72,32 @@ func detachFloatingIpURL(sc *client.ServiceClient, opts *DetachFloatingIpRequest
 		"detach")
 }
 
+func listServersURL(sc *client.ServiceClient, opts *ListServersRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "servers")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}
+
+func listSSHKeysURL(sc *client.ServiceClient, opts *ListSSHKeysRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "sshKeys")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}
+
 func listServerGroupPoliciesURL(sc *client.ServiceClient) string {
 	return sc.ServiceURL(
 		sc.ProjectID,
