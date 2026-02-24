@@ -361,3 +361,48 @@ func (r *CreateServerGroupResponse) ToEntityServerGroup() *ServerGroup {
 		PolicyID:    r.Data.PolicyID,
 	}
 }
+
+type userImageResp struct {
+	Uuid      string  `json:"uuid"`
+	ProjectID string  `json:"projectId"`
+	Name      string  `json:"name"`
+	MinDisk   int     `json:"minDisk"`
+	ImageSize float64 `json:"imageSize"`
+	Status    string  `json:"status"`
+	CreatedAt string  `json:"createdAt"`
+	MetaData  string  `json:"metaData"`
+}
+
+func (r userImageResp) toEntityUserImage() *UserImage {
+	return &UserImage{
+		Uuid:      r.Uuid,
+		ProjectID: r.ProjectID,
+		Name:      r.Name,
+		MinDisk:   r.MinDisk,
+		ImageSize: r.ImageSize,
+		Status:    r.Status,
+		CreatedAt: r.CreatedAt,
+		MetaData:  r.MetaData,
+	}
+}
+
+type ListUserImagesResponse struct {
+	ListData  []userImageResp `json:"listData"`
+	Page      int             `json:"page"`
+	PageSize  int             `json:"pageSize"`
+	TotalPage int             `json:"totalPage"`
+	TotalItem int             `json:"totalItem"`
+}
+
+func (r *ListUserImagesResponse) ToEntityListUserImages() *ListUserImages {
+	images := &ListUserImages{
+		Page:      r.Page,
+		PageSize:  r.PageSize,
+		TotalPage: r.TotalPage,
+		TotalItem: r.TotalItem,
+	}
+	for _, item := range r.ListData {
+		images.Items = append(images.Items, item.toEntityUserImage())
+	}
+	return images
+}

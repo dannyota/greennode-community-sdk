@@ -133,3 +133,16 @@ func createServerGroupURL(sc *client.ServiceClient, _ *CreateServerGroupRequest)
 		"serverGroups",
 	)
 }
+
+func listUserImagesURL(sc *client.ServiceClient, opts *ListUserImagesRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "user-images")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}

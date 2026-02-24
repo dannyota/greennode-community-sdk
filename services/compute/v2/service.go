@@ -22,6 +22,9 @@ const (
 
 	defaultPageListSSHKeys = 1
 	defaultSizeListSSHKeys = 50
+
+	defaultPageListUserImages = 1
+	defaultSizeListUserImages = 10
 )
 
 func (s *ComputeServiceV2) CreateServer(ctx context.Context, opts *CreateServerRequest) (*Server, error) {
@@ -324,4 +327,22 @@ func (s *ComputeServiceV2) CreateServerGroup(ctx context.Context, opts *CreateSe
 	}
 
 	return resp.ToEntityServerGroup(), nil
+}
+
+func (s *ComputeServiceV2) ListUserImages(ctx context.Context, opts *ListUserImagesRequest) (*ListUserImages, error) {
+	url := listUserImagesURL(s.Client, opts)
+	resp := new(ListUserImagesResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithParameters(common.StructToMap(opts)).
+			WithKVparameters("projectId", s.Client.ProjectID)
+	}
+
+	return resp.ToEntityListUserImages(), nil
 }

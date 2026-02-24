@@ -204,6 +204,25 @@ func (l *ListServerGroups) FindServerGroupByServerGroupID(serverGroupID string) 
 	return nil, false
 }
 
+type UserImage struct {
+	Uuid      string  `json:"uuid"`
+	ProjectID string  `json:"projectId"`
+	Name      string  `json:"name"`
+	MinDisk   int     `json:"minDisk"`
+	ImageSize float64 `json:"imageSize"`
+	Status    string  `json:"status"`
+	CreatedAt string  `json:"createdAt"`
+	MetaData  string  `json:"metaData"`
+}
+
+type ListUserImages struct {
+	Items     []*UserImage
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
+}
+
 type ServerGroupPolicy struct {
 	Name         string            `json:"name"`
 	UUID         string            `json:"uuid"`
