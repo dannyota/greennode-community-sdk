@@ -8,8 +8,6 @@ import (
 	"testing"
 
 	"danny.vn/greennode/sdkerror"
-	serverv1 "danny.vn/greennode/services/server/v1"
-
 	computev2 "danny.vn/greennode/services/compute/v2"
 )
 
@@ -403,21 +401,4 @@ func TestCreateServerGroup(t *testing.T) {
 	}
 
 	t.Logf("Result: %v", groups)
-}
-
-func TestCreateSystemTags(t *testing.T) {
-	vngcloud := validSuperSdkConfig()
-	opt := serverv1.NewSystemTagRequest("ins-da59addd-6263-4544-b405-420a65ccfb1f", serverv1.Server)
-	opt.Tags = []serverv1.SystemTag{{Key: "vng.billing.product", Value: "VKS"}}
-
-	response, sdkerr := vngcloud.ServerInternal.CreateSystemTags(context.Background(), opt)
-	if sdkerr != nil {
-		var sdkErr *sdkerror.SdkError
-		if errors.As(sdkerr, &sdkErr) {
-			t.Fatalf("Expect nil but got %+v", sdkErr.ErrorCode())
-		}
-	}
-
-	t.Log("Result: ", sdkerr)
-	t.Logf("Result: %v", response)
 }

@@ -20,7 +20,7 @@ greennode-community-sdk/
 │   ├── endpoints.go               Default endpoint resolution from Region + auth method
 │   ├── auth/                      IAM user auth (PKCE + TOTP) and TOTP providers
 │   ├── client/                    Low-level HTTP client, ServiceClient, request builder
-│   ├── services/                  Per-service business logic (9 services, versioned)
+│   ├── services/                  Per-service business logic (8 services, versioned)
 │   │   ├── common/                Shared helpers (StructToMap, Paging)
 │   │   ├── compute/               Server lifecycle, floating IPs, server groups
 │   │   ├── dns/                   Hosted zones, DNS records
@@ -29,7 +29,6 @@ greennode-community-sdk/
 │   │   ├── loadbalancer/          Load balancers, listeners, pools, policies, certs
 │   │   ├── network/               VPCs, subnets, security groups, endpoints
 │   │   ├── portal/                Portal info, project listing
-│   │   ├── server/                Internal server system tags
 │   │   └── volume/                Block volumes, snapshots, volume types
 │   ├── entity/                    Domain model structs (~79 types)
 │   └── sdkerror/                  Error codes, categories, handler chain
@@ -254,12 +253,11 @@ first match.
 | **Compute** | `services/compute` | v2 | Server lifecycle, floating IPs, server groups |
 | **Volume** | `services/volume` | v1, v2 | Block volumes, snapshots, volume types |
 | **Network** | `services/network` | v1, v2 | VPCs, subnets, security groups, endpoints, virtual addresses |
-| **Load Balancer** | `services/loadbalancer` | v2, inter | Load balancers, listeners, pools, policies, certificates |
+| **Load Balancer** | `services/loadbalancer` | v2 | Load balancers, listeners, pools, policies, certificates |
 | **GLB** | `services/glb` | v1 | Global load balancer pools, listeners, health checks |
-| **DNS** | `services/dns` | v1, internal_system | Hosted zones, DNS records |
+| **DNS** | `services/dns` | v1 | Hosted zones, DNS records |
 | **Identity** | `services/identity` | v2 | OAuth2 token acquisition |
 | **Portal** | `services/portal` | v1, v2 | Portal info, project listing |
-| **Server** | `services/server` | v1 | Internal server system tags |
 | **Auth** | `auth` | — | IAM user auth (PKCE + TOTP), TOTP providers |
 
 ### Client Service Wiring
@@ -269,9 +267,9 @@ first match.
 | Endpoint | Version suffixes | Services |
 |----------|-----------------|----------|
 | **IAM** | v2 | Identity |
-| **VServer** | v1, v2, internal | Compute, Volume, Portal, Network, Server |
-| **VLB** | v2, internal | Load Balancer |
-| **VNetwork** | vnetwork/v1, vnetwork/az/v1, internal/v1 | Network (V1, AZ, Internal) |
+| **VServer** | v1, v2 | Compute, Volume, Portal, Network |
+| **VLB** | v2 | Load Balancer |
+| **VNetwork** | vnetwork/v1 | Network (V1) |
 | **GLB** | v1 | GLB |
-| **DNS** | v1, internal/v1 | DNS |
+| **DNS** | v1 | DNS |
 

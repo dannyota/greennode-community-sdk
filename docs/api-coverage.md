@@ -287,17 +287,6 @@ Host: `vmonitor.console.vngcloud.vn`. Note: uses `lstData` wrapper, not `listDat
 
 **0/1**
 
-## Internal/System Services
-
-Exist in the SDK for internal use, not public API coverage:
-
-| Service | Client Field | Methods |
-|---------|-------------|---------|
-| DNS Internal | `Client.DNSInternal` | 10 methods (mirrors DNS V1) |
-| Network Internal | `Client.NetworkInternal` | 5 methods (endpoint tags) |
-| LB Internal | `Client.LoadBalancerInternal` | 1 method (CreateLoadBalancer) |
-| Server Internal | `Client.ServerInternal` | 1 method (CreateSystemTags) |
-
 ---
 
 ### Next priorities

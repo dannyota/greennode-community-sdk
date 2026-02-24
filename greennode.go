@@ -11,13 +11,11 @@ import (
 	dnsv1 "danny.vn/greennode/services/dns/v1"
 	glbv1 "danny.vn/greennode/services/glb/v1"
 	identityv2 "danny.vn/greennode/services/identity/v2"
-	lbintervpc "danny.vn/greennode/services/loadbalancer/intervpc"
 	lbv2 "danny.vn/greennode/services/loadbalancer/v2"
 	networkv1 "danny.vn/greennode/services/network/v1"
 	networkv2 "danny.vn/greennode/services/network/v2"
 	portalv1 "danny.vn/greennode/services/portal/v1"
 	portalv2 "danny.vn/greennode/services/portal/v2"
-	serverv1 "danny.vn/greennode/services/server/v1"
 	volumev1 "danny.vn/greennode/services/volume/v1"
 	volumev2 "danny.vn/greennode/services/volume/v2"
 )
@@ -56,15 +54,10 @@ type Client struct {
 	Portal       *portalv2.PortalServiceV2
 	Identity     *identityv2.IdentityServiceV2
 
-	// Legacy / internal API versions
-	NetworkV1            *networkv1.NetworkServiceV1
-	NetworkAZ            *networkv2.NetworkServiceV2
-	NetworkInternal      *networkv1.NetworkServiceInternalV1
-	VolumeV1             *volumev1.VolumeServiceV1
-	PortalV1             *portalv1.PortalServiceV1
-	LoadBalancerInternal *lbintervpc.LoadBalancerServiceInternal
-	ServerInternal       *serverv1.ServerServiceInternalV1
-	DNSInternal          *dnsv1.VDnsServiceInternal
+	// Legacy API versions
+	NetworkV1 *networkv1.NetworkServiceV1
+	VolumeV1  *volumev1.VolumeServiceV1
+	PortalV1  *portalv1.PortalServiceV1
 }
 
 // NewClient creates a fully-wired SDK client from the given configuration.
@@ -118,8 +111,6 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 		c.VolumeV1 = &volumev1.VolumeServiceV1{Client: svcV1}
 		c.PortalV1 = &portalv1.PortalServiceV1{Client: svcV1}
 
-		svcInternal := newServiceClient(ep+"internal", cfg.ProjectID, "", hc)
-		c.ServerInternal = &serverv1.ServerServiceInternalV1{Client: svcInternal}
 	}
 
 	// VLB (load balancer)
@@ -132,9 +123,6 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 			vserverSvcV2 = newServiceClient(client.NormalizeURL(cfg.VServerEndpoint)+"v2", cfg.ProjectID, "", hc)
 		}
 		c.LoadBalancer = &lbv2.LoadBalancerServiceV2{Client: vlbSvcV2, ServerClient: vserverSvcV2}
-
-		vlbSvcInternal := newServiceClient(vlbEp+"internal", cfg.ProjectID, "", hc)
-		c.LoadBalancerInternal = &lbintervpc.LoadBalancerServiceInternal{Client: vlbSvcInternal}
 	}
 
 	// VNetwork
@@ -143,12 +131,6 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 
 		vnetV1 := newServiceClient(vnEp+"vnetwork/v1", cfg.ProjectID, cfg.ZoneID, hc)
 		c.NetworkV1 = &networkv1.NetworkServiceV1{Client: vnetV1}
-
-		vnetAZ := newServiceClient(vnEp+"vnetwork/az/v1", cfg.ProjectID, cfg.ZoneID, hc)
-		c.NetworkAZ = &networkv2.NetworkServiceV2{Client: vnetAZ}
-
-		vnetInternal := newServiceClient(vnEp+"internal/v1", cfg.ProjectID, cfg.ZoneID, hc)
-		c.NetworkInternal = &networkv1.NetworkServiceInternalV1{Client: vnetInternal}
 	}
 
 	// GLB (global load balancer)
@@ -163,9 +145,6 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 
 		dnsSvc := newServiceClient(dnsEp+"v1", cfg.ProjectID, "", hc)
 		c.DNS = &dnsv1.VDnsServiceV1{Client: dnsSvc}
-
-		dnsInternalSvc := newServiceClient(dnsEp+"internal/v1", cfg.ProjectID, "", hc)
-		c.DNSInternal = &dnsv1.VDnsServiceInternal{Client: dnsInternalSvc}
 	}
 
 	// Set up auth
