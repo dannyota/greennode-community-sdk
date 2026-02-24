@@ -7,7 +7,7 @@ What the SDK supports today vs. what GreenNode exposes.
 | Portal | 6 | 0 | 6 |
 | Compute | 17 | 5 | 22 |
 | Network | 20 | 12 | 32 |
-| vNetwork | 4 | 1 | 5 |
+| vNetwork | 5 | 0 | 5 |
 | Volume | 14 | 2 | 16 |
 | Load Balancer | 30 | 0 | 30 |
 | Global LB | 21 | 0 | 21 |
@@ -18,7 +18,7 @@ What the SDK supports today vs. what GreenNode exposes.
 | Object Storage | 0 | 3 | 3 |
 | Monitoring | 0 | 4 | 4 |
 | Billing | 0 | 1 | 1 |
-| **Total** | **123** | **38** | **161** |
+| **Total** | **124** | **37** | **161** |
 
 ---
 
@@ -112,9 +112,9 @@ What the SDK supports today vs. what GreenNode exposes.
 | Get Endpoint | `GetEndpointByID()` | `GET /vnetwork/v1/{regionId}/{projectId}/endpoints/{id}` | ✅ |
 | Create Endpoint | `CreateEndpoint()` | `POST /vnetwork/v1/{regionId}/{projectId}/endpoints` | ✅ |
 | Delete Endpoint | `DeleteEndpointByID()` | `DELETE /vnetwork/v1/{regionId}/{projectId}/endpoints/{id}` | ✅ |
-| Regions | — | `GET /vnetwork/v1/regions` | |
+| Regions | `ListVNetworkRegions()` | `GET /vnetwork/v1/regions` | ✅ |
 
-**4/5**
+**5/5**
 
 ## Volume (`Client.Volume`, `Client.VolumeV1`)
 

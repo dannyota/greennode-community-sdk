@@ -88,6 +88,23 @@ func (s *NetworkServiceV1) DeleteEndpointByID(ctx context.Context, opts *DeleteE
 	return nil
 }
 
+func (s *NetworkServiceV1) ListVNetworkRegions(ctx context.Context, opts *ListVNetworkRegionsRequest) (*ListVNetworkRegions, error) {
+	url := listVNetworkRegionsURL(s.Client)
+	resp := new(ListVNetworkRegionsResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NetworkGatewayErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			AppendCategories(sdkerror.ErrCatProductVNetwork)
+	}
+
+	return resp.ToEntityListVNetworkRegions(), nil
+}
+
 func (s *NetworkServiceV1) ListEndpoints(ctx context.Context, opts *ListEndpointsRequest) (*ListEndpoints, error) {
 	url := listEndpointsURL(s.Client, opts)
 	resp := new(ListEndpointsResponse)

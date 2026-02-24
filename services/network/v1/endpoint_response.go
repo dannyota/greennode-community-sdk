@@ -2,14 +2,81 @@ package v1
 
 import "danny.vn/greennode/types"
 
+type endpointCategoryResp struct {
+	Uuid      string `json:"uuid,omitempty"`
+	Name      string `json:"name,omitempty"`
+	IsDefault bool   `json:"isDefault,omitempty"`
+}
+
+type endpointServiceDetailResp struct {
+	EndpointAuthURL    string `json:"endpointAuthUrl,omitempty"`
+	EndpointURL        string `json:"endpointUrl,omitempty"`
+	TargetCIDR         string `json:"targetCidr,omitempty"`
+	EndpointEncryptURL string `json:"endpointEncryptUrl,omitempty"`
+}
+
+type endpointServiceResp struct {
+	Uuid         string                     `json:"uuid,omitempty"`
+	Name         string                     `json:"name,omitempty"`
+	EndpointURL  string                     `json:"endpointUrl,omitempty"`
+	EndpointType string                     `json:"endpointType,omitempty"`
+	Detail       *endpointServiceDetailResp `json:"detail,omitempty"`
+}
+
+type endpointVPCResp struct {
+	Uuid      string `json:"uuid,omitempty"`
+	Name      string `json:"name,omitempty"`
+	CIDR      string `json:"cidr,omitempty"`
+	Status    string `json:"status,omitempty"`
+	DnsStatus string `json:"dnsStatus,omitempty"`
+}
+
+type endpointSubnetResp struct {
+	Uuid   string `json:"uuid,omitempty"`
+	Name   string `json:"name,omitempty"`
+	Status string `json:"status,omitempty"`
+	CIDR   string `json:"cidr,omitempty"`
+	ZoneID string `json:"zoneUuid,omitempty"`
+}
+
+type endpointPackageResp struct {
+	Uuid        string `json:"uuid,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty"`
+}
+
+type endpointProjectResp struct {
+	Uuid             string `json:"uuid,omitempty"`
+	BackendProjectID string `json:"backendProjectId,omitempty"`
+	PortalUserID     int    `json:"portalUserId,omitempty"`
+	VServerProjectID string `json:"vserverProjectId,omitempty"`
+}
+
 type endpointResp struct {
 	Uuid              string `json:"uuid,omitempty"`
 	EndpointName      string `json:"endpointName,omitempty"`
 	EndpointServiceID string `json:"endpointServiceId,omitempty"`
 	VpcID             string `json:"vpcId,omitempty"`
 	EndpointURL       string `json:"endpointUrl,omitempty"`
+	EndpointAuthURL   string `json:"endpointAuthUrl,omitempty"`
 	EndpointIp        string `json:"endpointIp,omitempty"`
 	Status            string `json:"status,omitempty"`
+	BillingStatus     string `json:"billingStatus,omitempty"`
+	EndpointType      string `json:"endpointType,omitempty"`
+	Version           string `json:"version,omitempty"`
+	Description       string `json:"description,omitempty"`
+	CreatedAt         string `json:"createdAt,omitempty"`
+	UpdatedAt         string `json:"updatedAt,omitempty"`
+	ZoneUuid          string `json:"zoneUuid,omitempty"`
+	EnableDnsName     bool   `json:"enableDnsName,omitempty"`
+
+	EndpointDomains []string             `json:"endpointDomains,omitempty"`
+	Category        *endpointCategoryResp `json:"category,omitempty"`
+	Service         *endpointServiceResp  `json:"service,omitempty"`
+	VPC             *endpointVPCResp      `json:"vpc,omitempty"`
+	Subnet          *endpointSubnetResp   `json:"subnet,omitempty"`
+	Package         *endpointPackageResp  `json:"endpointPackage,omitempty"`
+	Project         *endpointProjectResp  `json:"project,omitempty"`
 }
 
 type endpointTagResp struct {
@@ -24,14 +91,90 @@ type endpointTagResp struct {
 }
 
 func (e *endpointResp) toEntityEndpoint() *Endpoint {
-	return &Endpoint{
-		ID:          e.Uuid,
-		Name:        e.EndpointName,
-		VpcID:       e.VpcID,
-		IPv4Address: e.EndpointIp,
-		EndpointURL: e.EndpointURL,
-		Status:      e.Status,
+	ep := &Endpoint{
+		ID:                e.Uuid,
+		Name:              e.EndpointName,
+		VpcID:             e.VpcID,
+		IPv4Address:       e.EndpointIp,
+		EndpointURL:       e.EndpointURL,
+		EndpointAuthURL:   e.EndpointAuthURL,
+		Status:            e.Status,
+		EndpointServiceID: e.EndpointServiceID,
+		BillingStatus:     e.BillingStatus,
+		EndpointType:      e.EndpointType,
+		Version:           e.Version,
+		Description:       e.Description,
+		CreatedAt:         e.CreatedAt,
+		UpdatedAt:         e.UpdatedAt,
+		ZoneUuid:          e.ZoneUuid,
+		EnableDnsName:     e.EnableDnsName,
+		EndpointDomains:   e.EndpointDomains,
 	}
+
+	if e.Category != nil {
+		ep.Category = &EndpointCategory{
+			ID:        e.Category.Uuid,
+			Name:      e.Category.Name,
+			IsDefault: e.Category.IsDefault,
+		}
+	}
+
+	if e.Service != nil {
+		svc := &EndpointService{
+			ID:           e.Service.Uuid,
+			Name:         e.Service.Name,
+			EndpointURL:  e.Service.EndpointURL,
+			EndpointType: e.Service.EndpointType,
+		}
+		if e.Service.Detail != nil {
+			svc.Detail = &EndpointServiceDetail{
+				EndpointAuthURL:    e.Service.Detail.EndpointAuthURL,
+				EndpointURL:        e.Service.Detail.EndpointURL,
+				TargetCIDR:         e.Service.Detail.TargetCIDR,
+				EndpointEncryptURL: e.Service.Detail.EndpointEncryptURL,
+			}
+		}
+		ep.Service = svc
+	}
+
+	if e.VPC != nil {
+		ep.VPC = &EndpointVPC{
+			ID:        e.VPC.Uuid,
+			Name:      e.VPC.Name,
+			CIDR:      e.VPC.CIDR,
+			Status:    e.VPC.Status,
+			DnsStatus: e.VPC.DnsStatus,
+		}
+	}
+
+	if e.Subnet != nil {
+		ep.Subnet = &EndpointSubnet{
+			ID:     e.Subnet.Uuid,
+			Name:   e.Subnet.Name,
+			Status: e.Subnet.Status,
+			CIDR:   e.Subnet.CIDR,
+			ZoneID: e.Subnet.ZoneID,
+		}
+	}
+
+	if e.Package != nil {
+		ep.Package = &EndpointPackage{
+			ID:          e.Package.Uuid,
+			Name:        e.Package.Name,
+			Description: e.Package.Description,
+		}
+	}
+
+	if e.Project != nil {
+		ep.Project = &EndpointProject{
+			ID:               e.Project.Uuid,
+			BackendProjectID: e.Project.BackendProjectID,
+			PortalUserID:     e.Project.PortalUserID,
+			VServerProjectID: e.Project.VServerProjectID,
+		}
+	}
+
+	return ep
 }
 
 type GetEndpointByIDResponse struct {

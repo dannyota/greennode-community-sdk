@@ -64,3 +64,7 @@ func updateTagValueOfEndpointURL(sc *client.ServiceClient, opts *UpdateTagValueO
 		"tags",
 		opts.TagID)
 }
+
+func listVNetworkRegionsURL(sc *client.ServiceClient) string {
+	return sc.ServiceURL("regions")
+}
