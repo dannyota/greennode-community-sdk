@@ -7,6 +7,7 @@ import (
 	"danny.vn/greennode/auth"
 	"danny.vn/greennode/client"
 	"danny.vn/greennode/option"
+	computev1 "danny.vn/greennode/services/compute/v1"
 	computev2 "danny.vn/greennode/services/compute/v2"
 	dnsv1 "danny.vn/greennode/services/dns/v1"
 	glbv1 "danny.vn/greennode/services/glb/v1"
@@ -55,6 +56,7 @@ type Client struct {
 	Identity     *identityv2.IdentityServiceV2
 
 	// Legacy API versions
+	ComputeV1 *computev1.ComputeServiceV1
 	NetworkV1 *networkv1.NetworkServiceV1
 	VolumeV1  *volumev1.VolumeServiceV1
 	PortalV1  *portalv1.PortalServiceV1
@@ -108,6 +110,7 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 		c.Portal = &portalv2.PortalServiceV2{Client: svcV2}
 
 		svcV1 := newServiceClient(ep+"v1", cfg.ProjectID, "", hc)
+		c.ComputeV1 = &computev1.ComputeServiceV1{Client: svcV1}
 		c.VolumeV1 = &volumev1.VolumeServiceV1{Client: svcV1}
 		c.PortalV1 = &portalv1.PortalServiceV1{Client: svcV1}
 

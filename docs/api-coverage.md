@@ -6,7 +6,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Service | ✅ | Missing | Total |
 |---------|:---:|:-------:|:-----:|
 | Portal | 6 | 0 | 6 |
-| Compute | 14 | 8 | 22 |
+| Compute | 16 | 6 | 22 |
 | Network | 18 | 14 | 32 |
 | vNetwork | 4 | 1 | 5 |
 | Volume | 14 | 2 | 16 |
@@ -19,7 +19,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Object Storage | 0 | 3 | 3 |
 | Monitoring | 0 | 4 | 4 |
 | Billing | 0 | 1 | 1 |
-| **Total** | **118** | **43** | **161** |
+| **Total** | **120** | **41** | **161** |
 
 ---
 
@@ -36,7 +36,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 
 **6/6**
 
-## Compute (`Client.Compute`)
+## Compute (`Client.Compute`, `Client.ComputeV1`)
 
 | Resource | SDK Method | REST Endpoint | |
 |----------|-----------|---------------|:---:|
@@ -54,8 +54,8 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Create Server Group | `CreateServerGroup()` | `POST /v2/{projectId}/serverGroups` | ✅ |
 | Delete Server Group | `DeleteServerGroupByID()` | `DELETE /v2/{projectId}/serverGroups/{id}` | ✅ |
 | List Server Group Policies | `ListServerGroupPolicies()` | `GET /v2/{projectId}/serverGroups/policies` | ✅ |
-| OS Images | — | `GET /v1/{projectId}/images/os` | |
-| GPU Images | — | `GET /v1/{projectId}/images/gpu` | |
+| OS Images | `ComputeV1.ListOSImages()` | `GET /v1/{projectId}/images/os` | ✅ |
+| GPU Images | `ComputeV1.ListGPUImages()` | `GET /v1/{projectId}/images/gpu` | ✅ |
 | User Images | — | `GET /v2/{projectId}/user-images` | |
 | Flavors | — | `GET /v1/{projectId}/flavors/families/{family}/platforms/{code}` | |
 | Flavor Zones | — | `GET /v1/{projectId}/flavor_zones/product` | |
@@ -63,7 +63,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Tags | — | `GET /v2/{projectId}/tag` | |
 | Tag Keys | — | `GET /v2/{projectId}/tag/tag-key` | |
 
-**14/22**
+**16/22**
 
 ## Network (`Client.Network`)
 
