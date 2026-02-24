@@ -9,8 +9,16 @@ import (
 )
 
 const (
-	defaultPageListNetworks = 1
-	defaultSizeListNetworks = 10
+	defaultPageListNetworks      = 1
+	defaultSizeListNetworks      = 10
+	defaultPageListSecgroups     = 1
+	defaultSizeListSecgroups     = 10
+	defaultPageListRouteTables   = 1
+	defaultSizeListRouteTables   = 10
+	defaultPageListPeerings      = 1
+	defaultSizeListPeerings      = 10
+	defaultPageListInterconnects = 1
+	defaultSizeListInterconnects = 10
 )
 
 type NetworkServiceV2 struct {

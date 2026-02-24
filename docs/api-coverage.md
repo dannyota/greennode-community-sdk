@@ -6,7 +6,7 @@ What the SDK supports today vs. what GreenNode exposes.
 |---------|:---:|:-------:|:-----:|
 | Portal | 6 | 0 | 6 |
 | Compute | 17 | 5 | 22 |
-| Network | 20 | 12 | 32 |
+| Network | 23 | 9 | 32 |
 | vNetwork | 5 | 0 | 5 |
 | Volume | 14 | 2 | 16 |
 | Load Balancer | 30 | 0 | 30 |
@@ -18,7 +18,7 @@ What the SDK supports today vs. what GreenNode exposes.
 | Object Storage | 0 | 3 | 3 |
 | Monitoring | 0 | 4 | 4 |
 | Billing | 0 | 1 | 1 |
-| **Total** | **124** | **37** | **161** |
+| **Total** | **127** | **34** | **161** |
 
 ---
 
@@ -90,19 +90,19 @@ What the SDK supports today vs. what GreenNode exposes.
 | List Subnets | `ListSubnetsByNetworkID()` | `GET /v2/{projectId}/networks/{id}/subnets` | ✅ |
 | Network ACLs | — | `GET /v2/{projectId}/network-acl/list` | |
 | Network ACL Rules | — | `GET /v2/{projectId}/network-acl/{id}/rules` | |
-| Route Tables | — | `GET /v2/{projectId}/route-table` | |
+| Route Tables | `ListRouteTables()` | `GET /v2/{projectId}/route-table` | ✅ |
 | Route Table Routes | — | `GET /v2/{projectId}/route-table/route/{id}` | |
 | DHCP Options | — | `GET /v2/{projectId}/dhcp_option` | |
 | Elastic IPs | — | `GET /v2/{projectId}/elastic-ips` | |
 | Network Interfaces | — | `GET /v2/{projectId}/network-interfaces-elastic` | |
 | Virtual IPs | — | `GET /v2/{projectId}/virtualIpAddress` | |
 | Public VIPs | — | `GET /v2/{projectId}/public-vips/externalNetworkInterfaces` | |
-| Peering | — | `GET /v2/{projectId}/peering` | |
-| Interconnects | — | `GET /v2/{projectId}/interconnects` | |
+| Peering | `ListPeerings()` | `GET /v2/{projectId}/peering` | ✅ |
+| Interconnects | `ListInterconnects()` | `GET /v2/{projectId}/interconnects` | ✅ |
 | Interconnect Connections | — | `GET /v2/{projectId}/interconnects/{id}/connections` | |
 | WAN IPs | — | `GET /v2/{projectId}/wanIps` | |
 
-**20/32**
+**23/32**
 
 ## vNetwork (`Client.NetworkV1`)
 

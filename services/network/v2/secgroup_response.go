@@ -43,6 +43,8 @@ func (r *GetSecgroupByIDResponse) ToEntitySecgroup() *Secgroup {
 		Name:        r.Data.Name,
 		Description: r.Data.Description,
 		Status:      r.Data.Status,
+		CreatedAt:   r.Data.CreatedAt,
+		IsSystem:    r.Data.IsSystem,
 	}
 }
 
@@ -69,7 +71,15 @@ func (r *ListSecgroupResponse) ToListEntitySecgroups() *ListSecgroups {
 			Name:        item.Name,
 			Description: item.Description,
 			Status:      item.Status,
+			CreatedAt:   item.CreatedAt,
+			IsSystem:    item.IsSystem,
 		})
 	}
-	return &ListSecgroups{Items: items}
+	return &ListSecgroups{
+		Items:     items,
+		Page:      r.Page,
+		PageSize:  r.PageSize,
+		TotalPage: r.TotalPage,
+		TotalItem: r.TotalItem,
+	}
 }

@@ -67,8 +67,11 @@ func TestGetSecgroupByIDResponse_Unmarshal_ToEntity(t *testing.T) {
 	if sg.Name != "default" {
 		t.Fatalf("Name: got %q", sg.Name)
 	}
-	if sg.Description != "default security group" {
-		t.Fatalf("Description: got %q", sg.Description)
+	if sg.CreatedAt != "2024-06-01T10:00:00Z" {
+		t.Fatalf("CreatedAt: got %q", sg.CreatedAt)
+	}
+	if !sg.IsSystem {
+		t.Fatal("IsSystem: expected true")
 	}
 }
 
@@ -98,6 +101,24 @@ func TestListSecgroupResponse_Unmarshal_ToEntity(t *testing.T) {
 	}
 	if lst.Items[1].Name != "sg-two" {
 		t.Fatalf("second Name: got %q", lst.Items[1].Name)
+	}
+	if lst.Items[0].CreatedAt != "2024-01-01" {
+		t.Fatalf("first CreatedAt: got %q", lst.Items[0].CreatedAt)
+	}
+	if !lst.Items[1].IsSystem {
+		t.Fatal("second IsSystem: expected true")
+	}
+	if lst.Page != 1 {
+		t.Fatalf("Page: got %d", lst.Page)
+	}
+	if lst.PageSize != 10 {
+		t.Fatalf("PageSize: got %d", lst.PageSize)
+	}
+	if lst.TotalPage != 1 {
+		t.Fatalf("TotalPage: got %d", lst.TotalPage)
+	}
+	if lst.TotalItem != 2 {
+		t.Fatalf("TotalItem: got %d", lst.TotalItem)
 	}
 }
 

@@ -63,10 +63,16 @@ type Secgroup struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Status      string `json:"status"`
+	CreatedAt   string `json:"createdAt"`
+	IsSystem    bool   `json:"isSystem"`
 }
 
 type ListSecgroups struct {
-	Items []*Secgroup
+	Items     []*Secgroup
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
 }
 
 type SecgroupRule struct {
@@ -131,4 +137,76 @@ func (l ListAddressPairs) At(idx int) *AddressPair {
 	}
 
 	return l.Items[idx]
+}
+
+type Route struct {
+	ID                    string `json:"id"`
+	RouteTableID          string `json:"routeTableId"`
+	RoutingType           string `json:"routingType"`
+	DestinationCidrBlock  string `json:"destinationCidrBlock"`
+	Target                string `json:"target"`
+	Status                string `json:"status"`
+}
+
+type RouteTable struct {
+	ID        string   `json:"id"`
+	Name      string   `json:"name"`
+	Status    string   `json:"status"`
+	NetworkID string   `json:"networkId"`
+	CreatedAt string   `json:"createdAt"`
+	Routes    []*Route `json:"routes"`
+}
+
+type ListRouteTables struct {
+	Items     []*RouteTable
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
+}
+
+type Peering struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Status    string `json:"status"`
+	FromVpcID string `json:"fromVpcId"`
+	FromCidr  string `json:"fromCidr"`
+	EndVpcID  string `json:"endVpcId"`
+	EndCidr   string `json:"endCidr"`
+	CreatedAt string `json:"createdAt"`
+}
+
+type ListPeerings struct {
+	Items     []*Peering
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
+}
+
+type Interconnect struct {
+	ID           string `json:"id"`
+	ProjectID    string `json:"projectId"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	EnableGw2    bool   `json:"enableGw2"`
+	CircuitID    int    `json:"circuitId"`
+	Gw01IP       string `json:"gw01Ip"`
+	Gw02IP       string `json:"gw02Ip"`
+	GwVIP        string `json:"gwVip"`
+	RemoteGw01IP string `json:"remoteGw01Ip"`
+	RemoteGw02IP string `json:"remoteGw02Ip"`
+	PackageID    string `json:"packageId"`
+	Status       string `json:"status"`
+	TypeID       string `json:"typeId"`
+	TypeName     string `json:"typeName"`
+	CreatedAt    string `json:"createdAt"`
+}
+
+type ListInterconnects struct {
+	Items     []*Interconnect
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
 }

@@ -129,7 +129,7 @@ func TestListAllServerBySecgroupIDSuccess(t *testing.T) {
 
 func TestListSecgroupSuccess(t *testing.T) {
 	vngcloud := validSdkConfig()
-	opt := networkv2.NewListSecgroupRequest()
+	opt := networkv2.NewListSecgroupRequest(1, 10)
 	secgroups, err := vngcloud.Network.ListSecgroup(context.Background(), opt)
 
 	if err != nil {

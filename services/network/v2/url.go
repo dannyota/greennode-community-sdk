@@ -15,10 +15,17 @@ func createSecgroupURL(sc *client.ServiceClient) string {
 		"secgroups")
 }
 
-func listSecgroupURL(sc *client.ServiceClient, _ *ListSecgroupRequest) string {
-	return sc.ServiceURL(
-		sc.ProjectID,
-		"secgroups")
+func listSecgroupURL(sc *client.ServiceClient, opts *ListSecgroupRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "secgroups")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
 }
 
 func deleteSecgroupByIDURL(sc *client.ServiceClient, opts *DeleteSecgroupByIDRequest) string {
@@ -165,4 +172,43 @@ func listAddressPairsByVirtualAddressIDURL(sc *client.ServiceClient, opts *ListA
 		"virtualIpAddress",
 		opts.VirtualAddressID,
 		"addressPairs")
+}
+
+func listRouteTablesURL(sc *client.ServiceClient, opts *ListRouteTablesRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "route-table")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}
+
+func listPeeringsURL(sc *client.ServiceClient, opts *ListPeeringsRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "peering")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}
+
+func listInterconnectsURL(sc *client.ServiceClient, opts *ListInterconnectsRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "interconnects")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
 }
