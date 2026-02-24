@@ -12,6 +12,16 @@ type GetSubnetByIDRequest struct {
 	NetworkID string
 }
 
+type ListSubnetsByNetworkIDRequest struct {
+	NetworkID string
+}
+
+func NewListSubnetsByNetworkIDRequest(networkID string) *ListSubnetsByNetworkIDRequest {
+	return &ListSubnetsByNetworkIDRequest{
+		NetworkID: networkID,
+	}
+}
+
 type SecondarySubnetUpdateBody struct {
 	Name string `json:"name"`
 	CIDR string `json:"cidr"`

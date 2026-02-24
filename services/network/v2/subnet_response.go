@@ -44,6 +44,16 @@ func (r *GetSubnetByIDResponse) ToEntitySubnet() *Subnet {
 	}
 }
 
+type ListSubnetsByNetworkIDResponse []GetSubnetByIDResponse
+
+func (r ListSubnetsByNetworkIDResponse) ToEntityListSubnets() *ListSubnets {
+	result := &ListSubnets{}
+	for i := range r {
+		result.Items = append(result.Items, r[i].ToEntitySubnet())
+	}
+	return result
+}
+
 type UpdateSubnetByIDResponse struct {
 	Data GetSubnetByIDResponse `json:"data"`
 }

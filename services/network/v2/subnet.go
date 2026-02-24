@@ -7,6 +7,25 @@ import (
 	sdkerror "danny.vn/greennode/sdkerror"
 )
 
+func (s *NetworkServiceV2) ListSubnetsByNetworkID(ctx context.Context, opts *ListSubnetsByNetworkIDRequest) (*ListSubnets, error) {
+	url := listSubnetsByNetworkIDURL(s.Client, opts)
+	resp := new(ListSubnetsByNetworkIDResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters(
+				"networkId", opts.NetworkID,
+				"projectId", s.Client.ProjectID)
+	}
+
+	return resp.ToEntityListSubnets(), nil
+}
+
 func (s *NetworkServiceV2) GetSubnetByID(ctx context.Context, opts *GetSubnetByIDRequest) (*Subnet, error) {
 	url := getSubnetByIDURL(s.Client, opts)
 	resp := new(GetSubnetByIDResponse)

@@ -1,12 +1,38 @@
 package v2
 
 type Network struct {
-	Status     string   `json:"status"`
-	ElasticIps []string `json:"elasticIps"`
-	Name       string   `json:"displayName"`
-	ID         string   `json:"id"`
-	CreatedAt  string   `json:"createdAt"`
-	Cidr       string   `json:"cidr"`
+	Status          string      `json:"status"`
+	ElasticIps      []string    `json:"elasticIps"`
+	Name            string      `json:"displayName"`
+	ID              string      `json:"id"`
+	CreatedAt       string      `json:"createdAt"`
+	Cidr            string      `json:"cidr"`
+	DhcpOptionName  string      `json:"dhcpOptionName"`
+	DhcpOptionID    string      `json:"dhcpOptionId"`
+	RouteTableName  string      `json:"routeTableName"`
+	RouteTableID    string      `json:"routeTableId"`
+	Zone            NetworkZone `json:"zone"`
+	DnsStatus       string      `json:"dnsStatus"`
+	DnsID           string      `json:"dnsId"`
+}
+
+type NetworkZone struct {
+	Uuid          string   `json:"uuid"`
+	Name          string   `json:"name"`
+	ZoneType      string   `json:"zoneType"`
+	IsDefault     bool     `json:"isDefault"`
+	Description   string   `json:"description"`
+	IsEnabled     bool     `json:"isEnabled"`
+	OpenstackZone string   `json:"openstackZone"`
+	IpRanges      []string `json:"ipRanges"`
+}
+
+type ListNetworks struct {
+	Items     []*Network
+	Page      int
+	PageSize  int
+	TotalPage int
+	TotalItem int
 }
 
 type Subnet struct {
@@ -26,6 +52,10 @@ type SubnetSecondaryRange struct {
 	ID   string `json:"uuid"`
 	Name string `json:"name"`
 	Cidr string `json:"cidr"`
+}
+
+type ListSubnets struct {
+	Items []*Subnet
 }
 
 type Secgroup struct {

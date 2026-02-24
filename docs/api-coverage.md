@@ -1,13 +1,12 @@
 # API Coverage
 
-What the SDK supports today vs. what GreenNode exposes. Based on
-[hotpot feature inventory](/home/danny/src/hotpot/docs/features/GREENNODE.md).
+What the SDK supports today vs. what GreenNode exposes.
 
 | Service | ✅ | Missing | Total |
 |---------|:---:|:-------:|:-----:|
 | Portal | 6 | 0 | 6 |
 | Compute | 17 | 5 | 22 |
-| Network | 18 | 14 | 32 |
+| Network | 20 | 12 | 32 |
 | vNetwork | 4 | 1 | 5 |
 | Volume | 14 | 2 | 16 |
 | Load Balancer | 30 | 0 | 30 |
@@ -19,7 +18,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Object Storage | 0 | 3 | 3 |
 | Monitoring | 0 | 4 | 4 |
 | Billing | 0 | 1 | 1 |
-| **Total** | **121** | **40** | **161** |
+| **Total** | **123** | **38** | **161** |
 
 ---
 
@@ -87,8 +86,8 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Delete Address Pair | `DeleteAddressPair()` | `DELETE /v2/{projectId}/virtual-subnets/addressPairs/{id}` | ✅ |
 | Get All Address Pairs by Subnet | `GetAllAddressPairByVirtualSubnetID()` | `GET /v2/{projectId}/virtual-subnets/{id}/addressPairs` | ✅ |
 | Set Address Pair in Subnet | `SetAddressPairInVirtualSubnet()` | `POST /v2/{projectId}/virtual-subnets/{id}/addressPairs` | ✅ |
-| List Networks (VPCs) | — | `GET /v2/{projectId}/networks` | |
-| List Subnets | — | `GET /v2/{projectId}/networks/{id}/subnets` | |
+| List Networks (VPCs) | `ListNetworks()` | `GET /v2/{projectId}/networks` | ✅ |
+| List Subnets | `ListSubnetsByNetworkID()` | `GET /v2/{projectId}/networks/{id}/subnets` | ✅ |
 | Network ACLs | — | `GET /v2/{projectId}/network-acl/list` | |
 | Network ACL Rules | — | `GET /v2/{projectId}/network-acl/{id}/rules` | |
 | Route Tables | — | `GET /v2/{projectId}/route-table` | |
@@ -103,7 +102,7 @@ What the SDK supports today vs. what GreenNode exposes. Based on
 | Interconnect Connections | — | `GET /v2/{projectId}/interconnects/{id}/connections` | |
 | WAN IPs | — | `GET /v2/{projectId}/wanIps` | |
 
-**18/32**
+**20/32**
 
 ## vNetwork (`Client.NetworkV1`)
 

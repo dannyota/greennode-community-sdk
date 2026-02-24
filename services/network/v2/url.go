@@ -53,11 +53,32 @@ func listSecgroupRulesBySecgroupIDURL(sc *client.ServiceClient, opts *ListSecgro
 		"secGroupRules")
 }
 
+func listNetworksURL(sc *client.ServiceClient, opts *ListNetworksRequest) string {
+	query, err := opts.ToListQuery()
+	if err != nil {
+		query = opts.getDefaultQuery()
+	}
+
+	base := sc.ServiceURL(sc.ProjectID, "networks")
+	if query != "" {
+		return base + "?" + query
+	}
+	return base
+}
+
 func getNetworkByIDURL(sc *client.ServiceClient, opts *GetNetworkByIDRequest) string {
 	return sc.ServiceURL(
 		sc.ProjectID,
 		"networks",
 		opts.NetworkID)
+}
+
+func listSubnetsByNetworkIDURL(sc *client.ServiceClient, opts *ListSubnetsByNetworkIDRequest) string {
+	return sc.ServiceURL(
+		sc.ProjectID,
+		"networks",
+		opts.NetworkID,
+		"subnets")
 }
 
 func getSubnetByIDURL(sc *client.ServiceClient, opts *GetSubnetByIDRequest) string {
