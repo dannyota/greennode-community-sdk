@@ -4,7 +4,7 @@ type GetNetworkByIDResponse struct {
 	Status      string   `json:"status"`
 	ElasticIps  []string `json:"elasticIps"`
 	DisplayName string   `json:"displayName"`
-	ID          string   `json:"id"`
+	ID          string   `json:"uuid"`
 	CreatedAt   string   `json:"createdAt"`
 	Cidr        string   `json:"cidr"`
 }
@@ -35,7 +35,7 @@ type networkResp struct {
 	Status         string          `json:"status"`
 	ElasticIps     []string        `json:"elasticIps"`
 	DisplayName    string          `json:"displayName"`
-	ID             string          `json:"id"`
+	ID             string          `json:"uuid"`
 	CreatedAt      string          `json:"createdAt"`
 	Cidr           string          `json:"cidr"`
 	DhcpOptionName string          `json:"dhcpOptionName"`

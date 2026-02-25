@@ -10,7 +10,7 @@ type routeResp struct {
 }
 
 type routeTableResp struct {
-	ID        string      `json:"id"`
+	ID        string      `json:"uuid"`
 	Name      string      `json:"name"`
 	Status    string      `json:"status"`
 	NetworkID string      `json:"networkId"`
