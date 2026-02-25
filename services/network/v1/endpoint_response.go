@@ -9,10 +9,10 @@ type endpointCategoryResp struct {
 }
 
 type endpointServiceDetailResp struct {
-	EndpointAuthURL    string `json:"endpointAuthUrl,omitempty"`
-	EndpointURL        string `json:"endpointUrl,omitempty"`
-	TargetCIDR         string `json:"targetCidr,omitempty"`
-	EndpointEncryptURL string `json:"endpointEncryptUrl,omitempty"`
+	EndpointAuthURL    string `json:"endpoint_auth_url,omitempty"`
+	EndpointURL        string `json:"endpoint_url,omitempty"`
+	TargetCIDR         string `json:"target_cidr,omitempty"`
+	EndpointEncryptURL string `json:"endpoint_encrypt_url,omitempty"`
 }
 
 type endpointServiceResp struct {
@@ -20,7 +20,7 @@ type endpointServiceResp struct {
 	Name         string                     `json:"name,omitempty"`
 	EndpointURL  string                     `json:"endpointUrl,omitempty"`
 	EndpointType string                     `json:"endpointType,omitempty"`
-	Detail       *endpointServiceDetailResp `json:"detail,omitempty"`
+	Detail       *endpointServiceDetailResp `json:"endpointDetailInformation,omitempty"`
 }
 
 type endpointVPCResp struct {
@@ -36,7 +36,7 @@ type endpointSubnetResp struct {
 	Name   string `json:"name,omitempty"`
 	Status string `json:"status,omitempty"`
 	CIDR   string `json:"cidr,omitempty"`
-	ZoneID string `json:"zoneUuid,omitempty"`
+	ZoneID string `json:"zoneId,omitempty"`
 }
 
 type endpointPackageResp struct {
@@ -46,7 +46,7 @@ type endpointPackageResp struct {
 }
 
 type endpointProjectResp struct {
-	Uuid             string `json:"uuid,omitempty"`
+	Uuid             string `json:"id,omitempty"`
 	BackendProjectID string `json:"backendProjectId,omitempty"`
 	PortalUserID     int    `json:"portalUserId,omitempty"`
 	VServerProjectID string `json:"vserverProjectId,omitempty"`
@@ -75,7 +75,7 @@ type endpointResp struct {
 	Service         *endpointServiceResp  `json:"service,omitempty"`
 	VPC             *endpointVPCResp      `json:"vpc,omitempty"`
 	Subnet          *endpointSubnetResp   `json:"subnet,omitempty"`
-	Package         *endpointPackageResp  `json:"endpointPackage,omitempty"`
+	Package         *endpointPackageResp  `json:"packageId,omitempty"`
 	Project         *endpointProjectResp  `json:"project,omitempty"`
 }
 
