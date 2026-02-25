@@ -23,7 +23,7 @@ func getVolumeTypeZonesURL(sc *client.ServiceClient, opts *GetVolumeTypeZonesReq
 	return sc.ServiceURL(
 		sc.ProjectID,
 		"volume_type_zones",
-	) + query
+	) + "?" + query
 }
 
 func getVolumeTypesURL(sc *client.ServiceClient, opts *GetListVolumeTypeRequest) string {

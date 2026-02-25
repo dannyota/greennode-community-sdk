@@ -35,7 +35,7 @@ func listLoadBalancersURL(sc *client.ServiceClient, opts *ListLoadBalancersReque
 		query = opts.getDefaultQuery()
 	}
 
-	return sc.ServiceURL(sc.ProjectID, "loadBalancers") + query
+	return sc.ServiceURL(sc.ProjectID, "loadBalancers") + "?" + query
 }
 
 func getPoolHealthMonitorByIDURL(sc *client.ServiceClient, opts *GetPoolHealthMonitorByIDRequest) string {

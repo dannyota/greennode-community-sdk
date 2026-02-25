@@ -138,7 +138,7 @@ func listGlobalLoadBalancersURL(sc *client.ServiceClient, opts *ListGlobalLoadBa
 		query = opts.getDefaultQuery()
 	}
 
-	return sc.ServiceURL("global-load-balancers") + query
+	return sc.ServiceURL("global-load-balancers") + "?" + query
 }
 
 func createGlobalLoadBalancerURL(sc *client.ServiceClient, _ *CreateGlobalLoadBalancerRequest) string {
