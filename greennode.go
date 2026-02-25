@@ -2,6 +2,7 @@ package greennode
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"danny.vn/greennode/auth"
@@ -155,6 +156,18 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 		hc.WithReauthFunc(client.IAMUserOauth2, iamUserReauthFunc(cfg.IAMAuth))
 	} else if c.Identity != nil && cfg.ClientID != "" && cfg.ClientSecret != "" {
 		hc.WithReauthFunc(client.IAMOauth2, reauthFunc(c.Identity, cfg.ClientID, cfg.ClientSecret))
+	}
+
+	// Auto-discover VNetwork ZoneID (regionId) if not explicitly set.
+	if c.NetworkV1 != nil && c.NetworkV1.Client.ZoneID == "" && cfg.Region != "" {
+		if regions, err := c.NetworkV1.ListVNetworkRegions(ctx, networkv1.NewListVNetworkRegionsRequest()); err == nil {
+			for _, r := range regions.Items {
+				if strings.Contains(r.DashboardURL, cfg.Region+"-vnetwork") {
+					c.NetworkV1.Client.ZoneID = r.ID
+					break
+				}
+			}
+		}
 	}
 
 	return c, nil

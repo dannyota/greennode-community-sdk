@@ -34,7 +34,7 @@ func resolveEndpoints(cfg *Config) {
 	}
 
 	if cfg.VNetworkEndpoint == "" {
-		cfg.VNetworkEndpoint = fmt.Sprintf("https://%s.console.vngcloud.vn/vserver/vnetwork-gateway/vnetwork/", cfg.Region)
+		cfg.VNetworkEndpoint = fmt.Sprintf("https://%s-vnetwork.console.vngcloud.vn/vnetwork-gateway/", cfg.Region)
 	}
 
 	if cfg.GLBEndpoint == "" {
