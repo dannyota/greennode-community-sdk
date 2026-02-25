@@ -23,7 +23,7 @@ func listBlockVolumesURL(sc *client.ServiceClient, opts *ListBlockVolumesRequest
 
 	return sc.ServiceURL(
 		sc.ProjectID,
-		"volumes") + query
+		"volumes") + "?" + query
 }
 
 func getBlockVolumeByIDURL(sc *client.ServiceClient, opts *GetBlockVolumeByIDRequest) string {
@@ -52,7 +52,7 @@ func listSnapshotsByBlockVolumeIDURL(sc *client.ServiceClient, opts *ListSnapsho
 		"volumes",
 		opts.BlockVolumeID,
 		"snapshots",
-	) + query
+	) + "?" + query
 }
 
 func createSnapshotByBlockVolumeIDURL(sc *client.ServiceClient, opts *CreateSnapshotByBlockVolumeIDRequest) string {
