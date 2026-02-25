@@ -1,7 +1,7 @@
 package v2
 
 type peeringResp struct {
-	ID        string `json:"id"`
+	ID        string `json:"uuid"`
 	Name      string `json:"name"`
 	Status    string `json:"status"`
 	FromVpcID string `json:"fromVpcId"`
