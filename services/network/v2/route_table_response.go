@@ -1,7 +1,7 @@
 package v2
 
 type routeResp struct {
-	ID                   string `json:"id"`
+	ID                   string `json:"uuid"`
 	RouteTableID         string `json:"routeTableId"`
 	RoutingType          string `json:"routingType"`
 	DestinationCidrBlock string `json:"destinationCidrBlock"`
