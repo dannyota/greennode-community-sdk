@@ -22,7 +22,7 @@ func (r *routeTableResp) toEntity() *RouteTable {
 	routes := make([]*Route, 0, len(r.Routes))
 	for _, rt := range r.Routes {
 		routes = append(routes, &Route{
-			ID:                   rt.ID,
+			UUID:                 rt.ID,
 			RouteTableID:         rt.RouteTableID,
 			RoutingType:          rt.RoutingType,
 			DestinationCidrBlock: rt.DestinationCidrBlock,
@@ -31,7 +31,7 @@ func (r *routeTableResp) toEntity() *RouteTable {
 		})
 	}
 	return &RouteTable{
-		ID:        r.ID,
+		UUID:      r.ID,
 		Name:      r.Name,
 		Status:    r.Status,
 		NetworkID: r.NetworkID,

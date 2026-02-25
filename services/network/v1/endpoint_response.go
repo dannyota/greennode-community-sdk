@@ -92,7 +92,7 @@ type endpointTagResp struct {
 
 func (e *endpointResp) toEntityEndpoint() *Endpoint {
 	ep := &Endpoint{
-		ID:                e.Uuid,
+		UUID:              e.Uuid,
 		Name:              e.EndpointName,
 		VpcID:             e.VpcID,
 		IPv4Address:       e.EndpointIp,
@@ -113,7 +113,7 @@ func (e *endpointResp) toEntityEndpoint() *Endpoint {
 
 	if e.Category != nil {
 		ep.Category = &EndpointCategory{
-			ID:        e.Category.Uuid,
+			UUID:      e.Category.Uuid,
 			Name:      e.Category.Name,
 			IsDefault: e.Category.IsDefault,
 		}
@@ -121,7 +121,7 @@ func (e *endpointResp) toEntityEndpoint() *Endpoint {
 
 	if e.Service != nil {
 		svc := &EndpointService{
-			ID:           e.Service.Uuid,
+			UUID:         e.Service.Uuid,
 			Name:         e.Service.Name,
 			EndpointURL:  e.Service.EndpointURL,
 			EndpointType: e.Service.EndpointType,
@@ -139,7 +139,7 @@ func (e *endpointResp) toEntityEndpoint() *Endpoint {
 
 	if e.VPC != nil {
 		ep.VPC = &EndpointVPC{
-			ID:        e.VPC.Uuid,
+			UUID:      e.VPC.Uuid,
 			Name:      e.VPC.Name,
 			CIDR:      e.VPC.CIDR,
 			Status:    e.VPC.Status,
@@ -149,7 +149,7 @@ func (e *endpointResp) toEntityEndpoint() *Endpoint {
 
 	if e.Subnet != nil {
 		ep.Subnet = &EndpointSubnet{
-			ID:     e.Subnet.Uuid,
+			UUID:   e.Subnet.Uuid,
 			Name:   e.Subnet.Name,
 			Status: e.Subnet.Status,
 			CIDR:   e.Subnet.CIDR,
@@ -159,7 +159,7 @@ func (e *endpointResp) toEntityEndpoint() *Endpoint {
 
 	if e.Package != nil {
 		ep.Package = &EndpointPackage{
-			ID:          e.Package.Uuid,
+			UUID:        e.Package.Uuid,
 			Name:        e.Package.Name,
 			Description: e.Package.Description,
 		}
@@ -194,7 +194,7 @@ type CreateEndpointResponse struct {
 
 func (r *CreateEndpointResponse) ToEntityEndpoint() *Endpoint {
 	return &Endpoint{
-		ID:   r.Data.Uuid,
+		UUID: r.Data.Uuid,
 		Name: r.Data.Name,
 	}
 }

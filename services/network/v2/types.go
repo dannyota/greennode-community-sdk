@@ -4,7 +4,7 @@ type Network struct {
 	Status          string      `json:"status"`
 	ElasticIps      []string    `json:"elasticIps"`
 	Name            string      `json:"displayName"`
-	ID              string      `json:"id"`
+	UUID            string      `json:"uuid"`
 	CreatedAt       string      `json:"createdAt"`
 	Cidr            string      `json:"cidr"`
 	DhcpOptionName  string      `json:"dhcpOptionName"`
@@ -36,7 +36,7 @@ type ListNetworks struct {
 }
 
 type Subnet struct {
-	ID                     string                 `json:"uuid"`
+	UUID                   string                 `json:"uuid"`
 	NetworkID              string                 `json:"networkUuid"`
 	Name                   string                 `json:"name"`
 	Status                 string                 `json:"status"`
@@ -49,7 +49,7 @@ type Subnet struct {
 }
 
 type SubnetSecondaryRange struct {
-	ID   string `json:"uuid"`
+	UUID string `json:"uuid"`
 	Name string `json:"name"`
 	Cidr string `json:"cidr"`
 }
@@ -103,7 +103,7 @@ func (l ListSecgroupRules) Get(i int) *SecgroupRule {
 }
 
 type VirtualAddress struct {
-	ID              string   `json:"uuid"`
+	UUID            string   `json:"uuid"`
 	Name            string   `json:"name"`
 	EndpointAddress string   `json:"ipAddress"`
 	VpcID           string   `json:"networkId"`
@@ -115,7 +115,7 @@ type VirtualAddress struct {
 }
 
 type AddressPair struct {
-	ID                 string `json:"uuid"`
+	UUID               string `json:"uuid"`
 	VirtualIPAddressID string `json:"virtualIpAddressId"`
 	VirtualSubnetID    string `json:"virtualSubnetId"`
 	NetworkInterfaceIP string `json:"networkInterfaceIp"`
@@ -140,7 +140,7 @@ func (l ListAddressPairs) At(idx int) *AddressPair {
 }
 
 type Route struct {
-	ID                    string `json:"id"`
+	UUID                  string `json:"uuid"`
 	RouteTableID          string `json:"routeTableId"`
 	RoutingType           string `json:"routingType"`
 	DestinationCidrBlock  string `json:"destinationCidrBlock"`
@@ -149,7 +149,7 @@ type Route struct {
 }
 
 type RouteTable struct {
-	ID        string   `json:"id"`
+	UUID      string   `json:"uuid"`
 	Name      string   `json:"name"`
 	Status    string   `json:"status"`
 	NetworkID string   `json:"networkId"`
@@ -166,7 +166,7 @@ type ListRouteTables struct {
 }
 
 type Peering struct {
-	ID        string `json:"id"`
+	UUID      string `json:"uuid"`
 	Name      string `json:"name"`
 	Status    string `json:"status"`
 	FromVpcID string `json:"fromVpcId"`
@@ -185,7 +185,7 @@ type ListPeerings struct {
 }
 
 type Interconnect struct {
-	ID           string `json:"id"`
+	UUID         string `json:"uuid"`
 	ProjectID    string `json:"projectId"`
 	Name         string `json:"name"`
 	Description  string `json:"description"`

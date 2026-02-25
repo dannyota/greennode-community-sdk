@@ -16,7 +16,7 @@ type AddressPairResponse struct {
 
 func (r *AddressPairResponse) toEntityAddressPair() *AddressPair {
 	return &AddressPair{
-		ID:                 r.UUID,
+		UUID:               r.UUID,
 		VirtualIPAddressID: r.VirtualIPAddressID,
 		VirtualSubnetID:    r.VirtualSubnetID,
 		NetworkInterfaceIP: r.NetworkInterfaceIP,

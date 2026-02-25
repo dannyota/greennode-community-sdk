@@ -21,7 +21,7 @@ type interconnectResp struct {
 
 func (r *interconnectResp) toEntity() *Interconnect {
 	return &Interconnect{
-		ID:           r.ID,
+		UUID:         r.ID,
 		ProjectID:    r.ProjectID,
 		Name:         r.Name,
 		Description:  r.Description,

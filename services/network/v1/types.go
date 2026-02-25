@@ -1,7 +1,7 @@
 package v1
 
 type EndpointCategory struct {
-	ID        string
+	UUID      string
 	Name      string
 	IsDefault bool
 }
@@ -14,7 +14,7 @@ type EndpointServiceDetail struct {
 }
 
 type EndpointService struct {
-	ID           string
+	UUID         string
 	Name         string
 	EndpointURL  string
 	EndpointType string
@@ -22,7 +22,7 @@ type EndpointService struct {
 }
 
 type EndpointVPC struct {
-	ID        string
+	UUID      string
 	Name      string
 	CIDR      string
 	Status    string
@@ -30,7 +30,7 @@ type EndpointVPC struct {
 }
 
 type EndpointSubnet struct {
-	ID     string
+	UUID   string
 	Name   string
 	Status string
 	CIDR   string
@@ -38,7 +38,7 @@ type EndpointSubnet struct {
 }
 
 type EndpointPackage struct {
-	ID          string
+	UUID        string
 	Name        string
 	Description string
 }
@@ -51,7 +51,7 @@ type EndpointProject struct {
 }
 
 type Endpoint struct {
-	ID                string
+	UUID              string
 	Name              string
 	IPv4Address       string
 	EndpointURL       string

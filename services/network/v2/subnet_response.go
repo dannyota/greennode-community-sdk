@@ -25,13 +25,13 @@ func (r *GetSubnetByIDResponse) ToEntitySubnet() *Subnet {
 	secondaryRange := make([]SubnetSecondaryRange, 0, len(r.SecondarySubnets))
 	for _, sr := range r.SecondarySubnets {
 		secondaryRange = append(secondaryRange, SubnetSecondaryRange{
-			ID:   sr.UUID,
+			UUID: sr.UUID,
 			Name: sr.Name,
 			Cidr: sr.Cidr,
 		})
 	}
 	return &Subnet{
-		ID:                     r.UUID,
+		UUID:                   r.UUID,
 		NetworkID:              r.NetworkUuid,
 		Name:                   r.Name,
 		Status:                 r.Status,

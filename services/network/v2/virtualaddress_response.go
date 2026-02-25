@@ -17,7 +17,7 @@ type VirtualAddressDataResponse struct {
 
 func (r *VirtualAddressDataResponse) toEntityVirtualAddress() *VirtualAddress {
 	return &VirtualAddress{
-		ID:              r.UUID,
+		UUID:            r.UUID,
 		Name:            r.Name,
 		EndpointAddress: r.IPAddress,
 		VpcID:           r.NetworkID,
@@ -57,7 +57,7 @@ func (r *ListAddressPairsByVirtualAddressIDResponse) ToEntityListAddressPairs() 
 	addressPairs := make([]*AddressPair, 0, len(r.Data))
 	for _, addressPair := range r.Data {
 		addressPairs = append(addressPairs, &AddressPair{
-			ID:                 addressPair.UUID,
+			UUID:               addressPair.UUID,
 			VirtualIPAddressID: addressPair.VirtualIPAddressID,
 			VirtualSubnetID:    addressPair.VirtualSubnetID,
 			NetworkInterfaceIP: addressPair.NetworkInterfaceIP,

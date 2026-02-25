@@ -14,7 +14,7 @@ func (r *GetNetworkByIDResponse) ToEntityNetwork() *Network {
 		Status:     r.Status,
 		ElasticIps: r.ElasticIps,
 		Name:       r.DisplayName,
-		ID:         r.ID,
+		UUID:       r.ID,
 		CreatedAt:  r.CreatedAt,
 		Cidr:       r.Cidr,
 	}
@@ -52,7 +52,7 @@ func (r *networkResp) toEntityNetwork() *Network {
 		Status:         r.Status,
 		ElasticIps:     r.ElasticIps,
 		Name:           r.DisplayName,
-		ID:             r.ID,
+		UUID:           r.ID,
 		CreatedAt:      r.CreatedAt,
 		Cidr:           r.Cidr,
 		DhcpOptionName: r.DhcpOptionName,

@@ -13,7 +13,7 @@ type peeringResp struct {
 
 func (r *peeringResp) toEntity() *Peering {
 	return &Peering{
-		ID:        r.ID,
+		UUID:      r.ID,
 		Name:      r.Name,
 		Status:    r.Status,
 		FromVpcID: r.FromVpcID,
