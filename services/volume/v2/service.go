@@ -15,10 +15,10 @@ type VolumeServiceV2 struct {
 
 const (
 	defaultPageListBlockVolumesRequest = 1
-	defaultSizeListBlockVolumesRequest = 10000
+	defaultSizeListBlockVolumesRequest = 50
 
 	defaultPageListSnapshotsByBlockVolumeIDRequest = 1
-	defaultSizeListSnapshotsByBlockVolumeIDRequest = 10000
+	defaultSizeListSnapshotsByBlockVolumeIDRequest = 50
 )
 
 func (s *VolumeServiceV2) CreateBlockVolume(ctx context.Context, opts *CreateBlockVolumeRequest) (*Volume, error) {

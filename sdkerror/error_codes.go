@@ -10,6 +10,7 @@ const (
 	EcPagingInvalid         = ErrorCode("VngCloudApiPagingInvalid")
 	EcTagKeyInvalid         = ErrorCode("VngCloudApiTagKeyInvalid")
 	EcPermissionDenied      = ErrorCode("VngCloudApiPermissionDenied")
+	EcRateLimited           = ErrorCode("VngCloudApiRateLimited")
 	EcUnexpectedError       = ErrorCode("VngCloudApiUnexpectedError")
 	EcPaymentMethodNotAllow = ErrorCode("VngCloudPaymentMethodNotAllow")
 	EcCreditNotEnough       = ErrorCode("VngCloudCredtNotEnough")

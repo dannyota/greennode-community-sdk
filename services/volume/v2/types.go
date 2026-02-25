@@ -20,7 +20,11 @@ type Volume struct {
 }
 
 type ListVolumes struct {
-	Items []*Volume
+	Items      []*Volume
+	TotalPage  int
+	Page       int
+	PageSize   int
+	TotalItems int
 }
 
 func (l ListVolumes) Len() int {

@@ -144,7 +144,7 @@ func TestListBlockVolumesRequest_getDefaultQuery(t *testing.T) {
 	if !strings.Contains(q, "page=1") {
 		t.Fatalf("default query missing page: %q", q)
 	}
-	if !strings.Contains(q, "size=10000") {
+	if !strings.Contains(q, "size=50") {
 		t.Fatalf("default query missing size: %q", q)
 	}
 }

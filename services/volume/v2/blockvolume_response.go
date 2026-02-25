@@ -68,6 +68,11 @@ func (r *ListBlockVolumesResponse) ToEntityListVolumes() *ListVolumes {
 		lstVolumes.Items = append(lstVolumes.Items, vol.toEntityVolume())
 	}
 
+	lstVolumes.TotalPage = int(r.TotalPage)
+	lstVolumes.Page = int(r.Page)
+	lstVolumes.PageSize = int(r.PageSize)
+	lstVolumes.TotalItems = int(r.TotalItem)
+
 	return lstVolumes
 }
 

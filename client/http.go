@@ -252,8 +252,8 @@ func (hc *HTTPClient) handleStatusCode(ctx context.Context, url string, resp *ht
 		return hc.handleUnauthorized(ctx, url, resp, preq)
 	case http.StatusTooManyRequests:
 		return defaultErrorResponse(nil, url, preq, resp).
-			WithErrorCode(sdkerror.EcPermissionDenied).
-			WithMessage("Permission Denied")
+			WithErrorCode(sdkerror.EcRateLimited).
+			WithMessage("Too Many Requests")
 	case http.StatusInternalServerError:
 		return defaultErrorResponse(nil, url, preq, resp).
 			WithErrorCode(sdkerror.EcInternalServerError).
