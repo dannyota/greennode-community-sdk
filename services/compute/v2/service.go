@@ -9,7 +9,8 @@ import (
 )
 
 type ComputeServiceV2 struct {
-	Client *client.ServiceClient
+	Client   *client.ServiceClient
+	V1Client *client.ServiceClient // for v1-only endpoints (OS images)
 }
 
 
@@ -345,4 +346,38 @@ func (s *ComputeServiceV2) ListUserImages(ctx context.Context, opts *ListUserIma
 	}
 
 	return resp.ToEntityListUserImages(), nil
+}
+
+func (s *ComputeServiceV2) ListOSImages(ctx context.Context, opts *ListOSImagesRequest) (*ListOSImages, error) {
+	url := listOSImagesURL(s.V1Client, opts)
+	resp := new(listOSImagesResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.V1Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters("projectId", s.V1Client.ProjectID)
+	}
+
+	return resp.ToEntityListOSImages(), nil
+}
+
+func (s *ComputeServiceV2) ListGPUImages(ctx context.Context) (*ListOSImages, error) {
+	url := listGPUImagesURL(s.V1Client)
+	resp := new(listOSImagesResponse)
+	errResp := sdkerror.NewErrorResponse(sdkerror.NormalErrorType)
+	req := client.NewRequest().
+		WithOKCodes(200).
+		WithJSONResponse(resp).
+		WithJSONError(errResp)
+
+	if _, sdkErr := s.V1Client.Get(ctx, url, req); sdkErr != nil {
+		return nil, sdkerror.SdkErrorHandler(sdkErr, errResp).
+			WithKVparameters("projectId", s.V1Client.ProjectID)
+	}
+
+	return resp.ToEntityListOSImages(), nil
 }

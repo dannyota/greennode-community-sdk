@@ -249,3 +249,20 @@ func (l *ListServerGroupPolicies) At(idx int) *ServerGroupPolicy {
 func (l *ListServerGroupPolicies) Len() int {
 	return len(l.Items)
 }
+
+type OSImage struct {
+	ID            string       `json:"id"`
+	ImageType     string       `json:"imageType"`
+	ImageVersion  string       `json:"imageVersion"`
+	Licence       *bool        `json:"licence"`
+	FlavorZoneIDs []string     `json:"flavorZoneIds"`
+	PackageLimit  PackageLimit `json:"packageLimit"`
+	LicenseKey    *string      `json:"licenseKey"`
+	DefaultTagIDs []string     `json:"defaultTagIds"`
+	ZoneID        string       `json:"zoneId"`
+	Description   string       `json:"description"`
+}
+
+type ListOSImages struct {
+	Items []*OSImage
+}

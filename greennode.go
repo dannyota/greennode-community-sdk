@@ -105,12 +105,12 @@ func NewClient(ctx context.Context, cfg Config, opts ...option.ClientOption) (*C
 		ep := client.NormalizeURL(cfg.VServerEndpoint)
 
 		svcV2 := newServiceClient(ep+"v2", cfg.ProjectID, "", hc)
-		c.Compute = &computev2.ComputeServiceV2{Client: svcV2}
+		svcV1 := newServiceClient(ep+"v1", cfg.ProjectID, "", hc)
+		c.Compute = &computev2.ComputeServiceV2{Client: svcV2, V1Client: svcV1}
 		c.Network = &networkv2.NetworkServiceV2{Client: svcV2}
 		c.Volume = &volumev2.VolumeServiceV2{Client: svcV2}
 		c.Portal = &portalv2.PortalServiceV2{Client: svcV2}
 
-		svcV1 := newServiceClient(ep+"v1", cfg.ProjectID, "", hc)
 		c.ComputeV1 = &computev1.ComputeServiceV1{Client: svcV1}
 		c.VolumeV1 = &volumev1.VolumeServiceV1{Client: svcV1}
 		c.PortalV1 = &portalv1.PortalServiceV1{Client: svcV1}

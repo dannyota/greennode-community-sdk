@@ -146,3 +146,19 @@ func listUserImagesURL(sc *client.ServiceClient, opts *ListUserImagesRequest) st
 	}
 	return base
 }
+
+func listOSImagesURL(sc *client.ServiceClient, opts *ListOSImagesRequest) string {
+	return sc.ServiceURL(
+		sc.ProjectID,
+		"images",
+		"os",
+	) + opts.ToQuery()
+}
+
+func listGPUImagesURL(sc *client.ServiceClient) string {
+	return sc.ServiceURL(
+		sc.ProjectID,
+		"images",
+		"gpu",
+	)
+}
